@@ -41,9 +41,26 @@ module register_file_tb;
         #5 clk = !clk;
     end
 
+    // tb_data is an array which will be loaded with the test's input stimulus 
+    logic [80:0] tb_data [3:0];
+    // index for the tb_data array
+    integer tb_i;
+
     // test block
     initial begin
-        $display("unit test: register_file");
+        $display("unit: register_file");
+       
+        // initialize clk
+        clk = 1'b1;
+        // load test stimulus into tb_data 
+        $readmemb("C:/Users/seanj/Documents/bluejay/sim/t.txt", tb_data);
+        for (tb_i = 0; tb_i < 4; tb_i = tb_i + 1) begin
+            {rst, we, rd_addr_0, rd_addr_1, wr_addr, wr_data} = tb_data[tb_i];
+            $display("%h", tb_data[tb_i]);
+            #10;
+        end
+        
+        
     end
     
     

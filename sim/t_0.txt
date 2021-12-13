@@ -1,0 +1,4 @@
+rst: 1'h1, we: 1'h0, rd_addr_0: 5'h00, rd_addr_1: 5'h00, wr_addr: 5'h00, wr_data: 64'h00_00_00_00_00_00_00_00
+rst: 1'h0, we: 1'h1, rd_addr_0: 5'h00, rd_addr_1: 5'h00, wr_addr: 5'h01, wr_data: 64'h00_00_00_00_00_00_00_aa
+rst: 1'h0, we: 1'h0, rd_addr_0: 5'h01, rd_addr_1: 5'h00, wr_addr: 5'h00, wr_data: 64'h00_00_00_00_00_00_00_00
+rst: 1'h0, we: 1'h0, rd_addr_0: 5'h00, rd_addr_1: 5'h00, wr_addr: 5'h00, wr_data: 64'h00_00_00_00_00_00_00_00

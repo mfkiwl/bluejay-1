@@ -11,7 +11,7 @@ module register_file
     input [4:0] rd_addr_1, 
     output logic [63:0] rd_data_1,
     input [4:0] wr_addr,
-    output logic [63:0] wr_data
+    input [63:0] wr_data
 );
     
     // general-purpose registers

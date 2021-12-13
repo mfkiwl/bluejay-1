@@ -1,3 +1,7 @@
 Vivado Simulator 2019.2
 Time resolution is 1 ps
-unit test: register_file
+unit: register_file
+100000000000000000000
+0800100000000000000aa
+004000000000000000000
+000000000000000000000
