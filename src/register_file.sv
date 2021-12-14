@@ -16,7 +16,7 @@ module register_file
     
     // general-purpose registers
     logic [63:0] r_0, r_1, r_2, r_3, r_4, r_5, r_6, r_7, r_8, r_9, r_10, r_11, r_12, r_13, r_14, r_15, r_16, r_17, r_18, r_19, r_20, r_21, r_22, r_23, r_24, r_25, r_26, r_27, r_28, r_29, r_30, r_31;
-
+    //PYTHON(for i in range(32): print(f'r_{i}')
     // register r_0 is hardwired to 0
     assign r_0 = 64'h00;
          

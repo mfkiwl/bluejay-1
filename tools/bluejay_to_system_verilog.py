@@ -4,7 +4,51 @@
 import math
 import re
 
+#########
+# clean #
+#########
+def clean(string):
+	# remove comments
+	string = re.sub('//.*', '', string)
+	# convert tabs to spaces
+	string = re.sub('\t+', ' ', string)
+	# replace multiple spaces with a single space
+	string = re.sub(' +', ' ', string)
+	# remove any spaces before the begining of the string
+	string = re.sub('^ *', '', string)
+	# remove any spaces before the end of the string
+	string = re.sub(' $', '', string)
+	return string
 
+
+##########
+# header #
+##########
+def header(filename):
+	txt = ''
+	with open(filename, 'r') as file:
+		txt += 'define =\n'
+		txt += '{\n'
+		for line in re.split('\n', file.read()):
+			if line == '':
+				continue
+			line = clean(line)
+			line = re.split(' ', line)
+			key = line[1]
+			value = line[2]
+			txt += f'    {key}: "{value}",\n'
+		txt += '}'
+
+	filename = re.sub('.h', '.py', filename)
+	with open(filename, 'w') as file:
+		file.write(txt)
+	
+
+# header('../include/define.h')
+
+#for i in range(5): print("hi")
+
+for i in range(32): print(f"5'h{format(i, 'x')}: rd_data_0 = r_{i};")
 
 ########
 # log2 #
@@ -55,4 +99,4 @@ def bluejay_to_system_verilog(filename):
 	filename_sv = re.sub('b$', 'sv', filename)
 	# open(filename_sv, 'w').write(file)
 
-bluejay_to_system_verilog('../src/register_file.b')
+# bluejay_to_system_verilog('../src/register_file.b')

@@ -9,9 +9,9 @@
 module register_file_tb;
 
 
-	//==============================
-	// dut
-	//==============================
+    //==============================
+    // dut
+    //==============================
     register_file dut
     (
         .clk(clk),
@@ -26,7 +26,7 @@ module register_file_tb;
     );
 
     // dut I/O
-	logic clk;
+    logic clk;
     logic rst;
     logic we;
     logic [4:0] rd_addr_0;
@@ -45,6 +45,8 @@ module register_file_tb;
     logic [80:0] tb_data [3:0];
     // index for the tb_data array
     integer tb_i;
+    // file id number
+    integer tb_file_id;
 
     // test block
     initial begin
@@ -54,13 +56,15 @@ module register_file_tb;
         clk = 1'b1;
         // load test stimulus into tb_data 
         $readmemb("C:/Users/seanj/Documents/bluejay/sim/t.txt", tb_data);
+        tb_file_id = $fopen("C:/Users/seanj/Documents/bluejay/sim/z.txt", "w");
         for (tb_i = 0; tb_i < 4; tb_i = tb_i + 1) begin
             {rst, we, rd_addr_0, rd_addr_1, wr_addr, wr_data} = tb_data[tb_i];
+            $fwrite(tb_file_id, "%b_%b\n", rd_data_0, rd_data_1);
             $display("%h", tb_data[tb_i]);
             #10;
         end
-        
-        
+        $fclose(tb_file_id);
+        $finish;
     end
     
     

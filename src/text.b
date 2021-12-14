@@ -1,0 +1,1 @@
+    PYTHON(for i in range(2): print(f"    5'h{format(i, 'x')}: rd_data_0 = r_{i};"))

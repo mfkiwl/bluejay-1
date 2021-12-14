@@ -1,0 +1,1 @@
+for i in range(32): print(f"5'h{format(i, 'x')}: r_{i} <= we ? wr_data : r_{i};")
