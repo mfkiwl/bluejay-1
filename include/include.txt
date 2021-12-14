@@ -1,4 +1,6 @@
 {
+"WIDTH": "64",
+"NUM_GPR": "32",
 "FUNC__ADD": "4'h0",
 "FUNC__SUB": "4'h1",
 "FUNC__SLL": "4'h3",

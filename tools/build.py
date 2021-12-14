@@ -31,6 +31,7 @@ class Build:
 		txt = self.fine_and_replace(txt)
 		txt = self.eval_func(txt, 'LOG2', self.log2)
 		txt = self.eval_func(txt, 'PYTHON', self.python)
+		txt = self.fold_constants(txt)
 
 		self.write(txt)
 
@@ -83,6 +84,30 @@ class Build:
 			txt = re.sub(key, value, txt)
 		return txt
 
+	####################
+	# find_and_replace #
+	####################
+	def fold_constants(self, txt):
+		while True:
+			# save a copy of txt at the start of each iteration
+			temp = txt
+			# search for an mathematical expression (constants only)
+			match = re.search('-?[0-9]([0-9]|[-+\/*()]| )+[0-9]', txt)
+			# return if there are no matches
+			if match is None:
+				return txt
+
+			# get matched string
+			string = match.group(0)
+
+			# replace the expression with the simplified version
+			txt = txt.replace(string, str(int(eval(string))))
+
+			# if txt has not changed, return
+			if txt == temp:
+				return txt
+
+
 	##########
 	# python #
 	##########
@@ -96,7 +121,10 @@ class Build:
 		stream = os.popen('python ' + filename)
 
 		# read and format output
-		string = self.add_indent(stream.read()[:-1], indent)
+		string = stream.read()
+		if string[-1] == '\n':
+			string = string[:-1]
+		string = self.add_indent(string, indent)
 
 		return string
 

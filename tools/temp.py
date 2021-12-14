@@ -1,1 +1,3 @@
-for i in range(2): print('hi') if i == 0
+import dis
+
+print(eval("5-1 * (1 + 5)"))
