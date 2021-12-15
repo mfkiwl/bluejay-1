@@ -11,9 +11,9 @@ import sys
 # Build #
 #########
 class Build:
-	def __init__(self, filename, path):
-		self.filename = filename
-		self.path = path
+	def __init__(self, filename):
+		self.filename = re.sub('(.|[/])*[/]', '', filename)
+		self.path = re.sub(self.filename + '$', '', filename)
 
 		with open('/mnt/c/Users/seanj/Documents/bluejay/include/include.txt', 'r') as file:
 			# load include dict
@@ -226,9 +226,9 @@ class Build:
 
 if __name__ == '__main__':
 
-	if len(sys.argv) == 3:
-		filename, path = sys.argv[1], sys.argv[2]
-		build = Build(filename, path)
+	if len(sys.argv) == 2:
+		filename = sys.argv[1]
+		build = Build(filename)
 		build.build()
 	else:
 		print('[ERROR]')

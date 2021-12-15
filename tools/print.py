@@ -8,3 +8,9 @@
 # 	for j in range(140):
 # 		print("0", end = '')
 # 	print('')
+
+import re
+
+x = 'mnt/c/Users/seanj/Documents/bluejay/src/central_processing_unit/t.b'
+y =re.sub('(.|[/])*[/]', '', x)
+print(y)
