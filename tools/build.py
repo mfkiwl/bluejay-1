@@ -5,21 +5,21 @@ import math
 import re
 import ast
 import os
+import sys
 
 #########
 # Build #
 #########
 class Build:
-	def __init__(self, filename, path_src, path_gen):
+	def __init__(self, filename, path):
 		self.filename = filename
-		self.path_src = path_src
-		self.path_gen = path_gen
+		self.path = path
 
-		with open('../include/include.txt', 'r') as file:
+		with open('/mnt/c/Users/seanj/Documents/bluejay/include/include.txt', 'r') as file:
 			# load include dict
 			self.include = ast.literal_eval(file.read())
 
-		with open(path_src + filename, 'r') as file:
+		with open(self.path + self.filename, 'r') as file:
 			# read file
 			self.txt = file.read()
 
@@ -41,8 +41,12 @@ class Build:
 	def write(self, txt):
 		# get output file name (.b goes to .sv)
 		filename = re.sub('.b', '.sv', self.filename)
+
+		# make gen/ directory
+		os.makedirs('gen/', exist_ok=True)
+
 		# write txt to the file
-		with open(path_gen + filename, 'w') as file:
+		with open(self.path + 'gen/' + filename, 'w') as file:
 			file.write(txt)
 
 	#########
@@ -113,18 +117,21 @@ class Build:
 	##########
 	def python(self, arg, indent):
 		# create temporary .py file
-		filename = 'build_temp.py'
+		filename = 'build_abcdefg.py'
 		with open(filename, 'w') as file:
 			file.write(self.remove_indent(arg, indent))
 
 		# run temporary .py file and capture the output
-		stream = os.popen('python ' + filename)
+		stream = os.popen('python3 ' + filename)
 
 		# read and format output
 		string = stream.read()
+		# remove '\n' character from the end of the string (if there is one)
 		if string[-1] == '\n':
 			string = string[:-1]
 		string = self.add_indent(string, indent)
+
+		os.system('rm build_abcdefg.py')
 
 		return string
 
@@ -218,8 +225,10 @@ class Build:
 
 
 if __name__ == '__main__':
-	filename = 'register_file.b'
-	path_src = '../src/'
-	path_gen = '../gen/'
-	build = Build(filename, path_src, path_gen)
-	build.build()
+
+	if len(sys.argv) == 3:
+		filename, path = sys.argv[1], sys.argv[2]
+		build = Build(filename, path)
+		build.build()
+	else:
+		print('[ERROR]')

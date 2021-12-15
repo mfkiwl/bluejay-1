@@ -37,7 +37,6 @@ module register_file
     // write wr_data (if we is asserted) 
     always_ff @(posedge clk) begin
         case (wr_addr)
-            5'h0: r_0 <= r_0;
             PYTHON(for i in range(NUM_GPR): print(f"LOG2(NUM_GPR)'h{format(i, 'x')}: r_{i} <= we ? wr_data : r_{i};"))
         endcase
     end
