@@ -26,12 +26,12 @@ register_file dut
 logic clk;
 logic rst;
 logic we;
-logic [4:0] rd_addr_0;
-logic [63:0] rd_data_0;
-logic [4:0] rd_addr_1;
-logic [63:0] rd_data_1;
-logic [4:0] wr_addr;
-logic [63:0] wr_data;
+logic [LOG2(NUM_GPR)-1:0] rd_addr_0;
+logic [WIDTH-1:0] rd_data_0;
+logic [LOG2(NUM_GPR)-1:0] rd_addr_1;
+logic [WIDTH-1:0] rd_data_1;
+logic [LOG2(NUM_GPR)-1:0] wr_addr;
+logic [WIDTH-1:0] wr_data;
 
 // 10 ns clock
 always begin

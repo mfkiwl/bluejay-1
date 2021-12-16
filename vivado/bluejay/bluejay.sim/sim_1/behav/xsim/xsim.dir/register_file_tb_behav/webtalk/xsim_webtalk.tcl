@@ -1,6 +1,6 @@
 webtalk_init -webtalk_dir C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.sim/sim_1/behav/xsim/xsim.dir/register_file_tb_behav/webtalk/
 webtalk_register_client -client project
-webtalk_add_data -client project -key date_generated -value "Sun Dec 12 22:22:09 2021" -context "software_version_and_target_device"
+webtalk_add_data -client project -key date_generated -value "Wed Dec 15 23:29:43 2021" -context "software_version_and_target_device"
 webtalk_add_data -client project -key product_version -value "XSIM v2019.2 (64-bit)" -context "software_version_and_target_device"
 webtalk_add_data -client project -key build_version -value "2708876" -context "software_version_and_target_device"
 webtalk_add_data -client project -key os_platform -value "WIN64" -context "software_version_and_target_device"
@@ -14,7 +14,7 @@ webtalk_add_data -client project -key target_package -value "not_applicable" -co
 webtalk_add_data -client project -key target_speed -value "not_applicable" -context "software_version_and_target_device"
 webtalk_add_data -client project -key random_id -value "a5ec5eb6-f7f5-4701-b73b-0c0d91620332" -context "software_version_and_target_device"
 webtalk_add_data -client project -key project_id -value "4ed5088d37f24eedbc3a8b476c46cbad" -context "software_version_and_target_device"
-webtalk_add_data -client project -key project_iteration -value "26" -context "software_version_and_target_device"
+webtalk_add_data -client project -key project_iteration -value "31" -context "software_version_and_target_device"
 webtalk_add_data -client project -key os_name -value "Windows Server 2016 or Windows 10" -context "user_environment"
 webtalk_add_data -client project -key os_release -value "major release  (build 9200)" -context "user_environment"
 webtalk_add_data -client project -key cpu_name -value "Intel(R) Core(TM) i9-10850K CPU @ 3.60GHz" -context "user_environment"
@@ -37,7 +37,7 @@ webtalk_add_data -client xsim -key Total_Nets -value "0" -context "xsim\\usage"
 webtalk_add_data -client xsim -key Total_Processes -value "27" -context "xsim\\usage"
 webtalk_add_data -client xsim -key Total_Instances -value "3" -context "xsim\\usage"
 webtalk_add_data -client xsim -key Xilinx_HDL_Libraries_Used -value "secureip unimacro_ver unisims_ver " -context "xsim\\usage"
-webtalk_add_data -client xsim -key Compiler_Time -value "0.59_sec" -context "xsim\\usage"
-webtalk_add_data -client xsim -key Compiler_Memory -value "50904_KB" -context "xsim\\usage"
-webtalk_transmit -clientid 2569682574 -regid "" -xml C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.sim/sim_1/behav/xsim/xsim.dir/register_file_tb_behav/webtalk/usage_statistics_ext_xsim.xml -html C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.sim/sim_1/behav/xsim/xsim.dir/register_file_tb_behav/webtalk/usage_statistics_ext_xsim.html -wdm C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.sim/sim_1/behav/xsim/xsim.dir/register_file_tb_behav/webtalk/usage_statistics_ext_xsim.wdm -intro "<H3>XSIM Usage Report</H3><BR>"
+webtalk_add_data -client xsim -key Compiler_Time -value "0.61_sec" -context "xsim\\usage"
+webtalk_add_data -client xsim -key Compiler_Memory -value "47880_KB" -context "xsim\\usage"
+webtalk_transmit -clientid 768513704 -regid "" -xml C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.sim/sim_1/behav/xsim/xsim.dir/register_file_tb_behav/webtalk/usage_statistics_ext_xsim.xml -html C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.sim/sim_1/behav/xsim/xsim.dir/register_file_tb_behav/webtalk/usage_statistics_ext_xsim.html -wdm C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.sim/sim_1/behav/xsim/xsim.dir/register_file_tb_behav/webtalk/usage_statistics_ext_xsim.wdm -intro "<H3>XSIM Usage Report</H3><BR>"
 webtalk_terminate

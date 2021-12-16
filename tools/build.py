@@ -40,7 +40,7 @@ class Build:
 	#########
 	def write(self, txt):
 		# get output file name (.b goes to .sv)
-		filename = re.sub('.b', '.sv', self.filename)
+		filename = self.filename.replace('.b', '.sv')
 
 		# make gen/ directory
 		os.makedirs('gen/', exist_ok=True)
@@ -96,7 +96,7 @@ class Build:
 			# save a copy of txt at the start of each iteration
 			temp = txt
 			# search for an mathematical expression (constants only)
-			match = re.search('-?[0-9]([0-9]|[-+\/*()]| )+[0-9]', txt)
+			match = re.search('-?[0-9] *[-+\/*] *-?[0-9]+', txt)
 			# return if there are no matches
 			if match is None:
 				return txt
