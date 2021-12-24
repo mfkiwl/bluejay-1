@@ -8,30 +8,32 @@
 //==============================================
 module register_file_tb;
 
+//==============================
 // dut
+//==============================
 register_file dut
 (
     .clk(clk),
     .rst(rst),
     .we(we),
-    .rd_addr_0(rd_addr_0),
-    .rd_data_0(rd_data_0),
-    .rd_addr_1(rd_addr_1),
-    .rd_data_1(rd_data_1),
-    .wr_addr(wr_addr),
-    .wr_data(wr_data)
+    .rs1(rs1),
+    .rs1_data(rs1_data),
+    .rs2(rs2),
+    .rs2_data(rs2_data),
+    .rd(rd),
+    .rd_data(rd_data)
 );
 
 // dut I/O
 logic clk;
 logic rst;
 logic we;
-logic [4:0] rd_addr_0;
-logic [63:0] rd_data_0;
-logic [4:0] rd_addr_1;
-logic [63:0] rd_data_1;
-logic [4:0] wr_addr;
-logic [63:0] wr_data;
+logic [4:0] rs1;
+logic [63:0] rs1_data;
+logic [4:0] rs2;
+logic [63:0] rs2_data;
+logic [4:0] rd;
+logic [63:0] rd_data;
 
 // 10 ns clock
 always begin
@@ -49,14 +51,16 @@ initial begin
     clk = 1'b1;
 
     // open files
-    tb_in = $fopen("C:/Users/seanj/Documents/bluejay/sim/t.txt","r");
-    tb_out = $fopen("C:/Users/seanj/Documents/bluejay/sim/abc.txt","w");
+    tb_in = $fopen("C:/Users/seanj/Documents/bluejay/tools/gen/tb_in.txt","r");
+    tb_out = $fopen("C:/Users/seanj/Documents/bluejay/tools/gen/tb_out.txt","w");
 
+    #1;
     // read the contents of the file tb_in.txt as hexadecimal values
     while (!$feof(tb_in)) begin
-        $fscanf(tb_in, "%b\n", {rst, we, rd_addr_0, rd_addr_1, wr_addr, wr_data});
-        $fwrite(tb_out, "%b\n", {rd_data_0, rd_data_1});
-        #10;
+        $fscanf(tb_in, "%b\n", {rst, we, rs1, rs2, rd, rd_data});
+        #1;
+        $fwrite(tb_out, "%b\n", {rs1_data, rs2_data});
+        #9;
     end
 
     // close files

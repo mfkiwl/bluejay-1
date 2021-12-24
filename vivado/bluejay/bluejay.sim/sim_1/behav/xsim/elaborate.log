@@ -11,6 +11,6 @@ Completed simulation data flow analysis
 Time Resolution for simulation is 1ps
 Compiling module xil_defaultlib.register_file
 Compiling module xil_defaultlib.register_file_tb
-WARNING: [XSIM 43-3373] "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sim_1/new/register_file_tb.sv" Line 57. System function $fscanf is used as system task. This system function should have a LHS e.g. x=$fscanf().
+WARNING: [XSIM 43-3373] "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sim_1/new/register_file_tb.sv" Line 60. System function $fscanf is used as system task. This system function should have a LHS e.g. x=$fscanf().
 Compiling module xil_defaultlib.glbl
 Built simulation snapshot register_file_tb_behav

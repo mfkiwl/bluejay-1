@@ -11,3 +11,8 @@
 #-----------------------------------------------------------
 start_gui
 open_project C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.xpr
+update_compile_order -fileset sources_1
+launch_simulation
+source register_file_tb.tcl
+relaunch_sim
+relaunch_sim

@@ -51,14 +51,16 @@ initial begin
     clk = 1'b1;
 
     // open files
-    tb_in = $fopen("C:/Users/seanj/Documents/bluejay/sim/t.txt","r");
-    tb_out = $fopen("C:/Users/seanj/Documents/bluejay/sim/abc.txt","w");
+    tb_in = $fopen("C:/Users/seanj/Documents/bluejay/tools/gen/tb_in.txt","r");
+    tb_out = $fopen("C:/Users/seanj/Documents/bluejay/tools/gen/tb_out.txt","w");
 
+    #1;
     // read the contents of the file tb_in.txt as hexadecimal values
     while (!$feof(tb_in)) begin
         $fscanf(tb_in, "%b\n", {rst, we, rs1, rs2, rd, rd_data});
+        #1;
         $fwrite(tb_out, "%b\n", {rs1_data, rs2_data});
-        #10;
+        #9;
     end
 
     // close files

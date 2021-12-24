@@ -73,7 +73,7 @@ def format_test(filename):
     txt = txt[:-1]
     
     # write txt to file
-    with open('gen/tb_in.txt', 'w') as file:
+    with open('gen/tb_out.txt', 'w') as file:
         file.write(txt)
 
 
@@ -102,6 +102,16 @@ def compare(filename_0, filename_1):
     else:
         print('fail.')
 
+    lines_0 = re.split('\n', txt_0)
+    lines_1 = re.split('\n', txt_1)
+
+    for i in range(len(lines_0)):
+        if lines_0[i] != lines_1[i]:
+            print(i)
+            print(lines_0[i])
+            print(lines_1[i])
+            break
+
 
 format_test(filename)
-compare('gen/tb_in.txt', 'gen/tb_in.txt')
+compare('gen/tb_out.txt', 'gen/tb_out_sim.txt')

@@ -6,132 +6,131 @@ module register_file
     input clk,
     input rst,
     input we,
-    input [4:0] rd_addr_0,
-    output logic [63:0] rd_data_0,
-    input [4:0] rd_addr_1, 
-    output logic [63:0] rd_data_1,
-    input [4:0] wr_addr,
-    input [63:0] wr_data
+    input [4:0] rs1,
+    output logic [63:0] rs1_data,
+    input [4:0] rs2,
+    output logic [63:0] rs2_data,
+    input [4:0] rd,
+    input [63:0] rd_data
 );
     
 // general-purpose registers
-logic [63:0] r_0, r_1, r_2, r_3, r_4, r_5, r_6, r_7, r_8, r_9, r_10, r_11, r_12, r_13, r_14, r_15, r_16, r_17, r_18, r_19, r_20, r_21, r_22, r_23, r_24, r_25, r_26, r_27, r_28, r_29, r_30, r_31;
+logic [63:0] x_0, x_1, x_2, x_3, x_4, x_5, x_6, x_7, x_8, x_9, x_10, x_11, x_12, x_13, x_14, x_15, x_16, x_17, x_18, x_19, x_20, x_21, x_22, x_23, x_24, x_25, x_26, x_27, x_28, x_29, x_30, x_31;
 
-// register r_0 is hardwired to 0
-assign r_0 = 64'h0;
+// register x_0 is hardwired to 0
+assign x_0 = 64'h0;
      
-// assign rd_data_0
+// assign rs1_data
 always_comb begin
-    case (rd_addr_0)
-        5'h00: rd_data_0 = r_0;
-        5'h01: rd_data_0 = r_1;
-        5'h02: rd_data_0 = r_2;
-        5'h03: rd_data_0 = r_3;
-        5'h04: rd_data_0 = r_4;
-        5'h05: rd_data_0 = r_5;
-        5'h06: rd_data_0 = r_6;
-        5'h07: rd_data_0 = r_7;
-        5'h08: rd_data_0 = r_8;
-        5'h09: rd_data_0 = r_9;
-        5'h0a: rd_data_0 = r_10;
-        5'h0b: rd_data_0 = r_11;
-        5'h0c: rd_data_0 = r_12;
-        5'h0d: rd_data_0 = r_13;
-        5'h0e: rd_data_0 = r_14;
-        5'h0f: rd_data_0 = r_15;
-        5'h10: rd_data_0 = r_16;
-        5'h11: rd_data_0 = r_17;
-        5'h12: rd_data_0 = r_18;
-        5'h13: rd_data_0 = r_19;
-        5'h14: rd_data_0 = r_20;
-        5'h15: rd_data_0 = r_21;
-        5'h16: rd_data_0 = r_22;
-        5'h17: rd_data_0 = r_23;
-        5'h18: rd_data_0 = r_24;
-        5'h19: rd_data_0 = r_25;
-        5'h1a: rd_data_0 = r_26;
-        5'h1b: rd_data_0 = r_27;
-        5'h1c: rd_data_0 = r_28;
-        5'h1d: rd_data_0 = r_29;
-        5'h1e: rd_data_0 = r_30;
-        5'h1f: rd_data_0 = r_31;
+    case (rs1)
+        5'h00: rs1_data = x_0;
+        5'h01: rs1_data = x_1;
+        5'h02: rs1_data = x_2;
+        5'h03: rs1_data = x_3;
+        5'h04: rs1_data = x_4;
+        5'h05: rs1_data = x_5;
+        5'h06: rs1_data = x_6;
+        5'h07: rs1_data = x_7;
+        5'h08: rs1_data = x_8;
+        5'h09: rs1_data = x_9;
+        5'h0a: rs1_data = x_10;
+        5'h0b: rs1_data = x_11;
+        5'h0c: rs1_data = x_12;
+        5'h0d: rs1_data = x_13;
+        5'h0e: rs1_data = x_14;
+        5'h0f: rs1_data = x_15;
+        5'h10: rs1_data = x_16;
+        5'h11: rs1_data = x_17;
+        5'h12: rs1_data = x_18;
+        5'h13: rs1_data = x_19;
+        5'h14: rs1_data = x_20;
+        5'h15: rs1_data = x_21;
+        5'h16: rs1_data = x_22;
+        5'h17: rs1_data = x_23;
+        5'h18: rs1_data = x_24;
+        5'h19: rs1_data = x_25;
+        5'h1a: rs1_data = x_26;
+        5'h1b: rs1_data = x_27;
+        5'h1c: rs1_data = x_28;
+        5'h1d: rs1_data = x_29;
+        5'h1e: rs1_data = x_30;
+        5'h1f: rs1_data = x_31;
     endcase
 end
 
-// assign rd_data_1
+// assign rs2_data
 always_comb begin
-    case (rd_addr_1)
-        5'h00: rd_data_1 = r_0;
-        5'h01: rd_data_1 = r_1;
-        5'h02: rd_data_1 = r_2;
-        5'h03: rd_data_1 = r_3;
-        5'h04: rd_data_1 = r_4;
-        5'h05: rd_data_1 = r_5;
-        5'h06: rd_data_1 = r_6;
-        5'h07: rd_data_1 = r_7;
-        5'h08: rd_data_1 = r_8;
-        5'h09: rd_data_1 = r_9;
-        5'h0a: rd_data_1 = r_10;
-        5'h0b: rd_data_1 = r_11;
-        5'h0c: rd_data_1 = r_12;
-        5'h0d: rd_data_1 = r_13;
-        5'h0e: rd_data_1 = r_14;
-        5'h0f: rd_data_1 = r_15;
-        5'h10: rd_data_1 = r_16;
-        5'h11: rd_data_1 = r_17;
-        5'h12: rd_data_1 = r_18;
-        5'h13: rd_data_1 = r_19;
-        5'h14: rd_data_1 = r_20;
-        5'h15: rd_data_1 = r_21;
-        5'h16: rd_data_1 = r_22;
-        5'h17: rd_data_1 = r_23;
-        5'h18: rd_data_1 = r_24;
-        5'h19: rd_data_1 = r_25;
-        5'h1a: rd_data_1 = r_26;
-        5'h1b: rd_data_1 = r_27;
-        5'h1c: rd_data_1 = r_28;
-        5'h1d: rd_data_1 = r_29;
-        5'h1e: rd_data_1 = r_30;
-        5'h1f: rd_data_1 = r_31;
+    case (rs2)
+        5'h00: rs2_data = x_0;
+        5'h01: rs2_data = x_1;
+        5'h02: rs2_data = x_2;
+        5'h03: rs2_data = x_3;
+        5'h04: rs2_data = x_4;
+        5'h05: rs2_data = x_5;
+        5'h06: rs2_data = x_6;
+        5'h07: rs2_data = x_7;
+        5'h08: rs2_data = x_8;
+        5'h09: rs2_data = x_9;
+        5'h0a: rs2_data = x_10;
+        5'h0b: rs2_data = x_11;
+        5'h0c: rs2_data = x_12;
+        5'h0d: rs2_data = x_13;
+        5'h0e: rs2_data = x_14;
+        5'h0f: rs2_data = x_15;
+        5'h10: rs2_data = x_16;
+        5'h11: rs2_data = x_17;
+        5'h12: rs2_data = x_18;
+        5'h13: rs2_data = x_19;
+        5'h14: rs2_data = x_20;
+        5'h15: rs2_data = x_21;
+        5'h16: rs2_data = x_22;
+        5'h17: rs2_data = x_23;
+        5'h18: rs2_data = x_24;
+        5'h19: rs2_data = x_25;
+        5'h1a: rs2_data = x_26;
+        5'h1b: rs2_data = x_27;
+        5'h1c: rs2_data = x_28;
+        5'h1d: rs2_data = x_29;
+        5'h1e: rs2_data = x_30;
+        5'h1f: rs2_data = x_31;
     endcase
 end
      
-// write wr_data (if we is asserted) 
+// write rd_data (if we is asserted) 
 always_ff @(posedge clk) begin
-    case (wr_addr)
-        5'h01: r_1 <= we ? wr_data : r_1;
-        5'h02: r_2 <= we ? wr_data : r_2;
-        5'h03: r_3 <= we ? wr_data : r_3;
-        5'h04: r_4 <= we ? wr_data : r_4;
-        5'h05: r_5 <= we ? wr_data : r_5;
-        5'h06: r_6 <= we ? wr_data : r_6;
-        5'h07: r_7 <= we ? wr_data : r_7;
-        5'h08: r_8 <= we ? wr_data : r_8;
-        5'h09: r_9 <= we ? wr_data : r_9;
-        5'h0a: r_10 <= we ? wr_data : r_10;
-        5'h0b: r_11 <= we ? wr_data : r_11;
-        5'h0c: r_12 <= we ? wr_data : r_12;
-        5'h0d: r_13 <= we ? wr_data : r_13;
-        5'h0e: r_14 <= we ? wr_data : r_14;
-        5'h0f: r_15 <= we ? wr_data : r_15;
-        5'h10: r_16 <= we ? wr_data : r_16;
-        5'h11: r_17 <= we ? wr_data : r_17;
-        5'h12: r_18 <= we ? wr_data : r_18;
-        5'h13: r_19 <= we ? wr_data : r_19;
-        5'h14: r_20 <= we ? wr_data : r_20;
-        5'h15: r_21 <= we ? wr_data : r_21;
-        5'h16: r_22 <= we ? wr_data : r_22;
-        5'h17: r_23 <= we ? wr_data : r_23;
-        5'h18: r_24 <= we ? wr_data : r_24;
-        5'h19: r_25 <= we ? wr_data : r_25;
-        5'h1a: r_26 <= we ? wr_data : r_26;
-        5'h1b: r_27 <= we ? wr_data : r_27;
-        5'h1c: r_28 <= we ? wr_data : r_28;
-        5'h1d: r_29 <= we ? wr_data : r_29;
-        5'h1e: r_30 <= we ? wr_data : r_30;
-        5'h1f: r_31 <= we ? wr_data : r_31;
+    case (rd)
+        5'h01: x_1 <= we ? rd_data : x_1;
+        5'h02: x_2 <= we ? rd_data : x_2;
+        5'h03: x_3 <= we ? rd_data : x_3;
+        5'h04: x_4 <= we ? rd_data : x_4;
+        5'h05: x_5 <= we ? rd_data : x_5;
+        5'h06: x_6 <= we ? rd_data : x_6;
+        5'h07: x_7 <= we ? rd_data : x_7;
+        5'h08: x_8 <= we ? rd_data : x_8;
+        5'h09: x_9 <= we ? rd_data : x_9;
+        5'h0a: x_10 <= we ? rd_data : x_10;
+        5'h0b: x_11 <= we ? rd_data : x_11;
+        5'h0c: x_12 <= we ? rd_data : x_12;
+        5'h0d: x_13 <= we ? rd_data : x_13;
+        5'h0e: x_14 <= we ? rd_data : x_14;
+        5'h0f: x_15 <= we ? rd_data : x_15;
+        5'h10: x_16 <= we ? rd_data : x_16;
+        5'h11: x_17 <= we ? rd_data : x_17;
+        5'h12: x_18 <= we ? rd_data : x_18;
+        5'h13: x_19 <= we ? rd_data : x_19;
+        5'h14: x_20 <= we ? rd_data : x_20;
+        5'h15: x_21 <= we ? rd_data : x_21;
+        5'h16: x_22 <= we ? rd_data : x_22;
+        5'h17: x_23 <= we ? rd_data : x_23;
+        5'h18: x_24 <= we ? rd_data : x_24;
+        5'h19: x_25 <= we ? rd_data : x_25;
+        5'h1a: x_26 <= we ? rd_data : x_26;
+        5'h1b: x_27 <= we ? rd_data : x_27;
+        5'h1c: x_28 <= we ? rd_data : x_28;
+        5'h1d: x_29 <= we ? rd_data : x_29;
+        5'h1e: x_30 <= we ? rd_data : x_30;
+        5'h1f: x_31 <= we ? rd_data : x_31;
     endcase
 end
 
 endmodule
-
