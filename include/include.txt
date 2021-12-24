@@ -1,7 +1,34 @@
 {
 "WIDTH": "64",
 "NUM_GPR": "32",
+
+"R_TYPE": "3'h0",
+"I_TYPE": "3'h1",
+"S_TYPE": "3'h2",
+"B_TYPE": "3'h3",
+"U_TYPE": "3'h4",
+"J_TYPE": "3'h5",
+
 "FUNC__ADD": "4'h0",
+"FUNC__ADDW": "4'h0",
 "FUNC__SUB": "4'h1",
-"FUNC__SLL": "4'h3",
+"FUNC__SLL": "4'h2",
+"FUNC__SLLW": "4'h2",
+"FUNC__SLT": "4'h3",
+"FUNC__SLTU": "4'h4",
+"FUNC__XOR": "4'h5",
+"FUNC__SRL": "4'h6",
+"FUNC__SRLW": "4'h6",
+"FUNC__SRA": "4'h7",
+"FUNC__SRAW": "4'h7",
+"FUNC__OR": "4'h8",
+"FUNC__AND": "4'h9",
+
+"SEL__DATA_0__REG": "1'b0",
+"SEL__DATA_0__PC": "1'b1",
+
+"SEL__DATA_1__REG": "1'b0",
+"SEL__DATA_1__IMM": "1'b1",
+
+"SEL__PC__PC_PLUS_FOUR": "2'h0",
 }

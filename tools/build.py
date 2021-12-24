@@ -6,6 +6,7 @@ import re
 import ast
 import os
 import sys
+import platform
 
 #########
 # Build #
@@ -15,7 +16,13 @@ class Build:
 		self.filename = re.sub('(.|[/])*[/]', '', filename)
 		self.path = re.sub(self.filename + '$', '', filename)
 
-		with open('/mnt/c/Users/seanj/Documents/bluejay/include/include.txt', 'r') as file:
+		os = platform.system()
+		if os == 'Darwin':
+			bluejay = '/Users/seankent/Documents/bluejay'
+		else:
+			bluejay = '/mnt/c/Users/seanj/Documents/bluejay/'
+
+		with open(bluejay + '/include/include.txt', 'r') as file:
 			# load include dict
 			self.include = ast.literal_eval(file.read())
 
@@ -85,7 +92,7 @@ class Build:
 	def fine_and_replace(self, txt):
 		# find and replace of key, value pairs
 		for key, value in self.include.items():
-			txt = re.sub(key, value, txt)
+			txt = re.sub(r'\b' + key + r'\b', value, txt)
 		return txt
 
 	####################

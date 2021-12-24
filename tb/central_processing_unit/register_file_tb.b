@@ -8,30 +8,32 @@
 //==============================================
 module register_file_tb;
 
+//==============================
 // dut
+//==============================
 register_file dut
 (
     .clk(clk),
     .rst(rst),
     .we(we),
-    .rd_addr_0(rd_addr_0),
-    .rd_data_0(rd_data_0),
-    .rd_addr_1(rd_addr_1),
-    .rd_data_1(rd_data_1),
-    .wr_addr(wr_addr),
-    .wr_data(wr_data)
+    .rs1(rs1),
+    .rs1_data(rs1_data),
+    .rs2(rs2),
+    .rs2_data(rs2_data),
+    .rd(rd),
+    .rd_data(rd_data)
 );
 
 // dut I/O
 logic clk;
 logic rst;
 logic we;
-logic [LOG2(NUM_GPR)-1:0] rd_addr_0;
-logic [WIDTH-1:0] rd_data_0;
-logic [LOG2(NUM_GPR)-1:0] rd_addr_1;
-logic [WIDTH-1:0] rd_data_1;
-logic [LOG2(NUM_GPR)-1:0] wr_addr;
-logic [WIDTH-1:0] wr_data;
+logic [LOG2(NUM_GPR)-1:0] rs1;
+logic [WIDTH-1:0] rs1_data;
+logic [LOG2(NUM_GPR)-1:0] rs2;
+logic [WIDTH-1:0] rs2_data;
+logic [LOG2(NUM_GPR)-1:0] rd;
+logic [WIDTH-1:0] rd_data;
 
 // 10 ns clock
 always begin
@@ -54,8 +56,8 @@ initial begin
 
     // read the contents of the file tb_in.txt as hexadecimal values
     while (!$feof(tb_in)) begin
-        $fscanf(tb_in, "%b\n", {rst, we, rd_addr_0, rd_addr_1, wr_addr, wr_data});
-        $fwrite(tb_out, "%b\n", {rd_data_0, rd_data_1});
+        $fscanf(tb_in, "%b\n", {rst, we, rs1, rs2, rd, rd_data});
+        $fwrite(tb_out, "%b\n", {rs1_data, rs2_data});
         #10;
     end
 

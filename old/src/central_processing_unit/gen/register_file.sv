@@ -23,22 +23,22 @@ assign r_0 = 64'h0;
 // assign rd_data_0
 always_comb begin
     case (rd_addr_0)
-        5'h00: rd_data_0 = r_0;
-        5'h01: rd_data_0 = r_1;
-        5'h02: rd_data_0 = r_2;
-        5'h03: rd_data_0 = r_3;
-        5'h04: rd_data_0 = r_4;
-        5'h05: rd_data_0 = r_5;
-        5'h06: rd_data_0 = r_6;
-        5'h07: rd_data_0 = r_7;
-        5'h08: rd_data_0 = r_8;
-        5'h09: rd_data_0 = r_9;
-        5'h0a: rd_data_0 = r_10;
-        5'h0b: rd_data_0 = r_11;
-        5'h0c: rd_data_0 = r_12;
-        5'h0d: rd_data_0 = r_13;
-        5'h0e: rd_data_0 = r_14;
-        5'h0f: rd_data_0 = r_15;
+        5'h0: rd_data_0 = r_0;
+        5'h1: rd_data_0 = r_1;
+        5'h2: rd_data_0 = r_2;
+        5'h3: rd_data_0 = r_3;
+        5'h4: rd_data_0 = r_4;
+        5'h5: rd_data_0 = r_5;
+        5'h6: rd_data_0 = r_6;
+        5'h7: rd_data_0 = r_7;
+        5'h8: rd_data_0 = r_8;
+        5'h9: rd_data_0 = r_9;
+        5'ha: rd_data_0 = r_10;
+        5'hb: rd_data_0 = r_11;
+        5'hc: rd_data_0 = r_12;
+        5'hd: rd_data_0 = r_13;
+        5'he: rd_data_0 = r_14;
+        5'hf: rd_data_0 = r_15;
         5'h10: rd_data_0 = r_16;
         5'h11: rd_data_0 = r_17;
         5'h12: rd_data_0 = r_18;
@@ -61,22 +61,22 @@ end
 // assign rd_data_1
 always_comb begin
     case (rd_addr_1)
-        5'h00: rd_data_1 = r_0;
-        5'h01: rd_data_1 = r_1;
-        5'h02: rd_data_1 = r_2;
-        5'h03: rd_data_1 = r_3;
-        5'h04: rd_data_1 = r_4;
-        5'h05: rd_data_1 = r_5;
-        5'h06: rd_data_1 = r_6;
-        5'h07: rd_data_1 = r_7;
-        5'h08: rd_data_1 = r_8;
-        5'h09: rd_data_1 = r_9;
-        5'h0a: rd_data_1 = r_10;
-        5'h0b: rd_data_1 = r_11;
-        5'h0c: rd_data_1 = r_12;
-        5'h0d: rd_data_1 = r_13;
-        5'h0e: rd_data_1 = r_14;
-        5'h0f: rd_data_1 = r_15;
+        5'h0: rd_data_1 = r_0;
+        5'h1: rd_data_1 = r_1;
+        5'h2: rd_data_1 = r_2;
+        5'h3: rd_data_1 = r_3;
+        5'h4: rd_data_1 = r_4;
+        5'h5: rd_data_1 = r_5;
+        5'h6: rd_data_1 = r_6;
+        5'h7: rd_data_1 = r_7;
+        5'h8: rd_data_1 = r_8;
+        5'h9: rd_data_1 = r_9;
+        5'ha: rd_data_1 = r_10;
+        5'hb: rd_data_1 = r_11;
+        5'hc: rd_data_1 = r_12;
+        5'hd: rd_data_1 = r_13;
+        5'he: rd_data_1 = r_14;
+        5'hf: rd_data_1 = r_15;
         5'h10: rd_data_1 = r_16;
         5'h11: rd_data_1 = r_17;
         5'h12: rd_data_1 = r_18;
@@ -99,21 +99,21 @@ end
 // write wr_data (if we is asserted) 
 always_ff @(posedge clk) begin
     case (wr_addr)
-        5'h01: r_1 <= we ? wr_data : r_1;
-        5'h02: r_2 <= we ? wr_data : r_2;
-        5'h03: r_3 <= we ? wr_data : r_3;
-        5'h04: r_4 <= we ? wr_data : r_4;
-        5'h05: r_5 <= we ? wr_data : r_5;
-        5'h06: r_6 <= we ? wr_data : r_6;
-        5'h07: r_7 <= we ? wr_data : r_7;
-        5'h08: r_8 <= we ? wr_data : r_8;
-        5'h09: r_9 <= we ? wr_data : r_9;
-        5'h0a: r_10 <= we ? wr_data : r_10;
-        5'h0b: r_11 <= we ? wr_data : r_11;
-        5'h0c: r_12 <= we ? wr_data : r_12;
-        5'h0d: r_13 <= we ? wr_data : r_13;
-        5'h0e: r_14 <= we ? wr_data : r_14;
-        5'h0f: r_15 <= we ? wr_data : r_15;
+        5'h1: r_1 <= we ? wr_data : r_1;
+        5'h2: r_2 <= we ? wr_data : r_2;
+        5'h3: r_3 <= we ? wr_data : r_3;
+        5'h4: r_4 <= we ? wr_data : r_4;
+        5'h5: r_5 <= we ? wr_data : r_5;
+        5'h6: r_6 <= we ? wr_data : r_6;
+        5'h7: r_7 <= we ? wr_data : r_7;
+        5'h8: r_8 <= we ? wr_data : r_8;
+        5'h9: r_9 <= we ? wr_data : r_9;
+        5'ha: r_10 <= we ? wr_data : r_10;
+        5'hb: r_11 <= we ? wr_data : r_11;
+        5'hc: r_12 <= we ? wr_data : r_12;
+        5'hd: r_13 <= we ? wr_data : r_13;
+        5'he: r_14 <= we ? wr_data : r_14;
+        5'hf: r_15 <= we ? wr_data : r_15;
         5'h10: r_16 <= we ? wr_data : r_16;
         5'h11: r_17 <= we ? wr_data : r_17;
         5'h12: r_18 <= we ? wr_data : r_18;
