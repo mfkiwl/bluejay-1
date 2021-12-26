@@ -468,11 +468,11 @@ end
 // create the immediate value
 always_comb begin
     case (instr_format)
-        I_TYPE: imm = {53{ir[31]}, ir[30:25], ir[24:21], ir[20]};
-        S_TYPE: imm = {53{ir[31]}, ir[30:25], ir[11:8], ir[7]};
-        B_TYPE: imm = {52{ir[31]}, ir[7], ir[30:25], ir[11:8], 1'b0};
-        U_TYPE: imm = {33{ir[31]}, ir[30:20], ir[19:12], 12'h0};
-        J_TYPE: imm = {44{ir[31]}, ir[19:12], ir[20], ir[30:25], ir[24:21], 1'b0};
+        I_TYPE: imm = {{53{ir[31]}}, ir[30:25], ir[24:21], ir[20]};
+        S_TYPE: imm = {{53{ir[31]}}, ir[30:25], ir[11:8], ir[7]};
+        B_TYPE: imm = {{52{ir[31]}}, ir[7], ir[30:25], ir[11:8], 1'b0};
+        U_TYPE: imm = {{33{ir[31]}}, ir[30:20], ir[19:12], 12'h0};
+        J_TYPE: imm = {{44{ir[31]}}, ir[19:12], ir[20], ir[30:25], ir[24:21], 1'b0};
     endcase
 case
 

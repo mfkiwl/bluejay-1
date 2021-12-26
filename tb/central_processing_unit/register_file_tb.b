@@ -28,12 +28,12 @@ register_file dut
 logic clk;
 logic rst;
 logic we;
-logic [LOG2(NUM_GPR)-1:0] rs1;
-logic [WIDTH-1:0] rs1_data;
-logic [LOG2(NUM_GPR)-1:0] rs2;
-logic [WIDTH-1:0] rs2_data;
-logic [LOG2(NUM_GPR)-1:0] rd;
-logic [WIDTH-1:0] rd_data;
+logic [4:0] rs1;
+logic [63:0] rs1_data;
+logic [4:0] rs2;
+logic [63:0] rs2_data;
+logic [4:0] rd;
+logic [63:0] rd_data;
 
 // 10 ns clock
 always begin
@@ -52,15 +52,12 @@ initial begin
 
     // open files
     tb_in = $fopen("C:/Users/seanj/Documents/bluejay/tools/gen/tb_in.txt","r");
-    tb_out = $fopen("C:/Users/seanj/Documents/bluejay/tools/gen/tb_out.txt","w");
 
-    #1;
     // read the contents of the file tb_in.txt as hexadecimal values
+    #1;
     while (!$feof(tb_in)) begin
         $fscanf(tb_in, "%b\n", {rst, we, rs1, rs2, rd, rd_data});
-        #1;
-        $fwrite(tb_out, "%b\n", {rs1_data, rs2_data});
-        #9;
+        #10;
     end
 
     // close files
