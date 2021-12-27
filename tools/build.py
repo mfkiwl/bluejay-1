@@ -15,6 +15,9 @@ from io import StringIO
 # Build #
 #########
 class Build:
+    ############
+    # __init__ #
+    ############
     def __init__(self, filename):
         self.filename = re.sub('(.|[/])*[/]', '', filename)
         self.path = re.sub(self.filename + '$', '', filename)
