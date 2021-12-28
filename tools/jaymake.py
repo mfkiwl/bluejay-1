@@ -1,8 +1,13 @@
 ##########
 # import #
 ##########
-from bluejay import *
+from build import *
 from sim import *
+
+files = {
+    'register_file.b',
+    'arithmetic_logic_unit.b',
+}
 
 
 ###########
@@ -16,71 +21,102 @@ class Jaymake:
 
         os = platform.system()
         if os == 'Darwin':
-            self.path = '/Users/seankent/Documents/bluejay'
+            self.bluejay = '/Users/seankent/Documents/bluejay/'
         else:
-            self.path = '/mnt/c/Users/seanj/Documents/bluejay/'
-
-
-        self.src = self.path + 'src/'
-        self.tb = self.path + 'tb/'
-        self.sim = self.path + 'sim/'
-        self.tools = self.path + 'tools/'
-        self.vivado = self.path + 'vivado/'
-        self.vivado_source = self.vivado + 'bluejay/bluejay.srcs/sources_1/new/'
-        self.vivado_sim = self.vivado + 'bluejay/bluejay.srcs/sim_1/new/'
-
-        self.do_not_enter = {'gen/', '__pycache__/'}
+            self.bluejay = '/mnt/c/Users/seanj/Documents/bluejay/'
 
     #######
     # run #
     #######
     def run(self):
-        self.make(self.src)
-        self.make(self.tb)
-        self.make(self.sim)
+        self.build(self.bluejay + 'src/')
+        self.build(self.bluejay + 'tb/')
+        self.sim(self.bluejay + 'sim/')
+        self.update()
 
-
-
-    ########
-    # make #
-    ########
-    def make(self, path):
-        print(path)
-        # get a list of all files in the directory
-        stream = os.popen('ls -p ' + path + ' | grep -v /')
-        string = stream.read()[:-1]
-        files = re.split('\n', string)
-
-        for filename in files:
-            # bluejay file
-            if bool(re.search('.b$', filename)):
-                # build bluejay file
-                os.system('python3 ' + self.tools + 'bluejay.py ' + path + filename)
-
-                # copy output file into vivado project
-                if bool(re.search(self.src, path)):
-                    os.system('cp ' + path + 'gen/' + filename.replace('.b', '.sv') + ' ' + self.vivado_source)
-                if bool(re.search(self.tb, path)):
-                    os.system('cp ' + path + 'gen/' + filename.replace('.b', '.sv') + ' ' + self.vivado_sim)
-                    
-            # test file (.csv file)
-            if bool(re.search('.csv$', filename)):
-                # build sim file
-                os.system('python3 ' + self.tools + 'sim.py ' + path + filename)
-
-
-        # get a list of all the sub directories
-        stream = os.popen('ls -p ' + path + ' | grep /')
-        string = stream.read()[:-1]
-        dirs = re.split('\n', string)
+    #######
+    # sim #
+    #######
+    def sim(self, path):
+        print('SIM ' + path)
+        # create a list of all the .csv files in the tree
+        stdout = os.popen('find ' + path + '* -name *.csv').read()
+        files = re.split('\n', stdout[:-1])
         
-        if dirs == ['']:
-            return
+        # iterate over the .csv files
+        for file_csv in files:
+            # get filename
+            filename = re.search('[A-z0-9_]*\.csv$', file_csv).group(0)
 
-        # recursively call make on sub directories (which are not in self.do_not_enter)
-        for directory in dirs:
-            if directory not in self.do_not_enter:
-                self.make(path + directory)
+            # name of generated .txt file
+            file_txt = re.sub(filename, 'gen/' + filename.replace('.csv', '.txt'), file_csv)
+            
+            # search for .txt file
+            stdout = os.popen('find ' + file_txt).read()
+
+            # build .txt file if it does not exist or if the .csv file has been modified
+            if (stdout[:-1] != file_txt) or (os.stat(file_csv).st_mtime > os.stat(file_txt).st_mtime):
+                print('...' + filename)
+                sim = Sim(file_csv)
+                sim.build()
+
+    #########
+    # build #
+    #########
+    def build(self, path):
+        print('BUILD ' + path)
+        # create a list of all the .b files in the tree
+        stdout = os.popen('find ' + path + '* -name *.b').read()
+        files = re.split('\n', stdout[:-1])
+        
+        # iterate over the .b files
+        for file_b in files:
+            # get filename
+            filename = re.search('[A-z0-9_]*\.b$', file_b).group(0)
+
+            # name of generated .sv file
+            file_sv = re.sub(filename, 'gen/' + filename.replace('.b', '.sv'), file_b)
+            
+            # search for .sv file
+            stdout = os.popen('find ' + file_sv).read()
+
+            # build .sv file if it does not exist or if the .b file has been modified
+            if (stdout[:-1] != file_sv) or (os.stat(file_b).st_mtime > os.stat(file_sv).st_mtime):
+                print('...' + filename)
+                build = Build(file_b)
+                build.build()
+
+    ##########
+    # update #
+    ##########
+    def update(self):
+        print('UPDATE')
+        # source files
+        os.system('cp ' + self.bluejay + 'src/central_processing_unit/gen/register_file.sv ' + self.bluejay + 'vivado/bluejay/bluejay.srcs/sources_1/new/')
+        os.system('cp ' + self.bluejay + 'src/central_processing_unit/gen/central_processing_unit.sv ' + self.bluejay + 'vivado/bluejay/bluejay.srcs/sources_1/new/')
+
+        # testbench files
+        os.system('cp ' + self.bluejay + 'tb/central_processing_unit/gen/register_file_tb.sv ' + self.bluejay + 'vivado/bluejay/bluejay.srcs/sim_1/new/')
+        os.system('cp ' + self.bluejay + 'tb/central_processing_unit/gen/central_processing_unit_tb.sv ' + self.bluejay + 'vivado/bluejay/bluejay.srcs/sim_1/new/')
+
+
+    # def update(self):
+    #     print('UPDATE')
+    #     # create a list of all the .sv files in the src/ directory
+    #     stdout = os.popen('find ' + self.bluejay + 'src/* -name *.sv').read()
+    #     src = re.split('\n', stdout[:-1])
+
+    #     # create a list of all the .sv files in the tb/ directory
+    #     stdout = os.popen('find ' + self.bluejay + 'tb/* -name *.sv').read()
+    #     tb = re.split('\n', stdout[:-1])
+
+    #     for filename in src:
+    #         # copy file into vivado project
+    #         os.system('cp ' + filename + ' ' + self.bluejay + 'vivado/bluejay/bluejay.srcs/sources_1/new/')
+
+    #     for filename in tb:
+    #         # copy file into vivado project
+    #         os.system('cp ' + filename + ' ' + self.bluejay + 'vivado/bluejay/bluejay.srcs/sim_1/new/')
 
 jaymake = Jaymake()
 jaymake.run()

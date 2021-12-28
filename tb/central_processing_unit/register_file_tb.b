@@ -40,29 +40,26 @@ always begin
     #5 clk = !clk;
 end
 
-// tb file descriptors
-integer tb_in, tb_out;
+// file descriptors
+integer file;
 
 // test block
 initial begin
-    $display("unit: register_file");
-   
     // initialize clk
     clk = 1'b1;
 
-    // open files
-    tb_in = $fopen("C:/Users/seanj/Documents/bluejay/tools/gen/tb_in.txt","r");
+    // open file
+    file = $fopen("C:/Users/seanj/Documents/bluejay/sim/central_processing_unit/register_file/gen/t_0.txt","r");
 
-    // read the contents of the file tb_in.txt as hexadecimal values
+    // read the contents of the file as hexadecimal values
     #1;
-    while (!$feof(tb_in)) begin
-        $fscanf(tb_in, "%b\n", {rst, we, rs1, rs2, rd, rd_data});
+    while (!$feof(file)) begin
+        $fscanf(file, "%b\n", {rst, we, rs1, rs2, rd, rd_data});
         #10;
     end
 
-    // close files
-    $fclose(tb_in);
-    $fclose(tb_out);
+    // close file
+    $fclose(file);
     $finish;
 end
 

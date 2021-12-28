@@ -40,7 +40,16 @@ class Build:
     # build #
     #########
     def build(self):
-        pass
+        txt = self.txt
+        txt = self.find_and_replace(txt)
+        txt = self.eval_func(txt, 'LOG2', self.log2)
+        txt = self.eval_func(txt, 'PYTHON', self.python)
+        txt = self.fold_constants(txt)
+
+        # get output file name
+        filename = self.filename.replace('.b', '.sv')
+        # write file
+        self.write(filename, txt)
 
     #########
     # write #
@@ -128,18 +137,16 @@ class Build:
             file.write(self.remove_indent(arg, indent))
 
         # run temporary .py file and capture the output
-        stream = os.popen('python3 ' + filename)
+        stdout = os.popen('python3 ' + filename).read()
 
-        # read and format output
-        string = stream.read()
         # remove '\n' character from the end of the string (if there is one)
-        if string[-1] == '\n':
-            string = string[:-1]
-        string = self.add_indent(string, indent)
+        if stdout[-1] == '\n':
+            stdout = stdout[:-1]
+        stdout = self.add_indent(stdout, indent)
 
         os.system('rm build_abcdefg.py')
 
-        return string
+        return stdout
 
     ########
     # log2 #
