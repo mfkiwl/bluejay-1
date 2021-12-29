@@ -17,8 +17,10 @@ module decoder
     output logic sel__data_1
 );
 
+logic [6:0] opcode;
+logic [2:0] funct3;
+logic [6:0] funct7;
 logic [1:0] instr_format;
-
 
 // decode the instruction fields
 assign opcode = ir[6:0];
@@ -405,7 +407,7 @@ always_comb begin
                         7'h20:
                         begin
                             instr_format = R_TYPE;
-                            func = FUNC__SLAW;
+                            func = FUNC__SRAW;
                         end
                     endcase
                 end
@@ -474,6 +476,6 @@ always_comb begin
         U_TYPE: imm = {{33{ir[31]}}, ir[30:20], ir[19:12], 12'h0};
         J_TYPE: imm = {{44{ir[31]}}, ir[19:12], ir[20], ir[30:25], ir[24:21], 1'b0};
     endcase
-case
+end
 
 endmodule

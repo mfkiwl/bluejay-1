@@ -8,7 +8,7 @@ module arithmetic_logic_unit
     input [3:0] func,
     input [63:0] data_0,
     input [63:0] data_1,
-    output logic [63:0] data_2,
+    output logic [63:0] data_2
 );
 
 // comparisons

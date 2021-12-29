@@ -94,7 +94,8 @@ class Jaymake:
         # source files
         os.system('cp ' + self.bluejay + 'src/central_processing_unit/gen/register_file.sv ' + self.bluejay + 'vivado/bluejay/bluejay.srcs/sources_1/new/')
         os.system('cp ' + self.bluejay + 'src/central_processing_unit/gen/central_processing_unit.sv ' + self.bluejay + 'vivado/bluejay/bluejay.srcs/sources_1/new/')
-
+        os.system('cp ' + self.bluejay + 'src/central_processing_unit/gen/decoder.sv ' + self.bluejay + 'vivado/bluejay/bluejay.srcs/sources_1/new/')
+        os.system('cp ' + self.bluejay + 'src/central_processing_unit/gen/arithmetic_logic_unit.sv ' + self.bluejay + 'vivado/bluejay/bluejay.srcs/sources_1/new/')
         # testbench files
         os.system('cp ' + self.bluejay + 'tb/central_processing_unit/gen/register_file_tb.sv ' + self.bluejay + 'vivado/bluejay/bluejay.srcs/sim_1/new/')
         os.system('cp ' + self.bluejay + 'tb/central_processing_unit/gen/central_processing_unit_tb.sv ' + self.bluejay + 'vivado/bluejay/bluejay.srcs/sim_1/new/')
