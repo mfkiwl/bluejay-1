@@ -7,12 +7,13 @@ module decoder
     input rst,
     input [31:0] ir,
 
+    output logic we,
     output logic [4:0] rs1,
     output logic [4:0] rs2,
     output logic [4:0] rd,
     output logic [63:0] imm,
     output logic [3:0] func,
-    output logic sel__pc,
+    output logic [3:0] ctrl_flow,
     output logic sel__data_0,
     output logic sel__data_1
 );
@@ -32,10 +33,12 @@ assign funct7 = ir[31:25];
 
 
 always_comb begin
+    we = 1'b1;
     func = FUNC__ADD;
-    sel__pc = SEL__PC__PC_PLUS_FOUR;
+    ctrl_flow = CTRL_FLOW__PC_PLUS_FOUR;
     sel__data_0 = SEL__DATA_0__REG;
     sel__data_1 = SEL__DATA_1__REG;
+    
     case (opcode)
         7'h03:
         begin
@@ -235,21 +238,25 @@ always_comb begin
                 3'h0:
                 begin
                     instr_format = S_TYPE;
+                    we = 1'b0;
                 end
                 // sh
                 3'h1:
                 begin
                     instr_format = S_TYPE;
+                    we = 1'b0;
                 end
                 // sw
                 3'h2:
                 begin
                     instr_format = S_TYPE;
+                    we = 1'b0;
                 end
                 // sd
                 3'h3:
                 begin
                     instr_format = S_TYPE;
+                    we = 1'b0;
                 end
             endcase
         end
@@ -420,31 +427,43 @@ always_comb begin
                 3'h0:
                 begin
                     instr_format = B_TYPE;
+                    we = 1'b0;
+                    ctrl_flow = CTRL_FLOW__BEQ;
                 end
                 // bne
                 3'h1:
                 begin
                     instr_format = B_TYPE;
+                    we = 1'b0;
+                    ctrl_flow = CTRL_FLOW__BNE;
                 end
                 // blt
                 3'h4:
                 begin
                     instr_format = B_TYPE;
+                    we = 1'b0;
+                    ctrl_flow = CTRL_FLOW__BLT;
                 end
                 // bge
                 3'h5:
                 begin
                     instr_format = B_TYPE;
+                    we = 1'b0;
+                    ctrl_flow = CTRL_FLOW__BGE;
                 end
                 // bltu
                 3'h6:
                 begin
                     instr_format = B_TYPE;
+                    we = 1'b0;
+                    ctrl_flow = CTRL_FLOW__BLTU;
                 end
                 // bgeu
                 3'h7:
                 begin
                     instr_format = B_TYPE;
+                    we = 1'b0;
+                    ctrl_flow = CTRL_FLOW__BGEU;
                 end
             endcase
         end
@@ -455,13 +474,18 @@ always_comb begin
                 3'h0:
                 begin
                     instr_format = I_TYPE;
+                    we = 1'b0;
+                    ctrl_flow = CTRL_FLOW__JALR;
                     sel__data_1 = SEL__DATA_1__IMM;
                 end
             endcase
         end
+        // jal
         7'h6f:
         begin
             instr_format = J_TYPE;
+            we = 1'b0;
+            ctrl_flow = CTRL_FLOW__JAL;
             sel__data_1 = SEL__DATA_1__IMM;
         end
     endcase

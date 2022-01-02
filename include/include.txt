@@ -25,6 +25,8 @@
 "FUNC__OR": "4'hd",
 "FUNC__AND": "4'he",
 
+"NOP": "32'h00_00_00_33",
+
 "SEL__DATA_0__REG": "1'b0",
 "SEL__DATA_0__PC": "1'b1",
 
@@ -32,4 +34,16 @@
 "SEL__DATA_1__IMM": "1'b1",
 
 "SEL__PC__PC_PLUS_FOUR": "2'h0",
+"SEL__PC__PC_PLUS_IMM": "2'h1",
+"SEL__PC__REG_PLUG_IMM": "2'h2",
+
+"CTRL_FLOW__PC_PLUS_FOUR": "4'h0",
+"CTRL_FLOW__JAL": "4'h1",
+"CTRL_FLOW__JALR": "4'h2",
+"CTRL_FLOW__BEQ": "4'h3",
+"CTRL_FLOW__BNE": "4'h4",
+"CTRL_FLOW__BLT": "4'h5",
+"CTRL_FLOW__BLTU": "4'h6",
+"CTRL_FLOW__BGE": "4'h7",
+"CTRL_FLOW__BGEU": "4'h8",
 }
