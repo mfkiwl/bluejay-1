@@ -11,13 +11,13 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="0fs"></ZoomStartTime>
-      <ZoomEndTime time="67101fs"></ZoomEndTime>
-      <Cursor1Time time="44500fs"></Cursor1Time>
+      <ZoomStartTime time="277968fs"></ZoomStartTime>
+      <ZoomEndTime time="311719fs"></ZoomEndTime>
+      <Cursor1Time time="311000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="226"></NameColumnWidth>
-      <ValueColumnWidth column_width="134"></ValueColumnWidth>
+      <ValueColumnWidth column_width="130"></ValueColumnWidth>
    </column_width_setting>
    <WVObjectSize size="72" />
    <wvobject fp_name="/central_processing_unit_tb/clk" type="logic">
@@ -28,9 +28,13 @@
       <obj_property name="ElementShortName">rst</obj_property>
       <obj_property name="ObjectShortName">rst</obj_property>
    </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/ir" type="array">
-      <obj_property name="ElementShortName">ir[31:0]</obj_property>
-      <obj_property name="ObjectShortName">ir[31:0]</obj_property>
+   <wvobject fp_name="/central_processing_unit_tb/dut/IF__pc" type="array">
+      <obj_property name="ElementShortName">IF__pc[63:0]</obj_property>
+      <obj_property name="ObjectShortName">IF__pc[63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/central_processing_unit_tb/IF__ir" type="array">
+      <obj_property name="ElementShortName">IF__ir[31:0]</obj_property>
+      <obj_property name="ObjectShortName">IF__ir[31:0]</obj_property>
    </wvobject>
    <wvobject fp_name="/central_processing_unit_tb/dut/IF__ready" type="logic">
       <obj_property name="ElementShortName">IF__ready</obj_property>
@@ -43,14 +47,6 @@
    <wvobject fp_name="/central_processing_unit_tb/dut/ID__stall" type="logic">
       <obj_property name="ElementShortName">ID__stall</obj_property>
       <obj_property name="ObjectShortName">ID__stall</obj_property>
-   </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/file" type="array">
-      <obj_property name="ElementShortName">file[31:0]</obj_property>
-      <obj_property name="ObjectShortName">file[31:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/dut/IF__pc" type="array">
-      <obj_property name="ElementShortName">IF__pc[63:0]</obj_property>
-      <obj_property name="ObjectShortName">IF__pc[63:0]</obj_property>
    </wvobject>
    <wvobject fp_name="/central_processing_unit_tb/dut/MEM__branch" type="logic">
       <obj_property name="ElementShortName">MEM__branch</obj_property>
@@ -72,9 +68,9 @@
       <obj_property name="ElementShortName">ID__rd[4:0]</obj_property>
       <obj_property name="ObjectShortName">ID__rd[4:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/dut/ID__sel__rd_data" type="logic">
-      <obj_property name="ElementShortName">ID__sel__rd_data</obj_property>
-      <obj_property name="ObjectShortName">ID__sel__rd_data</obj_property>
+   <wvobject fp_name="/central_processing_unit_tb/dut/ID__sel__rd_data" type="array">
+      <obj_property name="ElementShortName">ID__sel__rd_data[1:0]</obj_property>
+      <obj_property name="ObjectShortName">ID__sel__rd_data[1:0]</obj_property>
    </wvobject>
    <wvobject fp_name="/central_processing_unit_tb/dut/ID__ctrl_flow" type="array">
       <obj_property name="ElementShortName">ID__ctrl_flow[3:0]</obj_property>
@@ -180,17 +176,17 @@
       <obj_property name="ElementShortName">WB__rd[4:0]</obj_property>
       <obj_property name="ObjectShortName">WB__rd[4:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/dut/WB__sel__rd_data" type="logic">
-      <obj_property name="ElementShortName">WB__sel__rd_data</obj_property>
-      <obj_property name="ObjectShortName">WB__sel__rd_data</obj_property>
+   <wvobject fp_name="/central_processing_unit_tb/dut/WB__sel__rd_data" type="array">
+      <obj_property name="ElementShortName">WB__sel__rd_data[1:0]</obj_property>
+      <obj_property name="ObjectShortName">WB__sel__rd_data[1:0]</obj_property>
    </wvobject>
    <wvobject fp_name="/central_processing_unit_tb/dut/WB__rd_data" type="array">
       <obj_property name="ElementShortName">WB__rd_data[63:0]</obj_property>
       <obj_property name="ObjectShortName">WB__rd_data[63:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/dut/ID__sel__rd_data" type="logic">
-      <obj_property name="ElementShortName">ID__sel__rd_data</obj_property>
-      <obj_property name="ObjectShortName">ID__sel__rd_data</obj_property>
+   <wvobject fp_name="/central_processing_unit_tb/dut/ID__sel__rd_data" type="array">
+      <obj_property name="ElementShortName">ID__sel__rd_data[1:0]</obj_property>
+      <obj_property name="ObjectShortName">ID__sel__rd_data[1:0]</obj_property>
    </wvobject>
    <wvobject fp_name="/central_processing_unit_tb/dut/EX__data_1" type="array">
       <obj_property name="ElementShortName">EX__data_1[63:0]</obj_property>
@@ -307,5 +303,9 @@
    <wvobject fp_name="/central_processing_unit_tb/dut/register_file__0/x_22" type="array">
       <obj_property name="ElementShortName">x_22[63:0]</obj_property>
       <obj_property name="ObjectShortName">x_22[63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/central_processing_unit_tb/dut/register_file__0/x_31" type="array">
+      <obj_property name="ElementShortName">x_31[63:0]</obj_property>
+      <obj_property name="ObjectShortName">x_31[63:0]</obj_property>
    </wvobject>
 </wave_config>

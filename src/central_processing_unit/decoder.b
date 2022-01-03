@@ -16,7 +16,7 @@ module decoder
     output logic [3:0] ctrl_flow,
     output logic sel__data_0,
     output logic sel__data_1,
-    output logic sel__rd_data
+    output logic [1:0] sel__rd_data
 );
 
 logic [6:0] opcode;
@@ -34,7 +34,7 @@ assign funct7 = ir[31:25];
 
 
 always_comb begin
-    we = 1'b1;
+    we = 1'b0;
     func = FUNC__ADD;
     ctrl_flow = CTRL_FLOW__PC_PLUS_FOUR;
     sel__data_0 = SEL__DATA_0__REG;
@@ -48,6 +48,7 @@ always_comb begin
                 3'h0:
                 begin
                     instr_format = I_TYPE;
+                    we = 1'b1;
                     sel__data_1 = SEL__DATA_1__IMM;
                     sel__rd_data = SEL__RD_DATA__MEM;
                 end
@@ -55,6 +56,7 @@ always_comb begin
                 3'h1:
                 begin
                     instr_format = I_TYPE;
+                    we = 1'b1;
                     sel__data_1 = SEL__DATA_1__IMM;
                     sel__rd_data = SEL__RD_DATA__MEM;
                 end
@@ -62,6 +64,7 @@ always_comb begin
                 3'h2:
                 begin
                     instr_format = I_TYPE;
+                    we = 1'b1;
                     sel__data_1 = SEL__DATA_1__IMM;
                     sel__rd_data = SEL__RD_DATA__MEM;
                 end
@@ -69,6 +72,7 @@ always_comb begin
                 3'h3:
                 begin
                     instr_format = I_TYPE;
+                    we = 1'b1;
                     sel__data_1 = SEL__DATA_1__IMM;
                     sel__rd_data = SEL__RD_DATA__MEM;
                 end
@@ -76,6 +80,7 @@ always_comb begin
                 3'h4:
                 begin
                     instr_format = I_TYPE;
+                    we = 1'b1;
                     sel__data_1 = SEL__DATA_1__IMM;
                     sel__rd_data = SEL__RD_DATA__MEM;
                 end
@@ -83,6 +88,7 @@ always_comb begin
                 3'h5:
                 begin
                     instr_format = I_TYPE;
+                    we = 1'b1;
                     sel__data_1 = SEL__DATA_1__IMM;
                     sel__rd_data = SEL__RD_DATA__MEM;
                 end
@@ -90,6 +96,7 @@ always_comb begin
                 3'h6:
                 begin
                     instr_format = I_TYPE;
+                    we = 1'b1;
                     sel__data_1 = SEL__DATA_1__IMM;
                     sel__rd_data = SEL__RD_DATA__MEM;
                 end
@@ -117,6 +124,7 @@ always_comb begin
                 3'h0:
                 begin
                     instr_format = I_TYPE;
+                    we = 1'b1;
                     func = FUNC__ADD;
                     sel__data_1 = SEL__DATA_1__IMM;
                 end
@@ -127,6 +135,7 @@ always_comb begin
                         7'h00:
                         begin
                             instr_format = I_TYPE;
+                            we = 1'b1;
                             func = FUNC__SLL;
                             sel__data_1 = SEL__DATA_1__IMM;
                         end
@@ -136,6 +145,7 @@ always_comb begin
                 3'h2:
                 begin
                     instr_format = I_TYPE;
+                    we = 1'b1;
                     func = FUNC__SLT;
                     sel__data_1 = SEL__DATA_1__IMM;
                 end
@@ -143,6 +153,7 @@ always_comb begin
                 3'h3:
                 begin
                     instr_format = I_TYPE;
+                    we = 1'b1;
                     func = FUNC__SLTU;
                     sel__data_1 = SEL__DATA_1__IMM;
                 end
@@ -150,6 +161,7 @@ always_comb begin
                 3'h4:
                 begin
                     instr_format = I_TYPE;
+                    we = 1'b1;
                     func = FUNC__XOR;
                     sel__data_1 = SEL__DATA_1__IMM;
                 end
@@ -160,6 +172,7 @@ always_comb begin
                         7'h00:
                         begin
                             instr_format = I_TYPE;
+                            we = 1'b1;
                             func = FUNC__SRL;
                             sel__data_1 = SEL__DATA_1__IMM;
                         end
@@ -167,6 +180,7 @@ always_comb begin
                         7'h20:
                         begin
                             instr_format = I_TYPE;
+                            we = 1'b1;
                             func = FUNC__SRA;
                             sel__data_1 = SEL__DATA_1__IMM;
                         end
@@ -176,6 +190,7 @@ always_comb begin
                 3'h6:
                 begin
                     instr_format = I_TYPE;
+                    we = 1'b1;
                     func = FUNC__OR;
                     sel__data_1 = SEL__DATA_1__IMM;
                 end
@@ -183,6 +198,7 @@ always_comb begin
                 3'h7:
                 begin
                     instr_format = I_TYPE;
+                    we = 1'b1;
                     func = FUNC__AND;
                     sel__data_1 = SEL__DATA_1__IMM;
                 end
@@ -192,6 +208,7 @@ always_comb begin
         7'h17:
         begin
             instr_format = U_TYPE;
+            we = 1'b1;
             func = FUNC__AND;
             sel__data_0 = SEL__DATA_0__PC;
             sel__data_1 = SEL__DATA_1__IMM;
@@ -203,6 +220,7 @@ always_comb begin
                 3'h0:
                 begin
                     instr_format = I_TYPE;
+                    we = 1'b1;
                     func = FUNC__ADDW;
                     sel__data_1 = SEL__DATA_1__IMM;
                 end
@@ -213,6 +231,7 @@ always_comb begin
                         7'h00:
                         begin
                             instr_format = I_TYPE;
+                            we = 1'b1;
                             func = FUNC__SLLW;
                             sel__data_1 = SEL__DATA_1__IMM;
                         end
@@ -225,6 +244,7 @@ always_comb begin
                         7'h00:
                         begin
                             instr_format = I_TYPE;
+                            we = 1'b1;
                             func = FUNC__SRLW;
                             sel__data_1 = SEL__DATA_1__IMM;
                         end
@@ -232,6 +252,7 @@ always_comb begin
                         7'h00:
                         begin
                             instr_format = I_TYPE;
+                            we = 1'b1;
                             func = FUNC__SRAW;
                             sel__data_1 = SEL__DATA_1__IMM;
                         end
@@ -246,25 +267,21 @@ always_comb begin
                 3'h0:
                 begin
                     instr_format = S_TYPE;
-                    we = 1'b0;
                 end
                 // sh
                 3'h1:
                 begin
                     instr_format = S_TYPE;
-                    we = 1'b0;
                 end
                 // sw
                 3'h2:
                 begin
                     instr_format = S_TYPE;
-                    we = 1'b0;
                 end
                 // sd
                 3'h3:
                 begin
                     instr_format = S_TYPE;
-                    we = 1'b0;
                 end
             endcase
         end
@@ -278,12 +295,14 @@ always_comb begin
                         7'h00:
                         begin
                             instr_format = R_TYPE;
+                            we = 1'b1;
                             func = FUNC__ADD;
                         end
                         // sub
                         7'h20:
                         begin
                             instr_format = R_TYPE;
+                            we = 1'b1;
                             func = FUNC__SUB;
                         end
                     endcase
@@ -295,6 +314,7 @@ always_comb begin
                         7'h00:
                         begin
                             instr_format = R_TYPE;
+                            we = 1'b1;
                             func = FUNC__SLL;
                         end
                     endcase
@@ -306,6 +326,7 @@ always_comb begin
                         7'h00:
                         begin
                             instr_format = R_TYPE;
+                            we = 1'b1;
                             func = FUNC__SLT;
                         end
                     endcase
@@ -317,6 +338,7 @@ always_comb begin
                         7'h00:
                         begin
                             instr_format = R_TYPE;
+                            we = 1'b1;
                             func = FUNC__SLTU;
                         end
                     endcase
@@ -328,6 +350,7 @@ always_comb begin
                         7'h00:
                         begin
                             instr_format = R_TYPE;
+                            we = 1'b1;
                             func = FUNC__XOR;
                         end
                     endcase
@@ -339,12 +362,14 @@ always_comb begin
                         7'h00:
                         begin
                             instr_format = R_TYPE;
+                            we = 1'b1;
                             func = FUNC__SRL;
                         end
                         // sra
                         7'h20:
                         begin
                             instr_format = R_TYPE;
+                            we = 1'b1;
                             func = FUNC__SRA;
                         end
                     endcase
@@ -356,6 +381,7 @@ always_comb begin
                         7'h00:
                         begin
                             instr_format = R_TYPE;
+                            we = 1'b1;
                             func = FUNC__OR;
                         end
                     endcase
@@ -367,6 +393,7 @@ always_comb begin
                         7'h00:
                         begin
                             instr_format = R_TYPE;
+                            we = 1'b1;
                             func = FUNC__AND;
                         end
                     endcase
@@ -377,6 +404,7 @@ always_comb begin
         7'h37:
         begin
             instr_format = U_TYPE;
+            we = 1'b1;
         end
         7'h3b:
         begin
@@ -388,12 +416,14 @@ always_comb begin
                         7'h00:
                         begin
                             instr_format = R_TYPE;
+                            we = 1'b1;
                             func = FUNC__ADDW;
                         end
                         // subw
                         7'h20:
                         begin
                             instr_format = R_TYPE;
+                            we = 1'b1;
                             func = FUNC__SUBW;
                         end
                     endcase
@@ -405,6 +435,7 @@ always_comb begin
                         7'h00:
                         begin
                             instr_format = R_TYPE;
+                            we = 1'b1;
                             func = FUNC__SLLW;
                         end
                     endcase
@@ -416,12 +447,14 @@ always_comb begin
                         7'h00:
                         begin
                             instr_format = R_TYPE;
+                            we = 1'b1;
                             func = FUNC__SRLW;
                         end
                         // sraw
                         7'h20:
                         begin
                             instr_format = R_TYPE;
+                            we = 1'b1;
                             func = FUNC__SRAW;
                         end
                     endcase
@@ -435,42 +468,36 @@ always_comb begin
                 3'h0:
                 begin
                     instr_format = B_TYPE;
-                    we = 1'b0;
                     ctrl_flow = CTRL_FLOW__BEQ;
                 end
                 // bne
                 3'h1:
                 begin
                     instr_format = B_TYPE;
-                    we = 1'b0;
                     ctrl_flow = CTRL_FLOW__BNE;
                 end
                 // blt
                 3'h4:
                 begin
                     instr_format = B_TYPE;
-                    we = 1'b0;
                     ctrl_flow = CTRL_FLOW__BLT;
                 end
                 // bge
                 3'h5:
                 begin
                     instr_format = B_TYPE;
-                    we = 1'b0;
                     ctrl_flow = CTRL_FLOW__BGE;
                 end
                 // bltu
                 3'h6:
                 begin
                     instr_format = B_TYPE;
-                    we = 1'b0;
                     ctrl_flow = CTRL_FLOW__BLTU;
                 end
                 // bgeu
                 3'h7:
                 begin
                     instr_format = B_TYPE;
-                    we = 1'b0;
                     ctrl_flow = CTRL_FLOW__BGEU;
                 end
             endcase
@@ -482,9 +509,10 @@ always_comb begin
                 3'h0:
                 begin
                     instr_format = I_TYPE;
-                    we = 1'b0;
+                    we = 1'b1;
                     ctrl_flow = CTRL_FLOW__JALR;
                     sel__data_1 = SEL__DATA_1__IMM;
+                    sel__rd_data = SEL__RD_DATA__PC_PLUS_FOUR;
                 end
             endcase
         end
@@ -492,8 +520,9 @@ always_comb begin
         7'h6f:
         begin
             instr_format = J_TYPE;
-            we = 1'b0;
+            we = 1'b1;
             ctrl_flow = CTRL_FLOW__JAL;
+            sel__rd_data = SEL__RD_DATA__PC_PLUS_FOUR;
         end
     endcase
 end

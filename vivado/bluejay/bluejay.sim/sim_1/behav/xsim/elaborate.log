@@ -17,6 +17,5 @@ Compiling module xil_defaultlib.register_file
 Compiling module xil_defaultlib.arithmetic_logic_unit
 Compiling module xil_defaultlib.central_processing_unit
 Compiling module xil_defaultlib.central_processing_unit_tb
-WARNING: [XSIM 43-3373] "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sim_1/new/central_processing_unit_tb.sv" Line 47. System function $fscanf is used as system task. This system function should have a LHS e.g. x=$fscanf().
 Compiling module xil_defaultlib.glbl
 Built simulation snapshot central_processing_unit_tb_behav

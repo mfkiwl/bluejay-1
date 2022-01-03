@@ -11,3 +11,7 @@
 #-----------------------------------------------------------
 start_gui
 open_project C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.xpr
+update_compile_order -fileset sources_1
+launch_simulation
+open_wave_config C:/Users/seanj/Documents/bluejay/vivado/bluejay/central_processing_unit_tb_behav.wcfg
+source central_processing_unit_tb.tcl

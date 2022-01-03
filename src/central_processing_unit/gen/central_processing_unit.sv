@@ -5,8 +5,8 @@ module central_processing_unit
 (
     input clk,
     input rst,
-    input [31:0] ir,
-    output logic IF__ready
+    output logic [63:0] IF__pc,
+    input [31:0] IF__ir 
 );
 
 // instruction fetch (IF)
@@ -21,7 +21,7 @@ logic [63:0] ID__pc;
 logic [31:0] ID__ir;
 logic ID__we;
 logic [4:0] ID__rd;
-logic ID__sel__rd_data;
+logic [1:0] ID__sel__rd_data;
 logic [63:0] ID__imm;
 logic [3:0] ID__ctrl_flow;
 logic [63:0] ID__rs2_data;
@@ -40,7 +40,7 @@ logic [63:0] EX__pc;
 logic [31:0] EX__ir;
 logic EX__we;
 logic [4:0] EX__rd;
-logic EX__sel__rd_data;
+logic [1:0] EX__sel__rd_data;
 logic [63:0] EX__imm;
 logic [3:0] EX__ctrl_flow;
 logic [63:0] EX__rs2_data;
@@ -64,7 +64,7 @@ logic [63:0] MEM__pc;
 logic [31:0] MEM__ir;
 logic MEM__we;
 logic [4:0] MEM__rd;
-logic MEM__sel__rd_data;
+logic [1:0] MEM__sel__rd_data;
 logic [63:0] MEM__imm;
 logic [3:0] MEM__ctrl_flow;
 logic [63:0] MEM__rs2_data;
@@ -86,7 +86,7 @@ logic [63:0] WB__pc;
 logic [31:0] WB__ir;
 logic WB__we;
 logic [4:0] WB__rd;
-logic WB__sel__rd_data;
+logic [1:0] WB__sel__rd_data;
 logic [63:0] WB__data_2;
 logic [63:0] WB__mem_data;
 logic [63:0] WB__rd_data;
@@ -189,7 +189,6 @@ end
 
 // IF stage
 assign IF__ready = ID__ready;
-assign IF__ir = ir;
 
 // ID stage
 assign ID__ready = ~ID__stall;
@@ -220,7 +219,13 @@ always_comb begin
 end
 
 // WB stage
-assign WB__rd_data = WB__sel__rd_data ? WB__mem_data : WB__data_2;
+always_comb begin
+    case (WB__sel__rd_data)
+        2'h0: WB__rd_data = WB__data_2;
+        2'h1: WB__rd_data = WB__mem_data;
+        2'h2: WB__rd_data = WB__pc + 4;
+    endcase
+end
 
 //==============================
 // decoder__0

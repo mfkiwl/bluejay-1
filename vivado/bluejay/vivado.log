@@ -16,3 +16,85 @@ Finished scanning sources
 INFO: [IP_Flow 19-234] Refreshing IP repositories
 INFO: [IP_Flow 19-1704] No user IP repositories specified
 INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'C:/Xilinx/Vivado/2019.2/data/ip'.
+update_compile_order -fileset sources_1
+launch_simulation
+Command: launch_simulation 
+INFO: [Vivado 12-5682] Launching behavioral simulation in 'C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.sim/sim_1/behav/xsim'
+INFO: [SIM-utils-51] Simulation object is 'sim_1'
+INFO: [SIM-utils-54] Inspecting design source files for 'central_processing_unit_tb' in fileset 'sim_1'...
+INFO: [USF-XSim-97] Finding global include files...
+INFO: [USF-XSim-98] Fetching design files from 'sim_1'...
+INFO: [USF-XSim-2] XSim::Compile design
+INFO: [USF-XSim-61] Executing 'COMPILE and ANALYZE' step in 'C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.sim/sim_1/behav/xsim'
+"xvlog --incr --relax -prj central_processing_unit_tb_vlog.prj"
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/arithmetic_logic_unit.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module arithmetic_logic_unit
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/central_processing_unit.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module central_processing_unit
+WARNING: [VRFC 10-3676] redeclaration of ansi port 'IF__ready' is not allowed [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/central_processing_unit.sv:15]
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/decoder.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module decoder
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/register_file.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module register_file
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sim_1/new/central_processing_unit_tb.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module central_processing_unit_tb
+INFO: [VRFC 10-2458] undeclared symbol clk, assumed default net type wire [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sim_1/new/central_processing_unit_tb.sv:16]
+INFO: [VRFC 10-2458] undeclared symbol rst, assumed default net type wire [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sim_1/new/central_processing_unit_tb.sv:17]
+INFO: [VRFC 10-2458] undeclared symbol ir, assumed default net type wire [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sim_1/new/central_processing_unit_tb.sv:18]
+INFO: [VRFC 10-2458] undeclared symbol IF__ready, assumed default net type wire [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sim_1/new/central_processing_unit_tb.sv:19]
+WARNING: [VRFC 10-2938] 'clk' is already implicitly declared on line 16 [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sim_1/new/central_processing_unit_tb.sv:23]
+WARNING: [VRFC 10-2938] 'rst' is already implicitly declared on line 17 [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sim_1/new/central_processing_unit_tb.sv:24]
+WARNING: [VRFC 10-2938] 'ir' is already implicitly declared on line 18 [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sim_1/new/central_processing_unit_tb.sv:25]
+WARNING: [VRFC 10-2938] 'IF__ready' is already implicitly declared on line 19 [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sim_1/new/central_processing_unit_tb.sv:26]
+INFO: [USF-XSim-69] 'compile' step finished in '1' seconds
+INFO: [USF-XSim-3] XSim::Elaborate design
+INFO: [USF-XSim-61] Executing 'ELABORATE' step in 'C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.sim/sim_1/behav/xsim'
+"xelab -wto 7cd26d1a35f944c6bc1bdff14b047b72 --incr --debug typical --relax --mt 2 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip --snapshot central_processing_unit_tb_behav xil_defaultlib.central_processing_unit_tb xil_defaultlib.glbl -log elaborate.log"
+Vivado Simulator 2019.2
+Copyright 1986-1999, 2001-2019 Xilinx, Inc. All Rights Reserved.
+Running: C:/Xilinx/Vivado/2019.2/bin/unwrapped/win64.o/xelab.exe -wto 7cd26d1a35f944c6bc1bdff14b047b72 --incr --debug typical --relax --mt 2 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip --snapshot central_processing_unit_tb_behav xil_defaultlib.central_processing_unit_tb xil_defaultlib.glbl -log elaborate.log 
+Using 2 slave threads.
+Starting static elaboration
+Pass Through NonSizing Optimizer
+Completed static elaboration
+Starting simulation data flow analysis
+WARNING: [XSIM 43-4099] "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/central_processing_unit.sv" Line 4. Module central_processing_unit doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/decoder.sv" Line 4. Module decoder doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/register_file.sv" Line 4. Module register_file doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/arithmetic_logic_unit.sv" Line 4. Module arithmetic_logic_unit doesn't have a timescale but at least one module in design has a timescale.
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling module xil_defaultlib.decoder
+Compiling module xil_defaultlib.register_file
+Compiling module xil_defaultlib.arithmetic_logic_unit
+Compiling module xil_defaultlib.central_processing_unit
+Compiling module xil_defaultlib.central_processing_unit_tb
+WARNING: [XSIM 43-3373] "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sim_1/new/central_processing_unit_tb.sv" Line 47. System function $fscanf is used as system task. This system function should have a LHS e.g. x=$fscanf().
+Compiling module xil_defaultlib.glbl
+Built simulation snapshot central_processing_unit_tb_behav
+INFO: [USF-XSim-69] 'elaborate' step finished in '2' seconds
+INFO: [USF-XSim-4] XSim::Simulate design
+INFO: [USF-XSim-61] Executing 'SIMULATE' step in 'C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.sim/sim_1/behav/xsim'
+INFO: [USF-XSim-98] *** Running xsim
+   with args "central_processing_unit_tb_behav -key {Behavioral:sim_1:Functional:central_processing_unit_tb} -tclbatch {central_processing_unit_tb.tcl} -view {C:/Users/seanj/Documents/bluejay/vivado/bluejay/central_processing_unit_tb_behav.wcfg} -log {simulate.log}"
+INFO: [USF-XSim-8] Loading simulator feature
+Vivado Simulator 2019.2
+Time resolution is 1 ps
+open_wave_config C:/Users/seanj/Documents/bluejay/vivado/bluejay/central_processing_unit_tb_behav.wcfg
+open_wave_config: Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 869.121 ; gain = 0.000
+source central_processing_unit_tb.tcl
+# set curr_wave [current_wave_config]
+# if { [string length $curr_wave] == 0 } {
+#   if { [llength [get_objects]] > 0} {
+#     add_wave /
+#     set_property needs_save false [current_wave_config]
+#   } else {
+#      send_msg_id Add_Wave-1 WARNING "No top level signals found. Simulator will start without a wave window. If you want to open a wave window go to 'File->New Waveform Configuration' or type 'create_wave_config' in the TCL console."
+#   }
+# }
+# run 1000ns
+$finish called at time : 71 ns : File "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sim_1/new/central_processing_unit_tb.sv" Line 56
+xsim: Time (s): cpu = 00:00:10 ; elapsed = 00:00:09 . Memory (MB): peak = 904.422 ; gain = 35.301
+INFO: [USF-XSim-96] XSim completed. Design snapshot 'central_processing_unit_tb_behav' loaded.
+INFO: [USF-XSim-97] XSim simulation ran for 1000ns
+launch_simulation: Time (s): cpu = 00:00:11 ; elapsed = 00:00:13 . Memory (MB): peak = 904.422 ; gain = 35.301

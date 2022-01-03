@@ -15,44 +15,39 @@ central_processing_unit dut
 (
     .clk(clk),
     .rst(rst),
-    .ir(ir),
-    .IF__ready(IF__ready)
+    .IF__pc(IF__pc),
+    .IF__ir(IF__ir)
 );
 
 // dut I/O
 logic clk;
 logic rst;
-logic [31:0] ir;
-logic IF__ready;
+logic [63:0] IF__pc;
+logic [31:0] IF__ir;
 
 // 10 ns clock
 always begin
     #5 clk = !clk;
 end
 
-// file descriptors
-integer file;
+// instruction memory
+logic [31:0] instr_memory [15:0];
+assign IF__ir = instr_memory[IF__pc[5:2]];
 
 // test block
 initial begin
     // initialize clk
     clk = 1'b1;
+    // initialize instruction memory
+    $readmemh("C:/Users/seanj/Documents/bluejay/code/jalr.txt", instr_memory);
 
-    // open file
-    file = $fopen("C:/Users/seanj/Documents/bluejay/sim/central_processing_unit/gen/t_beq.txt","r");
-
-    // read the contents of the file as hexadecimal values
     #1;
-    while (!$feof(file)) begin
-        $fscanf(file, "%b\n", {rst, ir});
-        #10;
-        while (!IF__ready) begin
-            #10;
-        end
-    end
-
-    // close file
-    $fclose(file);
+    // assert rst
+    rst = 1'b1;
+    #10;
+    rst = 1'b0;
+    
+    #300;
     $finish;
 end
 

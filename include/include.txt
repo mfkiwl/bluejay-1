@@ -33,8 +33,9 @@
 "SEL__DATA_1__REG": "1'b0",
 "SEL__DATA_1__IMM": "1'b1",
 
-"SEL__RD_DATA__ALU": "1'b0",
-"SEL__RD_DATA__MEM": "1'b1",
+"SEL__RD_DATA__ALU": "2'h0",
+"SEL__RD_DATA__MEM": "2'h1",
+"SEL__RD_DATA__PC_PLUS_FOUR": "2'h2",
 
 "SEL__PC__PC_PLUS_FOUR": "2'h0",
 "SEL__PC__PC_PLUS_IMM": "2'h1",
@@ -49,4 +50,13 @@
 "CTRL_FLOW__BLTU": "4'h6",
 "CTRL_FLOW__BGE": "4'h7",
 "CTRL_FLOW__BGEU": "4'h8",
+
+"DATA_TYPE__D": "3'h0",
+"DATA_TYPE__W": "3'h1",
+"DATA_TYPE__WU": "3'h2",
+"DATA_TYPE__H": "3'h3",
+"DATA_TYPE__HU": "3'h4",
+"DATA_TYPE__B": "3'h5",
+"DATA_TYPE__BU": "3'h6",
+
 }
