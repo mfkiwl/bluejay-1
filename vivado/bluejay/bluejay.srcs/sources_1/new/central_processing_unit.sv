@@ -77,6 +77,7 @@ logic MEM__ltu;
 logic MEM__ge;
 logic MEM__geu;
 logic MEM__branch;
+logic [63:0] MEM__branch_pc;
 logic MEM__ready;
 
 
@@ -99,7 +100,7 @@ logic WB__ready;
 
 // IF pipe stage
 always_ff @(posedge clk) begin
-    IF__pc <= rst ? 32'h0 : MEM__branch ? MEM__data_2 : IF__ready ? IF__pc + 4 : IF__pc;
+    IF__pc <= rst ? 32'h0 : MEM__branch ? MEM__branch_pc : IF__ready ? IF__pc + 4 : IF__pc;
 end
 
 // IF/ID pipe stage
@@ -203,7 +204,7 @@ assign EX__data_1 = EX__sel__data_1 ? EX__imm : EX__rs2_data;
 
 // MEM stage
 assign MEM__ready = 1'b1;
-
+assign MEM__branch_pc = (MEM__ctrl_flow == 4'h2) ? MEM__data_2 : MEM__pc + MEM__imm;
 always_comb begin
     case (MEM__ctrl_flow)
         4'h0: MEM__branch = 1'b0;

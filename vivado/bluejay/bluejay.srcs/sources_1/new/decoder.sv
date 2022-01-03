@@ -494,8 +494,6 @@ always_comb begin
             instr_format = 3'h5;
             we = 1'b0;
             ctrl_flow = 4'h1;
-            sel__data_0 = 1'b1;
-            sel__data_1 = 1'b1;
         end
     endcase
 end

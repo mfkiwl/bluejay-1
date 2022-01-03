@@ -494,8 +494,6 @@ always_comb begin
             instr_format = J_TYPE;
             we = 1'b0;
             ctrl_flow = CTRL_FLOW__JAL;
-            sel__data_0 = SEL__DATA_0__PC;
-            sel__data_1 = SEL__DATA_1__IMM;
         end
     endcase
 end
