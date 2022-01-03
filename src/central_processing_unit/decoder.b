@@ -15,7 +15,8 @@ module decoder
     output logic [3:0] func,
     output logic [3:0] ctrl_flow,
     output logic sel__data_0,
-    output logic sel__data_1
+    output logic sel__data_1,
+    output logic sel__rd_data
 );
 
 logic [6:0] opcode;
@@ -38,7 +39,7 @@ always_comb begin
     ctrl_flow = CTRL_FLOW__PC_PLUS_FOUR;
     sel__data_0 = SEL__DATA_0__REG;
     sel__data_1 = SEL__DATA_1__REG;
-    
+    sel__rd_data = SEL__RD_DATA__ALU;
     case (opcode)
         7'h03:
         begin
@@ -48,42 +49,49 @@ always_comb begin
                 begin
                     instr_format = I_TYPE;
                     sel__data_1 = SEL__DATA_1__IMM;
+                    sel__rd_data = SEL__RD_DATA__MEM;
                 end
                 // lh
                 3'h1:
                 begin
                     instr_format = I_TYPE;
                     sel__data_1 = SEL__DATA_1__IMM;
+                    sel__rd_data = SEL__RD_DATA__MEM;
                 end
                 // lw
                 3'h2:
                 begin
                     instr_format = I_TYPE;
                     sel__data_1 = SEL__DATA_1__IMM;
+                    sel__rd_data = SEL__RD_DATA__MEM;
                 end
                 // ld
                 3'h3:
                 begin
                     instr_format = I_TYPE;
                     sel__data_1 = SEL__DATA_1__IMM;
+                    sel__rd_data = SEL__RD_DATA__MEM;
                 end
                 // lbu
                 3'h4:
                 begin
                     instr_format = I_TYPE;
                     sel__data_1 = SEL__DATA_1__IMM;
+                    sel__rd_data = SEL__RD_DATA__MEM;
                 end
                 // lhu
                 3'h5:
                 begin
                     instr_format = I_TYPE;
                     sel__data_1 = SEL__DATA_1__IMM;
+                    sel__rd_data = SEL__RD_DATA__MEM;
                 end
                 // lhu
                 3'h6:
                 begin
                     instr_format = I_TYPE;
                     sel__data_1 = SEL__DATA_1__IMM;
+                    sel__rd_data = SEL__RD_DATA__MEM;
                 end
             endcase
         end
@@ -486,6 +494,7 @@ always_comb begin
             instr_format = J_TYPE;
             we = 1'b0;
             ctrl_flow = CTRL_FLOW__JAL;
+            sel__data_0 = SEL__DATA_0__PC;
             sel__data_1 = SEL__DATA_1__IMM;
         end
     endcase

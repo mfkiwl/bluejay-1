@@ -12,14 +12,14 @@
    </db_ref_list>
    <zoom_setting>
       <ZoomStartTime time="0fs"></ZoomStartTime>
-      <ZoomEndTime time="101000fs"></ZoomEndTime>
-      <Cursor1Time time="101000fs"></Cursor1Time>
+      <ZoomEndTime time="67101fs"></ZoomEndTime>
+      <Cursor1Time time="44500fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="226"></NameColumnWidth>
-      <ValueColumnWidth column_width="146"></ValueColumnWidth>
+      <ValueColumnWidth column_width="134"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="29" />
+   <WVObjectSize size="72" />
    <wvobject fp_name="/central_processing_unit_tb/clk" type="logic">
       <obj_property name="ElementShortName">clk</obj_property>
       <obj_property name="ObjectShortName">clk</obj_property>
@@ -32,6 +32,18 @@
       <obj_property name="ElementShortName">ir[31:0]</obj_property>
       <obj_property name="ObjectShortName">ir[31:0]</obj_property>
    </wvobject>
+   <wvobject fp_name="/central_processing_unit_tb/dut/IF__ready" type="logic">
+      <obj_property name="ElementShortName">IF__ready</obj_property>
+      <obj_property name="ObjectShortName">IF__ready</obj_property>
+   </wvobject>
+   <wvobject fp_name="/central_processing_unit_tb/dut/ID__ready" type="logic">
+      <obj_property name="ElementShortName">ID__ready</obj_property>
+      <obj_property name="ObjectShortName">ID__ready</obj_property>
+   </wvobject>
+   <wvobject fp_name="/central_processing_unit_tb/dut/ID__stall" type="logic">
+      <obj_property name="ElementShortName">ID__stall</obj_property>
+      <obj_property name="ObjectShortName">ID__stall</obj_property>
+   </wvobject>
    <wvobject fp_name="/central_processing_unit_tb/file" type="array">
       <obj_property name="ElementShortName">file[31:0]</obj_property>
       <obj_property name="ObjectShortName">file[31:0]</obj_property>
@@ -39,6 +51,10 @@
    <wvobject fp_name="/central_processing_unit_tb/dut/IF__pc" type="array">
       <obj_property name="ElementShortName">IF__pc[63:0]</obj_property>
       <obj_property name="ObjectShortName">IF__pc[63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/central_processing_unit_tb/dut/MEM__branch" type="logic">
+      <obj_property name="ElementShortName">MEM__branch</obj_property>
+      <obj_property name="ObjectShortName">MEM__branch</obj_property>
    </wvobject>
    <wvobject fp_name="/central_processing_unit_tb/dut/ID__pc" type="array">
       <obj_property name="ElementShortName">ID__pc[63:0]</obj_property>
@@ -92,6 +108,14 @@
       <obj_property name="ElementShortName">ID__we</obj_property>
       <obj_property name="ObjectShortName">ID__we</obj_property>
    </wvobject>
+   <wvobject fp_name="/central_processing_unit_tb/dut/ID__rs1" type="array">
+      <obj_property name="ElementShortName">ID__rs1[4:0]</obj_property>
+      <obj_property name="ObjectShortName">ID__rs1[4:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/central_processing_unit_tb/dut/ID__rs2" type="array">
+      <obj_property name="ElementShortName">ID__rs2[4:0]</obj_property>
+      <obj_property name="ObjectShortName">ID__rs2[4:0]</obj_property>
+   </wvobject>
    <wvobject fp_name="/central_processing_unit_tb/dut/EX__pc" type="array">
       <obj_property name="ElementShortName">EX__pc[63:0]</obj_property>
       <obj_property name="ObjectShortName">EX__pc[63:0]</obj_property>
@@ -135,5 +159,153 @@
    <wvobject fp_name="/central_processing_unit_tb/dut/EX__sel__data_1" type="logic">
       <obj_property name="ElementShortName">EX__sel__data_1</obj_property>
       <obj_property name="ObjectShortName">EX__sel__data_1</obj_property>
+   </wvobject>
+   <wvobject fp_name="/central_processing_unit_tb/dut/EX__data_0" type="array">
+      <obj_property name="ElementShortName">EX__data_0[63:0]</obj_property>
+      <obj_property name="ObjectShortName">EX__data_0[63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/central_processing_unit_tb/dut/EX__data_1" type="array">
+      <obj_property name="ElementShortName">EX__data_1[63:0]</obj_property>
+      <obj_property name="ObjectShortName">EX__data_1[63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/central_processing_unit_tb/dut/EX__data_2" type="array">
+      <obj_property name="ElementShortName">EX__data_2[63:0]</obj_property>
+      <obj_property name="ObjectShortName">EX__data_2[63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/central_processing_unit_tb/dut/WB__we" type="logic">
+      <obj_property name="ElementShortName">WB__we</obj_property>
+      <obj_property name="ObjectShortName">WB__we</obj_property>
+   </wvobject>
+   <wvobject fp_name="/central_processing_unit_tb/dut/WB__rd" type="array">
+      <obj_property name="ElementShortName">WB__rd[4:0]</obj_property>
+      <obj_property name="ObjectShortName">WB__rd[4:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/central_processing_unit_tb/dut/WB__sel__rd_data" type="logic">
+      <obj_property name="ElementShortName">WB__sel__rd_data</obj_property>
+      <obj_property name="ObjectShortName">WB__sel__rd_data</obj_property>
+   </wvobject>
+   <wvobject fp_name="/central_processing_unit_tb/dut/WB__rd_data" type="array">
+      <obj_property name="ElementShortName">WB__rd_data[63:0]</obj_property>
+      <obj_property name="ObjectShortName">WB__rd_data[63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/central_processing_unit_tb/dut/ID__sel__rd_data" type="logic">
+      <obj_property name="ElementShortName">ID__sel__rd_data</obj_property>
+      <obj_property name="ObjectShortName">ID__sel__rd_data</obj_property>
+   </wvobject>
+   <wvobject fp_name="/central_processing_unit_tb/dut/EX__data_1" type="array">
+      <obj_property name="ElementShortName">EX__data_1[63:0]</obj_property>
+      <obj_property name="ObjectShortName">EX__data_1[63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/central_processing_unit_tb/dut/EX__data_0" type="array">
+      <obj_property name="ElementShortName">EX__data_0[63:0]</obj_property>
+      <obj_property name="ObjectShortName">EX__data_0[63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/central_processing_unit_tb/dut/EX__data_2" type="array">
+      <obj_property name="ElementShortName">EX__data_2[63:0]</obj_property>
+      <obj_property name="ObjectShortName">EX__data_2[63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/central_processing_unit_tb/dut/MEM__data_2" type="array">
+      <obj_property name="ElementShortName">MEM__data_2[63:0]</obj_property>
+      <obj_property name="ObjectShortName">MEM__data_2[63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/central_processing_unit_tb/dut/WB__data_2" type="array">
+      <obj_property name="ElementShortName">WB__data_2[63:0]</obj_property>
+      <obj_property name="ObjectShortName">WB__data_2[63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/central_processing_unit_tb/dut/ID__stall" type="logic">
+      <obj_property name="ElementShortName">ID__stall</obj_property>
+      <obj_property name="ObjectShortName">ID__stall</obj_property>
+   </wvobject>
+   <wvobject fp_name="/central_processing_unit_tb/dut/register_file__0/x_0" type="array">
+      <obj_property name="ElementShortName">x_0[63:0]</obj_property>
+      <obj_property name="ObjectShortName">x_0[63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/central_processing_unit_tb/dut/register_file__0/x_1" type="array">
+      <obj_property name="ElementShortName">x_1[63:0]</obj_property>
+      <obj_property name="ObjectShortName">x_1[63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/central_processing_unit_tb/dut/register_file__0/x_2" type="array">
+      <obj_property name="ElementShortName">x_2[63:0]</obj_property>
+      <obj_property name="ObjectShortName">x_2[63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/central_processing_unit_tb/dut/register_file__0/x_3" type="array">
+      <obj_property name="ElementShortName">x_3[63:0]</obj_property>
+      <obj_property name="ObjectShortName">x_3[63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/central_processing_unit_tb/dut/register_file__0/x_4" type="array">
+      <obj_property name="ElementShortName">x_4[63:0]</obj_property>
+      <obj_property name="ObjectShortName">x_4[63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/central_processing_unit_tb/dut/register_file__0/x_5" type="array">
+      <obj_property name="ElementShortName">x_5[63:0]</obj_property>
+      <obj_property name="ObjectShortName">x_5[63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/central_processing_unit_tb/dut/register_file__0/x_6" type="array">
+      <obj_property name="ElementShortName">x_6[63:0]</obj_property>
+      <obj_property name="ObjectShortName">x_6[63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/central_processing_unit_tb/dut/register_file__0/x_7" type="array">
+      <obj_property name="ElementShortName">x_7[63:0]</obj_property>
+      <obj_property name="ObjectShortName">x_7[63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/central_processing_unit_tb/dut/register_file__0/x_8" type="array">
+      <obj_property name="ElementShortName">x_8[63:0]</obj_property>
+      <obj_property name="ObjectShortName">x_8[63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/central_processing_unit_tb/dut/register_file__0/x_9" type="array">
+      <obj_property name="ElementShortName">x_9[63:0]</obj_property>
+      <obj_property name="ObjectShortName">x_9[63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/central_processing_unit_tb/dut/register_file__0/x_10" type="array">
+      <obj_property name="ElementShortName">x_10[63:0]</obj_property>
+      <obj_property name="ObjectShortName">x_10[63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/central_processing_unit_tb/dut/register_file__0/x_11" type="array">
+      <obj_property name="ElementShortName">x_11[63:0]</obj_property>
+      <obj_property name="ObjectShortName">x_11[63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/central_processing_unit_tb/dut/register_file__0/x_12" type="array">
+      <obj_property name="ElementShortName">x_12[63:0]</obj_property>
+      <obj_property name="ObjectShortName">x_12[63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/central_processing_unit_tb/dut/register_file__0/x_13" type="array">
+      <obj_property name="ElementShortName">x_13[63:0]</obj_property>
+      <obj_property name="ObjectShortName">x_13[63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/central_processing_unit_tb/dut/register_file__0/x_14" type="array">
+      <obj_property name="ElementShortName">x_14[63:0]</obj_property>
+      <obj_property name="ObjectShortName">x_14[63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/central_processing_unit_tb/dut/register_file__0/x_15" type="array">
+      <obj_property name="ElementShortName">x_15[63:0]</obj_property>
+      <obj_property name="ObjectShortName">x_15[63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/central_processing_unit_tb/dut/register_file__0/x_16" type="array">
+      <obj_property name="ElementShortName">x_16[63:0]</obj_property>
+      <obj_property name="ObjectShortName">x_16[63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/central_processing_unit_tb/dut/register_file__0/x_17" type="array">
+      <obj_property name="ElementShortName">x_17[63:0]</obj_property>
+      <obj_property name="ObjectShortName">x_17[63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/central_processing_unit_tb/dut/register_file__0/x_18" type="array">
+      <obj_property name="ElementShortName">x_18[63:0]</obj_property>
+      <obj_property name="ObjectShortName">x_18[63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/central_processing_unit_tb/dut/register_file__0/x_19" type="array">
+      <obj_property name="ElementShortName">x_19[63:0]</obj_property>
+      <obj_property name="ObjectShortName">x_19[63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/central_processing_unit_tb/dut/register_file__0/x_20" type="array">
+      <obj_property name="ElementShortName">x_20[63:0]</obj_property>
+      <obj_property name="ObjectShortName">x_20[63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/central_processing_unit_tb/dut/register_file__0/x_21" type="array">
+      <obj_property name="ElementShortName">x_21[63:0]</obj_property>
+      <obj_property name="ObjectShortName">x_21[63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/central_processing_unit_tb/dut/register_file__0/x_22" type="array">
+      <obj_property name="ElementShortName">x_22[63:0]</obj_property>
+      <obj_property name="ObjectShortName">x_22[63:0]</obj_property>
    </wvobject>
 </wave_config>

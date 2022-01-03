@@ -8,7 +8,13 @@ module arithmetic_logic_unit
     input [3:0] func,
     input [63:0] data_0,
     input [63:0] data_1,
-    output logic [63:0] data_2
+    output logic [63:0] data_2,
+    output logic eq,
+    output logic ne,
+    output logic lt,
+    output logic ltu,
+    output logic ge,
+    output logic geu
 );
 
 // comparisons
@@ -102,7 +108,7 @@ always_comb begin
                 6'h3f: data_2 = {64{data_0[63]}};
             endcase
         end
-        FUNC__SRA:
+        FUNC__SRAW:
         begin
             case (data_1[4:0])
                 5'h00: data_2 = data_0;
@@ -140,7 +146,7 @@ always_comb begin
             endcase
         end
         FUNC__OR: data_2 = data_0 | data_1;
-        FUNC__AND: data_2 = data_0 | data_1;
+        FUNC__AND: data_2 = data_0 & data_1;
     endcase
 end
 

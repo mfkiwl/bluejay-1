@@ -33,9 +33,12 @@
 "SEL__DATA_1__REG": "1'b0",
 "SEL__DATA_1__IMM": "1'b1",
 
+"SEL__RD_DATA__ALU": "1'b0",
+"SEL__RD_DATA__MEM": "1'b1",
+
 "SEL__PC__PC_PLUS_FOUR": "2'h0",
 "SEL__PC__PC_PLUS_IMM": "2'h1",
-"SEL__PC__REG_PLUG_IMM": "2'h2",
+"SEL__PC__REG_PLUS_IMM": "2'h2",
 
 "CTRL_FLOW__PC_PLUS_FOUR": "4'h0",
 "CTRL_FLOW__JAL": "4'h1",

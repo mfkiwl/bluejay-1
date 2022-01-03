@@ -15,7 +15,8 @@ module decoder
     output logic [3:0] func,
     output logic [3:0] ctrl_flow,
     output logic sel__data_0,
-    output logic sel__data_1
+    output logic sel__data_1,
+    output logic sel__rd_data
 );
 
 logic [6:0] opcode;
@@ -38,7 +39,7 @@ always_comb begin
     ctrl_flow = 4'h0;
     sel__data_0 = 1'b0;
     sel__data_1 = 1'b0;
-    
+    sel__rd_data = 1'b0;
     case (opcode)
         7'h03:
         begin
@@ -48,42 +49,49 @@ always_comb begin
                 begin
                     instr_format = 3'h1;
                     sel__data_1 = 1'b1;
+                    sel__rd_data = 1'b1;
                 end
                 // lh
                 3'h1:
                 begin
                     instr_format = 3'h1;
                     sel__data_1 = 1'b1;
+                    sel__rd_data = 1'b1;
                 end
                 // lw
                 3'h2:
                 begin
                     instr_format = 3'h1;
                     sel__data_1 = 1'b1;
+                    sel__rd_data = 1'b1;
                 end
                 // ld
                 3'h3:
                 begin
                     instr_format = 3'h1;
                     sel__data_1 = 1'b1;
+                    sel__rd_data = 1'b1;
                 end
                 // lbu
                 3'h4:
                 begin
                     instr_format = 3'h1;
                     sel__data_1 = 1'b1;
+                    sel__rd_data = 1'b1;
                 end
                 // lhu
                 3'h5:
                 begin
                     instr_format = 3'h1;
                     sel__data_1 = 1'b1;
+                    sel__rd_data = 1'b1;
                 end
                 // lhu
                 3'h6:
                 begin
                     instr_format = 3'h1;
                     sel__data_1 = 1'b1;
+                    sel__rd_data = 1'b1;
                 end
             endcase
         end
@@ -486,6 +494,7 @@ always_comb begin
             instr_format = 3'h5;
             we = 1'b0;
             ctrl_flow = 4'h1;
+            sel__data_0 = 1'b1;
             sel__data_1 = 1'b1;
         end
     endcase
