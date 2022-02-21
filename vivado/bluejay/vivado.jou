@@ -15,3 +15,28 @@ update_compile_order -fileset sources_1
 launch_simulation
 open_wave_config C:/Users/seanj/Documents/bluejay/vivado/bluejay/central_processing_unit_tb_behav.wcfg
 source central_processing_unit_tb.tcl
+close [ open C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/memory.sv w ]
+add_files C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/memory.sv
+update_compile_order -fileset sources_1
+update_compile_order -fileset sources_1
+update_compile_order -fileset sources_1
+close_sim
+launch_simulation
+launch_simulation
+update_compile_order -fileset sources_1
+launch_simulation
+open_wave_config C:/Users/seanj/Documents/bluejay/vivado/bluejay/central_processing_unit_tb_behav.wcfg
+source central_processing_unit_tb.tcl
+relaunch_sim
+relaunch_sim
+relaunch_sim
+relaunch_sim
+relaunch_sim
+relaunch_sim
+relaunch_sim
+relaunch_sim
+relaunch_sim
+relaunch_sim
+relaunch_sim
+save_wave_config {C:/Users/seanj/Documents/bluejay/vivado/bluejay/central_processing_unit_tb_behav.wcfg}
+close_sim
