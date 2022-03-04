@@ -25,11 +25,11 @@ public:
     Bluejay();
     void Run();
     uint64_t Load(uint64_t addr, uint8_t size);
+    void Store(uint64_t data, uint64_t addr, uint8_t size);
     uint64_t Field(uint64_t data, uint64_t lsb, uint64_t width);
     uint64_t SignExtend(uint64_t data, uint64_t width);
 
 };
-
 
 
 //==============================================
@@ -39,22 +39,22 @@ Bluejay::Bluejay()
 {
     std::cout << "Bluejay\n";
     
-    memory[0] = 0xff;
-    memory[1] = 0xee;
-    memory[2] = 0xdd;
-    memory[3] = 0xcc;
-    memory[4] = 0xbb;
-    memory[5] = 0xaa;
-    memory[6] = 0x99;
-    memory[7] = 0x88;
-    memory[8] = 0x77;
-    memory[9] = 0x66;
-    memory[10] = 0x55;
-    memory[11] = 0x44;
-    memory[12] = 0x33;
-    memory[13] = 0x22;
-    memory[14] = 0x11;
-    memory[15] = 0x00;
+    mem[0] = 0xff;
+    mem[1] = 0xee;
+    mem[2] = 0xdd;
+    mem[3] = 0xcc;
+    mem[4] = 0xbb;
+    mem[5] = 0xaa;
+    mem[6] = 0x99;
+    mem[7] = 0x88;
+    mem[8] = 0x77;
+    mem[9] = 0x66;
+    mem[10] = 0x55;
+    mem[11] = 0x44;
+    mem[12] = 0x33;
+    mem[13] = 0x22;
+    mem[14] = 0x11;
+    mem[15] = 0x00;
 }
 
 #define IR__OPCODE__LSB 0
@@ -84,7 +84,7 @@ uint64_t Bluejay::Field(uint64_t data, uint64_t lsb, uint64_t width)
 //==============================================
 uint64_t Bluejay::SignExtend(uint64_t data, uint64_t width)
 {
-    if ((data >> (width - 1)) 0x1) return data | (0xffffffffffffffff << width);
+    if ((data >> (width - 1)) & 0x1) return data | (0xffffffffffffffff << width);
     else return data & (0xffffffffffffffff >> (64 - width));
 }
 
@@ -195,7 +195,7 @@ void Bluejay::Run()
                     // addi
                     case 0x0:
                         x[rd] = x[rs1] + imm__i_type;
-                        pc += 4
+                        pc += 4;
                         break;
                     case 0x1:
                         switch (funct7)
@@ -203,14 +203,14 @@ void Bluejay::Run()
                             // slli
                             case 0x0:
                                 x[rd] = x[rs1] << (imm__i_type & 0x1f);
-                                pc += 4
+                                pc += 4;
                                 break; 
                         }
                         break;
                     // slti
                     case 0x2:
                         x[rd] = (int64_t)x[rs1] < (int64_t)imm__i_type;
-                        pc += 4
+                        pc += 4;
                         break;
                     // sltiu
                     case 0x3:
@@ -228,12 +228,12 @@ void Bluejay::Run()
                             // srli
                             case 0x00:
                                 x[rd] = x[rs1] >> (imm__i_type & 0x1f);
-                                pc += 4
+                                pc += 4;
                                 break;
                             // srai
                             case 0x20:
                                 x[rd] = (int64_t)x[rs1] >> (imm__i_type & 0x1f);
-                                pc += 4
+                                pc += 4;
                                 break;
                         }
                         break;
@@ -260,7 +260,7 @@ void Bluejay::Run()
                     // addiw
                     case 0x0:
                         x[rd] = SignExtend(x[rs1] + imm__i_type, 32);
-                        p4 += 4;
+                        pc += 4;
                         break;
                     case 0x1:
                         switch (funct7)
@@ -268,7 +268,7 @@ void Bluejay::Run()
                             // slliw
                             case 0x00:
                                 x[rd] = SignExtend(x[rs1] << (imm__i_type & 0x1f), 32);
-                                p4 += 4;
+                                pc += 4;
                                 break; 
                         }
                         break;
@@ -278,12 +278,12 @@ void Bluejay::Run()
                             // srliw
                             case 0x00:
                                 x[rd] = SignExtend(x[rs1] >> (imm__i_type & 0x1f), 32);
-                                p4 += 4;
+                                pc += 4;
                                 break; 
                             // sraiw
                             case 0x20:
                                 x[rd] = SignExtend((int64_t)x[rs1] >> (imm__i_type & 0x1f), 32);
-                                p4 += 4;
+                                pc += 4;
                                 break; 
                         }
                         break;
@@ -294,15 +294,23 @@ void Bluejay::Run()
                 {
                     // sb
                     case 0x0:
+                        Store(x[rs2], x[rs1] + imm__b_type, 1);
+                        pc += 4;
                         break;
                     // sh
                     case 0x1:
+                        Store(x[rs2], x[rs1] + imm__b_type, 2);
+                        pc += 4;
                         break;
                     // sw
                     case 0x2:
+                        Store(x[rs2], x[rs1] + imm__b_type, 4);
+                        pc += 4;
                         break;
                     // sd
                     case 0x3:
+                        Store(x[rs2], x[rs1] + imm__b_type, 8);
+                        pc += 4;
                         break;
                 }
                 break;
@@ -314,9 +322,13 @@ void Bluejay::Run()
                         {
                             // add
                             case 0x00:
+                                x[rd] = (int64_t)x[rs1] + (int64_t)x[rs2];
+                                pc += 4;
                                 break;
                             // sub 
                             case 0x20:
+                                x[rd] = (int64_t)x[rs1] - (int64_t)x[rs2];
+                                pc += 4;
                                 break;
                         }
                         break;
@@ -325,6 +337,8 @@ void Bluejay::Run()
                         {
                             // sll
                             case 0x00:
+                                x[rd] = x[rs1] << (x[rs2] & 0x1f);
+                                pc += 4;
                                 break;
                         }
                         break; 
@@ -333,6 +347,8 @@ void Bluejay::Run()
                         {
                             // slt 
                             case 0x00:
+                                x[rd] = (int64_t)x[rs1] < (int64_t)x[rs2];
+                                pc += 4;
                                 break;
                         }
                         break; 
@@ -341,6 +357,8 @@ void Bluejay::Run()
                         {
                             // sltu 
                             case 0x00:
+                                x[rd] = x[rs1] < x[rs2];
+                                pc += 4;
                                 break;
                         }
                         break; 
@@ -349,6 +367,8 @@ void Bluejay::Run()
                         {
                             // xor 
                             case 0x00:
+                                x[rd] = x[rs1] ^ x[rs2];
+                                pc += 4;
                                 break;
                         }
                         break; 
@@ -357,9 +377,13 @@ void Bluejay::Run()
                         {
                             // srl 
                             case 0x00:
+                                x[rd] = x[rs1] >> (x[rs2] & 0x1f);
+                                pc += 4;
                                 break;
                             // sra 
                             case 0x20:
+                                x[rd] = (uint64_t)x[rs1] >> (x[rs2] & 0x1f);
+                                pc += 4;
                                 break;
                         }
                         break; 
@@ -368,6 +392,8 @@ void Bluejay::Run()
                         {
                             // or 
                             case 0x00:
+                                x[rd] = x[rs1] | x[rs2];
+                                pc += 4;
                                 break;
                         }
                         break;
@@ -376,13 +402,17 @@ void Bluejay::Run()
                         {
                             // and 
                             case 0x00:
+                                x[rd] = x[rs1] & x[rs2];
+                                pc += 4;
                                 break;
                         }
                         break;
                 }
                 break;
-            // lui
+            // lui 
             case 0x37:
+                x[rd] = imm__u_type;
+                pc += 4;
                 break;
             case 0x3b:
                 switch (funct3)
@@ -392,9 +422,13 @@ void Bluejay::Run()
                         {
                             // addw
                             case 0x00:
+                                x[rd] = SignExtend(x[rs1] + x[rs2], 32);
+                                pc += 4;
                                 break;
                             // subw
                             case 0x20:
+                                x[rd] = SignExtend(x[rs1] - x[rs2], 32);
+                                pc += 4;
                                 break;
                         }
                         break;
@@ -403,6 +437,8 @@ void Bluejay::Run()
                         {
                             // sllw
                             case 0x00:
+                                x[rd] = SignExtend(x[rs1] << (x[rs2] & 0x1f), 32);
+                                pc += 4;
                                 break;
                         }
                         break;
@@ -411,9 +447,13 @@ void Bluejay::Run()
                         {
                             // srlw
                             case 0x00:
+                                x[rd] = SignExtend(x[rs1] >> (x[rs2] & 0x1f), 32);
+                                pc += 4;
                                 break;
                             // sraw
                             case 0x20:
+                                x[rd] = SignExtend((uint64_t)x[rs1] >> (x[rs2] & 0x1f), 32);
+                                pc += 4;
                                 break;
                         }
                         break;
@@ -424,21 +464,33 @@ void Bluejay::Run()
                 {
                     // beq 
                     case 0x0:
+                        if (x[rs1] == x[rs2]) pc += imm__b_type;
+                        else pc += 4;
                         break;
                     // bne 
                     case 0x1:
+                        if (x[rs1] != x[rs2]) pc += imm__b_type;
+                        else pc += 4;
                         break;
                     // blt 
                     case 0x4:
+                        if ((int64_t)x[rs1] < (int64_t)x[rs2]) pc += imm__b_type;
+                        else pc += 4;
                         break;
                     // bge 
                     case 0x5:
+                        if ((int64_t)x[rs1] >= (int64_t)x[rs2]) pc += imm__b_type;
+                        else pc += 4;
                         break;
                     // bltu 
                     case 0x6:
+                        if (x[rs1] < x[rs2]) pc += imm__b_type;
+                        else pc += 4;
                         break;
                     // bgeu 
                     case 0x7:
+                        if (x[rs1] >= x[rs2]) pc += imm__b_type;
+                        else pc += 4;
                         break;
                 }
                 break;
@@ -447,11 +499,15 @@ void Bluejay::Run()
                 {
                     // jalr
                     case 0x0:
+                        x[rd] = pc + 4;
+                        pc = x[rs1] + imm__i_type;
                         break;
                 }
                 break;
             // jal
             case 0x6f:
+                x[rd] = pc + 4;
+                pc += imm__j_type;
                 break;
             case 0x73:
                 switch (funct3)
@@ -490,6 +546,17 @@ uint64_t Bluejay::Load(uint64_t addr, uint8_t size)
     } 
 
     return data;
+}
+
+//==============================================
+// Store 
+//==============================================
+void Bluejay::Store(uint64_t data, uint64_t addr, uint8_t size)
+{
+    for (int i = 0; i < size; i++) 
+    {
+        mem[addr + i] = (uint8_t)((data >> (8*i)) & 0xff);
+    } 
 }
 
 //==============================================
