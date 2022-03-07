@@ -2,11 +2,32 @@
 // include 
 //==============================================
 #include <iostream>
+#include <string>
+#include <fstream>
+#include <vector>
+#include <iomanip>
 
 //==============================================
 // define 
 //==============================================
-#define MEMORY__SIZE 1024 
+#define MEMORY__SIZE 32768 
+#define IR__OPCODE__LSB 0
+#define IR__OPCODE__WIDTH 7
+#define IR__RD__LSB 7
+#define IR__RD__WIDTH 5
+#define IR__FUNCT3__LSB 12
+#define IR__FUNCT3__WIDTH 3
+#define IR__RS1__LSB 15
+#define IR__RS1__WIDTH 5
+#define IR__RS2__LSB 20
+#define IR__RS2__WIDTH 5
+#define IR__FUNCT7__LSB 25
+#define IR__FUNCT7__WIDTH 7 
+#define REG__RA 1
+#define REG__SP 2
+#define REG__GP 3
+
+
 
 //==============================================
 // Bluejay 
@@ -23,12 +44,20 @@ public:
     uint64_t ir;
 
     Bluejay();
+    void Init();
+    void LoadMem(std::string filename);
     void Run();
     uint64_t Load(uint64_t addr, uint8_t size);
     void Store(uint64_t data, uint64_t addr, uint8_t size);
     uint64_t Field(uint64_t data, uint64_t lsb, uint64_t width);
     uint64_t SignExtend(uint64_t data, uint64_t width);
 
+    uint64_t Read(uint64_t rs);
+    void Write(uint64_t rd, uint64_t data);
+
+
+    void PrintMemory();
+    void PrintRegs();
 };
 
 
@@ -37,38 +66,107 @@ public:
 //==============================================
 Bluejay::Bluejay()
 {
-    std::cout << "Bluejay\n";
-    
-    mem[0] = 0xff;
-    mem[1] = 0xee;
-    mem[2] = 0xdd;
-    mem[3] = 0xcc;
-    mem[4] = 0xbb;
-    mem[5] = 0xaa;
-    mem[6] = 0x99;
-    mem[7] = 0x88;
-    mem[8] = 0x77;
-    mem[9] = 0x66;
-    mem[10] = 0x55;
-    mem[11] = 0x44;
-    mem[12] = 0x33;
-    mem[13] = 0x22;
-    mem[14] = 0x11;
-    mem[15] = 0x00;
 }
 
-#define IR__OPCODE__LSB 0
-#define IR__OPCODE__WIDTH 7
-#define IR__RD__LSB 7
-#define IR__RD__WIDTH 5
-#define IR__FUNCT3__LSB 12
-#define IR__FUNCT3__WIDTH 3
-#define IR__RS1__LSB 15
-#define IR__RS1__WIDTH 5
-#define IR__RS2__LSB 20
-#define IR__RS2__WIDTH 5
-#define IR__FUNCT7__LSB 25
-#define IR__FUNCT7__WIDTH 7 
+//==============================================
+// Init 
+//==============================================
+void Bluejay::Init()
+{
+    pc = 0x0;
+    x[REG__SP] = 0x3ffc;
+    x[REG__GP] = 0x1800;
+}
+
+//==============================================
+// PrintRegs 
+//==============================================
+void Bluejay::PrintRegs()
+{
+    std::cout << "zero: 0x" << std::setfill('0') << std::setw(16) << std::right << std::hex << x[0] << std::endl; 
+    std::cout << "ra:   0x" << std::setfill('0') << std::setw(16) << std::right << std::hex << x[1] << std::endl; 
+    std::cout << "sp:   0x" << std::setfill('0') << std::setw(16) << std::right << std::hex << x[2] << std::endl; 
+    std::cout << "gp:   0x" << std::setfill('0') << std::setw(16) << std::right << std::hex << x[3] << std::endl; 
+    std::cout << "tp:   0x" << std::setfill('0') << std::setw(16) << std::right << std::hex << x[4] << std::endl; 
+    std::cout << "t0:   0x" << std::setfill('0') << std::setw(16) << std::right << std::hex << x[5] << std::endl; 
+    std::cout << "t1:   0x" << std::setfill('0') << std::setw(16) << std::right << std::hex << x[6] << std::endl; 
+    std::cout << "t2:   0x" << std::setfill('0') << std::setw(16) << std::right << std::hex << x[7] << std::endl; 
+    std::cout << "s0:   0x" << std::setfill('0') << std::setw(16) << std::right << std::hex << x[8] << std::endl; 
+    std::cout << "s1:   0x" << std::setfill('0') << std::setw(16) << std::right << std::hex << x[9] << std::endl; 
+    std::cout << "a0:   0x" << std::setfill('0') << std::setw(16) << std::right << std::hex << x[10] << std::endl; 
+    std::cout << "a1:   0x" << std::setfill('0') << std::setw(16) << std::right << std::hex << x[11] << std::endl; 
+    std::cout << "a2:   0x" << std::setfill('0') << std::setw(16) << std::right << std::hex << x[12] << std::endl; 
+    std::cout << "a3:   0x" << std::setfill('0') << std::setw(16) << std::right << std::hex << x[13] << std::endl; 
+    std::cout << "a4:   0x" << std::setfill('0') << std::setw(16) << std::right << std::hex << x[14] << std::endl; 
+    std::cout << "a5:   0x" << std::setfill('0') << std::setw(16) << std::right << std::hex << x[15] << std::endl; 
+    std::cout << "a6:   0x" << std::setfill('0') << std::setw(16) << std::right << std::hex << x[16] << std::endl; 
+    std::cout << "a7:   0x" << std::setfill('0') << std::setw(16) << std::right << std::hex << x[17] << std::endl; 
+    std::cout << "s2:   0x" << std::setfill('0') << std::setw(16) << std::right << std::hex << x[18] << std::endl; 
+    std::cout << "s3:   0x" << std::setfill('0') << std::setw(16) << std::right << std::hex << x[19] << std::endl; 
+    std::cout << "s4:   0x" << std::setfill('0') << std::setw(16) << std::right << std::hex << x[20] << std::endl; 
+    std::cout << "s5:   0x" << std::setfill('0') << std::setw(16) << std::right << std::hex << x[21] << std::endl; 
+    std::cout << "s6:   0x" << std::setfill('0') << std::setw(16) << std::right << std::hex << x[22] << std::endl; 
+    std::cout << "s7:   0x" << std::setfill('0') << std::setw(16) << std::right << std::hex << x[23] << std::endl; 
+    std::cout << "s8:   0x" << std::setfill('0') << std::setw(16) << std::right << std::hex << x[24] << std::endl; 
+    std::cout << "s9:   0x" << std::setfill('0') << std::setw(16) << std::right << std::hex << x[25] << std::endl; 
+    std::cout << "s10:  0x" << std::setfill('0') << std::setw(16) << std::right << std::hex << x[26] << std::endl; 
+    std::cout << "s11:  0x" << std::setfill('0') << std::setw(16) << std::right << std::hex << x[27] << std::endl; 
+    std::cout << "t3:   0x" << std::setfill('0') << std::setw(16) << std::right << std::hex << x[28] << std::endl; 
+    std::cout << "t4:   0x" << std::setfill('0') << std::setw(16) << std::right << std::hex << x[29] << std::endl; 
+    std::cout << "t5:   0x" << std::setfill('0') << std::setw(16) << std::right << std::hex << x[30] << std::endl; 
+    std::cout << "t6:   0x" << std::setfill('0') << std::setw(16) << std::right << std::hex << x[31] << std::endl; 
+}
+
+//==============================================
+// Read 
+//==============================================
+uint64_t Bluejay::Read(uint64_t rs)
+{
+    if (rs == 0x0) return 0x0;
+    else return x[rs];
+}
+
+//==============================================
+// Write 
+//==============================================
+void Bluejay::Write(uint64_t rd, uint64_t data)
+{
+    if (rd != 0x0) x[rd] = data;
+}
+
+//==============================================
+// LoadMem 
+//==============================================
+void Bluejay::LoadMem(std::string filename)
+{
+
+    std::cout << filename << std::endl;
+    std::ifstream file(filename);
+    std::string line;
+
+
+    uint64_t addr = 0;
+    uint64_t data;
+
+    if (file.is_open())
+    {
+
+        while (getline(file, line))
+        {
+            if (addr >= MEMORY__SIZE) 
+            {
+                std::cout << "[ERROR] Memory Limit Reached.\n";
+            }
+            std::cout << line << '\n';
+            data = std::stoul(line, nullptr, 16);
+            Store(data, addr, 4);
+            addr += 4;
+        }
+        file.close();
+    }
+    else std::cout << "[ERROR] Unable to open file.\n";
+}
+
 
 
 //==============================================
@@ -107,11 +205,19 @@ void Bluejay::Run()
     uint64_t imm__u_type;
     uint64_t imm__j_type;
 
-    while (1) {
+    std::cout << "Run\n";
+
+    while (1)
+    {
+        std::cout << "hi" << std::endl;
+        break;
+    }
+
+    while (1) 
+    {
         // load instruction      
         ir = Load(pc, 4);
-        std::cout << "pc: " << std::hex << pc << std::endl; 
-        std::cout << "ir: " << std::hex << ir << std::endl; 
+     
 
         opcode = Field(ir, IR__OPCODE__LSB, IR__OPCODE__WIDTH);
         rd = Field(ir, IR__RD__LSB, IR__RD__WIDTH);
@@ -124,18 +230,21 @@ void Bluejay::Run()
         imm__b_type = SignExtend((Field(ir, 31, 1) << 12) | (Field(ir, 7, 1) << 11) | (Field(ir, 25, 6) << 5) | (Field(ir, 8, 4) << 1), 13);
         imm__u_type = SignExtend(Field(ir, 12, 20) << 12, 32);
         imm__j_type = SignExtend((Field(ir, 31, 1) << 20) | (Field(ir, 12, 8) << 12) | (Field(ir, 20, 1) << 11) | (Field(ir, 21, 10) << 1), 21);
-                
-        std::cout << "opcode: " << std::hex << opcode << std::endl; 
-        std::cout << "rd: " << std::hex << rd << std::endl; 
-        std::cout << "funct3: " << std::hex << funct3 << std::endl; 
-        std::cout << "rs1: " << std::hex << rs1 << std::endl; 
-        std::cout << "rs2: " << std::hex << rs2 << std::endl; 
-        std::cout << "funct7: " << std::hex << funct7 << std::endl; 
+              
+
+        //std::cout << "pc: " << std::hex << pc << std::endl; 
+        //std::cout << "ir: " << std::hex << ir << std::endl; 
+        //std::cout << "opcode: " << std::hex << opcode << std::endl; 
+        //std::cout << "rd: " << std::hex << rd << std::endl; 
+        //std::cout << "funct3: " << std::hex << funct3 << std::endl; 
+        //std::cout << "rs1: " << std::hex << rs1 << std::endl; 
+        //std::cout << "rs2: " << std::hex << rs2 << std::endl; 
+        //std::cout << "funct7: " << std::hex << funct7 << std::endl; 
 
         uint64_t addr;
         uint64_t data;
 
-
+        x[0] = 0x0;
         switch (opcode)
         {
             case 0x03:
@@ -517,18 +626,18 @@ void Bluejay::Run()
                         {
                             // ecall
                             case 0x000:
+                                return;
                                 break;
                             // ebreak
                             case 0x001:
+                                return;
                                 break;
                         }
                         break;
                 }
                 break;
         }
-
-
-        break;
+        x[0] = 0x0;
     }
 
 }
@@ -566,9 +675,13 @@ int main()
 {
     std::cout << "Hello World!\n";
     Bluejay bluejay;
+    bluejay.Init();
+    bluejay.LoadMem("ld.txt");
     bluejay.Run();
+    std::cout << std::hex << bluejay.pc << std::endl;
 //    uint64_t data;
 //    data = bluejay.Load(1, 8);
 //    std::cout << std::hex << data << std::endl;
+    bluejay.PrintRegs();
     return 0; 
 }
