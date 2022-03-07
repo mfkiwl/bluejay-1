@@ -26,6 +26,7 @@
 #define REG__RA 1
 #define REG__SP 2
 #define REG__GP 3
+#define REG__A0 10
 
 
 
@@ -66,6 +67,7 @@ public:
 //==============================================
 Bluejay::Bluejay()
 {
+    x[0] = 0x0;
 }
 
 //==============================================
@@ -140,7 +142,6 @@ void Bluejay::Write(uint64_t rd, uint64_t data)
 void Bluejay::LoadMem(std::string filename)
 {
 
-    std::cout << filename << std::endl;
     std::ifstream file(filename);
     std::string line;
 
@@ -157,7 +158,6 @@ void Bluejay::LoadMem(std::string filename)
             {
                 std::cout << "[ERROR] Memory Limit Reached.\n";
             }
-            std::cout << line << '\n';
             data = std::stoul(line, nullptr, 16);
             Store(data, addr, 4);
             addr += 4;
@@ -186,50 +186,33 @@ uint64_t Bluejay::SignExtend(uint64_t data, uint64_t width)
     else return data & (0xffffffffffffffff >> (64 - width));
 }
 
+
+
+
+
+
 //==============================================
-// Run 
+// Run
 //==============================================
 void Bluejay::Run()
 {
-    std::cout << "Run\n";
-
-    uint64_t opcode;
-    uint64_t rd;
-    uint64_t funct3;
-    uint64_t rs1;
-    uint64_t rs2;
-    uint64_t funct7;
-    uint64_t imm__i_type;
-    uint64_t imm__s_type;
-    uint64_t imm__b_type;
-    uint64_t imm__u_type;
-    uint64_t imm__j_type;
-
-    std::cout << "Run\n";
-
-    while (1)
-    {
-        std::cout << "hi" << std::endl;
-        break;
-    }
-
     while (1) 
     {
         // load instruction      
-        ir = Load(pc, 4);
+        uint64_t ir = Load(pc, 4);
      
-
-        opcode = Field(ir, IR__OPCODE__LSB, IR__OPCODE__WIDTH);
-        rd = Field(ir, IR__RD__LSB, IR__RD__WIDTH);
-        funct3 = Field(ir, IR__FUNCT3__LSB, IR__FUNCT3__WIDTH);
-        rs1 = Field(ir, IR__RS1__LSB, IR__RS1__WIDTH);
-        rs2 = Field(ir, IR__RS2__LSB, IR__RS2__WIDTH);
-        funct7 = Field(ir, IR__FUNCT7__LSB, IR__FUNCT7__WIDTH);
-        imm__i_type = SignExtend(Field(ir, 20, 12), 12);
-        imm__s_type = SignExtend((Field(ir, 25, 7) << 5) | Field(ir, 7, 5), 12);
-        imm__b_type = SignExtend((Field(ir, 31, 1) << 12) | (Field(ir, 7, 1) << 11) | (Field(ir, 25, 6) << 5) | (Field(ir, 8, 4) << 1), 13);
-        imm__u_type = SignExtend(Field(ir, 12, 20) << 12, 32);
-        imm__j_type = SignExtend((Field(ir, 31, 1) << 20) | (Field(ir, 12, 8) << 12) | (Field(ir, 20, 1) << 11) | (Field(ir, 21, 10) << 1), 21);
+        // decode instruction
+        uint64_t opcode = Field(ir, IR__OPCODE__LSB, IR__OPCODE__WIDTH);
+        uint64_t rd = Field(ir, IR__RD__LSB, IR__RD__WIDTH);
+        uint64_t funct3 = Field(ir, IR__FUNCT3__LSB, IR__FUNCT3__WIDTH);
+        uint64_t rs1 = Field(ir, IR__RS1__LSB, IR__RS1__WIDTH);
+        uint64_t rs2 = Field(ir, IR__RS2__LSB, IR__RS2__WIDTH);
+        uint64_t funct7 = Field(ir, IR__FUNCT7__LSB, IR__FUNCT7__WIDTH);
+        uint64_t imm__i_type = SignExtend(Field(ir, 20, 12), 12);
+        uint64_t imm__s_type = SignExtend((Field(ir, 25, 7) << 5) | Field(ir, 7, 5), 12);
+        uint64_t imm__b_type = SignExtend((Field(ir, 31, 1) << 12) | (Field(ir, 7, 1) << 11) | (Field(ir, 25, 6) << 5) | (Field(ir, 8, 4) << 1), 13);
+        uint64_t imm__u_type = SignExtend(Field(ir, 12, 20) << 12, 32);
+        uint64_t imm__j_type = SignExtend((Field(ir, 31, 1) << 20) | (Field(ir, 12, 8) << 12) | (Field(ir, 20, 1) << 11) | (Field(ir, 21, 10) << 1), 21);
               
 
         //std::cout << "pc: " << std::hex << pc << std::endl; 
@@ -241,10 +224,7 @@ void Bluejay::Run()
         //std::cout << "rs2: " << std::hex << rs2 << std::endl; 
         //std::cout << "funct7: " << std::hex << funct7 << std::endl; 
 
-        uint64_t addr;
-        uint64_t data;
-
-        x[0] = 0x0;
+        // execute instruction
         switch (opcode)
         {
             case 0x03:
@@ -252,37 +232,37 @@ void Bluejay::Run()
                 {
                     // lb
                     case 0x0:
-                        x[rd] = SignExtend(Load(x[rs1] + imm__i_type, 1), 8);
+                        if (rd != 0) x[rd] = SignExtend(Load(x[rs1] + imm__i_type, 1), 8);
                         pc += 4;
                         break;
                     // lh
                     case 0x1:
-                        x[rd] = SignExtend(Load(x[rs1] + imm__i_type, 2), 16);
+                        if (rd != 0) x[rd] = SignExtend(Load(x[rs1] + imm__i_type, 2), 16);
                         pc += 4;
                         break;
                     // lw
                     case 0x2:
-                        x[rd] = SignExtend(Load(x[rs1] + imm__i_type, 4), 32);
+                        if (rd != 0) x[rd] = SignExtend(Load(x[rs1] + imm__i_type, 4), 32);
                         pc += 4;
                         break;
                     // ld
                     case 0x3:
-                        x[rd] = Load(x[rs1] + imm__i_type, 8);
+                        if (rd != 0) x[rd] = Load(x[rs1] + imm__i_type, 8);
                         pc += 4;
                         break;
                     // lbu
                     case 0x4:
-                        x[rd] = Load(x[rs1] + imm__i_type, 1);
+                        if (rd != 0) x[rd] = Load(x[rs1] + imm__i_type, 1);
                         pc += 4;
                         break;
                     // lhu 
                     case 0x5:
-                        x[rd] = Load(x[rs1] + imm__i_type, 2);
+                        if (rd != 0) x[rd] = Load(x[rs1] + imm__i_type, 2);
                         pc += 4;
                         break;
                     // lwu 
                     case 0x6:
-                        x[rd] = Load(x[rs1] + imm__i_type, 4);
+                        if (rd != 0) x[rd] = Load(x[rs1] + imm__i_type, 4);
                         pc += 4;
                         break;
                 }
@@ -303,7 +283,7 @@ void Bluejay::Run()
                 {
                     // addi
                     case 0x0:
-                        x[rd] = x[rs1] + imm__i_type;
+                        if (rd != 0) x[rd] = x[rs1] + imm__i_type;
                         pc += 4;
                         break;
                     case 0x1:
@@ -311,24 +291,24 @@ void Bluejay::Run()
                         {
                             // slli
                             case 0x0:
-                                x[rd] = x[rs1] << (imm__i_type & 0x1f);
+                                if (rd != 0) x[rd] = x[rs1] << (imm__i_type & 0x1f);
                                 pc += 4;
                                 break; 
                         }
                         break;
                     // slti
                     case 0x2:
-                        x[rd] = (int64_t)x[rs1] < (int64_t)imm__i_type;
+                        if (rd != 0) x[rd] = (int64_t)x[rs1] < (int64_t)imm__i_type;
                         pc += 4;
                         break;
                     // sltiu
                     case 0x3:
-                        x[rd] = x[rs1] < imm__i_type;
+                        if (rd != 0) x[rd] = x[rs1] < imm__i_type;
                         pc += 4;
                         break;
                     // xori
                     case 0x4:
-                        x[rd] = x[rs1] ^ imm__i_type;
+                        if (rd != 0) x[rd] = x[rs1] ^ imm__i_type;
                         pc += 4;
                         break;
                     case 0x5:
@@ -336,31 +316,31 @@ void Bluejay::Run()
                         {
                             // srli
                             case 0x00:
-                                x[rd] = x[rs1] >> (imm__i_type & 0x1f);
+                                if (rd != 0) x[rd] = x[rs1] >> (imm__i_type & 0x1f);
                                 pc += 4;
                                 break;
                             // srai
                             case 0x20:
-                                x[rd] = (int64_t)x[rs1] >> (imm__i_type & 0x1f);
+                                if (rd != 0) x[rd] = (int64_t)x[rs1] >> (imm__i_type & 0x1f);
                                 pc += 4;
                                 break;
                         }
                         break;
                     // ori
                     case 0x6:
-                        x[rd] = x[rs1] | imm__i_type;
+                        if (rd != 0) x[rd] = x[rs1] | imm__i_type;
                         pc += 4;
                         break;
                     // andi 
                     case 0x7:
-                        x[rd] = x[rs1] & imm__i_type;
+                        if (rd != 0) x[rd] = x[rs1] & imm__i_type;
                         pc += 4;
                         break;
                 }
                 break;
             // auipc
             case 0x17:
-                x[rd] = pc + imm__u_type;
+                if (rd != 0) x[rd] = pc + imm__u_type;
                 pc += 4;
                 break;
             case 0x1b:
@@ -368,7 +348,7 @@ void Bluejay::Run()
                 {
                     // addiw
                     case 0x0:
-                        x[rd] = SignExtend(x[rs1] + imm__i_type, 32);
+                        if (rd != 0) x[rd] = SignExtend(x[rs1] + imm__i_type, 32);
                         pc += 4;
                         break;
                     case 0x1:
@@ -376,7 +356,7 @@ void Bluejay::Run()
                         {
                             // slliw
                             case 0x00:
-                                x[rd] = SignExtend(x[rs1] << (imm__i_type & 0x1f), 32);
+                                if (rd != 0) x[rd] = SignExtend(x[rs1] << (imm__i_type & 0x1f), 32);
                                 pc += 4;
                                 break; 
                         }
@@ -386,12 +366,12 @@ void Bluejay::Run()
                         {
                             // srliw
                             case 0x00:
-                                x[rd] = SignExtend(x[rs1] >> (imm__i_type & 0x1f), 32);
+                                if (rd != 0) x[rd] = SignExtend(x[rs1] >> (imm__i_type & 0x1f), 32);
                                 pc += 4;
                                 break; 
                             // sraiw
                             case 0x20:
-                                x[rd] = SignExtend((int64_t)x[rs1] >> (imm__i_type & 0x1f), 32);
+                                if (rd != 0) x[rd] = SignExtend((int64_t)x[rs1] >> (imm__i_type & 0x1f), 32);
                                 pc += 4;
                                 break; 
                         }
@@ -431,12 +411,12 @@ void Bluejay::Run()
                         {
                             // add
                             case 0x00:
-                                x[rd] = (int64_t)x[rs1] + (int64_t)x[rs2];
+                                if (rd != 0) x[rd] = (int64_t)x[rs1] + (int64_t)x[rs2];
                                 pc += 4;
                                 break;
                             // sub 
                             case 0x20:
-                                x[rd] = (int64_t)x[rs1] - (int64_t)x[rs2];
+                                if (rd != 0) x[rd] = (int64_t)x[rs1] - (int64_t)x[rs2];
                                 pc += 4;
                                 break;
                         }
@@ -446,7 +426,7 @@ void Bluejay::Run()
                         {
                             // sll
                             case 0x00:
-                                x[rd] = x[rs1] << (x[rs2] & 0x1f);
+                                if (rd != 0) x[rd] = x[rs1] << (x[rs2] & 0x1f);
                                 pc += 4;
                                 break;
                         }
@@ -456,7 +436,7 @@ void Bluejay::Run()
                         {
                             // slt 
                             case 0x00:
-                                x[rd] = (int64_t)x[rs1] < (int64_t)x[rs2];
+                                if (rd != 0) x[rd] = (int64_t)x[rs1] < (int64_t)x[rs2];
                                 pc += 4;
                                 break;
                         }
@@ -466,7 +446,7 @@ void Bluejay::Run()
                         {
                             // sltu 
                             case 0x00:
-                                x[rd] = x[rs1] < x[rs2];
+                                if (rd != 0) x[rd] = x[rs1] < x[rs2];
                                 pc += 4;
                                 break;
                         }
@@ -476,7 +456,7 @@ void Bluejay::Run()
                         {
                             // xor 
                             case 0x00:
-                                x[rd] = x[rs1] ^ x[rs2];
+                                if (rd != 0) x[rd] = x[rs1] ^ x[rs2];
                                 pc += 4;
                                 break;
                         }
@@ -486,12 +466,12 @@ void Bluejay::Run()
                         {
                             // srl 
                             case 0x00:
-                                x[rd] = x[rs1] >> (x[rs2] & 0x1f);
+                                if (rd != 0) x[rd] = x[rs1] >> (x[rs2] & 0x1f);
                                 pc += 4;
                                 break;
                             // sra 
                             case 0x20:
-                                x[rd] = (uint64_t)x[rs1] >> (x[rs2] & 0x1f);
+                                if (rd != 0) x[rd] = (uint64_t)x[rs1] >> (x[rs2] & 0x1f);
                                 pc += 4;
                                 break;
                         }
@@ -501,7 +481,7 @@ void Bluejay::Run()
                         {
                             // or 
                             case 0x00:
-                                x[rd] = x[rs1] | x[rs2];
+                                if (rd != 0) x[rd] = x[rs1] | x[rs2];
                                 pc += 4;
                                 break;
                         }
@@ -511,7 +491,7 @@ void Bluejay::Run()
                         {
                             // and 
                             case 0x00:
-                                x[rd] = x[rs1] & x[rs2];
+                                if (rd != 0) x[rd] = x[rs1] & x[rs2];
                                 pc += 4;
                                 break;
                         }
@@ -520,7 +500,7 @@ void Bluejay::Run()
                 break;
             // lui 
             case 0x37:
-                x[rd] = imm__u_type;
+                if (rd != 0) x[rd] = imm__u_type;
                 pc += 4;
                 break;
             case 0x3b:
@@ -531,12 +511,12 @@ void Bluejay::Run()
                         {
                             // addw
                             case 0x00:
-                                x[rd] = SignExtend(x[rs1] + x[rs2], 32);
+                                if (rd != 0) x[rd] = SignExtend(x[rs1] + x[rs2], 32);
                                 pc += 4;
                                 break;
                             // subw
                             case 0x20:
-                                x[rd] = SignExtend(x[rs1] - x[rs2], 32);
+                                if (rd != 0) x[rd] = SignExtend(x[rs1] - x[rs2], 32);
                                 pc += 4;
                                 break;
                         }
@@ -546,7 +526,7 @@ void Bluejay::Run()
                         {
                             // sllw
                             case 0x00:
-                                x[rd] = SignExtend(x[rs1] << (x[rs2] & 0x1f), 32);
+                                if (rd != 0) x[rd] = SignExtend(x[rs1] << (x[rs2] & 0x1f), 32);
                                 pc += 4;
                                 break;
                         }
@@ -556,12 +536,12 @@ void Bluejay::Run()
                         {
                             // srlw
                             case 0x00:
-                                x[rd] = SignExtend(x[rs1] >> (x[rs2] & 0x1f), 32);
+                                if (rd != 0) x[rd] = SignExtend(x[rs1] >> (x[rs2] & 0x1f), 32);
                                 pc += 4;
                                 break;
                             // sraw
                             case 0x20:
-                                x[rd] = SignExtend((uint64_t)x[rs1] >> (x[rs2] & 0x1f), 32);
+                                if (rd != 0) x[rd] = SignExtend((uint64_t)x[rs1] >> (x[rs2] & 0x1f), 32);
                                 pc += 4;
                                 break;
                         }
@@ -608,14 +588,14 @@ void Bluejay::Run()
                 {
                     // jalr
                     case 0x0:
-                        x[rd] = pc + 4;
+                        if (rd != 0) x[rd] = pc + 4;
                         pc = x[rs1] + imm__i_type;
                         break;
                 }
                 break;
             // jal
             case 0x6f:
-                x[rd] = pc + 4;
+                if (rd != 0) x[rd] = pc + 4;
                 pc += imm__j_type;
                 break;
             case 0x73:
@@ -637,9 +617,7 @@ void Bluejay::Run()
                 }
                 break;
         }
-        x[0] = 0x0;
     }
-
 }
 
 //==============================================
@@ -669,19 +647,85 @@ void Bluejay::Store(uint64_t data, uint64_t addr, uint8_t size)
 }
 
 //==============================================
+// Test 
+//==============================================
+class Test
+{
+public:
+    uint64_t pc = 0x0;
+    uint64_t sp = 0x3ffc;
+    uint64_t gp = 0x1800;
+    std::string filename;
+    uint64_t type;
+    uint64_t addr;
+    uint64_t N;
+
+public:
+    Test(std::string filename, uint64_t type);
+    void Run();
+    void Load(Bluejay& bluejay);
+};
+
+//==============================================
+// Test 
+//==============================================
+Test::Test(std::string filename, uint64_t type)
+{
+    this->filename = filename;
+    this->type = type;
+}
+//==============================================
+// Run
+//==============================================
+void Test::Run()
+{
+    Bluejay bluejay;
+
+    Load(bluejay);
+    bluejay.pc = pc;
+    bluejay.x[REG__SP] = sp;
+    bluejay.x[REG__GP] = gp;
+    bluejay.Run();
+
+    switch (type)
+    {
+        case 0: 
+            std::cout << "a0: 0x" << std::setfill('0') << std::setw(16) << std::right << std::hex << bluejay.x[REG__A0] << std::endl; 
+            break;
+        case 1:
+            break;
+    }
+}
+
+//==============================================
+// Load 
+//==============================================
+void Test::Load(Bluejay& bluejay)
+{
+    std::ifstream file(filename);
+    std::string line;
+
+    if (file.is_open())
+    {
+        int n = 0;
+        while (getline(file, line))
+        {
+            bluejay.Store(std::stoul(line, nullptr, 16), pc + n, 4);
+            n += 4;
+        }
+        file.close();
+    }
+    else std::cout << "[ERROR] Unable to open file.\n";
+}
+
+//==============================================
 // main
 //==============================================
 int main()
 {
-    std::cout << "Hello World!\n";
-    Bluejay bluejay;
-    bluejay.Init();
-    bluejay.LoadMem("ld.txt");
-    bluejay.Run();
-    std::cout << std::hex << bluejay.pc << std::endl;
-//    uint64_t data;
-//    data = bluejay.Load(1, 8);
-//    std::cout << std::hex << data << std::endl;
-    bluejay.PrintRegs();
+    Test test0("/mnt/c/Users/seanj/Documents/bluejay/sim/asm/basic/addi.txt", 0);
+    test0.Run();
+    Test test1("/mnt/c/Users/seanj/Documents/bluejay/sim/asm/basic/add.txt", 0);
+    test1.Run();
     return 0; 
 }
