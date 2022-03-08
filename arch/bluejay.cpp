@@ -37,7 +37,7 @@ class Bluejay
 {
 public:
     uint64_t x[32];
-    uint8_t mem[MEMORY__SIZE];
+    uint8_t memory[MEMORY__SIZE];
 
     // program counter
     uint64_t pc;
@@ -45,8 +45,8 @@ public:
     uint64_t ir;
 
     Bluejay();
-    void Init();
-    void LoadMem(std::string filename);
+    void Reset();
+    void LoadMemory(std::string filename);
     void Run();
     uint64_t Load(uint64_t addr, uint8_t size);
     void Store(uint64_t data, uint64_t addr, uint8_t size);
@@ -67,17 +67,16 @@ public:
 //==============================================
 Bluejay::Bluejay()
 {
-    x[0] = 0x0;
+    Reset();
 }
 
 //==============================================
-// Init 
+// Reset 
 //==============================================
-void Bluejay::Init()
+void Bluejay::Reset()
 {
+    x[0] = 0x0;
     pc = 0x0;
-    x[REG__SP] = 0x3ffc;
-    x[REG__GP] = 0x1800;
 }
 
 //==============================================
@@ -120,31 +119,13 @@ void Bluejay::PrintRegs()
 }
 
 //==============================================
-// Read 
+// LoadMemory
 //==============================================
-uint64_t Bluejay::Read(uint64_t rs)
-{
-    if (rs == 0x0) return 0x0;
-    else return x[rs];
-}
-
-//==============================================
-// Write 
-//==============================================
-void Bluejay::Write(uint64_t rd, uint64_t data)
-{
-    if (rd != 0x0) x[rd] = data;
-}
-
-//==============================================
-// LoadMem 
-//==============================================
-void Bluejay::LoadMem(std::string filename)
+void Bluejay::LoadMemory(std::string filename)
 {
 
     std::ifstream file(filename);
     std::string line;
-
 
     uint64_t addr = 0;
     uint64_t data;
@@ -629,7 +610,7 @@ uint64_t Bluejay::Load(uint64_t addr, uint8_t size)
 
     for (int i = 0; i < size; i++) 
     {
-        data |= (uint64_t)mem[addr + i] << (8*i);
+        data |= (uint64_t)memory[addr + i] << (8*i);
     } 
 
     return data;
@@ -642,77 +623,53 @@ void Bluejay::Store(uint64_t data, uint64_t addr, uint8_t size)
 {
     for (int i = 0; i < size; i++) 
     {
-        mem[addr + i] = (uint8_t)((data >> (8*i)) & 0xff);
+        memory[addr + i] = (uint8_t)((data >> (8*i)) & 0xff);
     } 
 }
 
+
+
 //==============================================
-// Test 
+// Sim 
 //==============================================
-class Test
+class Sim 
 {
 public:
-    uint64_t pc = 0x0;
-    uint64_t sp = 0x3ffc;
-    uint64_t gp = 0x1800;
-    std::string filename;
-    uint64_t type;
-    uint64_t addr;
-    uint64_t N;
+    Bluejay bluejay;
 
 public:
-    Test(std::string filename, uint64_t type);
-    void Run();
-    void Load(Bluejay& bluejay);
+    void Run(std::string filename);
+    void WriteResult(std::string filename);
 };
 
 //==============================================
-// Test 
+// Run 
 //==============================================
-Test::Test(std::string filename, uint64_t type)
+void Sim::Run(std::string filename)
 {
-    this->filename = filename;
-    this->type = type;
-}
-//==============================================
-// Run
-//==============================================
-void Test::Run()
-{
-    Bluejay bluejay;
+    // reset bluejay 
+    bluejay.Reset();
 
-    Load(bluejay);
-    bluejay.pc = pc;
-    bluejay.x[REG__SP] = sp;
-    bluejay.x[REG__GP] = gp;
+    // load memory
+    bluejay.LoadMemory(filename);
+
+    // run simulation
     bluejay.Run();
 
-    switch (type)
-    {
-        case 0: 
-            std::cout << "a0: 0x" << std::setfill('0') << std::setw(16) << std::right << std::hex << bluejay.x[REG__A0] << std::endl; 
-            break;
-        case 1:
-            break;
-    }
+    std::cout << "a0: 0x" << std::setfill('0') << std::setw(16) << std::right << std::hex << bluejay.x[REG__A0] << std::endl; 
 }
 
 //==============================================
-// Load 
+// Run 
 //==============================================
-void Test::Load(Bluejay& bluejay)
+void Sim::WriteResult(std::string filename)
 {
-    std::ifstream file(filename);
+    std::ofstream file(filename);
     std::string line;
 
     if (file.is_open())
     {
-        int n = 0;
-        while (getline(file, line))
-        {
-            bluejay.Store(std::stoul(line, nullptr, 16), pc + n, 4);
-            n += 4;
-        }
+        file << std::setfill('0') << std::setw(16) << std::right << std::hex << bluejay.x[REG__A0] << std::endl; 
         file.close();
     }
     else std::cout << "[ERROR] Unable to open file.\n";
@@ -723,9 +680,12 @@ void Test::Load(Bluejay& bluejay)
 //==============================================
 int main()
 {
-    Test test0("/mnt/c/Users/seanj/Documents/bluejay/sim/asm/basic/addi.txt", 0);
-    test0.Run();
-    Test test1("/mnt/c/Users/seanj/Documents/bluejay/sim/asm/basic/add.txt", 0);
-    test1.Run();
+    Sim sim;
+
+    sim.Run("/mnt/c/Users/seanj/Documents/bluejay/sim/asm/basic/addi.txt");
+    sim.WriteResult("addi.yyy");
+
+    sim.Run("/mnt/c/Users/seanj/Documents/bluejay/sim/asm/basic/add.txt");
+    sim.WriteResult("add.yyy");
     return 0; 
 }
