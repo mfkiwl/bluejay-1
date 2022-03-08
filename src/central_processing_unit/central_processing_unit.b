@@ -48,17 +48,6 @@ logic [63:0] ID__rs2_data;
 
 // IF/ID pipe stage.
 always_ff @(posedge clk) begin
-    if (rst | MEM__branch) begin
-        ID__ir <= NOP;
-    end
-    else (ID__ready) begin
-        ID__ir <= IF__ir;
-        ID__pc <= IF__pc;      
-    end
-end
-
-// IF/ID pipe stage.
-always_ff @(posedge clk) begin
     if (rst | MEM__branch) {ID__ir} <= {NOP};
     else if (ID__ready) {ID__pc, ID__ir} <= {IF__pc, IF__ir};
 end
@@ -133,7 +122,7 @@ logic EX__geu;
 // ID/EX pipe stage.
 always_ff @(posedge clk) begin
     if (rst | ID__stall | MEM__branch) {EX__we, EX__ctrl_flow} <= {1'b0, CTRL_FLOW__PC_PLUS_FOUR};
-    else if (EX__ready) {EX__pc, EX__ir, EX__we, EX__rd, EX__rs1_data, EX__rs2_data, EX__imm, EX__func, EX__ctrl_flow, EX__sel__data_0, EX__sel__data_1, EX__sel__rd_data} <= {ID__pc, ID__ir, ID__we, ID__rd, ID__rs1_data, ID__rs2_data, ID__imm, ID__func, ID__ctrl_flow ID__sel__data_0, ID__sel__data_1, ID__sel__rd_data};
+    else if (EX__ready) {EX__pc, EX__ir, EX__we, EX__rd, EX__rs1_data, EX__rs2_data, EX__imm, EX__func, EX__ctrl_flow, EX__sel__data_0, EX__sel__data_1, EX__sel__rd_data} <= {ID__pc, ID__ir, ID__we, ID__rd, ID__rs1_data, ID__rs2_data, ID__imm, ID__func, ID__ctrl_flow, ID__sel__data_0, ID__sel__data_1, ID__sel__rd_data};
 end
 
 assign EX__ready = 1'b1;
