@@ -14,3 +14,5 @@ import re
 x = 'mnt/c/Users/seanj/Documents/bluejay/src/central_processing_unit/t.b'
 y =re.sub('(.|[/])*[/]', '', x)
 print(y)
+
+for i in range(32): print(f"x_{i},", end='') ; print("hi")
