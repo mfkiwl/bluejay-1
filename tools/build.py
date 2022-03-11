@@ -30,7 +30,7 @@ class Build:
 
         with open(bluejay + '/include/include.txt', 'r') as file:
             # load include dict
-            self.include = ast.literal_eval(file.read())
+            self.include = self.define_to_dict(file.read())
 
         with open(self.path + self.filename, 'r') as file:
             # read file
@@ -235,6 +235,23 @@ class Build:
     ##############
     def add_indent(self, string, indent):
         return re.sub('\n', '\n' + ' '*indent, string)
+
+    ##################
+    # define_to_dict #
+    ###################
+    def define_to_dict(self, txt):
+        include = {}
+        for line in re.split('\n', txt):
+            line = self.clean(line)
+
+            if line == '':
+                continue
+
+            tokens = re.split(' ', line)
+            key, value = tokens[1], tokens[2]
+            include[key] = value
+
+        return include
 
 
 if __name__ == '__main__':

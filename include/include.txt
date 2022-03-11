@@ -1,62 +1,79 @@
-{
-"WIDTH": "64",
-"NUM_GPR": "32",
+#define XLEN 64
 
-"R_TYPE": "3'h0",
-"I_TYPE": "3'h1",
-"S_TYPE": "3'h2",
-"B_TYPE": "3'h3",
-"U_TYPE": "3'h4",
-"J_TYPE": "3'h5",
+#define SIZE__DOUBLE 2'h0
+#define SIZE__WORD 2'h1
+#define SIZE__HALF 2'h2
+#define SIZE__BYTE 2'h3
 
-"FUNC__ADD": "4'h0",
-"FUNC__ADDW": "4'h1",
-"FUNC__SUB": "4'h2",
-"FUNC__SUBW": "4'h3",
-"FUNC__SLL": "4'h4",
-"FUNC__SLLW": "4'h5",
-"FUNC__SLT": "4'h6",
-"FUNC__SLTU": "4'h7",
-"FUNC__XOR": "4'h8",
-"FUNC__SRL": "4'h9",
-"FUNC__SRLW": "4'ha",
-"FUNC__SRA": "4'hb",
-"FUNC__SRAW": "4'hc",
-"FUNC__OR": "4'hd",
-"FUNC__AND": "4'he",
+#define NUM_GPR 32
 
-"NOP": "32'h00_00_00_33",
 
-"SEL__DATA_0__REG": "1'b0",
-"SEL__DATA_0__PC": "1'b1",
+#define R_TYPE 3'h0
+#define I_TYPE 3'h1
+#define S_TYPE 3'h2
+#define B_TYPE 3'h3
+#define U_TYPE 3'h4
+#define J_TYPE 3'h5
 
-"SEL__DATA_1__REG": "1'b0",
-"SEL__DATA_1__IMM": "1'b1",
+#define FUNC__ADD 4'h0
+#define FUNC__ADDW 4'h1
+#define FUNC__SUB 4'h2
+#define FUNC__SUBW 4'h3
+#define FUNC__SLL 4'h4
+#define FUNC__SLLW 4'h5
+#define FUNC__SLT 4'h6
+#define FUNC__SLTU 4'h7
+#define FUNC__XOR 4'h8
+#define FUNC__SRL 4'h9
+#define FUNC__SRLW 4'ha
+#define FUNC__SRA 4'hb
+#define FUNC__SRAW 4'hc
+#define FUNC__OR 4'hd
+#define FUNC__AND 4'he
 
-"SEL__RD_DATA__ALU": "2'h0",
-"SEL__RD_DATA__MEM": "2'h1",
-"SEL__RD_DATA__PC_PLUS_FOUR": "2'h2",
+#define NOP 32'h00_00_00_33
 
-"SEL__PC__PC_PLUS_FOUR": "2'h0",
-"SEL__PC__PC_PLUS_IMM": "2'h1",
-"SEL__PC__REG_PLUS_IMM": "2'h2",
+#define SEL__DATA_0__REG 1'b0
+#define SEL__DATA_0__PC 1'b1
 
-"CTRL_FLOW__PC_PLUS_FOUR": "4'h0",
-"CTRL_FLOW__JAL": "4'h1",
-"CTRL_FLOW__JALR": "4'h2",
-"CTRL_FLOW__BEQ": "4'h3",
-"CTRL_FLOW__BNE": "4'h4",
-"CTRL_FLOW__BLT": "4'h5",
-"CTRL_FLOW__BLTU": "4'h6",
-"CTRL_FLOW__BGE": "4'h7",
-"CTRL_FLOW__BGEU": "4'h8",
+#define SEL__DATA_1__REG 1'b0
+#define SEL__DATA_1__IMM 1'b1
 
-"DATA_TYPE__D": "3'h0",
-"DATA_TYPE__W": "3'h1",
-"DATA_TYPE__WU": "3'h2",
-"DATA_TYPE__H": "3'h3",
-"DATA_TYPE__HU": "3'h4",
-"DATA_TYPE__B": "3'h5",
-"DATA_TYPE__BU": "3'h6",
+#define SEL__RD_DATA__ALU 2'h0
+#define SEL__RD_DATA__MEM 2'h1
+#define SEL__RD_DATA__PC_PLUS_FOUR 2'h2
 
-}
+#define SEL__PC__PC_PLUS_FOUR 2'h0
+#define SEL__PC__PC_PLUS_IMM 2'h1
+#define SEL__PC__REG_PLUS_IMM 2'h2
+
+#define CTRL_FLOW__PC_PLUS_FOUR 4'h0
+#define CTRL_FLOW__JAL 4'h1
+#define CTRL_FLOW__JALR 4'h2
+#define CTRL_FLOW__BEQ 4'h3
+#define CTRL_FLOW__BNE 4'h4
+#define CTRL_FLOW__BLT 4'h5
+#define CTRL_FLOW__BLTU 4'h6
+#define CTRL_FLOW__BGE 4'h7
+#define CTRL_FLOW__BGEU 4'h8
+
+
+#define DATA_TYPE__D 3'h0
+#define DATA_TYPE__W 3'h1
+#define DATA_TYPE__WU 3'h2
+#define DATA_TYPE__H 3'h3
+#define DATA_TYPE__HU 3'h4
+#define DATA_TYPE__B 3'h5
+#define DATA_TYPE__BU 3'h6
+
+
+#define L1_CACHE__OFFSET__FIELD 5:0
+#define L1_CACHE__INDEX__FIELD 11:6
+#define L1_CACHE__INDEX__WIDTH 6
+#define L1_CACHE__TAG__FIELD 63:12
+
+#define L1_CACHE__SRAM__DATA__FIELD 511:0
+#define L1_CACHE__SRAM__TAG__FIELD 563:512
+#define L1_CACHE__SRAM__DIRTY__FIELD 564
+#define L1_CACHE__SRAM__VALID__FIELD 565
+#define L1_CACHE__SRAM__FIELD 565:0

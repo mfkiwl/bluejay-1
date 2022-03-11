@@ -14,16 +14,72 @@ module central_processing_unit
 //==============================================   
 logic [31:0] IF__ir;                           
 logic [63:0] IF__pc;
+logic [63:0] IF__next_pc;
+logic IF__cpu_to_instr_cache__valid;
+logic IF__cpu_to_instr_cache__ready;
+logic IF__cpu_to_instr_cache__rw;
+logic [63:0] IF__cpu_to_instr_cache__addr;
+logic [63:0] IF__cpu_to_instr_cache__data;
+logic [1:0] IF__cpu_to_instr_cache__size;
+logic IF__instr_cache_to_cpu__valid;
+logic IF__instr_cache_to_cpu__ready;
+logic [63:0] IF__instr_cache_to_cpu__data;
+logic IF__instr_cache_to_mem__valid;
+logic IF__instr_cache_to_mem__ready;
+logic IF__instr_cache_to_mem__rw;
+logic [63:0] IF__instr_cache_to_mem__addr;
+logic [511:0] IF__instr_cache_to_mem__data;
+logic IF__mem_to_instr_cache__valid;
+logic IF__mem_to_instr_cache__ready;
+logic [511:0] IF__mem_to_instr_cache__data;
+
+
 logic IF__ready;
+
+
+always_ff @(posedge clk) begin
+    if (MEM__branch) IF__next_pc = MEM__branch_pc;
+    else IF__next_pc = IF__pc + 4;
+end
 
 // IF pipe stage.
 always_ff @(posedge clk) begin
     if (rst) IF__pc <= 64'h0;
-    else if (MEM__branch) IF__pc <= MEM__branch_pc;
-    else if (IF__ready) IF__pc <= IF__pc + 4;
+    else if (IF__ready) IF__pc <= IF__next_pc;
 end
 
 assign IF__ready = ID__ready;
+
+
+//==============================
+// l1_cache
+//==============================
+l1_cache instr_cache
+(
+    .clk(clk),
+    .rst(rst),
+
+    .cpu_to_l1__valid(),
+    .cpu_to_l1__ready(),
+    .cpu_to_l1__rw(),
+    .cpu_to_l1__addr(),
+    .cpu_to_l1__data(),
+    .cpu_to_l1__size(),
+
+    .l1_to_cpu__valid(),
+    .l1_to_cpu__ready(),
+    .l1_to_cpu__data(),
+
+    .l1_to_mem__valid(),
+    .l1_to_mem__ready(),
+    .l1_to_mem__rw(),
+    .l1_to_mem__addr(),
+    .l1_to_mem__data(),
+
+    .mem_to_l1__valid(),
+    .mem_to_l1__ready(),
+    .mem_to_l1__data()
+);
 
 
 //==============================================
