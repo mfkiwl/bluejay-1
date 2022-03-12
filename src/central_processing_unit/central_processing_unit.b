@@ -9,77 +9,62 @@ module central_processing_unit
     input [31:0] IF__ir 
 );
 
+
 //==============================================
-// Intruction Fetch (IF)
-//==============================================   
-logic [31:0] IF__ir;                           
-logic [63:0] IF__pc;
-logic [63:0] IF__next_pc;
-logic IF__cpu_to_instr_cache__valid;
-logic IF__cpu_to_instr_cache__ready;
-logic IF__cpu_to_instr_cache__rw;
-logic [63:0] IF__cpu_to_instr_cache__addr;
-logic [63:0] IF__cpu_to_instr_cache__data;
-logic [1:0] IF__cpu_to_instr_cache__size;
-logic IF__instr_cache_to_cpu__valid;
-logic IF__instr_cache_to_cpu__ready;
-logic [63:0] IF__instr_cache_to_cpu__data;
-logic IF__instr_cache_to_mem__valid;
-logic IF__instr_cache_to_mem__ready;
-logic IF__instr_cache_to_mem__rw;
-logic [63:0] IF__instr_cache_to_mem__addr;
-logic [511:0] IF__instr_cache_to_mem__data;
-logic IF__mem_to_instr_cache__valid;
-logic IF__mem_to_instr_cache__ready;
-logic [511:0] IF__mem_to_instr_cache__data;
+// Input/Output
+//==============================================
+// cpu_to_il1
+logic cpu_to_il1__valid;
+logic cpu_to_il1__ready;
+logic cpu_to_il1__rw;
+logic [63:0] cpu_to_il1__addr;
+logic [63:0] cpu_to_il1__data;
+logic [1:0] cpu_to_il1__size;
+// il1_to_cpu
+logic il1_to_cpu__valid;
+logic il1_to_cpu__ready;
+logic [63:0] il1_to_cpu__data;
+
+assign cpu_to_il1__valid = IF0__valid;
+assign cpu_to_il1__addr = IF0__pc;
+assign cpu_to_il1__rw = 1'b0;
+assign cpu_to_il1__data = 64'h0;
+assign cpu_to_il1__size = SIZE__WORD;
 
 
-logic IF__ready;
 
 
-always_ff @(posedge clk) begin
-    if (MEM__branch) IF__next_pc = MEM__branch_pc;
-    else IF__next_pc = IF__pc + 4;
-end
+//==============================================
+// Intruction Fetch 0 (IF)
+//==============================================
+logic IF0__ready;   
+logic IF0__valid;                       
+logic [63:0] IF0__pc;
 
 // IF pipe stage.
 always_ff @(posedge clk) begin
-    if (rst) IF__pc <= 64'h0;
-    else if (IF__ready) IF__pc <= IF__next_pc;
+    if (rst) IF0__pc <= 64'h0;
+    else if (MEM__branch) IF0__pc <= MEM__branch_pc;
+    else if (IF__ready) IF0__pc <= IF0__next_pc;
 end
 
-assign IF__ready = ID__ready;
+assign IF0__valid = ~rst;
+assign IF0__ready = IF1__ready;
 
 
-//==============================
-// l1_cache
-//==============================
-l1_cache instr_cache
-(
-    .clk(clk),
-    .rst(rst),
+//==============================================
+// Intruction Fetch 1 (IF)
+//==============================================
+logic IF1__ready;  
+logic [31:0] IF1__ir;                           
+logic [63:0] IF1__pc;
 
-    .cpu_to_l1__valid(),
-    .cpu_to_l1__ready(),
-    .cpu_to_l1__rw(),
-    .cpu_to_l1__addr(),
-    .cpu_to_l1__data(),
-    .cpu_to_l1__size(),
+// IF0/IF1 pipe stage.
+always_ff @(posedge clk) begin
+    if (IF1__ready) {IF1__pc} <= {IF0__pc};
+end
 
-    .l1_to_cpu__valid(),
-    .l1_to_cpu__ready(),
-    .l1_to_cpu__data(),
-
-    .l1_to_mem__valid(),
-    .l1_to_mem__ready(),
-    .l1_to_mem__rw(),
-    .l1_to_mem__addr(),
-    .l1_to_mem__data(),
-
-    .mem_to_l1__valid(),
-    .mem_to_l1__ready(),
-    .mem_to_l1__data()
-);
+assign IF1__ready = ID__ready;
 
 
 //==============================================

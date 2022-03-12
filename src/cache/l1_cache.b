@@ -128,7 +128,7 @@ always_comb begin
         end
         READ_WRITE:
         begin
-            cpu_to_l1__ready = hit;
+            cpu_to_l1__ready = hit & l1_to_cpu__ready;
             l1_to_cpu__valid = hit;
             sram__rw = hit & rw;
             case (size)
