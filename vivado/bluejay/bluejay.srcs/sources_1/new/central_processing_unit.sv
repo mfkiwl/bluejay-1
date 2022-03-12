@@ -5,26 +5,40 @@ module central_processing_unit
 (
     input clk,
     input rst,
-    output logic [63:0] IF__pc,
-    input [31:0] IF__ir 
+
+    output logic cpu_to_il1__valid,
+    input cpu_to_il1__ready,
+    output logic cpu_to_il1__rw,
+    output logic [63:0] cpu_to_il1__addr,
+    output logic [63:0] cpu_to_il1__data,
+    output logic [1:0] cpu_to_il1__size,
+
+    input il1_to_cpu__valid,
+    output logic il1_to_cpu__ready,
+    input [63:0] il1_to_cpu__addr,
+    input [63:0] il1_to_cpu__data 
 );
 
 //==============================================
 // Intruction Fetch (IF)
-//==============================================   
-logic [31:0] IF__ir;                           
+//==============================================
+logic IF__ready;   
+logic IF__valid;                       
 logic [63:0] IF__pc;
-logic IF__ready;
 
-// IF pipe stage.
+// IF0 pipe stage.
 always_ff @(posedge clk) begin
     if (rst) IF__pc <= 64'h0;
-    else if (MEM__branch) IF__pc <= MEM__branch_pc;
-    else if (IF__ready) IF__pc <= IF__pc + 4;
+    else if (IF__valid & IF__ready) IF__pc <= MEM__take_branch ? MEM__branch_pc : IF__pc + 4;
 end
 
-assign IF__ready = ID__ready;
-
+assign IF__valid = ~rst;
+assign IF__ready = cpu_to_il1__ready;
+assign cpu_to_il1__valid = IF__valid;
+assign cpu_to_il1__addr = IF__pc;
+assign cpu_to_il1__rw = 1'b0;
+assign cpu_to_il1__data = 64'h0;
+assign cpu_to_il1__size = 2'h1;
 
 //==============================================
 // Instruction Decode (ID)
@@ -46,12 +60,13 @@ logic [63:0] ID__rs1_data;
 logic [4:0] ID__rs2;
 logic [63:0] ID__rs2_data;
 
-// IF/ID pipe stage.
+// IL1/ID pipe stage.
 always_ff @(posedge clk) begin
-    if (rst | MEM__branch) {ID__ir} <= {32'h00_00_00_33};
-    else if (ID__ready) {ID__pc, ID__ir} <= {IF__pc, IF__ir};
+    if (rst | MEM__take_branch) {ID__ir} <= {32'h00_00_00_33};
+    else if (ID__valid & ID__ready) {ID__pc, ID__ir} <= {il1_to_cpu__addr, il1_to_cpu__data[31:0]};
 end
 
+assign ID__valid = il1_to_cpu__valid;
 assign ID__ready = ~ID__stall;
 assign ID__stall = (EX__we & (EX__rd == ID__rs1) & ~ID__sel__data_0 & (EX__rd != 5'h0)) | (EX__we & (EX__rd == ID__rs2) & ~ID__sel__data_1 & (EX__rd != 5'h0)) |
                    (MEM__we & (MEM__rd == ID__rs1) & ~ID__sel__data_0 & (MEM__rd != 5'h0)) | (MEM__we & (MEM__rd == ID__rs2) & ~ID__sel__data_1 & (MEM__rd != 5'h0)) |
@@ -121,7 +136,7 @@ logic EX__geu;
 
 // ID/EX pipe stage.
 always_ff @(posedge clk) begin
-    if (rst | ID__stall | MEM__branch) {EX__we, EX__ctrl_flow} <= {1'b0, 4'h0};
+    if (rst | ID__stall | MEM__take_branch) {EX__we, EX__ctrl_flow} <= {1'b0, 4'h0};
     else if (EX__ready) {EX__pc, EX__ir, EX__we, EX__rd, EX__rs1_data, EX__rs2_data, EX__imm, EX__func, EX__ctrl_flow, EX__sel__data_0, EX__sel__data_1, EX__sel__rd_data} <= {ID__pc, ID__ir, ID__we, ID__rd, ID__rs1_data, ID__rs2_data, ID__imm, ID__func, ID__ctrl_flow, ID__sel__data_0, ID__sel__data_1, ID__sel__rd_data};
 end
 
@@ -168,12 +183,12 @@ logic MEM__lt;
 logic MEM__ltu;
 logic MEM__ge;
 logic MEM__geu;
-logic MEM__branch;
+logic MEM__take_branch;
 logic [63:0] MEM__branch_pc;
 
 // EX/MEM pipe stage.
 always_ff @(posedge clk) begin
-    if (rst | MEM__branch) {MEM__we, MEM__ctrl_flow} <= {1'b0, 4'h0};
+    if (rst | MEM__take_branch) {MEM__we, MEM__ctrl_flow} <= {1'b0, 4'h0};
     else if (MEM__ready) {MEM__pc, MEM__ir, MEM__we, MEM__rd, MEM__rs2_data, MEM__data_2, MEM__sel__rd_data, MEM__eq, MEM__ne, MEM__lt, MEM__ltu, MEM__ge, MEM__geu} <= {EX__pc, EX__ir, EX__we, EX__rd, EX__rs2_data, EX__data_2, EX__sel__rd_data, EX__eq, EX__ne, EX__lt, EX__ltu, EX__ge, EX__geu};
 end
 
@@ -181,15 +196,15 @@ assign MEM__ready = 1'b1;
 assign MEM__branch_pc = (MEM__ctrl_flow == 4'h2) ? MEM__data_2 : MEM__pc + MEM__imm;
 always_comb begin
     case (MEM__ctrl_flow)
-        4'h0: MEM__branch = 1'b0;
-        4'h1: MEM__branch = 1'b1;
-        4'h2: MEM__branch = 1'b1;
-        4'h3: MEM__branch = MEM__eq;
-        4'h4: MEM__branch = MEM__ne;
-        4'h5: MEM__branch = MEM__lt;
-        4'h6: MEM__branch = MEM__ltu;
-        4'h7: MEM__branch = MEM__ge;
-        4'h8: MEM__branch = MEM__geu;
+        4'h0: MEM__take_branch = 1'b0;
+        4'h1: MEM__take_branch = 1'b1;
+        4'h2: MEM__take_branch = 1'b1;
+        4'h3: MEM__take_branch = MEM__eq;
+        4'h4: MEM__take_branch = MEM__ne;
+        4'h5: MEM__take_branch = MEM__lt;
+        4'h6: MEM__take_branch = MEM__ltu;
+        4'h7: MEM__take_branch = MEM__ge;
+        4'h8: MEM__take_branch = MEM__geu;
     endcase
 end
 

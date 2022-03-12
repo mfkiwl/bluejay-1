@@ -15,6 +15,7 @@ module l1_cache
 
     output logic l1_to_cpu__valid,
     input l1_to_cpu__ready,
+    input [63:0] l1_to_cpu__addr,
     output logic [63:0] l1_to_cpu__data,
 
     output logic l1_to_mem__valid,
@@ -233,7 +234,6 @@ always_comb begin
     l1_to_mem__valid = 1'b0;
     l1_to_mem__rw = 1'b0;
     mem_to_l1__ready = 1'b0;
-    sram__addr = addr;
     sram__rw = 1'b0;
     sram__wr_data = sram__rd_data;
 
@@ -244,7 +244,7 @@ always_comb begin
         end
         READ_WRITE:
         begin
-            cpu_to_l1__ready = hit;
+            cpu_to_l1__ready = hit & l1_to_cpu__ready;
             l1_to_cpu__valid = hit;
             sram__rw = hit & rw;
             case (size)

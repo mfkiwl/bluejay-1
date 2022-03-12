@@ -15,6 +15,7 @@ module l1_cache
 
     output logic l1_to_cpu__valid,
     input l1_to_cpu__ready,
+    input [63:0] l1_to_cpu__addr,
     output logic [63:0] l1_to_cpu__data,
 
     output logic l1_to_mem__valid,
@@ -28,12 +29,13 @@ module l1_cache
     input [511:0] mem_to_l1__data
 );
 
-parameter IDLE = 2'h0;
-parameter READ_WRITE = 2'h1;
-parameter WRITE_BACK = 2'h2;
-parameter ALLOCATE = 2'h3;
+parameter IDLE = 3'h0;
+parameter READ_WRITE = 3'h1;
+parameter WRITE_BACK = 3'h2;
+parameter ALLOCATE_REQ = 3'h3;
+parameter ALLOCATE_WRITE = 3'h4;
 
-logic [1:0] state;
+logic [2:0] state;
 
 logic [63:0] addr;
 logic rw;
@@ -98,15 +100,19 @@ always_ff @(posedge clk) begin
         READ_WRITE:
         begin
             if (hit) state <= (cpu_to_l1__valid & cpu_to_l1__ready) ? READ_WRITE : IDLE;
-            else state <= sram__rd_data[L1_CACHE__SRAM__DIRTY__FIELD] ? WRITE_BACK : ALLOCATE;
+            else state <= sram__rd_data[L1_CACHE__SRAM__DIRTY__FIELD] ? WRITE_BACK : ALLOCATE_REQ;
         end
         WRITE_BACK:
         begin
-            state <= (l1_to_mem__valid & l1_to_mem__ready) ? ALLOCATE : WRITE_BACK;
+            state <= (l1_to_mem__valid & l1_to_mem__ready) ? ALLOCATE_REQ : WRITE_BACK;
         end
-        ALLOCATE:
+        ALLOCATE_REQ:
         begin
-            state <= (mem_to_l1__valid & mem_to_l1__ready) ? READ_WRITE : ALLOCATE;
+            state <= (l1_to_mem__valid & l1_to_mem__ready) ? ALLOCATE_WRITE : ALLOCATE_REQ;
+        end
+        ALLOCATE_WRITE:
+        begin
+            state <= (mem_to_l1__valid & mem_to_l1__ready) ? READ_WRITE : ALLOCATE_WRITE;
         end
     endcase
 end
@@ -117,7 +123,6 @@ always_comb begin
     l1_to_mem__valid = 1'b0;
     l1_to_mem__rw = 1'b0;
     mem_to_l1__ready = 1'b0;
-    sram__addr = addr;
     sram__rw = 1'b0;
     sram__wr_data = sram__rd_data;
 
@@ -155,9 +160,13 @@ always_comb begin
             l1_to_mem__valid = 1'b1;
             l1_to_mem__rw = 1'b1;
         end
-        ALLOCATE: 
+        ALLOCATE_REQ: 
         begin
             l1_to_mem__valid = 1'b1;
+        end
+        ALLOCATE_WRITE:
+        begin
+            mem_to_l1__ready;
             sram__rw = (mem_to_l1__valid & mem_to_l1__ready);
             sram__wr_data[L1_CACHE__SRAM__VALID__FIELD] = 1'b1;
             sram__wr_data[L1_CACHE__SRAM__DIRTY__FIELD] = 1'b0;

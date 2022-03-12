@@ -37,7 +37,7 @@ end
 // write rd_data (if we is asserted) 
 always_ff @(posedge clk) begin
     case (rd)
-        PYTHON(for i in range(32): print(f"5'h{i:x}: x_{i} <= we ? rd_data : x_{i};"))
+        PYTHON(for i in range(1, 32): print(f"5'h{i:x}: x_{i} <= we ? rd_data : x_{i};"))
     endcase
 end
 

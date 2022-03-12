@@ -130,7 +130,6 @@ end
 // write rd_data (if we is asserted) 
 always_ff @(posedge clk) begin
     case (rd)
-        5'h0: x_0 <= we ? rd_data : x_0;
         5'h1: x_1 <= we ? rd_data : x_1;
         5'h2: x_2 <= we ? rd_data : x_2;
         5'h3: x_3 <= we ? rd_data : x_3;
