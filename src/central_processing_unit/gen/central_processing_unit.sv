@@ -22,23 +22,22 @@ module central_processing_unit
 //==============================================
 // Intruction Fetch (IF)
 //==============================================
-logic IF__ready;   
-logic IF__valid;                       
+logic IF__ready;                         
 logic [63:0] IF__pc;
 
 // IF0 pipe stage.
 always_ff @(posedge clk) begin
     if (rst) IF__pc <= 64'h0;
-    else if (IF__valid & IF__ready) IF__pc <= MEM__take_branch ? MEM__branch_pc : IF__pc + 4;
+    else if (IF__ready) IF__pc <= MEM__take_branch ? MEM__branch_pc : IF__pc + 4;
 end
 
-assign IF__valid = ~rst;
+assign cpu_to_il1__valid = ~rst;
 assign IF__ready = cpu_to_il1__ready;
-assign cpu_to_il1__valid = IF__valid;
 assign cpu_to_il1__addr = IF__pc;
 assign cpu_to_il1__rw = 1'b0;
 assign cpu_to_il1__data = 64'h0;
 assign cpu_to_il1__size = 2'h1;
+
 
 //==============================================
 // Instruction Decode (ID)
@@ -62,11 +61,11 @@ logic [63:0] ID__rs2_data;
 
 // IL1/ID pipe stage.
 always_ff @(posedge clk) begin
-    if (rst | MEM__take_branch) {ID__ir} <= {32'h00_00_00_33};
-    else if (ID__valid & ID__ready) {ID__pc, ID__ir} <= {il1_to_cpu__addr, il1_to_cpu__data[31:0]};
+    if (rst | MEM__take_branch | ~il1_to_cpu__valid) {ID__ir} <= {32'h00_00_00_33};
+    else if (ID__ready) {ID__pc, ID__ir} <= {il1_to_cpu__addr, il1_to_cpu__data[31:0]};
 end
 
-assign ID__valid = il1_to_cpu__valid;
+assign il1_to_cpu__ready = ID__ready;
 assign ID__ready = ~ID__stall;
 assign ID__stall = (EX__we & (EX__rd == ID__rs1) & ~ID__sel__data_0 & (EX__rd != 5'h0)) | (EX__we & (EX__rd == ID__rs2) & ~ID__sel__data_1 & (EX__rd != 5'h0)) |
                    (MEM__we & (MEM__rd == ID__rs1) & ~ID__sel__data_0 & (MEM__rd != 5'h0)) | (MEM__we & (MEM__rd == ID__rs2) & ~ID__sel__data_1 & (MEM__rd != 5'h0)) |

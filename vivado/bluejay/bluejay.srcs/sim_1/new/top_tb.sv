@@ -38,7 +38,7 @@ initial begin
     rst = 1'b1;
     #10;
     rst = 1'b0;
-    $display("%h", top.cpu_to_il1__addr);
+    
     #300;
     $finish;
 end
