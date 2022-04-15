@@ -73,6 +73,18 @@ l1_cache il1
     .l1_to_mem__rd_data(il1_to_mem__rd_data)
 );
 
-
+//==============================
+// main_memory 
+//==============================
+main_memory mem
+(
+    .clk(clk),
+    .rst(rst),
+    .valid(il1_to_mem__valid),
+    .addr(il1_to_mem__addr),
+    .rw(il1_to_mem__rw),
+    .wr_data(il1_to_mem__wr_data),
+    .rd_data(il1_to_mem__rd_data)
+)
 
 endmodule;

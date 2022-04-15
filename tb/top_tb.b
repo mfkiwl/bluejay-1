@@ -31,7 +31,7 @@ initial begin
     // initialize clk
     clk = 1'b1;
     // initialize instruction memory
-    //$readmemh("C:/Users/seanj/Documents/bluejay/code/jalr.txt", instr_memory);
+    //$readmemh("C:/Users/seanj/Documents/bluejay/sim/asm/basic/gen_8/addi", top.mem.memory);
 
     #1;
     // assert rst

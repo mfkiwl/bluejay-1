@@ -1,7 +1,7 @@
 ##########
 # import #
 ##########
-from build import *
+from bluejay import *
 from sim import *
 
 files = {
@@ -21,18 +21,59 @@ class Jaymake:
 
         os = platform.system()
         if os == 'Darwin':
-            self.bluejay = '/Users/seankent/Documents/bluejay/'
+            self.path = '/Users/seankent/Documents/bluejay/'
         else:
-            self.bluejay = '/mnt/c/Users/seanj/Documents/bluejay/'
+            self.path = '/mnt/c/Users/seanj/Documents/bluejay/'
+
+        with open(self.path + '/include/include.txt', 'r') as file:
+            # load define dictionary
+            self.define = self.define_to_dict(file.read())
+
 
     #######
     # run #
     #######
     def run(self):
-        self.build(self.bluejay + 'src/')
-        self.build(self.bluejay + 'tb/')
-        self.sim(self.bluejay + 'sim/')
+        files = self.search(self.path + 'src/')
+        for filename in files:
+            self.build(filename)
+
+        files = self.search(self.path + 'tb/')
+        for filename in files:
+            self.build(filename)
+            
         self.update()
+
+    #########
+    # clean #
+    #########
+    def clean(self, string):
+        # convert tabs to spaces
+        string = re.sub('\t+', ' ', string)
+        # replace multiple spaces with a single space
+        string = re.sub(' +', ' ', string)
+        # remove any spaces before the begining of the string
+        string = re.sub('^ *', '', string)
+        # remove any spaces before the end of the string
+        string = re.sub(' $', '', string)
+        return string
+
+    ##################
+    # define_to_dict #
+    ###################
+    def define_to_dict(self, txt):
+        define = {}
+        for line in re.split('\n', txt):
+            line = self.clean(line)
+
+            if line == '':
+                continue
+
+            tokens = re.split(' ', line)
+            key, value = tokens[1], tokens[2]
+            define[key] = value
+
+        return define 
 
     #######
     # sim #
@@ -63,28 +104,67 @@ class Jaymake:
     #########
     # build #
     #########
-    def build(self, path):
-        print('BUILD ' + path)
+    def build(self, filename):
+
+        if not self.file_needs_update(filename):
+            return
+
+        print('BUILD... ' +  filename)
+        with open(filename, 'r') as file:
+            # read file
+            txt = file.read()
+            # create Bluejay object 
+            bluejay = Bluejay(txt, self.define)
+            # build system verilog file
+            bluejay.build()
+
+            name = re.sub('(.|[/])*[/]', '', filename)
+            # get file path 
+            path = re.sub(name + '$', '', filename)
+
+            # make gen/ directory
+            os.makedirs(path + 'gen/', exist_ok=True)
+           
+            print(path)
+            # write system verilog file to the gen/ directory 
+            self.write(path + 'gen/' + name.replace('.b', '.sv'), bluejay.sv)
+            
+
+
+    #########
+    # write #
+    #########
+    def write(self, filename, txt):
+        # write txt to the file
+        with open(filename, 'w') as file:
+            file.write(txt)
+
+    ##########
+    # search #
+    ##########
+    def search(self, path):
         # create a list of all the .b files in the tree
         stdout = os.popen('find ' + path + '* -name *.b').read()
-        files = re.split('\n', stdout[:-1])
-        
-        # iterate over the .b files
-        for file_b in files:
-            # get filename
-            filename = re.search('[A-z0-9_]*\.b$', file_b).group(0)
+        return re.split('\n', stdout[:-1])
+      
+    #####################
+    # file_needs_update #
+    #####################
+    def file_needs_update(self, filename):
+        name = re.sub('(.|[/])*[/]', '', filename)
+        path = re.sub(name + '$', '', filename)
 
-            # name of generated .sv file
-            file_sv = re.sub(filename, 'gen/' + filename.replace('.b', '.sv'), file_b)
+        # name of generated .sv file
+        filename_gen = path + 'gen/' + name.replace('.b', '.sv')
             
-            # search for .sv file
-            stdout = os.popen('find ' + file_sv).read()
+        # search for .sv file
+        stdout = os.popen('find ' + filename_gen).read()
 
-            # build .sv file if it does not exist or if the .b file has been modified
-            if (stdout[:-1] != file_sv) or (os.stat(file_b).st_mtime > os.stat(file_sv).st_mtime):
-                print('...' + filename)
-                build = Build(file_b)
-                build.build()
+        # build .sv file if it does not exist or if the .b file has been modified
+        if (stdout[:-1] != filename_gen) or (os.stat(filename).st_mtime > os.stat(filename_gen).st_mtime):
+            return True
+        else:
+            return False
 
     ##########
     # update #
@@ -92,19 +172,19 @@ class Jaymake:
     def update(self):
         print('UPDATE')
         # source files
-        os.system('cp ' + self.bluejay + 'src/central_processing_unit/gen/register_file.sv ' + self.bluejay + 'vivado/bluejay/bluejay.srcs/sources_1/new/')
-        os.system('cp ' + self.bluejay + 'src/central_processing_unit/gen/central_processing_unit.sv ' + self.bluejay + 'vivado/bluejay/bluejay.srcs/sources_1/new/')
-        os.system('cp ' + self.bluejay + 'src/central_processing_unit/gen/decoder.sv ' + self.bluejay + 'vivado/bluejay/bluejay.srcs/sources_1/new/')
-        os.system('cp ' + self.bluejay + 'src/central_processing_unit/gen/arithmetic_logic_unit.sv ' + self.bluejay + 'vivado/bluejay/bluejay.srcs/sources_1/new/')
-        os.system('cp ' + self.bluejay + 'src/cache/gen/l1_cache.sv ' + self.bluejay + 'vivado/bluejay/bluejay.srcs/sources_1/new/')
-        os.system('cp ' + self.bluejay + 'src/cache/gen/l1_sram.sv ' + self.bluejay + 'vivado/bluejay/bluejay.srcs/sources_1/new/')
-        os.system('cp ' + self.bluejay + 'src/memory/gen/memory.sv ' + self.bluejay + 'vivado/bluejay/bluejay.srcs/sources_1/new/')
-        os.system('cp ' + self.bluejay + 'src/gen/top.sv ' + self.bluejay + 'vivado/bluejay/bluejay.srcs/sources_1/new/')
+        os.system('cp ' + self.path + 'src/central_processing_unit/gen/register_file.sv ' + self.path + 'vivado/bluejay/bluejay.srcs/sources_1/new/')
+        os.system('cp ' + self.path + 'src/central_processing_unit/gen/central_processing_unit.sv ' + self.path + 'vivado/bluejay/bluejay.srcs/sources_1/new/')
+        os.system('cp ' + self.path + 'src/central_processing_unit/gen/decoder.sv ' + self.path + 'vivado/bluejay/bluejay.srcs/sources_1/new/')
+        os.system('cp ' + self.path + 'src/central_processing_unit/gen/arithmetic_logic_unit.sv ' + self.path + 'vivado/bluejay/bluejay.srcs/sources_1/new/')
+        os.system('cp ' + self.path + 'src/cache/gen/l1_cache.sv ' + self.path + 'vivado/bluejay/bluejay.srcs/sources_1/new/')
+        os.system('cp ' + self.path + 'src/cache/gen/l1_sram.sv ' + self.path + 'vivado/bluejay/bluejay.srcs/sources_1/new/')
+        os.system('cp ' + self.path + 'src/memory/gen/memory.sv ' + self.path + 'vivado/bluejay/bluejay.srcs/sources_1/new/')
+        os.system('cp ' + self.path + 'src/gen/top.sv ' + self.path + 'vivado/bluejay/bluejay.srcs/sources_1/new/')
         # testbench files
-        os.system('cp ' + self.bluejay + 'tb/central_processing_unit/gen/register_file_tb.sv ' + self.bluejay + 'vivado/bluejay/bluejay.srcs/sim_1/new/')
-        os.system('cp ' + self.bluejay + 'tb/central_processing_unit/gen/central_processing_unit_tb.sv ' + self.bluejay + 'vivado/bluejay/bluejay.srcs/sim_1/new/')
-        os.system('cp ' + self.bluejay + 'tb/central_processing_unit/gen/arithmetic_logic_unit_tb.sv ' + self.bluejay + 'vivado/bluejay/bluejay.srcs/sim_1/new/')
-        os.system('cp ' + self.bluejay + 'tb/gen/top_tb.sv ' + self.bluejay + 'vivado/bluejay/bluejay.srcs/sim_1/new/')
+        os.system('cp ' + self.path + 'tb/central_processing_unit/gen/register_file_tb.sv ' + self.path + 'vivado/bluejay/bluejay.srcs/sim_1/new/')
+        os.system('cp ' + self.path + 'tb/central_processing_unit/gen/central_processing_unit_tb.sv ' + self.path + 'vivado/bluejay/bluejay.srcs/sim_1/new/')
+        os.system('cp ' + self.path + 'tb/central_processing_unit/gen/arithmetic_logic_unit_tb.sv ' + self.path + 'vivado/bluejay/bluejay.srcs/sim_1/new/')
+        os.system('cp ' + self.path + 'tb/gen/top_tb.sv ' + self.path + 'vivado/bluejay/bluejay.srcs/sim_1/new/')
 
 
     # def update(self):
