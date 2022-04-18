@@ -1,0 +1,59 @@
+#define XLEN 64
+
+#define SIZE__DOUBLE 2'h0
+#define SIZE__WORD 2'h1
+#define SIZE__HALF 2'h2
+#define SIZE__BYTE 2'h3
+
+#define NUM_GPR 32
+
+#define R_TYPE 3'h0
+#define I_TYPE 3'h1
+#define S_TYPE 3'h2
+#define B_TYPE 3'h3
+#define U_TYPE 3'h4
+#define J_TYPE 3'h5
+
+#define FUNC__ADD 4'h0
+#define FUNC__ADDW 4'h1
+#define FUNC__SUB 4'h2
+#define FUNC__SUBW 4'h3
+#define FUNC__SLL 4'h4
+#define FUNC__SLLW 4'h5
+#define FUNC__SLT 4'h6
+#define FUNC__SLTU 4'h7
+#define FUNC__XOR 4'h8
+#define FUNC__SRL 4'h9
+#define FUNC__SRLW 4'ha
+#define FUNC__SRA 4'hb
+#define FUNC__SRAW 4'hc
+#define FUNC__OR 4'hd
+#define FUNC__AND 4'he
+
+#define OP__NOP
+#define OP__LB
+#define OP__LH
+#define OP__LW
+#define OP__LD
+#define
+#define
+#define
+#define
+#define
+#define
+#define
+#define
+#define
+#define
+#define
+#define
+#define
+#define
+#define
+#define
+#define
+#define
+#define
+#define
+#define
+#define

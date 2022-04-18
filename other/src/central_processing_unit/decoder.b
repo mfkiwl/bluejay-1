@@ -7,16 +7,12 @@ module decoder
     input rst,
     input [31:0] ir,
 
-    output logic [4:0] op,
-    output logic [3:0] func,
-    output logic [4:0] rd_addr__0,
-    output logic [4:0] rd_addr__1,
-    output logic [4:0] wr_addr,
-    output logic [63:0] imm,
-
-
     output logic we,
-
+    output logic [4:0] rs1,
+    output logic [4:0] rs2,
+    output logic [4:0] rd,
+    output logic [63:0] imm,
+    output logic [3:0] func,
     output logic [3:0] ctrl_flow,
     output logic sel__data_0,
     output logic sel__data_1,
@@ -26,12 +22,9 @@ module decoder
 logic [6:0] opcode;
 logic [2:0] funct3;
 logic [6:0] funct7;
-logic [2:0] format;
-logic [4:0] rs1;
-logic [4:0] rs2;
-logic [4:0] rd;
+logic [1:0] instr_format;
 
-// Breakout instruction fields.
+// decode the instruction fields
 assign opcode = ir[6:0];
 assign rs1 = ir[19:15];
 assign rs2 = ir[24:20];
@@ -39,20 +32,14 @@ assign rd = ir[11:7];
 assign funct3 = ir[14:12];
 assign funct7 = ir[31:25];
 
-// Generate immediate.
-always_comb begin
-    case (format)
-        FORMAT__R_TYPE: imm = 0;
-        FORMAT__I_TYPE: imm = {{53{ir[31]}}, ir[30:25], ir[24:21], ir[20]};
-        FORMAT__S_TYPE: imm = {{53{ir[31]}}, ir[30:25], ir[11:8], ir[7]};
-        FORMAT__B_TYPE: imm = {{52{ir[31]}}, ir[7], ir[30:25], ir[11:8], 1'b0};
-        FORMAT__U_TYPE: imm = {{33{ir[31]}}, ir[30:20], ir[19:12], 12'h0};
-        FORMAT__J_TYPE: imm = {{44{ir[31]}}, ir[19:12], ir[20], ir[30:25], ir[24:21], 1'b0};
-    endcase
-end
 
-// Decode instruction.
 always_comb begin
+    we = 1'b0;
+    func = FUNC__ADD;
+    ctrl_flow = CTRL_FLOW__PC_PLUS_FOUR;
+    sel__data_0 = SEL__DATA_0__REG;
+    sel__data_1 = SEL__DATA_1__REG;
+    sel__rd_data = SEL__RD_DATA__ALU;
     case (opcode)
         7'h03:
         begin
@@ -60,37 +47,58 @@ always_comb begin
                 // lb
                 3'h0:
                 begin
-                    op = OP__LB;
+                    instr_format = I_TYPE;
+                    we = 1'b1;
+                    sel__data_1 = SEL__DATA_1__IMM;
+                    sel__rd_data = SEL__RD_DATA__MEM;
                 end
                 // lh
                 3'h1:
                 begin
-                    op = OP__LH;
+                    instr_format = I_TYPE;
+                    we = 1'b1;
+                    sel__data_1 = SEL__DATA_1__IMM;
+                    sel__rd_data = SEL__RD_DATA__MEM;
                 end
                 // lw
                 3'h2:
                 begin
-                    op = OP__LW;
+                    instr_format = I_TYPE;
+                    we = 1'b1;
+                    sel__data_1 = SEL__DATA_1__IMM;
+                    sel__rd_data = SEL__RD_DATA__MEM;
                 end
                 // ld
                 3'h3:
                 begin
-                    op = OP__LD;
+                    instr_format = I_TYPE;
+                    we = 1'b1;
+                    sel__data_1 = SEL__DATA_1__IMM;
+                    sel__rd_data = SEL__RD_DATA__MEM;
                 end
                 // lbu
                 3'h4:
                 begin
-                    op = OP__LBU;
+                    instr_format = I_TYPE;
+                    we = 1'b1;
+                    sel__data_1 = SEL__DATA_1__IMM;
+                    sel__rd_data = SEL__RD_DATA__MEM;
                 end
                 // lhu
                 3'h5:
                 begin
-                    op = OP__LHU;
+                    instr_format = I_TYPE;
+                    we = 1'b1;
+                    sel__data_1 = SEL__DATA_1__IMM;
+                    sel__rd_data = SEL__RD_DATA__MEM;
                 end
-                // lhw
+                // lhu
                 3'h6:
                 begin
-                    op = OP__LWU;
+                    instr_format = I_TYPE;
+                    we = 1'b1;
+                    sel__data_1 = SEL__DATA_1__IMM;
+                    sel__rd_data = SEL__RD_DATA__MEM;
                 end
             endcase
         end
@@ -100,12 +108,12 @@ always_comb begin
                 // fence
                 3'h0:
                 begin
-                    op = OP__FENCE;
+                    instr_format = I_TYPE;
                 end
                 // fence.i
                 3'h1:
                 begin
-                    op = OP__FENCE_I;
+                    instr_format = I_TYPE;
                 end
             endcase
         end
@@ -115,7 +123,10 @@ always_comb begin
                 // addi
                 3'h0:
                 begin
-                    op = OP__ADDI;
+                    instr_format = I_TYPE;
+                    we = 1'b1;
+                    func = FUNC__ADD;
+                    sel__data_1 = SEL__DATA_1__IMM;
                 end
                 3'h1:
                 begin
@@ -123,24 +134,36 @@ always_comb begin
                         // slli
                         7'h00:
                         begin
-                            op = OP__SLLI;
+                            instr_format = I_TYPE;
+                            we = 1'b1;
+                            func = FUNC__SLL;
+                            sel__data_1 = SEL__DATA_1__IMM;
                         end
                     endcase
                 end
                 // slti
                 3'h2:
                 begin
-                    op = OP__SLTI;
+                    instr_format = I_TYPE;
+                    we = 1'b1;
+                    func = FUNC__SLT;
+                    sel__data_1 = SEL__DATA_1__IMM;
                 end
                 // sltiu
                 3'h3:
                 begin
-                    op = OP__SLTIIU;
+                    instr_format = I_TYPE;
+                    we = 1'b1;
+                    func = FUNC__SLTU;
+                    sel__data_1 = SEL__DATA_1__IMM;
                 end
                 // xori
                 3'h4:
                 begin
-                    op = OP__XORI;
+                    instr_format = I_TYPE;
+                    we = 1'b1;
+                    func = FUNC__XOR;
+                    sel__data_1 = SEL__DATA_1__IMM;
                 end
                 3'h5:
                 begin
@@ -148,31 +171,47 @@ always_comb begin
                         // srli
                         7'h00:
                         begin
-                            op = OP__SRLI;
+                            instr_format = I_TYPE;
+                            we = 1'b1;
+                            func = FUNC__SRL;
+                            sel__data_1 = SEL__DATA_1__IMM;
                         end
                         // srai
                         7'h20:
                         begin
-                            op = OP__SRAI;
+                            instr_format = I_TYPE;
+                            we = 1'b1;
+                            func = FUNC__SRA;
+                            sel__data_1 = SEL__DATA_1__IMM;
                         end
                     endcase
                 end
                 // ori
                 3'h6:
                 begin
-                    op = OP__ORI;
+                    instr_format = I_TYPE;
+                    we = 1'b1;
+                    func = FUNC__OR;
+                    sel__data_1 = SEL__DATA_1__IMM;
                 end
                 // andi
                 3'h7:
                 begin
-                    op = OP__ANDI;
+                    instr_format = I_TYPE;
+                    we = 1'b1;
+                    func = FUNC__AND;
+                    sel__data_1 = SEL__DATA_1__IMM;
                 end
             endcase
         end
         // auipc
         7'h17:
         begin
-            op = OP__AUIPC;
+            instr_format = U_TYPE;
+            we = 1'b1;
+            func = FUNC__AND;
+            sel__data_0 = SEL__DATA_0__PC;
+            sel__data_1 = SEL__DATA_1__IMM;
         end
         7'h1b:
         begin
@@ -180,7 +219,10 @@ always_comb begin
                 // addiw
                 3'h0:
                 begin
-                    op = OP__ADDIW;
+                    instr_format = I_TYPE;
+                    we = 1'b1;
+                    func = FUNC__ADDW;
+                    sel__data_1 = SEL__DATA_1__IMM;
                 end
                 3'h1:
                 begin
@@ -188,7 +230,10 @@ always_comb begin
                         // slliw
                         7'h00:
                         begin
-                            op = OP__SLLIW;
+                            instr_format = I_TYPE;
+                            we = 1'b1;
+                            func = FUNC__SLLW;
+                            sel__data_1 = SEL__DATA_1__IMM;
                         end
                     endcase
                 end
@@ -198,12 +243,18 @@ always_comb begin
                         // srliw
                         7'h00:
                         begin
-                            op = OP__SRLIW;
+                            instr_format = I_TYPE;
+                            we = 1'b1;
+                            func = FUNC__SRLW;
+                            sel__data_1 = SEL__DATA_1__IMM;
                         end
                         // sraiw
                         7'h00:
                         begin
-                            op = OP__SRAIW;
+                            instr_format = I_TYPE;
+                            we = 1'b1;
+                            func = FUNC__SRAW;
+                            sel__data_1 = SEL__DATA_1__IMM;
                         end
                     endcase
                 end
@@ -215,22 +266,22 @@ always_comb begin
                 // sb
                 3'h0:
                 begin
-                    op = OP__SB;
+                    instr_format = S_TYPE;
                 end
                 // sh
                 3'h1:
                 begin
-                    op = OP__SH;
+                    instr_format = S_TYPE;
                 end
                 // sw
                 3'h2:
                 begin
-                    op = OP__SW;
+                    instr_format = S_TYPE;
                 end
                 // sd
                 3'h3:
                 begin
-                    op = OP__SD;
+                    instr_format = S_TYPE;
                 end
             endcase
         end
@@ -243,12 +294,16 @@ always_comb begin
                         // add
                         7'h00:
                         begin
-                            op = OP__ADD;
+                            instr_format = R_TYPE;
+                            we = 1'b1;
+                            func = FUNC__ADD;
                         end
                         // sub
                         7'h20:
                         begin
-                            op = OP__SUB;
+                            instr_format = R_TYPE;
+                            we = 1'b1;
+                            func = FUNC__SUB;
                         end
                     endcase
                 end
@@ -258,7 +313,9 @@ always_comb begin
                         // sll
                         7'h00:
                         begin
-                            op = OP__SLL;
+                            instr_format = R_TYPE;
+                            we = 1'b1;
+                            func = FUNC__SLL;
                         end
                     endcase
                 end
@@ -268,7 +325,9 @@ always_comb begin
                         // slt
                         7'h00:
                         begin
-                            op = OP__SLT;
+                            instr_format = R_TYPE;
+                            we = 1'b1;
+                            func = FUNC__SLT;
                         end
                     endcase
                 end
@@ -278,7 +337,9 @@ always_comb begin
                         // sltu
                         7'h00:
                         begin
-                            op = OP__SLTU;
+                            instr_format = R_TYPE;
+                            we = 1'b1;
+                            func = FUNC__SLTU;
                         end
                     endcase
                 end
@@ -288,7 +349,9 @@ always_comb begin
                         // xor
                         7'h00:
                         begin
-                            op = OP__XOR;
+                            instr_format = R_TYPE;
+                            we = 1'b1;
+                            func = FUNC__XOR;
                         end
                     endcase
                 end
@@ -298,12 +361,16 @@ always_comb begin
                         // srl
                         7'h00:
                         begin
-                            op = OP__SRL;
+                            instr_format = R_TYPE;
+                            we = 1'b1;
+                            func = FUNC__SRL;
                         end
                         // sra
                         7'h20:
                         begin
-                            op = OP__SRA;
+                            instr_format = R_TYPE;
+                            we = 1'b1;
+                            func = FUNC__SRA;
                         end
                     endcase
                 end
@@ -313,7 +380,9 @@ always_comb begin
                         // or
                         7'h00:
                         begin
-                            op = OP__OR;
+                            instr_format = R_TYPE;
+                            we = 1'b1;
+                            func = FUNC__OR;
                         end
                     endcase
                 end
@@ -323,7 +392,9 @@ always_comb begin
                         // and
                         7'h00:
                         begin
-                            op = OP__AND;
+                            instr_format = R_TYPE;
+                            we = 1'b1;
+                            func = FUNC__AND;
                         end
                     endcase
                 end
@@ -332,7 +403,8 @@ always_comb begin
         // lui
         7'h37:
         begin
-            op = OP__LUI;
+            instr_format = U_TYPE;
+            we = 1'b1;
         end
         7'h3b:
         begin
@@ -343,12 +415,16 @@ always_comb begin
                         // addw
                         7'h00:
                         begin
-                            op = OP__ADDW;
+                            instr_format = R_TYPE;
+                            we = 1'b1;
+                            func = FUNC__ADDW;
                         end
                         // subw
                         7'h20:
                         begin
-                            op = OP__SUBW;
+                            instr_format = R_TYPE;
+                            we = 1'b1;
+                            func = FUNC__SUBW;
                         end
                     endcase
                 end
@@ -358,7 +434,9 @@ always_comb begin
                         // sllw
                         7'h00:
                         begin
-                            op = OP__SLLW;
+                            instr_format = R_TYPE;
+                            we = 1'b1;
+                            func = FUNC__SLLW;
                         end
                     endcase
                 end
@@ -368,12 +446,16 @@ always_comb begin
                         // srlw
                         7'h00:
                         begin
-                            op = OP__SRLW;
+                            instr_format = R_TYPE;
+                            we = 1'b1;
+                            func = FUNC__SRLW;
                         end
                         // sraw
                         7'h20:
                         begin
-                           op = OP__SRAW;
+                            instr_format = R_TYPE;
+                            we = 1'b1;
+                            func = FUNC__SRAW;
                         end
                     endcase
                 end
@@ -385,32 +467,38 @@ always_comb begin
                 // beq
                 3'h0:
                 begin
-                    op = OP__BEQ;
+                    instr_format = B_TYPE;
+                    ctrl_flow = CTRL_FLOW__BEQ;
                 end
                 // bne
                 3'h1:
                 begin
-                    op = OP__BNE;
+                    instr_format = B_TYPE;
+                    ctrl_flow = CTRL_FLOW__BNE;
                 end
                 // blt
                 3'h4:
                 begin
-                    op = OP__BLT;
+                    instr_format = B_TYPE;
+                    ctrl_flow = CTRL_FLOW__BLT;
                 end
                 // bge
                 3'h5:
                 begin
-                    op = OP__BGE;
+                    instr_format = B_TYPE;
+                    ctrl_flow = CTRL_FLOW__BGE;
                 end
                 // bltu
                 3'h6:
                 begin
-                    op = OP__BLTU;
+                    instr_format = B_TYPE;
+                    ctrl_flow = CTRL_FLOW__BLTU;
                 end
                 // bgeu
                 3'h7:
                 begin
-                    op = OP__BGEU;
+                    instr_format = B_TYPE;
+                    ctrl_flow = CTRL_FLOW__BGEU;
                 end
             endcase
         end
@@ -420,259 +508,34 @@ always_comb begin
                 // jalr
                 3'h0:
                 begin
-                    op = OP__JALR;
+                    instr_format = I_TYPE;
+                    we = 1'b1;
+                    ctrl_flow = CTRL_FLOW__JALR;
+                    sel__data_1 = SEL__DATA_1__IMM;
+                    sel__rd_data = SEL__RD_DATA__PC_PLUS_FOUR;
                 end
             endcase
         end
         // jal
         7'h6f:
         begin
-            op = OP__JAL;
+            instr_format = J_TYPE;
+            we = 1'b1;
+            ctrl_flow = CTRL_FLOW__JAL;
+            sel__rd_data = SEL__RD_DATA__PC_PLUS_FOUR;
         end
     endcase
 end
 
-// Set control signals.
+// create the immediate value
 always_comb begin
-    format = FORMAT__I_TYPE;
-    func = FUNC__ADD;
-    rd_addr__0 = rs1;
-    rd_addr__1 = rs2;
-    wr_addr = rd;
-    we = 1'b0;
-
-    
-    // ctrl_flow = CTRL_FLOW__PC_PLUS_FOUR;
-    // sel__data_0 = SEL__DATA_0__REG;
-    // sel__data_1 = SEL__DATA_1__REG;
-    // sel__rd_data = SEL__RD_DATA__ALU;
-
-
-    case (op):
-        OP__LB:
-        begin
-            we = 1'b1;
-        end
-        OP__LH:
-        begin
-            we = 1'b1;
-        end
-        OP__LW:
-        begin
-            we = 1'b1;
-        end
-        OP__LD:
-        begin
-            we = 1'b1;
-        end
-        OP__LBU:
-        begin
-            we = 1'b1;
-        end
-        OP__LHU:
-        begin
-            we = 1'b1;
-        end
-        OP__LWU:
-        begin
-            we = 1'b1;
-        end
-        OP__FENCE:
-        begin
-        end
-        OP__FENCE_I:
-        begin
-        end
-        OP__ADDI:
-        begin
-            we = 1'b1;
-        end
-        OP__SLLI:
-        begin
-            we = 1'b1;
-        end
-        OP__SLTI:
-        begin
-            we = 1'b1;
-        end
-        OP__SLTIU:
-        begin
-            we = 1'b1;
-        end
-        OP__XORI:
-        begin
-            we = 1'b1;
-        end
-        OP__SRLI:
-        begin
-            we = 1'b1;
-        end
-        OP__SRAI:
-        begin
-            we = 1'b1;
-        end
-        OP__ORI:
-        begin
-            we = 1'b1;
-        end
-        OP__ANDI:
-        begin
-            we = 1'b1;
-        end
-        OP__AUIPC:
-        begin
-            format = FORMAT__U_TYPE;
-            we = 1'b1;
-        end
-        OP__ADDIW:
-        begin
-            we = 1'b1;
-        end
-        OP__SLLIW:
-        begin
-            we = 1'b1;
-        end
-        OP__SRLIW:
-        begin
-            we = 1'b1;
-        end
-        OP__SRAIW:
-        begin
-            we = 1'b1;
-        end
-        OP__SB:
-        begin
-            format = FORMAT__S_TYPE;
-        end
-        OP__SH:
-        begin
-            format = FORMAT__S_TYPE;
-        end
-        OP__SW:
-        begin
-            format = FORMAT__S_TYPE;
-        end
-        OP__SD:
-        begin
-            format = FORMAT__S_TYPE;
-        end
-        OP__ADD:
-        begin
-            format = FORMAT__R_TYPE;
-            we = 1'b1;
-        end
-        OP__SUB:
-        begin
-            format = FORMAT__R_TYPE;
-            we = 1'b1;
-        end
-        OP__SLL:
-        begin
-            format = FORMAT__R_TYPE;
-            we = 1'b1;
-        end
-        OP__SLT:
-        begin
-            format = FORMAT__R_TYPE;
-            we = 1'b1;
-        end
-        OP__SLTU:
-        begin
-            format = FORMAT__R_TYPE;
-            we = 1'b1;
-        end
-        OP__XOR:
-        begin
-            format = FORMAT__R_TYPE;
-            we = 1'b1;
-        end
-        OP__SRL:
-        begin
-            format = FORMAT__R_TYPE;
-            we = 1'b1;
-        end
-        OP__SRA:
-        begin
-            format = FORMAT__R_TYPE;
-            we = 1'b1;
-        end
-        OP__OR:
-        begin
-            format = FORMAT__R_TYPE;
-            we = 1'b1;
-        end
-        OP__AND:
-        begin
-            format = FORMAT__R_TYPE;
-            we = 1'b1;
-        end
-        OP__LUI:
-        begin
-            format = FORMAT__U_TYPE;
-            we = 1'b1;
-        end
-        OP__ADDW:
-        begin
-            format = FORMAT__R_TYPE;
-            we = 1'b1;
-        end
-        OP__SUBW:
-        begin
-            format = FORMAT__R_TYPE;
-            we = 1'b1;
-        end
-        OP__SLLW:
-        begin
-            format = FORMAT__R_TYPE;
-            we = 1'b1;
-        end
-        OP__SRLW:
-        begin
-            format = FORMAT__R_TYPE;
-            we = 1'b1;
-        end
-        OP__SRAW:
-        begin
-            format = FORMAT__R_TYPE;
-            we = 1'b1;
-        end
-        OP__BEQ:
-        begin
-            format = FORMAT__B_TYPE;
-        end
-        OP__BNE:
-        begin
-            format = FORMAT__B_TYPE;
-        end
-        OP__BLT:
-        begin
-            format = FORMAT__B_TYPE;
-        end
-        OP__BGE:
-        begin
-            format = FORMAT__B_TYPE;
-        end
-        OP__BLTU:
-        begin
-            format = FORMAT__B_TYPE;
-        end
-        OP__BGEU:
-        begin
-            format = FORMAT__B_TYPE;
-        end
-        OP__JALR:
-        begin
-            we = 1'b1;
-        end
-        OP__JAL:
-        begin
-            format = FORMAT__J_TYPE;
-            we = 1'b1;
-        end
+    case (instr_format)
+        I_TYPE: imm = {{53{ir[31]}}, ir[30:25], ir[24:21], ir[20]};
+        S_TYPE: imm = {{53{ir[31]}}, ir[30:25], ir[11:8], ir[7]};
+        B_TYPE: imm = {{52{ir[31]}}, ir[7], ir[30:25], ir[11:8], 1'b0};
+        U_TYPE: imm = {{33{ir[31]}}, ir[30:20], ir[19:12], 12'h0};
+        J_TYPE: imm = {{44{ir[31]}}, ir[19:12], ir[20], ir[30:25], ir[24:21], 1'b0};
     endcase
-end 
-
-
-
+end
 
 endmodule

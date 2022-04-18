@@ -8,12 +8,68 @@
 #define NUM_GPR 32
 
 
-#define R_TYPE 3'h0
-#define I_TYPE 3'h1
-#define S_TYPE 3'h2
-#define B_TYPE 3'h3
-#define U_TYPE 3'h4
-#define J_TYPE 3'h5
+#define FORMAT__R_TYPE 3'h0
+#define FORMAT__I_TYPE 3'h1
+#define FORMAT__S_TYPE 3'h2
+#define FORMAT__B_TYPE 3'h3
+#define FORMAT__U_TYPE 3'h4
+#define FORMAT__J_TYPE 3'h5
+
+#define OP__NOP
+#define OP__LB
+#define OP__LH
+#define OP__LW
+#define OP__LD
+#define OP__LBU
+#define OP__LHU
+#define OP__LWU
+#define OP__FENCE
+#define OP__FENCE_I
+#define OP__ADDI
+#define OP__SLLI
+#define OP__SLTI
+#define OP__SLTIU
+#define OP__XORI
+#define OP__SRLI
+#define OP__SRAI
+#define OP__ORI
+#define OP__ANDI
+#define OP__AUIPC
+#define OP__ADDIW
+#define OP__SLLIW
+#define OP__SRLIW
+#define OP__SRAIW
+#define OP__SB
+#define OP__SH
+#define OP__SW
+#define OP__SD
+#define OP__ADD
+#define OP__SUB
+#define OP__SLL
+#define OP__SLT
+#define OP__SLTU
+#define OP__XOR
+#define OP__SRL
+#define OP__SRA
+#define OP__OR
+#define OP__AND
+#define OP__LUI
+#define OP__ADDW
+#define OP__SUBW
+#define OP__SLLW
+#define OP__SRLW
+#define OP__SRAW
+#define OP__BEQ
+#define OP__BNE
+#define OP__BLT
+#define OP__BGE
+#define OP__BLTU
+#define OP__BGEU
+#define OP__JALR
+#define OP__JAL
+
+
+
 
 #define FUNC__ADD 4'h0
 #define FUNC__ADDW 4'h1
