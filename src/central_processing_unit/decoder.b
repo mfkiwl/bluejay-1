@@ -13,14 +13,10 @@ module decoder
     output logic [4:0] rd_addr__1,
     output logic [4:0] wr_addr,
     output logic [63:0] imm,
-
-
     output logic we,
-
-    output logic [3:0] ctrl_flow,
-    output logic sel__data_0,
-    output logic sel__data_1,
-    output logic [1:0] sel__rd_data
+    output logic sel__a,
+    output logic sel__b,
+    output logic [1:0] sel__wr_data
 );
 
 logic [6:0] opcode;
@@ -440,42 +436,45 @@ always_comb begin
     rd_addr__1 = rs2;
     wr_addr = rd;
     we = 1'b0;
-
-    
-    // ctrl_flow = CTRL_FLOW__PC_PLUS_FOUR;
-    // sel__data_0 = SEL__DATA_0__REG;
-    // sel__data_1 = SEL__DATA_1__REG;
-    // sel__rd_data = SEL__RD_DATA__ALU;
-
+    sel__a = SEL__A__RD_DATA__0;
+    sel__b = SEL__B__IMM; 
+    sel__wr_data = SEL__WD_DATA__C;
 
     case (op):
         OP__LB:
         begin
             we = 1'b1;
+            sel__wr_data = SEL__WD_DATA__MEM_RD_DATA;
         end
         OP__LH:
         begin
             we = 1'b1;
+            sel__wr_data = SEL__WD_DATA__MEM_RD_DATA;
         end
         OP__LW:
         begin
             we = 1'b1;
+            sel__wr_data = SEL__WD_DATA__MEM_RD_DATA;
         end
         OP__LD:
         begin
             we = 1'b1;
+            sel__wr_data = SEL__WD_DATA__MEM_RD_DATA;
         end
         OP__LBU:
         begin
             we = 1'b1;
+            sel__wr_data = SEL__WD_DATA__MEM_RD_DATA;
         end
         OP__LHU:
         begin
             we = 1'b1;
+            sel__wr_data = SEL__WD_DATA__MEM_RD_DATA;
         end
         OP__LWU:
         begin
             we = 1'b1;
+            sel__wr_data = SEL__WD_DATA__MEM_RD_DATA;
         end
         OP__FENCE:
         begin
@@ -489,55 +488,68 @@ always_comb begin
         end
         OP__SLLI:
         begin
+            func = FUNC__SLL;
             we = 1'b1;
         end
         OP__SLTI:
         begin
+            func = FUNC__SLT;
             we = 1'b1;
         end
         OP__SLTIU:
         begin
+            func = FUNC__SLTU;
             we = 1'b1;
         end
         OP__XORI:
         begin
+            func = FUNC__XOR;
             we = 1'b1;
         end
         OP__SRLI:
         begin
+            func = FUNC__SRL;
             we = 1'b1;
         end
         OP__SRAI:
         begin
+            func = FUNC__SRA;
             we = 1'b1;
         end
         OP__ORI:
         begin
+            func = FUNC__OR;
             we = 1'b1;
         end
         OP__ANDI:
         begin
+            func = FUNC__AND;
             we = 1'b1;
         end
         OP__AUIPC:
         begin
             format = FORMAT__U_TYPE;
             we = 1'b1;
+            sel__a = SEL__A__PC;
         end
         OP__ADDIW:
         begin
+            func = FUNC__ADDW;
             we = 1'b1;
         end
         OP__SLLIW:
         begin
+            func = FUNC__SLLW;
             we = 1'b1;
         end
         OP__SRLIW:
         begin
+            func = FUNC__SRLW;
             we = 1'b1;
         end
         OP__SRAIW:
         begin
+            func = FUNC__SRAW;
             we = 1'b1;
         end
         OP__SB:
@@ -560,114 +572,153 @@ always_comb begin
         begin
             format = FORMAT__R_TYPE;
             we = 1'b1;
+            sel__b = SEL__B__RD_DATA__1; 
         end
         OP__SUB:
         begin
             format = FORMAT__R_TYPE;
+            func = FUNC__SUB;
             we = 1'b1;
+            sel__b = SEL__B__RD_DATA__1; 
         end
         OP__SLL:
         begin
             format = FORMAT__R_TYPE;
+            func = FUNC__SLL;
             we = 1'b1;
+            sel__b = SEL__B__RD_DATA__1; 
         end
         OP__SLT:
         begin
             format = FORMAT__R_TYPE;
+            func = FUNC__SLT;
             we = 1'b1;
+            sel__b = SEL__B__RD_DATA__1; 
         end
         OP__SLTU:
         begin
             format = FORMAT__R_TYPE;
+            func = FUNC__SLTU;
             we = 1'b1;
+            sel__b = SEL__B__RD_DATA__1; 
         end
         OP__XOR:
         begin
             format = FORMAT__R_TYPE;
+            func = FUNC__XOR;
             we = 1'b1;
+            sel__b = SEL__B__RD_DATA__1; 
         end
         OP__SRL:
         begin
             format = FORMAT__R_TYPE;
+            func = FUNC__SRL;
             we = 1'b1;
+            sel__b = SEL__B__RD_DATA__1; 
         end
         OP__SRA:
         begin
             format = FORMAT__R_TYPE;
+            func = FUNC__SRA;
             we = 1'b1;
+            sel__b = SEL__B__RD_DATA__1; 
         end
         OP__OR:
         begin
             format = FORMAT__R_TYPE;
+            func = FUNC__OR;
             we = 1'b1;
+            sel__b = SEL__B__RD_DATA__1; 
         end
         OP__AND:
         begin
             format = FORMAT__R_TYPE;
+            func = FUNC__AND;
             we = 1'b1;
+            sel__b = SEL__B__RD_DATA__1; 
         end
         OP__LUI:
         begin
             format = FORMAT__U_TYPE;
+            rd_addr__0 = 0;
             we = 1'b1;
         end
         OP__ADDW:
         begin
             format = FORMAT__R_TYPE;
+            func = FUNC__ADDW;
             we = 1'b1;
+            sel__b = SEL__B__RD_DATA__1; 
         end
         OP__SUBW:
         begin
             format = FORMAT__R_TYPE;
+            func = FUNC__SUBW;
             we = 1'b1;
+            sel__b = SEL__B__RD_DATA__1; 
         end
         OP__SLLW:
         begin
             format = FORMAT__R_TYPE;
+            func = FUNC__SLLW;
             we = 1'b1;
+            sel__b = SEL__B__RD_DATA__1; 
         end
         OP__SRLW:
         begin
             format = FORMAT__R_TYPE;
+            func = FUNC__SRLW;
             we = 1'b1;
+            sel__b = SEL__B__RD_DATA__1; 
         end
         OP__SRAW:
         begin
             format = FORMAT__R_TYPE;
+            func = FUNC__SRAW;
             we = 1'b1;
+            sel__b = SEL__B__RD_DATA__1; 
         end
         OP__BEQ:
         begin
             format = FORMAT__B_TYPE;
+            sel__a = SEL__A__PC;
         end
         OP__BNE:
         begin
             format = FORMAT__B_TYPE;
+            sel__a = SEL__A__PC;
         end
         OP__BLT:
         begin
             format = FORMAT__B_TYPE;
+            sel__a = SEL__A__PC;
         end
         OP__BGE:
         begin
             format = FORMAT__B_TYPE;
+            sel__a = SEL__A__PC;
         end
         OP__BLTU:
         begin
             format = FORMAT__B_TYPE;
+            sel__a = SEL__A__PC;
         end
         OP__BGEU:
         begin
             format = FORMAT__B_TYPE;
+            sel__a = SEL__A__PC;
         end
         OP__JALR:
         begin
             we = 1'b1;
+            sel__wr_data = SEL__WD_DATA__PC_PLUS_FOUR;
         end
         OP__JAL:
         begin
             format = FORMAT__J_TYPE;
             we = 1'b1;
+            sel__a = SEL__A__PC;
+            sel__wr_data = SEL__WD_DATA__PC_PLUS_FOUR;
         end
     endcase
 end 

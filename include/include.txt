@@ -89,15 +89,15 @@
 
 #define NOP 32'h00_00_00_33
 
-#define SEL__DATA_0__REG 1'b0
-#define SEL__DATA_0__PC 1'b1
+#define SEL__A__RD_DATA__0 1'b0
+#define SEL__A__PC 1'b1
 
-#define SEL__DATA_1__REG 1'b0
-#define SEL__DATA_1__IMM 1'b1
+#define SEL__B__RD_DATA__1 1'b0
+#define SEL__B__IMM 1'b1
 
-#define SEL__RD_DATA__ALU 2'h0
-#define SEL__RD_DATA__MEM 2'h1
-#define SEL__RD_DATA__PC_PLUS_FOUR 2'h2
+#define SEL__WD_DATA__C 2'h0
+#define SEL__WD_DATA__MEM_RD_DATA 2'h1
+#define SEL__WD_DATA__PC_PLUS_FOUR 2'h2
 
 #define SEL__PC__PC_PLUS_FOUR 2'h0
 #define SEL__PC__PC_PLUS_IMM 2'h1
