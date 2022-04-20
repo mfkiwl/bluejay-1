@@ -7,9 +7,9 @@ module register_file
     input rst,
     input we,
     input [4:0] rd_addr__0,
-    output logic [XLEN-1:0] rd_data__0,
+    output logic [63:0] rd_data__0,
     input [4:0] rd_addr__1,
-    output logic [XLEN-1:0] rd_data__1,
+    output logic [63:0] rd_data__1,
     input [4:0] wr_addr,
     input [XLEN-1:0] wr_data
 );

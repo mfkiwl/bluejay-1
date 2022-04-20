@@ -6,8 +6,7 @@ module decoder
     input clk,
     input rst,
     input [31:0] ir,
-
-    output logic [4:0] op,
+    output logic [5:0] op,
     output logic [3:0] func,
     output logic [4:0] rd_addr__0,
     output logic [4:0] rd_addr__1,

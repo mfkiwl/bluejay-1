@@ -4,72 +4,74 @@
 module central_processing_unit
 (
     input clk,
-    input rst,
-
-    output logic cpu_to_il1__valid,
-    input cpu_to_il1__ready,
-    output logic cpu_to_il1__rw,
-    output logic [63:0] cpu_to_il1__addr,
-    output logic [63:0] cpu_to_il1__data,
-    output logic [1:0] cpu_to_il1__size,
-
-    input il1_to_cpu__valid,
-    output logic il1_to_cpu__ready,
-    input [63:0] il1_to_cpu__addr,
-    input [63:0] il1_to_cpu__data 
+    input rst
 );
 
 //==============================================
 // Intruction Fetch (IF)
 //==============================================
+logic IF__valid;
 logic IF__ready;                         
 logic [63:0] IF__pc;
+logic [63:0] IF__pc_n;
+logic [31:0] IF__ir;
 
-// IF0 pipe stage.
+// IF pipe stage.
 always_ff @(posedge clk) begin
-    if (rst) IF__pc <= 64'h0;
-    else if (IF__ready) IF__pc <= MEM__take_branch ? MEM__branch_pc : IF__pc + 4;
+    if (rst) begin
+        IF__pc <= 64'h0;
+    end
+    else if (IF__ready) begin
+        IF__pc <= IF__pc_n;
+    end
 end
 
-assign cpu_to_il1__valid = ~rst;
-assign IF__ready = cpu_to_il1__ready;
-assign cpu_to_il1__addr = IF__pc;
-assign cpu_to_il1__rw = 1'b0;
-assign cpu_to_il1__data = 64'h0;
-assign cpu_to_il1__size = SIZE__WORD;
+// Select the next pc.
+always_comb begin
+    IF__pc_n = IF__pc + 4;
+end
 
+// TODO
+assign IF__valid = 1'b1;
+assign IF__ir = NOP;
 
 //==============================================
 // Instruction Decode (ID)
 //==============================================  
+logic ID__valid;
 logic ID__ready;
-logic ID__stall;
 logic [63:0] ID__pc;
 logic [31:0] ID__ir;
-logic ID__we;
-logic [4:0] ID__rd;
-logic [1:0] ID__sel__rd_data;
-logic [3:0] ID__ctrl_flow;
-logic [3:0] ID__func;
+logic [5:0] ID__op;
+logic [3:0] func;
+logic [4:0] ID__rd_addr__0;
+logic [4:0] ID__rd_addr__1;
+logic [4:0] ID__wr_addr;
 logic [63:0] ID__imm;
-logic ID__sel__data_0;
-logic ID__sel__data_1;
-logic [4:0] ID__rs1;
-logic [63:0] ID__rs1_data;
-logic [4:0] ID__rs2;
-logic [63:0] ID__rs2_data;
+logic ID__we;
+logic ID__sel__a;
+logic ID__sel__b;
+logic [1:0] ID__sel__wr_data;
+logic [63:0] ID__rd_data__0;
+logic [63:0] ID__rd_data__1;
 
-// IL1/ID pipe stage.
+// IF/ID pipe stage (valid).
 always_ff @(posedge clk) begin
-    if (rst | MEM__take_branch | ~il1_to_cpu__valid) {ID__ir} <= {NOP};
-    else if (ID__ready) {ID__pc, ID__ir} <= {il1_to_cpu__addr, il1_to_cpu__data[31:0]};
+    if (rst) begin
+        ID__valid <= 1'b0;
+    end
+    else begin
+        ID__valid <= ID__ready ? IF__valid : ID__valid;
+    end
 end
 
-assign il1_to_cpu__ready = ID__ready;
-assign ID__ready = ~ID__stall;
-assign ID__stall = (EX__we & (EX__rd == ID__rs1) & ~ID__sel__data_0 & (EX__rd != 5'h0)) | (EX__we & (EX__rd == ID__rs2) & ~ID__sel__data_1 & (EX__rd != 5'h0)) |
-                   (MEM__we & (MEM__rd == ID__rs1) & ~ID__sel__data_0 & (MEM__rd != 5'h0)) | (MEM__we & (MEM__rd == ID__rs2) & ~ID__sel__data_1 & (MEM__rd != 5'h0)) |
-                   (WB__we & (WB__rd == ID__rs1) & ~ID__sel__data_0 & (WB__rd != 5'h0)) | (WB__we & (WB__rd == ID__rs2) & ~ID__sel__data_1 & (WB__rd != 5'h0));
+// IF/ID pipe stage (data).
+always_ff @(posedge clk) begin
+    if (IF__valid && ID__ready) begin
+        ID__pc <= IF__pc;
+        ID__ir <= IF__ir;
+    end
+end
 
 //==============================
 // decoder
@@ -79,16 +81,16 @@ decoder decoder__0
     .clk(clk),
     .rst(rst),
     .ir(ID__ir),
-    .we(ID__we),
-    .rd(ID__rd),
-    .rs1(ID__rs1),
-    .rs2(ID__rs2),
-    .imm(ID__imm),
+    .op(ID__op),
     .func(ID__func),
-    .ctrl_flow(ID__ctrl_flow),
-    .sel__data_0(ID__sel__data_0),
-    .sel__data_1(ID__sel__data_1),
-    .sel__rd_data(ID__sel__rd_data)
+    .rd_addr__0(ID__rd_addr__0),
+    .rd_addr__1(ID__rd_addr__1),
+    .wr_addr(ID__wr_addr),
+    .imm(ID__imm),
+    .we(ID__we),
+    .sel__a(ID__sel__a),
+    .sel__b(ID__sel__b),
+    .sel__wr_data(ID__sel__wr_data)
 );
 
 //==============================
@@ -99,12 +101,12 @@ register_file register_file__0
     .clk(clk),
     .rst(rst),
     .we(WB__we),
-    .rs1(ID__rs1),
-    .rs1_data(ID__rs1_data),
-    .rs2(ID__rs2),
-    .rs2_data(ID__rs2_data),
-    .rd(WB__rd),
-    .rd_data(WB__rd_data)
+    .rd_addr__0(ID__rd_addr__0),
+    .rd_data__0(ID__rd_data__0),
+    .rd_addr__1(ID__rd_addr__1),
+    .rd_data__1(ID__rd_data__1),
+    .wr_addr(WB__wr_addr),
+    .wr_data(WB__wr_data)
 );
 
 //==============================================

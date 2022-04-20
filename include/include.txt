@@ -15,60 +15,58 @@
 #define FORMAT__U_TYPE 3'h4
 #define FORMAT__J_TYPE 3'h5
 
-#define OP__NOP
-#define OP__LB
-#define OP__LH
-#define OP__LW
-#define OP__LD
-#define OP__LBU
-#define OP__LHU
-#define OP__LWU
-#define OP__FENCE
-#define OP__FENCE_I
-#define OP__ADDI
-#define OP__SLLI
-#define OP__SLTI
-#define OP__SLTIU
-#define OP__XORI
-#define OP__SRLI
-#define OP__SRAI
-#define OP__ORI
-#define OP__ANDI
-#define OP__AUIPC
-#define OP__ADDIW
-#define OP__SLLIW
-#define OP__SRLIW
-#define OP__SRAIW
-#define OP__SB
-#define OP__SH
-#define OP__SW
-#define OP__SD
-#define OP__ADD
-#define OP__SUB
-#define OP__SLL
-#define OP__SLT
-#define OP__SLTU
-#define OP__XOR
-#define OP__SRL
-#define OP__SRA
-#define OP__OR
-#define OP__AND
-#define OP__LUI
-#define OP__ADDW
-#define OP__SUBW
-#define OP__SLLW
-#define OP__SRLW
-#define OP__SRAW
-#define OP__BEQ
-#define OP__BNE
-#define OP__BLT
-#define OP__BGE
-#define OP__BLTU
-#define OP__BGEU
-#define OP__JALR
-#define OP__JAL
-
-
+#define OP__NOP 6'h0
+#define OP__LB 6'h1
+#define OP__LH 6'h2
+#define OP__LW 6'h3
+#define OP__LD 6'h4
+#define OP__LBU 6'h5
+#define OP__LHU 6'h6
+#define OP__LWU 6'h7
+#define OP__FENCE 6'h8
+#define OP__FENCE_I 6'h9
+#define OP__ADDI 6'ha
+#define OP__SLLI 6'hb
+#define OP__SLTI 6'hc
+#define OP__SLTIU 6'hd
+#define OP__XORI 6'he
+#define OP__SRLI 6'hf
+#define OP__SRAI 6'h10
+#define OP__ORI 6'h11
+#define OP__ANDI 6'h12
+#define OP__AUIPC 6'h13
+#define OP__ADDIW 6'h14
+#define OP__SLLIW 6'h15
+#define OP__SRLIW 6'h16
+#define OP__SRAIW 6'h17
+#define OP__SB 6'h18
+#define OP__SH 6'h19
+#define OP__SW 6'h1a
+#define OP__SD 6'h1b
+#define OP__ADD 6'h1c
+#define OP__SUB 6'h1d
+#define OP__SLL 6'h1e
+#define OP__SLT 6'h1f
+#define OP__SLTU 6'h20
+#define OP__XOR 6'h21
+#define OP__SRL 6'h22
+#define OP__SRA 6'h23
+#define OP__OR 6'h24
+#define OP__AND 6'h25
+#define OP__LUI 6'h26
+#define OP__ADDW 6'h27
+#define OP__SUBW 6'h28
+#define OP__SLLW 6'h29
+#define OP__SRLW 6'h2a
+#define OP__SRAW 6'h2b
+#define OP__BEQ 6'h2c
+#define OP__BNE 6'h2d
+#define OP__BLT 6'h2e
+#define OP__BGE 6'h2f
+#define OP__BLTU 6'h30
+#define OP__BGEU 6'h31
+#define OP__JALR 6'h32
+#define OP__JAL 6'h33
 
 
 #define FUNC__ADD 4'h0
@@ -86,6 +84,8 @@
 #define FUNC__SRAW 4'hc
 #define FUNC__OR 4'hd
 #define FUNC__AND 4'he
+
+
 
 #define NOP 32'h00_00_00_33
 
