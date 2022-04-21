@@ -1,6 +1,6 @@
-//==============================================================
+//==============================================
 // central_processing_unit
-//==============================================================
+//==============================================
 module central_processing_unit
 (
     input clk,
@@ -43,7 +43,7 @@ logic ID__ready;
 logic [63:0] ID__pc;
 logic [31:0] ID__ir;
 logic [5:0] ID__op;
-logic [3:0] func;
+logic [3:0] ID__func;
 logic [4:0] ID__rd_addr__0;
 logic [4:0] ID__rd_addr__1;
 logic [4:0] ID__wr_addr;
@@ -100,7 +100,7 @@ register_file register_file__0
 (
     .clk(clk),
     .rst(rst),
-    .we(WB__we),
+    .we(WB__we & WB__valid),
     .rd_addr__0(ID__rd_addr__0),
     .rd_data__0(ID__rd_data__0),
     .rd_addr__1(ID__rd_addr__1),
@@ -112,22 +112,23 @@ register_file register_file__0
 //==============================================
 // Execute (EX)
 //==============================================
+logic EX__valid;
 logic EX__ready;
 logic [63:0] EX__pc;
 logic [31:0] EX__ir;
-logic EX__we;
-logic [4:0] EX__rd;
-logic [1:0] EX__sel__rd_data;
-logic [3:0] EX__ctrl_flow;
+logic [5:0] EX__op;
 logic [3:0] EX__func;
+logic [4:0] EX__wr_addr;
 logic [63:0] EX__imm;
-logic EX__sel__data_0;
-logic EX__sel__data_1;
-logic [63:0] EX__rs2_data;
-logic [63:0] EX__rs1_data;
-logic [63:0] EX__data_0;
-logic [63:0] EX__data_1;
-logic [63:0] EX__data_2;
+logic EX__we;
+logic EX__sel__a;
+logic EX__sel__b;
+logic [1:0] EX__sel__wr_data;
+logic [63:0] EX__rd_data__0;
+logic [63:0] EX__rd_data__1;
+logic [63:0] EX__a;
+logic [63:0] EX__b;
+logic [63:0] EX__c;
 logic EX__eq;
 logic EX__ne;
 logic EX__lt;
@@ -135,15 +136,34 @@ logic EX__ltu;
 logic EX__ge;
 logic EX__geu;
 
-// ID/EX pipe stage.
+
+// IF/ID pipe stage (valid).
 always_ff @(posedge clk) begin
-    if (rst | ID__stall | MEM__take_branch) {EX__we, EX__ctrl_flow} <= {1'b0, CTRL_FLOW__PC_PLUS_FOUR};
-    else if (EX__ready) {EX__pc, EX__ir, EX__we, EX__rd, EX__rs1_data, EX__rs2_data, EX__imm, EX__func, EX__ctrl_flow, EX__sel__data_0, EX__sel__data_1, EX__sel__rd_data} <= {ID__pc, ID__ir, ID__we, ID__rd, ID__rs1_data, ID__rs2_data, ID__imm, ID__func, ID__ctrl_flow, ID__sel__data_0, ID__sel__data_1, ID__sel__rd_data};
+    if (rst) begin
+        EX__valid <= 1'b0;
+    end
+    else begin
+        EX__valid <= EX__ready ? ID__valid : EX__valid;
+    end
 end
 
-assign EX__ready = 1'b1;
-assign EX__data_0 = EX__sel__data_0 ? EX__pc : EX__rs1_data;
-assign EX__data_1 = EX__sel__data_1 ? EX__imm : EX__rs2_data;
+// IF/ID pipe stage (data).
+always_ff @(posedge clk) begin
+    if (ID__valid && EX__ready) begin
+        EX__pc <= ID__pc;
+        EX__ir <= ID__ir;
+        EX__op <= ID__op;
+        EX__func <= ID__func;
+        EX__wr_addr <= ID__wr_addr;
+        EX__imm <= ID__imm;
+        EX__we <= ID__we;
+        EX__sel__a <= ID__sel__a;
+        EX__sel__b <= ID__sel__b;
+        EX__sel__wr_data <= ID__sel__wr_data;
+        EX__rd_data__0 <= ID__rd_data__0;
+        EX__rd_data__1 <= ID__rd_data__1;
+    end
+end
 
 //==============================
 // arithmetic_logic_unit
@@ -153,9 +173,20 @@ arithmetic_logic_unit arithmetic_logic_unit__0
     .clk(clk),
     .rst(rst),
     .func(EX__func),
-    .data_0(EX__data_0),
-    .data_1(EX__data_1),
-    .data_2(EX__data_2),
+    .a(EX__a),
+    .b(EX__b),
+    .c(EX__c),
+);
+
+//==============================
+// comparator
+//==============================
+comparator comparator__0
+(
+    .clk(clk),
+    .rst(rst),
+    .a(EX__rd_data__0),
+    .b(EX__rd_data__0),
     .eq(EX__eq),
     .ne(EX__ne),
     .lt(EX__lt),
@@ -163,6 +194,34 @@ arithmetic_logic_unit arithmetic_logic_unit__0
     .ge(EX__ge),
     .geu(EX__geu)
 );
+
+// Select a (input to ALU).
+always_comb begin
+    case (sel__a)
+        SEL__A__RD_DATA__0:
+        begin
+            EX__a = EX__rd_data__0;
+        end
+        SEL__A__PC:
+        begin
+            EX__a = EX__pc;
+        end
+    endcase
+end
+
+// Select b (input to ALU).
+always_comb begin
+    case (sel__b)
+        SEL__B__RD_DATA__1:
+        begin
+            EX__b = EX__rd_data__1;
+        end
+        SEL__B__IMM:
+        begin
+            EX__b = EX__imm;
+        end
+    endcase
+end
 
 //==============================================
 // Memory (MEM)
