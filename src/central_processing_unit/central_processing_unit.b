@@ -4,7 +4,9 @@
 module central_processing_unit
 (
     input clk,
-    input rst
+    input rst,
+    output [63:0] pc,
+    input [31:0] ir
 );
 
 //==============================================
@@ -16,24 +18,36 @@ logic [63:0] IF__pc;
 logic [63:0] IF__pc_n;
 logic [31:0] IF__ir;
 
-// IF pipe stage.
+// IF pipe stage (data).
 always_ff @(posedge clk) begin
     if (rst) begin
         IF__pc <= 64'h0;
     end
-    else if (IF__ready) begin
-        IF__pc <= IF__pc_n;
+    else begin
+        if (WB__valid) begin
+            IF__pc <= IF__pc_n;
+        end        
     end
 end
 
-// Select the next pc.
+// Determine the next pc.
 always_comb begin
     IF__pc_n = IF__pc + 4;
+
+    if ((WB__op == OP__BEQ) | (WB__op == OP__BNE) | (WB__op == OP__BLT) | (WB__op == OP__BGE) | (WB__op == OP__BLTU) | (WB__op == OP__BGEU)) begin
+        IF__pc_n = WB__take_branch ? WB__c : IF__pc + 4;
+    end
+    else if ((WB__op == OP__JAL) | (WB__op == OP__JALR)) begin
+        IF__pc_n = WB__c;
+    end
 end
 
-// TODO
-assign IF__valid = 1'b1;
-assign IF__ir = NOP;
+// TODO.
+assign pc = IF__pc;
+assign IF__ir = ir;
+
+// IF ready signal.
+assign IF__ready = ID__ready;
 
 //==============================================
 // Instruction Decode (ID)
@@ -109,6 +123,9 @@ register_file register_file__0
     .wr_data(WB__wr_data)
 );
 
+// ID ready signal.
+assign ID__ready = EX__ready;
+
 //==============================================
 // Execute (EX)
 //==============================================
@@ -135,9 +152,10 @@ logic EX__lt;
 logic EX__ltu;
 logic EX__ge;
 logic EX__geu;
+logic EX__take_branch;
 
 
-// IF/ID pipe stage (valid).
+// ID/EX pipe stage (valid).
 always_ff @(posedge clk) begin
     if (rst) begin
         EX__valid <= 1'b0;
@@ -147,7 +165,7 @@ always_ff @(posedge clk) begin
     end
 end
 
-// IF/ID pipe stage (data).
+// ID/EX pipe stage (data).
 always_ff @(posedge clk) begin
     if (ID__valid && EX__ready) begin
         EX__pc <= ID__pc;
@@ -197,7 +215,7 @@ comparator comparator__0
 
 // Select a (input to ALU).
 always_comb begin
-    case (sel__a)
+    case (EX__sel__a)
         SEL__A__RD_DATA__0:
         begin
             EX__a = EX__rd_data__0;
@@ -211,7 +229,7 @@ end
 
 // Select b (input to ALU).
 always_comb begin
-    case (sel__b)
+    case (EX__sel__b)
         SEL__B__RD_DATA__1:
         begin
             EX__b = EX__rd_data__1;
@@ -223,77 +241,184 @@ always_comb begin
     endcase
 end
 
+// If the instruction is a branch, decide if the branch should be taken.
+always_comb begin
+    EX__take_branch = 1'b0;
+    case (EX__op)
+        OP__BEQ:
+        begin
+            EX__take_branch = EX__eq;
+        end
+        OP__BNE:
+        begin
+            EX__take_branch = EX__ne;
+        end        
+        OP__BLT:
+        begin
+            EX__take_branch = EX__blt;
+        end        
+        OP__BGE:
+        begin
+            EX__take_branch = EX__bge;
+        end        
+        OP__BLTU:
+        begin
+            EX__take_branch = EX__bltu;
+        end        
+        OP__BGEU:
+        begin
+            EX__take_branch = EX__geu;
+        end
+    endcase
+end
+
+// EX ready signal.
+assign EX__ready = MEM__ready;
+
 //==============================================
 // Memory (MEM)
 //==============================================
+logic MEM__valid;
 logic MEM__ready;
 logic [63:0] MEM__pc;
 logic [31:0] MEM__ir;
+logic [5:0] MEM__op;
+logic [4:0] MEM__wr_addr;
 logic MEM__we;
-logic [4:0] MEM__rd;
-logic [1:0] MEM__sel__rd_data;
-logic [3:0] MEM__ctrl_flow;
-logic [63:0] MEM__imm;
-logic [63:0] MEM__rs2_data;
-logic [63:0] MEM__data_2;
-logic [63:0] MEM__mem_data;
-logic MEM__eq;
-logic MEM__ne;
-logic MEM__lt;
-logic MEM__ltu;
-logic MEM__ge;
-logic MEM__geu;
+logic [1:0] MEM__sel__wr_data;
+logic [63:0] MEM__rd_data__1;
+logic [63:0] MEM__c;
 logic MEM__take_branch;
-logic [63:0] MEM__branch_pc;
+logic [63:0] MEM__mem_rd_data;
 
-// EX/MEM pipe stage.
+
+// EX/MEM pipe stage (valid).
 always_ff @(posedge clk) begin
-    if (rst | MEM__take_branch) {MEM__we, MEM__ctrl_flow} <= {1'b0, CTRL_FLOW__PC_PLUS_FOUR};
-    else if (MEM__ready) {MEM__pc, MEM__ir, MEM__we, MEM__rd, MEM__rs2_data, MEM__data_2, MEM__sel__rd_data, MEM__eq, MEM__ne, MEM__lt, MEM__ltu, MEM__ge, MEM__geu} <= {EX__pc, EX__ir, EX__we, EX__rd, EX__rs2_data, EX__data_2, EX__sel__rd_data, EX__eq, EX__ne, EX__lt, EX__ltu, EX__ge, EX__geu};
+    if (rst) begin
+        MEM__valid <= 1'b0;
+    end
+    else begin
+        MEM__valid <= MEM__ready ? EX__valid : MEM__valid;
+    end
 end
 
-assign MEM__ready = 1'b1;
-assign MEM__branch_pc = (MEM__ctrl_flow == CTRL_FLOW__JALR) ? MEM__data_2 : MEM__pc + MEM__imm;
-always_comb begin
-    case (MEM__ctrl_flow)
-        CTRL_FLOW__PC_PLUS_FOUR: MEM__take_branch = 1'b0;
-        CTRL_FLOW__JAL: MEM__take_branch = 1'b1;
-        CTRL_FLOW__JALR: MEM__take_branch = 1'b1;
-        CTRL_FLOW__BEQ: MEM__take_branch = MEM__eq;
-        CTRL_FLOW__BNE: MEM__take_branch = MEM__ne;
-        CTRL_FLOW__BLT: MEM__take_branch = MEM__lt;
-        CTRL_FLOW__BLTU: MEM__take_branch = MEM__ltu;
-        CTRL_FLOW__BGE: MEM__take_branch = MEM__ge;
-        CTRL_FLOW__BGEU: MEM__take_branch = MEM__geu;
-    endcase
+// EX/MEM pipe stage (data).
+always_ff @(posedge clk) begin
+    if (EX__valid && MEM__ready) begin
+        MEM__pc <= EX__pc;
+        MEM__ir <= EX__ir;
+        MEM__op <= EX__op;
+        MEM__wr_addr <= EX__wr_addr;
+        MEM__we <= EX__we;
+        MEM__sel__wr_data <= EX__sel__wr_data;
+        MEM__rd_data__1 <= EX__rd_data__1;
+        MEM__c <= EX__c;
+        MEM__take_branch <= EX__take_branch;
+    end
 end
+
+// MEM ready signal.
+assign MEM__ready = WB__ready;
 
 //==============================================
 // Write Back (WB)
 //==============================================
+logic WB__valid;
+logic WB__ready;
 logic [63:0] WB__pc;
 logic [31:0] WB__ir;
+logic [5:0] WB__op;
+logic [4:0] WB__wr_addr;
 logic WB__we;
-logic [4:0] WB__rd;
-logic [1:0] WB__sel__rd_data;
-logic [63:0] WB__data_2;
-logic [63:0] WB__mem_data;
-logic [63:0] WB__rd_data;
-logic WB__ready;
+logic [1:0] WB__sel__wr_data;
+logic [63:0] WB__rd_data__1;
+logic [63:0] WB__c;
+logic WB__take_branch;
+logic [63:0] WB__mem_rd_data;
+logic [63:0] WB__wr_data;
 
-// MEM/WB pipe stage.
+// EX/MEM pipe stage (valid).
 always_ff @(posedge clk) begin
-    if (rst) {WB__we} <= {1'b0};
-    else if (WB__ready) {WB__pc, WB__ir, WB__we, WB__rd, WB__data_2, WB__sel__rd_data, WB__mem_data} <= {MEM__pc, MEM__ir, MEM__we, MEM__rd, MEM__data_2, MEM__sel__rd_data, MEM__mem_data};
+    if (rst) begin
+        WB__valid <= 1'b0;
+    end
+    else begin
+        WB__valid <= WB__ready ? MEM__valid : WB__valid;
+    end
 end
 
+// EX/MEM pipe stage (data).
+always_ff @(posedge clk) begin
+    if (MEM__valid && WB__ready) begin
+        WB__pc <= MEM__pc;
+        WB__ir <= MEM__ir;
+        WB__op <= MEM__op;
+        WB__wr_addr <= MEM__wr_addr;
+        WB__we <= MEM__we;
+        WB__sel__wr_data <= MEM__sel__wr_data;
+        WB__c <= MEM__c;
+        WB__take_branch <= MEM__take_branch;
+    end
+end
+
+// Select wr_data (the data to be writen back to the register file).
 always_comb begin
-    case (WB__sel__rd_data)
-        SEL__RD_DATA__ALU: WB__rd_data = WB__data_2;
-        SEL__RD_DATA__MEM: WB__rd_data = WB__mem_data;
-        SEL__RD_DATA__PC_PLUS_FOUR: WB__rd_data = WB__pc + 4;
+    case (WB__sel__wr_data)
+        SEL__WD_DATA__C:
+        begin
+            WB__wr_data = WB__c;
+        end
+        SEL__WD_DATA__MEM_RD_DATA:
+        begin
+            WB__wr_data = WB__mem_rd_data;
+        end
+        SEL__WD_DATA__PC_PLUS_FOUR:
+        begin
+            WB__wr_data = WB__pc + 4;
+        end
     endcase
 end
 
+// WB ready signal.
+assign WB__ready = 1'b1;
+
+//==============================================
+// Finite State Machine
+//==============================================
+localparam STATE__RESET = 2'h0;
+localparam STATE__FETCH = 2'h1;
+localparam STATE__WAIT = 2'h2;
+
+logic [1:0] state;
+logic [1:0] state_n;
+
+always_ff @(posedge clk) begin
+    if (rst) begin
+        state <= STATE__RESET;
+    end
+    else begin
+        state <= state_n;
+    end
+end
+
+always_comb begin
+    IF__valid = 1'b0;
+
+    case (state)
+        STATE__RESET:
+        begin
+            state_n = STATE__FETCH;
+        end
+        STATE__FETCH:
+        begin
+            state_n = STATE__WAIT;
+            IF__valid = 1'b1;
+        end
+        STATE__WAIT:
+        begin
+            state_n = WB__valid ? STATE__FETCH : STATE__WAIT;
+        end
+    endcase
+end
 
 endmodule
