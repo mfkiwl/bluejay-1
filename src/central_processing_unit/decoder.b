@@ -130,7 +130,7 @@ always_comb begin
                 // sltiu
                 3'h3:
                 begin
-                    op = OP__SLTIIU;
+                    op = OP__SLTIU;
                 end
                 // xori
                 3'h4:
@@ -424,6 +424,26 @@ always_comb begin
         begin
             op = OP__JAL;
         end
+        7'h73:
+        begin
+            case (funct3)
+                3'h0:
+                begin
+                    case (ir[31:20])
+                        // ecall
+                        12'h000:
+                        begin
+                            op = OP__ECALL;
+                        end
+                        // ebreak
+                        12'h001:
+                        begin
+                            op = OP__EBREAK;
+                        end
+                    endcase
+                end
+            endcase
+        end
     endcase
 end
 
@@ -439,7 +459,7 @@ always_comb begin
     sel__b = SEL__B__IMM; 
     sel__wr_data = SEL__WD_DATA__C;
 
-    case (op):
+    case (op)
         OP__LB:
         begin
             we = 1'b1;
@@ -718,6 +738,14 @@ always_comb begin
             we = 1'b1;
             sel__a = SEL__A__PC;
             sel__wr_data = SEL__WD_DATA__PC_PLUS_FOUR;
+        end
+        OP__ECALL:
+        begin
+            
+        end
+        OP__EBREAK:
+        begin
+            
         end
     endcase
 end 

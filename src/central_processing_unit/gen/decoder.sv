@@ -6,25 +6,27 @@ module decoder
     input clk,
     input rst,
     input [31:0] ir,
-
-    output logic we,
-    output logic [4:0] rs1,
-    output logic [4:0] rs2,
-    output logic [4:0] rd,
-    output logic [63:0] imm,
+    output logic [5:0] op,
     output logic [3:0] func,
-    output logic [3:0] ctrl_flow,
-    output logic sel__data_0,
-    output logic sel__data_1,
-    output logic [1:0] sel__rd_data
+    output logic [4:0] rd_addr__0,
+    output logic [4:0] rd_addr__1,
+    output logic [4:0] wr_addr,
+    output logic [63:0] imm,
+    output logic we,
+    output logic sel__a,
+    output logic sel__b,
+    output logic [1:0] sel__wr_data
 );
 
 logic [6:0] opcode;
 logic [2:0] funct3;
 logic [6:0] funct7;
-logic [1:0] instr_format;
+logic [2:0] format;
+logic [4:0] rs1;
+logic [4:0] rs2;
+logic [4:0] rd;
 
-// decode the instruction fields
+// Breakout instruction fields.
 assign opcode = ir[6:0];
 assign rs1 = ir[19:15];
 assign rs2 = ir[24:20];
@@ -32,14 +34,20 @@ assign rd = ir[11:7];
 assign funct3 = ir[14:12];
 assign funct7 = ir[31:25];
 
-
+// Generate immediate.
 always_comb begin
-    we = 1'b0;
-    func = 4'h0;
-    ctrl_flow = 4'h0;
-    sel__data_0 = 1'b0;
-    sel__data_1 = 1'b0;
-    sel__rd_data = 2'h0;
+    case (format)
+        3'h0: imm = 0;
+        3'h1: imm = {{53{ir[31]}}, ir[30:25], ir[24:21], ir[20]};
+        3'h2: imm = {{53{ir[31]}}, ir[30:25], ir[11:8], ir[7]};
+        3'h3: imm = {{52{ir[31]}}, ir[7], ir[30:25], ir[11:8], 1'b0};
+        3'h4: imm = {{33{ir[31]}}, ir[30:20], ir[19:12], 12'h0};
+        3'h5: imm = {{44{ir[31]}}, ir[19:12], ir[20], ir[30:25], ir[24:21], 1'b0};
+    endcase
+end
+
+// Decode instruction.
+always_comb begin
     case (opcode)
         7'h03:
         begin
@@ -47,58 +55,37 @@ always_comb begin
                 // lb
                 3'h0:
                 begin
-                    instr_format = 3'h1;
-                    we = 1'b1;
-                    sel__data_1 = 1'b1;
-                    sel__rd_data = 2'h1;
+                    op = 6'h1;
                 end
                 // lh
                 3'h1:
                 begin
-                    instr_format = 3'h1;
-                    we = 1'b1;
-                    sel__data_1 = 1'b1;
-                    sel__rd_data = 2'h1;
+                    op = 6'h2;
                 end
                 // lw
                 3'h2:
                 begin
-                    instr_format = 3'h1;
-                    we = 1'b1;
-                    sel__data_1 = 1'b1;
-                    sel__rd_data = 2'h1;
+                    op = 6'h3;
                 end
                 // ld
                 3'h3:
                 begin
-                    instr_format = 3'h1;
-                    we = 1'b1;
-                    sel__data_1 = 1'b1;
-                    sel__rd_data = 2'h1;
+                    op = 6'h4;
                 end
                 // lbu
                 3'h4:
                 begin
-                    instr_format = 3'h1;
-                    we = 1'b1;
-                    sel__data_1 = 1'b1;
-                    sel__rd_data = 2'h1;
+                    op = 6'h5;
                 end
                 // lhu
                 3'h5:
                 begin
-                    instr_format = 3'h1;
-                    we = 1'b1;
-                    sel__data_1 = 1'b1;
-                    sel__rd_data = 2'h1;
+                    op = 6'h6;
                 end
-                // lhu
+                // lhw
                 3'h6:
                 begin
-                    instr_format = 3'h1;
-                    we = 1'b1;
-                    sel__data_1 = 1'b1;
-                    sel__rd_data = 2'h1;
+                    op = 6'h7;
                 end
             endcase
         end
@@ -108,12 +95,12 @@ always_comb begin
                 // fence
                 3'h0:
                 begin
-                    instr_format = 3'h1;
+                    op = 6'h8;
                 end
                 // fence.i
                 3'h1:
                 begin
-                    instr_format = 3'h1;
+                    op = 6'h9;
                 end
             endcase
         end
@@ -123,10 +110,7 @@ always_comb begin
                 // addi
                 3'h0:
                 begin
-                    instr_format = 3'h1;
-                    we = 1'b1;
-                    func = 4'h0;
-                    sel__data_1 = 1'b1;
+                    op = 6'ha;
                 end
                 3'h1:
                 begin
@@ -134,36 +118,24 @@ always_comb begin
                         // slli
                         7'h00:
                         begin
-                            instr_format = 3'h1;
-                            we = 1'b1;
-                            func = 4'h4;
-                            sel__data_1 = 1'b1;
+                            op = 6'hb;
                         end
                     endcase
                 end
                 // slti
                 3'h2:
                 begin
-                    instr_format = 3'h1;
-                    we = 1'b1;
-                    func = 4'h6;
-                    sel__data_1 = 1'b1;
+                    op = 6'hc;
                 end
                 // sltiu
                 3'h3:
                 begin
-                    instr_format = 3'h1;
-                    we = 1'b1;
-                    func = 4'h7;
-                    sel__data_1 = 1'b1;
+                    op = 6'hd;
                 end
                 // xori
                 3'h4:
                 begin
-                    instr_format = 3'h1;
-                    we = 1'b1;
-                    func = 4'h8;
-                    sel__data_1 = 1'b1;
+                    op = 6'he;
                 end
                 3'h5:
                 begin
@@ -171,47 +143,31 @@ always_comb begin
                         // srli
                         7'h00:
                         begin
-                            instr_format = 3'h1;
-                            we = 1'b1;
-                            func = 4'h9;
-                            sel__data_1 = 1'b1;
+                            op = 6'hf;
                         end
                         // srai
                         7'h20:
                         begin
-                            instr_format = 3'h1;
-                            we = 1'b1;
-                            func = 4'hb;
-                            sel__data_1 = 1'b1;
+                            op = 6'h10;
                         end
                     endcase
                 end
                 // ori
                 3'h6:
                 begin
-                    instr_format = 3'h1;
-                    we = 1'b1;
-                    func = 4'hd;
-                    sel__data_1 = 1'b1;
+                    op = 6'h11;
                 end
                 // andi
                 3'h7:
                 begin
-                    instr_format = 3'h1;
-                    we = 1'b1;
-                    func = 4'he;
-                    sel__data_1 = 1'b1;
+                    op = 6'h12;
                 end
             endcase
         end
         // auipc
         7'h17:
         begin
-            instr_format = 3'h4;
-            we = 1'b1;
-            func = 4'he;
-            sel__data_0 = 1'b1;
-            sel__data_1 = 1'b1;
+            op = 6'h13;
         end
         7'h1b:
         begin
@@ -219,10 +175,7 @@ always_comb begin
                 // addiw
                 3'h0:
                 begin
-                    instr_format = 3'h1;
-                    we = 1'b1;
-                    func = 4'h1;
-                    sel__data_1 = 1'b1;
+                    op = 6'h14;
                 end
                 3'h1:
                 begin
@@ -230,10 +183,7 @@ always_comb begin
                         // slliw
                         7'h00:
                         begin
-                            instr_format = 3'h1;
-                            we = 1'b1;
-                            func = 4'h5;
-                            sel__data_1 = 1'b1;
+                            op = 6'h15;
                         end
                     endcase
                 end
@@ -243,18 +193,12 @@ always_comb begin
                         // srliw
                         7'h00:
                         begin
-                            instr_format = 3'h1;
-                            we = 1'b1;
-                            func = 4'ha;
-                            sel__data_1 = 1'b1;
+                            op = 6'h16;
                         end
                         // sraiw
                         7'h00:
                         begin
-                            instr_format = 3'h1;
-                            we = 1'b1;
-                            func = 4'hc;
-                            sel__data_1 = 1'b1;
+                            op = 6'h17;
                         end
                     endcase
                 end
@@ -266,22 +210,22 @@ always_comb begin
                 // sb
                 3'h0:
                 begin
-                    instr_format = 3'h2;
+                    op = 6'h18;
                 end
                 // sh
                 3'h1:
                 begin
-                    instr_format = 3'h2;
+                    op = 6'h19;
                 end
                 // sw
                 3'h2:
                 begin
-                    instr_format = 3'h2;
+                    op = 6'h1a;
                 end
                 // sd
                 3'h3:
                 begin
-                    instr_format = 3'h2;
+                    op = 6'h1b;
                 end
             endcase
         end
@@ -294,16 +238,12 @@ always_comb begin
                         // add
                         7'h00:
                         begin
-                            instr_format = 3'h0;
-                            we = 1'b1;
-                            func = 4'h0;
+                            op = 6'h1c;
                         end
                         // sub
                         7'h20:
                         begin
-                            instr_format = 3'h0;
-                            we = 1'b1;
-                            func = 4'h2;
+                            op = 6'h1d;
                         end
                     endcase
                 end
@@ -313,9 +253,7 @@ always_comb begin
                         // sll
                         7'h00:
                         begin
-                            instr_format = 3'h0;
-                            we = 1'b1;
-                            func = 4'h4;
+                            op = 6'h1e;
                         end
                     endcase
                 end
@@ -325,9 +263,7 @@ always_comb begin
                         // slt
                         7'h00:
                         begin
-                            instr_format = 3'h0;
-                            we = 1'b1;
-                            func = 4'h6;
+                            op = 6'h1f;
                         end
                     endcase
                 end
@@ -337,9 +273,7 @@ always_comb begin
                         // sltu
                         7'h00:
                         begin
-                            instr_format = 3'h0;
-                            we = 1'b1;
-                            func = 4'h7;
+                            op = 6'h20;
                         end
                     endcase
                 end
@@ -349,9 +283,7 @@ always_comb begin
                         // xor
                         7'h00:
                         begin
-                            instr_format = 3'h0;
-                            we = 1'b1;
-                            func = 4'h8;
+                            op = 6'h21;
                         end
                     endcase
                 end
@@ -361,16 +293,12 @@ always_comb begin
                         // srl
                         7'h00:
                         begin
-                            instr_format = 3'h0;
-                            we = 1'b1;
-                            func = 4'h9;
+                            op = 6'h22;
                         end
                         // sra
                         7'h20:
                         begin
-                            instr_format = 3'h0;
-                            we = 1'b1;
-                            func = 4'hb;
+                            op = 6'h23;
                         end
                     endcase
                 end
@@ -380,9 +308,7 @@ always_comb begin
                         // or
                         7'h00:
                         begin
-                            instr_format = 3'h0;
-                            we = 1'b1;
-                            func = 4'hd;
+                            op = 6'h24;
                         end
                     endcase
                 end
@@ -392,9 +318,7 @@ always_comb begin
                         // and
                         7'h00:
                         begin
-                            instr_format = 3'h0;
-                            we = 1'b1;
-                            func = 4'he;
+                            op = 6'h25;
                         end
                     endcase
                 end
@@ -403,8 +327,7 @@ always_comb begin
         // lui
         7'h37:
         begin
-            instr_format = 3'h4;
-            we = 1'b1;
+            op = 6'h26;
         end
         7'h3b:
         begin
@@ -415,16 +338,12 @@ always_comb begin
                         // addw
                         7'h00:
                         begin
-                            instr_format = 3'h0;
-                            we = 1'b1;
-                            func = 4'h1;
+                            op = 6'h27;
                         end
                         // subw
                         7'h20:
                         begin
-                            instr_format = 3'h0;
-                            we = 1'b1;
-                            func = 4'h3;
+                            op = 6'h28;
                         end
                     endcase
                 end
@@ -434,9 +353,7 @@ always_comb begin
                         // sllw
                         7'h00:
                         begin
-                            instr_format = 3'h0;
-                            we = 1'b1;
-                            func = 4'h5;
+                            op = 6'h29;
                         end
                     endcase
                 end
@@ -446,16 +363,12 @@ always_comb begin
                         // srlw
                         7'h00:
                         begin
-                            instr_format = 3'h0;
-                            we = 1'b1;
-                            func = 4'ha;
+                            op = 6'h2a;
                         end
                         // sraw
                         7'h20:
                         begin
-                            instr_format = 3'h0;
-                            we = 1'b1;
-                            func = 4'hc;
+                           op = 6'h2b;
                         end
                     endcase
                 end
@@ -467,38 +380,32 @@ always_comb begin
                 // beq
                 3'h0:
                 begin
-                    instr_format = 3'h3;
-                    ctrl_flow = 4'h3;
+                    op = 6'h2c;
                 end
                 // bne
                 3'h1:
                 begin
-                    instr_format = 3'h3;
-                    ctrl_flow = 4'h4;
+                    op = 6'h2d;
                 end
                 // blt
                 3'h4:
                 begin
-                    instr_format = 3'h3;
-                    ctrl_flow = 4'h5;
+                    op = 6'h2e;
                 end
                 // bge
                 3'h5:
                 begin
-                    instr_format = 3'h3;
-                    ctrl_flow = 4'h7;
+                    op = 6'h2f;
                 end
                 // bltu
                 3'h6:
                 begin
-                    instr_format = 3'h3;
-                    ctrl_flow = 4'h6;
+                    op = 6'h30;
                 end
                 // bgeu
                 3'h7:
                 begin
-                    instr_format = 3'h3;
-                    ctrl_flow = 4'h8;
+                    op = 6'h31;
                 end
             endcase
         end
@@ -508,34 +415,342 @@ always_comb begin
                 // jalr
                 3'h0:
                 begin
-                    instr_format = 3'h1;
-                    we = 1'b1;
-                    ctrl_flow = 4'h2;
-                    sel__data_1 = 1'b1;
-                    sel__rd_data = 2'h2;
+                    op = 6'h32;
                 end
             endcase
         end
         // jal
         7'h6f:
         begin
-            instr_format = 3'h5;
-            we = 1'b1;
-            ctrl_flow = 4'h1;
-            sel__rd_data = 2'h2;
+            op = 6'h33;
+        end
+        7'h73:
+        begin
+            case (funct3)
+                3'h0:
+                begin
+                    case (ir[31:20])
+                        // ecall
+                        12'h000:
+                        begin
+                            op = 6'h34;
+                        end
+                        // ebreak
+                        12'h001:
+                        begin
+                            op = 6'h35;
+                        end
+                    endcase
+                end
+            endcase
         end
     endcase
 end
 
-// create the immediate value
+// Set control signals.
 always_comb begin
-    case (instr_format)
-        3'h1: imm = {{53{ir[31]}}, ir[30:25], ir[24:21], ir[20]};
-        3'h2: imm = {{53{ir[31]}}, ir[30:25], ir[11:8], ir[7]};
-        3'h3: imm = {{52{ir[31]}}, ir[7], ir[30:25], ir[11:8], 1'b0};
-        3'h4: imm = {{33{ir[31]}}, ir[30:20], ir[19:12], 12'h0};
-        3'h5: imm = {{44{ir[31]}}, ir[19:12], ir[20], ir[30:25], ir[24:21], 1'b0};
+    format = 3'h1;
+    func = 4'h0;
+    rd_addr__0 = rs1;
+    rd_addr__1 = rs2;
+    wr_addr = rd;
+    we = 1'b0;
+    sel__a = 1'b0;
+    sel__b = 1'b1; 
+    sel__wr_data = 2'h0;
+
+    case (op)
+        6'h1:
+        begin
+            we = 1'b1;
+            sel__wr_data = 2'h1;
+        end
+        6'h2:
+        begin
+            we = 1'b1;
+            sel__wr_data = 2'h1;
+        end
+        6'h3:
+        begin
+            we = 1'b1;
+            sel__wr_data = 2'h1;
+        end
+        6'h4:
+        begin
+            we = 1'b1;
+            sel__wr_data = 2'h1;
+        end
+        6'h5:
+        begin
+            we = 1'b1;
+            sel__wr_data = 2'h1;
+        end
+        6'h6:
+        begin
+            we = 1'b1;
+            sel__wr_data = 2'h1;
+        end
+        6'h7:
+        begin
+            we = 1'b1;
+            sel__wr_data = 2'h1;
+        end
+        6'h8:
+        begin
+        end
+        6'h9:
+        begin
+        end
+        6'ha:
+        begin
+            we = 1'b1;
+        end
+        6'hb:
+        begin
+            func = 4'h4;
+            we = 1'b1;
+        end
+        6'hc:
+        begin
+            func = 4'h6;
+            we = 1'b1;
+        end
+        6'hd:
+        begin
+            func = 4'h7;
+            we = 1'b1;
+        end
+        6'he:
+        begin
+            func = 4'h8;
+            we = 1'b1;
+        end
+        6'hf:
+        begin
+            func = 4'h9;
+            we = 1'b1;
+        end
+        6'h10:
+        begin
+            func = 4'hb;
+            we = 1'b1;
+        end
+        6'h11:
+        begin
+            func = 4'hd;
+            we = 1'b1;
+        end
+        6'h12:
+        begin
+            func = 4'he;
+            we = 1'b1;
+        end
+        6'h13:
+        begin
+            format = 3'h4;
+            we = 1'b1;
+            sel__a = 1'b1;
+        end
+        6'h14:
+        begin
+            func = 4'h1;
+            we = 1'b1;
+        end
+        6'h15:
+        begin
+            func = 4'h5;
+            we = 1'b1;
+        end
+        6'h16:
+        begin
+            func = 4'ha;
+            we = 1'b1;
+        end
+        6'h17:
+        begin
+            func = 4'hc;
+            we = 1'b1;
+        end
+        6'h18:
+        begin
+            format = 3'h2;
+        end
+        6'h19:
+        begin
+            format = 3'h2;
+        end
+        6'h1a:
+        begin
+            format = 3'h2;
+        end
+        6'h1b:
+        begin
+            format = 3'h2;
+        end
+        6'h1c:
+        begin
+            format = 3'h0;
+            we = 1'b1;
+            sel__b = 1'b0; 
+        end
+        6'h1d:
+        begin
+            format = 3'h0;
+            func = 4'h2;
+            we = 1'b1;
+            sel__b = 1'b0; 
+        end
+        6'h1e:
+        begin
+            format = 3'h0;
+            func = 4'h4;
+            we = 1'b1;
+            sel__b = 1'b0; 
+        end
+        6'h1f:
+        begin
+            format = 3'h0;
+            func = 4'h6;
+            we = 1'b1;
+            sel__b = 1'b0; 
+        end
+        6'h20:
+        begin
+            format = 3'h0;
+            func = 4'h7;
+            we = 1'b1;
+            sel__b = 1'b0; 
+        end
+        6'h21:
+        begin
+            format = 3'h0;
+            func = 4'h8;
+            we = 1'b1;
+            sel__b = 1'b0; 
+        end
+        6'h22:
+        begin
+            format = 3'h0;
+            func = 4'h9;
+            we = 1'b1;
+            sel__b = 1'b0; 
+        end
+        6'h23:
+        begin
+            format = 3'h0;
+            func = 4'hb;
+            we = 1'b1;
+            sel__b = 1'b0; 
+        end
+        6'h24:
+        begin
+            format = 3'h0;
+            func = 4'hd;
+            we = 1'b1;
+            sel__b = 1'b0; 
+        end
+        6'h25:
+        begin
+            format = 3'h0;
+            func = 4'he;
+            we = 1'b1;
+            sel__b = 1'b0; 
+        end
+        6'h26:
+        begin
+            format = 3'h4;
+            rd_addr__0 = 0;
+            we = 1'b1;
+        end
+        6'h27:
+        begin
+            format = 3'h0;
+            func = 4'h1;
+            we = 1'b1;
+            sel__b = 1'b0; 
+        end
+        6'h28:
+        begin
+            format = 3'h0;
+            func = 4'h3;
+            we = 1'b1;
+            sel__b = 1'b0; 
+        end
+        6'h29:
+        begin
+            format = 3'h0;
+            func = 4'h5;
+            we = 1'b1;
+            sel__b = 1'b0; 
+        end
+        6'h2a:
+        begin
+            format = 3'h0;
+            func = 4'ha;
+            we = 1'b1;
+            sel__b = 1'b0; 
+        end
+        6'h2b:
+        begin
+            format = 3'h0;
+            func = 4'hc;
+            we = 1'b1;
+            sel__b = 1'b0; 
+        end
+        6'h2c:
+        begin
+            format = 3'h3;
+            sel__a = 1'b1;
+        end
+        6'h2d:
+        begin
+            format = 3'h3;
+            sel__a = 1'b1;
+        end
+        6'h2e:
+        begin
+            format = 3'h3;
+            sel__a = 1'b1;
+        end
+        6'h2f:
+        begin
+            format = 3'h3;
+            sel__a = 1'b1;
+        end
+        6'h30:
+        begin
+            format = 3'h3;
+            sel__a = 1'b1;
+        end
+        6'h31:
+        begin
+            format = 3'h3;
+            sel__a = 1'b1;
+        end
+        6'h32:
+        begin
+            we = 1'b1;
+            sel__wr_data = 2'h2;
+        end
+        6'h33:
+        begin
+            format = 3'h5;
+            we = 1'b1;
+            sel__a = 1'b1;
+            sel__wr_data = 2'h2;
+        end
+        6'h34:
+        begin
+            
+        end
+        6'h35:
+        begin
+            
+        end
     endcase
-end
+end 
+
+
+
 
 endmodule

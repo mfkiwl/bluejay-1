@@ -9,15 +9,89 @@ module central_processing_unit
     input [31:0] ir
 );
 
-//==============================================
-// Intruction Fetch (IF)
-//==============================================
+// IF
 logic IF__valid;
 logic IF__ready;                         
 logic [63:0] IF__pc;
 logic [63:0] IF__pc_n;
 logic [31:0] IF__ir;
 
+// ID
+logic ID__valid;
+logic ID__ready;
+logic [63:0] ID__pc;
+logic [31:0] ID__ir;
+logic [5:0] ID__op;
+logic [3:0] ID__func;
+logic [4:0] ID__rd_addr__0;
+logic [4:0] ID__rd_addr__1;
+logic [4:0] ID__wr_addr;
+logic [63:0] ID__imm;
+logic ID__we;
+logic ID__sel__a;
+logic ID__sel__b;
+logic [1:0] ID__sel__wr_data;
+logic [63:0] ID__rd_data__0;
+logic [63:0] ID__rd_data__1;
+
+// EX
+logic EX__valid;
+logic EX__ready;
+logic [63:0] EX__pc;
+logic [31:0] EX__ir;
+logic [5:0] EX__op;
+logic [3:0] EX__func;
+logic [4:0] EX__wr_addr;
+logic [63:0] EX__imm;
+logic EX__we;
+logic EX__sel__a;
+logic EX__sel__b;
+logic [1:0] EX__sel__wr_data;
+logic [63:0] EX__rd_data__0;
+logic [63:0] EX__rd_data__1;
+logic [63:0] EX__a;
+logic [63:0] EX__b;
+logic [63:0] EX__c;
+logic EX__eq;
+logic EX__ne;
+logic EX__lt;
+logic EX__ltu;
+logic EX__ge;
+logic EX__geu;
+logic EX__take_branch;
+
+// MEM
+logic MEM__valid;
+logic MEM__ready;
+logic [63:0] MEM__pc;
+logic [31:0] MEM__ir;
+logic [5:0] MEM__op;
+logic [4:0] MEM__wr_addr;
+logic MEM__we;
+logic [1:0] MEM__sel__wr_data;
+logic [63:0] MEM__rd_data__1;
+logic [63:0] MEM__c;
+logic MEM__take_branch;
+logic [63:0] MEM__mem_rd_data;
+
+// WB
+logic WB__valid;
+logic WB__ready;
+logic [63:0] WB__pc;
+logic [31:0] WB__ir;
+logic [5:0] WB__op;
+logic [4:0] WB__wr_addr;
+logic WB__we;
+logic [1:0] WB__sel__wr_data;
+logic [63:0] WB__rd_data__1;
+logic [63:0] WB__c;
+logic WB__take_branch;
+logic [63:0] WB__mem_rd_data;
+logic [63:0] WB__wr_data;
+
+//==============================================
+// Intruction Fetch (IF)
+//==============================================
 // IF pipe stage (data).
 always_ff @(posedge clk) begin
     if (rst) begin
@@ -52,23 +126,6 @@ assign IF__ready = ID__ready;
 //==============================================
 // Instruction Decode (ID)
 //==============================================  
-logic ID__valid;
-logic ID__ready;
-logic [63:0] ID__pc;
-logic [31:0] ID__ir;
-logic [5:0] ID__op;
-logic [3:0] ID__func;
-logic [4:0] ID__rd_addr__0;
-logic [4:0] ID__rd_addr__1;
-logic [4:0] ID__wr_addr;
-logic [63:0] ID__imm;
-logic ID__we;
-logic ID__sel__a;
-logic ID__sel__b;
-logic [1:0] ID__sel__wr_data;
-logic [63:0] ID__rd_data__0;
-logic [63:0] ID__rd_data__1;
-
 // IF/ID pipe stage (valid).
 always_ff @(posedge clk) begin
     if (rst) begin
@@ -129,32 +186,6 @@ assign ID__ready = EX__ready;
 //==============================================
 // Execute (EX)
 //==============================================
-logic EX__valid;
-logic EX__ready;
-logic [63:0] EX__pc;
-logic [31:0] EX__ir;
-logic [5:0] EX__op;
-logic [3:0] EX__func;
-logic [4:0] EX__wr_addr;
-logic [63:0] EX__imm;
-logic EX__we;
-logic EX__sel__a;
-logic EX__sel__b;
-logic [1:0] EX__sel__wr_data;
-logic [63:0] EX__rd_data__0;
-logic [63:0] EX__rd_data__1;
-logic [63:0] EX__a;
-logic [63:0] EX__b;
-logic [63:0] EX__c;
-logic EX__eq;
-logic EX__ne;
-logic EX__lt;
-logic EX__ltu;
-logic EX__ge;
-logic EX__geu;
-logic EX__take_branch;
-
-
 // ID/EX pipe stage (valid).
 always_ff @(posedge clk) begin
     if (rst) begin
@@ -193,7 +224,7 @@ arithmetic_logic_unit arithmetic_logic_unit__0
     .func(EX__func),
     .a(EX__a),
     .b(EX__b),
-    .c(EX__c),
+    .c(EX__c)
 );
 
 //==============================
@@ -255,15 +286,15 @@ always_comb begin
         end        
         OP__BLT:
         begin
-            EX__take_branch = EX__blt;
+            EX__take_branch = EX__lt;
         end        
         OP__BGE:
         begin
-            EX__take_branch = EX__bge;
+            EX__take_branch = EX__ge;
         end        
         OP__BLTU:
         begin
-            EX__take_branch = EX__bltu;
+            EX__take_branch = EX__ltu;
         end        
         OP__BGEU:
         begin
@@ -278,20 +309,6 @@ assign EX__ready = MEM__ready;
 //==============================================
 // Memory (MEM)
 //==============================================
-logic MEM__valid;
-logic MEM__ready;
-logic [63:0] MEM__pc;
-logic [31:0] MEM__ir;
-logic [5:0] MEM__op;
-logic [4:0] MEM__wr_addr;
-logic MEM__we;
-logic [1:0] MEM__sel__wr_data;
-logic [63:0] MEM__rd_data__1;
-logic [63:0] MEM__c;
-logic MEM__take_branch;
-logic [63:0] MEM__mem_rd_data;
-
-
 // EX/MEM pipe stage (valid).
 always_ff @(posedge clk) begin
     if (rst) begin
@@ -323,20 +340,6 @@ assign MEM__ready = WB__ready;
 //==============================================
 // Write Back (WB)
 //==============================================
-logic WB__valid;
-logic WB__ready;
-logic [63:0] WB__pc;
-logic [31:0] WB__ir;
-logic [5:0] WB__op;
-logic [4:0] WB__wr_addr;
-logic WB__we;
-logic [1:0] WB__sel__wr_data;
-logic [63:0] WB__rd_data__1;
-logic [63:0] WB__c;
-logic WB__take_branch;
-logic [63:0] WB__mem_rd_data;
-logic [63:0] WB__wr_data;
-
 // EX/MEM pipe stage (valid).
 always_ff @(posedge clk) begin
     if (rst) begin

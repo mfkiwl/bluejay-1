@@ -22,15 +22,15 @@ assign x_0 = 64'h0;
 
 // Assign rd_data__0.
 always_comb begin
-    case (rd_data__0)
+    case (rd_addr__0)
         PYTHON(for i in range(32): print(f"5'h{i:x}: rd_data__0 = x_{i};"))
     endcase
 end
 
 // Assign rd_data__1.
 always_comb begin
-    case (rd_data__1)
-        PYTHON(for i in range(32): print(f"5'h{i:x}: rs2_data = x_{i};"))
+    case (rd_addr__1)
+        PYTHON(for i in range(32): print(f"5'h{i:x}: rd_data__1 = x_{i};"))
     endcase
 end
      

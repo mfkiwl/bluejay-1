@@ -8,7 +8,6 @@ import os
 import sys
 import platform
 import csv
-import pandas as pd
 from io import StringIO
 
 ###########
@@ -18,13 +17,13 @@ class Bluejay:
     ############
     # __init__ #
     ############
-    def __init__(self, txt, define = {}):
+    def __init__(self, txt, defines = {}):
         # the src rtl
         self.txt = txt 
         # initialize the system verilog (sv) file to an empty string
         self.sv = ''
         # dictionary with defines
-        self.define = define
+        self.defines = defines
 
     #########
     # build #
@@ -32,7 +31,7 @@ class Bluejay:
     def build(self):
         txt = self.txt
         txt = self.find_and_replace(txt)
-        txt = self.eval_func(txt, 'LOG2', self.log2)
+        # txt = self.eval_func(txt, 'LOG2', self.log2)
         txt = self.eval_func(txt, 'PYTHON', self.python)
         txt = self.fold_constants(txt)
         self.sv = txt
@@ -75,7 +74,7 @@ class Bluejay:
     ####################
     def find_and_replace(self, txt):
         # find and replace of key, value pairs
-        for key, value in self.define.items():
+        for key, value in self.defines.items():
             txt = re.sub(r'\b' + key + r'\b', value, txt)
         return txt
 
@@ -87,13 +86,15 @@ class Bluejay:
             # save a copy of txt at the start of each iteration
             temp = txt
             # search for an mathematical expression (constants only)
-            match = re.search('-?[0-9] *[-+\/*] *-?[0-9]+', txt)
+            match = re.search('[ \[\(]-?[0-9]+ *[-+\/*] *-?[0-9]+', txt)
             # return if there are no matches
             if match is None:
                 return txt
 
             # get matched string
-            string = match.group(0)
+            string = match.group(0)[1:]
+
+            print(string)
 
             # replace the expression with the simplified version
             txt = txt.replace(string, str(int(eval(string))))

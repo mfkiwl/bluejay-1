@@ -67,6 +67,8 @@
 #define OP__BGEU 6'h31
 #define OP__JALR 6'h32
 #define OP__JAL 6'h33
+#define OP__ECALL 6'h34
+#define OP__EBREAK 6'h35
 
 
 #define FUNC__ADD 4'h0
@@ -84,6 +86,23 @@
 #define FUNC__SRAW 4'hc
 #define FUNC__OR 4'hd
 #define FUNC__AND 4'he
+
+#define TYPE__D 3'h0
+#define TYPE__W 3'h1
+#define TYPE__WU 3'h2
+#define TYPE__H 3'h3
+#define TYPE__HU 3'h4
+#define TYPE__B 3'h5
+#define TYPE__BU 3'h6
+
+#define L1__OFFSET__FIELD 5:0
+#define L1__OFFSET__WIDTH 6
+#define L1__INDEX__FIELD 11:6
+#define L1__INDEX__WIDTH 6
+#define L1__TAG__FIELD 63:12
+#define L1__TAG__WIDTH 52
+
+
 
 
 
@@ -114,13 +133,7 @@
 #define CTRL_FLOW__BGEU 4'h8
 
 
-#define DATA_TYPE__D 3'h0
-#define DATA_TYPE__W 3'h1
-#define DATA_TYPE__WU 3'h2
-#define DATA_TYPE__H 3'h3
-#define DATA_TYPE__HU 3'h4
-#define DATA_TYPE__B 3'h5
-#define DATA_TYPE__BU 3'h6
+
 
 
 #define L1_CACHE__OFFSET__FIELD 5:0
