@@ -138,7 +138,7 @@ end
 
 // IF/ID pipe stage (data).
 always_ff @(posedge clk) begin
-    if (IF__valid && ID__ready) begin
+    if (IF__valid & ID__ready) begin
         ID__pc <= IF__pc;
         ID__ir <= IF__ir;
     end
@@ -198,7 +198,7 @@ end
 
 // ID/EX pipe stage (data).
 always_ff @(posedge clk) begin
-    if (ID__valid && EX__ready) begin
+    if (ID__valid & EX__ready) begin
         EX__pc <= ID__pc;
         EX__ir <= ID__ir;
         EX__op <= ID__op;
@@ -321,7 +321,7 @@ end
 
 // EX/MEM pipe stage (data).
 always_ff @(posedge clk) begin
-    if (EX__valid && MEM__ready) begin
+    if (EX__valid & MEM__ready) begin
         MEM__pc <= EX__pc;
         MEM__ir <= EX__ir;
         MEM__op <= EX__op;
@@ -352,7 +352,7 @@ end
 
 // EX/MEM pipe stage (data).
 always_ff @(posedge clk) begin
-    if (MEM__valid && WB__ready) begin
+    if (MEM__valid & WB__ready) begin
         WB__pc <= MEM__pc;
         WB__ir <= MEM__ir;
         WB__op <= MEM__op;

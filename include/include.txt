@@ -95,15 +95,21 @@
 #define TYPE__B 3'h5
 #define TYPE__BU 3'h6
 
-#define L1__OFFSET__FIELD 5:0
-#define L1__OFFSET__WIDTH 6
+#define L1__BYTE_OFFSET__FIELD 2:0
+#define L1__BYTE_OFFSET__WIDTH 3
+#define L1__BLOCK_OFFSET__FIELD 5:3
+#define L1__BLOCK_OFFSET__WIDTH 3
 #define L1__INDEX__FIELD 11:6
 #define L1__INDEX__WIDTH 6
 #define L1__TAG__FIELD 63:12
 #define L1__TAG__WIDTH 52
 
-
-
+#define L1__TAG_MEM__TAG__FIELD 51:0
+#define L1__TAG_MEM__TAG__WIDTH 52
+#define L1__TAG_MEM__VALID__FIELD 52
+#define L1__TAG_MEM__VALID__WIDTH 1
+#define L1__TAG_MEM__DIRTY__FIELD 53
+#define L1__TAG_MEM__DIRTY__WIDTH 1
 
 
 #define NOP 32'h00_00_00_33

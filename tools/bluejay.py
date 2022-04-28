@@ -94,8 +94,6 @@ class Bluejay:
             # get matched string
             string = match.group(0)[1:]
 
-            print(string)
-
             # replace the expression with the simplified version
             txt = txt.replace(string, str(int(eval(string))))
 

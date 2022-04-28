@@ -1,30 +1,405 @@
 //==============================================================
-// l1_cache
+// l1
 //==============================================================
-module l1_cache
+module l1
 (
     input clk,
     input rst,
 
-    input cpu_to_l1__valid,
-    output logic cpu_to_l1__ready,
-    input cpu_to_l1__rw,
-    input [63:0] cpu_to_l1__addr,
-    input [63:0] cpu_to_l1__data,
-    input [1:0] cpu_to_l1__type,
+    input in__valid,
+    output in__ready,
+    input in__addr,
+    input in__wr_data,
+    input in__type,
 
-    output logic l1_to_cpu__valid,
-    input l1_to_cpu__ready,
-    output logic [63:0] l1_to_cpu__addr,
-    output logic [63:0] l1_to_cpu__data,
-
-    output logic l1_to_mem__valid,
-    // input l1_to_mem__ready,
-    output logic l1_to_mem__rw,
-    output logic [63:0] l1_to_mem__addr,
-    output logic [511:0] l1_to_mem__wr_data,
-    input logic [511:0] l1_to_mem__rd_data
+    input [63:0] addr,
+    input rw,
+    input [63:0] wr_data,
+    input [1:0] type,
+    output logic [63:0] rd_data,
 );
+
+// S0
+logic S0__valid;
+logic S0__ready;
+logic [63:0] S0__addr;
+logic S0__rw;
+logic [63:0] S0__wr_data;
+logic [1:0] S0__type;
+logic [63:0] S0__rd_data;
+logic S0__hit;
+
+// S1
+logic S1__valid;
+logic S1__ready;
+logic [63:0] S1__rd_data;
+
+//==============================================
+// Stage 0 (S0)
+//==============================================
+// S0 pipe stage (valid)
+always_ff @(posedge clk) begin
+    if (rst) begin
+        S0__valid <= 1'b0;
+    end
+    else begin
+        S0__valid <= S0__ready ? cpu_to_l1__valid : S0__valid;
+    end
+end
+
+// S0 pipe stage (data).
+always_ff @(posedge clk) begin
+    if (cpu_to_l1__valid & S0__ready) begin
+        S0__addr <= cpu_to_l1__addr;
+        S0__rw <= cpu_to_l1__rw;
+        S0__wr_data <= cpu_to_l1__wr_data;
+        S0__type <= cpu_to_l1__type;
+    end
+end
+
+assign S0__ready = ~S0__valid | (S0__valid & S0__hit & S1__ready);
+
+//==============================================
+// Stage 1 (S1)
+//==============================================
+// S1 pipe stage (valid)
+always_ff @(posedge clk) begin
+    if (rst) begin
+        S1__valid <= 1'b0;
+    end
+    else begin
+        S1__valid <= S1__ready ? (S0__valid & S0__hit) : S1__valid;
+    end
+end
+
+// S1 pipe stage (data).
+always_ff @(posedge clk) begin
+    if (S0__valid & S0__hit & S1__ready) begin
+        S1__rd_data <= S0__rd_data;
+    end
+end
+
+
+assign S1__ready = l1_to_cpu__ready;
+
+
+
+//==============================================
+// Format Read Data
+//==============================================
+always_comb begin
+    case (S0__type)
+        TYPE__D:
+        begin
+            S0__rd_data = data_mem__rd_data;
+        end
+        TYPE__W:
+            case (S0__addr[L1__BYTE_OFFSET__FIELD])
+                PYTHON
+                (
+                size = 4
+                for i in range(8):
+                    if (i % size) == 0:
+                        print(f"3'h{i:x}:")
+                        print(f"begin")
+                        print(f"    S0__rd_data =  {{{{{8*size}{{data_mem__rd_data[{8*i + 8*size - 1}]}}}}, data_mem__rd_data[{8*i + 8*size - 1}:{8*i}]}}")
+                        print(f"end")
+                )
+            endcase
+        TYPE__WU:
+        begin
+            case (S0__addr[L1__BYTE_OFFSET__FIELD])
+                PYTHON
+                (
+                size = 4
+                for i in range(8):
+                    if (i % size) == 0:
+                        print(f"3'h{i:x}:")
+                        print(f"begin")
+                        print(f"    S0__rd_data =  {{{{{8*size}{{1'b0}}}}, data_mem__rd_data[{8*i + 8*size - 1}:{8*i}]}}")
+                        print(f"end")
+                )
+            endcase
+        end
+        TYPE__H:
+        begin
+            case (S0__addr[L1__BYTE_OFFSET__FIELD])
+                PYTHON
+                (
+                size = 2
+                for i in range(8):
+                    if (i % size) == 0:
+                        print(f"3'h{i:x}:")
+                        print(f"begin")
+                        print(f"    S0__rd_data =  {{{{{8*size}{{data_mem__rd_data[{8*i + 8*size - 1}]}}}}, data_mem__rd_data[{8*i + 8*size - 1}:{8*i}]}}")
+                        print(f"end")
+                )
+        end
+        TYPE__HU:
+        begin
+            case (S0__addr[L1__BYTE_OFFSET__FIELD])
+                PYTHON
+                (
+                size = 2
+                for i in range(8):
+                    if (i % size) == 0:
+                        print(f"3'h{i:x}:")
+                        print(f"begin")
+                        print(f"    S0__rd_data =  {{{{{8*size}{{1'b0}}}}, data_mem__rd_data[{8*i + 8*size - 1}:{8*i}]}}")
+                        print(f"end")
+                )
+            endcase            
+        end
+        TYPE__B:
+        begin
+            case (S0__addr[L1__BYTE_OFFSET__FIELD])
+                PYTHON
+                (
+                size = 1
+                for i in range(8):
+                    if (i % size) == 0:
+                        print(f"3'h{i:x}:")
+                        print(f"begin")
+                        print(f"    S0__rd_data =  {{{{{8*size}{{data_mem__rd_data[{8*i + 8*size - 1}]}}}}, data_mem__rd_data[{8*i + 8*size - 1}:{8*i}]}}")
+                        print(f"end")
+                )  
+            endcase        
+        end
+        TYPE__BU:
+        begin
+            case (S0__addr[L1__BYTE_OFFSET__FIELD])
+                PYTHON
+                (
+                size = 1
+                for i in range(8):
+                    if (i % size) == 0:
+                        print(f"3'h{i:x}:")
+                        print(f"begin")
+                        print(f"    S0__rd_data =  {{{{{8*size}{{1'b0}}}}, data_mem__rd_data[{8*i + 8*size - 1}:{8*i}]}}")
+                        print(f"end")
+                )
+            endcase              
+        end
+    endcase
+end
+
+
+
+//==============================
+// data_mem
+//==============================
+memory #(.WIDTH(64), .DEPTH(512), .DEPTH__LOG2(9)) data_mem
+(
+    .clk(clk),
+    .rst(rst),
+    .addr(data_mem__addr),
+    .rw(data_mem__rw),
+    .wr_data(data_mem__wr_data),
+    .rd_data(data_mem__rd_data)
+);
+
+logic [8:0] data_mem__addr;
+logic data_mem__rw;
+logic [63:0] data_mem__wr_data;
+logic [64:0] data_mem__rd_data;
+
+assign data_mem__addr = {S0__index, S0__block_offset};
+
+//==============================
+// tag_mem
+//==============================
+memory #(.WIDTH(54), .DEPTH(64), .DEPTH__LOG2(6)) tag_mem
+(
+    .clk(clk),
+    .rst(rst),
+    .addr(tag_mem__addr),
+    .rw(tag_mem__rw),
+    .wr_data(tag_mem__wr_data),
+    .rd_data(tag_mem__rd_data)
+);
+
+logic [8:0] tag_mem__addr;
+logic tag_mem__rw;
+logic [63:0] tag_mem__wr_data;
+logic [64:0] tag_mem__rd_data;
+
+assign data_mem__addr = S0__index;
+
+
+//==============================
+// tx
+//==============================
+tx tx__l1_to_mem
+(
+    .clk(clk),
+    .rst(rst),
+    .valid(l1_to_mem__valid),
+    .ready(l1_to_mem__ready),
+    .data(l1_to_mem__data),
+    .tx__valid(tx__l1_to_mem__valid),
+    .tx__data(tx__l1_to_mem__ready),
+    .tx__credit(tx__l1_to_mem__data)
+);
+
+logic l1_to_mem__valid;
+logic l1_to_mem__ready;
+logic [63:0] l1_to_mem__data;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Breakout addr.
+assign tag = addr[L1__TAG__FIELD];
+assign index = addr[L1__INDEX__FIELD];
+assign block_offset = addr[L1__BLOCK_OFFSET__FIELD];
+assign byte_offset = addr[L1__BYTE_OFFSET__FIELD];
+
+assign hit = (S0__tag = tag_mem__rd_data[L1__TAG_MEM__TAG__FIELD]) & tag_mem__rd_data[L1__TAG_MEM__VALID__FIELD];
+
+
+
+//==============================================
+// FSM
+//==============================================
+// FSM state
+logic [2:0] state;
+logic [2:0] state_n;
+// parameter READ_WRITE = 3'h0;
+// parameter WRITE_BACK_0 = 3'h1;
+// parameter WRITE_BACK_1 = 3'h2;
+// parameter ALLOCATE_0 = 3'h3;
+// parameter ALLOCATE_1 = 3'h4;
+// parameter ALLOCATE_2 = 3'h5;
+
+
+always_comb begin
+    S0__hit = 1'b0;
+    data_mem__rw = 1'b0;
+    tag_mem__rw = 1'b0;
+
+    case (state)
+        STATE__READ_WRITE:
+        begin
+            if (S0__valid) begin
+                S0__hit = (S0__addr[L1__TAG__FIELD] == tag_mem__rd_data[L1__TAG_MEM__TAG__FIELD]) & tag_mem__rd_data[L1__TAG_MEM__VALID__FIELD];
+
+                if (S0__rw) begin
+                    data_mem__rw = 1'b1;
+                    tag_mem__rw = 1'b1;
+                    tag_mem__wr_data = tag_mem__rd_data;
+                    tag_mem__wr_data[L1__TAG_MEM__DIRTY__FIELD] = 1'b1;
+                    state_n = S0__hit ? STATE__READ_WRITE : STATE__WRITE_BACK;
+                end 
+                else begin
+                    state_n = S0__hit ? STATE__READ_WRITE : STATE__ALLOCATE__SEND_REQUEST;
+                end
+            end
+        STATE__ALLOCATE__SEND_REQUEST:
+        begin
+            l1_to_mem__valid = 1'b1;
+            l1_to_mem__data = {S0__addr, S0__rw};
+            state_n = l1_to_mem__ready ? STATE__ALLOCATE__WAIT : STATE__ALLOCATE__SEND_REQUEST;
+        end
+        STATE__ALLOCATE__WAIT:
+        begin
+            mem_to_l1__ready = 1'b1;
+            state_n = mem_to_l1__valid ? STATE__ALLOCATE__WRITE_L1 : STATE__ALLOCATE__WAIT;
+        end
+        STATE__ALLOCATE__WRITE_L1:
+        begin
+            mem_to_l1__ready = 1'b1;
+
+            if (mem_to_l1__valid) begin
+                rw_count += 1;
+                
+            end
+        end
+
+
+
+
+
+
+
+
+            
+
+            if (S0__rw) begin
+                data_mem__rw = S0__valid;
+            end
+            data_mem__rw = S0__rw & S0__valid;
+            tag_mem__rw = S0__rw & S0__valid;
+            tag_mem__wr_data[L1__TAG_MEM__DIRTY__FIELD] = 1'b1;
+            state_n = (S1__ready & ) ? STATE__READ_WRITE;
+            end
+            else begin
+                
+            end
+        end
+    endcase
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//==============================================
+// CPU to L1
+//==============================================
+always_ff @(posedge clk) begin
+    if (cpu_to_l1__valid & cpu_to_l1__ready) begin
+        addr <= cpu_to_l1__addr;
+        rw <= cpu_to_l1__rw;
+        wr_data <= cpu_to_l1__data;
+        type <= cpu_to_l1__type;
+    end
+end
+
+//==============================================
+// L1 to CPU
+//==============================================
+always_ff @(posedge clk) begin
+    if (cpu_to_l1__valid_n & cpu_to_l1__ready) begin
+        l1_to_cpu__data <= data_mem__rd_data;
+    end
+end
+
+
+
+
 
 
 
@@ -44,113 +419,48 @@ assign hit = valid & (sram__rd_data[L1_CACHE__SRAM__TAG__FIELD] == S0__addr[L1_C
 assign dirty = sram__rd_data[L1_CACHE__SRAM__DIRTY__FIELD];
 assign sram__addr = S0__addr[L1_CACHE__INDEX__FIELD];
 
-// S0
-logic S0__valid;
-logic S0__ready;
-logic [63:0] S0__addr;
-logic S0__rw;
-logic [63:0] S0__wr_data;
-logic [1:0] S0__type;
-logic [63:0] S0__rd_data;
-logic [L1__TAG__WIDTH-1:0] S0__tag;
-logic [L1__INDEX__WIDTH-1:0] S0__index;
-logic [L1__OFFSET__WIDTH-1:0] S0__offset;
 
-// S1
-logic S1__valid;
-logic S1__ready;
-logic [63:0] S1__addr;
-logic [63:0] S1__rd_data;
+
+
+
+
+
+
+
+
+
+
+
+assign S0__tag = S0__addr[L1__TAG__FIELD];
+assign S0__index = S0__addr[L1__INDEX__FIELD];
+assign S0__block_offset = S0__addr[L1__BLOCK_OFFSET__FIELD];
+assign S0__byte_offset = S0__addr[L1__BYTE_OFFSET__FIELD];
+
+assign S0__hit = (S0__tag = tag_mem__rd_data[L1__TAG_MEM__TAG__FIELD]) & tag_mem__rd_data[L1__TAG_MEM__VALID__FIELD];
+
+
+
 
 //==============================================
-// STAGE 0 (S0)
+// STAGE 1 (S1)
 //==============================================
-// S0 pipe stage (valid)
 always_ff @(posedge clk) begin
     if (rst) begin
-        S0__valid <= 1'b0;
+        S1__valid <= 1'b0;
     end
     else begin
-        S0__valid <= S0__ready ? cpu_to_l1__valid : S0__valid;
+        S1__valid <= S1__ready ? S0__valid : S1__valid;
     end
 end
 
-// S0 pipe stage (data).
+// S1 pipe stage (data).
 always_ff @(posedge clk) begin
-    if (cpu_to_l1__valid && S0__ready) begin
-        S0__addr <= cpu_to_l1__addr;
-        S0__rw <= cpu_to_l1__rw;
-        S0__wr_data <= cpu_to_l1__wr_data;
-        S0__type <= cpu_to_l1__type;
+    if (S0__valid & S1__ready) begin
+        S1__addr <= S0__addr;
+        S1__rd_data <= S0__rd_data;
     end
 end
 
-assign S0__tag = S0__addr[L1_CACHE__TAG__FIELD];
-assign S0__index = S0__addr[L1__INDEX__FIELD];
-assign S0__offset = S0__addr[L1__TAG__FIELD];
-
-
-always_comb begin
-    S0__rd_data = 64'h0;
-
-    case (S0__size)
-        TYPE__D:
-            case (S0__addr)
-                PYTHON(for i in range(8): print(f"3'h{i:x}: S0__rd_data = sram__rd_data[{i*64 + 63}:{i*64}];"))
-            endcase
-        TYPE__W:
-            case (S0__addr[5:2])
-                PYTHON(for i in range(16): print(f"4'h{i:x}: S0__rd_data[31:0] = sram__rd_data[{i*32 + 31}:{i*32}];"))
-            endcase
-        TYPE__HALF: 
-            case (S0__addr[5:1])
-                PYTHON(for i in range(32): print(f"5'h{i:x}: S0__rd_data[16:0] = sram__rd_data[{i*16 + 15}:{i*16}];"))
-            endcase
-        TYPE__BYTE: 
-            case (S0__addr[5:0])
-                PYTHON(for i in range(64): print(f"6'h{i:x}: S0__rd_data[8:0] = sram__rd_data[{i*8 + 7}:{i*8}];"))
-            endcase
-    endcase
-end
-
-
-
-
-
-logic S0__s1_valid_n;
-logic [63:0] S0__rd_data;
-logic [511:0] S0__sram_wr_data;
-
-
-
-
-
-
-
-assign cpu_to_l1__ready = S0__ready;
-
-
-always_comb begin
-    S0__sram_wr_data = sram__rd_data[L1_CACHE__SRAM__DATA__FIELD];
-    case (S0__size)
-        SIZE__DOUBLE:
-            case (S0__addr[5:3])
-                PYTHON(for i in range(8): print(f"3'h{i:x}: S0__sram_wr_data[{i*64 + 63}:{i*64}] = S0__wr_data;"))
-            endcase
-        SIZE__WORD:
-            case (S0__addr[5:2])
-                PYTHON(for i in range(16): print(f"4'h{i:x}: S0__sram_wr_data[{i*32 + 31}:{i*32}] = S0__wr_data;"))
-            endcase
-        SIZE__HALF: 
-            case (S0__addr[5:1])
-                PYTHON(for i in range(32): print(f"5'h{i:x}: S0__sram_wr_data[{i*16 + 15}:{i*16}] = S0__wr_data;"))
-            endcase
-        SIZE__BYTE: 
-            case (S0__addr[5:0])
-                PYTHON(for i in range(64): print(f"6'h{i:x}: S0__sram_wr_data[{i*8+ 7}:{i*8}] = S0__wr_data;"))
-            endcase
-    endcase
-end
 
 //==============================================
 // STAGE 1 (S1)
@@ -167,7 +477,7 @@ end
 
 // S1 pipe stage (data).
 always_ff @(posedge clk) begin
-    if (S0__valid && S1__ready) begin
+    if (S0__valid & S1__ready) begin
         S1__addr <= S0__addr;
         S1__rd_data <= S0__rd_data;
     end
@@ -178,10 +488,6 @@ end
 
 
 
-assign S1__ready = l1_to_cpu__ready;
-assign l1_to_cpu__valid = S1__valid;
-assign l1_to_cpu__addr = S1__addr;
-assign l1_to_cpu__data  = S1__rd_data;
 
 //==============================================
 // FSM
@@ -198,13 +504,34 @@ parameter ALLOCATE_2 = 3'h5;
 
 
 always_comb begin
+    S0__ready = 1'b0;
+     = 1'b0;
+    data_mem__rw = 1'b0;
+    data_mem__wr_data = S0__wr_data;
+    tag_mem__rw = 1'b0;
+    tag_mem__wr_data = tag_mem__rd_data;
+
     case (state)
-        IDLE:
+        STATE__IDLE:
         begin
-            state_n = 
+            S0__ready = 1'b1;
+            state_n = (cpu_to_l1__valid & S0__ready) ? STATE__READ_WRITE : STATE__IDLE;
         end
-        READ_WRITE:
+        STATE__READ_WRITE:
         begin
+            if (S0__hit) begin
+                S0__ready = 1'b1;
+                data_mem__rw = S0__rw;
+                tag_mem__rw = S0__rw;
+                tag_mem__wr_data[L1__TAG_MEM__DIRTY__FIELD] = 1'b1;
+                state_n = cpu_to_l1__valid ? STATE__READ_WRITE;
+            end
+            else begin
+                
+            end
+        end
+    endcase
+end
 
 always_comb begin
     S0__ready = 1'b0;
