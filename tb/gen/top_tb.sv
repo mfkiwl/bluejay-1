@@ -32,13 +32,19 @@ initial begin
     clk = 1'b1;
     rst = 1'b1;
     // initialize instruction memory
-    $readmemh("C:/Users/seanj/Documents/bluejay/sim/asm/basic/gen_32/addi", top.memory__0.memory);
+    $readmemh("C:/Users/seanj/Documents/bluejay/sim/asm/basic/gen_64/addi", top.mem.memory);
 
     #11;
     // de-assert rst
     rst = 1'b0;
     
-    #300;
+    // @(posedge clk) begin
+    //     if (top.cpu.WB__valid && (top.cpu.WB__op == 6'h34)) begin
+    //         $finish;
+    //     end
+    // end
+
+    #15000;
     $finish;
 end
 

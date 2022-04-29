@@ -10,9 +10,9 @@ module central_processing_unit
     output logic [63:0] tx__il1_to_mem__data,
     input tx__il1_to_mem__credit,
 
-    input rx__mem_to_il1__valid,
-    input [63:0] rx__mem_to_il1__data,
-    output rx__mem_to_il1__credit,
+    input tx__mem_to_il1__valid,
+    input [63:0] tx__mem_to_il1__data,
+    output tx__mem_to_il1__credit
 );
 
 // Instruction L1.
@@ -108,57 +108,98 @@ logic [63:0] WB__wr_data;
 //==============================================
 // IF pipe stage (data).
 always_ff @(posedge clk) begin
-    if (rst) begin
-        IF__pc <= 64'h0;
-    end
-    else begin
-        if (WB__valid) begin
-            IF__pc <= IF__pc_n;
-        end        
+    if (cpu_to_il1__valid & cpu_to_il1__ready) begin
+        IF__pc <= cpu_to_il1__addr;    
     end
 end
 
 // Determine the next pc.
-always_comb begin
-    IF__pc_n = IF__pc + 4;
+// always_comb begin
+//     if (rst) begin
+//         IF__pc_n = 0;
+//     end
+//     else begin
+//         if (((WB__op == OP__BEQ) | (WB__op == OP__BNE) | (WB__op == OP__BLT) | (WB__op == OP__BGE) | (WB__op == OP__BLTU) | (WB__op == OP__BGEU)) & WB__take_branch) begin
+//             IF__pc_n = WB__c;
+//         end
+//         else if ((WB__op == OP__JAL) | (WB__op == OP__JALR)) begin
+//             IF__pc_n = WB__c;
+//         end
+//         else begin
+//             IF__pc_n = IF__pc + 4;
+//         end
+//     end
+// end
 
-    if ((WB__op == OP__BEQ) | (WB__op == OP__BNE) | (WB__op == OP__BLT) | (WB__op == OP__BGE) | (WB__op == OP__BLTU) | (WB__op == OP__BGEU)) begin
-        IF__pc_n = WB__take_branch ? WB__c : IF__pc + 4;
-    end
-    else if ((WB__op == OP__JAL) | (WB__op == OP__JALR)) begin
-        IF__pc_n = WB__c;
-    end
-end
 
-// TODO.
-assign pc = IF__pc;
-assign IF__ir = ir;
 
-// IF ready signal.
-assign IF__ready = ID__ready;
+logic cpu_to_il1__valid;
+logic cpu_to_il1__ready;
+logic [39:0] cpu_to_il1__addr;
+logic cpu_to_il1__rw;
+logic [63:0] cpu_to_il1__data;
+logic [2:0] cpu_to_il1__dtype;
+
+logic il1_to_cpu__valid;
+logic il1_to_cpu__ready;
+logic [63:0] il1_to_cpu__data;
+
+logic il1_to_mem__valid;
+logic il1_to_mem__ready;
+logic [63:0] il1_to_mem__data;
+
+logic mem_to_il1__valid;
+logic mem_to_il1__ready;
+logic [63:0] mem_to_il1__data;
+
+assign IF__ready = cpu_to_il1__ready;
+assign cpu_to_il1__rw = 1'b0;
+assign cpu_to_il1__data = 0;
+assign cpu_to_il1__dtype = DTYPE__WU;
+assign il1_to_cpu__ready = ID__ready;
+assign IF__ir = il1_to_cpu__data[31:0];
+
 
 
 //==============================
+// il1
 //==============================
 l1 il1
 (
     .clk(clk),
     .rst(rst),
-    .valid(),
-    .ready(),
-    .addr(),
-    .rw(),
-    .wr_data(),
-    .rd_data(),
-    .hit(),
-    .type(),
-    .l1_to_mem__valid(),
-    .l1_to_mem__ready(),
-    .l1_to_mem__data(),
-    .mem_to_l1__valid(),
-    .mem_to_l1__ready(),
-    .mem_to_l1__data()
+    .cpu_to_l1__valid(cpu_to_il1__valid),
+    .cpu_to_l1__ready(cpu_to_il1__ready),
+    .cpu_to_l1__addr(cpu_to_il1__addr),
+    .cpu_to_l1__rw(cpu_to_il1__rw),
+    .cpu_to_l1__data(cpu_to_il1__data),
+    .cpu_to_l1__dtype(cpu_to_il1__dtype),
+    .l1_to_cpu__valid(il1_to_cpu__valid),
+    .l1_to_cpu__ready(il1_to_cpu__ready),
+    .l1_to_cpu__data(il1_to_cpu__data),
+    .l1_to_mem__valid(il1_to_mem__valid),
+    .l1_to_mem__ready(il1_to_mem__ready),
+    .l1_to_mem__data(il1_to_mem__data),
+    .mem_to_l1__valid(mem_to_il1__valid),
+    .mem_to_l1__ready(mem_to_il1__ready),
+    .mem_to_l1__data(mem_to_il1__data)
 );
+
+
+// logic IF__il1__valid;
+// logic IF__il1__ready;
+// logic [39:0] IF__il1__addr;
+// logic IF__il1__rw;
+// logic [63:0] IF__il1__wr_data;
+// logic [63:0] IF__il1__rd_data;
+// logic IF__il1__hit;
+// logic [2:0] IF__il1__dtype;
+// logic IF__il1__l1_to_mem__valid;
+// logic IF__il1__l1_to_mem__ready;
+// logic [63:0] IF__il1__l1_to_mem__data;
+// logic IF__il1__mem_to_l1__valid;
+// logic IF__il1__mem_to_l1__ready;
+// logic [63:0] IF__il1__mem_to_l1__data;
 
 
 
@@ -171,13 +212,13 @@ always_ff @(posedge clk) begin
         ID__valid <= 1'b0;
     end
     else begin
-        ID__valid <= ID__ready ? IF__valid : ID__valid;
+        ID__valid <= ID__ready ? il1_to_cpu__valid : ID__valid;
     end
 end
 
 // IF/ID pipe stage (data).
 always_ff @(posedge clk) begin
-    if (IF__valid & ID__ready) begin
+    if (il1_to_cpu__valid & ID__ready) begin
         ID__pc <= IF__pc;
         ID__ir <= IF__ir;
     end
@@ -428,8 +469,8 @@ assign WB__ready = 1'b1;
 // Finite State Machine
 //==============================================
 localparam STATE__RESET = 2'h0;
-localparam STATE__FETCH = 2'h1;
-localparam STATE__WAIT = 2'h2;
+localparam STATE__START = 2'h1;
+localparam STATE__RUN = 2'h2;
 
 logic [1:0] state;
 logic [1:0] state_n;
@@ -444,24 +485,43 @@ always_ff @(posedge clk) begin
 end
 
 always_comb begin
-    IF__valid = 1'b0;
+    state_n = state;
+    cpu_to_il1__valid = 1'b0;
+    cpu_to_il1__addr = 0;
 
     case (state)
         STATE__RESET:
         begin
-            state_n = STATE__FETCH;
+            state_n = STATE__START;
         end
-        STATE__FETCH:
-        begin
-            state_n = STATE__WAIT;
-            IF__valid = 1'b1;
+        STATE__START:
+        begin      
+            cpu_to_il1__valid = 1'b1;
+            if (cpu_to_il1__ready) begin
+                state_n = STATE__RUN;
+            end
         end
-        STATE__WAIT:
+        STATE__RUN:
         begin
-            state_n = WB__valid ? STATE__FETCH : STATE__WAIT;
+            if (WB__valid) begin
+                cpu_to_il1__valid = 1'b1;
+
+                if (((WB__op == OP__BEQ) | (WB__op == OP__BNE) | (WB__op == OP__BLT) | (WB__op == OP__BGE) | (WB__op == OP__BLTU) | (WB__op == OP__BGEU)) & WB__take_branch) begin
+                    cpu_to_il1__addr = WB__c;
+                end
+                else if ((WB__op == OP__JAL) | (WB__op == OP__JALR)) begin
+                    cpu_to_il1__addr = WB__c;
+                end
+                else begin
+                    cpu_to_il1__addr = WB__pc + 4;
+                end
+            end
         end
     endcase
 end
+
+
+
 
 
 //==============================
@@ -474,9 +534,9 @@ tx #(.WIDTH(64), .MAX_CREDITS(1), .MAX_CREDITS__LOG2(0)) tx__il1_to_mem
     .valid(il1_to_mem__valid),
     .ready(il1_to_mem__ready),
     .data(il1_to_mem__data),
-    .tx__valid(tx__l1_to_mem__valid),
-    .tx__data(tx__l1_to_mem__ready),
-    .tx__credit(tx__l1_to_mem__data)
+    .tx__valid(tx__il1_to_mem__valid),
+    .tx__data(tx__il1_to_mem__data),
+    .tx__credit(tx__il1_to_mem__credit)
 );
 
 
@@ -484,16 +544,16 @@ tx #(.WIDTH(64), .MAX_CREDITS(1), .MAX_CREDITS__LOG2(0)) tx__il1_to_mem
 //==============================
 // rx__mem_to_il1
 //==============================
-tx #(.WIDTH(64), .MAX_CREDITS(1), .MAX_CREDITS__LOG2(0)) rx__mem_to_il1
+rx #(.WIDTH(64), .MAX_CREDITS(1), .MAX_CREDITS__LOG2(0)) rx__mem_to_il1
 (
     .clk(clk),
     .rst(rst),
     .valid(mem_to_il1__valid),
     .ready(mem_to_il1__ready),
     .data(mem_to_il1__data),
-    .rx__valid(rx__mem_to_il1__valid),
-    .rx__data(rx__mem_to_il1__ready),
-    .rx__credit(rx__mem_to_il1__data)
+    .rx__valid(tx__mem_to_il1__valid),
+    .rx__data(tx__mem_to_il1__data),
+    .rx__credit(tx__mem_to_il1__credit)
 );
 
 

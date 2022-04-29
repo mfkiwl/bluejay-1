@@ -3,309 +3,165 @@
    <wave_state>
    </wave_state>
    <db_ref_list>
-      <db_ref path="central_processing_unit_tb_behav.wdb" id="1">
+      <db_ref path="top_tb_behav.wdb" id="1">
          <top_modules>
-            <top_module name="central_processing_unit_tb" />
             <top_module name="glbl" />
+            <top_module name="top_tb" />
          </top_modules>
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="277968fs"></ZoomStartTime>
-      <ZoomEndTime time="311719fs"></ZoomEndTime>
-      <Cursor1Time time="311000fs"></Cursor1Time>
+      <ZoomStartTime time="872395fs"></ZoomStartTime>
+      <ZoomEndTime time="1481396fs"></ZoomEndTime>
+      <Cursor1Time time="8500000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="226"></NameColumnWidth>
-      <ValueColumnWidth column_width="130"></ValueColumnWidth>
+      <ValueColumnWidth column_width="126"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="72" />
-   <wvobject fp_name="/central_processing_unit_tb/clk" type="logic">
+   <WVObjectSize size="36" />
+   <wvobject fp_name="/top_tb/dut/clk" type="logic">
       <obj_property name="ElementShortName">clk</obj_property>
       <obj_property name="ObjectShortName">clk</obj_property>
    </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/rst" type="logic">
+   <wvobject fp_name="/top_tb/dut/rst" type="logic">
       <obj_property name="ElementShortName">rst</obj_property>
       <obj_property name="ObjectShortName">rst</obj_property>
    </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/dut/IF__pc" type="array">
+   <wvobject fp_name="/top_tb/dut/cpu/ID__valid" type="logic">
+      <obj_property name="ElementShortName">ID__valid</obj_property>
+      <obj_property name="ObjectShortName">ID__valid</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_tb/dut/cpu/EX__valid" type="logic">
+      <obj_property name="ElementShortName">EX__valid</obj_property>
+      <obj_property name="ObjectShortName">EX__valid</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_tb/dut/cpu/MEM__valid" type="logic">
+      <obj_property name="ElementShortName">MEM__valid</obj_property>
+      <obj_property name="ObjectShortName">MEM__valid</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_tb/dut/cpu/WB__valid" type="logic">
+      <obj_property name="ElementShortName">WB__valid</obj_property>
+      <obj_property name="ObjectShortName">WB__valid</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_tb/dut/cpu/cpu_to_il1__valid" type="logic">
+      <obj_property name="ElementShortName">cpu_to_il1__valid</obj_property>
+      <obj_property name="ObjectShortName">cpu_to_il1__valid</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_tb/dut/cpu/il1/cpu_to_l1__ready" type="logic">
+      <obj_property name="ElementShortName">cpu_to_l1__ready</obj_property>
+      <obj_property name="ObjectShortName">cpu_to_l1__ready</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_tb/dut/cpu/il1/S0__valid" type="logic">
+      <obj_property name="ElementShortName">S0__valid</obj_property>
+      <obj_property name="ObjectShortName">S0__valid</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_tb/dut/cpu/il1/S0__ready" type="logic">
+      <obj_property name="ElementShortName">S0__ready</obj_property>
+      <obj_property name="ObjectShortName">S0__ready</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_tb/dut/cpu/il1/S0__hit" type="logic">
+      <obj_property name="ElementShortName">S0__hit</obj_property>
+      <obj_property name="ObjectShortName">S0__hit</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_tb/dut/cpu/il1/S0__rd_data" type="array">
+      <obj_property name="ElementShortName">S0__rd_data[63:0]</obj_property>
+      <obj_property name="ObjectShortName">S0__rd_data[63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_tb/dut/cpu/il1/S0__dtype" type="array">
+      <obj_property name="ElementShortName">S0__dtype[2:0]</obj_property>
+      <obj_property name="ObjectShortName">S0__dtype[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_tb/dut/cpu/il1/data_mem__rd_data" type="array">
+      <obj_property name="ElementShortName">data_mem__rd_data[63:0]</obj_property>
+      <obj_property name="ObjectShortName">data_mem__rd_data[63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_tb/dut/cpu/il1/cpu_to_l1__dtype" type="array">
+      <obj_property name="ElementShortName">cpu_to_l1__dtype[2:0]</obj_property>
+      <obj_property name="ObjectShortName">cpu_to_l1__dtype[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_tb/dut/cpu/cpu_to_il1__dtype" type="array">
+      <obj_property name="ElementShortName">cpu_to_il1__dtype[2:0]</obj_property>
+      <obj_property name="ObjectShortName">cpu_to_il1__dtype[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_tb/dut/cpu/il1/S0__dtype" type="array">
+      <obj_property name="ElementShortName">S0__dtype[2:0]</obj_property>
+      <obj_property name="ObjectShortName">S0__dtype[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_tb/dut/cpu/il1/l1_to_cpu__ready" type="logic">
+      <obj_property name="ElementShortName">l1_to_cpu__ready</obj_property>
+      <obj_property name="ObjectShortName">l1_to_cpu__ready</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_tb/dut/cpu/il1/tag_mem__rd_data" type="array">
+      <obj_property name="ElementShortName">tag_mem__rd_data[29:0]</obj_property>
+      <obj_property name="ObjectShortName">tag_mem__rd_data[29:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_tb/dut/cpu/il1/tag_mem__wr_data" type="array">
+      <obj_property name="ElementShortName">tag_mem__wr_data[29:0]</obj_property>
+      <obj_property name="ObjectShortName">tag_mem__wr_data[29:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_tb/dut/cpu/il1/tag_mem__rw" type="logic">
+      <obj_property name="ElementShortName">tag_mem__rw</obj_property>
+      <obj_property name="ObjectShortName">tag_mem__rw</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_tb/dut/cpu/il1/state" type="array">
+      <obj_property name="ElementShortName">state[2:0]</obj_property>
+      <obj_property name="ObjectShortName">state[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_tb/dut/cpu/il1/tag_mem__addr" type="array">
+      <obj_property name="ElementShortName">tag_mem__addr[5:0]</obj_property>
+      <obj_property name="ObjectShortName">tag_mem__addr[5:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_tb/dut/cpu/il1/S0__addr" type="array">
+      <obj_property name="ElementShortName">S0__addr[39:0]</obj_property>
+      <obj_property name="ObjectShortName">S0__addr[39:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_tb/dut/cpu/il1/cpu_to_l1__addr" type="array">
+      <obj_property name="ElementShortName">cpu_to_l1__addr[39:0]</obj_property>
+      <obj_property name="ObjectShortName">cpu_to_l1__addr[39:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_tb/dut/cpu/il1/cpu_to_l1__valid" type="logic">
+      <obj_property name="ElementShortName">cpu_to_l1__valid</obj_property>
+      <obj_property name="ObjectShortName">cpu_to_l1__valid</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_tb/dut/cpu/il1/cpu_to_l1__ready" type="logic">
+      <obj_property name="ElementShortName">cpu_to_l1__ready</obj_property>
+      <obj_property name="ObjectShortName">cpu_to_l1__ready</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_tb/dut/cpu/il1/l1_to_cpu__ready" type="logic">
+      <obj_property name="ElementShortName">l1_to_cpu__ready</obj_property>
+      <obj_property name="ObjectShortName">l1_to_cpu__ready</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_tb/dut/cpu/IF__pc" type="array">
       <obj_property name="ElementShortName">IF__pc[63:0]</obj_property>
       <obj_property name="ObjectShortName">IF__pc[63:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/IF__ir" type="array">
-      <obj_property name="ElementShortName">IF__ir[31:0]</obj_property>
-      <obj_property name="ObjectShortName">IF__ir[31:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/dut/IF__ready" type="logic">
-      <obj_property name="ElementShortName">IF__ready</obj_property>
-      <obj_property name="ObjectShortName">IF__ready</obj_property>
-   </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/dut/ID__ready" type="logic">
-      <obj_property name="ElementShortName">ID__ready</obj_property>
-      <obj_property name="ObjectShortName">ID__ready</obj_property>
-   </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/dut/ID__stall" type="logic">
-      <obj_property name="ElementShortName">ID__stall</obj_property>
-      <obj_property name="ObjectShortName">ID__stall</obj_property>
-   </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/dut/MEM__branch" type="logic">
-      <obj_property name="ElementShortName">MEM__branch</obj_property>
-      <obj_property name="ObjectShortName">MEM__branch</obj_property>
-   </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/dut/ID__pc" type="array">
-      <obj_property name="ElementShortName">ID__pc[63:0]</obj_property>
-      <obj_property name="ObjectShortName">ID__pc[63:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/dut/ID__ir" type="array">
-      <obj_property name="ElementShortName">ID__ir[31:0]</obj_property>
-      <obj_property name="ObjectShortName">ID__ir[31:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/dut/ID__we" type="logic">
-      <obj_property name="ElementShortName">ID__we</obj_property>
-      <obj_property name="ObjectShortName">ID__we</obj_property>
-   </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/dut/ID__rd" type="array">
-      <obj_property name="ElementShortName">ID__rd[4:0]</obj_property>
-      <obj_property name="ObjectShortName">ID__rd[4:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/dut/ID__sel__rd_data" type="array">
-      <obj_property name="ElementShortName">ID__sel__rd_data[1:0]</obj_property>
-      <obj_property name="ObjectShortName">ID__sel__rd_data[1:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/dut/ID__ctrl_flow" type="array">
-      <obj_property name="ElementShortName">ID__ctrl_flow[3:0]</obj_property>
-      <obj_property name="ObjectShortName">ID__ctrl_flow[3:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/dut/ID__imm" type="array">
-      <obj_property name="ElementShortName">ID__imm[63:0]</obj_property>
-      <obj_property name="ObjectShortName">ID__imm[63:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/dut/ID__rs1_data" type="array">
-      <obj_property name="ElementShortName">ID__rs1_data[63:0]</obj_property>
-      <obj_property name="ObjectShortName">ID__rs1_data[63:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/dut/ID__rs2_data" type="array">
-      <obj_property name="ElementShortName">ID__rs2_data[63:0]</obj_property>
-      <obj_property name="ObjectShortName">ID__rs2_data[63:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/dut/ID__func" type="array">
-      <obj_property name="ElementShortName">ID__func[3:0]</obj_property>
-      <obj_property name="ObjectShortName">ID__func[3:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/dut/ID__sel__data_0" type="logic">
-      <obj_property name="ElementShortName">ID__sel__data_0</obj_property>
-      <obj_property name="ObjectShortName">ID__sel__data_0</obj_property>
-   </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/dut/ID__sel__data_1" type="logic">
-      <obj_property name="ElementShortName">ID__sel__data_1</obj_property>
-      <obj_property name="ObjectShortName">ID__sel__data_1</obj_property>
-   </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/dut/ID__we" type="logic">
-      <obj_property name="ElementShortName">ID__we</obj_property>
-      <obj_property name="ObjectShortName">ID__we</obj_property>
-   </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/dut/ID__rs1" type="array">
-      <obj_property name="ElementShortName">ID__rs1[4:0]</obj_property>
-      <obj_property name="ObjectShortName">ID__rs1[4:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/dut/ID__rs2" type="array">
-      <obj_property name="ElementShortName">ID__rs2[4:0]</obj_property>
-      <obj_property name="ObjectShortName">ID__rs2[4:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/dut/EX__pc" type="array">
-      <obj_property name="ElementShortName">EX__pc[63:0]</obj_property>
-      <obj_property name="ObjectShortName">EX__pc[63:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/dut/EX__ir" type="array">
-      <obj_property name="ElementShortName">EX__ir[31:0]</obj_property>
-      <obj_property name="ObjectShortName">EX__ir[31:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/dut/EX__we" type="logic">
-      <obj_property name="ElementShortName">EX__we</obj_property>
-      <obj_property name="ObjectShortName">EX__we</obj_property>
-   </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/dut/EX__rd" type="array">
-      <obj_property name="ElementShortName">EX__rd[4:0]</obj_property>
-      <obj_property name="ObjectShortName">EX__rd[4:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/dut/EX__rs1_data" type="array">
-      <obj_property name="ElementShortName">EX__rs1_data[63:0]</obj_property>
-      <obj_property name="ObjectShortName">EX__rs1_data[63:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/dut/EX__rs2_data" type="array">
-      <obj_property name="ElementShortName">EX__rs2_data[63:0]</obj_property>
-      <obj_property name="ObjectShortName">EX__rs2_data[63:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/dut/EX__imm" type="array">
-      <obj_property name="ElementShortName">EX__imm[63:0]</obj_property>
-      <obj_property name="ObjectShortName">EX__imm[63:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/dut/EX__func" type="array">
-      <obj_property name="ElementShortName">EX__func[3:0]</obj_property>
-      <obj_property name="ObjectShortName">EX__func[3:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/dut/EX__ctrl_flow" type="array">
-      <obj_property name="ElementShortName">EX__ctrl_flow[3:0]</obj_property>
-      <obj_property name="ObjectShortName">EX__ctrl_flow[3:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/dut/EX__sel__data_0" type="logic">
-      <obj_property name="ElementShortName">EX__sel__data_0</obj_property>
-      <obj_property name="ObjectShortName">EX__sel__data_0</obj_property>
-   </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/dut/EX__sel__data_1" type="logic">
-      <obj_property name="ElementShortName">EX__sel__data_1</obj_property>
-      <obj_property name="ObjectShortName">EX__sel__data_1</obj_property>
-   </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/dut/EX__data_0" type="array">
-      <obj_property name="ElementShortName">EX__data_0[63:0]</obj_property>
-      <obj_property name="ObjectShortName">EX__data_0[63:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/dut/EX__data_1" type="array">
-      <obj_property name="ElementShortName">EX__data_1[63:0]</obj_property>
-      <obj_property name="ObjectShortName">EX__data_1[63:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/dut/EX__data_2" type="array">
-      <obj_property name="ElementShortName">EX__data_2[63:0]</obj_property>
-      <obj_property name="ObjectShortName">EX__data_2[63:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/dut/WB__we" type="logic">
-      <obj_property name="ElementShortName">WB__we</obj_property>
-      <obj_property name="ObjectShortName">WB__we</obj_property>
-   </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/dut/WB__rd" type="array">
-      <obj_property name="ElementShortName">WB__rd[4:0]</obj_property>
-      <obj_property name="ObjectShortName">WB__rd[4:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/dut/WB__sel__rd_data" type="array">
-      <obj_property name="ElementShortName">WB__sel__rd_data[1:0]</obj_property>
-      <obj_property name="ObjectShortName">WB__sel__rd_data[1:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/dut/WB__rd_data" type="array">
-      <obj_property name="ElementShortName">WB__rd_data[63:0]</obj_property>
-      <obj_property name="ObjectShortName">WB__rd_data[63:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/dut/ID__sel__rd_data" type="array">
-      <obj_property name="ElementShortName">ID__sel__rd_data[1:0]</obj_property>
-      <obj_property name="ObjectShortName">ID__sel__rd_data[1:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/dut/EX__data_1" type="array">
-      <obj_property name="ElementShortName">EX__data_1[63:0]</obj_property>
-      <obj_property name="ObjectShortName">EX__data_1[63:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/dut/EX__data_0" type="array">
-      <obj_property name="ElementShortName">EX__data_0[63:0]</obj_property>
-      <obj_property name="ObjectShortName">EX__data_0[63:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/dut/EX__data_2" type="array">
-      <obj_property name="ElementShortName">EX__data_2[63:0]</obj_property>
-      <obj_property name="ObjectShortName">EX__data_2[63:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/dut/MEM__data_2" type="array">
-      <obj_property name="ElementShortName">MEM__data_2[63:0]</obj_property>
-      <obj_property name="ObjectShortName">MEM__data_2[63:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/dut/WB__data_2" type="array">
-      <obj_property name="ElementShortName">WB__data_2[63:0]</obj_property>
-      <obj_property name="ObjectShortName">WB__data_2[63:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/dut/ID__stall" type="logic">
-      <obj_property name="ElementShortName">ID__stall</obj_property>
-      <obj_property name="ObjectShortName">ID__stall</obj_property>
-   </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/dut/register_file__0/x_0" type="array">
-      <obj_property name="ElementShortName">x_0[63:0]</obj_property>
-      <obj_property name="ObjectShortName">x_0[63:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/dut/register_file__0/x_1" type="array">
-      <obj_property name="ElementShortName">x_1[63:0]</obj_property>
-      <obj_property name="ObjectShortName">x_1[63:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/dut/register_file__0/x_2" type="array">
-      <obj_property name="ElementShortName">x_2[63:0]</obj_property>
-      <obj_property name="ObjectShortName">x_2[63:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/dut/register_file__0/x_3" type="array">
-      <obj_property name="ElementShortName">x_3[63:0]</obj_property>
-      <obj_property name="ObjectShortName">x_3[63:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/dut/register_file__0/x_4" type="array">
-      <obj_property name="ElementShortName">x_4[63:0]</obj_property>
-      <obj_property name="ObjectShortName">x_4[63:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/dut/register_file__0/x_5" type="array">
-      <obj_property name="ElementShortName">x_5[63:0]</obj_property>
-      <obj_property name="ObjectShortName">x_5[63:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/dut/register_file__0/x_6" type="array">
-      <obj_property name="ElementShortName">x_6[63:0]</obj_property>
-      <obj_property name="ObjectShortName">x_6[63:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/dut/register_file__0/x_7" type="array">
-      <obj_property name="ElementShortName">x_7[63:0]</obj_property>
-      <obj_property name="ObjectShortName">x_7[63:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/dut/register_file__0/x_8" type="array">
-      <obj_property name="ElementShortName">x_8[63:0]</obj_property>
-      <obj_property name="ObjectShortName">x_8[63:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/dut/register_file__0/x_9" type="array">
-      <obj_property name="ElementShortName">x_9[63:0]</obj_property>
-      <obj_property name="ObjectShortName">x_9[63:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/dut/register_file__0/x_10" type="array">
+   <wvobject fp_name="/top_tb/dut/cpu/register_file__0/x_10" type="array">
       <obj_property name="ElementShortName">x_10[63:0]</obj_property>
       <obj_property name="ObjectShortName">x_10[63:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/dut/register_file__0/x_11" type="array">
-      <obj_property name="ElementShortName">x_11[63:0]</obj_property>
-      <obj_property name="ObjectShortName">x_11[63:0]</obj_property>
+   <wvobject fp_name="/top_tb/dut/cpu/il1/data_mem__rw" type="logic">
+      <obj_property name="ElementShortName">data_mem__rw</obj_property>
+      <obj_property name="ObjectShortName">data_mem__rw</obj_property>
    </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/dut/register_file__0/x_12" type="array">
-      <obj_property name="ElementShortName">x_12[63:0]</obj_property>
-      <obj_property name="ObjectShortName">x_12[63:0]</obj_property>
+   <wvobject fp_name="/top_tb/dut/cpu/il1/data_mem__wr_data" type="array">
+      <obj_property name="ElementShortName">data_mem__wr_data[63:0]</obj_property>
+      <obj_property name="ObjectShortName">data_mem__wr_data[63:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/dut/register_file__0/x_13" type="array">
-      <obj_property name="ElementShortName">x_13[63:0]</obj_property>
-      <obj_property name="ObjectShortName">x_13[63:0]</obj_property>
+   <wvobject fp_name="/top_tb/dut/cpu/il1/data_mem__rd_data" type="array">
+      <obj_property name="ElementShortName">data_mem__rd_data[63:0]</obj_property>
+      <obj_property name="ObjectShortName">data_mem__rd_data[63:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/dut/register_file__0/x_14" type="array">
-      <obj_property name="ElementShortName">x_14[63:0]</obj_property>
-      <obj_property name="ObjectShortName">x_14[63:0]</obj_property>
+   <wvobject fp_name="/top_tb/dut/cpu/mem_to_il1__data" type="array">
+      <obj_property name="ElementShortName">mem_to_il1__data[63:0]</obj_property>
+      <obj_property name="ObjectShortName">mem_to_il1__data[63:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/dut/register_file__0/x_15" type="array">
-      <obj_property name="ElementShortName">x_15[63:0]</obj_property>
-      <obj_property name="ObjectShortName">x_15[63:0]</obj_property>
+   <wvobject fp_name="/top_tb/dut/cpu/il1/mem_to_l1__data" type="array">
+      <obj_property name="ElementShortName">mem_to_l1__data[63:0]</obj_property>
+      <obj_property name="ObjectShortName">mem_to_l1__data[63:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/dut/register_file__0/x_16" type="array">
-      <obj_property name="ElementShortName">x_16[63:0]</obj_property>
-      <obj_property name="ObjectShortName">x_16[63:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/dut/register_file__0/x_17" type="array">
-      <obj_property name="ElementShortName">x_17[63:0]</obj_property>
-      <obj_property name="ObjectShortName">x_17[63:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/dut/register_file__0/x_18" type="array">
-      <obj_property name="ElementShortName">x_18[63:0]</obj_property>
-      <obj_property name="ObjectShortName">x_18[63:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/dut/register_file__0/x_19" type="array">
-      <obj_property name="ElementShortName">x_19[63:0]</obj_property>
-      <obj_property name="ObjectShortName">x_19[63:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/dut/register_file__0/x_20" type="array">
-      <obj_property name="ElementShortName">x_20[63:0]</obj_property>
-      <obj_property name="ObjectShortName">x_20[63:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/dut/register_file__0/x_21" type="array">
-      <obj_property name="ElementShortName">x_21[63:0]</obj_property>
-      <obj_property name="ObjectShortName">x_21[63:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/dut/register_file__0/x_22" type="array">
-      <obj_property name="ElementShortName">x_22[63:0]</obj_property>
-      <obj_property name="ObjectShortName">x_22[63:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/central_processing_unit_tb/dut/register_file__0/x_31" type="array">
-      <obj_property name="ElementShortName">x_31[63:0]</obj_property>
-      <obj_property name="ObjectShortName">x_31[63:0]</obj_property>
+   <wvobject fp_name="/top_tb/dut/cpu/IF__ir" type="array">
+      <obj_property name="ElementShortName">IF__ir[31:0]</obj_property>
+      <obj_property name="ObjectShortName">IF__ir[31:0]</obj_property>
    </wvobject>
 </wave_config>

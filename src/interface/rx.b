@@ -1,7 +1,7 @@
 //==============================================
-// interface__rx
+// rx
 //==============================================
-module interface__rx
+module rx
 (
     input clk,
     input rst,
@@ -19,7 +19,7 @@ parameter MAX_CREDITS__LOG2 = 0;
 
 
 // Buffer. The buffer is empty when get == put.
-logic [MAX_CREDITS__LOG2:0] buffer [WIDTH-1:0];
+logic [WIDTH-1:0] buffer [MAX_CREDITS__LOG2:0];
 logic [MAX_CREDITS__LOG2:0] get;
 logic [MAX_CREDITS__LOG2:0] put;
 
@@ -34,6 +34,13 @@ always_ff @(posedge clk) begin
         rx__credit <= valid & ready;
     end
 end
+
+always_ff @(posedge clk) begin
+    if (rx__valid) begin
+        buffer[put] = rx__data;
+    end
+end
+
 
 always_ff @(posedge clk) begin
     if (rst) begin

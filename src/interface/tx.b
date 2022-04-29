@@ -26,7 +26,7 @@ always_ff @(posedge clk) begin
     if (rst) credits <= MAX_CREDITS;
     else begin
         if (valid & ready) begin
-            if (tx_credit) begin
+            if (tx__credit) begin
                 credits <= credits;
             end 
             else begin
@@ -34,14 +34,15 @@ always_ff @(posedge clk) begin
             end
         end
         else begin
-            if (tx_credit) begin
+            if (tx__credit) begin
                 credits <= credits + 1;
             end
             else begin
                 credits <= credits;
             end
         end
-
+    end
+end
 
 always_ff @(posedge clk) begin
     if (rst) begin

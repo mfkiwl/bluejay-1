@@ -181,6 +181,8 @@ if __name__ == '__main__':
         {'path': 'src/central_processing_unit/', 'filename': 'central_processing_unit.b'},
         {'path': 'src/cache/', 'filename': 'memory.b'},
         {'path': 'src/cache/', 'filename': 'l1.b'},
+        {'path': 'src/interface/', 'filename': 'tx.b'},
+        {'path': 'src/interface/', 'filename': 'rx.b'},
         {'path': 'tb/', 'filename': 'top_tb.b'},
     ]
 

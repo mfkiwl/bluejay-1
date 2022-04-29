@@ -87,13 +87,13 @@
 #define FUNC__OR 4'hd
 #define FUNC__AND 4'he
 
-#define TYPE__D 3'h0
-#define TYPE__W 3'h1
-#define TYPE__WU 3'h2
-#define TYPE__H 3'h3
-#define TYPE__HU 3'h4
-#define TYPE__B 3'h5
-#define TYPE__BU 3'h6
+#define DTYPE__D 3'h0
+#define DTYPE__W 3'h1
+#define DTYPE__WU 3'h2
+#define DTYPE__H 3'h3
+#define DTYPE__HU 3'h4
+#define DTYPE__B 3'h5
+#define DTYPE__BU 3'h6
 
 #define L1__BYTE_OFFSET__FIELD 2:0
 #define L1__BYTE_OFFSET__WIDTH 3

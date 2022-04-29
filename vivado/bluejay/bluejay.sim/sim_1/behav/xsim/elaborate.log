@@ -8,19 +8,31 @@ Completed static elaboration
 Starting simulation data flow analysis
 WARNING: [XSIM 43-4099] "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv" Line 4. Module top doesn't have a timescale but at least one module in design has a timescale.
 WARNING: [XSIM 43-4099] "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/central_processing_unit.sv" Line 4. Module central_processing_unit doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l1.sv" Line 4. Module l1 doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/memory.sv" Line 4. Module memory(WIDTH=64,DEPTH=512,DEPTH__LOG2=9) doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/memory.sv" Line 4. Module memory(WIDTH=30,DEPTH=64,DEPTH__LOG2=6) doesn't have a timescale but at least one module in design has a timescale.
 WARNING: [XSIM 43-4099] "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/decoder.sv" Line 4. Module decoder doesn't have a timescale but at least one module in design has a timescale.
 WARNING: [XSIM 43-4099] "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/register_file.sv" Line 4. Module register_file doesn't have a timescale but at least one module in design has a timescale.
 WARNING: [XSIM 43-4099] "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/arithmetic_logic_unit.sv" Line 4. Module arithmetic_logic_unit doesn't have a timescale but at least one module in design has a timescale.
 WARNING: [XSIM 43-4099] "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/comparator.sv" Line 4. Module comparator doesn't have a timescale but at least one module in design has a timescale.
-WARNING: [XSIM 43-4099] "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/memory.sv" Line 4. Module memory(WIDTH=32,DEPTH=1024,DEPTH__LOG2=10) doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/tx.sv" Line 4. Module tx(WIDTH=64) doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/rx.sv" Line 4. Module rx(WIDTH=64) doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/memory.sv" Line 4. Module memory(WIDTH=64,DEPTH=4096,DEPTH__LOG2=12) doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/rx.sv" Line 4. Module rx(WIDTH=64) doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/tx.sv" Line 4. Module tx(WIDTH=64) doesn't have a timescale but at least one module in design has a timescale.
 Completed simulation data flow analysis
 Time Resolution for simulation is 1ps
+Compiling module xil_defaultlib.memory(WIDTH=64,DEPTH=512,DEPTH_...
+Compiling module xil_defaultlib.memory(WIDTH=30,DEPTH=64,DEPTH__...
+Compiling module xil_defaultlib.l1
 Compiling module xil_defaultlib.decoder
 Compiling module xil_defaultlib.register_file
 Compiling module xil_defaultlib.arithmetic_logic_unit
 Compiling module xil_defaultlib.comparator
+Compiling module xil_defaultlib.tx(WIDTH=64)
+Compiling module xil_defaultlib.rx(WIDTH=64)
 Compiling module xil_defaultlib.central_processing_unit
-Compiling module xil_defaultlib.memory(WIDTH=32,DEPTH=1024,DEPTH...
+Compiling module xil_defaultlib.memory(WIDTH=64,DEPTH=4096,DEPTH...
 Compiling module xil_defaultlib.top
 Compiling module xil_defaultlib.top_tb
 Compiling module xil_defaultlib.glbl
