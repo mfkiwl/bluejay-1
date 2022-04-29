@@ -5,9 +5,23 @@ module central_processing_unit
 (
     input clk,
     input rst,
-    output [63:0] pc,
-    input [31:0] ir
+
+    output logic tx__il1_to_mem__valid,
+    output logic [63:0] tx__il1_to_mem__data,
+    input tx__il1_to_mem__credit,
+
+    input rx__mem_to_il1__valid,
+    input [63:0] rx__mem_to_il1__data,
+    output rx__mem_to_il1__credit,
 );
+
+// Instruction L1.
+logic il1_to_mem__valid;
+logic il1_to_mem__ready;
+logic [63:0] il1_to_mem__data;
+logic mem_to_il1__valid;
+logic mem_to_il1__ready;
+logic [63:0] mem_to_il1__data;
 
 // IF
 logic IF__valid;
@@ -122,6 +136,31 @@ assign IF__ir = ir;
 
 // IF ready signal.
 assign IF__ready = ID__ready;
+
+
+//==============================
+//==============================
+l1 il1
+(
+    .clk(clk),
+    .rst(rst),
+    .valid(),
+    .ready(),
+    .addr(),
+    .rw(),
+    .wr_data(),
+    .rd_data(),
+    .hit(),
+    .type(),
+    .l1_to_mem__valid(),
+    .l1_to_mem__ready(),
+    .l1_to_mem__data(),
+    .mem_to_l1__valid(),
+    .mem_to_l1__ready(),
+    .mem_to_l1__data()
+);
+
+
 
 //==============================================
 // Instruction Decode (ID)
@@ -423,5 +462,45 @@ always_comb begin
         end
     endcase
 end
+
+
+//==============================
+// tx__il1_to_mem
+//==============================
+tx #(.WIDTH(64), .MAX_CREDITS(1), .MAX_CREDITS__LOG2(0)) tx__il1_to_mem
+(
+    .clk(clk),
+    .rst(rst),
+    .valid(il1_to_mem__valid),
+    .ready(il1_to_mem__ready),
+    .data(il1_to_mem__data),
+    .tx__valid(tx__l1_to_mem__valid),
+    .tx__data(tx__l1_to_mem__ready),
+    .tx__credit(tx__l1_to_mem__data)
+);
+
+
+
+//==============================
+// rx__mem_to_il1
+//==============================
+tx #(.WIDTH(64), .MAX_CREDITS(1), .MAX_CREDITS__LOG2(0)) rx__mem_to_il1
+(
+    .clk(clk),
+    .rst(rst),
+    .valid(mem_to_il1__valid),
+    .ready(mem_to_il1__ready),
+    .data(mem_to_il1__data),
+    .rx__valid(rx__mem_to_il1__valid),
+    .rx__data(rx__mem_to_il1__ready),
+    .rx__credit(rx__mem_to_il1__data)
+);
+
+
+
+
+
+
+
 
 endmodule
