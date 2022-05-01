@@ -6,22 +6,21 @@ module central_processing_unit
     input clk,
     input rst,
 
-    output logic tx__il1_to_mem__valid,
-    output logic [63:0] tx__il1_to_mem__data,
-    input tx__il1_to_mem__credit,
+    output logic il1_to_mem__valid,
+    output logic [63:0] il1_to_mem__data,
+    input il1_to_mem__credit,
+    input mem_to_il1__valid,
+    input [63:0] mem_to_il1__data,
+    output mem_to_il1__credit,
 
-    input tx__mem_to_il1__valid,
-    input [63:0] tx__mem_to_il1__data,
-    output tx__mem_to_il1__credit
+    output logic dl1_to_mem__valid,
+    output logic [63:0] dl1_to_mem__data,
+    input dl1_to_mem__credit,
+    input mem_to_dl1__valid,
+    input [63:0] mem_to_dl1__data,
+    output mem_to_dl1__credit
 );
 
-// Instruction L1.
-logic il1_to_mem__valid;
-logic il1_to_mem__ready;
-logic [63:0] il1_to_mem__data;
-logic mem_to_il1__valid;
-logic mem_to_il1__ready;
-logic [63:0] mem_to_il1__data;
 
 // IF
 logic IF__valid;
@@ -45,6 +44,9 @@ logic ID__we;
 logic ID__sel__a;
 logic ID__sel__b;
 logic [1:0] ID__sel__wr_data;
+logic ID__mem_valid;
+logic ID__mem_rw;
+logic [2:0] ID__mem_dtype;
 logic [63:0] ID__rd_data__0;
 logic [63:0] ID__rd_data__1;
 
@@ -61,6 +63,9 @@ logic EX__we;
 logic EX__sel__a;
 logic EX__sel__b;
 logic [1:0] EX__sel__wr_data;
+logic EX__mem_valid;
+logic EX__mem_rw;
+logic [2:0] EX__mem_dtype;
 logic [63:0] EX__rd_data__0;
 logic [63:0] EX__rd_data__1;
 logic [63:0] EX__a;
@@ -83,6 +88,7 @@ logic [5:0] MEM__op;
 logic [4:0] MEM__wr_addr;
 logic MEM__we;
 logic [1:0] MEM__sel__wr_data;
+logic MEM__mem_valid;
 logic [63:0] MEM__rd_data__1;
 logic [63:0] MEM__c;
 logic MEM__take_branch;
@@ -132,25 +138,23 @@ end
 // end
 
 
-
+// il1
 logic cpu_to_il1__valid;
 logic cpu_to_il1__ready;
 logic [39:0] cpu_to_il1__addr;
 logic cpu_to_il1__rw;
 logic [63:0] cpu_to_il1__data;
 logic [2:0] cpu_to_il1__dtype;
-
 logic il1_to_cpu__valid;
 logic il1_to_cpu__ready;
 logic [63:0] il1_to_cpu__data;
-
 logic il1_to_mem__valid;
 logic il1_to_mem__ready;
 logic [63:0] il1_to_mem__data;
-
 logic mem_to_il1__valid;
 logic mem_to_il1__ready;
 logic [63:0] mem_to_il1__data;
+
 
 assign IF__ready = cpu_to_il1__ready;
 assign cpu_to_il1__rw = 1'b0;
@@ -178,11 +182,11 @@ l1 il1
     .l1_to_cpu__ready(il1_to_cpu__ready),
     .l1_to_cpu__data(il1_to_cpu__data),
     .l1_to_mem__valid(il1_to_mem__valid),
-    .l1_to_mem__ready(il1_to_mem__ready),
     .l1_to_mem__data(il1_to_mem__data),
+    .l1_to_mem__credit(il1_to_mem__credit),
     .mem_to_l1__valid(mem_to_il1__valid),
-    .mem_to_l1__ready(mem_to_il1__ready),
-    .mem_to_l1__data(mem_to_il1__data)
+    .mem_to_l1__data(mem_to_il1__data),
+    .mem_to_l1__credit(mem_to_il1__credit)
 );
 
 
@@ -241,7 +245,10 @@ decoder decoder__0
     .we(ID__we),
     .sel__a(ID__sel__a),
     .sel__b(ID__sel__b),
-    .sel__wr_data(ID__sel__wr_data)
+    .sel__wr_data(ID__sel__wr_data),
+    .mem_valid(ID__mem_valid),
+    .mem_rw(ID__mem_rw),
+    .mem_dtype(ID__mem_dtype)
 );
 
 //==============================
@@ -289,6 +296,9 @@ always_ff @(posedge clk) begin
         EX__sel__a <= ID__sel__a;
         EX__sel__b <= ID__sel__b;
         EX__sel__wr_data <= ID__sel__wr_data;
+        EX__mem_valid <= ID__mem_valid;
+        EX__mem_rw <= ID__mem_rw;
+        EX__mem_dtype <= ID__mem_dtype;
         EX__rd_data__0 <= ID__rd_data__0;
         EX__rd_data__1 <= ID__rd_data__1;
     end
@@ -408,14 +418,63 @@ always_ff @(posedge clk) begin
         MEM__wr_addr <= EX__wr_addr;
         MEM__we <= EX__we;
         MEM__sel__wr_data <= EX__sel__wr_data;
+        MEM__mem_valid <= EX__mem_valid;
         MEM__rd_data__1 <= EX__rd_data__1;
         MEM__c <= EX__c;
         MEM__take_branch <= EX__take_branch;
     end
 end
 
-// MEM ready signal.
-assign MEM__ready = WB__ready;
+//==============================
+// dl1
+//==============================
+l1 dl1
+(
+    .clk(clk),
+    .rst(rst),
+    .cpu_to_l1__valid(cpu_to_dl1__valid),
+    .cpu_to_l1__ready(cpu_to_dl1__ready),
+    .cpu_to_l1__addr(cpu_to_dl1__addr),
+    .cpu_to_l1__rw(cpu_to_dl1__rw),
+    .cpu_to_l1__data(cpu_to_dl1__data),
+    .cpu_to_l1__dtype(cpu_to_dl1__dtype),
+    .l1_to_cpu__valid(dl1_to_cpu__valid),
+    .l1_to_cpu__ready(dl1_to_cpu__ready),
+    .l1_to_cpu__data(dl1_to_cpu__data),
+    .l1_to_mem__valid(dl1_to_mem__valid),
+    .l1_to_mem__data(dl1_to_mem__data),
+    .l1_to_mem__credit(dl1_to_mem__credit),
+    .mem_to_l1__valid(mem_to_dl1__valid),
+    .mem_to_l1__data(mem_to_dl1__data),
+    .mem_to_l1__credit(mem_to_dl1__credit)
+);
+
+logic cpu_to_dl1__valid;
+logic cpu_to_dl1__ready;
+logic [39:0] cpu_to_dl1__addr;
+logic cpu_to_dl1__rw;
+logic [63:0] cpu_to_dl1__data;
+logic [2:0] cpu_to_dl1__dtype;
+logic dl1_to_cpu__valid;
+logic dl1_to_cpu__ready;
+logic [63:0] dl1_to_cpu__data;
+logic dl1_to_mem__valid;
+logic dl1_to_mem__ready;
+logic [63:0] dl1_to_mem__data;
+logic mem_to_dl1__valid;
+logic mem_to_dl1__ready;
+logic [63:0] mem_to_dl1__data;
+
+assign cpu_to_dl1__valid = EX__mem_valid & EX__valid;
+assign MEM__ready = EX__mem_valid ? cpu_to_dl1__ready : WB__ready;
+assign cpu_to_dl1__addr = EX__c;
+assign cpu_to_dl1__rw = EX__mem_rw;
+assign cpu_to_dl1__data = EX__rd_data__1;
+assign cpu_to_dl1__dypte = EX__mem_dtype;
+assign dl1_to_cpu__ready = WB__ready;
+
+
+
 
 //==============================================
 // Write Back (WB)
@@ -426,13 +485,13 @@ always_ff @(posedge clk) begin
         WB__valid <= 1'b0;
     end
     else begin
-        WB__valid <= WB__ready ? MEM__valid : WB__valid;
+        WB__valid <= WB__ready ? (MEM__mem_valid ? dl1_to_cpu__valid : MEM__valid) : WB__valid;
     end
 end
 
 // EX/MEM pipe stage (data).
 always_ff @(posedge clk) begin
-    if (MEM__valid & WB__ready) begin
+    if ((MEM__mem_valid ? dl1_to_cpu__valid : MEM__valid) & WB__ready) begin
         WB__pc <= MEM__pc;
         WB__ir <= MEM__ir;
         WB__op <= MEM__op;
@@ -440,6 +499,7 @@ always_ff @(posedge clk) begin
         WB__we <= MEM__we;
         WB__sel__wr_data <= MEM__sel__wr_data;
         WB__c <= MEM__c;
+        WB__mem_rd_data <= dl1_to_cpu__data;
         WB__take_branch <= MEM__take_branch;
     end
 end
@@ -523,38 +583,6 @@ end
 
 
 
-
-//==============================
-// tx__il1_to_mem
-//==============================
-tx #(.WIDTH(64), .MAX_CREDITS(1), .MAX_CREDITS__LOG2(0)) tx__il1_to_mem
-(
-    .clk(clk),
-    .rst(rst),
-    .valid(il1_to_mem__valid),
-    .ready(il1_to_mem__ready),
-    .data(il1_to_mem__data),
-    .tx__valid(tx__il1_to_mem__valid),
-    .tx__data(tx__il1_to_mem__data),
-    .tx__credit(tx__il1_to_mem__credit)
-);
-
-
-
-//==============================
-// rx__mem_to_il1
-//==============================
-rx #(.WIDTH(64), .MAX_CREDITS(1), .MAX_CREDITS__LOG2(0)) rx__mem_to_il1
-(
-    .clk(clk),
-    .rst(rst),
-    .valid(mem_to_il1__valid),
-    .ready(mem_to_il1__ready),
-    .data(mem_to_il1__data),
-    .rx__valid(tx__mem_to_il1__valid),
-    .rx__data(tx__mem_to_il1__data),
-    .rx__credit(tx__mem_to_il1__credit)
-);
 
 
 

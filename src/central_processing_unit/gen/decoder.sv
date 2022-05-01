@@ -15,7 +15,10 @@ module decoder
     output logic we,
     output logic sel__a,
     output logic sel__b,
-    output logic [1:0] sel__wr_data
+    output logic [1:0] sel__wr_data,
+    output logic mem_valid,
+    output logic mem_rw,
+    output logic [2:0] mem_dtype
 );
 
 logic [6:0] opcode;
@@ -458,42 +461,59 @@ always_comb begin
     sel__a = 1'b0;
     sel__b = 1'b1; 
     sel__wr_data = 2'h0;
+    mem_valid = 1'b0;
+    mem_rw = 1'b0;
+    mem_dtype = 3'h0;
 
     case (op)
         6'h1:
         begin
             we = 1'b1;
             sel__wr_data = 2'h1;
+            mem_valid = 1'b1;
+            mem_dtype = 3'h5;
         end
         6'h2:
         begin
             we = 1'b1;
             sel__wr_data = 2'h1;
+            mem_valid = 1'b1;
+            mem_dtype = 3'h3;
         end
         6'h3:
         begin
             we = 1'b1;
             sel__wr_data = 2'h1;
+            mem_valid = 1'b1;
+            mem_dtype = 3'h1;
         end
         6'h4:
         begin
             we = 1'b1;
             sel__wr_data = 2'h1;
+            mem_valid = 1'b1;
+            mem_dtype = 3'h0;
         end
         6'h5:
         begin
             we = 1'b1;
             sel__wr_data = 2'h1;
+            mem_valid = 1'b1;
+            mem_dtype = 3'h6;
         end
         6'h6:
         begin
             we = 1'b1;
             sel__wr_data = 2'h1;
+            mem_valid = 1'b1;
+            mem_dtype = 3'h4;
         end
         6'h7:
         begin
             we = 1'b1;
             sel__wr_data = 2'h1;
+            mem_valid = 1'b1;
+            mem_dtype = 3'h4;
         end
         6'h8:
         begin
@@ -574,18 +594,26 @@ always_comb begin
         6'h18:
         begin
             format = 3'h2;
+            mem_valid = 1'b1;
+            mem_rw = 1'b1;
         end
         6'h19:
         begin
             format = 3'h2;
+            mem_valid = 1'b1;
+            mem_rw = 1'b1;
         end
         6'h1a:
         begin
             format = 3'h2;
+            mem_valid = 1'b1;
+            mem_rw = 1'b1;
         end
         6'h1b:
         begin
             format = 3'h2;
+            mem_valid = 1'b1;
+            mem_rw = 1'b1;
         end
         6'h1c:
         begin

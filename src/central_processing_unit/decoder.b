@@ -15,7 +15,10 @@ module decoder
     output logic we,
     output logic sel__a,
     output logic sel__b,
-    output logic [1:0] sel__wr_data
+    output logic [1:0] sel__wr_data,
+    output logic mem_valid,
+    output logic mem_rw,
+    output logic [2:0] mem_dtype
 );
 
 logic [6:0] opcode;
@@ -458,42 +461,59 @@ always_comb begin
     sel__a = SEL__A__RD_DATA__0;
     sel__b = SEL__B__IMM; 
     sel__wr_data = SEL__WD_DATA__C;
+    mem_valid = 1'b0;
+    mem_rw = 1'b0;
+    mem_dtype = DTYPE__D;
 
     case (op)
         OP__LB:
         begin
             we = 1'b1;
             sel__wr_data = SEL__WD_DATA__MEM_RD_DATA;
+            mem_valid = 1'b1;
+            mem_dtype = DTYPE__B;
         end
         OP__LH:
         begin
             we = 1'b1;
             sel__wr_data = SEL__WD_DATA__MEM_RD_DATA;
+            mem_valid = 1'b1;
+            mem_dtype = DTYPE__H;
         end
         OP__LW:
         begin
             we = 1'b1;
             sel__wr_data = SEL__WD_DATA__MEM_RD_DATA;
+            mem_valid = 1'b1;
+            mem_dtype = DTYPE__W;
         end
         OP__LD:
         begin
             we = 1'b1;
             sel__wr_data = SEL__WD_DATA__MEM_RD_DATA;
+            mem_valid = 1'b1;
+            mem_dtype = DTYPE__D;
         end
         OP__LBU:
         begin
             we = 1'b1;
             sel__wr_data = SEL__WD_DATA__MEM_RD_DATA;
+            mem_valid = 1'b1;
+            mem_dtype = DTYPE__BU;
         end
         OP__LHU:
         begin
             we = 1'b1;
             sel__wr_data = SEL__WD_DATA__MEM_RD_DATA;
+            mem_valid = 1'b1;
+            mem_dtype = DTYPE__HU;
         end
         OP__LWU:
         begin
             we = 1'b1;
             sel__wr_data = SEL__WD_DATA__MEM_RD_DATA;
+            mem_valid = 1'b1;
+            mem_dtype = DTYPE__HU;
         end
         OP__FENCE:
         begin
@@ -574,18 +594,26 @@ always_comb begin
         OP__SB:
         begin
             format = FORMAT__S_TYPE;
+            mem_valid = 1'b1;
+            mem_rw = 1'b1;
         end
         OP__SH:
         begin
             format = FORMAT__S_TYPE;
+            mem_valid = 1'b1;
+            mem_rw = 1'b1;
         end
         OP__SW:
         begin
             format = FORMAT__S_TYPE;
+            mem_valid = 1'b1;
+            mem_rw = 1'b1;
         end
         OP__SD:
         begin
             format = FORMAT__S_TYPE;
+            mem_valid = 1'b1;
+            mem_rw = 1'b1;
         end
         OP__ADD:
         begin

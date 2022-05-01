@@ -18,13 +18,14 @@ module l1
     output logic [63:0] l1_to_cpu__data,
 
     output logic l1_to_mem__valid,
-    input l1_to_mem__ready,
     output logic [63:0] l1_to_mem__data,
-
+    input l1_to_mem__credit,
+    
     input mem_to_l1__valid,
-    output logic mem_to_l1__ready,
-    input [63:0] mem_to_l1__data
+    input [63:0] mem_to_l1__data,
+    output logic mem_to_l1__credit   
 );
+
 
 logic [2:0] state;
 logic [2:0] state_n;
@@ -50,6 +51,14 @@ logic [2:0] S0__dtype;
 logic [63:0] S0__wr_data;
 logic [63:0] S0__rd_data;
 logic S0__hit;
+
+logic req__valid;
+logic req__ready;
+logic [63:0] req__data;
+
+logic rtn__valid;
+logic rtn__ready;
+logic [63:0] rtn__data;
 
 
 //==============================================
@@ -200,8 +209,8 @@ always_comb begin
     tag_mem__rw = 1'b0;
     tag_mem__wr_data = tag_mem__wr_data;
     tag_mem__addr = S0__addr[L1__INDEX__FIELD];
-    mem_to_l1__ready = 1'b0;
-    l1_to_mem__valid = 1'b0;
+    rtn__ready = 1'b0;
+    req__valid = 1'b0;
     inc_offset = 1'b0;
     inc_index = 1'b0;
 
@@ -246,21 +255,21 @@ always_comb begin
         end
         STATE__ALLOCATE__SEND_REQUEST:
         begin
-            l1_to_mem__valid = 1'b1;
-            l1_to_mem__data = {1'b0, S0__addr};
+            req__valid = 1'b1;
+            req__data = {1'b0, S0__addr};
 
-            if (l1_to_mem__ready) begin
+            if (req__ready) begin
                 state_n = STATE__ALLOCATE__WRITE_L1;
             end       
         end
         STATE__ALLOCATE__WRITE_L1:
         begin
-            mem_to_l1__ready = 1'b1;
+            rtn__ready = 1'b1;
             data_mem__addr = {S0__addr[L1__INDEX__FIELD], offset};
 
-            if (mem_to_l1__valid) begin
+            if (rtn__valid) begin
                 data_mem__rw = 1'b1;
-                data_mem__wr_data = mem_to_l1__data;
+                data_mem__wr_data = rtn__data;
                 tag_mem__rw = 1'b1;
                 tag_mem__wr_data[L1__TAG_MEM__TAG__FIELD] = S0__addr[L1__TAG__FIELD];
                 tag_mem__wr_data[L1__TAG_MEM__VALID__FIELD] = 1'b1;
@@ -274,20 +283,20 @@ always_comb begin
         end
         STATE__WRITE_BACK__SEND_HEADER:
         begin
-            l1_to_mem__valid = 1'b1;
-            l1_to_mem__data = {1'b1, S0__addr};
+            req__valid = 1'b1;
+            req__data = {1'b1, S0__addr};
 
-            if (l1_to_mem__ready) begin
+            if (req__ready) begin
                 state_n = STATE__WRITE_BACK__SEND_DATA;
             end 
         end
         STATE__WRITE_BACK__SEND_DATA:
         begin
             data_mem__addr = {S0__addr[L1__INDEX__FIELD], offset};
-            l1_to_mem__valid = 1'b1;
-            l1_to_mem__data = data_mem__rd_data;
+            req__valid = 1'b1;
+            req__data = data_mem__rd_data;
 
-            if (l1_to_mem__ready) begin
+            if (req__ready) begin
                 inc_offset = 1'b1;
 
                 if (&offset) begin
@@ -351,6 +360,40 @@ memory #(.WIDTH(30), .DEPTH(64), .DEPTH__LOG2(6)) tag_mem
     .rw(tag_mem__rw),
     .wr_data(tag_mem__wr_data),
     .rd_data(tag_mem__rd_data)
+);
+
+
+
+//==============================
+// il1_to_mem__tx
+//==============================
+tx #(.WIDTH(64), .MAX_CREDITS(1), .MAX_CREDITS__LOG2(0)) il1_to_mem__tx
+(
+    .clk(clk),
+    .rst(rst),
+    .valid(req__valid),
+    .ready(req__ready),
+    .data(req__data),
+    .tx__valid(l1_to_mem__valid),
+    .tx__data(l1_to_mem__data),
+    .tx__credit(l1_to_mem__credit)
+);
+
+
+
+//==============================
+// mem_to_il1__rx
+//==============================
+rx #(.WIDTH(64), .MAX_CREDITS(1), .MAX_CREDITS__LOG2(0)) mem_to_il1__rx
+(
+    .clk(clk),
+    .rst(rst),
+    .valid(rtn__valid),
+    .ready(rtn__ready),
+    .data(rtn__data),
+    .rx__valid(mem_to_l1__valid),
+    .rx__data(mem_to_l1__data),
+    .rx__credit(mem_to_l1__credit)
 );
 
 
