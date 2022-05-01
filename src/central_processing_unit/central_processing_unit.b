@@ -470,7 +470,7 @@ assign MEM__ready = EX__mem_valid ? cpu_to_dl1__ready : WB__ready;
 assign cpu_to_dl1__addr = EX__c;
 assign cpu_to_dl1__rw = EX__mem_rw;
 assign cpu_to_dl1__data = EX__rd_data__1;
-assign cpu_to_dl1__dypte = EX__mem_dtype;
+assign cpu_to_dl1__dtype = EX__mem_dtype;
 assign dl1_to_cpu__ready = WB__ready;
 
 

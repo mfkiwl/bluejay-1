@@ -27,7 +27,7 @@ module l2
 );
 
 
-logic mem__addr_n;
+logic [39:0] mem__addr_n;
 
 //==============================================
 // Control FSM
