@@ -6,16 +6,25 @@ module l1
     input clk,
     input rst,
 
-    input cpu_to_l1__valid,
-    output logic cpu_to_l1__ready,
-    input [39:0] cpu_to_l1__addr,
-    input cpu_to_l1__rw,
-    input [63:0] cpu_to_l1__data,
-    input [2:0] cpu_to_l1__dtype,
+    input valid,
+    output logic ready,
+    input [39:0] addr,
+    input rw,
+    input [63:0] wr_data,
+    input [2:0] dtype,
+    output logic hit,
+    output logic [63:0] rd_data,
 
-    output logic l1_to_cpu__valid,
-    input l1_to_cpu__ready,
-    output logic [63:0] l1_to_cpu__data,
+    // input cpu_to_l1__valid,
+    // output logic cpu_to_l1__ready,
+    // input [39:0] cpu_to_l1__addr,
+    // input cpu_to_l1__rw,
+    // input [63:0] cpu_to_l1__data,
+    // input [2:0] cpu_to_l1__dtype,
+
+    // output logic l1_to_cpu__valid,
+    // input l1_to_cpu__ready,
+    // output logic [63:0] l1_to_cpu__data,
 
     output logic l1_to_mem__valid,
     output logic [63:0] l1_to_mem__data,
@@ -29,28 +38,22 @@ module l1
 
 logic [2:0] state;
 logic [2:0] state_n;
+
 logic [L1__BLOCK_OFFSET__WIDTH-1:0] offset;
 logic [L1__INDEX__WIDTH-1:0] index;
+logic inc_offset;
+logic inc_index;
+
 logic [8:0] data_mem__addr;
 logic data_mem__rw;
 logic [63:0] data_mem__wr_data;
 logic [63:0] data_mem__rd_data;
+
 logic [5:0] tag_mem__addr;
 logic tag_mem__rw;
 logic [29:0] tag_mem__wr_data;
 logic [29:0] tag_mem__rd_data;
-logic inc_offset;
-logic inc_index;
 
-
-logic S0__valid;
-logic S0__ready;
-logic [39:0] S0__addr;
-logic S0__rw;
-logic [2:0] S0__dtype;
-logic [63:0] S0__wr_data;
-logic [63:0] S0__rd_data;
-logic S0__hit;
 
 logic req__valid;
 logic req__ready;
@@ -61,44 +64,15 @@ logic rtn__ready;
 logic [63:0] rtn__data;
 
 
-//==============================================
-// Stage 0 (S0)
-//==============================================
-// S0 pipe stage (valid).
-always_ff @(posedge clk) begin
-    if (rst) begin
-        S0__valid <= 1'b0;
-    end
-    else begin
-        S0__valid <= S0__ready ? cpu_to_l1__valid : S0__valid;
-    end
-end
-
-// S0 pipe stage (data).
-always_ff @(posedge clk) begin
-    if (cpu_to_l1__valid & S0__ready) begin
-        S0__addr <= cpu_to_l1__addr;
-        S0__rw <= cpu_to_l1__rw;
-        S0__wr_data <= cpu_to_l1__data;
-        S0__dtype <= cpu_to_l1__dtype;
-    end
-end
-
-assign S0__ready = l1_to_cpu__ready & (~S0__valid || S0__hit); 
-assign S0__hit = S0__valid & (S0__addr[L1__TAG__FIELD] == tag_mem__rd_data[L1__TAG_MEM__TAG__FIELD]) & tag_mem__rd_data[L1__TAG_MEM__VALID__FIELD] & (state == STATE__READ_WRITE);
-assign cpu_to_l1__ready = S0__ready;
-assign l1_to_cpu__valid = S0__valid & S0__hit;
-assign l1_to_cpu__data = S0__rd_data;
-
 // Format rd_data.
 always_comb begin
-    case (S0__dtype)
+    case (dtype)
         DTYPE__D:
         begin
-            S0__rd_data = data_mem__rd_data;
+            rd_data = data_mem__rd_data;
         end
         DTYPE__W:
-            case (S0__addr[L1__BYTE_OFFSET__FIELD])
+            case (addr[L1__BYTE_OFFSET__FIELD])
                 PYTHON
                 (
                 size = 4
@@ -106,13 +80,13 @@ always_comb begin
                     if (i % size) == 0:
                         print(f"3'h{i:x}:")
                         print(f"begin")
-                        print(f"    S0__rd_data = {{{{{8*size}{{data_mem__rd_data[{8*i + 8*size - 1}]}}}}, data_mem__rd_data[{8*i + 8*size - 1}:{8*i}]}};")
+                        print(f"    rd_data = {{{{{8*size}{{data_mem__rd_data[{8*i + 8*size - 1}]}}}}, data_mem__rd_data[{8*i + 8*size - 1}:{8*i}]}};")
                         print(f"end")
                 )
             endcase
         DTYPE__WU:
         begin
-            case (S0__addr[L1__BYTE_OFFSET__FIELD])
+            case (addr[L1__BYTE_OFFSET__FIELD])
                 PYTHON
                 (
                 size = 4
@@ -120,14 +94,14 @@ always_comb begin
                     if (i % size) == 0:
                         print(f"3'h{i:x}:")
                         print(f"begin")
-                        print(f"    S0__rd_data = {{{{{8*size}{{1'b0}}}}, data_mem__rd_data[{8*i + 8*size - 1}:{8*i}]}};")
+                        print(f"    rd_data = {{{{{8*size}{{1'b0}}}}, data_mem__rd_data[{8*i + 8*size - 1}:{8*i}]}};")
                         print(f"end")
                 )
             endcase
         end
         DTYPE__H:
         begin
-            case (S0__addr[L1__BYTE_OFFSET__FIELD])
+            case (addr[L1__BYTE_OFFSET__FIELD])
                 PYTHON
                 (
                 size = 2
@@ -135,14 +109,14 @@ always_comb begin
                     if (i % size) == 0:
                         print(f"3'h{i:x}:")
                         print(f"begin")
-                        print(f"    S0__rd_data = {{{{{8*size}{{data_mem__rd_data[{8*i + 8*size - 1}]}}}}, data_mem__rd_data[{8*i + 8*size - 1}:{8*i}]}};")
+                        print(f"    rd_data = {{{{{8*size}{{data_mem__rd_data[{8*i + 8*size - 1}]}}}}, data_mem__rd_data[{8*i + 8*size - 1}:{8*i}]}};")
                         print(f"end")
                 )
             endcase
         end
         DTYPE__HU:
         begin
-            case (S0__addr[L1__BYTE_OFFSET__FIELD])
+            case (addr[L1__BYTE_OFFSET__FIELD])
                 PYTHON
                 (
                 size = 2
@@ -150,14 +124,14 @@ always_comb begin
                     if (i % size) == 0:
                         print(f"3'h{i:x}:")
                         print(f"begin")
-                        print(f"    S0__rd_data = {{{{{8*size}{{1'b0}}}}, data_mem__rd_data[{8*i + 8*size - 1}:{8*i}]}};")
+                        print(f"    rd_data = {{{{{8*size}{{1'b0}}}}, data_mem__rd_data[{8*i + 8*size - 1}:{8*i}]}};")
                         print(f"end")
                 )
             endcase            
         end
         DTYPE__B:
         begin
-            case (S0__addr[L1__BYTE_OFFSET__FIELD])
+            case (addr[L1__BYTE_OFFSET__FIELD])
                 PYTHON
                 (
                 size = 1
@@ -165,14 +139,14 @@ always_comb begin
                     if (i % size) == 0:
                         print(f"3'h{i:x}:")
                         print(f"begin")
-                        print(f"    S0__rd_data = {{{{{8*size}{{data_mem__rd_data[{8*i + 8*size - 1}]}}}}, data_mem__rd_data[{8*i + 8*size - 1}:{8*i}]}};")
+                        print(f"    rd_data = {{{{{8*size}{{data_mem__rd_data[{8*i + 8*size - 1}]}}}}, data_mem__rd_data[{8*i + 8*size - 1}:{8*i}]}};")
                         print(f"end")
                 )  
             endcase        
         end
         DTYPE__BU:
         begin
-            case (S0__addr[L1__BYTE_OFFSET__FIELD])
+            case (addr[L1__BYTE_OFFSET__FIELD])
                 PYTHON
                 (
                 size = 1
@@ -180,7 +154,7 @@ always_comb begin
                     if (i % size) == 0:
                         print(f"3'h{i:x}:")
                         print(f"begin")
-                        print(f"    S0__rd_data = {{{{{8*size}{{1'b0}}}}, data_mem__rd_data[{8*i + 8*size - 1}:{8*i}]}};")
+                        print(f"    rd_data = {{{{{8*size}{{1'b0}}}}, data_mem__rd_data[{8*i + 8*size - 1}:{8*i}]}};")
                         print(f"end")
                 )
             endcase              
@@ -202,13 +176,24 @@ parameter STATE__WRITE_BACK__SEND_HEADER = 3'h5;
 parameter STATE__WRITE_BACK__SEND_DATA = 3'h6;
 
 
+logic [39:0] rw_addr;
+logic [39:0] rw_addr_n;
+
 always_comb begin
     state_n = state;
+    hit = 1'b0;
+
+    ready = 1'b0;
+
+    rw_addr_n = rw_addr;
+
     data_mem__rw = 1'b0;
-    data_mem__addr = {S0__addr[L1__INDEX__FIELD], S0__addr[L1__BLOCK_OFFSET__FIELD]};
+    data_mem__addr = {addr[L1__INDEX__FIELD], addr[L1__BLOCK_OFFSET__FIELD]};
+
     tag_mem__rw = 1'b0;
     tag_mem__wr_data = tag_mem__wr_data;
-    tag_mem__addr = S0__addr[L1__INDEX__FIELD];
+    tag_mem__addr = addr[L1__INDEX__FIELD];
+
     rtn__ready = 1'b0;
     req__valid = 1'b0;
     inc_offset = 1'b0;
@@ -217,26 +202,32 @@ always_comb begin
     case (state)
         STATE__RESET:
         begin
+            rw_addr_n = 0;
             state_n = STATE__INIT;
         end
         STATE__INIT:
         begin
-            inc_index = 1'b1;    
+            rw_addr_n = rw_addr + 64;
             tag_mem__rw = 1'b1;
             tag_mem__wr_data = 0;
-            tag_mem__addr = index;
+            tag_mem__addr = rw_addr[L1__INDEX__FIELD];
 
-            if (&index) begin
+            if (&rw_addr[L1__INDEX__FIELD]) begin
                 state_n = STATE__READ_WRITE;
             end
         end
         STATE__READ_WRITE:
         begin
-            if (S0__valid) begin
-                if (S0__hit) begin
-                    if (S0__rw) begin
+            if (valid) begin
+                hit = (addr[L1__TAG__FIELD] == tag_mem__rd_data[L1__TAG_MEM__TAG__FIELD]) & tag_mem__rd_data[L1__TAG_MEM__VALID__FIELD];
+
+                if (hit) begin
+                    ready = 1'b1;
+
+                    if (rw) begin
                         data_mem__rw = 1'b1;
-                        data_mem__wr_data = S0__wr_data;
+                        // EDIT: need to modify write based on dtype
+                        data_mem__wr_data = wr_data;
                         tag_mem__rw = 1'b1;
                         tag_mem__wr_data = tag_mem__rd_data;
                         tag_mem__wr_data[L1__TAG_MEM__DIRTY__FIELD] = 1'b1;
@@ -245,18 +236,23 @@ always_comb begin
                 end
                 else begin
                     if (tag_mem__rd_data[L1__TAG_MEM__DIRTY__FIELD]) begin
+                        rw_addr_n = {tag_mem__rd_data[L1__TAG_MEM__TAG__FIELD], addr[L1__INDEX__FIELD], 6'h0};
                         state_n = STATE__WRITE_BACK__SEND_HEADER;
                     end
                     else begin
+                        rw_addr_n = {addr[L1__TAG__FIELD], addr[L1__INDEX__FIELD], 6'h0};
                         state_n = STATE__ALLOCATE__SEND_REQUEST;
                     end
                 end
+            end
+            else begin
+                ready = 1'b1;
             end
         end
         STATE__ALLOCATE__SEND_REQUEST:
         begin
             req__valid = 1'b1;
-            req__data = {1'b0, S0__addr};
+            req__data = {1'b0, rw_addr};
 
             if (req__ready) begin
                 state_n = STATE__ALLOCATE__WRITE_L1;
@@ -265,18 +261,18 @@ always_comb begin
         STATE__ALLOCATE__WRITE_L1:
         begin
             rtn__ready = 1'b1;
-            data_mem__addr = {S0__addr[L1__INDEX__FIELD], offset};
+            data_mem__addr = {rw_addr[L1__INDEX__FIELD], rw_addr[L1__BLOCK_OFFSET__FIELD]};
 
             if (rtn__valid) begin
                 data_mem__rw = 1'b1;
                 data_mem__wr_data = rtn__data;
                 tag_mem__rw = 1'b1;
-                tag_mem__wr_data[L1__TAG_MEM__TAG__FIELD] = S0__addr[L1__TAG__FIELD];
+                tag_mem__wr_data[L1__TAG_MEM__TAG__FIELD] = addr[L1__TAG__FIELD];
                 tag_mem__wr_data[L1__TAG_MEM__VALID__FIELD] = 1'b1;
                 tag_mem__wr_data[L1__TAG_MEM__DIRTY__FIELD] = 1'b0;
-                inc_offset = 1'b1;
+                rw_addr_n = rw_addr + 8;
 
-                if (&offset) begin
+                if (&rw_addr[L1__BLOCK_OFFSET__FIELD]) begin
                     state_n = STATE__READ_WRITE;
                 end
             end
@@ -284,7 +280,7 @@ always_comb begin
         STATE__WRITE_BACK__SEND_HEADER:
         begin
             req__valid = 1'b1;
-            req__data = {1'b1, S0__addr};
+            req__data = {1'b1, rw_addr};
 
             if (req__ready) begin
                 state_n = STATE__WRITE_BACK__SEND_DATA;
@@ -292,14 +288,15 @@ always_comb begin
         end
         STATE__WRITE_BACK__SEND_DATA:
         begin
-            data_mem__addr = {S0__addr[L1__INDEX__FIELD], offset};
+            data_mem__addr = {rw_addr[L1__INDEX__FIELD], rw_addr[L1__BLOCK_OFFSET__FIELD]};
             req__valid = 1'b1;
             req__data = data_mem__rd_data;
 
             if (req__ready) begin
-                inc_offset = 1'b1;
+                rw_addr_n = rw_addr + 8;
 
-                if (&offset) begin
+                if (&rw_addr[L1__BLOCK_OFFSET__FIELD]) begin
+                    rw_addr_n = {addr[L1__TAG__FIELD], addr[L1__INDEX__FIELD], 6'h0};
                     state_n = STATE__ALLOCATE__SEND_REQUEST;
                 end
             end
@@ -317,21 +314,7 @@ always_ff @(posedge clk) begin
 end
 
 always_ff @(posedge clk) begin
-    if (rst) begin
-        index <= 0;
-    end
-    else begin
-        index <= inc_index ? index + 1 : index;
-    end
-end
-
-always_ff @(posedge clk) begin
-    if (rst) begin
-        offset <= 0;
-    end
-    else begin
-        offset <= inc_offset ? offset + 1 : offset;
-    end
+    rw_addr <= rw_addr_n;
 end
 
 
