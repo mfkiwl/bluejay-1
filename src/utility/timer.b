@@ -3,30 +3,31 @@
 //==============================================
 module timer
 (
-    input logic clk,
-    input logic rst,
-    input logic [31:0] N,   // for a period of x clock cycles, set N = x - 1
+    input clk,
+    input rst,
+    input [WIDTH-1:0] N,   
     output logic ov
 );
+
+// To achieve a period of x clock cycles, set N = x - 1.
+
+
+parameter WIDTH = 8;
     
-    //==============================
-    // logic
-    //==============================
-    logic [31:0] n;
+logic [WIDHT-1:0] n;
     
-    //==============================
-    // always_ff
-    //==============================
-    always_ff @(posedge clk) begin
-        ov = (n == N) ? 1'b1 : 1'b0;
+
+assign ov = (n == N);
+
+    
+always_ff @(posedge clk) begin
+    if (rst) begin
+        n <= 0;
     end
-    
-    //==============================
-    // always_ff
-    //==============================
-    always_ff @(posedge clk) begin
-        if (rst) n <= 31'h00_00_00_00;
-        else n <= (n == N) ? 31'b00_00_00_00 : n + 1;
+    else begin
+        n <= (n == N) ? 0 : n + 1;
     end
+end
+
 
 endmodule
