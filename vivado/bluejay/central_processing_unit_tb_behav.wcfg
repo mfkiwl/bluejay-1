@@ -11,15 +11,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="1190700fs"></ZoomStartTime>
-      <ZoomEndTime time="1477233fs"></ZoomEndTime>
+      <ZoomStartTime time="890833fs"></ZoomStartTime>
+      <ZoomEndTime time="2221834fs"></ZoomEndTime>
       <Cursor1Time time="2000000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="226"></NameColumnWidth>
-      <ValueColumnWidth column_width="118"></ValueColumnWidth>
+      <ValueColumnWidth column_width="114"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="66" />
+   <WVObjectSize size="14" />
    <wvobject fp_name="/top_tb/dut/clk" type="logic">
       <obj_property name="ElementShortName">clk</obj_property>
       <obj_property name="ObjectShortName">clk</obj_property>
@@ -27,6 +27,10 @@
    <wvobject fp_name="/top_tb/dut/rst" type="logic">
       <obj_property name="ElementShortName">rst</obj_property>
       <obj_property name="ObjectShortName">rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_tb/dut/cpu/IF__valid" type="logic">
+      <obj_property name="ElementShortName">IF__valid</obj_property>
+      <obj_property name="ObjectShortName">IF__valid</obj_property>
    </wvobject>
    <wvobject fp_name="/top_tb/dut/cpu/ID__valid" type="logic">
       <obj_property name="ElementShortName">ID__valid</obj_property>
@@ -40,248 +44,36 @@
       <obj_property name="ElementShortName">MEM__valid</obj_property>
       <obj_property name="ObjectShortName">MEM__valid</obj_property>
    </wvobject>
-   <wvobject fp_name="/top_tb/dut/cpu/dl1/S0__valid" type="logic">
-      <obj_property name="ElementShortName">S0__valid</obj_property>
-      <obj_property name="ObjectShortName">S0__valid</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/dut/cpu/dl1/S0__ready" type="logic">
-      <obj_property name="ElementShortName">S0__ready</obj_property>
-      <obj_property name="ObjectShortName">S0__ready</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/dut/cpu/dl1/state" type="array">
-      <obj_property name="ElementShortName">state[2:0]</obj_property>
-      <obj_property name="ObjectShortName">state[2:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/dut/cpu/ID__mem_dtype" type="array">
-      <obj_property name="ElementShortName">ID__mem_dtype[2:0]</obj_property>
-      <obj_property name="ObjectShortName">ID__mem_dtype[2:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/dut/cpu/EX__mem_dtype" type="array">
-      <obj_property name="ElementShortName">EX__mem_dtype[2:0]</obj_property>
-      <obj_property name="ObjectShortName">EX__mem_dtype[2:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/dut/cpu/cpu_to_dl1__dtype" type="array">
-      <obj_property name="ElementShortName">cpu_to_dl1__dtype[2:0]</obj_property>
-      <obj_property name="ObjectShortName">cpu_to_dl1__dtype[2:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/dut/cpu/ID__we" type="logic">
-      <obj_property name="ElementShortName">ID__we</obj_property>
-      <obj_property name="ObjectShortName">ID__we</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/dut/cpu/EX__we" type="logic">
-      <obj_property name="ElementShortName">EX__we</obj_property>
-      <obj_property name="ObjectShortName">EX__we</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/dut/cpu/MEM__we" type="logic">
-      <obj_property name="ElementShortName">MEM__we</obj_property>
-      <obj_property name="ObjectShortName">MEM__we</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/dut/cpu/WB__we" type="logic">
-      <obj_property name="ElementShortName">WB__we</obj_property>
-      <obj_property name="ObjectShortName">WB__we</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/dut/cpu/WB__sel__wr_data" type="array">
-      <obj_property name="ElementShortName">WB__sel__wr_data[1:0]</obj_property>
-      <obj_property name="ObjectShortName">WB__sel__wr_data[1:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/dut/cpu/dl1/S0__dtype" type="array">
-      <obj_property name="ElementShortName">S0__dtype[2:0]</obj_property>
-      <obj_property name="ObjectShortName">S0__dtype[2:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/dut/cpu/dl1/S0__addr" type="array">
-      <obj_property name="ElementShortName">S0__addr[39:0]</obj_property>
-      <obj_property name="ObjectShortName">S0__addr[39:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/dut/cpu/dl1_to_cpu__data" type="array">
-      <obj_property name="ElementShortName">dl1_to_cpu__data[63:0]</obj_property>
-      <obj_property name="ObjectShortName">dl1_to_cpu__data[63:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/dut/cpu/dl1/S0__rd_data" type="array">
-      <obj_property name="ElementShortName">S0__rd_data[63:0]</obj_property>
-      <obj_property name="ObjectShortName">S0__rd_data[63:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/dut/cpu/dl1/data_mem__wr_data" type="array">
-      <obj_property name="ElementShortName">data_mem__wr_data[63:0]</obj_property>
-      <obj_property name="ObjectShortName">data_mem__wr_data[63:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/dut/cpu/dl1/data_mem__rw" type="logic">
-      <obj_property name="ElementShortName">data_mem__rw</obj_property>
-      <obj_property name="ObjectShortName">data_mem__rw</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/dut/cpu/dl1/data_mem/rw" type="logic">
-      <obj_property name="ElementShortName">rw</obj_property>
-      <obj_property name="ObjectShortName">rw</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/dut/cpu/dl1/data_mem/addr" type="array">
-      <obj_property name="ElementShortName">addr[8:0]</obj_property>
-      <obj_property name="ObjectShortName">addr[8:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/dut/cpu/dl1/data_mem/memory[0]" type="array">
-      <obj_property name="ElementShortName">[0][63:0]</obj_property>
-      <obj_property name="ObjectShortName">[0][63:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/dut/cpu/dl1/data_mem/rd_data" type="array">
-      <obj_property name="ElementShortName">rd_data[63:0]</obj_property>
-      <obj_property name="ObjectShortName">rd_data[63:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/dut/l2__cache/dl1_to_mem__valid" type="logic">
-      <obj_property name="ElementShortName">dl1_to_mem__valid</obj_property>
-      <obj_property name="ObjectShortName">dl1_to_mem__valid</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/dut/l2__cache/state" type="array">
-      <obj_property name="ElementShortName">state[2:0]</obj_property>
-      <obj_property name="ObjectShortName">state[2:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/dut/mem__addr" type="array">
-      <obj_property name="ElementShortName">mem__addr[39:0]</obj_property>
-      <obj_property name="ObjectShortName">mem__addr[39:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/dut/l2__cache/mem__addr_n" type="array">
-      <obj_property name="ElementShortName">mem__addr_n[39:0]</obj_property>
-      <obj_property name="ObjectShortName">mem__addr_n[39:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/dut/l2__cache/irtn__ready" type="logic">
-      <obj_property name="ElementShortName">irtn__ready</obj_property>
-      <obj_property name="ObjectShortName">irtn__ready</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/dut/cpu/dl1/S0__hit" type="logic">
-      <obj_property name="ElementShortName">S0__hit</obj_property>
-      <obj_property name="ObjectShortName">S0__hit</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/dut/cpu/WB__valid" type="logic">
-      <obj_property name="ElementShortName">WB__valid</obj_property>
-      <obj_property name="ObjectShortName">WB__valid</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/dut/cpu/cpu_to_il1__valid" type="logic">
-      <obj_property name="ElementShortName">cpu_to_il1__valid</obj_property>
-      <obj_property name="ObjectShortName">cpu_to_il1__valid</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/dut/cpu/il1/cpu_to_l1__ready" type="logic">
-      <obj_property name="ElementShortName">cpu_to_l1__ready</obj_property>
-      <obj_property name="ObjectShortName">cpu_to_l1__ready</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/dut/cpu/il1/S0__valid" type="logic">
-      <obj_property name="ElementShortName">S0__valid</obj_property>
-      <obj_property name="ObjectShortName">S0__valid</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/dut/cpu/il1/S0__ready" type="logic">
-      <obj_property name="ElementShortName">S0__ready</obj_property>
-      <obj_property name="ObjectShortName">S0__ready</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/dut/cpu/il1/S0__hit" type="logic">
-      <obj_property name="ElementShortName">S0__hit</obj_property>
-      <obj_property name="ObjectShortName">S0__hit</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/dut/cpu/il1/S0__rd_data" type="array">
-      <obj_property name="ElementShortName">S0__rd_data[63:0]</obj_property>
-      <obj_property name="ObjectShortName">S0__rd_data[63:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/dut/cpu/il1/S0__dtype" type="array">
-      <obj_property name="ElementShortName">S0__dtype[2:0]</obj_property>
-      <obj_property name="ObjectShortName">S0__dtype[2:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/dut/cpu/il1/data_mem__rd_data" type="array">
-      <obj_property name="ElementShortName">data_mem__rd_data[63:0]</obj_property>
-      <obj_property name="ObjectShortName">data_mem__rd_data[63:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/dut/cpu/il1/cpu_to_l1__dtype" type="array">
-      <obj_property name="ElementShortName">cpu_to_l1__dtype[2:0]</obj_property>
-      <obj_property name="ObjectShortName">cpu_to_l1__dtype[2:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/dut/cpu/cpu_to_il1__dtype" type="array">
-      <obj_property name="ElementShortName">cpu_to_il1__dtype[2:0]</obj_property>
-      <obj_property name="ObjectShortName">cpu_to_il1__dtype[2:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/dut/cpu/il1/S0__dtype" type="array">
-      <obj_property name="ElementShortName">S0__dtype[2:0]</obj_property>
-      <obj_property name="ObjectShortName">S0__dtype[2:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/dut/cpu/il1/l1_to_cpu__ready" type="logic">
-      <obj_property name="ElementShortName">l1_to_cpu__ready</obj_property>
-      <obj_property name="ObjectShortName">l1_to_cpu__ready</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/dut/cpu/il1/tag_mem__rd_data" type="array">
-      <obj_property name="ElementShortName">tag_mem__rd_data[29:0]</obj_property>
-      <obj_property name="ObjectShortName">tag_mem__rd_data[29:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/dut/cpu/il1/tag_mem__wr_data" type="array">
-      <obj_property name="ElementShortName">tag_mem__wr_data[29:0]</obj_property>
-      <obj_property name="ObjectShortName">tag_mem__wr_data[29:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/dut/cpu/il1/tag_mem__rw" type="logic">
-      <obj_property name="ElementShortName">tag_mem__rw</obj_property>
-      <obj_property name="ObjectShortName">tag_mem__rw</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/dut/cpu/il1/state" type="array">
-      <obj_property name="ElementShortName">state[2:0]</obj_property>
-      <obj_property name="ObjectShortName">state[2:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/dut/cpu/il1/tag_mem__addr" type="array">
-      <obj_property name="ElementShortName">tag_mem__addr[5:0]</obj_property>
-      <obj_property name="ObjectShortName">tag_mem__addr[5:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/dut/cpu/il1/S0__addr" type="array">
-      <obj_property name="ElementShortName">S0__addr[39:0]</obj_property>
-      <obj_property name="ObjectShortName">S0__addr[39:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/dut/cpu/il1/cpu_to_l1__addr" type="array">
-      <obj_property name="ElementShortName">cpu_to_l1__addr[39:0]</obj_property>
-      <obj_property name="ObjectShortName">cpu_to_l1__addr[39:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/dut/cpu/il1/cpu_to_l1__valid" type="logic">
-      <obj_property name="ElementShortName">cpu_to_l1__valid</obj_property>
-      <obj_property name="ObjectShortName">cpu_to_l1__valid</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/dut/cpu/il1/cpu_to_l1__ready" type="logic">
-      <obj_property name="ElementShortName">cpu_to_l1__ready</obj_property>
-      <obj_property name="ObjectShortName">cpu_to_l1__ready</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/dut/cpu/il1/l1_to_cpu__ready" type="logic">
-      <obj_property name="ElementShortName">l1_to_cpu__ready</obj_property>
-      <obj_property name="ObjectShortName">l1_to_cpu__ready</obj_property>
-   </wvobject>
    <wvobject fp_name="/top_tb/dut/cpu/IF__pc" type="array">
       <obj_property name="ElementShortName">IF__pc[63:0]</obj_property>
       <obj_property name="ObjectShortName">IF__pc[63:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/dut/cpu/register_file__0/x_10" type="array">
-      <obj_property name="ElementShortName">x_10[63:0]</obj_property>
-      <obj_property name="ObjectShortName">x_10[63:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/dut/cpu/il1/data_mem__rw" type="logic">
-      <obj_property name="ElementShortName">data_mem__rw</obj_property>
-      <obj_property name="ObjectShortName">data_mem__rw</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/dut/cpu/il1/data_mem__wr_data" type="array">
-      <obj_property name="ElementShortName">data_mem__wr_data[63:0]</obj_property>
-      <obj_property name="ObjectShortName">data_mem__wr_data[63:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/dut/cpu/il1/data_mem__rd_data" type="array">
-      <obj_property name="ElementShortName">data_mem__rd_data[63:0]</obj_property>
-      <obj_property name="ObjectShortName">data_mem__rd_data[63:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/dut/cpu/mem_to_il1__data" type="array">
-      <obj_property name="ElementShortName">mem_to_il1__data[63:0]</obj_property>
-      <obj_property name="ObjectShortName">mem_to_il1__data[63:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/dut/cpu/il1/mem_to_l1__data" type="array">
-      <obj_property name="ElementShortName">mem_to_l1__data[63:0]</obj_property>
-      <obj_property name="ObjectShortName">mem_to_l1__data[63:0]</obj_property>
    </wvobject>
    <wvobject fp_name="/top_tb/dut/cpu/IF__ir" type="array">
       <obj_property name="ElementShortName">IF__ir[31:0]</obj_property>
       <obj_property name="ObjectShortName">IF__ir[31:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/top_tb/dut/l2__cache/il1_to_mem__valid" type="logic">
-      <obj_property name="ElementShortName">il1_to_mem__valid</obj_property>
-      <obj_property name="ObjectShortName">il1_to_mem__valid</obj_property>
+   <wvobject fp_name="/top_tb/dut/cpu/il1/data_mem__rd_data" type="array">
+      <obj_property name="ElementShortName">data_mem__rd_data[63:0]</obj_property>
+      <obj_property name="ObjectShortName">data_mem__rd_data[63:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/top_tb/dut/l2__cache/il1_to_mem__data" type="array">
-      <obj_property name="ElementShortName">il1_to_mem__data[63:0]</obj_property>
-      <obj_property name="ObjectShortName">il1_to_mem__data[63:0]</obj_property>
+   <wvobject fp_name="/top_tb/dut/cpu/MEM__ready" type="logic">
+      <obj_property name="ElementShortName">MEM__ready</obj_property>
+      <obj_property name="ObjectShortName">MEM__ready</obj_property>
    </wvobject>
-   <wvobject fp_name="/top_tb/dut/l2__cache/il1_to_mem__credit" type="logic">
-      <obj_property name="ElementShortName">il1_to_mem__credit</obj_property>
-      <obj_property name="ObjectShortName">il1_to_mem__credit</obj_property>
+   <wvobject fp_name="/top_tb/dut/cpu/MEM__mem_valid" type="logic">
+      <obj_property name="ElementShortName">MEM__mem_valid</obj_property>
+      <obj_property name="ObjectShortName">MEM__mem_valid</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_tb/dut/cpu/ID__mem_valid" type="logic">
+      <obj_property name="ElementShortName">ID__mem_valid</obj_property>
+      <obj_property name="ObjectShortName">ID__mem_valid</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_tb/dut/cpu/EX__mem_valid" type="logic">
+      <obj_property name="ElementShortName">EX__mem_valid</obj_property>
+      <obj_property name="ObjectShortName">EX__mem_valid</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_tb/dut/cpu/register_file__0/x_10" type="array">
+      <obj_property name="ElementShortName">x_10[63:0]</obj_property>
+      <obj_property name="ObjectShortName">x_10[63:0]</obj_property>
    </wvobject>
 </wave_config>

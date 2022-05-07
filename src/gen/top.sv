@@ -3,85 +3,49 @@
 //==============================================
 module top
 (
-    input clk,
-    input rst
+    input clk_100mhz, //clock
+    // input [15:0] sw,         //switches
+    input btnc,       //center button
+    // input btnu,      //up button
+    // input btnl,       //left button
+    // input btnr,       //right button
+    // input btnd,       //down button
+    // output logic [15:0] led,        //little LEDs above switches
+    output logic led16_b    //blue channel left RGB LED
+    // output logic led16_g,    //green channel left RGB LED
+    // output logic led16_r,    //red channel left RGB LED
+    // output logic led17_b,    //blue channel right RGB LED
+    // output logic led17_g,    //green channel right RGB LED
+    // output logic led17_r,    //red channel right RGB LED
+    // output logic [7:0] an,
+    // output logic ca, cb, cc, cd, ce, cf, cg
 );
 
-logic [39:0] mem__addr;
-logic [63:0] mem__rd_data;
-logic [63:0] mem__wr_data;
-logic il1_to_mem__valid;
 
-logic [63:0] il1_to_mem__data;
-logic il1_to_mem__credit;
-logic mem_to_il1__valid;
-logic [63:0] mem_to_il1__data;
-logic mem_to_il1__credit;
+logic clk;
+logic rst;
+logic x;
+// logic btnd_clean;
+// logic [7:0] port_0;
+// logic [7:0] port_1;
+// logic [7:0] port_2;
+// logic [7:0] port_3;
 
-logic [63:0] dl1_to_mem__data;
-logic dl1_to_mem__credit;
-logic mem_to_dl1__valid;
-logic [63:0] mem_to_dl1__data;
-logic mem_to_dl1__credit;
-
+assign clk = clk_100mhz;
+assign rst = btnc;
+assign led16_b = x;
+// assign rst = btnd_clean;
+// assign led[7:0] = port_0;
+// assign led[15:8] = port_1;
 
 //==============================
-// cpu
+// jay__0
 //==============================
-central_processing_unit cpu
+jay jay__0
 (
     .clk(clk),
     .rst(rst),
-    .il1_to_mem__valid(il1_to_mem__valid),
-    .il1_to_mem__data(il1_to_mem__data),
-    .il1_to_mem__credit(il1_to_mem__credit),
-    .mem_to_il1__valid(mem_to_il1__valid),
-    .mem_to_il1__data(mem_to_il1__data),
-    .mem_to_il1__credit(mem_to_il1__credit),
-    .dl1_to_mem__valid(dl1_to_mem__valid),
-    .dl1_to_mem__data(dl1_to_mem__data),
-    .dl1_to_mem__credit(dl1_to_mem__credit),
-    .mem_to_dl1__valid(mem_to_dl1__valid),
-    .mem_to_dl1__data(mem_to_dl1__data),
-    .mem_to_dl1__credit(mem_to_dl1__credit)
-);
-
-//==============================
-// l2__cache
-//==============================
-l2 l2__cache
-(
-    .clk(clk),
-    .rst(rst),
-    .il1_to_mem__valid(il1_to_mem__valid),
-    .il1_to_mem__data(il1_to_mem__data),
-    .il1_to_mem__credit(il1_to_mem__credit), 
-    .mem_to_il1__valid(mem_to_il1__valid),
-    .mem_to_il1__data(mem_to_il1__data),
-    .mem_to_il1__credit(mem_to_il1__credit),
-    .dl1_to_mem__valid(dl1_to_mem__valid),
-    .dl1_to_mem__data(dl1_to_mem__data),
-    .dl1_to_mem__credit(dl1_to_mem__credit), 
-    .mem_to_dl1__valid(mem_to_dl1__valid),
-    .mem_to_dl1__data(mem_to_dl1__data),
-    .mem_to_dl1__credit(mem_to_dl1__credit),
-    .mem__addr(mem__addr),
-    .mem__rw(mem__rw),
-    .mem__wr_data(mem__wr_data),
-    .mem__rd_data(mem__rd_data)
-);
-
-//==============================================
-// mem
-//==============================================
-memory #(.WIDTH(64), .DEPTH(4096), .DEPTH__LOG2(12)) mem
-(
-    .clk(clk),
-    .rst(rst),
-    .addr(mem__addr[11:0]),
-    .rw(1'b0),
-    .wr_data(mem__wr_data),
-    .rd_data(mem__rd_data)
+    .x(x)
 );
 
 

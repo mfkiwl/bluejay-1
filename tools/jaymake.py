@@ -174,6 +174,7 @@ if __name__ == '__main__':
     
     files = [
         {'path': 'src/', 'filename': 'top.b'},
+        {'path': 'src/', 'filename': 'jay.b'},
         {'path': 'src/central_processing_unit/', 'filename': 'register_file.b'},
         {'path': 'src/central_processing_unit/', 'filename': 'arithmetic_logic_unit.b'},
         {'path': 'src/central_processing_unit/', 'filename': 'decoder.b'},

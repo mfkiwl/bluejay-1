@@ -8,10 +8,14 @@
 //==============================================
 module top_tb;
 
+
+
+
+
 //==============================
 // dut
 //==============================
-top dut
+jay dut
 (
     .clk(clk),
     .rst(rst)
@@ -32,7 +36,7 @@ initial begin
     clk = 1'b1;
     rst = 1'b1;
     // initialize instruction memory
-    $readmemh("C:/Users/seanj/Documents/bluejay/sim/asm/basic/gen_64/ld", top.mem.memory);
+    $readmemh("C:/Users/seanj/Documents/bluejay/sim/asm/basic/gen_64/ld", jay.mem.memory);
 
     #11;
     // de-assert rst
@@ -49,3 +53,30 @@ initial begin
 end
 
 endmodule
+
+
+//==============================================
+// intf
+//==============================================
+interface intf
+(
+    input clk
+);
+
+logic rst;
+
+endinterface
+
+//==============================================
+// driver
+//==============================================
+class driver;
+
+// Virtual interface
+virtual intf vif;
+
+
+
+
+
+endclass

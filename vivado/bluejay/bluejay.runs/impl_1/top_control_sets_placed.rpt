@@ -1,0 +1,149 @@
+Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2019.2 (win64) Build 2708876 Wed Nov  6 21:40:23 MST 2019
+| Date         : Sat May  7 00:52:39 2022
+| Host         : DESKTOP-18I9AUK running 64-bit major release  (build 9200)
+| Command      : report_control_sets -verbose -file top_control_sets_placed.rpt
+| Design       : top
+| Device       : xc7a100t
+------------------------------------------------------------------------------------
+
+Control Set Information
+
+Table of Contents
+-----------------
+1. Summary
+2. Histogram
+3. Flip-Flop Distribution
+4. Detailed Control Set Information
+
+1. Summary
+----------
+
++----------------------------------------------------------+-------+
+|                          Status                          | Count |
++----------------------------------------------------------+-------+
+| Total control sets                                       |    71 |
+|    Minimum number of control sets                        |    71 |
+|    Addition due to synthesis replication                 |     0 |
+|    Addition due to physical synthesis replication        |     0 |
+| Unused register locations in slices containing registers |    50 |
++----------------------------------------------------------+-------+
+* Control sets can be merged at opt_design using control_set_merge or merge_equivalent_drivers
+** Run report_qor_suggestions for automated merging and remapping suggestions
+
+
+2. Histogram
+------------
+
++--------------------+-------+
+|       Fanout       | Count |
++--------------------+-------+
+| Total control sets |    71 |
+| >= 0 to < 4        |     0 |
+| >= 4 to < 6        |     1 |
+| >= 6 to < 8        |     5 |
+| >= 8 to < 10       |     0 |
+| >= 10 to < 12      |     1 |
+| >= 12 to < 14      |     0 |
+| >= 14 to < 16      |     0 |
+| >= 16              |    64 |
++--------------------+-------+
+* Control sets can be remapped at either synth_design or opt_design
+
+
+3. Flip-Flop Distribution
+-------------------------
+
++--------------+-----------------------+------------------------+-----------------+--------------+
+| Clock Enable | Synchronous Set/Reset | Asynchronous Set/Reset | Total Registers | Total Slices |
++--------------+-----------------------+------------------------+-----------------+--------------+
+| No           | No                    | No                     |             553 |          284 |
+| No           | No                    | Yes                    |               0 |            0 |
+| No           | Yes                   | No                     |              37 |           17 |
+| Yes          | No                    | No                     |            3204 |         1306 |
+| Yes          | No                    | Yes                    |               0 |            0 |
+| Yes          | Yes                   | No                     |              68 |           15 |
++--------------+-----------------------+------------------------+-----------------+--------------+
+
+
+4. Detailed Control Set Information
+-----------------------------------
+
++------------------------------------------+-------------------------------------------------------------+--------------------------------------+------------------+----------------+
+|               Clock Signal               |                        Enable Signal                        |           Set/Reset Signal           | Slice Load Count | Bel Load Count |
++------------------------------------------+-------------------------------------------------------------+--------------------------------------+------------------+----------------+
+|  clk_100mhz_IBUF_BUFG                    | jay__0/l2_cache/il1_to_mem__rx/mem__addr_n                  | jay__0/l2_cache/mem__addr[5]_i_1_n_5 |                1 |              4 |
+|  jay__0/cpu/decoder__0/op_reg[5]_i_2_n_5 |                                                             |                                      |                5 |              6 |
+|  jay__0/cpu/dl1/req__valid               |                                                             |                                      |                2 |              6 |
+|  clk_100mhz_IBUF_BUFG                    | jay__0/cpu/dl1/il1_to_mem__tx/tx__valid_reg_0[0]            |                                      |                1 |              6 |
+|  clk_100mhz_IBUF_BUFG                    | jay__0/l2_cache/il1_to_mem__rx/mem__addr_n                  |                                      |                2 |              6 |
+|  clk_100mhz_IBUF_BUFG                    | jay__0/cpu/dl1/il1_to_mem__tx/credits1                      |                                      |                2 |              6 |
+|  clk_100mhz_IBUF_BUFG                    | jay__0/cpu/dl1/tag_mem/E[0]                                 |                                      |                4 |             10 |
+|  cpu/dl1/tag_mem__rw                     |                                                             |                                      |               10 |             30 |
+|  clk_100mhz_IBUF_BUFG                    | cpu/dl1/tag_mem__rw                                         |                                      |                8 |             30 |
+|  clk_100mhz_IBUF_BUFG                    | cpu/il1/tag_mem__rw                                         |                                      |                8 |             30 |
+|  cpu/il1/tag_mem__rw                     |                                                             |                                      |               13 |             30 |
+|  n_4_4052_BUFG                           |                                                             |                                      |               18 |             32 |
+|  clk_100mhz_IBUF_BUFG                    |                                                             | btnc_IBUF                            |               17 |             37 |
+|  clk_100mhz_IBUF_BUFG                    | jay__0/cpu/il1/tag_mem/E[0]                                 |                                      |               21 |             38 |
+|  n_1_2506_BUFG                           |                                                             |                                      |               50 |             64 |
+|  n_3_3839_BUFG                           |                                                             |                                      |               36 |             64 |
+|  cpu/dl1/data_mem__rw                    |                                                             |                                      |               25 |             64 |
+|  cpu/il1/req__valid                      |                                                             |                                      |               36 |             64 |
+|  clk_100mhz_IBUF_BUFG                    | jay__0/cpu/register_file__0/x_28[63]_i_1_n_5                |                                      |               30 |             64 |
+|  clk_100mhz_IBUF_BUFG                    | jay__0/cpu/il1/il1_to_mem__tx/credits1                      |                                      |               22 |             64 |
+|  clk_100mhz_IBUF_BUFG                    | jay__0/cpu/il1/il1_to_mem__tx/E[0]                          |                                      |               19 |             64 |
+|  clk_100mhz_IBUF_BUFG                    | jay__0/cpu/dl1/tag_mem/IF__valid_reg[0]                     | btnc_IBUF                            |               14 |             64 |
+|  clk_100mhz_IBUF_BUFG                    | jay__0/cpu/dl1/mem_to_il1__rx/FSM_sequential_state_reg[0]_2 |                                      |               16 |             64 |
+|  clk_100mhz_IBUF_BUFG                    | jay__0/cpu/dl1/mem_to_il1__rx/FSM_sequential_state_reg[0]_0 |                                      |               16 |             64 |
+|  clk_100mhz_IBUF_BUFG                    | jay__0/cpu/register_file__0/x_5[63]_i_1_n_5                 |                                      |               22 |             64 |
+|  clk_100mhz_IBUF_BUFG                    | jay__0/cpu/register_file__0/x_31[63]_i_1_n_5                |                                      |               39 |             64 |
+|  clk_100mhz_IBUF_BUFG                    | jay__0/cpu/register_file__0/x_15[63]_i_1_n_5                |                                      |               28 |             64 |
+|  clk_100mhz_IBUF_BUFG                    | jay__0/cpu/register_file__0/x_1[63]_i_1_n_5                 |                                      |               26 |             64 |
+|  clk_100mhz_IBUF_BUFG                    | jay__0/cpu/register_file__0/x_25[63]_i_1_n_5                |                                      |               24 |             64 |
+|  clk_100mhz_IBUF_BUFG                    | jay__0/cpu/register_file__0/x_20[63]_i_1_n_5                |                                      |               32 |             64 |
+|  clk_100mhz_IBUF_BUFG                    | jay__0/cpu/register_file__0/x_12[63]_i_1_n_5                |                                      |               28 |             64 |
+|  clk_100mhz_IBUF_BUFG                    | jay__0/cpu/register_file__0/x_19[63]_i_1_n_5                |                                      |               24 |             64 |
+|  clk_100mhz_IBUF_BUFG                    | jay__0/cpu/register_file__0/x_14[63]_i_1_n_5                |                                      |               25 |             64 |
+|  clk_100mhz_IBUF_BUFG                    | jay__0/cpu/register_file__0/x_26[63]_i_1_n_5                |                                      |               25 |             64 |
+|  clk_100mhz_IBUF_BUFG                    | jay__0/cpu/register_file__0/x_2[63]_i_1_n_5                 |                                      |               25 |             64 |
+|  clk_100mhz_IBUF_BUFG                    | jay__0/cpu/register_file__0/x_27[63]_i_1_n_5                |                                      |               28 |             64 |
+|  clk_100mhz_IBUF_BUFG                    | jay__0/cpu/register_file__0/x_16[63]_i_1_n_5                |                                      |               24 |             64 |
+|  clk_100mhz_IBUF_BUFG                    | jay__0/cpu/register_file__0/x_24[63]_i_1_n_5                |                                      |               22 |             64 |
+|  clk_100mhz_IBUF_BUFG                    | jay__0/cpu/register_file__0/x_7[63]_i_1_n_5                 |                                      |               33 |             64 |
+|  clk_100mhz_IBUF_BUFG                    | jay__0/cpu/register_file__0/x_29[63]_i_1_n_5                |                                      |               28 |             64 |
+|  clk_100mhz_IBUF_BUFG                    | jay__0/cpu/register_file__0/x_3[63]_i_1_n_5                 |                                      |               26 |             64 |
+|  clk_100mhz_IBUF_BUFG                    | jay__0/cpu/register_file__0/x_10[63]_i_1_n_5                |                                      |               28 |             64 |
+|  clk_100mhz_IBUF_BUFG                    | jay__0/cpu/register_file__0/x_23[63]_i_1_n_5                |                                      |               35 |             64 |
+|  clk_100mhz_IBUF_BUFG                    | jay__0/cpu/register_file__0/x_30[63]_i_1_n_5                |                                      |               35 |             64 |
+|  clk_100mhz_IBUF_BUFG                    | jay__0/cpu/register_file__0/x_13[63]_i_1_n_5                |                                      |               32 |             64 |
+|  clk_100mhz_IBUF_BUFG                    | jay__0/cpu/register_file__0/x_4[63]_i_1_n_5                 |                                      |               23 |             64 |
+|  clk_100mhz_IBUF_BUFG                    | jay__0/cpu/register_file__0/x_6[63]_i_1_n_5                 |                                      |               34 |             64 |
+|  clk_100mhz_IBUF_BUFG                    | jay__0/cpu/register_file__0/x_18[63]_i_1_n_5                |                                      |               28 |             64 |
+|  clk_100mhz_IBUF_BUFG                    | jay__0/cpu/register_file__0/x_8[63]_i_1_n_5                 |                                      |               37 |             64 |
+|  clk_100mhz_IBUF_BUFG                    | jay__0/cpu/register_file__0/x_9[63]_i_1_n_5                 |                                      |               40 |             64 |
+|  clk_100mhz_IBUF_BUFG                    | jay__0/cpu/register_file__0/x_11[63]_i_1_n_5                |                                      |               25 |             64 |
+|  clk_100mhz_IBUF_BUFG                    | jay__0/cpu/register_file__0/x_21[63]_i_1_n_5                |                                      |               27 |             64 |
+|  clk_100mhz_IBUF_BUFG                    | jay__0/cpu/register_file__0/x_22[63]_i_1_n_5                |                                      |               34 |             64 |
+|  clk_100mhz_IBUF_BUFG                    | jay__0/cpu/register_file__0/x_17[63]_i_1_n_5                |                                      |               25 |             64 |
+|  clk_100mhz_IBUF_BUFG                    | jay__0/l2_cache/mem_to_il1__tx/credits1                     |                                      |               20 |             64 |
+|  clk_100mhz_IBUF_BUFG                    | jay__0/l2_cache/mem_to_dl1__tx/credits1                     |                                      |               21 |             64 |
+|  clk_100mhz_IBUF_BUFG                    | jay__0/l2_cache/mem_to_dl1__tx/tx__valid_reg_0[0]           |                                      |               14 |             64 |
+|  clk_100mhz_IBUF_BUFG                    | jay__0/l2_cache/mem_to_il1__tx/tx__valid_reg_0[0]           |                                      |               18 |             64 |
+|  cpu/il1/data_mem__rw                    |                                                             |                                      |               32 |             64 |
+|  n_2_3663_BUFG                           |                                                             |                                      |               30 |             64 |
+|  n_0_4011_BUFG                           |                                                             |                                      |               27 |             65 |
+|  clk_100mhz_IBUF_BUFG                    | jay__0/cpu/il1/mem_to_il1__rx/FSM_sequential_state_reg[2]_2 |                                      |               20 |             80 |
+|  clk_100mhz_IBUF_BUFG                    | jay__0/cpu/il1/mem_to_il1__rx/FSM_sequential_state_reg[2]_0 |                                      |               20 |             80 |
+|  clk_100mhz_IBUF_BUFG                    | jay__0/cpu/il1/tag_mem/ID__pc0                              |                                      |               42 |            104 |
+|  clk_100mhz_IBUF_BUFG                    | jay__0/cpu/il1/mem_to_il1__rx/FSM_sequential_state_reg[2]_1 |                                      |               44 |            176 |
+|  clk_100mhz_IBUF_BUFG                    | jay__0/cpu/il1/mem_to_il1__rx/FSM_sequential_state_reg[2]   |                                      |               44 |            176 |
+|  clk_100mhz_IBUF_BUFG                    | jay__0/cpu/dl1/mem_to_il1__rx/FSM_sequential_state_reg[0]_1 |                                      |               48 |            192 |
+|  clk_100mhz_IBUF_BUFG                    | jay__0/cpu/dl1/mem_to_il1__rx/FSM_sequential_state_reg[0]   |                                      |               48 |            192 |
+|  clk_100mhz_IBUF_BUFG                    | jay__0/cpu/dl1/tag_mem/FSM_sequential_state_reg[1]_0[0]     |                                      |               65 |            206 |
+|  clk_100mhz_IBUF_BUFG                    | jay__0/cpu/dl1/tag_mem/EX__valid_reg[0]                     |                                      |               73 |            211 |
+|  clk_100mhz_IBUF_BUFG                    | jay__0/cpu/dl1/tag_mem/ID__valid_reg[0]                     |                                      |               90 |            249 |
++------------------------------------------+-------------------------------------------------------------+--------------------------------------+------------------+----------------+
+
+
