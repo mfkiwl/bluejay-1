@@ -19,7 +19,7 @@ parameter MAX_CREDITS__LOG2 = 0;
 
 
 // Buffer. The buffer is empty when get == put.
-logic [WIDTH-1:0] buffer [MAX_CREDITS__LOG2:0];
+logic [WIDTH-1:0] buffer [MAX_CREDITS:0];
 logic [MAX_CREDITS__LOG2:0] get;
 logic [MAX_CREDITS__LOG2:0] put;
 
@@ -47,7 +47,9 @@ always_ff @(posedge clk) begin
         put <= 0;
     end
     else begin
-        put <= rx__valid ? put + 1 : put;
+        if (rx__valid) begin
+            put <= (put == MAX_CREDITS) ? 0 : put + 1;
+        end
     end
 end
 
@@ -56,7 +58,9 @@ always_ff @(posedge clk) begin
         get <= 0;
     end
     else begin
-        get <= (valid & ready) ? get + 1 :get;
+        if (valid & ready) begin
+            get <= (get == MAX_CREDITS) ? 0: get + 1;
+        end
     end
 end
 

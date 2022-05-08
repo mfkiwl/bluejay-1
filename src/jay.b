@@ -5,7 +5,7 @@ module jay
 (
     input clk,
     input rst,
-    output logic x
+    output logic port__0__rd_data
 );
 
 logic [39:0] mem__addr;
@@ -89,13 +89,35 @@ l2 l2_cache
 
 main_memory mem
 (
-    .addra(mem__addr[11:0]),
+    .addra(mem__addr[14:3]),
     .clka(clk),
     .dina(mem__wr_data),
     .douta(mem__rd_data),
     .ena(1'b1),
     .wea(mem__rw)
 );
+
+//==============================
+// port__0
+//==============================
+memory #(.WIDTH(64), .DEPTH(1), .DEPTH__LOG2(0)) port__0
+(
+    .clk(clk),
+    .rst(rst),
+    .addr(port__0__addr),
+    .rw(port__0__rw),
+    .wr_data(port__0__wr_data),
+    .rd_data(port__0__rd_data)
+);
+
+logic port__0__addr;
+logic port__0__rw;
+logic [63:0] port__0__wr_data;
+logic [63:0] port__0__rd_data;
+
+assign port__0__addr = 0;
+assign port__0__rw = (mem__addr == 64'hff);
+assign port__0__wr_data = mem__wr_data;
 
 
 

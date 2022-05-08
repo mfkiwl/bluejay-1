@@ -3,7 +3,7 @@
 //==============================================
 module top
 (
-    input clk_100mhz, //clock
+    input clk_100mhz,
     // input [15:0] sw,         //switches
     input btnc,       //center button
     // input btnu,      //up button
@@ -33,7 +33,7 @@ logic x;
 
 assign clk = clk_100mhz;
 assign rst = btnc;
-assign led16_b = x;
+assign led16_b = port__0__rd_data[0];
 // assign rst = btnd_clean;
 // assign led[7:0] = port_0;
 // assign led[15:8] = port_1;
@@ -45,9 +45,10 @@ jay jay__0
 (
     .clk(clk),
     .rst(rst),
-    .x(x)
+    .port__0__rd_data(port__0__rd_data)
 );
 
+logic [63:0] port__0__rd_data;
 
 
 endmodule

@@ -32,16 +32,20 @@ logic [39:0] mem__addr_n;
 //==============================================
 // Control FSM
 //==============================================
-parameter STATE__IDLE = 3'h0;
-parameter STATE__IL1__ACCEPT = 3'h1;
-parameter STATE__IL1__READ = 3'h2;
-parameter STATE__IL1__WRITE = 3'h3;
-parameter STATE__DL1__ACCEPT = 3'h4;
-parameter STATE__DL1__READ = 3'h5;
-parameter STATE__DL1__WRITE = 3'h5;
+parameter STATE__IDLE = 4'h0;
+parameter STATE__IL1__ACCEPT = 4'h1;
+parameter STATE__IL1__WRITE = 4'h2;
+parameter STATE__IL1__READ = 4'h3;
+parameter STATE__IL1__READ_DELAY_0 = 4'h4;
+parameter STATE__IL1__READ_DELAY_1 = 4'h5;
+parameter STATE__DL1__ACCEPT = 4'h6;
+parameter STATE__DL1__WRITE = 4'h7;
+parameter STATE__DL1__READ = 4'h8;
+parameter STATE__DL1__READ_DELAY_0 = 4'h9;
+parameter STATE__DL1__READ_DELAY_1 = 4'ha;
 
-logic [2:0] state;
-logic [2:0] state_n;
+logic [3:0] state;
+logic [3:0] state_n;
 
 
 always_comb begin
@@ -73,8 +77,16 @@ always_comb begin
                 state_n = STATE__IL1__WRITE;
             end
             else begin
-                state_n = STATE__IL1__READ;
+                state_n = STATE__IL1__READ_DELAY_0;
             end
+        end
+        STATE__IL1__READ_DELAY_0:
+        begin
+            state_n = STATE__IL1__READ_DELAY_1;
+        end
+        STATE__IL1__READ_DELAY_1:
+        begin
+            state_n = STATE__IL1__READ;
         end
         STATE__IL1__READ:
         begin
@@ -85,6 +97,9 @@ always_comb begin
 
                 if (&mem__addr[5:3]) begin
                     state_n = STATE__IDLE;
+                end
+                else begin
+                    state_n = STATE__IL1__READ_DELAY_0;
                 end
             end
         end
@@ -111,8 +126,16 @@ always_comb begin
                 state_n = STATE__DL1__WRITE;
             end
             else begin
-                state_n = STATE__DL1__READ;
+                state_n = STATE__DL1__READ_DELAY_0;
             end
+        end
+        STATE__DL1__READ_DELAY_0:
+        begin
+            state_n = STATE__DL1__READ_DELAY_1;
+        end
+        STATE__DL1__READ_DELAY_1:
+        begin
+            state_n = STATE__DL1__READ;
         end
         STATE__DL1__READ:
         begin
@@ -123,6 +146,9 @@ always_comb begin
 
                 if (&mem__addr[5:3]) begin
                     state_n = STATE__IDLE;
+                end
+                else begin
+                    state_n = STATE__DL1__READ_DELAY_0;
                 end
             end
         end

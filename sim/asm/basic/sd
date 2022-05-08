@@ -1,0 +1,6 @@
+.text
+main:
+    li a0, 0xff
+    li a1, 0xbb
+    sd a1, 0(a0)
+    j main 
