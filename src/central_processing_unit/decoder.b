@@ -523,6 +523,7 @@ always_comb begin
         end
         OP__ADDI:
         begin
+            func = FUNC__ADD;
             we = 1'b1;
         end
         OP__SLLI:
@@ -594,30 +595,35 @@ always_comb begin
         OP__SB:
         begin
             format = FORMAT__S_TYPE;
+            mem_dtype = DTYPE__B;
             mem_valid = 1'b1;
             mem_rw = 1'b1;
         end
         OP__SH:
         begin
             format = FORMAT__S_TYPE;
+            mem_dtype = DTYPE__H;
             mem_valid = 1'b1;
             mem_rw = 1'b1;
         end
         OP__SW:
         begin
             format = FORMAT__S_TYPE;
+            mem_dtype = DTYPE__W;
             mem_valid = 1'b1;
             mem_rw = 1'b1;
         end
         OP__SD:
         begin
             format = FORMAT__S_TYPE;
+            mem_dtype = DTYPE__D;
             mem_valid = 1'b1;
             mem_rw = 1'b1;
         end
         OP__ADD:
         begin
             format = FORMAT__R_TYPE;
+            func = FUNC__ADD;
             we = 1'b1;
             sel__b = SEL__B__RD_DATA__1; 
         end

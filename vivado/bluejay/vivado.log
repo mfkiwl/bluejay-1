@@ -2,10 +2,10 @@
 # Vivado v2019.2 (64-bit)
 # SW Build 2708876 on Wed Nov  6 21:40:23 MST 2019
 # IP Build 2700528 on Thu Nov  7 00:09:20 MST 2019
-# Start of session at: Sat May  7 20:16:48 2022
-# Process ID: 4348
+# Start of session at: Tue May 17 01:21:28 2022
+# Process ID: 7688
 # Current directory: C:/Users/seanj/Documents/bluejay/vivado/bluejay
-# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent6244 C:\Users\seanj\Documents\bluejay\vivado\bluejay\bluejay.xpr
+# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent14380 C:\Users\seanj\Documents\bluejay\vivado\bluejay\bluejay.xpr
 # Log file: C:/Users/seanj/Documents/bluejay/vivado/bluejay/vivado.log
 # Journal file: C:/Users/seanj/Documents/bluejay/vivado/bluejay\vivado.jou
 #-----------------------------------------------------------
@@ -16,3 +16,415 @@ Finished scanning sources
 INFO: [IP_Flow 19-234] Refreshing IP repositories
 INFO: [IP_Flow 19-1704] No user IP repositories specified
 INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'C:/Xilinx/Vivado/2019.2/data/ip'.
+update_compile_order -fileset sources_1
+launch_simulation
+Command: launch_simulation 
+INFO: [Vivado 12-5698] Checking validity of IPs in the design for the 'XSim' simulator...
+INFO: [Vivado 12-5682] Launching behavioral simulation in 'C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.sim/sim_1/behav/xsim'
+INFO: [Vivado 12-4795] Using compiled simulation libraries for IPs
+INFO: [SIM-utils-51] Simulation object is 'sim_1'
+INFO: [USF-XSim-7] Finding pre-compiled libraries...
+INFO: [USF-XSim-11] File 'C:/Xilinx/Vivado/2019.2/data/xsim/xsim.ini' copied to run dir:'C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.sim/sim_1/behav/xsim'
+INFO: [SIM-utils-54] Inspecting design source files for 'top_tb' in fileset 'sim_1'...
+INFO: [SIM-utils-43] Exported 'C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.sim/sim_1/behav/xsim/main_memory.mif'
+INFO: [SIM-utils-43] Exported 'C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.sim/sim_1/behav/xsim/addi.coe'
+INFO: [USF-XSim-97] Finding global include files...
+INFO: [USF-XSim-98] Fetching design files from 'sim_1'...
+INFO: [USF-XSim-2] XSim::Compile design
+INFO: [USF-XSim-61] Executing 'COMPILE and ANALYZE' step in 'C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.sim/sim_1/behav/xsim'
+"xvlog --incr --relax -prj top_tb_vlog.prj"
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/arithmetic_logic_unit.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module arithmetic_logic_unit
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/central_processing_unit.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module central_processing_unit
+WARNING: [VRFC 10-3248] data object 'IF__il1__rd_data' is already declared [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/central_processing_unit.sv:39]
+WARNING: [VRFC 10-3703] second declaration of 'IF__il1__rd_data' ignored [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/central_processing_unit.sv:39]
+WARNING: [VRFC 10-3248] data object 'MEM__mem_valid' is already declared [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/central_processing_unit.sv:103]
+WARNING: [VRFC 10-3703] second declaration of 'MEM__mem_valid' ignored [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/central_processing_unit.sv:103]
+WARNING: [VRFC 10-3676] redeclaration of ansi port 'il1_to_mem__valid' is not allowed [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/central_processing_unit.sv:182]
+WARNING: [VRFC 10-3676] redeclaration of ansi port 'il1_to_mem__data' is not allowed [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/central_processing_unit.sv:184]
+WARNING: [VRFC 10-3676] redeclaration of ansi port 'mem_to_il1__valid' is not allowed [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/central_processing_unit.sv:185]
+WARNING: [VRFC 10-3676] redeclaration of ansi port 'mem_to_il1__data' is not allowed [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/central_processing_unit.sv:187]
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/comparator.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module comparator
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/decoder.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module decoder
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/jay.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module jay
+INFO: [VRFC 10-2458] undeclared symbol x, assumed default net type wire [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/jay.sv:28]
+INFO: [VRFC 10-2458] undeclared symbol dl1_to_mem__valid, assumed default net type wire [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/jay.sv:44]
+INFO: [VRFC 10-2458] undeclared symbol mem__rw, assumed default net type wire [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/jay.sv:72]
+INFO: [VRFC 10-2458] undeclared symbol port__0__addr, assumed default net type wire [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/jay.sv:107]
+INFO: [VRFC 10-2458] undeclared symbol port__0__rw, assumed default net type wire [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/jay.sv:108]
+INFO: [VRFC 10-2458] undeclared symbol port__0__wr_data, assumed default net type wire [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/jay.sv:109]
+WARNING: [VRFC 10-2938] 'port__0__addr' is already implicitly declared on line 107 [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/jay.sv:113]
+WARNING: [VRFC 10-2938] 'port__0__rw' is already implicitly declared on line 108 [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/jay.sv:114]
+WARNING: [VRFC 10-2938] 'port__0__wr_data' is already implicitly declared on line 109 [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/jay.sv:115]
+WARNING: [VRFC 10-3676] redeclaration of ansi port 'port__0__rd_data' is not allowed [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/jay.sv:116]
+WARNING: [VRFC 10-3029] 'port__0__rd_data' was previously declared without a range [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/jay.sv:116]
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l1.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module l1
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module l2
+INFO: [VRFC 10-2458] undeclared symbol ireq__valid, assumed default net type wire [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:196]
+INFO: [VRFC 10-2458] undeclared symbol ireq__ready, assumed default net type wire [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:197]
+INFO: [VRFC 10-2458] undeclared symbol ireq__data, assumed default net type wire [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:198]
+WARNING: [VRFC 10-2938] 'ireq__valid' is already implicitly declared on line 196 [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:204]
+WARNING: [VRFC 10-2938] 'ireq__ready' is already implicitly declared on line 197 [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:205]
+WARNING: [VRFC 10-2938] 'ireq__data' is already implicitly declared on line 198 [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:206]
+INFO: [VRFC 10-2458] undeclared symbol irtn__valid, assumed default net type wire [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:216]
+INFO: [VRFC 10-2458] undeclared symbol irtn__ready, assumed default net type wire [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:217]
+INFO: [VRFC 10-2458] undeclared symbol irtn__data, assumed default net type wire [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:218]
+WARNING: [VRFC 10-2938] 'irtn__valid' is already implicitly declared on line 216 [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:224]
+WARNING: [VRFC 10-2938] 'irtn__ready' is already implicitly declared on line 217 [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:225]
+WARNING: [VRFC 10-2938] 'irtn__data' is already implicitly declared on line 218 [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:226]
+INFO: [VRFC 10-2458] undeclared symbol dreq__valid, assumed default net type wire [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:238]
+INFO: [VRFC 10-2458] undeclared symbol dreq__ready, assumed default net type wire [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:239]
+INFO: [VRFC 10-2458] undeclared symbol dreq__data, assumed default net type wire [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:240]
+WARNING: [VRFC 10-2938] 'dreq__valid' is already implicitly declared on line 238 [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:246]
+WARNING: [VRFC 10-2938] 'dreq__ready' is already implicitly declared on line 239 [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:247]
+WARNING: [VRFC 10-2938] 'dreq__data' is already implicitly declared on line 240 [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:248]
+INFO: [VRFC 10-2458] undeclared symbol drtn__valid, assumed default net type wire [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:258]
+INFO: [VRFC 10-2458] undeclared symbol drtn__ready, assumed default net type wire [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:259]
+INFO: [VRFC 10-2458] undeclared symbol drtn__data, assumed default net type wire [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:260]
+WARNING: [VRFC 10-2938] 'drtn__valid' is already implicitly declared on line 258 [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:266]
+WARNING: [VRFC 10-2938] 'drtn__ready' is already implicitly declared on line 259 [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:267]
+WARNING: [VRFC 10-2938] 'drtn__data' is already implicitly declared on line 260 [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:268]
+WARNING: [VRFC 10-3380] identifier 'ireq__ready' is used before its declaration [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:54]
+WARNING: [VRFC 10-3380] identifier 'irtn__valid' is used before its declaration [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:55]
+WARNING: [VRFC 10-3380] identifier 'irtn__data' is used before its declaration [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:56]
+WARNING: [VRFC 10-3380] identifier 'dreq__ready' is used before its declaration [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:57]
+WARNING: [VRFC 10-3380] identifier 'drtn__valid' is used before its declaration [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:58]
+WARNING: [VRFC 10-3380] identifier 'drtn__data' is used before its declaration [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:59]
+WARNING: [VRFC 10-3380] identifier 'ireq__valid' is used before its declaration [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:64]
+WARNING: [VRFC 10-3380] identifier 'dreq__valid' is used before its declaration [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:67]
+WARNING: [VRFC 10-3380] identifier 'ireq__ready' is used before its declaration [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:73]
+WARNING: [VRFC 10-3380] identifier 'ireq__data' is used before its declaration [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:74]
+WARNING: [VRFC 10-3380] identifier 'ireq__data' is used before its declaration [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:76]
+WARNING: [VRFC 10-3380] identifier 'irtn__valid' is used before its declaration [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:93]
+WARNING: [VRFC 10-3380] identifier 'irtn__ready' is used before its declaration [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:95]
+WARNING: [VRFC 10-3380] identifier 'ireq__ready' is used before its declaration [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:108]
+WARNING: [VRFC 10-3380] identifier 'ireq__valid' is used before its declaration [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:110]
+WARNING: [VRFC 10-3380] identifier 'ireq__data' is used before its declaration [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:112]
+WARNING: [VRFC 10-3380] identifier 'dreq__ready' is used before its declaration [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:122]
+WARNING: [VRFC 10-3380] identifier 'dreq__data' is used before its declaration [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:123]
+WARNING: [VRFC 10-3380] identifier 'dreq__data' is used before its declaration [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:125]
+WARNING: [VRFC 10-3380] identifier 'drtn__valid' is used before its declaration [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:142]
+WARNING: [VRFC 10-3380] identifier 'drtn__ready' is used before its declaration [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:144]
+WARNING: [VRFC 10-3380] identifier 'dreq__ready' is used before its declaration [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:157]
+WARNING: [VRFC 10-3380] identifier 'dreq__valid' is used before its declaration [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:159]
+WARNING: [VRFC 10-3380] identifier 'dreq__data' is used before its declaration [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:161]
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/memory.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module memory
+WARNING: [VRFC 10-3380] identifier 'DEPTH__LOG2' is used before its declaration [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/memory.sv:8]
+WARNING: [VRFC 10-3380] identifier 'WIDTH' is used before its declaration [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/memory.sv:10]
+WARNING: [VRFC 10-3380] identifier 'WIDTH' is used before its declaration [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/memory.sv:11]
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/register_file.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module register_file
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/rx.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module rx
+WARNING: [VRFC 10-3380] identifier 'WIDTH' is used before its declaration [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/rx.sv:10]
+WARNING: [VRFC 10-3380] identifier 'WIDTH' is used before its declaration [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/rx.sv:12]
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/tx.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module tx
+WARNING: [VRFC 10-3380] identifier 'WIDTH' is used before its declaration [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/tx.sv:10]
+WARNING: [VRFC 10-3380] identifier 'WIDTH' is used before its declaration [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/tx.sv:12]
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sim_1/new/top_tb.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module top_tb
+INFO: [VRFC 10-2458] undeclared symbol clk, assumed default net type wire [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sim_1/new/top_tb.sv:20]
+INFO: [VRFC 10-2458] undeclared symbol rst, assumed default net type wire [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sim_1/new/top_tb.sv:21]
+WARNING: [VRFC 10-2938] 'clk' is already implicitly declared on line 20 [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sim_1/new/top_tb.sv:25]
+WARNING: [VRFC 10-2938] 'rst' is already implicitly declared on line 21 [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sim_1/new/top_tb.sv:26]
+run_program: Time (s): cpu = 00:00:00 ; elapsed = 00:00:07 . Memory (MB): peak = 883.762 ; gain = 0.000
+INFO: [USF-XSim-69] 'compile' step finished in '7' seconds
+INFO: [USF-XSim-3] XSim::Elaborate design
+INFO: [USF-XSim-61] Executing 'ELABORATE' step in 'C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.sim/sim_1/behav/xsim'
+"xelab -wto 7cd26d1a35f944c6bc1bdff14b047b72 --incr --debug typical --relax --mt 2 -L blk_mem_gen_v8_4_4 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip -L xpm --snapshot top_tb_behav xil_defaultlib.top_tb xil_defaultlib.glbl -log elaborate.log"
+Vivado Simulator 2019.2
+Copyright 1986-1999, 2001-2019 Xilinx, Inc. All Rights Reserved.
+Running: C:/Xilinx/Vivado/2019.2/bin/unwrapped/win64.o/xelab.exe -wto 7cd26d1a35f944c6bc1bdff14b047b72 --incr --debug typical --relax --mt 2 -L blk_mem_gen_v8_4_4 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip -L xpm --snapshot top_tb_behav xil_defaultlib.top_tb xil_defaultlib.glbl -log elaborate.log 
+Using 2 slave threads.
+Starting static elaboration
+Pass Through NonSizing Optimizer
+WARNING: [VRFC 10-3091] actual bit length 1 differs from formal bit length 2 for port 'addr' [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/jay.sv:107]
+WARNING: [VRFC 10-3091] actual bit length 1 differs from formal bit length 64 for port 'rd_data' [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/jay.sv:110]
+Completed static elaboration
+Starting simulation data flow analysis
+WARNING: [XSIM 43-4099] "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/jay.sv" Line 4. Module jay doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/central_processing_unit.sv" Line 4. Module central_processing_unit doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l1.sv" Line 4. Module l1 doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/memory.sv" Line 4. Module memory(WIDTH=64,DEPTH=512,DEPTH__LOG2=9) doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/memory.sv" Line 4. Module memory(WIDTH=30,DEPTH=64,DEPTH__LOG2=6) doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/tx.sv" Line 4. Module tx(WIDTH=64) doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/rx.sv" Line 4. Module rx(WIDTH=64) doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/decoder.sv" Line 4. Module decoder doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/register_file.sv" Line 4. Module register_file doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/arithmetic_logic_unit.sv" Line 4. Module arithmetic_logic_unit doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/comparator.sv" Line 4. Module comparator doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l1.sv" Line 4. Module l1 doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/memory.sv" Line 4. Module memory(WIDTH=64,DEPTH=512,DEPTH__LOG2=9) doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/memory.sv" Line 4. Module memory(WIDTH=30,DEPTH=64,DEPTH__LOG2=6) doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/tx.sv" Line 4. Module tx(WIDTH=64) doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/rx.sv" Line 4. Module rx(WIDTH=64) doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv" Line 4. Module l2 doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/rx.sv" Line 4. Module rx(WIDTH=64) doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/tx.sv" Line 4. Module tx(WIDTH=64) doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/rx.sv" Line 4. Module rx(WIDTH=64) doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/tx.sv" Line 4. Module tx(WIDTH=64) doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/memory.sv" Line 4. Module memory(WIDTH=64,DEPTH=1,DEPTH__LOG2=0) doesn't have a timescale but at least one module in design has a timescale.
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling module xil_defaultlib.memory(WIDTH=64,DEPTH=512,DEPTH_...
+Compiling module xil_defaultlib.memory(WIDTH=30,DEPTH=64,DEPTH__...
+Compiling module xil_defaultlib.tx(WIDTH=64)
+Compiling module xil_defaultlib.rx(WIDTH=64)
+Compiling module xil_defaultlib.l1
+Compiling module xil_defaultlib.decoder
+Compiling module xil_defaultlib.register_file
+Compiling module xil_defaultlib.arithmetic_logic_unit
+Compiling module xil_defaultlib.comparator
+Compiling module xil_defaultlib.central_processing_unit
+Compiling module xil_defaultlib.l2
+Compiling module blk_mem_gen_v8_4_4.blk_mem_gen_v8_4_4_output_stage(...
+Compiling module blk_mem_gen_v8_4_4.blk_mem_gen_v8_4_4_output_stage(...
+Compiling module blk_mem_gen_v8_4_4.blk_mem_gen_v8_4_4_softecc_outpu...
+Compiling module blk_mem_gen_v8_4_4.blk_mem_gen_v8_4_4_mem_module(C_...
+Compiling module blk_mem_gen_v8_4_4.blk_mem_gen_v8_4_4(C_FAMILY="art...
+Compiling module xil_defaultlib.main_memory
+Compiling module xil_defaultlib.memory(WIDTH=64,DEPTH=1,DEPTH__L...
+Compiling module xil_defaultlib.jay
+Compiling module xil_defaultlib.top_tb
+Compiling module xil_defaultlib.glbl
+Built simulation snapshot top_tb_behav
+
+****** Webtalk v2019.2 (64-bit)
+  **** SW Build 2708876 on Wed Nov  6 21:40:23 MST 2019
+  **** IP Build 2700528 on Thu Nov  7 00:09:20 MST 2019
+    ** Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
+
+source C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.sim/sim_1/behav/xsim/xsim.dir/top_tb_behav/webtalk/xsim_webtalk.tcl -notrace
+INFO: [Common 17-186] 'C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.sim/sim_1/behav/xsim/xsim.dir/top_tb_behav/webtalk/usage_statistics_ext_xsim.xml' has been successfully sent to Xilinx on Tue May 17 01:26:33 2022. For additional details about this file, please refer to the WebTalk help file at C:/Xilinx/Vivado/2019.2/doc/webtalk_introduction.html.
+INFO: [Common 17-206] Exiting Webtalk at Tue May 17 01:26:33 2022...
+run_program: Time (s): cpu = 00:00:00 ; elapsed = 00:00:05 . Memory (MB): peak = 883.762 ; gain = 0.000
+INFO: [USF-XSim-69] 'elaborate' step finished in '5' seconds
+INFO: [USF-XSim-4] XSim::Simulate design
+INFO: [USF-XSim-61] Executing 'SIMULATE' step in 'C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.sim/sim_1/behav/xsim'
+INFO: [USF-XSim-98] *** Running xsim
+   with args "top_tb_behav -key {Behavioral:sim_1:Functional:top_tb} -tclbatch {top_tb.tcl} -view {C:/Users/seanj/Documents/bluejay/vivado/bluejay/central_processing_unit_tb_behav.wcfg} -log {simulate.log}"
+INFO: [USF-XSim-8] Loading simulator feature
+Vivado Simulator 2019.2
+Time resolution is 1 ps
+open_wave_config C:/Users/seanj/Documents/bluejay/vivado/bluejay/central_processing_unit_tb_behav.wcfg
+source top_tb.tcl
+# set curr_wave [current_wave_config]
+# if { [string length $curr_wave] == 0 } {
+#   if { [llength [get_objects]] > 0} {
+#     add_wave /
+#     set_property needs_save false [current_wave_config]
+#   } else {
+#      send_msg_id Add_Wave-1 WARNING "No top level signals found. Simulator will start without a wave window. If you want to open a wave window go to 'File->New Waveform Configuration' or type 'create_wave_config' in the TCL console."
+#   }
+# }
+# run 1000ns
+ Block Memory Generator module loading initial data...
+ Block Memory Generator data initialization complete.
+Block Memory Generator module top_tb.dut.mem.inst.native_mem_module.blk_mem_gen_v8_4_4_inst is using a behavioral model for simulation which will not precisely model memory collision behavior.
+INFO: [USF-XSim-96] XSim completed. Design snapshot 'top_tb_behav' loaded.
+INFO: [USF-XSim-97] XSim simulation ran for 1000ns
+launch_simulation: Time (s): cpu = 00:00:06 ; elapsed = 00:00:17 . Memory (MB): peak = 883.762 ; gain = 7.363
+relaunch_sim
+Command: launch_simulation -simset sim_1 -mode behavioral
+INFO: [Vivado 12-5698] Checking validity of IPs in the design for the 'XSim' simulator...
+INFO: [Vivado 12-5682] Launching behavioral simulation in 'C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.sim/sim_1/behav/xsim'
+INFO: [Vivado 12-4795] Using compiled simulation libraries for IPs
+INFO: [SIM-utils-51] Simulation object is 'sim_1'
+INFO: [USF-XSim-7] Finding pre-compiled libraries...
+INFO: [USF-XSim-11] File 'C:/Xilinx/Vivado/2019.2/data/xsim/xsim.ini' copied to run dir:'C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.sim/sim_1/behav/xsim'
+INFO: [SIM-utils-54] Inspecting design source files for 'top_tb' in fileset 'sim_1'...
+INFO: [SIM-utils-43] Exported 'C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.sim/sim_1/behav/xsim/main_memory.mif'
+INFO: [SIM-utils-43] Exported 'C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.sim/sim_1/behav/xsim/addi.coe'
+INFO: [USF-XSim-97] Finding global include files...
+INFO: [USF-XSim-98] Fetching design files from 'sim_1'...
+INFO: [USF-XSim-2] XSim::Compile design
+INFO: [USF-XSim-61] Executing 'COMPILE and ANALYZE' step in 'C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.sim/sim_1/behav/xsim'
+"xvlog --incr --relax -prj top_tb_vlog.prj"
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/arithmetic_logic_unit.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module arithmetic_logic_unit
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/central_processing_unit.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module central_processing_unit
+WARNING: [VRFC 10-3248] data object 'IF__il1__rd_data' is already declared [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/central_processing_unit.sv:39]
+WARNING: [VRFC 10-3703] second declaration of 'IF__il1__rd_data' ignored [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/central_processing_unit.sv:39]
+WARNING: [VRFC 10-3248] data object 'MEM__mem_valid' is already declared [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/central_processing_unit.sv:103]
+WARNING: [VRFC 10-3703] second declaration of 'MEM__mem_valid' ignored [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/central_processing_unit.sv:103]
+WARNING: [VRFC 10-3676] redeclaration of ansi port 'il1_to_mem__valid' is not allowed [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/central_processing_unit.sv:182]
+WARNING: [VRFC 10-3676] redeclaration of ansi port 'il1_to_mem__data' is not allowed [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/central_processing_unit.sv:184]
+WARNING: [VRFC 10-3676] redeclaration of ansi port 'mem_to_il1__valid' is not allowed [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/central_processing_unit.sv:185]
+WARNING: [VRFC 10-3676] redeclaration of ansi port 'mem_to_il1__data' is not allowed [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/central_processing_unit.sv:187]
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/comparator.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module comparator
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/decoder.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module decoder
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/jay.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module jay
+INFO: [VRFC 10-2458] undeclared symbol x, assumed default net type wire [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/jay.sv:28]
+INFO: [VRFC 10-2458] undeclared symbol dl1_to_mem__valid, assumed default net type wire [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/jay.sv:44]
+INFO: [VRFC 10-2458] undeclared symbol mem__rw, assumed default net type wire [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/jay.sv:72]
+INFO: [VRFC 10-2458] undeclared symbol port__0__addr, assumed default net type wire [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/jay.sv:107]
+INFO: [VRFC 10-2458] undeclared symbol port__0__rw, assumed default net type wire [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/jay.sv:108]
+INFO: [VRFC 10-2458] undeclared symbol port__0__wr_data, assumed default net type wire [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/jay.sv:109]
+WARNING: [VRFC 10-2938] 'port__0__addr' is already implicitly declared on line 107 [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/jay.sv:113]
+WARNING: [VRFC 10-2938] 'port__0__rw' is already implicitly declared on line 108 [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/jay.sv:114]
+WARNING: [VRFC 10-2938] 'port__0__wr_data' is already implicitly declared on line 109 [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/jay.sv:115]
+WARNING: [VRFC 10-3676] redeclaration of ansi port 'port__0__rd_data' is not allowed [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/jay.sv:116]
+WARNING: [VRFC 10-3029] 'port__0__rd_data' was previously declared without a range [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/jay.sv:116]
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l1.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module l1
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module l2
+INFO: [VRFC 10-2458] undeclared symbol ireq__valid, assumed default net type wire [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:196]
+INFO: [VRFC 10-2458] undeclared symbol ireq__ready, assumed default net type wire [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:197]
+INFO: [VRFC 10-2458] undeclared symbol ireq__data, assumed default net type wire [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:198]
+WARNING: [VRFC 10-2938] 'ireq__valid' is already implicitly declared on line 196 [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:204]
+WARNING: [VRFC 10-2938] 'ireq__ready' is already implicitly declared on line 197 [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:205]
+WARNING: [VRFC 10-2938] 'ireq__data' is already implicitly declared on line 198 [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:206]
+INFO: [VRFC 10-2458] undeclared symbol irtn__valid, assumed default net type wire [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:216]
+INFO: [VRFC 10-2458] undeclared symbol irtn__ready, assumed default net type wire [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:217]
+INFO: [VRFC 10-2458] undeclared symbol irtn__data, assumed default net type wire [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:218]
+WARNING: [VRFC 10-2938] 'irtn__valid' is already implicitly declared on line 216 [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:224]
+WARNING: [VRFC 10-2938] 'irtn__ready' is already implicitly declared on line 217 [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:225]
+WARNING: [VRFC 10-2938] 'irtn__data' is already implicitly declared on line 218 [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:226]
+INFO: [VRFC 10-2458] undeclared symbol dreq__valid, assumed default net type wire [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:238]
+INFO: [VRFC 10-2458] undeclared symbol dreq__ready, assumed default net type wire [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:239]
+INFO: [VRFC 10-2458] undeclared symbol dreq__data, assumed default net type wire [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:240]
+WARNING: [VRFC 10-2938] 'dreq__valid' is already implicitly declared on line 238 [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:246]
+WARNING: [VRFC 10-2938] 'dreq__ready' is already implicitly declared on line 239 [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:247]
+WARNING: [VRFC 10-2938] 'dreq__data' is already implicitly declared on line 240 [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:248]
+INFO: [VRFC 10-2458] undeclared symbol drtn__valid, assumed default net type wire [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:258]
+INFO: [VRFC 10-2458] undeclared symbol drtn__ready, assumed default net type wire [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:259]
+INFO: [VRFC 10-2458] undeclared symbol drtn__data, assumed default net type wire [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:260]
+WARNING: [VRFC 10-2938] 'drtn__valid' is already implicitly declared on line 258 [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:266]
+WARNING: [VRFC 10-2938] 'drtn__ready' is already implicitly declared on line 259 [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:267]
+WARNING: [VRFC 10-2938] 'drtn__data' is already implicitly declared on line 260 [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:268]
+WARNING: [VRFC 10-3380] identifier 'ireq__ready' is used before its declaration [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:54]
+WARNING: [VRFC 10-3380] identifier 'irtn__valid' is used before its declaration [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:55]
+WARNING: [VRFC 10-3380] identifier 'irtn__data' is used before its declaration [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:56]
+WARNING: [VRFC 10-3380] identifier 'dreq__ready' is used before its declaration [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:57]
+WARNING: [VRFC 10-3380] identifier 'drtn__valid' is used before its declaration [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:58]
+WARNING: [VRFC 10-3380] identifier 'drtn__data' is used before its declaration [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:59]
+WARNING: [VRFC 10-3380] identifier 'ireq__valid' is used before its declaration [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:64]
+WARNING: [VRFC 10-3380] identifier 'dreq__valid' is used before its declaration [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:67]
+WARNING: [VRFC 10-3380] identifier 'ireq__ready' is used before its declaration [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:73]
+WARNING: [VRFC 10-3380] identifier 'ireq__data' is used before its declaration [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:74]
+WARNING: [VRFC 10-3380] identifier 'ireq__data' is used before its declaration [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:76]
+WARNING: [VRFC 10-3380] identifier 'irtn__valid' is used before its declaration [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:93]
+WARNING: [VRFC 10-3380] identifier 'irtn__ready' is used before its declaration [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:95]
+WARNING: [VRFC 10-3380] identifier 'ireq__ready' is used before its declaration [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:108]
+WARNING: [VRFC 10-3380] identifier 'ireq__valid' is used before its declaration [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:110]
+WARNING: [VRFC 10-3380] identifier 'ireq__data' is used before its declaration [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:112]
+WARNING: [VRFC 10-3380] identifier 'dreq__ready' is used before its declaration [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:122]
+WARNING: [VRFC 10-3380] identifier 'dreq__data' is used before its declaration [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:123]
+WARNING: [VRFC 10-3380] identifier 'dreq__data' is used before its declaration [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:125]
+WARNING: [VRFC 10-3380] identifier 'drtn__valid' is used before its declaration [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:142]
+WARNING: [VRFC 10-3380] identifier 'drtn__ready' is used before its declaration [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:144]
+WARNING: [VRFC 10-3380] identifier 'dreq__ready' is used before its declaration [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:157]
+WARNING: [VRFC 10-3380] identifier 'dreq__valid' is used before its declaration [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:159]
+WARNING: [VRFC 10-3380] identifier 'dreq__data' is used before its declaration [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv:161]
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/memory.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module memory
+WARNING: [VRFC 10-3380] identifier 'DEPTH__LOG2' is used before its declaration [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/memory.sv:8]
+WARNING: [VRFC 10-3380] identifier 'WIDTH' is used before its declaration [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/memory.sv:10]
+WARNING: [VRFC 10-3380] identifier 'WIDTH' is used before its declaration [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/memory.sv:11]
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/register_file.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module register_file
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/rx.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module rx
+WARNING: [VRFC 10-3380] identifier 'WIDTH' is used before its declaration [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/rx.sv:10]
+WARNING: [VRFC 10-3380] identifier 'WIDTH' is used before its declaration [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/rx.sv:12]
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/tx.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module tx
+WARNING: [VRFC 10-3380] identifier 'WIDTH' is used before its declaration [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/tx.sv:10]
+WARNING: [VRFC 10-3380] identifier 'WIDTH' is used before its declaration [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/tx.sv:12]
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sim_1/new/top_tb.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module top_tb
+INFO: [VRFC 10-2458] undeclared symbol clk, assumed default net type wire [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sim_1/new/top_tb.sv:20]
+INFO: [VRFC 10-2458] undeclared symbol rst, assumed default net type wire [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sim_1/new/top_tb.sv:21]
+WARNING: [VRFC 10-2938] 'clk' is already implicitly declared on line 20 [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sim_1/new/top_tb.sv:25]
+WARNING: [VRFC 10-2938] 'rst' is already implicitly declared on line 21 [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sim_1/new/top_tb.sv:26]
+run_program: Time (s): cpu = 00:00:00 ; elapsed = 00:00:05 . Memory (MB): peak = 883.762 ; gain = 0.000
+INFO: [USF-XSim-69] 'compile' step finished in '5' seconds
+launch_simulation: Time (s): cpu = 00:00:00 ; elapsed = 00:00:05 . Memory (MB): peak = 883.762 ; gain = 0.000
+Command: launch_simulation -simset sim_1 -mode behavioral
+INFO: [Vivado 12-5698] Checking validity of IPs in the design for the 'XSim' simulator...
+INFO: [Vivado 12-5682] Launching behavioral simulation in 'C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.sim/sim_1/behav/xsim'
+INFO: [Vivado 12-4795] Using compiled simulation libraries for IPs
+INFO: [USF-XSim-3] XSim::Elaborate design
+INFO: [USF-XSim-61] Executing 'ELABORATE' step in 'C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.sim/sim_1/behav/xsim'
+"xelab -wto 7cd26d1a35f944c6bc1bdff14b047b72 --incr --debug typical --relax --mt 2 -L blk_mem_gen_v8_4_4 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip -L xpm --snapshot top_tb_behav xil_defaultlib.top_tb xil_defaultlib.glbl -log elaborate.log"
+Vivado Simulator 2019.2
+Copyright 1986-1999, 2001-2019 Xilinx, Inc. All Rights Reserved.
+Running: C:/Xilinx/Vivado/2019.2/bin/unwrapped/win64.o/xelab.exe -wto 7cd26d1a35f944c6bc1bdff14b047b72 --incr --debug typical --relax --mt 2 -L blk_mem_gen_v8_4_4 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip -L xpm --snapshot top_tb_behav xil_defaultlib.top_tb xil_defaultlib.glbl -log elaborate.log 
+Using 2 slave threads.
+Starting static elaboration
+Pass Through NonSizing Optimizer
+WARNING: [VRFC 10-3091] actual bit length 1 differs from formal bit length 2 for port 'addr' [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/jay.sv:107]
+WARNING: [VRFC 10-3091] actual bit length 1 differs from formal bit length 64 for port 'rd_data' [C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/jay.sv:110]
+Completed static elaboration
+Starting simulation data flow analysis
+WARNING: [XSIM 43-4099] "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/jay.sv" Line 4. Module jay doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/central_processing_unit.sv" Line 4. Module central_processing_unit doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l1.sv" Line 4. Module l1 doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/memory.sv" Line 4. Module memory(WIDTH=64,DEPTH=512,DEPTH__LOG2=9) doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/memory.sv" Line 4. Module memory(WIDTH=30,DEPTH=64,DEPTH__LOG2=6) doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/tx.sv" Line 4. Module tx(WIDTH=64) doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/rx.sv" Line 4. Module rx(WIDTH=64) doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/decoder.sv" Line 4. Module decoder doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/register_file.sv" Line 4. Module register_file doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/arithmetic_logic_unit.sv" Line 4. Module arithmetic_logic_unit doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/comparator.sv" Line 4. Module comparator doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l1.sv" Line 4. Module l1 doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/memory.sv" Line 4. Module memory(WIDTH=64,DEPTH=512,DEPTH__LOG2=9) doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/memory.sv" Line 4. Module memory(WIDTH=30,DEPTH=64,DEPTH__LOG2=6) doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/tx.sv" Line 4. Module tx(WIDTH=64) doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/rx.sv" Line 4. Module rx(WIDTH=64) doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l2.sv" Line 4. Module l2 doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/rx.sv" Line 4. Module rx(WIDTH=64) doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/tx.sv" Line 4. Module tx(WIDTH=64) doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/rx.sv" Line 4. Module rx(WIDTH=64) doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/tx.sv" Line 4. Module tx(WIDTH=64) doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/seanj/Documents/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/memory.sv" Line 4. Module memory(WIDTH=64,DEPTH=1,DEPTH__LOG2=0) doesn't have a timescale but at least one module in design has a timescale.
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling module xil_defaultlib.memory(WIDTH=64,DEPTH=512,DEPTH_...
+Compiling module xil_defaultlib.memory(WIDTH=30,DEPTH=64,DEPTH__...
+Compiling module xil_defaultlib.tx(WIDTH=64)
+Compiling module xil_defaultlib.rx(WIDTH=64)
+Compiling module xil_defaultlib.l1
+Compiling module xil_defaultlib.decoder
+Compiling module xil_defaultlib.register_file
+Compiling module xil_defaultlib.arithmetic_logic_unit
+Compiling module xil_defaultlib.comparator
+Compiling module xil_defaultlib.central_processing_unit
+Compiling module xil_defaultlib.l2
+Compiling module blk_mem_gen_v8_4_4.blk_mem_gen_v8_4_4_output_stage(...
+Compiling module blk_mem_gen_v8_4_4.blk_mem_gen_v8_4_4_output_stage(...
+Compiling module blk_mem_gen_v8_4_4.blk_mem_gen_v8_4_4_softecc_outpu...
+Compiling module blk_mem_gen_v8_4_4.blk_mem_gen_v8_4_4_mem_module(C_...
+Compiling module blk_mem_gen_v8_4_4.blk_mem_gen_v8_4_4(C_FAMILY="art...
+Compiling module xil_defaultlib.main_memory
+Compiling module xil_defaultlib.memory(WIDTH=64,DEPTH=1,DEPTH__L...
+Compiling module xil_defaultlib.jay
+Compiling module xil_defaultlib.top_tb
+Compiling module xil_defaultlib.glbl
+Built simulation snapshot top_tb_behav
+INFO: [USF-XSim-69] 'elaborate' step finished in '2' seconds
+Vivado Simulator 2019.2
+Time resolution is 1 ps
+ Block Memory Generator module loading initial data...
+ Block Memory Generator data initialization complete.
+Block Memory Generator module top_tb.dut.mem.inst.native_mem_module.blk_mem_gen_v8_4_4_inst is using a behavioral model for simulation which will not precisely model memory collision behavior.
+relaunch_sim: Time (s): cpu = 00:00:03 ; elapsed = 00:00:14 . Memory (MB): peak = 883.762 ; gain = 0.000
+run 1 us
+close_sim
+INFO: [Simtcl 6-16] Simulation closed
+exit
+INFO: [Common 17-206] Exiting Vivado at Tue May 17 02:45:01 2022...

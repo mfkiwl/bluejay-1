@@ -523,6 +523,7 @@ always_comb begin
         end
         6'ha:
         begin
+            func = 4'h0;
             we = 1'b1;
         end
         6'hb:
@@ -594,30 +595,35 @@ always_comb begin
         6'h18:
         begin
             format = 3'h2;
+            mem_dtype = 3'h5;
             mem_valid = 1'b1;
             mem_rw = 1'b1;
         end
         6'h19:
         begin
             format = 3'h2;
+            mem_dtype = 3'h3;
             mem_valid = 1'b1;
             mem_rw = 1'b1;
         end
         6'h1a:
         begin
             format = 3'h2;
+            mem_dtype = 3'h1;
             mem_valid = 1'b1;
             mem_rw = 1'b1;
         end
         6'h1b:
         begin
             format = 3'h2;
+            mem_dtype = 3'h0;
             mem_valid = 1'b1;
             mem_rw = 1'b1;
         end
         6'h1c:
         begin
             format = 3'h0;
+            func = 4'h0;
             we = 1'b1;
             sel__b = 1'b0; 
         end
