@@ -95,6 +95,14 @@
 #define DTYPE__B 3'h5
 #define DTYPE__BU 3'h6
 
+#define ITYPE__REG_REG 4'h0
+#define ITYPE__REG_IMM 4'h1
+#define ITYPE__BRANCH 4'h2
+#define ITYPE__JAL 4'h3
+#define ITYPE__JALR 4'h4
+#define ITYPE__LOAD 4'h5
+#define ITYPE__STORE 4'h6
+
 #define L1__BYTE_OFFSET__FIELD 2:0
 #define L1__BYTE_OFFSET__WIDTH 3
 #define L1__BLOCK_OFFSET__FIELD 5:3
