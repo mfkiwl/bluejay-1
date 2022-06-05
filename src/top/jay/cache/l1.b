@@ -197,31 +197,31 @@ end
 
 always_comb begin
     case (dtype)
-        3'h0:
+        DTYPE__D:
         begin
             temp__1 = temp__0[63:0];
         end
-        3'h1:
+        DTYPE__W:
         begin
             temp__1 = {{32{temp__0[31]}}, temp__0[31:0]};
         end
-        3'h2:
+        DTYPE__WU:
         begin
             temp__1 = {32'h0, temp__0[31:0]};
         end
-        3'h3:
+        DTYPE__H:
         begin
             temp__1 = {{48{temp__0[15]}}, temp__0[15:0]};
         end
-        3'h4:
+        DTYPE__HU:
         begin
             temp__1 = {48'h0, temp__0[31:0]};
         end
-        3'h5:
+        DTYPE__B:
         begin
             temp__1 = {{56{temp__0[7]}}, temp__0[7:0]};
         end
-        3'h6:
+        DTYPE__BU:
         begin
             temp__1 = {56'h0}, temp__0[31:0]};
         end
@@ -232,11 +232,11 @@ always_comb begin
     l1_to_mem__wr_data = l1_to_mem__rd_data;
 
     case (dtype)
-        3'h0:
+        DTYPE__D:
         begin
             l1_to_mem__wr_data = wr_data;
         end
-        3'h1:
+        DTYPE__W:
         begin
             case (addr[2])
                 1'h0:
@@ -249,7 +249,7 @@ always_comb begin
                 end
             endcase
         end
-        3'h3:
+        DTYPE__H:
         begin
             case (addr[2:1])
                 2'h0:
@@ -270,7 +270,7 @@ always_comb begin
                 end
             endcase
         end
-        3'h5:
+        DTYPE__B:
         begin
             case (addr[2:0])
                 3'h0:

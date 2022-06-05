@@ -7,6 +7,7 @@
 
 #define NUM_GPR 32
 
+
 #define FORMAT__R_TYPE 3'h0
 #define FORMAT__I_TYPE 3'h1
 #define FORMAT__S_TYPE 3'h2

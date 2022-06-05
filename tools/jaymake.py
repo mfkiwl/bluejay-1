@@ -173,18 +173,19 @@ class Jaymake:
 if __name__ == '__main__':
     
     files = [
-        {'path': 'src/', 'filename': 'top.b'},
-        {'path': 'src/', 'filename': 'jay.b'},
-        {'path': 'src/central_processing_unit/', 'filename': 'register_file.b'},
-        {'path': 'src/central_processing_unit/', 'filename': 'arithmetic_logic_unit.b'},
-        {'path': 'src/central_processing_unit/', 'filename': 'decoder.b'},
-        {'path': 'src/central_processing_unit/', 'filename': 'comparator.b'},
-        {'path': 'src/central_processing_unit/', 'filename': 'central_processing_unit.b'},
-        {'path': 'src/cache/', 'filename': 'memory.b'},
-        {'path': 'src/cache/', 'filename': 'l1.b'},
-        {'path': 'src/cache/', 'filename': 'l2.b'},
-        {'path': 'src/interface/', 'filename': 'tx.b'},
-        {'path': 'src/interface/', 'filename': 'rx.b'},
+        {'path': 'src/top/', 'filename': 'top.b'},
+        {'path': 'src/top/jay/', 'filename': 'jay.b'},
+        {'path': 'src/top/jay/central_processing_unit/', 'filename': 'central_processing_unit.b'},
+        {'path': 'src/top/jay/central_processing_unit/', 'filename': 'register_file.b'},
+        {'path': 'src/top/jay/central_processing_unit/', 'filename': 'arithmetic_logic_unit.b'},
+        {'path': 'src/top/jay/central_processing_unit/', 'filename': 'decoder.b'},
+        {'path': 'src/top/jay/central_processing_unit/', 'filename': 'comparator.b'},
+        {'path': 'src/top/jay/cache/', 'filename': 'l1.b'},
+        {'path': 'src/top/interface/', 'filename': 'tx.b'},
+        {'path': 'src/top/interface/', 'filename': 'rx.b'},
+        {'path': 'src/top/utility/', 'filename': 'binary_to_seven_segment.b'},
+        {'path': 'src/top/utility/', 'filename': 'seven_segment_display.b'},
+        {'path': 'src/top/utility/', 'filename': 'debouncer.b'},
         {'path': 'tb/', 'filename': 'top_tb.b'},
     ]
 
