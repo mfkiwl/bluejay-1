@@ -454,27 +454,27 @@ always_comb begin
         end
         OP__LH:
         begin
-            mem_dtype = DTYPE__H;
+            dtype = DTYPE__H;
         end
         OP__LW:
         begin
-            mem_dtype = DTYPE__W;
+            dtype = DTYPE__W;
         end
         OP__LD:
         begin
-            mem_dtype = DTYPE__D;
+            dtype = DTYPE__D;
         end
         OP__LBU:
         begin
-            mem_dtype = DTYPE__BU;
+            dtype = DTYPE__BU;
         end
         OP__LHU:
         begin
-            mem_dtype = DTYPE__HU;
+            dtype = DTYPE__HU;
         end
         OP__LWU:
         begin
-            mem_dtype = DTYPE__HU;
+            dtype = DTYPE__HU;
         end
         OP__FENCE:
         begin

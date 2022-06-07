@@ -454,27 +454,27 @@ always_comb begin
         end
         6'h2:
         begin
-            mem_dtype = 3'h3;
+            dtype = 3'h3;
         end
         6'h3:
         begin
-            mem_dtype = 3'h1;
+            dtype = 3'h1;
         end
         6'h4:
         begin
-            mem_dtype = 3'h0;
+            dtype = 3'h0;
         end
         6'h5:
         begin
-            mem_dtype = 3'h6;
+            dtype = 3'h6;
         end
         6'h6:
         begin
-            mem_dtype = 3'h4;
+            dtype = 3'h4;
         end
         6'h7:
         begin
-            mem_dtype = 3'h4;
+            dtype = 3'h4;
         end
         6'h8:
         begin

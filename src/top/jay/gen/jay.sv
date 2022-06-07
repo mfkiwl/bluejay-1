@@ -6,7 +6,7 @@ module jay
     input clk,
     input rst,
     output logic [63:0] port__0,
-    output logic [63:0] port__1,
+    output logic [63:0] port__1
 );
 
 logic [60:0] l1_to_mem__addr;

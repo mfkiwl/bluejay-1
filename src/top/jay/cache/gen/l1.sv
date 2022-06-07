@@ -10,7 +10,7 @@ module l1
     input cpu_to_l1__we,
     input [63:0] cpu_to_l1__addr,
     input [63:0] cpu_to_l1__wr_data,
-    output logic cpu_to_l1__rd_data,
+    output logic [63:0] cpu_to_l1__rd_data,
     input [2:0] cpu_to_l1__dtype,
     output logic [60:0] l1_to_mem__addr,
     output logic [63:0] l1_to_mem__wr_data,
@@ -81,7 +81,7 @@ always_comb begin
     state__n = state;
     cpu_to_l1__ready = 1'b0;
     addr__n = addr;
-    dtype__n = dytpe;
+    dtype__n = dtype;
     wr_data__n = wr_data;
     rd_data__n = rd_data;
     l1_to_mem__en = 1'b0;
@@ -99,7 +99,7 @@ always_comb begin
             if (cpu_to_l1__valid) begin
                 addr__n = cpu_to_l1__addr;
                 dtype__n = cpu_to_l1__dtype;
-                wr_data__n = cpu_to_l1__data;
+                wr_data__n = cpu_to_l1__wr_data;
                 we__n = cpu_to_l1__we;
                 state__n = STATE__REQUEST_DATA;
             end
@@ -119,6 +119,7 @@ always_comb begin
         //==============================
         STATE__WAIT__0:
         begin
+            l1_to_mem__en = 1'b1;
             state__n = STATE__WAIT__1;
         end
 
@@ -127,6 +128,8 @@ always_comb begin
         //==============================
         STATE__WAIT__1:
         begin
+            l1_to_mem__en = 1'b1;
+            
             if (we) begin
                 state__n = STATE__WRITE;
             end
@@ -223,7 +226,7 @@ always_comb begin
         end
         3'h6:
         begin
-            temp__1 = {56'h0}, temp__0[31:0]};
+            temp__1 = {56'h0, temp__0[31:0]};
         end
     endcase
 end

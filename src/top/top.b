@@ -10,13 +10,13 @@ module top
     input btnl,
     input btnr,
     input btnd,
-    // output logic [15:0] led,        //little LEDs above switches
-    output logic led16_b    //blue channel left RGB LED
-    // output logic led16_g,    //green channel left RGB LED
-    // output logic led16_r,    //red channel left RGB LED
-    // output logic led17_b,    //blue channel right RGB LED
-    // output logic led17_g,    //green channel right RGB LED
-    // output logic led17_r,    //red channel right RGB LED
+    // output logic [15:0] led,
+    output logic led16_b,
+    // output logic led16_g,
+    // output logic led16_r,
+    // output logic led17_b,
+    // output logic led17_g,
+    // output logic led17_r,
     output logic [7:0] an,
     output logic ca, 
     output logic cb, 

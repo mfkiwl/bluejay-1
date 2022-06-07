@@ -68,6 +68,7 @@ always_comb begin
         4'hc:
         begin
             {cg, cf, ce, cd, cc, cb, ca} <= ~7'b011_1001;
+        end
         4'hd:
         begin
             {cg, cf, ce, cd, cc, cb, ca} <= ~7'b101_1110;

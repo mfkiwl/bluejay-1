@@ -18,12 +18,16 @@ module top_tb;
 jay dut
 (
     .clk(clk),
-    .rst(rst)
+    .rst(rst),
+    .port__0(port__0),
+    .port__1(port__1)
 );
 
 // dut I/O
 logic clk;
 logic rst;
+logic [63:0] port__0;
+logic [63:0] port__1;
 
 // 10 ns clock
 always begin

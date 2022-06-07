@@ -142,7 +142,7 @@ l1 l1__0
     .cpu_to_l1__we(cpu_to_l1__we),
     .cpu_to_l1__addr(cpu_to_l1__addr),
     .cpu_to_l1__wr_data(cpu_to_l1__wr_data),
-    .cpu_to_l1__wr_data(cpu_to_l1__rd_data),
+    .cpu_to_l1__rd_data(cpu_to_l1__rd_data),
     .cpu_to_l1__dtype(cpu_to_l1__dtype),
     .l1_to_mem__addr(l1_to_mem__addr),
     .l1_to_mem__wr_data(l1_to_mem__wr_data),
@@ -192,7 +192,6 @@ always_comb begin
     cpu_to_l1__valid = 1'b0;
     cpu_to_l1__we = 1'b0;
     cpu_to_l1__dtype = DTYPE__D;
-    l1_to_cpu__ready = 1'b0;
     pc__n = pc;
     ir__n = ir;
     temp__n = temp;
@@ -204,7 +203,7 @@ always_comb begin
         //==============================
         STATE__RESET:
         begin
-            state_n = STATE__IF__REQ;
+            state__n = STATE__IF__REQ;
         end
         
         //==============================
@@ -237,8 +236,8 @@ always_comb begin
         //==============================
         STATE__ID:
         begin
-            if ((op == OP__BEQ) || (op == OP__BNE) || (op == OP__BLT) || (op == OP__BGE) || (op == OP__BLTU) || (op = OP__BGEU)) begin
-                state__n = STATE__BRANCH__RS1_TO_A;
+            if ((op == OP__BEQ) || (op == OP__BNE) || (op == OP__BLT) || (op == OP__BGE) || (op == OP__BLTU) || (op == OP__BGEU)) begin
+                state__n = STATE__BRANCH__COMPARE;
             end
             else if (op == OP__JAL) begin
                 state__n = STATE__JAL__LINK;
@@ -264,8 +263,8 @@ always_comb begin
             else if (op == OP__ECALL) begin
                 state__n = STATE__ECALL;
             end
-            else if (op == OP__BREAK) begin
-                state__n = STATE__BREAK;
+            else if (op == OP__EBREAK) begin
+                state__n = STATE__EBREAK;
             end
             else if (op == OP__FENCE) begin
                 state__n = STATE__FENCE;
@@ -415,7 +414,7 @@ always_comb begin
             b = 4;
             wr_data = c;
             we = 1'b1;
-            state__n = STATE__JALR__1;
+            state__n = STATE__JALR__JUMP;
         end
 
         //==============================

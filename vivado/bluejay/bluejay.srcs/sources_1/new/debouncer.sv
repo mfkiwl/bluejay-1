@@ -31,6 +31,7 @@ end
 always_ff @(posedge clk) begin
     if (rst) begin
         count <= 0;
+    end
     else begin
         if (in == in__p) begin
             count <= (count == DEBOUNCE_COUNT) ?  DEBOUNCE_COUNT : count + 1;

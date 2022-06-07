@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="top_tb_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="top_tb" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="925833fs"></ZoomStartTime>
+      <ZoomEndTime time="2214834fs"></ZoomEndTime>
+      <Cursor1Time time="2000000fs"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="226"></NameColumnWidth>
+      <ValueColumnWidth column_width="110"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="20" />
+   <wvobject fp_name="/top_tb/dut/clk" type="logic">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_tb/dut/rst" type="logic">
+      <obj_property name="ElementShortName">rst</obj_property>
+      <obj_property name="ObjectShortName">rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_tb/dut/cpu/IF__valid" type="logic">
+      <obj_property name="ElementShortName">IF__valid</obj_property>
+      <obj_property name="ObjectShortName">IF__valid</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_tb/dut/cpu/ID__valid" type="logic">
+      <obj_property name="ElementShortName">ID__valid</obj_property>
+      <obj_property name="ObjectShortName">ID__valid</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_tb/dut/cpu/EX__valid" type="logic">
+      <obj_property name="ElementShortName">EX__valid</obj_property>
+      <obj_property name="ObjectShortName">EX__valid</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_tb/dut/cpu/MEM__valid" type="logic">
+      <obj_property name="ElementShortName">MEM__valid</obj_property>
+      <obj_property name="ObjectShortName">MEM__valid</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_tb/dut/cpu/IF__pc" type="array">
+      <obj_property name="ElementShortName">IF__pc[63:0]</obj_property>
+      <obj_property name="ObjectShortName">IF__pc[63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_tb/dut/cpu/IF__ir" type="array">
+      <obj_property name="ElementShortName">IF__ir[31:0]</obj_property>
+      <obj_property name="ObjectShortName">IF__ir[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_tb/dut/cpu/il1/data_mem__rd_data" type="array">
+      <obj_property name="ElementShortName">data_mem__rd_data[63:0]</obj_property>
+      <obj_property name="ObjectShortName">data_mem__rd_data[63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_tb/dut/cpu/MEM__ready" type="logic">
+      <obj_property name="ElementShortName">MEM__ready</obj_property>
+      <obj_property name="ObjectShortName">MEM__ready</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_tb/dut/cpu/MEM__mem_valid" type="logic">
+      <obj_property name="ElementShortName">MEM__mem_valid</obj_property>
+      <obj_property name="ObjectShortName">MEM__mem_valid</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_tb/dut/cpu/ID__mem_valid" type="logic">
+      <obj_property name="ElementShortName">ID__mem_valid</obj_property>
+      <obj_property name="ObjectShortName">ID__mem_valid</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_tb/dut/cpu/EX__mem_valid" type="logic">
+      <obj_property name="ElementShortName">EX__mem_valid</obj_property>
+      <obj_property name="ObjectShortName">EX__mem_valid</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_tb/dut/cpu/register_file__0/x_10" type="array">
+      <obj_property name="ElementShortName">x_10[63:0]</obj_property>
+      <obj_property name="ObjectShortName">x_10[63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_tb/dut/mem/addra" type="array">
+      <obj_property name="ElementShortName">addra[11:0]</obj_property>
+      <obj_property name="ObjectShortName">addra[11:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_tb/dut/mem/dina" type="array">
+      <obj_property name="ElementShortName">dina[63:0]</obj_property>
+      <obj_property name="ObjectShortName">dina[63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_tb/dut/mem/douta" type="array">
+      <obj_property name="ElementShortName">douta[63:0]</obj_property>
+      <obj_property name="ObjectShortName">douta[63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_tb/dut/l2_cache/irtn__valid" type="logic">
+      <obj_property name="ElementShortName">irtn__valid</obj_property>
+      <obj_property name="ObjectShortName">irtn__valid</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_tb/dut/l2_cache/irtn__ready" type="logic">
+      <obj_property name="ElementShortName">irtn__ready</obj_property>
+      <obj_property name="ObjectShortName">irtn__ready</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_tb/dut/l2_cache/irtn__data" type="array">
+      <obj_property name="ElementShortName">irtn__data[63:0]</obj_property>
+      <obj_property name="ObjectShortName">irtn__data[63:0]</obj_property>
+   </wvobject>
+</wave_config>
