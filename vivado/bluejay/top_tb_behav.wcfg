@@ -3,10 +3,10 @@
    <wave_state>
    </wave_state>
    <db_ref_list>
-      <db_ref path="top_tb_behav.wdb" id="1">
+      <db_ref path="jay__tb_behav.wdb" id="1">
          <top_modules>
             <top_module name="glbl" />
-            <top_module name="top_tb" />
+            <top_module name="jay__tb" />
          </top_modules>
       </db_ref>
    </db_ref_list>
@@ -17,95 +17,23 @@
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="226"></NameColumnWidth>
-      <ValueColumnWidth column_width="106"></ValueColumnWidth>
+      <ValueColumnWidth column_width="102"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="22" />
-   <wvobject fp_name="/top_tb/clk" type="logic">
-      <obj_property name="ElementShortName">clk</obj_property>
-      <obj_property name="ObjectShortName">clk</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/rst" type="logic">
-      <obj_property name="ElementShortName">rst</obj_property>
-      <obj_property name="ObjectShortName">rst</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/port__0" type="array">
-      <obj_property name="ElementShortName">port__0[63:0]</obj_property>
-      <obj_property name="ObjectShortName">port__0[63:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/port__1" type="array">
-      <obj_property name="ElementShortName">port__1[63:0]</obj_property>
-      <obj_property name="ObjectShortName">port__1[63:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/dut/central_processing_unit__0/register_file__0/x_10" type="array">
+   <WVObjectSize size="4" />
+   <wvobject fp_name="/jay__tb/dut/central_processing_unit__0/register_file__0/x_10" type="array">
       <obj_property name="ElementShortName">x_10[63:0]</obj_property>
       <obj_property name="ObjectShortName">x_10[63:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/top_tb/dut/central_processing_unit__0/pc" type="array">
-      <obj_property name="ElementShortName">pc[63:0]</obj_property>
-      <obj_property name="ObjectShortName">pc[63:0]</obj_property>
+   <wvobject fp_name="/jay__tb/dut/central_processing_unit__0/pc__n" type="array">
+      <obj_property name="ElementShortName">pc__n[63:0]</obj_property>
+      <obj_property name="ObjectShortName">pc__n[63:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/top_tb/dut/central_processing_unit__0/ir" type="array">
-      <obj_property name="ElementShortName">ir[32:0]</obj_property>
-      <obj_property name="ObjectShortName">ir[32:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/dut/central_processing_unit__0/ir__n" type="array">
-      <obj_property name="ElementShortName">ir__n[32:0]</obj_property>
-      <obj_property name="ObjectShortName">ir__n[32:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/dut/central_processing_unit__0/state" type="array">
+   <wvobject fp_name="/jay__tb/dut/central_processing_unit__0/state" type="array">
       <obj_property name="ElementShortName">state[5:0]</obj_property>
       <obj_property name="ObjectShortName">state[5:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/top_tb/dut/central_processing_unit__0/l1__0/cpu_to_l1__valid" type="logic">
-      <obj_property name="ElementShortName">cpu_to_l1__valid</obj_property>
-      <obj_property name="ObjectShortName">cpu_to_l1__valid</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/dut/central_processing_unit__0/l1__0/cpu_to_l1__ready" type="logic">
-      <obj_property name="ElementShortName">cpu_to_l1__ready</obj_property>
-      <obj_property name="ObjectShortName">cpu_to_l1__ready</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/dut/central_processing_unit__0/l1__0/cpu_to_l1__we" type="logic">
-      <obj_property name="ElementShortName">cpu_to_l1__we</obj_property>
-      <obj_property name="ObjectShortName">cpu_to_l1__we</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/dut/central_processing_unit__0/l1__0/cpu_to_l1__addr" type="array">
-      <obj_property name="ElementShortName">cpu_to_l1__addr[63:0]</obj_property>
-      <obj_property name="ObjectShortName">cpu_to_l1__addr[63:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/dut/central_processing_unit__0/l1__0/cpu_to_l1__wr_data" type="array">
-      <obj_property name="ElementShortName">cpu_to_l1__wr_data[63:0]</obj_property>
-      <obj_property name="ObjectShortName">cpu_to_l1__wr_data[63:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/dut/central_processing_unit__0/l1__0/cpu_to_l1__rd_data" type="array">
-      <obj_property name="ElementShortName">cpu_to_l1__rd_data[63:0]</obj_property>
-      <obj_property name="ObjectShortName">cpu_to_l1__rd_data[63:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/dut/central_processing_unit__0/l1__0/cpu_to_l1__dtype" type="array">
-      <obj_property name="ElementShortName">cpu_to_l1__dtype[2:0]</obj_property>
-      <obj_property name="ObjectShortName">cpu_to_l1__dtype[2:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/dut/central_processing_unit__0/l1__0/state" type="array">
-      <obj_property name="ElementShortName">state[2:0]</obj_property>
-      <obj_property name="ObjectShortName">state[2:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/dut/central_processing_unit__0/l1__0/l1_to_mem__addr" type="array">
-      <obj_property name="ElementShortName">l1_to_mem__addr[60:0]</obj_property>
-      <obj_property name="ObjectShortName">l1_to_mem__addr[60:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/dut/central_processing_unit__0/l1__0/l1_to_mem__wr_data" type="array">
-      <obj_property name="ElementShortName">l1_to_mem__wr_data[63:0]</obj_property>
-      <obj_property name="ObjectShortName">l1_to_mem__wr_data[63:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/dut/central_processing_unit__0/l1__0/l1_to_mem__rd_data" type="array">
-      <obj_property name="ElementShortName">l1_to_mem__rd_data[63:0]</obj_property>
-      <obj_property name="ObjectShortName">l1_to_mem__rd_data[63:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/dut/central_processing_unit__0/l1__0/l1_to_mem__en" type="logic">
-      <obj_property name="ElementShortName">l1_to_mem__en</obj_property>
-      <obj_property name="ObjectShortName">l1_to_mem__en</obj_property>
-   </wvobject>
-   <wvobject fp_name="/top_tb/dut/central_processing_unit__0/l1__0/l1_to_mem__we" type="logic">
-      <obj_property name="ElementShortName">l1_to_mem__we</obj_property>
-      <obj_property name="ObjectShortName">l1_to_mem__we</obj_property>
+   <wvobject fp_name="/jay__tb/dut/central_processing_unit__0/ir" type="array">
+      <obj_property name="ElementShortName">ir[32:0]</obj_property>
+      <obj_property name="ObjectShortName">ir[32:0]</obj_property>
    </wvobject>
 </wave_config>

@@ -186,7 +186,8 @@ if __name__ == '__main__':
         {'path': 'src/top/utility/', 'filename': 'binary_to_seven_segment.b'},
         {'path': 'src/top/utility/', 'filename': 'seven_segment_display.b'},
         {'path': 'src/top/utility/', 'filename': 'debouncer.b'},
-        {'path': 'tb/', 'filename': 'top_tb.b'},
+        {'path': 'src/top/memory/', 'filename': 'mem.b'},
+        {'path': 'tb/top/jay/', 'filename': 'jay__tb.b'},
     ]
 
     jaymake = Jaymake(files)

@@ -15,8 +15,8 @@ module central_processing_unit
 // Program Counter/Instruction Register
 logic [63:0] pc;
 logic [63:0] pc__n;
-logic [32:0] ir;
-logic [32:0] ir__n;
+logic [31:0] ir;
+logic [31:0] ir__n;
 
 // Decoder.
 logic [5:0] op;

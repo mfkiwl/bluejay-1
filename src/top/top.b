@@ -57,6 +57,51 @@ jay jay__0
     .port__1(port__1)
 );
 
+logic [60:0] l1_to_mem__addr;
+logic [63:0] l1_to_mem__wr_data;
+logic [63:0] l1_to_mem__rd_data;
+logic l1_to_mem__en;
+logic l1_to_mem__we;
+
+logic [63:0] addra;
+logic [63:0] dina;
+logic [63:0] douta;
+logic ena;
+logic wea;
+
+
+//==============================
+// memory__0
+//==============================
+memory memory__0
+(
+    .clka(clk),
+    .addra(addra),
+    .dina(dina),
+    .douta(douta),
+    .ena(ena),
+    .wea(wea)
+);
+
+assign addra = l1_to_mem__addr[11:0];
+assign dina = l1_to_mem__wr_data;
+assign l1_to_mem__rd_data = douta;
+assign ena = l1_to_mem__en;
+assign wea = l1_to_mem__we;
+
+always_ff @(posedge clk) begin
+    if (addra == 12'hfff) begin
+        port__0 <= dina;
+    end
+end
+
+always_ff @(posedge clk) begin
+    if (addra == 12'hffe) begin
+        port__1 <= dina;
+    end
+end
+
+
 //==============================
 // seven_segment_display__0
 //==============================
