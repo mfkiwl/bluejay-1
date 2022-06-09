@@ -1,4 +1,4 @@
-FILES := addi add ecall
+FILES := addi add loop 
 BIN := $(FILES:=.bin)
 LST := $(FILES:=.lst)
 TXT := $(FILES:=.txt)

@@ -2,5 +2,5 @@
 .global _start 
 
 _start:
-    addi a0, x0, 0xaa
+    addi a0, zero, 0xaa
     ecall
