@@ -414,7 +414,7 @@ always_comb begin
             b = 4;
             wr_data = c;
             we = 1'b1;
-            state__n = STATE__JALR__JUMP;
+            state__n = STATE__JAL__JUMP;
         end
 
         //==============================

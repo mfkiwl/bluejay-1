@@ -11,19 +11,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="0fs"></ZoomStartTime>
-      <ZoomEndTime time="1000001fs"></ZoomEndTime>
-      <Cursor1Time time="1000000fs"></Cursor1Time>
+      <ZoomStartTime time="2835500fs"></ZoomStartTime>
+      <ZoomEndTime time="3104901fs"></ZoomEndTime>
+      <Cursor1Time time="3060000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="226"></NameColumnWidth>
-      <ValueColumnWidth column_width="102"></ValueColumnWidth>
+      <ValueColumnWidth column_width="98"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="4" />
-   <wvobject fp_name="/jay__tb/dut/central_processing_unit__0/register_file__0/x_10" type="array">
-      <obj_property name="ElementShortName">x_10[63:0]</obj_property>
-      <obj_property name="ObjectShortName">x_10[63:0]</obj_property>
-   </wvobject>
+   <WVObjectSize size="11" />
    <wvobject fp_name="/jay__tb/dut/central_processing_unit__0/pc__n" type="array">
       <obj_property name="ElementShortName">pc__n[63:0]</obj_property>
       <obj_property name="ObjectShortName">pc__n[63:0]</obj_property>
@@ -33,7 +29,39 @@
       <obj_property name="ObjectShortName">state[5:0]</obj_property>
    </wvobject>
    <wvobject fp_name="/jay__tb/dut/central_processing_unit__0/ir" type="array">
-      <obj_property name="ElementShortName">ir[32:0]</obj_property>
-      <obj_property name="ObjectShortName">ir[32:0]</obj_property>
+      <obj_property name="ElementShortName">ir[31:0]</obj_property>
+      <obj_property name="ObjectShortName">ir[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/jay__tb/dut/central_processing_unit__0/op" type="array">
+      <obj_property name="ElementShortName">op[5:0]</obj_property>
+      <obj_property name="ObjectShortName">op[5:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/jay__tb/dut/central_processing_unit__0/imm" type="array">
+      <obj_property name="ElementShortName">imm[63:0]</obj_property>
+      <obj_property name="ObjectShortName">imm[63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/jay__tb/dut/central_processing_unit__0/c" type="array">
+      <obj_property name="ElementShortName">c[63:0]</obj_property>
+      <obj_property name="ObjectShortName">c[63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/jay__tb/dut/central_processing_unit__0/alu_func" type="array">
+      <obj_property name="ElementShortName">alu_func[3:0]</obj_property>
+      <obj_property name="ObjectShortName">alu_func[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/jay__tb/dut/central_processing_unit__0/pc" type="array">
+      <obj_property name="ElementShortName">pc[63:0]</obj_property>
+      <obj_property name="ObjectShortName">pc[63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/jay__tb/dut/central_processing_unit__0/arithmetic_logic_unit__0/a" type="array">
+      <obj_property name="ElementShortName">a[63:0]</obj_property>
+      <obj_property name="ObjectShortName">a[63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/jay__tb/dut/central_processing_unit__0/arithmetic_logic_unit__0/b" type="array">
+      <obj_property name="ElementShortName">b[63:0]</obj_property>
+      <obj_property name="ObjectShortName">b[63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/jay__tb/dut/central_processing_unit__0/register_file__0/x__10" type="array">
+      <obj_property name="ElementShortName">x__10[63:0]</obj_property>
+      <obj_property name="ObjectShortName">x__10[63:0]</obj_property>
    </wvobject>
 </wave_config>
