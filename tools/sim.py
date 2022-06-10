@@ -1,64 +1,68 @@
 ##########
 # import #
 ##########
-from build import *
+import math
+import re
+import ast
+import os
+import sys
+import platform
+import csv
+from io import StringIO
 
 #######
 # Sim #
 #######
-class Sim(Build):
+class Sim():
 
-    #########
-    # build #
-    #########
-    def build(self):
-        txt = self.txt
-        txt = self.find_and_replace(txt)
-        txt = self.fold_constants(txt)
+    ############
+    # __init__ #
+    ############
+    def __init__(self):
 
-        # create data frame
-        df = pd.read_csv(StringIO(txt))
+        os = platform.system()
+        if os == 'Darwin':
+            self.path = '/Users/seankent/Documents/bluejay/'
+        else:
+            self.path = '/mnt/c/Users/seanj/Documents/bluejay/'
 
-        # create a dictionary maping column names to their bit length
-        logic = {}
-        for column in df.columns:
-            match = re.search('\[[0-9]+:[0-9]+\]', column)
-            # if match is None, the bit width is 1
-            if match is None:
-                logic[column] = 1
-            # else, extract the bit width from the [msb:lsb] indicies
+
+    #######
+    # run #
+    #######
+    def run(self):
+        tests = ['add', 'loop']
+
+        for test in tests:
+            vout = self.path + 'sim/basic/results/' + test + '.vout'
+            aout = self.path + 'sim/basic/results/' + test + '.aout'
+            if self.diff(vout, aout):
+                print('failed.')
             else:
-                # extract the msb
-                msb = int(match.group(0)[1:-1].split(':')[0])
-                # extract the lsb
-                lsb = int(match.group(0)[1:-1].split(':')[1])
-                # calculate the bit width
-                logic[column] = msb - lsb + 1
+                print('passed!')
 
-        # create output file
-        txt = ''
-        # iterate over rows, columns of the df
-        for index, row in df.iterrows():
-            for column in df.columns:
-                value = self.string_to_int(row[column])
-                # convert value into a binary number of length logic[column]
-                if value is None:
-                    txt += 'x'*logic[column]
-                else:
-                    txt += format(value, f'0{logic[column]}b')
-            txt += '\n'
-
-        # remove final '\n'
-        txt = txt[:-1]
         
-        # get output file name
-        filename = self.filename.replace('.csv', '.txt')
-        self.write(filename, txt)
+
+    ########
+    # diff #
+    ########
+    def diff(self, filename__0, filename__1):
+        # read file 0
+        with open(filename__0, 'r') as file:
+            txt__0 = file.read()
+
+        # read file 1
+        with open(filename__1, 'r') as file:
+            txt__1 = file.read()
+            
+        # compare files
+        if txt__0 != txt__1:
+            return True
+        else:
+            return False
+
 
 if __name__ == '__main__':
-    if len(sys.argv) == 2:
-        filename = sys.argv[1]
-        sim = Sim(filename)
-        sim.build()
-    else:
-        print('[ERROR]')
+    sim = Sim()
+    sim.run()
+
