@@ -1,3 +1,5 @@
 - The JALR instruction ignores the lowest bit of the calculated target address.
 - The JAL and JALR instructions will generate a misaligned instruction fetch exception if the target address is not aligned to a four-byte boundary.
-
+- Loads with a destination of x0 must still raise any exceptions and action any other side effects even though the load value is discarded
+- Trap for misaligned memory accesses
+- For RV32I, SLLI, SRLI, and SRAI generate an illegal instruction exception if imm[5] != 0.
