@@ -16,3 +16,5 @@ Resources:
         - https://www.youtube.com/watch?v=iWQRV-KJ7tQ&list=PL3by7evD3F53Dz2RiB47Ztp9l_piGVuus&index=9
     - Compiling Freestanding RISC-V Programs
         - https://www.youtube.com/watch?v=ODn7vnWOptM
+
+
