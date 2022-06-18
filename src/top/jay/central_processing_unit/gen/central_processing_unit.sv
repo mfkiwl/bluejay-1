@@ -509,7 +509,7 @@ end
 
 always_ff @(posedge clk) begin
     if (rst) begin
-        pc <= 0;
+        pc <= 64'h80_00_00_00;
     end
     else begin
         pc <= pc__n;
