@@ -1,7 +1,0 @@
-.text
-.global _start 
-
-_start:
-    addi t0, zero, 0x8
-    slti a0, t0, 0x9
-    ecall

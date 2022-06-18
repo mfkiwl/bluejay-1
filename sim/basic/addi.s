@@ -3,4 +3,5 @@
 
 _start:
     addi a0, zero, 0xaa
-    ecall
+_end:
+    j _end 
