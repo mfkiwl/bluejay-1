@@ -20,3 +20,7 @@ Resources:
         - https://github.com/riscv-software-src/riscv-isa-sim/issues/192
     - Spike Documentation
         - https://github.com/poweihuang17/Documentation_Spike
+    - Vivado Design Suite Tcl Command Reference Guide
+        - https://docs.xilinx.com/v/u/2019.2-English/ug835-vivado-tcl-commands
+    - Install Vivado on Ubuntu
+        - https://danielmangum.com/posts/vivado-2020-x-ubuntu-20-04/

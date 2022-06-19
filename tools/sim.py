@@ -23,9 +23,25 @@ class Sim():
         os = platform.system()
         if os == 'Darwin':
             self.path = '/Users/seankent/Documents/bluejay/'
+        elif os == 'Linux':
+            self.path = '/home/seankent/bluejay/'
         else:
             self.path = '/mnt/c/Users/seanj/Documents/bluejay/'
 
+    ########
+    # asim #
+    ########
+    def asim(self, filename, path):
+        # run the spike simulator
+        stdout = os.popen('spike pk ' + path + filename).read()
+        tokens = stdout.split()
+        # determine the value of the a0 register
+        a0 = re.search('a0 [0-9a-f]+', stdout).group(0).split()[1]
+
+        with open(path + 'results/' + filename + '.aout', 'w') as file:
+            file.write(a0 + '\n')
+
+        
 
     #######
     # run #
@@ -64,5 +80,6 @@ class Sim():
 
 if __name__ == '__main__':
     sim = Sim()
-    sim.run()
+    sim.asim('addi', '/home/seankent/bluejay/sim/basic/')
+    #sim.run()
 

@@ -1,4 +1,4 @@
-FILES := addi 
+FILES := addi test
 BIN := $(FILES:=.bin)
 LST := $(FILES:=.lst)
 TXT := $(FILES:=.txt)

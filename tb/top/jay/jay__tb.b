@@ -72,7 +72,7 @@ int fd;
 initial begin
     forever begin
         @(posedge clk) begin
-            if (dut.central_processing_unit__0.ir == 32'h0000006f) begin
+            if (dut.central_processing_unit__0.op == OP__EBREAK) begin
                 fd = $fopen("C:/Users/seanj/Documents/bluejay/sim/basic/results/addi.vout");
                 $fdisplay(fd, "%016h", dut.central_processing_unit__0.register_file__0.x__10);
                 $fclose(fd);
