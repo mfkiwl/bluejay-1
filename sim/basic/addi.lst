@@ -4,6 +4,6 @@ addi:     file format elf64-littleriscv
 
 Disassembly of section .text:
 
-0000000080000000 <_start>:
-    80000000:	0ab00513          	addi	x10,x0,171
-    80000004:	00100073          	ebreak
+0000000000000000 <_start>:
+   0:	0ab00513          	addi	x10,x0,171
+   4:	00100073          	ebreak

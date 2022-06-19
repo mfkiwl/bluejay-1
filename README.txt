@@ -24,3 +24,5 @@ Resources:
         - https://docs.xilinx.com/v/u/2019.2-English/ug835-vivado-tcl-commands
     - Install Vivado on Ubuntu
         - https://danielmangum.com/posts/vivado-2020-x-ubuntu-20-04/
+    - ELF Files Format
+        - https://www.ics.uci.edu/~aburtsev/238P/hw/hw3-elf/hw3-elf.html

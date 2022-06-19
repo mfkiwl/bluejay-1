@@ -19,6 +19,8 @@ class Jaymake:
         os = platform.system()
         if os == 'Darwin':
             self.path = '/Users/seankent/Documents/bluejay/'
+        elif os == 'Linux':
+            self.path = '/home/seankent/bluejay/'
         else:
             self.path = '/mnt/c/Users/seanj/Documents/bluejay/'
 
