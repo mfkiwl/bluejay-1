@@ -1,4 +1,5 @@
 BLUEJAY := /home/seankent/bluejay
+SIM := /home/seankent/bluejay/sim
 TOOLS := $(BLUEJAY)/tools
 BUILD := $(BLUEJAY)/build
 
@@ -13,6 +14,34 @@ ELAB_OPTS := \
 
 TOP__TB := jay__tb
 
+TESTNAME := basic
+TESTLIST := addi slti sltiu slli xori
+VOUT := $(foreach i, $(TESTLIST), $(addprefix $(SIM)/results/$(TESTNAME)/, $(i:=.vout)))
+AOUT := $(foreach i, $(TESTLIST), $(addprefix $(SIM)/results/$(TESTNAME)/, $(i:=.aout)))
+
+
+
+diff: $(AOUT) $(VOUT)
+	python3 $(TOOLS)/diff.py $(SIM)/results/$(TESTNAME)/ 
+
+
+$(SIM)/results/$(TESTNAME)/%.vout: .elab.timestamp
+	cd $(SIM)/$(TESTNAME) && $(MAKE)
+	cp $(SIM)/$(TESTNAME)/$*.txt t.txt 
+	xsim $(TOP__TB)__snapshot --tclbatch xsim_cfg.tcl
+	cp t.vout $(SIM)/results/$(TESTNAME)/$*.vout
+
+$(SIM)/results/$(TESTNAME)/%.aout: 
+	cd $(SIM)/$(TESTNAME) && $(MAKE)
+	cd $(SIM)/$(TESTNAME) && $(MAKE)
+	python3 $(TOOLS)/asim.py $(SIM)/$(TESTNAME)/$* $@ 
+
+
+
+.PHONY: $(SIM)/$(TESTNAME)
+$(SIM)/$(TESTNAME):
+	cd $@ && $(MAKE)
+	
 
 .PHONY: waves
 waves: $(TOP__TB)__snapshot.wdb

@@ -1,11 +1,11 @@
-FILES := addi slti sltiu add 
-BIN := $(FILES:=.bin)
-LST := $(FILES:=.lst)
-TXT := $(FILES:=.txt)
+FILES := $(wildcard *.s)
+BIN := $(FILES:.s=.bin)
+LST := $(FILES:.s=.lst)
+TXT := $(FILES:.s=.txt)
 
 all: $(TXT) $(BIN) $(LST) 
 
-$(FILES): %: %.s 
+$(FILES:.s=): %: %.s 
 	riscv64-unknown-elf-gcc -march=rv64i -mabi=lp64 -ffreestanding -fno-pic -nostdlib -Ttext=0x0 -mno-relax $@.s -o $@ 
 	#riscv64-unknown-elf-gcc -march=rv64i -mabi=lp64 -ffreestanding -fno-pic -nostdlib -Ttext=0x80000000 -mno-relax $@.s -o $@ 
 
@@ -22,5 +22,5 @@ $(TXT): %.txt: %.bin
 .PHONY: clean
 
 clean:
-	rm -f $(FILES) $(BIN) $(LST) $(TXT)
+	rm -f $(FILES:.s=) $(BIN) $(LST) $(TXT)
 
