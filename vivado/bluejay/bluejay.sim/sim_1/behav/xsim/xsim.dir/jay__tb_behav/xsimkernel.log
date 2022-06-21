@@ -1,7 +1,7 @@
-Running: xsim.dir/jay__tb_behav/xsimk.exe -simmode gui -wdb jay__tb_behav.wdb -simrunnum 0 -socket 56754
+Running: xsim.dir/jay__tb_behav/xsimk -simmode gui -wdb jay__tb_behav.wdb -simrunnum 0 -socket 42709
 Design successfully loaded
-Design Loading Memory Usage: 6008 KB (Peak: 6008 KB)
-Design Loading CPU Usage: 62 ms
+Design Loading Memory Usage: 29288 KB (Peak: 29684 KB)
+Design Loading CPU Usage: 10 ms
 Simulation completed
-Simulation Memory Usage: 6940 KB (Peak: 6940 KB)
-Simulation CPU Usage: 62 ms
+Simulation Memory Usage: 115384 KB (Peak: 168556 KB)
+Simulation CPU Usage: 20 ms

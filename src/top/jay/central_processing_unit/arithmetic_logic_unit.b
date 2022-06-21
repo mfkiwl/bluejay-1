@@ -32,7 +32,7 @@ always_comb begin
         end
         FUNC__SLL:
         begin 
-            c = a << b[4:0];
+            c = a << b[5:0];
         end
         FUNC__SLLW:
         begin

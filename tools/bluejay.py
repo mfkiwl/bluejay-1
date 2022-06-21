@@ -211,12 +211,62 @@ class Bluejay:
         return re.sub('\n', '\n' + ' '*indent, string)
 
 
+##################
+# define_to_dict #
+###################
+def define_to_dict(txt):
+    define = {}
+    for line in re.split('\n', txt):
+        line = clean(line)
+        if line == '':
+            continue
 
-# if __name__ == '__main__':
-# 
-#     if len(sys.argv) == 2:
-#         filename = sys.argv[1]
-#         bluejay = Build(filename)
-#         build.build()
-#     else:
-#         print('[ERROR]')
+        tokens = re.split(' ', line)
+        key, value = tokens[1], tokens[2]
+        define[key] = value
+
+    return define
+
+
+#########
+# clean #
+#########
+def clean(string):
+    # convert tabs to spaces
+    string = re.sub('\t+', ' ', string)
+    # replace multiple spaces with a single space
+    string = re.sub(' +', ' ', string)
+    # remove any spaces before the begining of the string
+    string = re.sub('^ *', '', string)
+    # remove any spaces before the end of the string
+    string = re.sub(' $', '', string)
+    return string
+
+if __name__ == '__main__':
+ 
+    if len(sys.argv) == 3:
+        file__b = sys.argv[1]
+        file__sv = sys.argv[2]
+
+        if platform.system() == 'Darwin':
+            path = '/Users/seankent/Documents/bluejay/'
+        elif platform.system() == 'Linux':
+            path = '/home/seankent/bluejay/'
+        else:
+            path = '/mnt/c/Users/seanj/Documents/bluejay/'
+
+        with open(file__b, 'r') as file:
+            txt = file.read()
+
+        with open(path + 'include/include.txt', 'r') as file:
+            defines = define_to_dict(file.read())
+
+        bluejay = Bluejay(txt, defines)
+        bluejay.build()
+
+        with open(file__sv, 'w') as file:
+            file.write(bluejay.sv)
+
+
+    else:
+        print('[ERROR] Bluejay failed.')

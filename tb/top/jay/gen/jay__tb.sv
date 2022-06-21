@@ -1,7 +1,7 @@
 //==============================================
 // timescale
 //==============================================
-`timescale 1ns / 1ps
+//`timescale 1ns / 1ps
 
 //==============================================
 // jay__tb
@@ -72,8 +72,8 @@ int fd;
 initial begin
     forever begin
         @(posedge clk) begin
-            if (dut.central_processing_unit__0.ir == 32'h0000006f) begin
-                fd = $fopen("C:/Users/seanj/Documents/bluejay/sim/basic/results/addi.vout");
+            if (dut.central_processing_unit__0.op == 6'h35) begin
+                fd = $fopen("/home/seankent/bluejay/sim/basic/results/sltiu.vout");
                 $fdisplay(fd, "%016h", dut.central_processing_unit__0.register_file__0.x__10);
                 $fclose(fd);
                 $finish;
@@ -90,7 +90,7 @@ initial begin
     clk = 1'b1;
     rst = 1'b1;
     // initialize instruction memory
-    $readmemh("C:/Users/seanj/Documents/bluejay/sim/basic/addi.txt", mem__0.memory);
+    $readmemh("/home/seankent/bluejay/sim/basic/sltiu.txt", mem__0.memory);
 
     #11;
     // de-assert rst
@@ -99,5 +99,9 @@ initial begin
     #15000;
     $finish;
 end
+
+
+//fd = $fopen("C:/Users/seanj/Documents/bluejay/sim/basic/results/shlti.vout");
+//$readmemh("C:/Users/seanj/Documents/bluejay/sim/basic/slti.txt", mem__0.memory);
 
 endmodule

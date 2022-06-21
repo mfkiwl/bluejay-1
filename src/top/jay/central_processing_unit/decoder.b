@@ -46,37 +46,30 @@ always_comb begin
         7'h03:
         begin
             case (funct3)
-                // lb
                 3'h0:
                 begin
                     op = OP__LB;
                 end
-                // lh
                 3'h1:
                 begin
                     op = OP__LH;
                 end
-                // lw
                 3'h2:
                 begin
                     op = OP__LW;
                 end
-                // ld
                 3'h3:
                 begin
                     op = OP__LD;
                 end
-                // lbu
                 3'h4:
                 begin
                     op = OP__LBU;
                 end
-                // lhu
                 3'h5:
                 begin
                     op = OP__LHU;
                 end
-                // lhw
                 3'h6:
                 begin
                     op = OP__LWU;
@@ -86,12 +79,10 @@ always_comb begin
         7'h0f:
         begin
             case (funct3)
-                // fence
                 3'h0:
                 begin
                     op = OP__FENCE;
                 end
-                // fence.i
                 3'h1:
                 begin
                     op = OP__FENCE_I;
@@ -101,7 +92,6 @@ always_comb begin
         7'h13:
         begin
             case (funct3)
-                // addi
                 3'h0:
                 begin
                     op = OP__ADDI;
@@ -109,24 +99,24 @@ always_comb begin
                 3'h1:
                 begin
                     case (funct7)
-                        // slli
                         7'h00:
+                        begin
+                            op = OP__SLLI;
+                        end
+                        7'h01:
                         begin
                             op = OP__SLLI;
                         end
                     endcase
                 end
-                // slti
                 3'h2:
                 begin
                     op = OP__SLTI;
                 end
-                // sltiu
                 3'h3:
                 begin
                     op = OP__SLTIU;
                 end
-                // xori
                 3'h4:
                 begin
                     op = OP__XORI;
@@ -134,31 +124,34 @@ always_comb begin
                 3'h5:
                 begin
                     case (funct7)
-                        // srli
                         7'h00:
                         begin
                             op = OP__SRLI;
                         end
-                        // srai
+                        7'h01:
+                        begin
+                            op = OP__SRLI;
+                        end
                         7'h20:
+                        begin
+                            op = OP__SRAI;
+                        end
+                        7'h21:
                         begin
                             op = OP__SRAI;
                         end
                     endcase
                 end
-                // ori
                 3'h6:
                 begin
                     op = OP__ORI;
                 end
-                // andi
                 3'h7:
                 begin
                     op = OP__ANDI;
                 end
             endcase
         end
-        // auipc
         7'h17:
         begin
             op = OP__AUIPC;
@@ -166,7 +159,6 @@ always_comb begin
         7'h1b:
         begin
             case (funct3)
-                // addiw
                 3'h0:
                 begin
                     op = OP__ADDIW;
@@ -174,7 +166,6 @@ always_comb begin
                 3'h1:
                 begin
                     case (funct7)
-                        // slliw
                         7'h00:
                         begin
                             op = OP__SLLIW;
@@ -184,12 +175,10 @@ always_comb begin
                 3'h5:
                 begin
                     case (funct7)
-                        // srliw
                         7'h00:
                         begin
                             op = OP__SRLIW;
                         end
-                        // sraiw
                         7'h00:
                         begin
                             op = OP__SRAIW;
@@ -201,22 +190,18 @@ always_comb begin
         7'h23:
         begin
             case (funct3)
-                // sb
                 3'h0:
                 begin
                     op = OP__SB;
                 end
-                // sh
                 3'h1:
                 begin
                     op = OP__SH;
                 end
-                // sw
                 3'h2:
                 begin
                     op = OP__SW;
                 end
-                // sd
                 3'h3:
                 begin
                     op = OP__SD;
@@ -229,12 +214,10 @@ always_comb begin
                 3'h0:
                 begin
                     case (funct7)
-                        // add
                         7'h00:
                         begin
                             op = OP__ADD;
                         end
-                        // sub
                         7'h20:
                         begin
                             op = OP__SUB;
@@ -244,7 +227,6 @@ always_comb begin
                 3'h1:
                 begin
                     case (funct7)
-                        // sll
                         7'h00:
                         begin
                             op = OP__SLL;
@@ -254,7 +236,6 @@ always_comb begin
                 3'h2:
                 begin
                     case (funct7)
-                        // slt
                         7'h00:
                         begin
                             op = OP__SLT;
@@ -264,7 +245,6 @@ always_comb begin
                 3'h3:
                 begin
                     case (funct7)
-                        // sltu
                         7'h00:
                         begin
                             op = OP__SLTU;
@@ -274,7 +254,6 @@ always_comb begin
                 3'h4:
                 begin
                     case (funct7)
-                        // xor
                         7'h00:
                         begin
                             op = OP__XOR;
@@ -284,12 +263,10 @@ always_comb begin
                 3'h5:
                 begin
                     case (funct7)
-                        // srl
                         7'h00:
                         begin
                             op = OP__SRL;
                         end
-                        // sra
                         7'h20:
                         begin
                             op = OP__SRA;
@@ -299,7 +276,6 @@ always_comb begin
                 3'h6:
                 begin
                     case (funct7)
-                        // or
                         7'h00:
                         begin
                             op = OP__OR;
@@ -309,7 +285,6 @@ always_comb begin
                 3'h7:
                 begin
                     case (funct7)
-                        // and
                         7'h00:
                         begin
                             op = OP__AND;
@@ -318,7 +293,6 @@ always_comb begin
                 end
             endcase
         end
-        // lui
         7'h37:
         begin
             op = OP__LUI;
@@ -329,12 +303,10 @@ always_comb begin
                 3'h0:
                 begin
                     case (funct7)
-                        // addw
                         7'h00:
                         begin
                             op = OP__ADDW;
                         end
-                        // subw
                         7'h20:
                         begin
                             op = OP__SUBW;
@@ -344,7 +316,6 @@ always_comb begin
                 3'h1:
                 begin
                     case (funct7)
-                        // sllw
                         7'h00:
                         begin
                             op = OP__SLLW;
@@ -354,12 +325,10 @@ always_comb begin
                 3'h5:
                 begin
                     case (funct7)
-                        // srlw
                         7'h00:
                         begin
                             op = OP__SRLW;
                         end
-                        // sraw
                         7'h20:
                         begin
                            op = OP__SRAW;
@@ -371,32 +340,26 @@ always_comb begin
         7'h63:
         begin
             case (funct3)
-                // beq
                 3'h0:
                 begin
                     op = OP__BEQ;
                 end
-                // bne
                 3'h1:
                 begin
                     op = OP__BNE;
                 end
-                // blt
                 3'h4:
                 begin
                     op = OP__BLT;
                 end
-                // bge
                 3'h5:
                 begin
                     op = OP__BGE;
                 end
-                // bltu
                 3'h6:
                 begin
                     op = OP__BLTU;
                 end
-                // bgeu
                 3'h7:
                 begin
                     op = OP__BGEU;
@@ -406,14 +369,12 @@ always_comb begin
         7'h67:
         begin
             case (funct3)
-                // jalr
                 3'h0:
                 begin
                     op = OP__JALR;
                 end
             endcase
         end
-        // jal
         7'h6f:
         begin
             op = OP__JAL;
@@ -424,12 +385,10 @@ always_comb begin
                 3'h0:
                 begin
                     case (ir[31:20])
-                        // ecall
                         12'h000:
                         begin
                             op = OP__ECALL;
                         end
-                        // ebreak
                         12'h001:
                         begin
                             op = OP__EBREAK;

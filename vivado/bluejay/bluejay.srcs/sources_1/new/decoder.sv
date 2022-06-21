@@ -46,37 +46,30 @@ always_comb begin
         7'h03:
         begin
             case (funct3)
-                // lb
                 3'h0:
                 begin
                     op = 6'h1;
                 end
-                // lh
                 3'h1:
                 begin
                     op = 6'h2;
                 end
-                // lw
                 3'h2:
                 begin
                     op = 6'h3;
                 end
-                // ld
                 3'h3:
                 begin
                     op = 6'h4;
                 end
-                // lbu
                 3'h4:
                 begin
                     op = 6'h5;
                 end
-                // lhu
                 3'h5:
                 begin
                     op = 6'h6;
                 end
-                // lhw
                 3'h6:
                 begin
                     op = 6'h7;
@@ -86,12 +79,10 @@ always_comb begin
         7'h0f:
         begin
             case (funct3)
-                // fence
                 3'h0:
                 begin
                     op = 6'h8;
                 end
-                // fence.i
                 3'h1:
                 begin
                     op = 6'h9;
@@ -101,7 +92,6 @@ always_comb begin
         7'h13:
         begin
             case (funct3)
-                // addi
                 3'h0:
                 begin
                     op = 6'ha;
@@ -109,24 +99,24 @@ always_comb begin
                 3'h1:
                 begin
                     case (funct7)
-                        // slli
                         7'h00:
+                        begin
+                            op = 6'hb;
+                        end
+                        7'h01:
                         begin
                             op = 6'hb;
                         end
                     endcase
                 end
-                // slti
                 3'h2:
                 begin
                     op = 6'hc;
                 end
-                // sltiu
                 3'h3:
                 begin
                     op = 6'hd;
                 end
-                // xori
                 3'h4:
                 begin
                     op = 6'he;
@@ -134,31 +124,34 @@ always_comb begin
                 3'h5:
                 begin
                     case (funct7)
-                        // srli
                         7'h00:
                         begin
                             op = 6'hf;
                         end
-                        // srai
+                        7'h01:
+                        begin
+                            op = 6'hf;
+                        end
                         7'h20:
+                        begin
+                            op = 6'h10;
+                        end
+                        7'h21:
                         begin
                             op = 6'h10;
                         end
                     endcase
                 end
-                // ori
                 3'h6:
                 begin
                     op = 6'h11;
                 end
-                // andi
                 3'h7:
                 begin
                     op = 6'h12;
                 end
             endcase
         end
-        // auipc
         7'h17:
         begin
             op = 6'h13;
@@ -166,7 +159,6 @@ always_comb begin
         7'h1b:
         begin
             case (funct3)
-                // addiw
                 3'h0:
                 begin
                     op = 6'h14;
@@ -174,7 +166,6 @@ always_comb begin
                 3'h1:
                 begin
                     case (funct7)
-                        // slliw
                         7'h00:
                         begin
                             op = 6'h15;
@@ -184,12 +175,10 @@ always_comb begin
                 3'h5:
                 begin
                     case (funct7)
-                        // srliw
                         7'h00:
                         begin
                             op = 6'h16;
                         end
-                        // sraiw
                         7'h00:
                         begin
                             op = 6'h17;
@@ -201,22 +190,18 @@ always_comb begin
         7'h23:
         begin
             case (funct3)
-                // sb
                 3'h0:
                 begin
                     op = 6'h18;
                 end
-                // sh
                 3'h1:
                 begin
                     op = 6'h19;
                 end
-                // sw
                 3'h2:
                 begin
                     op = 6'h1a;
                 end
-                // sd
                 3'h3:
                 begin
                     op = 6'h1b;
@@ -229,12 +214,10 @@ always_comb begin
                 3'h0:
                 begin
                     case (funct7)
-                        // add
                         7'h00:
                         begin
                             op = 6'h1c;
                         end
-                        // sub
                         7'h20:
                         begin
                             op = 6'h1d;
@@ -244,7 +227,6 @@ always_comb begin
                 3'h1:
                 begin
                     case (funct7)
-                        // sll
                         7'h00:
                         begin
                             op = 6'h1e;
@@ -254,7 +236,6 @@ always_comb begin
                 3'h2:
                 begin
                     case (funct7)
-                        // slt
                         7'h00:
                         begin
                             op = 6'h1f;
@@ -264,7 +245,6 @@ always_comb begin
                 3'h3:
                 begin
                     case (funct7)
-                        // sltu
                         7'h00:
                         begin
                             op = 6'h20;
@@ -274,7 +254,6 @@ always_comb begin
                 3'h4:
                 begin
                     case (funct7)
-                        // xor
                         7'h00:
                         begin
                             op = 6'h21;
@@ -284,12 +263,10 @@ always_comb begin
                 3'h5:
                 begin
                     case (funct7)
-                        // srl
                         7'h00:
                         begin
                             op = 6'h22;
                         end
-                        // sra
                         7'h20:
                         begin
                             op = 6'h23;
@@ -299,7 +276,6 @@ always_comb begin
                 3'h6:
                 begin
                     case (funct7)
-                        // or
                         7'h00:
                         begin
                             op = 6'h24;
@@ -309,7 +285,6 @@ always_comb begin
                 3'h7:
                 begin
                     case (funct7)
-                        // and
                         7'h00:
                         begin
                             op = 6'h25;
@@ -318,7 +293,6 @@ always_comb begin
                 end
             endcase
         end
-        // lui
         7'h37:
         begin
             op = 6'h26;
@@ -329,12 +303,10 @@ always_comb begin
                 3'h0:
                 begin
                     case (funct7)
-                        // addw
                         7'h00:
                         begin
                             op = 6'h27;
                         end
-                        // subw
                         7'h20:
                         begin
                             op = 6'h28;
@@ -344,7 +316,6 @@ always_comb begin
                 3'h1:
                 begin
                     case (funct7)
-                        // sllw
                         7'h00:
                         begin
                             op = 6'h29;
@@ -354,12 +325,10 @@ always_comb begin
                 3'h5:
                 begin
                     case (funct7)
-                        // srlw
                         7'h00:
                         begin
                             op = 6'h2a;
                         end
-                        // sraw
                         7'h20:
                         begin
                            op = 6'h2b;
@@ -371,32 +340,26 @@ always_comb begin
         7'h63:
         begin
             case (funct3)
-                // beq
                 3'h0:
                 begin
                     op = 6'h2c;
                 end
-                // bne
                 3'h1:
                 begin
                     op = 6'h2d;
                 end
-                // blt
                 3'h4:
                 begin
                     op = 6'h2e;
                 end
-                // bge
                 3'h5:
                 begin
                     op = 6'h2f;
                 end
-                // bltu
                 3'h6:
                 begin
                     op = 6'h30;
                 end
-                // bgeu
                 3'h7:
                 begin
                     op = 6'h31;
@@ -406,14 +369,12 @@ always_comb begin
         7'h67:
         begin
             case (funct3)
-                // jalr
                 3'h0:
                 begin
                     op = 6'h32;
                 end
             endcase
         end
-        // jal
         7'h6f:
         begin
             op = 6'h33;
@@ -424,12 +385,10 @@ always_comb begin
                 3'h0:
                 begin
                     case (ir[31:20])
-                        // ecall
                         12'h000:
                         begin
                             op = 6'h34;
                         end
-                        // ebreak
                         12'h001:
                         begin
                             op = 6'h35;

@@ -1,0 +1,30 @@
+Vivado Simulator v2022.1
+Copyright 1986-1999, 2001-2022 Xilinx, Inc. All Rights Reserved.
+Running: /tools/Xilinx/Vivado/2022.1/bin/unwrapped/lnx64.o/xelab -debug all --relax -top jay__tb -snapshot jay__tb__snapshot 
+Multi-threading is on. Using 18 slave threads.
+Starting static elaboration
+Pass Through NonSizing Optimizer
+Completed static elaboration
+Starting simulation data flow analysis
+WARNING: [XSIM 43-4099] "/home/seankent/bluejay/build/jay.sv" Line 4. Module jay doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "/home/seankent/bluejay/build/central_processing_unit.sv" Line 4. Module central_processing_unit doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "/home/seankent/bluejay/build/decoder.sv" Line 4. Module decoder doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "/home/seankent/bluejay/build/arithmetic_logic_unit.sv" Line 4. Module arithmetic_logic_unit doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "/home/seankent/bluejay/build/comparator.sv" Line 4. Module comparator doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "/home/seankent/bluejay/build/jay.sv" Line 4. Module jay doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "/home/seankent/bluejay/build/central_processing_unit.sv" Line 4. Module central_processing_unit doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "/home/seankent/bluejay/build/decoder.sv" Line 4. Module decoder doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "/home/seankent/bluejay/build/arithmetic_logic_unit.sv" Line 4. Module arithmetic_logic_unit doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "/home/seankent/bluejay/build/comparator.sv" Line 4. Module comparator doesn't have a timescale but at least one module in design has a timescale.
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling module work.decoder
+Compiling module work.register_file
+Compiling module work.arithmetic_logic_unit
+Compiling module work.comparator
+Compiling module work.l1
+Compiling module work.central_processing_unit
+Compiling module work.jay
+Compiling module work.mem(WIDTH=64,DEPTH=4096,DEPTH__L...
+Compiling module work.jay__tb
+Built simulation snapshot jay__tb__snapshot

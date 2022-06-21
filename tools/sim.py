@@ -75,7 +75,7 @@ class Sim():
         # run asim for each test in the testlist 
         for test in testlist:
             value = self.asim(test) 
-            txt = '0x{:016x}'.format(value)
+            txt = '{:016x}\n'.format(value)
             self.write(self.path + self.sub + 'results/', test + '.aout', txt)
 
     #######

@@ -1,9 +1,13 @@
-BLUEJAY = /mnt/c/Users/seanj/Documents/bluejay/
-SRC = src/central_processing_unit/gen/
-TB = tb/central_processing_unit/gen/
-VIVADO_SRC = vivado/bluejay/bluejay.srcs/sources_1/new/
-VIVADO_TB = vivado/bluejay/bluejay.srcs/sim_1/new/
+BLUEJAY := /home/seankent/bluejay
+TOOLS := $(BLUEJAY)/tools
+BUILD := $(BLUEJAY)/build
+SRC := $(BLUEJAY)/src
+TB := $(BLUEJAY)/tb
 
-all:
-	cp $(BLUEJAY)$(SRC)*.sv $(BLUEJAY)$(VIVADO_SRC)
-	cp $(BLUEJAY)$(TB)*.sv $(BLUEJAY)$(VIVADO_TB)
+all: rtl 
+
+rtl: 
+	cd $(SRC) && $(MAKE)
+	cd $(TB) && $(MAKE)
+
+.PHONY: rtl

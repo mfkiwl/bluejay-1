@@ -33,14 +33,14 @@ logic [7:0] state__n;
 
 always_comb begin
     case (state)
-        8'hfe: n = n_0;
-        8'hfd: n = n_1;
-        8'hfb: n = n_2;
-        8'hf7: n = n_3;
-        8'hef: n = n_4;
-        8'hdf: n = n_5;
-        8'hbf: n = n_6;
-        8'h7f: n = n_7;
+        8'hfe: n = n__0;
+        8'hfd: n = n__1;
+        8'hfb: n = n__2;
+        8'hf7: n = n__3;
+        8'hef: n = n__4;
+        8'hdf: n = n__5;
+        8'hbf: n = n__6;
+        8'h7f: n = n__7;
     endcase
 end
 
@@ -74,7 +74,7 @@ always_ff @(posedge clk) begin
 end
 
 always_ff @(posedge clk) begin
-    if (reset) begin
+    if (rst) begin
         count <= 0;
     end
     else begin

@@ -26,3 +26,6 @@ Resources:
         - https://danielmangum.com/posts/vivado-2020-x-ubuntu-20-04/
     - ELF Files Format
         - https://www.ics.uci.edu/~aburtsev/238P/hw/hw3-elf/hw3-elf.html
+    - Running simulation in Vivado with TCL and Make
+        - https://www.itsembedded.com/dhd/vivado_sim_1/
+        - https://www.itsembedded.com/dhd/vivado_sim_3/
