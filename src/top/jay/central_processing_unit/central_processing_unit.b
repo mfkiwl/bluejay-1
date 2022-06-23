@@ -378,7 +378,7 @@ always_comb begin
         //==============================
         STATE__JALR__MOVE_RS1_TO_TEMP:
         begin
-            temp__n = rd_data__1;
+            temp__n = rd_data__0;
             state__n = STATE__JALR__LINK;
         end
 

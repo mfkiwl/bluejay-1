@@ -594,6 +594,7 @@ always_comb begin
         OP__SRAW:
         begin
             format = FORMAT__R_TYPE;
+            func = FUNC__SRAW;
         end
         OP__BEQ:
         begin

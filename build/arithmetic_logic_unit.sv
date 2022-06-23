@@ -52,7 +52,7 @@ always_comb begin
         end
         4'h9:
         begin
-            c = a >> b[4:0];
+            c = a >> b[5:0];
         end
         4'ha:
         begin

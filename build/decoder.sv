@@ -594,6 +594,7 @@ always_comb begin
         6'h2b:
         begin
             format = 3'h0;
+            func = 4'hc;
         end
         6'h2c:
         begin

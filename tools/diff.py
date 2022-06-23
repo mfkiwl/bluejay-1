@@ -30,8 +30,8 @@ def diff(path):
             print('pass!')
         else:
             print('fail.')
-            print(f'    asim: {asim}')
-            print(f'    vsim: {vsim}')
+            print(f'    aout: {aout}')
+            print(f'    vout: {vout}')
 
     print(f'{passed}/{total}')
 
