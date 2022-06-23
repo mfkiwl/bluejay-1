@@ -15,7 +15,7 @@ ELAB_OPTS := \
 TOP__TB := jay__tb
 
 TESTNAME := basic
-TESTLIST := addi slti sltiu slli xori
+TESTLIST := addi slti sltiu slli xori ori andi srli srai addiw slliw srliw sraiw beq bne blt bltu bge bgeu
 VOUT := $(foreach i, $(TESTLIST), $(addprefix $(SIM)/results/$(TESTNAME)/, $(i:=.vout)))
 AOUT := $(foreach i, $(TESTLIST), $(addprefix $(SIM)/results/$(TESTNAME)/, $(i:=.aout)))
 

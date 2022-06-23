@@ -1,0 +1,23 @@
+
+bne:     file format elf64-littleriscv
+
+
+Disassembly of section .text:
+
+0000000000000000 <_start>:
+   0:	0aa00293          	addi	x5,x0,170
+   4:	0ab00313          	addi	x6,x0,171
+   8:	000013b7          	lui	x7,0x1
+   c:	eb33839b          	addiw	x7,x7,-333 # eb3 <l1+0xe87>
+  10:	00001e37          	lui	x28,0x1
+  14:	eb3e0e1b          	addiw	x28,x28,-333 # eb3 <l1+0xe87>
+  18:	00000513          	addi	x10,x0,0
+  1c:	00629463          	bne	x5,x6,24 <l0>
+  20:	00106513          	ori	x10,x0,1
+
+0000000000000024 <l0>:
+  24:	01c39463          	bne	x7,x28,2c <l1>
+  28:	00206513          	ori	x10,x0,2
+
+000000000000002c <l1>:
+  2c:	00100073          	ebreak

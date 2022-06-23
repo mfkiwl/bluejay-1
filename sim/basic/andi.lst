@@ -1,0 +1,10 @@
+
+andi:     file format elf64-littleriscv
+
+
+Disassembly of section .text:
+
+0000000000000000 <_start>:
+   0:	00300293          	addi	x5,x0,3
+   4:	0022f513          	andi	x10,x5,2
+   8:	00100073          	ebreak
