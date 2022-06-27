@@ -1,5 +1,5 @@
 .text
-.global _start 
+.globl _start 
 
 _start:
     addi t0, zero, 0x3

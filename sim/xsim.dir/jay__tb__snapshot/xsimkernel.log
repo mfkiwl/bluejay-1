@@ -1,4 +1,4 @@
-Running: xsim.dir/jay__tb__snapshot/xsimk -simmode gui -wdb jay__tb__snapshot.wdb -simrunnum 0 -socket 41287
+Running: xsim.dir/jay__tb__snapshot/xsimk -simmode gui -wdb jay__tb__snapshot.wdb -simrunnum 0 -socket 56547
 Design successfully loaded
 Design Loading Memory Usage: 29280 KB (Peak: 29684 KB)
 Design Loading CPU Usage: 0 ms

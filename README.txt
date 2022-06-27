@@ -29,3 +29,5 @@ Resources:
     - Running simulation in Vivado with TCL and Make
         - https://www.itsembedded.com/dhd/vivado_sim_1/
         - https://www.itsembedded.com/dhd/vivado_sim_3/
+    - An Introduction to Assembly Language Programming in RISC-V
+        - https://riscv-programming.org/book/riscv-book.html

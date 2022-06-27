@@ -282,7 +282,7 @@ always_comb begin
         //==============================
         STATE__LOAD__REQ:
         begin
-            a = rs1;
+            a = rd_data__0;
             b = imm;
             cpu_to_l1__valid = 1'b1;
             cpu_to_l1__addr = c;
@@ -310,7 +310,7 @@ always_comb begin
         //==============================
         STATE__STORE:
         begin
-            a = rs1;
+            a = rd_data__0;
             b = imm;
             cpu_to_l1__valid = 1'b1;
             cpu_to_l1__addr = c;
