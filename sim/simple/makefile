@@ -6,7 +6,7 @@ TXT := $(FILES:.s=.txt)
 all: $(TXT) $(BIN) $(LST) 
 
 $(FILES:.s=): %: %.s 
-	riscv64-unknown-elf-gcc -march=rv64i -mabi=lp64 -ffreestanding -fno-pic -nostdlib -Ttext=0x0 -mno-relax $@.s -o $@ 
+	riscv64-unknown-elf-gcc -march=rv64i -mabi=lp64 -ffreestanding -fno-pic -nostdlib -Ttext=0x80000000 -mno-relax $@.s -o $@ 
 
 $(BIN): %.bin: % 
 	riscv64-unknown-elf-objcopy $< -O binary $@

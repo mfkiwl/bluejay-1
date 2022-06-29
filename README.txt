@@ -31,3 +31,9 @@ Resources:
         - https://www.itsembedded.com/dhd/vivado_sim_3/
     - An Introduction to Assembly Language Programming in RISC-V
         - https://riscv-programming.org/book/riscv-book.html
+    - How to exit Spike simulator Discussion:
+        - https://github.com/riscv-software-src/riscv-isa-sim/issues/256
+    - Imperas RISC-V Simulator
+        - https://github.com/riscv-ovpsim/imperas-riscv-tests
+        - https://github.com/riscv-ovpsim/imperas-riscv-tests/blob/v20220527/riscv-ovpsim/README.md
+        - https://github.com/riscv-ovpsim/imperas-riscv-tests/blob/v20220527/riscv-ovpsim/doc/riscvOVPsim_User_Guide.pdf
