@@ -16,7 +16,7 @@ TOP__TB := jay__tb
 
 TESTNAME := basic
 TESTLIST := addi slti sltiu slli xori ori andi srli srai addiw slliw srliw sraiw beq bne blt bltu bge bgeu add sub sll slt sltu xor or srl sra and addw subw sllw srlw sraw jal jalr ld lw lh lb
-#TESTLIST := jal 
+#TESTLIST := jalr 
 VOUT := $(foreach i, $(TESTLIST), $(addprefix $(SIM)/results/$(TESTNAME)/, $(i:=.vout)))
 AOUT := $(foreach i, $(TESTLIST), $(addprefix $(SIM)/results/$(TESTNAME)/, $(i:=.aout)))
 

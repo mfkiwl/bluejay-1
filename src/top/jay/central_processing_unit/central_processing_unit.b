@@ -29,9 +29,14 @@ logic [2:0] dtype;
 
 // Register File.
 logic we;
-logic [63:0] rd_data__0;
-logic [63:0] rd_data__1;
+logic [4:0] rd_addr;
+logic [63:0] rd_data;
+logic [4:0] wr_addr;
 logic [63:0] wr_data;
+logic [63:0] rd_data__0;
+logic [63:0] rd_data__0__n;
+logic [63:0] rd_data__1;
+logic [63:0] rd_data__1__n;
 
 // ALU.
 logic [3:0] alu_func;
@@ -46,10 +51,6 @@ logic lt;
 logic ge;
 logic ltu;
 logic geu;
-
-// Temp.
-logic [63:0] temp;
-logic [63:0] temp__n;
 
 // L1.
 logic cpu_to_l1__valid;
@@ -92,11 +93,9 @@ register_file register_file__0
     .clk(clk),
     .rst(rst),
     .we(we),
-    .rd_addr__0(rs1),
-    .rd_data__0(rd_data__0),
-    .rd_addr__1(rs2),
-    .rd_data__1(rd_data__1),
-    .wr_addr(rd),
+    .rd_addr(rd_addr),
+    .rd_data(rd_data),
+    .wr_addr(wr_addr),
     .wr_data(wr_data)
 );
 
@@ -157,45 +156,64 @@ l1 l1__0
 //==============================================
 // Finite State Machine
 //==============================================
-localparam STATE__RESET = 6'h0;
-localparam STATE__IF__REQ = 6'h1;
-localparam STATE__IF__WAIT = 6'h2;
-localparam STATE__ID = 6'h3;
-localparam STATE__LOAD__REQ = 6'h4;
-localparam STATE__LOAD__WAIT = 6'h5;
-localparam STATE__STORE = 6'h6;
-localparam STATE__REG_REG = 6'h7;
-localparam STATE__REG_IMM = 6'h8;
-localparam STATE__AUIPC = 6'h9;
-localparam STATE__PC_PLUS_FOUR = 6'ha;
-localparam STATE__JALR__MOVE_RS1_TO_TEMP = 6'hb;
-localparam STATE__JALR__LINK = 6'hc;
-localparam STATE__JALR__JUMP = 6'hd;
-localparam STATE__JAL__LINK = 6'he;
-localparam STATE__JAL__JUMP = 6'hf;
-localparam STATE__BRANCH__COMPARE = 6'h10;
-localparam STATE__ECALL = 6'h11;
-localparam STATE__EBREAK = 6'h12;
-localparam STATE__FENCE = 6'h13;
-localparam STATE__FENCE_I = 6'h14;
-localparam STATE__LUI = 6'h15;
+PYTHON(
+states = [
+    'STATE__RESET', 
+    'STATE__IF__0', 
+    'STATE__IF__1', 
+    'STATE__ID', 
+    'STATE__LOAD__0', 
+    'STATE__LOAD__1', 
+    'STATE__LOAD__2', 
+    'STATE__STORE__0', 
+    'STATE__STORE__1', 
+    'STATE__STORE__2', 
+    'STATE__ALU__0', 
+    'STATE__ALU__1', 
+    'STATE__ALU__2', 
+    'STATE__ALUI__0', 
+    'STATE__ALUI__1', 
+    'STATE__AUIPC', 
+    'STATE__JALR__0', 
+    'STATE__JALR__1', 
+    'STATE__JALR__2', 
+    'STATE__JAL__0', 
+    'STATE__JAL__1', 
+    'STATE__BRANCH__0', 
+    'STATE__BRANCH__1', 
+    'STATE__BRANCH__2', 
+    'STATE__BRANCH__3', 
+    'STATE__ECALL', 
+    'STATE__EBREAK', 
+    'STATE__FENCE', 
+    'STATE__FENCE_I', 
+    'STATE__LUI',
+    'STATE__PC4'
+]
+
+for i, state in enumerate(states):
+    print(f"localparam {state} = 6'h{i:x};") 
+)
 
 
 always_comb begin
+    state__n = state;
+    pc__n = pc;
+    ir__n = ir;
+    rd_data__0__n = rd_data__0;
+    rd_data__1__n = rd_data__1;
+    rd_addr = rs1;
     we = 1'b0;
+    wr_addr = rd;
     wr_data = c;
     alu_func = FUNC__ADD;
     a = rd_data__0;
     b = imm;
-    cpu_to_l1__addr = c;
+    cpu_to_l1__addr = pc;
     cpu_to_l1__wr_data = rd_data__1;
     cpu_to_l1__valid = 1'b0;
     cpu_to_l1__we = 1'b0;
     cpu_to_l1__dtype = DTYPE__D;
-    pc__n = pc;
-    ir__n = ir;
-    temp__n = temp;
-    state__n = state;
 
     case (state)
         //==============================
@@ -203,27 +221,27 @@ always_comb begin
         //==============================
         STATE__RESET:
         begin
-            state__n = STATE__IF__REQ;
+            state__n = STATE__IF__0;
         end
         
         //==============================
-        // STATE__IF__REQ
+        // STATE__IF__0
         //==============================
-        STATE__IF__REQ:
+        STATE__IF__0:
         begin
             cpu_to_l1__valid = 1'b1;
             cpu_to_l1__addr = pc;
             cpu_to_l1__dtype = DTYPE__W;
 
             if (cpu_to_l1__ready) begin
-                state__n = STATE__IF__WAIT;
+                state__n = STATE__IF__1;
             end
         end
 
         //==============================
-        // STATE__IF__WAIT
+        // STATE__IF__1
         //==============================
-        STATE__IF__WAIT:
+        STATE__IF__1:
         begin
             if (cpu_to_l1__ready) begin
                 ir__n = cpu_to_l1__rd_data[31:0];
@@ -237,25 +255,25 @@ always_comb begin
         STATE__ID:
         begin
             if ((op == OP__BEQ) || (op == OP__BNE) || (op == OP__BLT) || (op == OP__BGE) || (op == OP__BLTU) || (op == OP__BGEU)) begin
-                state__n = STATE__BRANCH__COMPARE;
+                state__n = STATE__BRANCH__0;
             end
             else if (op == OP__JAL) begin
-                state__n = STATE__JAL__LINK;
+                state__n = STATE__JAL__0;
             end
             else if (op == OP__JALR) begin
-                state__n = STATE__JALR__MOVE_RS1_TO_TEMP;
+                state__n = STATE__JALR__0;
             end
             else if ((op == OP__ADD) || (op == OP__ADDW) || (op == OP__AND) || (op == OP__OR) || (op == OP__SLL) || (op == OP__SLLW) || (op == OP__SLT) || (op == OP__SLTU) || (op == OP__SRA) || (op == OP__SRAW) || (op == OP__SRL) || (op == OP__SRLW) || (op == OP__SUB) || (op == OP__SUBW) || (op == OP__XOR)) begin
-                state__n = STATE__REG_REG;
+                state__n = STATE__ALU__0;
             end
             else if ((op == OP__ADDI) || (op == OP__ADDIW) || (op == OP__ANDI) || (op == OP__ORI) || (op == OP__SLLI) || (op == OP__SLLIW) || (op == OP__SLTI) || (op == OP__SLTIU) || (op == OP__SRAI) || (op == OP__SRAIW) || (op == OP__SRLI) || (op == OP__SRLIW) || (op == OP__XORI)) begin
-                state__n = STATE__REG_IMM;
+                state__n = STATE__ALUI__0;
             end
             else if ((op == OP__LB) || (op == OP__LBU) || (op == OP__LH) || (op == OP__LHU) || (op == OP__LW) || (op == OP__LWU) || (op == OP__LD)) begin
-                state__n = STATE__LOAD__REQ;
+                state__n = STATE__LOAD__0;
             end
             else if ((op == OP__SB) || (op == OP__SH) || (op == OP__SW) || (op == OP__SD)) begin
-                state__n = STATE__STORE;
+                state__n = STATE__STORE__0;
             end
             else if (op == OP__AUIPC) begin
                 state__n = STATE__AUIPC;
@@ -277,10 +295,21 @@ always_comb begin
             end
         end
 
+
         //==============================
-        // STATE__LOAD__REQ
+        // STATE__LOAD__0
         //==============================
-        STATE__LOAD__REQ:
+        STATE__LOAD__0:
+        begin
+            rd_addr = rs1;
+            rd_data__0__n = rd_data;
+            state__n = STATE__LOAD__1;
+        end
+
+        //==============================
+        // STATE__LOAD__1
+        //==============================
+        STATE__LOAD__1:
         begin
             a = rd_data__0;
             b = imm;
@@ -289,26 +318,46 @@ always_comb begin
             cpu_to_l1__dtype = dtype;
 
             if (cpu_to_l1__ready) begin
-                state__n = STATE__LOAD__WAIT;
+                state__n = STATE__LOAD__2;
             end
         end
 
         //==============================
-        // STATE__LOAD__WAIT
+        // STATE__LOAD__2
         //==============================
-        STATE__LOAD__WAIT:
+        STATE__LOAD__2:
         begin
             if (cpu_to_l1__ready) begin
                 wr_data = cpu_to_l1__rd_data;
                 we = 1'b1;
-                state__n = STATE__PC_PLUS_FOUR;
+                state__n = STATE__PC4;
             end
         end
 
         //==============================
-        // STATE__STORE
+        // STATE__STORE__0
         //==============================
-        STATE__STORE:
+        STATE__STORE__0:
+        begin
+            rd_addr = rs1;
+            rd_data__0__n = rd_data;
+            state__n = STATE__STORE__1;
+        end
+
+        //==============================
+        // STATE__STORE__1
+        //==============================
+        STATE__STORE__1:
+        begin
+            rd_addr = rs2;
+            rd_data__1__n = rd_data;
+            state__n = STATE__STORE__2;
+        end
+
+        //==============================
+        // STATE__STORE__2
+        //==============================
+        STATE__STORE__2:
         begin
             a = rd_data__0;
             b = imm;
@@ -319,34 +368,64 @@ always_comb begin
             cpu_to_l1__dtype = dtype;
 
             if (cpu_to_l1__ready) begin
-                state__n = STATE__PC_PLUS_FOUR;
+                state__n = STATE__PC4;
             end
         end
 
         //==============================
-        // STATE__REG_REG
+        // STATE__ALU__0
         //==============================
-        STATE__REG_REG:
+        STATE__ALU__0:
+        begin
+            rd_addr = rs1;
+            rd_data__0__n = rd_data;
+            state__n = STATE__ALU__1;
+        end
+
+        //==============================
+        // STATE__ALU__1
+        //==============================
+        STATE__ALU__1:
+        begin
+            rd_addr = rs2;
+            rd_data__1__n = rd_data;
+            state__n = STATE__ALU__2;
+        end
+
+        //==============================
+        // STATE__ALU__2
+        //==============================
+        STATE__ALU__2:
         begin
             a = rd_data__0;
             b = rd_data__1;
             wr_data = c;
             we = 1'b1;
             alu_func = func;
-            state__n = STATE__PC_PLUS_FOUR;
+            state__n = STATE__PC4;
         end
 
         //==============================
-        // STATE__REG_IMM
+        // STATE__ALUI__0
         //==============================
-        STATE__REG_IMM:
+        STATE__ALUI__0:
+        begin
+            rd_addr = rs1;
+            rd_data__0__n = rd_data;
+            state__n = STATE__ALUI__1;
+        end
+
+        //==============================
+        // STATE__ALUI__1
+        //==============================
+        STATE__ALUI__1:
         begin
             a = rd_data__0;
             b = imm;
             wr_data = c;
             we = 1'b1;
             alu_func = func;
-            state__n = STATE__PC_PLUS_FOUR;
+            state__n = STATE__PC4;
         end
 
         //==============================
@@ -359,97 +438,118 @@ always_comb begin
             wr_data = c;
             we = 1'b1;
             alu_func = FUNC__ADD;
-            state__n = STATE__PC_PLUS_FOUR;
+            state__n = STATE__PC4;
         end
 
         //==============================
-        // STATE__PC_PLUS_FOUR
+        // STATE__JALR__0
         //==============================
-        STATE__PC_PLUS_FOUR:
+        STATE__JALR__0:
         begin
-            a = pc;
-            b = 4;
-            pc__n = c;
-            state__n = STATE__IF__REQ;
+            rd_addr = rs1;
+            rd_data__0__n = rd_data;
+            state__n = STATE__JALR__1;
         end
 
         //==============================
-        // STATE__JALR__MOVE_RS1_TO_TEMP
+        // STATE__JALR__1
         //==============================
-        STATE__JALR__MOVE_RS1_TO_TEMP:
-        begin
-            temp__n = rd_data__0;
-            state__n = STATE__JALR__LINK;
-        end
-
-        //==============================
-        // STATE__JALR__LINK
-        //==============================
-        STATE__JALR__LINK:
+        STATE__JALR__1:
         begin
             a = pc;
             b = 4;
             wr_data = c;
             we = 1'b1;
-            state__n = STATE__JALR__JUMP;
+            state__n = STATE__JALR__2;
         end
 
         //==============================
-        // STATE__JALR__JUMP
+        // STATE__JALR__2
         //==============================
-        STATE__JALR__JUMP:
+        STATE__JALR__2:
         begin
-            a = temp;
+            a = rd_data__0;
             b = imm;
             pc__n = c;
-            state__n = STATE__IF__REQ;
+            state__n = STATE__PC4;
         end
 
         //==============================
-        // STATE__JAL__LINK
+        // STATE__JAL__0
         //==============================
-        STATE__JAL__LINK:
+        STATE__JAL__0:
         begin
             a = pc;
             b = 4;
             wr_data = c;
             we = 1'b1;
-            state__n = STATE__JAL__JUMP;
+            state__n = STATE__JAL__1;
         end
 
         //==============================
-        // STATE__JAL__JUMP
+        // STATE__JAL__1
         //==============================
-        STATE__JAL__JUMP:
+        STATE__JAL__1:
         begin
             a = pc;
             b = imm;
             pc__n = c;
-            state__n = STATE__IF__REQ;
+            state__n = STATE__PC4;
         end
 
         //==============================
-        // STATE__BRANCH__COMPARE
+        // STATE__BRANCH__0
         //==============================
-        STATE__BRANCH__COMPARE:
+        STATE__BRANCH__0:
+        begin
+            rd_addr = rs1;
+            rd_data__0__n = rd_data;
+            state__n = STATE__BRANCH__1;
+        end
+
+        //==============================
+        // STATE__BRANCH__1
+        //==============================
+        STATE__BRANCH__1:
+        begin
+            rd_addr = rs2;
+            rd_data__1__n = rd_data;
+            state__n = STATE__BRANCH__2;
+        end
+
+        //==============================
+        // STATE__BRANCH__2
+        //==============================
+        STATE__BRANCH__2:
         begin
             a = rd_data__0;
             b = rd_data__1;
 
             case (op)
                 OP__BEQ:
-                    state__n = eq ? STATE__JAL__JUMP : STATE__PC_PLUS_FOUR; 
+                    state__n = eq ? STATE__BRANCH__3 : STATE__PC4; 
                 OP__BNE:
-                    state__n = ne ? STATE__JAL__JUMP : STATE__PC_PLUS_FOUR; 
+                    state__n = ne ? STATE__BRANCH__3 : STATE__PC4; 
                 OP__BLT:
-                    state__n = lt ? STATE__JAL__JUMP : STATE__PC_PLUS_FOUR; 
+                    state__n = lt ? STATE__BRANCH__3 : STATE__PC4; 
                 OP__BGE:
-                    state__n = ge ? STATE__JAL__JUMP : STATE__PC_PLUS_FOUR; 
+                    state__n = ge ? STATE__BRANCH__3 : STATE__PC4; 
                 OP__BLTU:
-                    state__n = ltu ? STATE__JAL__JUMP : STATE__PC_PLUS_FOUR; 
+                    state__n = ltu ? STATE__BRANCH__3 : STATE__PC4; 
                 OP__BGEU:
-                    state__n = geu ? STATE__JAL__JUMP : STATE__PC_PLUS_FOUR; 
+                    state__n = geu ? STATE__BRANCH__3 : STATE__PC4; 
             endcase
+        end
+
+        //==============================
+        // STATE__BRANCH__3
+        //==============================
+        STATE__BRANCH__3:
+        begin
+            a = pc;
+            b = imm;
+            pc__n = c;
+            state__n = STATE__IF__0;
         end
 
         //==============================
@@ -491,7 +591,18 @@ always_comb begin
         begin
             wr_data = imm;
             we = 1'b1;
-            state__n = STATE__PC_PLUS_FOUR;
+            state__n = STATE__IF__0;
+        end
+
+        //==============================
+        // STATE__PC4
+        //==============================
+        STATE__PC4:
+        begin
+            a = pc;
+            b = 4;
+            pc__n = c;
+            state__n = STATE__IF__0;
         end
 
     endcase
@@ -521,9 +632,12 @@ always_ff @(posedge clk) begin
 end
 
 always_ff @(posedge clk) begin
-    temp <= temp__n;
+    rd_data__0 <= rd_data__0__n;
 end
 
+always_ff @(posedge clk) begin
+    rd_data__1 <= rd_data__1__n;
+end
 
 
 endmodule
