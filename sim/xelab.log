@@ -15,6 +15,6 @@ Compiling module work.comparator
 Compiling module work.l1
 Compiling module work.central_processing_unit
 Compiling module work.jay
-Compiling module work.mem(WIDTH=64,DEPTH=4096,DEPTH__L...
+Compiling module work.mem(WIDTH=64,DEPTH=8192,DEPTH__L...
 Compiling module work.jay__tb
 Built simulation snapshot jay__tb__snapshot

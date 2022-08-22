@@ -25,7 +25,7 @@ jay dut
 //==============================
 // mem__0
 //==============================
-mem #(.WIDTH(64), .DEPTH(4096), .DEPTH__LOG2(12)) mem__0
+mem #(.WIDTH(64), .DEPTH(8192), .DEPTH__LOG2(13)) mem__0
 (
     .clk(clk),
     .rst(rst),
@@ -46,13 +46,13 @@ logic l1_to_mem__en;
 logic l1_to_mem__we;
 
 // Memory I/O
-logic [11:0] addr;
+logic [12:0] addr;
 logic [63:0] wr_data;
 logic [63:0] rd_data;
 logic en;
 logic we;
 
-assign addr = l1_to_mem__addr[11:0];
+assign addr = l1_to_mem__addr[12:0];
 assign wr_data = l1_to_mem__wr_data;
 assign l1_to_mem__rd_data = rd_data;
 assign en = l1_to_mem__en;
@@ -72,7 +72,7 @@ int fd;
 initial begin
     forever begin
         @(posedge clk) begin
-            if (dut.central_processing_unit__0.op == OP__EBREAK) begin
+            if ((dut.central_processing_unit__0.op == OP__JALR) && (dut.central_processing_unit__0.rs1 == 5'h1) && (dut.central_processing_unit__0.register_file__0.x__1 = 64'hffffffffffffffff)) begin
                 fd = $fopen("/home/seankent/bluejay/sim/t.vout");
                 $fdisplay(fd, "%016h", dut.central_processing_unit__0.register_file__0.x__10);
                 $fclose(fd);
@@ -89,6 +89,12 @@ initial begin
     // initialize clk
     clk = 1'b1;
     rst = 1'b1;
+    // initialize the ra register
+    dut.central_processing_unit__0.register_file__0.x__1 = 64'hffffffffffffffff;
+    // initialize the sp register
+    dut.central_processing_unit__0.register_file__0.x__2 = 64'h20000;
+    // initialize the gp register
+    dut.central_processing_unit__0.register_file__0.x__3 = 64'h11860;
     // initialize instruction memory
     $readmemh("/home/seankent/bluejay/sim/t.txt", mem__0.memory);
 
@@ -96,7 +102,7 @@ initial begin
     // de-assert rst
     rst = 1'b0;
     
-    #15000;
+    #2000000;
     $finish;
 end
 

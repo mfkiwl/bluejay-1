@@ -471,7 +471,7 @@ always_comb begin
             a = rd_data__0;
             b = imm;
             pc__n = c;
-            state__n = STATE__PC4;
+            state__n = STATE__IF__0;
         end
 
         //==============================
@@ -494,7 +494,7 @@ always_comb begin
             a = pc;
             b = imm;
             pc__n = c;
-            state__n = STATE__PC4;
+            state__n = STATE__IF__0;
         end
 
         //==============================
@@ -591,7 +591,7 @@ always_comb begin
         begin
             wr_data = imm;
             we = 1'b1;
-            state__n = STATE__IF__0;
+            state__n = STATE__PC4;
         end
 
         //==============================
@@ -620,7 +620,7 @@ end
 
 always_ff @(posedge clk) begin
     if (rst) begin
-        pc <= 0;
+        pc <= 64'h10000;
     end
     else begin
         pc <= pc__n;

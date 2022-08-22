@@ -14,34 +14,34 @@ ELAB_OPTS := \
 
 TOP__TB := jay__tb
 
-TESTNAME := sim__0
-#TESTLIST := addi slti sltiu slli xori ori andi srli srai addiw slliw srliw sraiw beq bne blt bltu bge bgeu add sub sll slt sltu xor or srl sra and addw subw sllw srlw sraw jal jalr ld lw lh lb
+TESTNAME := basic
+TESTLIST := addi slti sltiu slli xori ori andi srli srai addiw slliw srliw sraiw beq bne blt bltu bge bgeu add sub sll slt sltu xor or srl sra and addw subw sllw srlw sraw jal jalr ld lw lh lb
 #TESTLIST := jalr 
 VOUT := $(foreach i, $(TESTLIST), $(addprefix $(SIM)/results/$(TESTNAME)/, $(i:=.vout)))
 AOUT := $(foreach i, $(TESTLIST), $(addprefix $(SIM)/results/$(TESTNAME)/, $(i:=.aout)))
 
 
 
-#diff: $(AOUT) $(VOUT)
-	#python3 $(TOOLS)/diff.py $(SIM)/results/$(TESTNAME)/ 
+diff: $(AOUT) $(VOUT)
+	python3 $(TOOLS)/diff.py $(SIM)/results/$(TESTNAME)/ 
 
 
-$(SIM)/tests/$(TESTNAME)/$(TESTNAME).vsig.dat.txt: .elab.timestamp
-	cd $(SIM)/tests/$(TESTNAME)
-	cp $(SIM)/tests/$(TESTNAME)/$(TESTNAME).txt t.txt 
+$(SIM)/results/$(TESTNAME)/%.vout: .elab.timestamp
+	cd $(SIM)/$(TESTNAME) && $(MAKE)
+	cp $(SIM)/$(TESTNAME)/$*.txt t.txt 
 	xsim $(TOP__TB)__snapshot --tclbatch xsim_cfg.tcl
-	cp t.vout $(SIM)/tests/$(TESTNAME)/$(TESTNAME).vsig.dat.txt
+	cp t.vout $(SIM)/results/$(TESTNAME)/$*.vout
 
-#$(SIM)/results/$(TESTNAME)/%.aout: 
-	#cd $(SIM)/$(TESTNAME) && $(MAKE)
-	#cd $(SIM)/$(TESTNAME) && $(MAKE)
-	#python3 $(TOOLS)/asim.py $(SIM)/$(TESTNAME)/$* $@ 
+$(SIM)/results/$(TESTNAME)/%.aout: 
+	cd $(SIM)/$(TESTNAME) && $(MAKE)
+	cd $(SIM)/$(TESTNAME) && $(MAKE)
+	python3 $(TOOLS)/asim.py $(SIM)/$(TESTNAME)/$* $@ 
 
 
 
-#.PHONY: $(SIM)/$(TESTNAME)
-#$(SIM)/$(TESTNAME):
-#	cd $@ && $(MAKE)
+.PHONY: $(SIM)/$(TESTNAME)
+$(SIM)/$(TESTNAME):
+	cd $@ && $(MAKE)
 	
 
 .PHONY: waves
