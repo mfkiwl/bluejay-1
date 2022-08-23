@@ -66,7 +66,9 @@ end
 
 
  // file descriptor handle
-int fd;
+integer fd;
+logic [63:0] addr_long;
+logic [12:0] addr_short;
 
 
 initial begin
@@ -74,7 +76,12 @@ initial begin
         @(posedge clk) begin
             if ((dut.central_processing_unit__0.op == 6'h32) && (dut.central_processing_unit__0.rs1 == 5'h1) && (dut.central_processing_unit__0.register_file__0.x__1 = 64'hffffffffffffffff)) begin
                 fd = $fopen("/home/seankent/bluejay/sim/t.vout");
-                $fdisplay(fd, "%016h", dut.central_processing_unit__0.register_file__0.x__10);
+                for (addr_long = 64'h11060; addr_long < (64'h11060 + 48); addr_long += 16) begin
+                    addr_short = addr_long[15:3];
+                    $fwrite(fd, "%016h", mem__0.memory[addr_short]);
+                    $fwrite(fd, "%016h\n", mem__0.memory[addr_short + 1]);
+                end
+                //$fdisplay(fd, "%016h", dut.central_processing_unit__0.register_file__0.x__10);
                 $fclose(fd);
                 $finish;
             end
