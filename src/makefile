@@ -1,22 +1,43 @@
+#===============================================
+# Project Directories 
+#===============================================
 BLUEJAY := /home/seankent/bluejay
 TOOLS := $(BLUEJAY)/tools
 BUILD := $(BLUEJAY)/build
 SRC := $(BLUEJAY)/src
 TB := $(BLUEJAY)/tb
 
-DIRS := \
-	$(SRC)/top \
-	$(SRC)/top/jay \
-	$(SRC)/top/jay/central_processing_unit \
-	$(SRC)/top/jay/cache \
-	$(SRC)/top/utility \
-	$(SRC)/top/interface \
-	$(SRC)/top/memory \
+#===============================================
+# Sources/Targets 
+#===============================================
+SUBDIRS := $(wildcard */.) 
+CLEAN_SUBDIRS := $(addprefix clean_, $(SUBDIRS))
 		
+#===============================================
+# Rules
+#===============================================
+#===============================
+# all
+#===============================
+.PHONY: all 
+all: $(SUBDIRS)
 
-all: $(DIRS)
-
-$(DIRS):
+#===============================
+# $(SUBDIRS) 
+#===============================
+.PHONY: $(SUBDIRS)
+$(SUBDIRS):
 	$(MAKE) -C $@
 
-.PHONY: $(DIRS)
+#===============================
+# clean 
+#===============================
+.PHONY: clean 
+clean: $(CLEAN_SUBDIRS) 
+
+#===============================
+# $(CLEAN_SUBDIRS) 
+#===============================
+$(CLEAN_SUBDIRS): clean_% : %
+	$(MAKE) -C $< clean
+
