@@ -4,7 +4,7 @@
 BLUEJAY := /home/seankent/bluejay
 TOOLS := $(BLUEJAY)/tools
 BUILD := $(BLUEJAY)/build
-SRC := $(BLUEJAY)/src
+IP := $(BLUEJAY)/ip
 TB := $(BLUEJAY)/tb
 
 #===============================================
@@ -13,25 +13,25 @@ TB := $(BLUEJAY)/tb
 #===============================
 # all
 #===============================
-all: $(SRC) 
+all: $(IP) 
 
 #===============================
-# $(SRC) 
+# $(IP) 
 #===============================
-.PHONY: $(SRC)
-$(SRC): 
+.PHONY: $(IP)
+$(IP): 
 	$(MAKE) -C $@
 
 #===============================
 # clean 
 #===============================
 .PHONY: clean 
-clean: clean_src 
+clean: clean_ip
 
 #===============================
-# clean_src 
+# clean_ip 
 #===============================
-.PHONY: clean_src 
-clean_src:
-	$(MAKE) -C $(SRC) clean
+.PHONY: clean_ip 
+clean_ip:
+	$(MAKE) -C $(IP) clean
 
