@@ -5,12 +5,17 @@ module central_processing_unit
 (
     input clk,
     input rst,
-    output logic [60:0] l1_to_mem__addr,
-    output logic [63:0] l1_to_mem__wr_data,
-    input [63:0] l1_to_mem__rd_data,
-    output logic l1_to_mem__en,
-    output logic l1_to_mem__we
+    output logic cpu_to_l1__valid,
+    input cpu_to_l1__ready,
+    output logic cpu_to_l1__we,
+    output logic [63:0] cpu_to_l1__addr,
+    output logic [2:0] cpu_to_l1__dtype,
+    output logic [63:0] cpu_to_l1__data,
+    input l1_to_cpu__valid,
+    output logic l1_to_cpu__ready,
+    input [63:0] l1_to_cpu__data
 );
+
 
 // Program Counter/Instruction Register
 logic [63:0] pc;
@@ -51,16 +56,6 @@ logic lt;
 logic ge;
 logic ltu;
 logic geu;
-
-// L1.
-logic cpu_to_l1__valid;
-logic cpu_to_l1__ready;
-logic cpu_to_l1__we;
-logic [63:0] cpu_to_l1__addr;
-logic [63:0] cpu_to_l1__wr_data;
-logic [63:0] cpu_to_l1__rd_data;
-logic [2:0] cpu_to_l1__dtype;
-
 
 // FSM.
 logic [5:0] state;
@@ -129,71 +124,43 @@ comparator comparator__0
     .geu(geu)
 );
 
-//==============================
-// l1__0
-//==============================
-l1 l1__0 
-(
-    .clk(clk),
-    .rst(rst),
-    .cpu_to_l1__valid(cpu_to_l1__valid),
-    .cpu_to_l1__ready(cpu_to_l1__ready),
-    .cpu_to_l1__we(cpu_to_l1__we),
-    .cpu_to_l1__addr(cpu_to_l1__addr),
-    .cpu_to_l1__wr_data(cpu_to_l1__wr_data),
-    .cpu_to_l1__rd_data(cpu_to_l1__rd_data),
-    .cpu_to_l1__dtype(cpu_to_l1__dtype),
-    .l1_to_mem__addr(l1_to_mem__addr),
-    .l1_to_mem__wr_data(l1_to_mem__wr_data),
-    .l1_to_mem__rd_data(l1_to_mem__rd_data),
-    .l1_to_mem__en(l1_to_mem__en),
-    .l1_to_mem__we(l1_to_mem__we)
-);
-
 
 
 
 //==============================================
 // Finite State Machine
 //==============================================
-PYTHON(
-states = [
-    'STATE__RESET', 
-    'STATE__IF__0', 
-    'STATE__IF__1', 
-    'STATE__ID', 
-    'STATE__LOAD__0', 
-    'STATE__LOAD__1', 
-    'STATE__LOAD__2', 
-    'STATE__STORE__0', 
-    'STATE__STORE__1', 
-    'STATE__STORE__2', 
-    'STATE__ALU__0', 
-    'STATE__ALU__1', 
-    'STATE__ALU__2', 
-    'STATE__ALUI__0', 
-    'STATE__ALUI__1', 
-    'STATE__AUIPC', 
-    'STATE__JALR__0', 
-    'STATE__JALR__1', 
-    'STATE__JALR__2', 
-    'STATE__JAL__0', 
-    'STATE__JAL__1', 
-    'STATE__BRANCH__0', 
-    'STATE__BRANCH__1', 
-    'STATE__BRANCH__2', 
-    'STATE__BRANCH__3', 
-    'STATE__ECALL', 
-    'STATE__EBREAK', 
-    'STATE__FENCE', 
-    'STATE__FENCE_I', 
-    'STATE__LUI',
-    'STATE__PC4'
-]
-
-for i, state in enumerate(states):
-    print(f"localparam {state} = 6'h{i:x};") 
-)
+localparam STATE__RESET = 6'h0;
+localparam STATE__IF__0 = 6'h1;
+localparam STATE__IF__1 = 6'h2;
+localparam STATE__ID = 6'h3;
+localparam STATE__LOAD__0 = 6'h4;
+localparam STATE__LOAD__1 = 6'h5;
+localparam STATE__LOAD__2 = 6'h6;
+localparam STATE__STORE__0 = 6'h7;
+localparam STATE__STORE__1 = 6'h8;
+localparam STATE__STORE__2 = 6'h9;
+localparam STATE__ALU__0 = 6'ha;
+localparam STATE__ALU__1 = 6'hb;
+localparam STATE__ALU__2 = 6'hc;
+localparam STATE__ALUI__0 = 6'hd;
+localparam STATE__ALUI__1 = 6'he;
+localparam STATE__AUIPC = 6'hf;
+localparam STATE__JALR__0 = 6'h10;
+localparam STATE__JALR__1 = 6'h11;
+localparam STATE__JALR__2 = 6'h12;
+localparam STATE__JAL__0 = 6'h13;
+localparam STATE__JAL__1 = 6'h14;
+localparam STATE__BRANCH__0 = 6'h15;
+localparam STATE__BRANCH__1 = 6'h16;
+localparam STATE__BRANCH__2 = 6'h17;
+localparam STATE__BRANCH__3 = 6'h18;
+localparam STATE__ECALL = 6'h19;
+localparam STATE__EBREAK = 6'h1a;
+localparam STATE__FENCE = 6'h1b;
+localparam STATE__FENCE_I = 6'h1c;
+localparam STATE__LUI = 6'h1d;
+localparam STATE__PC4 = 6'h1e;
 
 
 always_comb begin
@@ -206,14 +173,15 @@ always_comb begin
     we = 1'b0;
     wr_addr = rd;
     wr_data = c;
-    alu_func = FUNC__ADD;
+    alu_func = 4'h0;
     a = rd_data__0;
     b = imm;
-    cpu_to_l1__addr = pc;
-    cpu_to_l1__wr_data = rd_data__1;
     cpu_to_l1__valid = 1'b0;
+    cpu_to_l1__addr = pc;
+    cpu_to_l1__data = rd_data__1;
     cpu_to_l1__we = 1'b0;
-    cpu_to_l1__dtype = DTYPE__D;
+    cpu_to_l1__dtype = 3'h0;
+    l1_to_cpu__ready = 1'b0;
 
     case (state)
         //==============================
@@ -231,7 +199,7 @@ always_comb begin
         begin
             cpu_to_l1__valid = 1'b1;
             cpu_to_l1__addr = pc;
-            cpu_to_l1__dtype = DTYPE__W;
+            cpu_to_l1__dtype = 3'h1;
 
             if (cpu_to_l1__ready) begin
                 state__n = STATE__IF__1;
@@ -243,8 +211,10 @@ always_comb begin
         //==============================
         STATE__IF__1:
         begin
-            if (cpu_to_l1__ready) begin
-                ir__n = cpu_to_l1__rd_data[31:0];
+            l1_to_cpu__ready = 1'b1;
+
+            if (l1_to_cpu__valid) begin
+                ir__n = l1_to_cpu__data[31:0];
                 state__n = STATE__ID;
             end
         end
@@ -254,43 +224,43 @@ always_comb begin
         //==============================
         STATE__ID:
         begin
-            if ((op == OP__BEQ) || (op == OP__BNE) || (op == OP__BLT) || (op == OP__BGE) || (op == OP__BLTU) || (op == OP__BGEU)) begin
+            if ((op == 6'h2c) || (op == 6'h2d) || (op == 6'h2e) || (op == 6'h2f) || (op == 6'h30) || (op == 6'h31)) begin
                 state__n = STATE__BRANCH__0;
             end
-            else if (op == OP__JAL) begin
+            else if (op == 6'h33) begin
                 state__n = STATE__JAL__0;
             end
-            else if (op == OP__JALR) begin
+            else if (op == 6'h32) begin
                 state__n = STATE__JALR__0;
             end
-            else if ((op == OP__ADD) || (op == OP__ADDW) || (op == OP__AND) || (op == OP__OR) || (op == OP__SLL) || (op == OP__SLLW) || (op == OP__SLT) || (op == OP__SLTU) || (op == OP__SRA) || (op == OP__SRAW) || (op == OP__SRL) || (op == OP__SRLW) || (op == OP__SUB) || (op == OP__SUBW) || (op == OP__XOR)) begin
+            else if ((op == 6'h1c) || (op == 6'h27) || (op == 6'h25) || (op == 6'h24) || (op == 6'h1e) || (op == 6'h29) || (op == 6'h1f) || (op == 6'h20) || (op == 6'h23) || (op == 6'h2b) || (op == 6'h22) || (op == 6'h2a) || (op == 6'h1d) || (op == 6'h28) || (op == 6'h21)) begin
                 state__n = STATE__ALU__0;
             end
-            else if ((op == OP__ADDI) || (op == OP__ADDIW) || (op == OP__ANDI) || (op == OP__ORI) || (op == OP__SLLI) || (op == OP__SLLIW) || (op == OP__SLTI) || (op == OP__SLTIU) || (op == OP__SRAI) || (op == OP__SRAIW) || (op == OP__SRLI) || (op == OP__SRLIW) || (op == OP__XORI)) begin
+            else if ((op == 6'ha) || (op == 6'h14) || (op == 6'h12) || (op == 6'h11) || (op == 6'hb) || (op == 6'h15) || (op == 6'hc) || (op == 6'hd) || (op == 6'h10) || (op == 6'h17) || (op == 6'hf) || (op == 6'h16) || (op == 6'he)) begin
                 state__n = STATE__ALUI__0;
             end
-            else if ((op == OP__LB) || (op == OP__LBU) || (op == OP__LH) || (op == OP__LHU) || (op == OP__LW) || (op == OP__LWU) || (op == OP__LD)) begin
+            else if ((op == 6'h1) || (op == 6'h5) || (op == 6'h2) || (op == 6'h6) || (op == 6'h3) || (op == 6'h7) || (op == 6'h4)) begin
                 state__n = STATE__LOAD__0;
             end
-            else if ((op == OP__SB) || (op == OP__SH) || (op == OP__SW) || (op == OP__SD)) begin
+            else if ((op == 6'h18) || (op == 6'h19) || (op == 6'h1a) || (op == 6'h1b)) begin
                 state__n = STATE__STORE__0;
             end
-            else if (op == OP__AUIPC) begin
+            else if (op == 6'h13) begin
                 state__n = STATE__AUIPC;
             end
-            else if (op == OP__ECALL) begin
+            else if (op == 6'h34) begin
                 state__n = STATE__ECALL;
             end
-            else if (op == OP__EBREAK) begin
+            else if (op == 6'h35) begin
                 state__n = STATE__EBREAK;
             end
-            else if (op == OP__FENCE) begin
+            else if (op == 6'h8) begin
                 state__n = STATE__FENCE;
             end
-            else if (op == OP__FENCE_I) begin
+            else if (op == 6'h9) begin
                 state__n = STATE__FENCE_I;
             end
-            else if (op == OP__LUI) begin
+            else if (op == 6'h26) begin
                 state__n = STATE__LUI;
             end
         end
@@ -327,8 +297,10 @@ always_comb begin
         //==============================
         STATE__LOAD__2:
         begin
-            if (cpu_to_l1__ready) begin
-                wr_data = cpu_to_l1__rd_data;
+            l1_to_cpu__ready = 1'b1;
+
+            if (l1_to_cpu__valid) begin
+                wr_data = l1_to_cpu__data;
                 we = 1'b1;
                 state__n = STATE__PC4;
             end
@@ -363,7 +335,7 @@ always_comb begin
             b = imm;
             cpu_to_l1__valid = 1'b1;
             cpu_to_l1__addr = c;
-            cpu_to_l1__wr_data = rd_data__1;
+            cpu_to_l1__data = rd_data__1;
             cpu_to_l1__we = 1'b1;
             cpu_to_l1__dtype = dtype;
 
@@ -437,7 +409,7 @@ always_comb begin
             b = imm;
             wr_data = c;
             we = 1'b1;
-            alu_func = FUNC__ADD;
+            alu_func = 4'h0;
             state__n = STATE__PC4;
         end
 
@@ -526,17 +498,17 @@ always_comb begin
             b = rd_data__1;
 
             case (op)
-                OP__BEQ:
+                6'h2c:
                     state__n = eq ? STATE__BRANCH__3 : STATE__PC4; 
-                OP__BNE:
+                6'h2d:
                     state__n = ne ? STATE__BRANCH__3 : STATE__PC4; 
-                OP__BLT:
+                6'h2e:
                     state__n = lt ? STATE__BRANCH__3 : STATE__PC4; 
-                OP__BGE:
+                6'h2f:
                     state__n = ge ? STATE__BRANCH__3 : STATE__PC4; 
-                OP__BLTU:
+                6'h30:
                     state__n = ltu ? STATE__BRANCH__3 : STATE__PC4; 
-                OP__BGEU:
+                6'h31:
                     state__n = geu ? STATE__BRANCH__3 : STATE__PC4; 
             endcase
         end

@@ -1,0 +1,18 @@
+Vivado Simulator v2022.1
+Copyright 1986-1999, 2001-2022 Xilinx, Inc. All Rights Reserved.
+Running: /tools/Xilinx/Vivado/2022.1/bin/unwrapped/lnx64.o/xelab -debug all --relax -top central_processing_unit__tb -snapshot central_processing_unit__tb__snapshot 
+Multi-threading is on. Using 18 slave threads.
+Starting static elaboration
+Pass Through NonSizing Optimizer
+Completed static elaboration
+Starting simulation data flow analysis
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling module work.decoder
+Compiling module work.register_file
+Compiling module work.arithmetic_logic_unit
+Compiling module work.comparator
+Compiling module work.central_processing_unit
+Compiling module work.l1(DEPTH=16384,DEPTH__LOG2=14)
+Compiling module work.central_processing_unit__tb
+Built simulation snapshot central_processing_unit__tb__snapshot

@@ -1,0 +1,691 @@
+Info Session started: Mon Aug 29 16:41:40 2022
+
+Info PROGRAM /home/seankent/bluejay/imperas/imperas-riscv-tests/riscv-ovpsim-plus/bin/Linux64/riscvOVPsimPlus.exe
+Info ------------- ENVIRONMENT -------------
+Info --------------------------------------
+Info -------- FLAGS (from command line)
+Info --variant  RV64I
+Info --override  riscvOVPsim/cpu/tval_ii_code=F
+Info --program  /home/seankent/bluejay/imperas/imperas-riscv-tests/work/rv64i_m/I/XORI-01.elf
+Info --signaturedump
+Info --customcontrol
+Info --startcover  rvtest_code_begin
+Info --finishcover  rvtest_code_end
+Info --cover  basic
+Info --extensions  I
+Info --outputfile  /home/seankent/bluejay/imperas/imperas-riscv-tests/work/rv64i_m/I/XORI-01.basic.coverage.yaml
+Info --override  riscvOVPsim/cpu/sigdump/SignatureFile=/home/seankent/bluejay/imperas/imperas-riscv-tests/work/rv64i_m/I/XORI-01.signature.output
+Info --override  riscvOVPsim/cpu/sigdump/SignatureGranularity=4
+Info --override  riscvOVPsim/cpu/simulateexceptions=T
+Info --override  riscvOVPsim/cpu/defaultsemihost=F
+Info --logfile  /home/seankent/bluejay/imperas/imperas-riscv-tests/work/rv64i_m/I/XORI-01.log
+Info --override  riscvOVPsim/cpu/user_version=2.3
+Info --------------------------------------
+Imperas riscvOVPsimPlus
+
+
+riscvOVPsimPlus (64-Bit) v20220722.0 Open Virtual Platform simulator from www.IMPERAS.com.
+Copyright (c) 2005-2022 Imperas Software Ltd.  Contains Imperas Proprietary Information.
+Licensed Software, All Rights Reserved.
+Visit www.IMPERAS.com for multicore debug, verification and analysis solutions.
+
+riscvOVPsimPlus started: Mon Aug 29 16:41:40 2022
+
+
+Info (OR_OF) Target 'riscvOVPsim/cpu' has object file read from '/home/seankent/bluejay/imperas/imperas-riscv-tests/work/rv64i_m/I/XORI-01.elf'
+Info (OR_PH) Program Headers:
+Info (OR_PH) Type           Offset             VirtAddr           PhysAddr
+Info (OR_PH)                FileSiz            MemSiz             Flags  Align
+Info (OR_PD) PROC           0x0000000000004b08 0x0000000000000000 0x0000000000000000
+Info (OR_PD)                0x000000000000001e 0x0000000000000000 R--    1
+Info (OR_PD) LOAD           0x0000000000001000 0x0000000080000000 0x0000000080000000
+Info (OR_PD)                0x0000000000001cb4 0x0000000000001cb4 R-E    1000
+Info (OR_PD) LOAD           0x0000000000003000 0x0000000080002000 0x0000000080002000
+Info (OR_PD)                0x0000000000001b08 0x0000000000001b08 RW-    1000
+Info (SIGNATURE_DUMP_FSB) Found Symbol 'begin_signature' in application at 0x80003010
+Info (SIGNATURE_DUMP_FSE) Found Symbol 'end_signature' in application at 0x80003970
+Info (SIGNATURE_DUMP_EN) Signature File enabled, file '/home/seankent/bluejay/imperas/imperas-riscv-tests/work/rv64i_m/I/XORI-01.signature.output'.
+Info (SIGNATURE_DUMP_ES) Extracting signature from 0x80003010 size 2400 bytes
+Info (SIGNATURE_DUMP_SB) Symbol 'begin_signature' at 0x80003010
+Info (SIGNATURE_DUMP_SE) Symbol 'end_signature' at 0x80003970
+Info (ICV_PVSN) parameter 'user_version' is '2.3'
+Info (ICV_ALI) Pseudo instructions will be translated
+Info (ICV_ST) Starting coverage at 0x80000410
+Info (SIGNATURE_DUMP_SFW) Signature Write 1 0x80003010 bytes 8 0x0
+Info (ICV_FN) Finishing coverage at 0x80001c70
+Info (ICV_WCF) Writing coverage file /home/seankent/bluejay/imperas/imperas-riscv-tests/work/rv64i_m/I/XORI-01.basic.coverage.yaml
+Info (ICV_FIN) Instruction Coverage finished
+Info ---------------------------------------------------
+Info TOTAL INSTRUCTION COVERAGE : I
+Info   Threshold             : 1
+Info   Instructions counted  : 1561
+Info   Unique instructions   : 8/51 :  15.69%
+Info   Coverage points hit   : 358/3432 :  10.43%
+Info ---------------------------------------------------
+Info (SIGNATURE_DUMP_WTH) Intercept 'write_tohost'. Generate Signature file
+eae5fcc8
+ab0b5114
+bd61246c
+1e4ee664
+fffffc65
+ffffffff
+fb99df6b
+0d8ff719
+38c85124
+f37b7b5c
+00000000
+00000000
+d39c32a0
+02846207
+195b616e
+0afaa29d
+cb47f020
+bec0d39d
+34267e19
+2c370a9a
+67dd32ac
+2882a0b3
+4d2c086b
+6e22a529
+00000000
+00000000
+00000000
+00000000
+37c4c1e8
+b2dc9507
+56975212
+67c4609c
+a4f79f22
+e041c359
+6075c783
+353a8593
+b00f68d0
+99d975e5
+4cd5b449
+d753ab5c
+e85d0696
+23c8ec5d
+b7b9fb43
+8b98bc66
+0362798b
+942267de
+9b1a86c4
+825648e4
+bd9474d7
+840b10e3
+f6323c04
+0f49a4b2
+4bfb01e9
+fe9b8abf
+f22b62fc
+347ebc89
+f3362b14
+0ad5ad40
+169db9da
+caa4b80e
+ffffffff
+ffffffff
+ffffffff
+7fffffff
+00000000
+00000000
+fffffffe
+ffffffff
+00000000
+00000000
+ffffffff
+7fffffff
+00000000
+00000000
+fffffffe
+ffffffff
+ffffffff
+ffffffff
+ffffffff
+7fffffff
+00000000
+00000000
+00000000
+00000000
+00000000
+00000000
+00000000
+00000000
+00000000
+00000000
+00000000
+00000000
+00000000
+00000000
+00000000
+00000000
+00000000
+00000000
+00000000
+00000000
+00000000
+00000000
+fffff000
+ffffffff
+ffffeffe
+ffffffff
+ffffdffd
+ffffffff
+ffffbffb
+ffffffff
+ffff7ff7
+ffffffff
+fffeffef
+ffffffff
+fffdffdf
+ffffffff
+fffbffbf
+ffffffff
+fff7ff7f
+ffffffff
+ffeffeff
+ffffffff
+ffdffdff
+ffffffff
+ffbffbff
+ffffffff
+008007ff
+00000000
+fefffffe
+ffffffff
+fdfffffd
+ffffffff
+fbfffffb
+ffffffff
+f7fffff7
+ffffffff
+efffffef
+ffffffff
+dfffffdf
+ffffffff
+bfffffbf
+ffffffff
+7fffff7f
+ffffffff
+fffffeff
+fffffffe
+fffffdff
+fffffffd
+fffffbff
+fffffffb
+000007ff
+00000008
+fffffffe
+ffffffef
+fffffffd
+ffffffdf
+fffffffb
+ffffffbf
+fffffff7
+ffffff7f
+ffffffef
+fffffeff
+ffffffdf
+fffffdff
+ffffffbf
+fffffbff
+ffffff7f
+fffff7ff
+fffffeff
+ffffefff
+fffffdff
+ffffdfff
+fffffbff
+ffffbfff
+000007ff
+00008000
+fffffffe
+fffeffff
+fffffffd
+fffdffff
+fffffffb
+fffbffff
+fffffff7
+fff7ffff
+ffffffef
+ffefffff
+ffffffdf
+ffdfffff
+ffffffbf
+ffbfffff
+ffffff7f
+ff7fffff
+fffffeff
+feffffff
+fffffdff
+fdffffff
+fffffbff
+fbffffff
+000007ff
+08000000
+fffffffe
+efffffff
+fffffffd
+dfffffff
+fffffffb
+bfffffff
+fffffff7
+7fffffff
+00000011
+00000000
+00000022
+00000000
+00000044
+00000000
+00000088
+00000000
+00000110
+00000000
+00000220
+00000000
+00000440
+00000000
+fffff880
+ffffffff
+00000101
+00000000
+00000202
+00000000
+00000404
+00000000
+00000808
+00000000
+00001010
+00000000
+00002020
+00000000
+00004040
+00000000
+00008080
+00000000
+00010100
+00000000
+00020200
+00000000
+00040400
+00000000
+fff7f800
+ffffffff
+00100001
+00000000
+00200002
+00000000
+00400004
+00000000
+00800008
+00000000
+01000010
+00000000
+02000020
+00000000
+04000040
+00000000
+08000080
+00000000
+10000100
+00000000
+20000200
+00000000
+40000400
+00000000
+7ffff800
+ffffffff
+00000001
+00000001
+00000002
+00000002
+00000004
+00000004
+00000008
+00000008
+00000010
+00000010
+00000020
+00000020
+00000040
+00000040
+00000080
+00000080
+00000100
+00000100
+00000200
+00000200
+00000400
+00000400
+fffff800
+fffff7ff
+00000001
+00001000
+00000002
+00002000
+00000004
+00004000
+00000008
+00008000
+00000010
+00010000
+00000020
+00020000
+00000040
+00040000
+00000080
+00080000
+00000100
+00100000
+00000200
+00200000
+00000400
+00400000
+fffff800
+ff7fffff
+00000001
+01000000
+00000002
+02000000
+00000004
+04000000
+00000008
+08000000
+00000010
+10000000
+00000020
+20000000
+00000040
+40000000
+00000080
+80000000
+00000000
+00000000
+00000000
+00000000
+00000000
+00000000
+00000000
+00000000
+00000000
+00000000
+00000000
+00000000
+00000000
+00000000
+00000000
+00000000
+00000000
+00000000
+00000000
+00000000
+00000000
+00000000
+fffff000
+ffffffff
+ffffeffe
+ffffffff
+ffffdffd
+ffffffff
+ffffbffb
+ffffffff
+ffff7ff7
+ffffffff
+fffeffef
+ffffffff
+fffdffdf
+ffffffff
+fffbffbf
+ffffffff
+fff7ff7f
+ffffffff
+ffeffeff
+ffffffff
+ffdffdff
+ffffffff
+ffbffbff
+ffffffff
+008007ff
+00000000
+fefffffe
+ffffffff
+fdfffffd
+ffffffff
+fbfffffb
+ffffffff
+f7fffff7
+ffffffff
+efffffef
+ffffffff
+dfffffdf
+ffffffff
+bfffffbf
+ffffffff
+7fffff7f
+ffffffff
+fffffeff
+fffffffe
+fffffdff
+fffffffd
+fffffbff
+fffffffb
+000007ff
+00000008
+fffffffe
+ffffffef
+fffffffd
+ffffffdf
+fffffffb
+ffffffbf
+fffffff7
+ffffff7f
+ffffffef
+fffffeff
+ffffffdf
+fffffdff
+ffffffbf
+fffffbff
+ffffff7f
+fffff7ff
+fffffeff
+ffffefff
+fffffdff
+ffffdfff
+fffffbff
+ffffbfff
+000007ff
+00008000
+fffffffe
+fffeffff
+fffffffd
+fffdffff
+fffffffb
+fffbffff
+fffffff7
+fff7ffff
+ffffffef
+ffefffff
+ffffffdf
+ffdfffff
+ffffffbf
+ffbfffff
+ffffff7f
+ff7fffff
+fffffeff
+feffffff
+fffffdff
+fdffffff
+fffffbff
+fbffffff
+000007ff
+08000000
+fffffffe
+efffffff
+fffffffd
+dfffffff
+fffffffb
+bfffffff
+fffffff7
+7fffffff
+00000011
+00000000
+00000022
+00000000
+00000044
+00000000
+00000088
+00000000
+00000110
+00000000
+00000220
+00000000
+00000440
+00000000
+fffff880
+ffffffff
+00000101
+00000000
+00000202
+00000000
+00000404
+00000000
+00000808
+00000000
+00001010
+00000000
+00002020
+00000000
+00004040
+00000000
+00008080
+00000000
+00010100
+00000000
+00020200
+00000000
+00040400
+00000000
+fff7f800
+ffffffff
+00100001
+00000000
+00200002
+00000000
+00400004
+00000000
+00800008
+00000000
+01000010
+00000000
+02000020
+00000000
+04000040
+00000000
+08000080
+00000000
+10000100
+00000000
+20000200
+00000000
+40000400
+00000000
+7ffff800
+ffffffff
+00000001
+00000001
+00000002
+00000002
+00000004
+00000004
+00000008
+00000008
+00000010
+00000010
+00000020
+00000020
+00000040
+00000040
+00000080
+00000080
+00000100
+00000100
+00000200
+00000200
+00000400
+00000400
+fffff800
+fffff7ff
+00000001
+00001000
+00000002
+00002000
+00000004
+00004000
+00000008
+00008000
+00000010
+00010000
+00000020
+00020000
+00000040
+00040000
+00000080
+00080000
+00000100
+00100000
+00000200
+00200000
+00000400
+00400000
+fffff800
+ff7fffff
+00000001
+01000000
+00000002
+02000000
+00000004
+04000000
+00000008
+08000000
+00000010
+10000000
+00000020
+20000000
+00000040
+40000000
+00000080
+80000000
+00000000
+00000000
+fffff8e8
+ffffffff
+deadbeef
+00000000
+deadbeef
+00000000
+Info 
+Info ---------------------------------------------------
+Info CPU 'riscvOVPsim/cpu' STATISTICS
+Info   Type                  : riscv (RV64I)
+Info   Nominal MIPS          : 100
+Info   Final program counter : 0x8000003c
+Info   Simulated instructions: 1,810
+Info   Simulated MIPS        : run too short for meaningful result
+Info ---------------------------------------------------
+Info 
+Info ---------------------------------------------------
+Info SIMULATION TIME STATISTICS
+Info   Simulated time        : 0.00 seconds
+Info   User time             : 0.03 seconds
+Info   System time           : 0.00 seconds
+Info   Elapsed time          : 0.04 seconds
+Info ---------------------------------------------------
+
+riscvOVPsimPlus finished: Mon Aug 29 16:41:40 2022
+
+
+riscvOVPsimPlus (64-Bit) v20220722.0 Open Virtual Platform simulator from www.IMPERAS.com.
+Visit www.IMPERAS.com for multicore debug, verification and analysis solutions.
+
+Info Session ended: Mon Aug 29 16:41:40 2022
+

@@ -37,3 +37,7 @@ Resources:
         - https://github.com/riscv-ovpsim/imperas-riscv-tests
         - https://github.com/riscv-ovpsim/imperas-riscv-tests/blob/v20220527/riscv-ovpsim/README.md
         - https://github.com/riscv-ovpsim/imperas-riscv-tests/blob/v20220527/riscv-ovpsim/doc/riscvOVPsim_User_Guide.pdf
+        - make command: make RISCV_TARGET=riscv-target/riscvOVPsimPlus RISCV_DEVICE=I XLEN=64 RISCV_BASE=i TARGETDIR=/home/seankent/bluejay/imperas/imperas-riscv-tests
+        - Settup (this is how you make all of the tests!):
+            $ export TOPDIR=/home/seankent/riscv/riscv-gnu-toolchain
+            $ make clean simulate verify postverify XLEN=64 RISCV_DEVICE=I RISCV_TARGET=riscvOVPsimPlus

@@ -3,37 +3,53 @@
 #===============================================
 BLUEJAY := /home/seankent/bluejay
 TOOLS := $(BLUEJAY)/tools
-
-#===============================================
-# Setting
-#===============================================
-OUT_DIR = gen
+BUILD := $(BLUEJAY)/build
+SRC := $(BLUEJAY)/src
+TB := $(BLUEJAY)/tb
 
 #===============================================
 # Sources/Targets 
 #===============================================
-B_FILES := $(wildcard *.b)
-SV_FILES := $(B_FILES:.b=.sv) 
-TARGETS := $(addprefix $(OUT_DIR)/, $(SV_FILES))
-
+SRC := src 
+TB := tb
+SIM := sim
+		
 #===============================================
 # Rules
 #===============================================
 #===============================
 # all
 #===============================
-all: $(TARGETS)
+.PHONY: all 
+all: $(SRC) $(TB)
 
 #===============================
-# $(TARGETS) 
+# $(SRC) 
 #===============================
-$(TARGETS): $(OUT_DIR)/%.sv : %.b
-	mkdir -p $(OUT_DIR)
-	python3 $(TOOLS)/bluejay.py $< $@
+.PHONY: $(SRC) 
+$(SRC):
+	$(MAKE) -C $@
+
+#===============================
+# $(TB) 
+#===============================
+.PHONY: $(TB) 
+$(TB):
+	$(MAKE) -C $@
+
+#===============================
+# $(SIM) 
+#===============================
+.PHONY: $(SIM) 
+$(SIM):
+	$(MAKE) -C $@
+
 
 #===============================
 # clean 
 #===============================
-.PHONY: clean
-clean:
-	rm -rf $(OUT_DIR)
+.PHONY: clean 
+clean: 
+	$(MAKE) -C $(SRC) clean
+	$(MAKE) -C $(TB) clean
+
