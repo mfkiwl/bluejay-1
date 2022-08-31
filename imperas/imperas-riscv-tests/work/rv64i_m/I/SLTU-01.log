@@ -1,4 +1,4 @@
-Info Session started: Mon Aug 29 16:41:41 2022
+Info Session started: Tue Aug 30 21:58:23 2022
 
 Info PROGRAM /home/seankent/bluejay/imperas/imperas-riscv-tests/riscv-ovpsim-plus/bin/Linux64/riscvOVPsimPlus.exe
 Info ------------- ENVIRONMENT -------------
@@ -29,7 +29,7 @@ Copyright (c) 2005-2022 Imperas Software Ltd.  Contains Imperas Proprietary Info
 Licensed Software, All Rights Reserved.
 Visit www.IMPERAS.com for multicore debug, verification and analysis solutions.
 
-riscvOVPsimPlus started: Mon Aug 29 16:41:41 2022
+riscvOVPsimPlus started: Tue Aug 30 21:58:23 2022
 
 
 Info (OR_OF) Target 'riscvOVPsim/cpu' has object file read from '/home/seankent/bluejay/imperas/imperas-riscv-tests/work/rv64i_m/I/SLTU-01.elf'
@@ -676,16 +676,16 @@ Info
 Info ---------------------------------------------------
 Info SIMULATION TIME STATISTICS
 Info   Simulated time        : 0.00 seconds
-Info   User time             : 0.04 seconds
+Info   User time             : 0.02 seconds
 Info   System time           : 0.00 seconds
-Info   Elapsed time          : 0.04 seconds
+Info   Elapsed time          : 0.02 seconds
 Info ---------------------------------------------------
 
-riscvOVPsimPlus finished: Mon Aug 29 16:41:41 2022
+riscvOVPsimPlus finished: Tue Aug 30 21:58:23 2022
 
 
 riscvOVPsimPlus (64-Bit) v20220722.0 Open Virtual Platform simulator from www.IMPERAS.com.
 Visit www.IMPERAS.com for multicore debug, verification and analysis solutions.
 
-Info Session ended: Mon Aug 29 16:41:41 2022
+Info Session ended: Tue Aug 30 21:58:23 2022
 

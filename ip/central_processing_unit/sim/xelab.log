@@ -13,6 +13,6 @@ Compiling module work.register_file
 Compiling module work.arithmetic_logic_unit
 Compiling module work.comparator
 Compiling module work.central_processing_unit
-Compiling module work.l1(DEPTH=16384,DEPTH__LOG2=14)
+Compiling module work.l1(DEPTH=64'b010000000000000000,...
 Compiling module work.central_processing_unit__tb
 Built simulation snapshot central_processing_unit__tb__snapshot

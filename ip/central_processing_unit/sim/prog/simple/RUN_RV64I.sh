@@ -1,8 +1,8 @@
 #!/bin/bash
 
-bindir=/home/seankent/riscv/imperas-riscv-tests/riscv-ovpsim/bin/Linux64
+bindir=/home/seankent/bluejay/imperas/imperas-riscv-tests/riscv-ovpsim-plus/bin/Linux64
 
-${bindir}/riscvOVPsim.exe \
+${bindir}/riscvOVPsimPlus.exe \
     --program sim__0.elf \
     --variant RV64I \
     --signaturedump \

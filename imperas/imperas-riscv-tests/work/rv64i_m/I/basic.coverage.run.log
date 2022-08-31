@@ -1,4 +1,4 @@
-Info Session started: Mon Aug 29 16:41:43 2022
+Info Session started: Tue Aug 30 21:58:25 2022
 
 Info PROGRAM /home/seankent/bluejay/imperas/imperas-riscv-tests/riscv-ovpsim-plus/bin/Linux64/riscvOVPsimPlus.exe
 Info ------------- ENVIRONMENT -------------
@@ -23,7 +23,7 @@ Copyright (c) 2005-2022 Imperas Software Ltd.  Contains Imperas Proprietary Info
 Licensed Software, All Rights Reserved.
 Visit www.IMPERAS.com for multicore debug, verification and analysis solutions.
 
-riscvOVPsimPlus started: Mon Aug 29 16:41:43 2022
+riscvOVPsimPlus started: Tue Aug 30 21:58:25 2022
 
 
 Info (ICV_PVSN) parameter 'user_version' is '20191213'
@@ -38,7 +38,7 @@ Info   System time           : 0.00 seconds
 Info   Elapsed time          : 0.00 seconds
 Info ---------------------------------------------------
 
-riscvOVPsimPlus finished: Mon Aug 29 16:41:43 2022
+riscvOVPsimPlus finished: Tue Aug 30 21:58:25 2022
 
 
 riscvOVPsimPlus (64-Bit) v20220722.0 Open Virtual Platform simulator from www.IMPERAS.com.
@@ -114,5 +114,5 @@ Info   Instructions counted  : 0
 Info   Unique instructions   : 50/51 :  98.04%
 Info   Coverage points hit   : 3424/3432 :  99.77%
 Info ---------------------------------------------------
-Info Session ended: Mon Aug 29 16:41:43 2022
+Info Session ended: Tue Aug 30 21:58:25 2022
 

@@ -45,7 +45,7 @@ central_processing_unit dut
 //==============================
 // l1 
 //==============================
-l1 #(.DEPTH(16384), .DEPTH__LOG2(14)) l1_cache 
+l1 #(.DEPTH(64'h10000), .DEPTH__LOG2(16)) l1_cache 
 (
     .clk(clk),
     .rst(rst),
@@ -83,7 +83,7 @@ initial begin
     // initialize the ra register
     dut.register_file__0.x__1 = 64'hffffffffffffffff;
     // initialize the sp register (Set to top of mem) EDIT
-    dut.register_file__0.x__2 = 64'h4000;
+    dut.register_file__0.x__2 = 64'h10000;
     // initialize the gp register
     dut.register_file__0.x__3 = 64'h11860;
     // initialize instruction memory
@@ -92,10 +92,12 @@ initial begin
     rst = 1'b0;
 end
 
+
 initial begin
     forever begin
         @(posedge clk) begin
-            if ((dut.op == OP__JALR) && (dut.rs1 == 5'h1) && (dut.register_file__0.x__1 = 64'hffffffffffffffff)) begin
+            //if ((dut.op == OP__JALR) && (dut.rs1 == 5'h1) && (dut.register_file__0.x__1 = 64'hffffffffffffffff)) begin
+            if (dut.op == OP__ECALL) begin
                 //fd = $fopen("/home/seankent/bluejay/sim/t.vout");
                 //for (addr_long = 64'h11060; addr_long < (64'h11060 + 48); addr_long += 16) begin
                 //    addr_short = addr_long[15:3];

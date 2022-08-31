@@ -545,7 +545,7 @@ always_comb begin
         //==============================
         STATE__FENCE:
         begin
-            state__n = STATE__FENCE;
+            state__n = STATE__PC4;
         end
 
         //==============================
@@ -553,7 +553,7 @@ always_comb begin
         //==============================
         STATE__FENCE_I:
         begin
-            state__n = STATE__FENCE_I;
+            state__n = STATE__PC4;
         end
 
         //==============================
@@ -592,7 +592,7 @@ end
 
 always_ff @(posedge clk) begin
     if (rst) begin
-        pc <= 64'h10000;
+        pc <= 64'h80000000;
     end
     else begin
         pc <= pc__n;

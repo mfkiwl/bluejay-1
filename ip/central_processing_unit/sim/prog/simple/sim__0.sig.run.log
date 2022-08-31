@@ -1,6 +1,6 @@
-Info Session started: Sun Aug 21 17:13:23 2022
+Info Session started: Tue Aug 30 21:55:58 2022
 
-Info PROGRAM /home/seankent/riscv/imperas-riscv-tests/riscv-ovpsim/bin/Linux64/riscvOVPsim.exe
+Info PROGRAM /home/seankent/bluejay/imperas/imperas-riscv-tests/riscv-ovpsim-plus/bin/Linux64/riscvOVPsimPlus.exe
 Info ------------- ENVIRONMENT -------------
 Info --------------------------------------
 Info -------- FLAGS (from command line)
@@ -13,15 +13,15 @@ Info --override  riscvOVPsim/cpu/sigdump/ByteCount=48
 Info --override  riscvOVPsim/cpu/sigdump/SignatureAtEnd=T
 Info --logfile  sim__0.sig.run.log
 Info --------------------------------------
-Imperas riscvOVPsim
+Imperas riscvOVPsimPlus
 
 
-riscvOVPsim (64-Bit) v20220527.0 Open Virtual Platform simulator from www.IMPERAS.com.
+riscvOVPsimPlus (64-Bit) v20220722.0 Open Virtual Platform simulator from www.IMPERAS.com.
 Copyright (c) 2005-2022 Imperas Software Ltd.  Contains Imperas Proprietary Information.
 Licensed Software, All Rights Reserved.
 Visit www.IMPERAS.com for multicore debug, verification and analysis solutions.
 
-riscvOVPsim started: Sun Aug 21 17:13:23 2022
+riscvOVPsimPlus started: Tue Aug 30 21:55:58 2022
 
 
 Info (OR_OF) Target 'riscvOVPsim/cpu' has object file read from 'sim__0.elf'
@@ -55,21 +55,20 @@ Info
 Info ---------------------------------------------------
 Info SIMULATION TIME STATISTICS
 Info   Simulated time        : 0.00 seconds
-Info   User time             : 0.00 seconds
+Info   User time             : 0.01 seconds
 Info   System time           : 0.00 seconds
 Info   Elapsed time          : 0.00 seconds
-Info   Real time ratio       : 1.01x faster
 Info ---------------------------------------------------
 
-riscvOVPsim finished: Sun Aug 21 17:13:23 2022
+riscvOVPsimPlus finished: Tue Aug 30 21:55:58 2022
 
 
-riscvOVPsim (64-Bit) v20220527.0 Open Virtual Platform simulator from www.IMPERAS.com.
+riscvOVPsimPlus (64-Bit) v20220722.0 Open Virtual Platform simulator from www.IMPERAS.com.
 Visit www.IMPERAS.com for multicore debug, verification and analysis solutions.
 
 Info (SIGNATURE_DUMP) Destructor. Generate Signature file
 0f0e0d0c0b0a09080706050403020100
 1f1e1d1c1b1a19181716151413121110
 2f2e2d2c2b2a29282726252423222120
-Info Session ended: Sun Aug 21 17:13:23 2022
+Info Session ended: Tue Aug 30 21:55:58 2022
 
