@@ -15,31 +15,18 @@ import filecmp
 ########
 # diff #
 ########
-def diff(path):
-
-    stdout = os.popen('find ' + path + '* -name "*.aout"').read()[:-1]
-
-    total = 0
-    passed = 0
-    for aout in stdout.split():
-        vout = re.sub('aout', 'vout', aout)
-        total += 1
-        
-        if filecmp.cmp(vout, aout, shallow=False):
-            passed += 1
-            print('pass!')
-        else:
-            print('fail.')
-            print(f'    aout: {aout}')
-            print(f'    vout: {vout}')
-
-    print(f'{passed}/{total}')
+def diff(f0, f1):
+    if filecmp.cmp(f0, f1, shallow=False):
+        print('pass!')
+    else:
+        print('fail.')
 
 if __name__ == '__main__':
  
-    if len(sys.argv) == 2:
-        path = sys.argv[1]
-        diff(path)
+    if len(sys.argv) == 3:
+        f0 = sys.argv[1]
+        f1 = sys.argv[2]
+        diff(f0, f1)
 
     else:
-        print('[ERROR] Diff failed.')
+        print('[ERROR] invalid args.')

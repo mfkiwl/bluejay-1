@@ -69,11 +69,29 @@ always begin
 end
 
 
-string filename;
+string filename__mem;
+string filename__sig;
+logic [63:0] begin_signature;
+logic [63:0] end_signature;
+logic [63:0] addr;
+logic [15:0] addr_short;
+
+// file descriptor handle
+integer fd;
+
 initial begin
-    if ($value$plusargs("filename=%s", filename)) begin
-        $readmemh(filename, l1.memory);
+    if ($value$plusargs("filename__mem=%s", filename__mem)) begin
+        $readmemh(filename__mem, l1.memory);
     end
+    //if ($value$plusargs("filename__sig=%s", filename__sig)) begin
+    //    $display("filename__sig = %s", filename__sig);
+    //end
+    //if ($value$plusargs("begin_signature=%0h", begin_signature)) begin
+    //    $display("begin_signature = %0h", begin_signature);
+    //end
+    //if ($value$plusargs("end_signature=%0h", end_signature)) begin
+    //    $display("end_signature = %0h", end_signature);
+    //end
 end
 
 initial begin
@@ -98,14 +116,22 @@ initial begin
         @(posedge clk) begin
             //if ((dut.op == 6'h32) && (dut.rs1 == 5'h1) && (dut.register_file__0.x__1 = 64'hffffffffffffffff)) begin
             if (dut.op == 6'h34) begin
-                //fd = $fopen("/home/seankent/bluejay/sim/t.vout");
-                //for (addr_long = 64'h11060; addr_long < (64'h11060 + 48); addr_long += 16) begin
-                //    addr_short = addr_long[15:3];
-                //    $fwrite(fd, "%016h", mem__0.memory[addr_short]);
-                //    $fwrite(fd, "%016h\n", mem__0.memory[addr_short + 1]);
-                //end
+                $value$plusargs("filename__sig=%s", filename__sig);
+                $display("filename__sig = %s", filename__sig);
+                $value$plusargs("begin_signature=%h", begin_signature);
+                $display("begin_signature = %0h", begin_signature);
+                $value$plusargs("end_signature=%h", end_signature);
+                $display("end_signature = %0h", end_signature);
+                fd = $fopen(filename__sig);
+                for (addr = begin_signature; addr < end_signature; addr += 4) begin
+                    addr_short = addr[15:0];
+                    $fwrite(fd, "%02h", l1_cache.memory[addr_short + 3]);
+                    $fwrite(fd, "%02h", l1_cache.memory[addr_short + 2]);
+                    $fwrite(fd, "%02h", l1_cache.memory[addr_short + 1]);
+                    $fwrite(fd, "%02h\n", l1_cache.memory[addr_short]);
+                end
                 ////$fdisplay(fd, "%016h", dut.central_processing_unit__0.register_file__0.x__10);
-                //$fclose(fd);
+                $fclose(fd);
                 $finish();
             end
         end
@@ -117,6 +143,11 @@ end
    
 initial begin
     #2000000;
+    $value$plusargs("filename__sig=%s", filename__sig);
+    $display("filename__sig = %s", filename__sig);
+    fd = $fopen(filename__sig);
+    $fwrite(fd, "00000000");
+    $fclose(fd);
     $finish();
 end
 

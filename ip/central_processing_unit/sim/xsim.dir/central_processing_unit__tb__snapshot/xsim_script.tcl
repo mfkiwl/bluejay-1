@@ -1,1 +1,1 @@
-xsim {central_processing_unit__tb__snapshot} -testplusarg filename=/home/seankent/bluejay/ip/central_processing_unit/sim/ADD-01.txt -wdb {ADD-01.wdb} -autoloadwcfg -tclbatch {xsim_cfg.tcl}
+xsim {central_processing_unit__tb__snapshot} -testplusarg filename__mem=/home/seankent/bluejay/ip/central_processing_unit/sim/BGE-01.mem -testplusarg filename__sig=/home/seankent/bluejay/ip/central_processing_unit/sim/BGE-01.signature -testplusarg begin_signature=0000000080005010 -testplusarg end_signature=0000000080005970 -wdb {BGE-01.wdb} -autoloadwcfg -tclbatch {xsim_cfg.tcl}
