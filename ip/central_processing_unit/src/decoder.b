@@ -7,12 +7,11 @@ module decoder
     input rst,
     input [31:0] ir,
     output logic [5:0] op,
-    output logic [3:0] func,
     output logic [4:0] rs1,
     output logic [4:0] rs2,
     output logic [4:0] rd,
     output logic [63:0] imm,
-    output logic [2:0] dtype
+    output logic [63:0] uimm
 );
 
 logic [6:0] opcode;
@@ -27,6 +26,7 @@ assign rs2 = ir[24:20];
 assign rd = ir[11:7];
 assign funct3 = ir[14:12];
 assign funct7 = ir[31:25];
+assign uimm = {{59{1'b0}}, ir[19:15]};
 
 // Generate immediate.
 always_comb begin
@@ -395,6 +395,30 @@ always_comb begin
                         end
                     endcase
                 end
+                3'h1:
+                begin
+                    op = OP__CSRRW;
+                end
+                3'h2:
+                begin
+                    op = OP__CSRRS;
+                end
+                3'h3:
+                begin
+                    op = OP__CSRRC;
+                end
+                3'h5:
+                begin
+                    op = OP__CSRRWI;
+                end
+                3'h6:
+                begin
+                    op = OP__CSRRSI;
+                end
+                3'h7:
+                begin
+                    op = OP__CSRRCI;
+                end
             endcase
         end
     endcase
@@ -403,37 +427,35 @@ end
 // Set control signals.
 always_comb begin
     format = FORMAT__I_TYPE;
-    func = FUNC__ADD;
-    dtype = DTYPE__D;
 
     case (op)
         OP__LB:
         begin
-            dtype = DTYPE__B;
+            format = FORMAT__I_TYPE;
         end
         OP__LH:
         begin
-            dtype = DTYPE__H;
+            format = FORMAT__I_TYPE;
         end
         OP__LW:
         begin
-            dtype = DTYPE__W;
+            format = FORMAT__I_TYPE;
         end
         OP__LD:
         begin
-            dtype = DTYPE__D;
+            format = FORMAT__I_TYPE;
         end
         OP__LBU:
         begin
-            dtype = DTYPE__BU;
+            format = FORMAT__I_TYPE;
         end
         OP__LHU:
         begin
-            dtype = DTYPE__HU;
+            format = FORMAT__I_TYPE;
         end
         OP__LWU:
         begin
-            dtype = DTYPE__HU;
+            format = FORMAT__I_TYPE;
         end
         OP__FENCE:
         begin
@@ -443,39 +465,39 @@ always_comb begin
         end
         OP__ADDI:
         begin
-            func = FUNC__ADD;
+            format = FORMAT__I_TYPE;
         end
         OP__SLLI:
         begin
-            func = FUNC__SLL;
+            format = FORMAT__I_TYPE;
         end
         OP__SLTI:
         begin
-            func = FUNC__SLT;
+            format = FORMAT__I_TYPE;
         end
         OP__SLTIU:
         begin
-            func = FUNC__SLTU;
+            format = FORMAT__I_TYPE;
         end
         OP__XORI:
         begin
-            func = FUNC__XOR;
+            format = FORMAT__I_TYPE;
         end
         OP__SRLI:
         begin
-            func = FUNC__SRL;
+            format = FORMAT__I_TYPE;
         end
         OP__SRAI:
         begin
-            func = FUNC__SRA;
+            format = FORMAT__I_TYPE;
         end
         OP__ORI:
         begin
-            func = FUNC__OR;
+            format = FORMAT__I_TYPE;
         end
         OP__ANDI:
         begin
-            func = FUNC__AND;
+            format = FORMAT__I_TYPE;
         end
         OP__AUIPC:
         begin
@@ -483,89 +505,75 @@ always_comb begin
         end
         OP__ADDIW:
         begin
-            func = FUNC__ADDW;
+            format = FORMAT__I_TYPE;
         end
         OP__SLLIW:
         begin
-            func = FUNC__SLLW;
+            format = FORMAT__I_TYPE;
         end
         OP__SRLIW:
         begin
-            func = FUNC__SRLW;
+            format = FORMAT__I_TYPE;
         end
         OP__SRAIW:
         begin
-            func = FUNC__SRAW;
+            format = FORMAT__I_TYPE;
         end
         OP__SB:
         begin
             format = FORMAT__S_TYPE;
-            dtype = DTYPE__B;
         end
         OP__SH:
         begin
             format = FORMAT__S_TYPE;
-            dtype = DTYPE__H;
         end
         OP__SW:
         begin
             format = FORMAT__S_TYPE;
-            dtype = DTYPE__W;
         end
         OP__SD:
         begin
             format = FORMAT__S_TYPE;
-            dtype = DTYPE__D;
         end
         OP__ADD:
         begin
             format = FORMAT__R_TYPE;
-            func = FUNC__ADD;
         end
         OP__SUB:
         begin
             format = FORMAT__R_TYPE;
-            func = FUNC__SUB;
         end
         OP__SLL:
         begin
             format = FORMAT__R_TYPE;
-            func = FUNC__SLL;
         end
         OP__SLT:
         begin
             format = FORMAT__R_TYPE;
-            func = FUNC__SLT;
         end
         OP__SLTU:
         begin
             format = FORMAT__R_TYPE;
-            func = FUNC__SLTU;
         end
         OP__XOR:
         begin
             format = FORMAT__R_TYPE;
-            func = FUNC__XOR;
         end
         OP__SRL:
         begin
             format = FORMAT__R_TYPE;
-            func = FUNC__SRL;
         end
         OP__SRA:
         begin
             format = FORMAT__R_TYPE;
-            func = FUNC__SRA;
         end
         OP__OR:
         begin
             format = FORMAT__R_TYPE;
-            func = FUNC__OR;
         end
         OP__AND:
         begin
             format = FORMAT__R_TYPE;
-            func = FUNC__AND;; 
         end
         OP__LUI:
         begin
@@ -574,27 +582,22 @@ always_comb begin
         OP__ADDW:
         begin
             format = FORMAT__R_TYPE;
-            func = FUNC__ADDW;
         end
         OP__SUBW:
         begin
             format = FORMAT__R_TYPE;
-            func = FUNC__SUBW;
         end
         OP__SLLW:
         begin
             format = FORMAT__R_TYPE;
-            func = FUNC__SLLW;
         end
         OP__SRLW:
         begin
             format = FORMAT__R_TYPE;
-            func = FUNC__SRLW;
         end
         OP__SRAW:
         begin
             format = FORMAT__R_TYPE;
-            func = FUNC__SRAW;
         end
         OP__BEQ:
         begin
@@ -622,6 +625,7 @@ always_comb begin
         end
         OP__JALR:
         begin
+            format = FORMAT__I_TYPE;
         end
         OP__JAL:
         begin
@@ -629,16 +633,37 @@ always_comb begin
         end
         OP__ECALL:
         begin
-            
+            format = FORMAT__I_TYPE;
         end
         OP__EBREAK:
         begin
-            
+            format = FORMAT__I_TYPE;
+        end
+        OP__CSRRW:
+        begin
+            format = FORMAT__I_TYPE;
+        end
+        OP__CSRRS:
+        begin
+            format = FORMAT__I_TYPE;
+        end
+        OP__CSRRC:
+        begin
+            format = FORMAT__I_TYPE;
+        end
+        OP__CSRRWI:
+        begin
+            format = FORMAT__I_TYPE;
+        end
+        OP__CSRRSI:
+        begin
+            format = FORMAT__I_TYPE;
+        end
+        OP__CSRRCI:
+        begin
+            format = FORMAT__I_TYPE;
         end
     endcase
 end 
-
-
-
 
 endmodule

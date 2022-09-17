@@ -24,7 +24,6 @@ def get_symbol_addr(elf, symbol):
     txt = re.findall('[0-9]+: [0-9]+[ \t]+0 NOTYPE  GLOBAL DEFAULT    [0-9] ' + symbol, stdout)[0]
 
     addr = re.split(' ', txt)[1]
-       #414: 0000000080004970     0 NOTYPE  GLOBAL DEFAULT    3 end_signature
 
     print(addr)
 
