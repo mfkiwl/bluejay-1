@@ -34,16 +34,17 @@ logic [63:0] uimm;
 
 // Register File.
 logic we;
-logic [4:0] addr;
-logic [63:0] rd_data;
+logic [4:0] rd_addr__0;
+logic [63:0] rd_data__0;
+logic [4:0] rd_addr__1;
+logic [63:0] rd_data__1;
+logic [4:0] wr_addr;
 logic [63:0] wr_data;
 
 // ALU.
 logic [3:0] func;
 logic [63:0] a;
-logic [63:0] a__n;
 logic [63:0] b;
-logic [63:0] b__n;
 logic [63:0] c;
 
 // Comparator.
@@ -54,13 +55,18 @@ logic ge;
 logic ltu;
 logic geu;
 
+// Extra Register
+logic [63:0] tmp;
+logic [63:0] tmp__n;
+
 // Control and Status Registers
 logic csr__we;
 logic [11:0] csr__addr;
 logic [63:0] csr__wr_data;
 logic [63:0] csr__rd_data;
 
-// FSM
+
+// FSM.
 logic [5:0] state;
 logic [5:0] state__n;
 
@@ -90,8 +96,11 @@ register_file register_file__0
     .clk(clk),
     .rst(rst),
     .we(we),
-    .addr(addr),
-    .rd_data(rd_data),
+    .rd_addr__0(rd_addr__0),
+    .rd_data__0(rd_data__0),
+    .rd_addr__1(rd_addr__1),
+    .rd_data__1(rd_data__1),
+    .wr_addr(wr_addr),
     .wr_data(wr_data)
 );
 
@@ -182,16 +191,6 @@ for i, state in enumerate(states):
     print(f"localparam {state} = 6'h{i:x};") 
 )
 
-
-localparam STATE__RESET = 
-localparam STATE__ALU__0 = 
-localparam STATE__ALU__1 = 
-localparam STATE__ALU__2 = 
-localparam STATE__ALUI__0 = 
-localparam STATE__ALUI__1 = 
-localparam STATE__AUIPC__0 = 
-localparam STATE__AUIPC__1 = 
-
 always_comb begin
     state__n = state;
 
@@ -204,28 +203,6 @@ always_comb begin
             state__n = STATE__FETCH__0;
         end
         
-        //==============================
-        // STATE__FETCH__0
-        //==============================
-        STATE__FETCH__0:
-        begin
-            ma__n = pc; 
-            
-            if (mstatus[CSR__MSTATUS__MIE__FIELD] && mip[CSR__MIP__MEIP__FIELD] && mie[CSR__MIE__MEIE__FIELD]) begin
-                state__n = STATE__INTERRUPT__EXTERNAL;
-            end
-            else if (mstatus[CSR__MSTATUS__MIE__FIELD] && mip[CSR__MIP__MSIP__FIELD] && mie[CSR__MIE__MSIE__FIELD]) begin
-                state__n = STATE__INTERRUPT__SOFTWARE;
-            end
-            else if (mstatus[CSR__MSTATUS__MIE__FIELD] && mip[CSR__MIP__MTIP__FIELD] && mie[CSR__MIE__MTIE__FIELD]) begin
-                state__n = STATE__INTERRUPT__TIMER;
-            end
-            else begin
-                state__n = STATE__FETCH__1;
-            end
-        end
-
-
         //==============================
         // STATE__FETCH__0
         //==============================
@@ -297,39 +274,39 @@ always_comb begin
                 end
                 OP__ADDI:
                 begin
-                    state__n = STATE__ALUI__0;
+                    state__n = STATE__ALUI;
                 end
                 OP__SLLI:
                 begin
-                    state__n = STATE__ALUI__0;
+                    state__n = STATE__ALUI;
                 end
                 OP__SLTI:
                 begin
-                    state__n = STATE__ALUI__0;
+                    state__n = STATE__ALUI;
                 end
                 OP__SLTIU:
                 begin
-                    state__n = STATE__ALUI__0;
+                    state__n = STATE__ALUI;
                 end
                 OP__XORI:
                 begin
-                    state__n = STATE__ALUI__0;
+                    state__n = STATE__ALUI;
                 end
                 OP__SRLI:
                 begin
-                    state__n = STATE__ALUI__0;
+                    state__n = STATE__ALUI;
                 end
                 OP__SRAI:
                 begin
-                    state__n = STATE__ALUI__0;
+                    state__n = STATE__ALUI;
                 end
                 OP__ORI:
                 begin
-                    state__n = STATE__ALUI__0;
+                    state__n = STATE__ALUI;
                 end
                 OP__ANDI:
                 begin
-                    state__n = STATE__ALUI__0;
+                    state__n = STATE__ALUI;
                 end
                 OP__AUIPC:
                 begin
@@ -337,19 +314,19 @@ always_comb begin
                 end
                 OP__ADDIW:
                 begin
-                    state__n = STATE__ALUI__0;
+                    state__n = STATE__ALUI;
                 end
                 OP__SLLIW:
                 begin
-                    state__n = STATE__ALUI__0;
+                    state__n = STATE__ALUI;
                 end
                 OP__SRLIW:
                 begin
-                    state__n = STATE__ALUI__0;
+                    state__n = STATE__ALUI;
                 end
                 OP__SRAIW:
                 begin
-                    state__n = STATE__ALUI__0;
+                    state__n = STATE__ALUI;
                 end
                 OP__SB:
                 begin
@@ -369,43 +346,43 @@ always_comb begin
                 end
                 OP__ADD:
                 begin
-                    state__n = STATE__ALU__0;
+                    state__n = STATE__ALU;
                 end
                 OP__SUB:
                 begin
-                    state__n = STATE__ALU__0;
+                    state__n = STATE__ALU;
                 end
                 OP__SLL:
                 begin
-                    state__n = STATE__ALU__0;
+                    state__n = STATE__ALU;
                 end
                 OP__SLT:
                 begin
-                    state__n = STATE__ALU__0;
+                    state__n = STATE__ALU;
                 end
                 OP__SLTU:
                 begin
-                    state__n = STATE__ALU__0;
+                    state__n = STATE__ALU;
                 end
                 OP__XOR:
                 begin
-                    state__n = STATE__ALU__0;
+                    state__n = STATE__ALU;
                 end
                 OP__SRL:
                 begin
-                    state__n = STATE__ALU__0;
+                    state__n = STATE__ALU;
                 end
                 OP__SRA:
                 begin
-                    state__n = STATE__ALU__0;
+                    state__n = STATE__ALU;
                 end
                 OP__OR:
                 begin
-                    state__n = STATE__ALU__0;
+                    state__n = STATE__ALU;
                 end
                 OP__AND:
                 begin
-                    state__n = STATE__ALU__0;
+                    state__n = STATE__ALU;
                 end
                 OP__LUI:
                 begin
@@ -413,23 +390,23 @@ always_comb begin
                 end
                 OP__ADDW:
                 begin
-                    state__n = STATE__ALU__0;
+                    state__n = STATE__ALU;
                 end
                 OP__SUBW:
                 begin
-                    state__n = STATE__ALU__0;
+                    state__n = STATE__ALU;
                 end
                 OP__SLLW:
                 begin
-                    state__n = STATE__ALU__0;
+                    state__n = STATE__ALU;
                 end
                 OP__SRLW:
                 begin
-                    state__n = STATE__ALU__0;
+                    state__n = STATE__ALU;
                 end
                 OP__SRAW:
                 begin
-                    state__n = STATE__ALU__0;
+                    state__n = STATE__ALU;
                 end
                 OP__BEQ:
                 begin
@@ -500,35 +477,18 @@ always_comb begin
             endcase
         end
 
-        //==============================
-        // STATE__ALU__0
-        //==============================
-        STATE__ALU__0:
-        begin
-            addr = rs1;
-            a__n = rd_data;
-            state__n = STATE__ALU__1;
-        end
 
         //==============================
-        // STATE__ALU__1
+        // STATE__ALU
         //==============================
-        STATE__ALU__1:
+        STATE__ALU:
         begin
-            addr = rs2;
-            b__n = rd_data;
-            state__n = STATE__ALU__2;
-        end
-
-        //==============================
-        // STATE__ALU__2
-        //==============================
-        STATE__ALU__2:
-        begin
-            addr = rd;
-            we = 1'b1;
+            a = rd_data__0;
+            b = rd_data__1;
             wr_data = c;
+            we = 1'b1;
             pc__n = pc + 4;
+
             case (op)
                 OP__ADD:
                 begin
@@ -591,29 +551,21 @@ always_comb begin
                     func = FUNC__SRAW;
                 end
             endcase
+
             state__n = STATE__FETCH__0;
         end
 
         //==============================
-        // STATE__ALUI__0
+        // STATE__ALUI
         //==============================
-        STATE__ALUI__0:
+        STATE__ALUI:
         begin
-            addr = rs1;
-            a__n = rd_data;
-            b__n = imm;
-            state__n = STATE__ALUI__1;
-        end
-
-        //==============================
-        // STATE__ALUI__1
-        //==============================
-        STATE__ALUI__1:
-        begin
-            addr = rd;
-            we = 1'b1;
+            a = rd_data__0;
+            b = imm;
             wr_data = c;
+            we = 1'b1;
             pc__n = pc + 4;
+
             case (op)
                 OP__ADDI:
                 begin
@@ -668,8 +620,10 @@ always_comb begin
                     func = FUNC__SRAW;
                 end
             endcase
+
             state__n = STATE__FETCH__0;
         end
+
 
         //==============================
         // STATE__LOAD__0
@@ -723,113 +677,45 @@ always_comb begin
         end
 
         //==============================
-        // STATE__AUIPC__0
+        // STATE__AUIPC
         //==============================
-        STATE__AUIPC__0:
+        STATE__AUIPC:
         begin
-            a__n = pc;
-            b__n = imm;
-            state__n = STATE__AUIPC__1;
-        end
-
-        //==============================
-        // STATE__AUIPC__1
-        //==============================
-        STATE__AUIPC__1:
-        begin
-            addr = rd;
-            we = 1'b1;
+            func = FUNC__ADD;
+            a = pc;
+            b = imm;
             wr_data = c;
+            we = 1'b1;
+            pc__n = pc + 4;
+            state__n = STATE__FETCH__0;
+        end
+
+        //==============================
+        // STATE__JALR
+        //==============================
+        STATE__JALR:
+        begin
             func = FUNC__ADD;
-            state__n = STATE__PC_PLUS_FOUR;
-        end
-
-        //==============================
-        // STATE__JALR__0
-        //==============================
-        STATE__JALR__0:
-        begin
-            addr = rs1;
-            a__n = rd_data;  
-            b__n = imm;  
-            state__n = STATE__JALR__1;
-        end
-
-        //==============================
-        // STATE__JALR__1
-        //==============================
-        STATE__JALR__1:
-        begin
-            addr = rd;
+            a = rd_data__0;  
+            b = imm;  
+            pc__n = c;
             wr_data = pc + 4;
-            func = FUNC__ADD;
-
-            if (c[1] == 1'b0) begin
-                we = 1'b1;     
-                pc__n = {c[63:1], 1'b0};
-                state__n = STATE__FETCH__0;
-            end
-            else begin
-                state__n = STATE__EXCEPTION__MISALIGNED_INSTRUCTION_FETCH;
-            end
+            we = 1'b1;
+            state__n = STATE__FETCH__0;
         end
 
         //==============================
-        // STATE__JAL__0
+        // STATE__JAL
         //==============================
-        STATE__JAL__0:
+        STATE__JAL:
         begin
-            a__n = pc;
-            b__n = imm;
-            state__n = STATE__JAL__1;
-        end
-
-        //==============================
-        // STATE__JAL__1
-        //==============================
-        STATE__JAL__1:
-        begin
-            addr = rd;
-            wr_data = pc + 4;
             func__ADD;
-
-            if (c[1:0] == 2'h0) begin
-                we = 1'b1;     
-                pc__n = c;
-                state__n = STATE__FETCH__0;
-            end
-            else begin
-                state__n = STATE__EXCEPTION__MISALIGNED_INSTRUCTION_FETCH;
-            end
-        end
-
-
-        //==============================
-        // STATE__BEQ__0
-        //==============================
-        STATE__BEQ__0:
-        begin
-            addr = rs1;
-            a__n = rd_data;
-            state__n = STATE__BEQ__1;
-        end
-
-        //==============================
-        // STATE__BEQ__1
-        //==============================
-        STATE__BEQ__1:
-        begin
-            addr = rs2;
-            b__n = rd_data;
-            state__n = STATE__BEQ__2;
-        end
-
-        //==============================
-        // STATE__BEQ__2
-        //==============================
-        STATE__BEQ__2:
-        begin
-            state__n = eq ? STATE__BRANCH__0 : STATE__PC_PLUS_FOUR; 
+            a = pc;
+            b = imm;
+            pc__n = c;
+            wr_data = pc + 4;
+            we = 1'b1;
+            state__n = STATE__FETCH__0;
         end
 
         //==============================
@@ -837,9 +723,35 @@ always_comb begin
         //==============================
         STATE__BRANCH__0:
         begin
-            a__n = pc;
-            b__n = imm;
-            state__n = STATE__BRANCH__1;
+            a = rd_data__0;
+            b = rd_data__1;
+
+            case (op)
+                OP__BEQ:
+                begin
+                    state__n = eq ? STATE__BRANCH__1 : STATE__BRANCH__2; 
+                end
+                OP__BNE:
+                begin
+                    state__n = ne ? STATE__BRANCH__1 : STATE__BRANCH__2; 
+                end
+                OP__BLT:
+                begin
+                    state__n = lt ? STATE__BRANCH__1 : STATE__BRANCH__2; 
+                end
+                OP__BGE:
+                begin
+                    state__n = ge ? STATE__BRANCH__1 : STATE__BRANCH__2; 
+                end
+                OP__BLTU:
+                begin
+                    state__n = ltu ? STATE__BRANCH__1 : STATE__BRANCH__2; 
+                end
+                OP__BGEU:
+                begin
+                    state__n = geu ? STATE__BRANCH__1 : STATE__BRANCH__2; 
+                end
+            endcase
         end
 
         //==============================
@@ -848,18 +760,21 @@ always_comb begin
         STATE__BRANCH__1:
         begin
             func = FUNC__ADD;
+            a = pc;
+            b = imm;
             pc__n = c;
-
-            case (interrupt) 1'b0:
-                begin
-                    state__n = STATE__FETCH__0;
-                end
-                1'b1:
-                begin
-                    state__n = STATE__INTERRUPT;
-                end
-            endcase
+            state__n = STATE__FETCH__0;
         end
+
+        //==============================
+        // STATE__BRANCH__2
+        //==============================
+        STATE__BRANCH__1:
+        begin
+            pc__n = pc + 4;
+            state__n = STATE__FETCH__0;
+        end
+
 
         //==============================
         // STATE__ECALL
@@ -882,7 +797,8 @@ always_comb begin
         //==============================
         STATE__FENCE:
         begin
-            state__n = STATE__PC_PLUS_FOUR;
+            pc__n = pc + 4;
+            state__n = STATE__FETCH__0;
         end
 
         //==============================
@@ -890,7 +806,8 @@ always_comb begin
         //==============================
         STATE__FENCE_I:
         begin
-            state__n = STATE__PC_PLUS_FOUR;
+            pc__n = pc + 4;
+            state__n = STATE__FETCH__0;
         end
 
         //==============================
@@ -898,127 +815,60 @@ always_comb begin
         //==============================
         STATE__LUI:
         begin
-            addr = rd;
             wr_data = imm;
             we = 1'b1;
-            state__n = STATE__PC_PLUS_FOUR;
+            pc__n = pc + 4;
+            state__n = STATE__FETCH__0;
         end
 
+
         //==============================
-        // STATE__CSRRW__0
+        // STATE__CSRRW
         //==============================
         STATE__CSRRW__0:
         begin
-            addr = rs1;
-            a__n = rd_data;
-            csr__addr = imm[11:0];
-            b__n = csr__rd_data;
-
-            case (rd)
-                5'h0:
-                begin
-                    state__n = STATE__CSRRW__2;
-                end
-                default:
-                begin
-                    case (imm[11:10])
-                        3'h3:
-                        begin
-                            state__n = STATE__ILLEGAL_INSTRUCTION;
-                        end
-                        default:
-                        begin
-                            state__n = STATE__CSRRW__1;
-                        end
-                    endcase
-                end
-            endcase
-        end
-
-
-        //==============================
-        // STATE__CSRRW__1
-        //==============================
-        STATE__CSRRW__1:
-        begin
-            addr = rd;
+            wr_data = csr__rd_data;
             we = 1'b1;
-            wr_data = c;
-            func = FUNC__NULL_B;
-            state__n = STATE__CSRRW__2;
+            csr__addr = imm[11:0]; 
+            csr__wr_data = rd_data__0; 
+            csr__we = 1'b1; 
+            pc__n = pc + 4;
+            state__n = STATE__FETCH__0;
         end
 
         //==============================
-        // STATE__CSRRW__2
-        //==============================
-        STATE__CSRRW__2:
-        begin
-            csr__addr = imm[11:0];
-            csr__we = 1'b1;
-            csr__wr_data = c;
-            func = FUNC__NULL_A;
-            state__n = STATE__PC_PLUS_FOUR;
-        end
-
-        //==============================
-        // STATE__CSRRS__0
+        // STATE__CSRRS
         //==============================
         STATE__CSRRS__0:
         begin
-            addr = rs1;
-            a__n = rd_data;
-            csr__addr = imm[11:0];
-            b__n = csr__rd_data;
-
-            case (rs1)
-                5'h0:
-                begin
-                    state__n = STATE__CSRRS__2;
-                end
-                default:
-                begin
-                    state__n = STATE__CSRRS__1;
-                end
-            endcase
-
-        end
-
-        //==============================
-        // STATE__CSRRS__1
-        //==============================
-        STATE__CSRRS__1:
-        begin
-            csr__addr = imm[11:0];
-            csr__we = 1'b1;
-            csr__wr_data = c;
-            func = FUNC__OR;
-            state__n = STATE__CSRRS__2;
-        end
-
-        //==============================
-        // STATE__CSRRS__2
-        //==============================
-        STATE__CSRRS__2:
-        begin
-            addr = rd;
+            wr_data = csr__rd_data;
             we = 1'b1;
-            wr_data = c;
-            func = FUNC__NULL_B;
-            state__n = STATE__PC_PLUS_FOUR;
+            csr__addr = imm[11:0]; 
+            csr__wr_data = c; 
+            csr__we = 1'b1; 
+            func = FUNC__OR;
+            a = rd_data__0;
+            b = csr__rd_data;
+            pc__n = pc + 4;
+            state__n = STATE__FETCH__0;
         end
 
         //==============================
-        // STATE__INTERRUPT__EXTERNAL
+        // STATE__CSRRC
         //==============================
-        STATE__INTERRUPT__EXTERNAL:
+        STATE__CSRRC:
         begin
-            csr__addr = CSR__MCAUSE;
-            csr__we = 1'b1;
-            csr__wr_data[CSR__MCAUSE__EXCEPTION_CODE__FIELD] = CSR__MCAUSE__EXEPTION_CODE__ILLEGAL_INSTRUCTION;
-            csr__wr_data[CSR__MCAUSE__INTERRUPT__FIELD] = CSR__MCAUSE__INTERRUPT__NOT_INTERRUPT;
-            state__n = STATE__TRAP__0;
+            wr_data = csr__rd_data;
+            we = 1'b1;
+            csr__addr = imm[11:0]; 
+            csr__wr_data = c; 
+            csr__we = 1'b1; 
+            func = FUNC__CLR;
+            a = rd_data__0;
+            b = csr__rd_data;
+            pc__n = pc + 4;
+            state__n = STATE__FETCH__0;
         end
-
 
         //==============================
         // STATE__EXCEPTION__ILLEGAL_INSTRUCTION
@@ -1039,7 +889,7 @@ always_comb begin
         begin
             csr__addr = CSR__MEPC;
             csr__we = 1'b1;
-            csr__wr_data[CSR__MEPC__MEPC__FIELD] = pc;
+            csr__wr_data[CSR__MEPC__MEPC__FIELD] <= pc;
             state__n = STATE__TRAP__1;
         end
 
@@ -1051,7 +901,7 @@ always_comb begin
             csr__addr = CSR__MSTATUS;
             csr__we = 1'b1;
             csr__wr_data[CSR__MSTATUS__MIE__FIELD] <= CSR__MSTATUS__MIE__DISABLED;
-            csr__wr_data[CSR__MSTATUS__MPIE__FIELD] <= csr__rd_data[CSR__MSTATUS__MIE__FIELD];
+            csr__wr_data[CSR__MSTATUS__MPIE__FIELD] <= mstatus[CSR__MSTATUS__MIE__FIELD];
             state__n = STATE__TRAP__2;
         end
 
