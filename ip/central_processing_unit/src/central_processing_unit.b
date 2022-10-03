@@ -39,7 +39,7 @@ logic [63:0] rd_data;
 logic [63:0] wr_data;
 
 // ALU.
-logic [3:0] func;
+logic [4:0] func;
 logic [63:0] a;
 logic [63:0] a__n;
 logic [63:0] b;
@@ -185,8 +185,66 @@ states = [
     'STATE__ADD__0',
     'STATE__ADD__1',
     'STATE__ADD__2',
+    'STATE__SUB__0',
+    'STATE__SUB__1',
+    'STATE__SUB__2',
+    'STATE__SLL__0',
+    'STATE__SLL__1',
+    'STATE__SLL__2',
+    'STATE__SLT__0',
+    'STATE__SLT__1',
+    'STATE__SLT__2',
+    'STATE__SLTU__0',
+    'STATE__SLTU__1',
+    'STATE__SLTU__2',
+    'STATE__XOR__0',
+    'STATE__XOR__1',
+    'STATE__XOR__2',
+    'STATE__SRL__0',
+    'STATE__SRL__1',
+    'STATE__SRL__2',
+    'STATE__SRA__0',
+    'STATE__SRA__1',
+    'STATE__SRA__2',
+    'STATE__OR__0',
+    'STATE__OR__1',
+    'STATE__OR__2',
+    'STATE__AND__0',
+    'STATE__AND__1',
+    'STATE__AND__2',
+    'STATE__ADDW__0',
+    'STATE__ADDW__1',
+    'STATE__ADDW__2',
+    'STATE__SUBW__0',
+    'STATE__SUBW__1',
+    'STATE__SUBW__2',
+    'STATE__SLLW__0',
+    'STATE__SLLW__1',
+    'STATE__SLLW__2',
+    'STATE__SRLW__0',
+    'STATE__SRLW__1',
+    'STATE__SRLW__2',
+    'STATE__SRAW__0',
+    'STATE__SRAW__1',
+    'STATE__SRAW__2',
     'STATE__ADDI__0',
     'STATE__ADDI__1',
+    'STATE__SLLI__0',
+    'STATE__SLLI__1',
+    'STATE__SLTI__0',
+    'STATE__SLTI__1',
+    'STATE__SLTIU__0',
+    'STATE__SLTIU__1',
+    'STATE__XORI__0',
+    'STATE__XORI__1',
+    'STATE__SRLI__0', 
+    'STATE__SRLI__1',
+    'STATE__SRAI__0', 
+    'STATE__SRAI__1',
+    'STATE__ORI__0', 
+    'STATE__ORI__1',
+    'STATE__ANDI__0', 
+    'STATE__ANDI__1',
     'STATE__AUIPC__0', 
     'STATE__AUIPC__1', 
     'STATE__JALR__0', 
@@ -267,30 +325,66 @@ always_comb begin
             state__n = STATE__FETCH__0;
         end
         
+//        //==============================
+//        // STATE__FETCH
+//        //==============================
+//        STATE__FETCH:
+//        begin
+//            cpu_to_l1__valid = 1'b1;
+//            cpu_to_l1__addr = pc;
+//            cpu_to_l1__dtype = DTYPE__W;
+//            
+//            if (mstatus[CSR__MSTATUS__MIE__FIELD] && mip[CSR__MIP__MEIP__FIELD] && mie[CSR__MIE__MEIE__FIELD]) begin
+//                state__n = STATE__INTERRUPT__EXTERNAL;
+//            end
+//            else if (mstatus[CSR__MSTATUS__MIE__FIELD] && mip[CSR__MIP__MSIP__FIELD] && mie[CSR__MIE__MSIE__FIELD]) begin
+//                state__n = STATE__INTERRUPT__SOFTWARE;
+//            end
+//            else if (mstatus[CSR__MSTATUS__MIE__FIELD] && mip[CSR__MIP__MTIP__FIELD] && mie[CSR__MIE__MTIE__FIELD]) begin
+//                state__n = STATE__INTERRUPT__TIMER;
+//            end
+//            else begin
+//                if (cpu_to_l1__hit) begin
+//                    ir__n = cpu_to_l1__rd_data[31:0];
+//                    state__n = STATE__DECODE;
+//                end
+//            end
+//        end
+
         //==============================
-        // STATE__FETCH
+        // STATE__FETCH__0
         //==============================
-        STATE__FETCH:
+        STATE__FETCH__0:
+        begin
+            state__n = STATE__FETCH__1;
+        end
+
+        //==============================
+        // STATE__FETCH__1
+        //==============================
+        STATE__FETCH__1:
         begin
             cpu_to_l1__valid = 1'b1;
             cpu_to_l1__addr = pc;
             cpu_to_l1__dtype = DTYPE__W;
-            
-            if (mstatus[CSR__MSTATUS__MIE__FIELD] && mip[CSR__MIP__MEIP__FIELD] && mie[CSR__MIE__MEIE__FIELD]) begin
-                state__n = STATE__INTERRUPT__EXTERNAL;
-            end
-            else if (mstatus[CSR__MSTATUS__MIE__FIELD] && mip[CSR__MIP__MSIP__FIELD] && mie[CSR__MIE__MSIE__FIELD]) begin
-                state__n = STATE__INTERRUPT__SOFTWARE;
-            end
-            else if (mstatus[CSR__MSTATUS__MIE__FIELD] && mip[CSR__MIP__MTIP__FIELD] && mie[CSR__MIE__MTIE__FIELD]) begin
-                state__n = STATE__INTERRUPT__TIMER;
-            end
-            else begin
-                if (cpu_to_l1__hit) begin
-                    ir__n = cpu_to_l1__rd_data[31:0];
-                    state__n = STATE__DECODE;
-                end
-            end
+            state__n = cpu_to_l1__ready ? STATE__FETCH__2 : STATE__FETCH__1;
+        end
+
+        //==============================
+        // STATE__FETCH__2
+        //==============================
+        STATE__FETCH__1:
+        begin
+            state__n = cpu_to_l1__rd_valid_next ? STATE__FETCH__3 : STATE__FETCH__2;
+        end
+
+        //==============================
+        // STATE__FETCH__3
+        //==============================
+        STATE__FETCH__3:
+        begin
+            ir__n = cpu_to_l1__rd_data[31:0];
+            state__n = STATE__DECODE; 
         end
 
         //==============================
@@ -301,7 +395,7 @@ always_comb begin
             case (op)
                 OP__LB:
                 begin
-                    state__n = STATE__;
+                    state__n = STATE__LB__0;
                 end
                 OP__LH:
                 begin
@@ -393,7 +487,7 @@ always_comb begin
                 end
                 OP__SB:
                 begin
-                    state__n = STATE__;
+                    state__n = STATE__SB__0;
                 end
                 OP__SH:
                 begin
@@ -1265,7 +1359,7 @@ always_comb begin
             addr = rs1;
             a__n = rd_data;
             b__n = imm;
-            state__n = STATE__LOAD__1;
+            state__n = STATE__LB__1;
         end
 
         //==============================
@@ -1277,7 +1371,7 @@ always_comb begin
             cpu_to_l1__valid = 1'b1;
             cpu_to_l1__addr = c;
             cpu_to_l1__dtype = DTYPE__B;
-            state__n = STATE__LB__2;
+            state__n = cpu_to_l1__ready ? STATE__LB__2 : STATE__LB__1;
         end
 
         //==============================
@@ -1285,9 +1379,7 @@ always_comb begin
         //==============================
         STATE__LB__2:
         begin
-            if (cpu_to_l1__done) begin
-                state__n = STATE__LB__3;
-            end
+            state__n = cpu_to_l1__rd_valid_next ? STATE__LB__3 : STATE__LB__2;
         end
 
         //==============================
@@ -1323,27 +1415,18 @@ always_comb begin
             cpu_to_l1__we = 1'b1;
             cpu_to_l1__addr = c;
             cpu_to_l1__dtype = DTYPE__B;
-            state__n = STATE__SB__2;
+            state__n = cpu_to_l1__ready ? STATE__SB__2 : STATE__SB__1;
         end
 
         //==============================
-        // STATE__SB__3
+        // STATE__SB__2
         //==============================
         STATE__SB__2:
         begin
             addr = rs1;
             cpu_to_l1__wr_data = rd_data;
-            state__n = STATE__SB__2;
-        end
-
-        //==============================
-        // STATE__SB__3
-        //==============================
-        STATE__SB__3:
-        begin
-            if (cpu_to_l1__done) begin
-                state__n = STATE__FETCH__0;
-            end
+            pc__n = pc + 4;
+            state__n = STATE__FETCH__0;
         end
 
         //==============================

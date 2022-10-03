@@ -177,25 +177,25 @@ localparam STATE__RESP = 1'b1;
 
 always_comb begin
     state__n = state;
-    addr__n = addr;
+    cpu_to_l1__ready = 1'b0;
+    l1_to_cpu__valid = 1'b0;
 
     case (state)
         STATE__READY:
         begin
-            if (ce) begin
-                addr__n = din;
-                state__n = we ? STATE__WRITE__0 : STATE__READ__0;
+            cpu_to_l1__ready = 1'b1;
+
+            if (cpu_to_l1__valid && ~cpu_to_l1__we) begin
+                state__n = STATE__RESP;
             end
         end
-        STATE__READ__0:
+        STATE__RESP:
         begin
-            dout__n = rd_data; 
-            state__n = 
-        end
-        STATE__WRITE__0:
-        begin
-            wr_data__n = din; 
-            state__n = 
+            l1_to_cpu__valid = 1'b1;
+
+            if (l1_to_cpu__ready) begin
+                state__n = STATE__READY;
+            end
         end
     endcase
 end
@@ -208,11 +208,5 @@ always_ff @(posedge clk) begin
         state <= state__n;
     end
 end
-
-always_ff @(posedge clk) begin
-    addr <= addr__n;
-end
-
-
 
 endmodule

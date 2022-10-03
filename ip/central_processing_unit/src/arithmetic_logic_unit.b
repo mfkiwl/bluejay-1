@@ -5,7 +5,7 @@ module arithmetic_logic_unit
 (
     input clk,
     input rst,
-    input [3:0] func,
+    input [4:0] func,
     input [63:0] a,
     input [63:0] b,
     output logic [63:0] c
@@ -77,6 +77,18 @@ always_comb begin
         FUNC__AND:
         begin
             c = a & b;
+        end
+        FUNC__CLR:
+        begin
+            c = ~a & b;
+        end
+        FUNC__NULL_A:
+        begin
+            c = a;
+        end
+        FUNC__NULL_B:
+        begin
+            c = b;
         end
     endcase
 end

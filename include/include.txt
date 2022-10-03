@@ -70,21 +70,24 @@
 #define OP__EBREAK 6'h35
 
 
-#define FUNC__ADD 4'h0
-#define FUNC__ADDW 4'h1
-#define FUNC__SUB 4'h2
-#define FUNC__SUBW 4'h3
-#define FUNC__SLL 4'h4
-#define FUNC__SLLW 4'h5
-#define FUNC__SLT 4'h6
-#define FUNC__SLTU 4'h7
-#define FUNC__XOR 4'h8
-#define FUNC__SRL 4'h9
-#define FUNC__SRLW 4'ha
-#define FUNC__SRA 4'hb
-#define FUNC__SRAW 4'hc
-#define FUNC__OR 4'hd
-#define FUNC__AND 4'he
+#define FUNC__ADD 5'h0
+#define FUNC__ADDW 5'h1
+#define FUNC__SUB 5'h2
+#define FUNC__SUBW 5'h3
+#define FUNC__SLL 5'h4
+#define FUNC__SLLW 5'h5
+#define FUNC__SLT 5'h6
+#define FUNC__SLTU 5'h7
+#define FUNC__XOR 5'h8
+#define FUNC__SRL 5'h9
+#define FUNC__SRLW 5'ha
+#define FUNC__SRA 5'hb
+#define FUNC__SRAW 5'hc
+#define FUNC__OR 5'hd
+#define FUNC__AND 5'he
+#define FUNC__CLR 5'hf
+#define FUNC__NULL_A 5'h10
+#define FUNC__NULL_B 5'h11
 
 #define DTYPE__D 3'h0
 #define DTYPE__W 3'h1
