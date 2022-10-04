@@ -13,7 +13,6 @@ module control_and_status_registers
 
 
 
-
 always_comb begin
     mstatus__we = 1'b0;
     mie__we = 1'b0;
@@ -144,7 +143,7 @@ end
 logic [63:0] mtvec;
 
 assign mtvec[CSR__MTVEC__OFFSET__FIELD] = CSR__MTVEC__OFFSET__VALUE;
-assign mtvec[CSR__MTVEC__TRAP_VECTOR_BASE_ADDRESS__FIELD] <= CSR__MTVEC__TRAP_VECTOR_BASE_ADDRESS__VALUE;
+assign mtvec[CSR__MTVEC__TRAP_VECTOR_BASE_ADDRESS__FIELD] = CSR__MTVEC__TRAP_VECTOR_BASE_ADDRESS__VALUE;
 
 
 //============================================== 
@@ -220,185 +219,90 @@ end
 
 
 
-
-
-
-logic [63:0] mcause;
-logic [63:0] mepc;
-
-
-
-// mcause
-always_ff @(posedge clk) begin
-    mcause[CSR__MCAUSE__EXCEPTION_CODE__FIELD] <= mcause__n[CSR__MCAUSE__EXCEPTION_CODE__FIELD];
-    mcause[CSR__MCAUSE__INTERRUPT__FIELD] <= mcause__n[CSR__MCAUSE__INTERRUPT__FIELD];
-end
-
-// mepc
-always_ff @(posedge clk) begin
-    mepc[CSR__MEPC__MEPC__FIELD] <= mepc__n[CSR__MEPC__MEPC__FIELD];
-end
-
-
+//logic [63:0] mcause;
+//logic [63:0] mepc;
+//
+//
+//
+//// mcause
+//always_ff @(posedge clk) begin
+//    mcause[CSR__MCAUSE__EXCEPTION_CODE__FIELD] <= mcause__n[CSR__MCAUSE__EXCEPTION_CODE__FIELD];
+//    mcause[CSR__MCAUSE__INTERRUPT__FIELD] <= mcause__n[CSR__MCAUSE__INTERRUPT__FIELD];
+//end
+//
+//// mepc
+//always_ff @(posedge clk) begin
+//    mepc[CSR__MEPC__MEPC__FIELD] <= mepc__n[CSR__MEPC__MEPC__FIELD];
+//end
+//
 
 
 
 
-
-
-
-//==============================================
-// mstatus
-//==============================================
-assign mstatus[CSR__MSTATUS__UIE__FIELD] = CSR__MSTATUS__UIE__DISABLED;
-assign mstatus[CSR__MSTATUS__SIE__FIELD] = CSR__MSTATUS__SIE__DISABLED;
-assign mstatus[CSR__MSTATUS__HIE__FIELD] = CSR__MSTATUS__HIE__DISABLED;
-assign mstatus[CSR__MSTATUS__MPP__FIELD] = CSR__MSTATUS__MPP__MACHINE;
-assign mstatus[CSR__MSTATUS__FS__FIELD] = CSR__MSTATUS__FS__OFF;
-assign mstatus[CSR__MSTATUS__XS__FIELD] = CSR__MSTATUS__XS__OFF;
-assign mstatus[CSR__MSTATUS__VM__FIELD] = CSR__MSTATUS__VM__MBARE;
-assign mstatus[CSR__MSTATUS__SD__FIELD] = CSR__MSTATUS__SD__NOT_DIRTY;
-
-
-always_ff @(posedge clk) begin
-    if (rst) begin
-        mstatus[CSR__MSTATUS__MIE__FIELD] <= CSR__MSTATUS__MIE__DISABLED;
-    end
-    else begin
-        if (we__mstatus) begin
-        end
-        else if (mtrap) begin
-            mstatus[CSR__MSTATUS__MIE__FIELD] <= CSR__MSTATUS__MIE__DISABLED;
-            mstatus[CSR__MSTATUS__MPIE__FIELD] <= mstatus[CSR__MSTATUS__MIE__FIELD];
-        end
-
-    end
-end
-
-
-
-
-
-
-//==============================================
-// misa (Machine ISA Register), RW
-//==============================================
-assign misa[CSR__MISA__EXTENSIONS__FIELD] = CSR__MISA__EXTENSIONS__I;
-assign misa[CSR__MISA__WIRI_0__FIELD] = CSR__MISA__WIRI_0__VALUE;
-assign misa[CSR__MISA__BASE__FIELD] = CSR__MISA__BASE__RV64;
 
 
 
 // marchid
-assign marchid[CSR__MARCHID__ARCHITECTURE_ID__FIELD] = CSR__MARCHID__ARCHITECTURE_ID__VALUE;
+//assign marchid[CSR__MARCHID__ARCHITECTURE_ID__FIELD] = CSR__MARCHID__ARCHITECTURE_ID__VALUE;
 
-
-// mhartid
-assign mhartid[CSR__MHARTID__HART_ID__FIELD] = CSR__MHARTID__HART_ID__VALUE;
-
-// mstatus
-assign mstatus[CSR__MSTATUS__UIE__FIELD] = CSR__MSTATUS__UIE__DISABLED;
-assign mstatus[CSR__MSTATUS__SIE__FIELD] = CSR__MSTATUS__SIE__DISABLED;
-assign mstatus[CSR__MSTATUS__HIE__FIELD] = CSR__MSTATUS__HIE__DISABLED;
-assign mstatus[CSR__MSTATUS__MPP__FIELD] = CSR__MSTATUS__MPP__MACHINE;
-assign mstatus[CSR__MSTATUS__FS__FIELD] = CSR__MSTATUS__FS__OFF;
-assign mstatus[CSR__MSTATUS__XS__FIELD] = CSR__MSTATUS__XS__OFF;
-assign mstatus[CSR__MSTATUS__VM__FIELD] = CSR__MSTATUS__VM__MBARE;
-assign mstatus[CSR__MSTATUS__SD__FIELD] = CSR__MSTATUS__SD__NOT_DIRTY;
-
-
-always_ff @(posedge clk) begin
-    if (rst) begin
-        mstatus[CSR__MSTATUS__MIE__FIELD] <= CSR__MSTATUS__MIE__DISABLED;
-    end
-    else begin
-        if (we__mstatus) begin
-            case (op) begin
-                
-            end
-        end
-    end
-end
-
-// mtvec
-assign mtvec[CSR__MTVEC__OFFSET__FIELD] = CSR__MTVEC__OFFSET__VALUE;
-
-always_ff @(posedge clk) begin
-    if (rst) begin
-        mstatus[CSR__MTVEC__TRAP_VECTOR_BASE_ADDRESS__FIELD] <= CSR__MTVEC__TRAP_VECTOR_BASE_ADDRESS__RESET_VALUE;
-    end
-    else begin
-
-    end
-end
 
 // medeleg
 
 // mideleg
 
 
-// mtime (EDIT: Memory Mapped?)
-always_ff @(posedge clk) begin
-    if (rst) begin
-        mtime[CSR__MTIME__MTIME__FIELD] <= CSR__MTIME__MTIME__RESET_VALUE;
-    end
-end
-
-// mtimecmp (EDIT: Memory Mapped?)
-always_ff @(posedge clk) begin
-    if (rst) begin
-        mtimecmp[CSR__MTIMECMP__MTIMECMP__FIELD] <= CSR__MTIMECMP__MTIMECMP__RESET_VALUE;
-    end
-end
-
-// mcycle
-always_ff @(posedge clk) begin
-    if (rst) begin
-        mcycle[CSR__MCYCLE__MCYCLE__FIELD] <= CSR__MCYCLE__MCYCLE__RESET_VALUE;
-    end
-    else begin
-        mcycle[CSR__MCYCLE__MCYCLE__FIELD] <= CSR__MCYCLE__MCYCLE__RESET_VALUE;
-    end
-end
-
-
-// minstret
-always_ff @(posedge clk) begin
-    if (rst) begin
-        minstret[CSR__MINSTRET__MINSTRET__FIELD] <= CSR__MCYCLE__MINSTRET__RESET_VALUE;
-    end
-    else begin
-        if (we) begin
-            case (op)
-                CSR_OP__WRITE:
-                begin
-                    minstret[CSR__MINSTRET__MINSTRET__FIELD] <= wr_data;
-                end
-                CSR_OP__SET:
-                begin
-                    minstret[CSR__MINSTRET__MINSTRET__FIELD] <= minstret[CSR__MINSTRET__MINSTRET__FIELD] | wr_data;
-                end
-                CSR_OP__CLEAR:
-                begin
-                    minstret[CSR__MINSTRET__MINSTRET__FIELD] <= minstret[CSR__MINSTRET__MINSTRET__FIELD] & ~wr_data;
-                end
-            endcase
-        end
-        else if (instret) begin
-            minstret[CSR__MINSTRET__MINSTRET__FIELD] <= minstret[CSR__MINSTRET__MINSTRET__FIELD] + 1;
-        end
-    end
-end
-
-
-always_comb begin
-    case (state)
-        STATE__READY:
-        begin
-            state__n =             
-        end
-    endcase
-end
+//// mtime (EDIT: Memory Mapped?)
+//always_ff @(posedge clk) begin
+//    if (rst) begin
+//        mtime[CSR__MTIME__MTIME__FIELD] <= CSR__MTIME__MTIME__RESET_VALUE;
+//    end
+//end
+//
+//// mtimecmp (EDIT: Memory Mapped?)
+//always_ff @(posedge clk) begin
+//    if (rst) begin
+//        mtimecmp[CSR__MTIMECMP__MTIMECMP__FIELD] <= CSR__MTIMECMP__MTIMECMP__RESET_VALUE;
+//    end
+//end
+//
+//// mcycle
+//always_ff @(posedge clk) begin
+//    if (rst) begin
+//        mcycle[CSR__MCYCLE__MCYCLE__FIELD] <= CSR__MCYCLE__MCYCLE__RESET_VALUE;
+//    end
+//    else begin
+//        mcycle[CSR__MCYCLE__MCYCLE__FIELD] <= CSR__MCYCLE__MCYCLE__RESET_VALUE;
+//    end
+//end
+//
+//
+//// minstret
+//always_ff @(posedge clk) begin
+//    if (rst) begin
+//        minstret[CSR__MINSTRET__MINSTRET__FIELD] <= CSR__MCYCLE__MINSTRET__RESET_VALUE;
+//    end
+//    else begin
+//        if (we) begin
+//            case (op)
+//                CSR_OP__WRITE:
+//                begin
+//                    minstret[CSR__MINSTRET__MINSTRET__FIELD] <= wr_data;
+//                end
+//                CSR_OP__SET:
+//                begin
+//                    minstret[CSR__MINSTRET__MINSTRET__FIELD] <= minstret[CSR__MINSTRET__MINSTRET__FIELD] | wr_data;
+//                end
+//                CSR_OP__CLEAR:
+//                begin
+//                    minstret[CSR__MINSTRET__MINSTRET__FIELD] <= minstret[CSR__MINSTRET__MINSTRET__FIELD] & ~wr_data;
+//                end
+//            endcase
+//        end
+//        else if (instret) begin
+//            minstret[CSR__MINSTRET__MINSTRET__FIELD] <= minstret[CSR__MINSTRET__MINSTRET__FIELD] + 1;
+//        end
+//    end
+//end
 
 
 endmodule

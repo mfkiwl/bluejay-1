@@ -6,13 +6,11 @@ module register_file
     input clk,
     input rst,
     input we,
-    input [4:0] rd_addr,
+    input [4:0] addr,
     output logic [63:0] rd_data,
-    input [4:0] wr_addr,
     input [63:0] wr_data
 );
 
-// General-purpose registers.
 logic [63:0] x__0;
 logic [63:0] x__1;
 logic [63:0] x__2;
@@ -46,12 +44,10 @@ logic [63:0] x__29;
 logic [63:0] x__30;
 logic [63:0] x__31;
 
-// Register x__0 is hardwired to 0.
 assign x__0 = 64'h0;
 
-// Read register file.
 always_comb begin
-    case (rd_addr)
+    case (addr)
         5'h0: rd_data = x__0;
         5'h1: rd_data = x__1;
         5'h2: rd_data = x__2;
@@ -87,10 +83,8 @@ always_comb begin
     endcase
 end
 
-     
-// Write register file. 
 always_ff @(posedge clk) begin
-    case (wr_addr)
+    case (addr)
         5'h1: x__1 <= we ? wr_data : x__1;
         5'h2: x__2 <= we ? wr_data : x__2;
         5'h3: x__3 <= we ? wr_data : x__3;

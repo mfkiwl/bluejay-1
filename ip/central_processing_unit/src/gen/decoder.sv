@@ -7,12 +7,11 @@ module decoder
     input rst,
     input [31:0] ir,
     output logic [5:0] op,
-    output logic [3:0] func,
     output logic [4:0] rs1,
     output logic [4:0] rs2,
     output logic [4:0] rd,
     output logic [63:0] imm,
-    output logic [2:0] dtype
+    output logic [63:0] uimm
 );
 
 logic [6:0] opcode;
@@ -27,6 +26,7 @@ assign rs2 = ir[24:20];
 assign rd = ir[11:7];
 assign funct3 = ir[14:12];
 assign funct7 = ir[31:25];
+assign uimm = {{59{1'b0}}, ir[19:15]};
 
 // Generate immediate.
 always_comb begin
@@ -395,6 +395,30 @@ always_comb begin
                         end
                     endcase
                 end
+                3'h1:
+                begin
+                    op = 6'h36;
+                end
+                3'h2:
+                begin
+                    op = 6'h37;
+                end
+                3'h3:
+                begin
+                    op = 6'h38;
+                end
+                3'h5:
+                begin
+                    op = 6'h39;
+                end
+                3'h6:
+                begin
+                    op = 6'h3a;
+                end
+                3'h7:
+                begin
+                    op = 6'h3b;
+                end
             endcase
         end
     endcase
@@ -403,37 +427,35 @@ end
 // Set control signals.
 always_comb begin
     format = 3'h1;
-    func = 4'h0;
-    dtype = 3'h0;
 
     case (op)
         6'h1:
         begin
-            dtype = 3'h5;
+            format = 3'h1;
         end
         6'h2:
         begin
-            dtype = 3'h3;
+            format = 3'h1;
         end
         6'h3:
         begin
-            dtype = 3'h1;
+            format = 3'h1;
         end
         6'h4:
         begin
-            dtype = 3'h0;
+            format = 3'h1;
         end
         6'h5:
         begin
-            dtype = 3'h6;
+            format = 3'h1;
         end
         6'h6:
         begin
-            dtype = 3'h4;
+            format = 3'h1;
         end
         6'h7:
         begin
-            dtype = 3'h4;
+            format = 3'h1;
         end
         6'h8:
         begin
@@ -443,39 +465,39 @@ always_comb begin
         end
         6'ha:
         begin
-            func = 4'h0;
+            format = 3'h1;
         end
         6'hb:
         begin
-            func = 4'h4;
+            format = 3'h1;
         end
         6'hc:
         begin
-            func = 4'h6;
+            format = 3'h1;
         end
         6'hd:
         begin
-            func = 4'h7;
+            format = 3'h1;
         end
         6'he:
         begin
-            func = 4'h8;
+            format = 3'h1;
         end
         6'hf:
         begin
-            func = 4'h9;
+            format = 3'h1;
         end
         6'h10:
         begin
-            func = 4'hb;
+            format = 3'h1;
         end
         6'h11:
         begin
-            func = 4'hd;
+            format = 3'h1;
         end
         6'h12:
         begin
-            func = 4'he;
+            format = 3'h1;
         end
         6'h13:
         begin
@@ -483,89 +505,75 @@ always_comb begin
         end
         6'h14:
         begin
-            func = 4'h1;
+            format = 3'h1;
         end
         6'h15:
         begin
-            func = 4'h5;
+            format = 3'h1;
         end
         6'h16:
         begin
-            func = 4'ha;
+            format = 3'h1;
         end
         6'h17:
         begin
-            func = 4'hc;
+            format = 3'h1;
         end
         6'h18:
         begin
             format = 3'h2;
-            dtype = 3'h5;
         end
         6'h19:
         begin
             format = 3'h2;
-            dtype = 3'h3;
         end
         6'h1a:
         begin
             format = 3'h2;
-            dtype = 3'h1;
         end
         6'h1b:
         begin
             format = 3'h2;
-            dtype = 3'h0;
         end
         6'h1c:
         begin
             format = 3'h0;
-            func = 4'h0;
         end
         6'h1d:
         begin
             format = 3'h0;
-            func = 4'h2;
         end
         6'h1e:
         begin
             format = 3'h0;
-            func = 4'h4;
         end
         6'h1f:
         begin
             format = 3'h0;
-            func = 4'h6;
         end
         6'h20:
         begin
             format = 3'h0;
-            func = 4'h7;
         end
         6'h21:
         begin
             format = 3'h0;
-            func = 4'h8;
         end
         6'h22:
         begin
             format = 3'h0;
-            func = 4'h9;
         end
         6'h23:
         begin
             format = 3'h0;
-            func = 4'hb;
         end
         6'h24:
         begin
             format = 3'h0;
-            func = 4'hd;
         end
         6'h25:
         begin
             format = 3'h0;
-            func = 4'he;; 
         end
         6'h26:
         begin
@@ -574,27 +582,22 @@ always_comb begin
         6'h27:
         begin
             format = 3'h0;
-            func = 4'h1;
         end
         6'h28:
         begin
             format = 3'h0;
-            func = 4'h3;
         end
         6'h29:
         begin
             format = 3'h0;
-            func = 4'h5;
         end
         6'h2a:
         begin
             format = 3'h0;
-            func = 4'ha;
         end
         6'h2b:
         begin
             format = 3'h0;
-            func = 4'hc;
         end
         6'h2c:
         begin
@@ -622,6 +625,7 @@ always_comb begin
         end
         6'h32:
         begin
+            format = 3'h1;
         end
         6'h33:
         begin
@@ -629,16 +633,37 @@ always_comb begin
         end
         6'h34:
         begin
-            
+            format = 3'h1;
         end
         6'h35:
         begin
-            
+            format = 3'h1;
+        end
+        6'h36:
+        begin
+            format = 3'h1;
+        end
+        6'h37:
+        begin
+            format = 3'h1;
+        end
+        6'h38:
+        begin
+            format = 3'h1;
+        end
+        6'h39:
+        begin
+            format = 3'h1;
+        end
+        6'h3a:
+        begin
+            format = 3'h1;
+        end
+        6'h3b:
+        begin
+            format = 3'h1;
         end
     endcase
 end 
-
-
-
 
 endmodule

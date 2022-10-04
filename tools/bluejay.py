@@ -220,7 +220,6 @@ def define_to_dict(txt):
         line = clean(line)
         if line == '':
             continue
-
         tokens = re.split(' ', line)
         key, value = tokens[1], tokens[2]
         define[key] = value

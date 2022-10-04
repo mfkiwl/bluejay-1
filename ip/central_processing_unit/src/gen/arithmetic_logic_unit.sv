@@ -5,7 +5,7 @@ module arithmetic_logic_unit
 (
     input clk,
     input rst,
-    input [3:0] func,
+    input [4:0] func,
     input [63:0] a,
     input [63:0] b,
     output logic [63:0] c
@@ -14,51 +14,51 @@ module arithmetic_logic_unit
 // Mathmatical/logical operations.
 always_comb begin
     case (func)
-        4'h0: 
+        5'h0: 
         begin 
             c = a + b;
         end
-        4'h1:
+        5'h1:
         begin
             c = {{32{a[31]}}, a[31:0]} + {{32{b[31]}}, b[31:0]};
         end
-        4'h2:
+        5'h2:
         begin
             c = a - b;
         end
-        4'h3:
+        5'h3:
         begin
             c = {{32{a[31]}}, a[31:0]} - {{32{b[31]}}, b[31:0]};
         end
-        4'h4:
+        5'h4:
         begin 
             c = a << b[5:0];
         end
-        4'h5:
+        5'h5:
         begin
             c = {{32{a[31 - b[4:0]]}}, a[31:0] << b[4:0]};
         end
-        4'h6:
+        5'h6:
         begin
             c = {63'h0, ((a[63] == b[63]) ? a < b : a[63])};
         end
-        4'h7:
+        5'h7:
         begin
-            c = {63'h0, ((a[63] == b[63]) ? a >= b : b[63])};
+            c = {63'h0, a < b};
         end
-        4'h8:
+        5'h8:
         begin
             c = a ^ b;
         end
-        4'h9:
+        5'h9:
         begin
             c = a >> b[5:0];
         end
-        4'ha:
+        5'ha:
         begin
-            c = {32'h0, a[31:0] >> b[4:0]};
+            c = {(b[4:0] == 0) ? {32{a[31]}} : 32'h0, a[31:0] >> b[4:0]};
         end
-        4'hb:
+        5'hb:
         begin
             case (b[5:0])
                 6'h0: c = {{0{a[63]}}, a[63:0]};
@@ -127,7 +127,7 @@ always_comb begin
                 6'h3f: c = {{63{a[63]}}, a[63:63]};
             endcase
         end
-        4'hc:
+        5'hc:
         begin
             case (b[4:0])
                 5'h0: c = {{32{a[31]}}, a[31:0]};
@@ -164,13 +164,25 @@ always_comb begin
                 5'h1f: c = {{63{a[31]}}, a[31:31]};
             endcase
         end
-        4'hd:
+        5'hd:
         begin
             c = a | b;
         end
-        4'he:
+        5'he:
         begin
             c = a & b;
+        end
+        5'hf:
+        begin
+            c = ~a & b;
+        end
+        5'h10:
+        begin
+            c = a;
+        end
+        5'h11:
+        begin
+            c = b;
         end
     endcase
 end

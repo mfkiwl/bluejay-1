@@ -45,6 +45,8 @@ ELAB_OPTS := --relax
 
 diff: $(TEST_NAME).wdb $(TEST_NAME).signature.output
 	python3 $(TOOLS)/diff.py $(SIM)/$(TEST_NAME).signature $(SIM)/$(TEST_NAME).signature.output > $(TEST_NAME).diff 
+	cat $(TEST_NAME).diff
+    
 
 all:
 	echo $(BEGIN_SIGNATURE)

@@ -18,10 +18,9 @@ logic cpu_to_l1__ready;
 logic cpu_to_l1__we;
 logic [63:0] cpu_to_l1__addr;
 logic [2:0] cpu_to_l1__dtype;
-logic [63:0] cpu_to_l1__data;
-logic l1_to_cpu__valid;
-logic l1_to_cpu__ready;
-logic [63:0] l1_to_cpu__data;
+logic [63:0] cpu_to_l1__wr_data;
+logic [63:0] cpu_to_l1__rd_data;
+logic cpu_to_l1__rd_valid_next;
 
 
 //==============================
@@ -36,10 +35,9 @@ central_processing_unit dut
     .cpu_to_l1__we(cpu_to_l1__we),
     .cpu_to_l1__addr(cpu_to_l1__addr),
     .cpu_to_l1__dtype(cpu_to_l1__dtype),
-    .cpu_to_l1__data(cpu_to_l1__data),
-    .l1_to_cpu__valid(l1_to_cpu__valid),
-    .l1_to_cpu__ready(l1_to_cpu__ready),
-    .l1_to_cpu__data(l1_to_cpu__data)
+    .cpu_to_l1__wr_data(cpu_to_l1__wr_data),
+    .cpu_to_l1__rd_data(cpu_to_l1__rd_data),
+    .cpu_to_l1__rd_valid_next(cpu_to_l1__rd_valid_next)
 );
 
 //==============================
@@ -54,10 +52,9 @@ l1 #(.DEPTH(64'h10000), .DEPTH__LOG2(16)) l1_cache
     .cpu_to_l1__we(cpu_to_l1__we),
     .cpu_to_l1__addr(cpu_to_l1__addr),
     .cpu_to_l1__dtype(cpu_to_l1__dtype),
-    .cpu_to_l1__data(cpu_to_l1__data),
-    .l1_to_cpu__valid(l1_to_cpu__valid),
-    .l1_to_cpu__ready(l1_to_cpu__ready),
-    .l1_to_cpu__data(l1_to_cpu__data)
+    .cpu_to_l1__wr_data(cpu_to_l1__wr_data),
+    .cpu_to_l1__rd_data(cpu_to_l1__rd_data),
+    .cpu_to_l1__rd_valid_next(cpu_to_l1__rd_valid_next)
 );
 
 

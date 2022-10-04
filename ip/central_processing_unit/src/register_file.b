@@ -6,7 +6,7 @@ module register_file
     input clk,
     input rst,
     input we,
-    input addr,
+    input [4:0] addr,
     output logic [63:0] rd_data,
     input [63:0] wr_data
 );

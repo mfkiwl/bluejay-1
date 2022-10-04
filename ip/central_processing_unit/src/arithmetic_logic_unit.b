@@ -44,7 +44,7 @@ always_comb begin
         end
         FUNC__SLTU:
         begin
-            c = {63'h0, ((a[63] == b[63]) ? a >= b : b[63])};
+            c = {63'h0, a < b};
         end
         FUNC__XOR:
         begin
@@ -56,7 +56,7 @@ always_comb begin
         end
         FUNC__SRLW:
         begin
-            c = {32'h0, a[31:0] >> b[4:0]};
+            c = {(b[4:0] == 0) ? {32{a[31]}} : 32'h0, a[31:0] >> b[4:0]};
         end
         FUNC__SRA:
         begin
