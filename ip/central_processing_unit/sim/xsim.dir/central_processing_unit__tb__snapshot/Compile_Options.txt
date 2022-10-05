@@ -1,1 +1,0 @@
--debug "all" --relax -top "central_processing_unit__tb" -snapshot "central_processing_unit__tb__snapshot" 

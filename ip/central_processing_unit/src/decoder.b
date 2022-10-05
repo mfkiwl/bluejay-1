@@ -179,7 +179,7 @@ always_comb begin
                         begin
                             op = OP__SRLIW;
                         end
-                        7'h00:
+                        7'h20:
                         begin
                             op = OP__SRAIW;
                         end

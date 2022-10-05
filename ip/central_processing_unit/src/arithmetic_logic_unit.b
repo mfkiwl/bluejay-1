@@ -10,7 +10,9 @@ module arithmetic_logic_unit
     input [63:0] b,
     output logic [63:0] c
 );
- 
+
+logic [63:0] x;
+
 // Mathmatical/logical operations.
 always_comb begin
     case (func)
@@ -20,7 +22,8 @@ always_comb begin
         end
         FUNC__ADDW:
         begin
-            c = {{32{a[31]}}, a[31:0]} + {{32{b[31]}}, b[31:0]};
+            x = a + b;
+            c = {{32{x[31]}}, x[31:0]};
         end
         FUNC__SUB:
         begin
@@ -28,7 +31,8 @@ always_comb begin
         end
         FUNC__SUBW:
         begin
-            c = {{32{a[31]}}, a[31:0]} - {{32{b[31]}}, b[31:0]};
+            x = a - b;
+            c = {{32{x[31]}}, x[31:0]};
         end
         FUNC__SLL:
         begin 
@@ -36,7 +40,8 @@ always_comb begin
         end
         FUNC__SLLW:
         begin
-            c = {{32{a[31 - b[4:0]]}}, a[31:0] << b[4:0]};
+            x = a << b[5:0];
+            c = {{32{x[31]}}, x[31:0]};
         end
         FUNC__SLT:
         begin
@@ -56,7 +61,10 @@ always_comb begin
         end
         FUNC__SRLW:
         begin
-            c = {(b[4:0] == 0) ? {32{a[31]}} : 32'h0, a[31:0] >> b[4:0]};
+            case (b[4:0])
+                PYTHON(for i in range(1): print(f"5'h{i:x}: c = {{{{{32 + i}{{a[31]}}}}, a[31:{i}]}};"))
+                PYTHON(for i in range(1, 32): print(f"5'h{i:x}: c = {{{{{32 + i}{{1'b0}}}}, a[31:{i}]}};"))
+            endcase
         end
         FUNC__SRA:
         begin
