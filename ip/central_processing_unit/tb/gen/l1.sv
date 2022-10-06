@@ -38,7 +38,7 @@ logic [1:0] state__n;
 // Reads 
 //==============================================
 always_comb begin
-    case (cpu_to_l1__dtype)
+    case (dtype)
         3'h0:
         begin
             rd_data__n[7:0] = memory[addr];

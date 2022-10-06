@@ -1,0 +1,30 @@
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/central_processing_unit/src/gen/arithmetic_logic_unit.sv" into library work
+INFO: [VRFC 10-311] analyzing module arithmetic_logic_unit
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/central_processing_unit/src/gen/central_processing_unit.sv" into library work
+INFO: [VRFC 10-311] analyzing module central_processing_unit
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/central_processing_unit/src/gen/comparator.sv" into library work
+INFO: [VRFC 10-311] analyzing module comparator
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/central_processing_unit/src/gen/control_and_status_registers.sv" into library work
+INFO: [VRFC 10-311] analyzing module control_and_status_registers
+WARNING: [VRFC 10-3380] identifier 'mstatus__we' is used before its declaration [/home/seankent/bluejay/ip/central_processing_unit/src/gen/control_and_status_registers.sv:17]
+WARNING: [VRFC 10-3380] identifier 'mie__we' is used before its declaration [/home/seankent/bluejay/ip/central_processing_unit/src/gen/control_and_status_registers.sv:18]
+WARNING: [VRFC 10-3380] identifier 'misa' is used before its declaration [/home/seankent/bluejay/ip/central_processing_unit/src/gen/control_and_status_registers.sv:23]
+WARNING: [VRFC 10-3380] identifier 'mvendorid' is used before its declaration [/home/seankent/bluejay/ip/central_processing_unit/src/gen/control_and_status_registers.sv:27]
+WARNING: [VRFC 10-3380] identifier 'mimpid' is used before its declaration [/home/seankent/bluejay/ip/central_processing_unit/src/gen/control_and_status_registers.sv:31]
+WARNING: [VRFC 10-3380] identifier 'mhartid' is used before its declaration [/home/seankent/bluejay/ip/central_processing_unit/src/gen/control_and_status_registers.sv:35]
+WARNING: [VRFC 10-3380] identifier 'mstatus' is used before its declaration [/home/seankent/bluejay/ip/central_processing_unit/src/gen/control_and_status_registers.sv:39]
+WARNING: [VRFC 10-3380] identifier 'mstatus__we' is used before its declaration [/home/seankent/bluejay/ip/central_processing_unit/src/gen/control_and_status_registers.sv:40]
+WARNING: [VRFC 10-3380] identifier 'mtvec' is used before its declaration [/home/seankent/bluejay/ip/central_processing_unit/src/gen/control_and_status_registers.sv:44]
+WARNING: [VRFC 10-3380] identifier 'medeleg' is used before its declaration [/home/seankent/bluejay/ip/central_processing_unit/src/gen/control_and_status_registers.sv:48]
+WARNING: [VRFC 10-3380] identifier 'mideleg' is used before its declaration [/home/seankent/bluejay/ip/central_processing_unit/src/gen/control_and_status_registers.sv:52]
+WARNING: [VRFC 10-3380] identifier 'mip' is used before its declaration [/home/seankent/bluejay/ip/central_processing_unit/src/gen/control_and_status_registers.sv:56]
+WARNING: [VRFC 10-3380] identifier 'mie' is used before its declaration [/home/seankent/bluejay/ip/central_processing_unit/src/gen/control_and_status_registers.sv:60]
+WARNING: [VRFC 10-3380] identifier 'mie__we' is used before its declaration [/home/seankent/bluejay/ip/central_processing_unit/src/gen/control_and_status_registers.sv:61]
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/central_processing_unit/src/gen/decoder.sv" into library work
+INFO: [VRFC 10-311] analyzing module decoder
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/central_processing_unit/src/gen/register_file.sv" into library work
+INFO: [VRFC 10-311] analyzing module register_file
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/central_processing_unit/tb/gen/central_processing_unit__tb.sv" into library work
+INFO: [VRFC 10-311] analyzing module central_processing_unit__tb
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/central_processing_unit/tb/gen/l1.sv" into library work
+INFO: [VRFC 10-311] analyzing module l1

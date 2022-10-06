@@ -40,7 +40,7 @@ always_comb begin
         end
         FUNC__SLLW:
         begin
-            x = a << b[5:0];
+            x = a << b[4:0];
             c = {{32{x[31]}}, x[31:0]};
         end
         FUNC__SLT:

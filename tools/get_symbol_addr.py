@@ -16,16 +16,22 @@ import filecmp
 # diff #
 ########
 def get_symbol_addr(elf, symbol):
-    stdout = os.popen('readelf -s ' + elf).read()
+    txt = os.popen('readelf -s ' + elf).read()
+
+    for line in re.split('\n', txt):
+        if symbol in line:
+            tokens = re.split(r' +', line)
+            addr = tokens[2]
+            print(addr)
 
     #stdout = 'abcd'
     #match = re.search('^ *[0-9a-f]+: *[0-9a-f]+ *0 NOTYPE *GLOBAL DEFAULT *\d end_signature', stdout)
     #match = re.findall('ab', stdout)
-    txt = re.findall('[0-9]+: [0-9]+[ \t]+0 NOTYPE  GLOBAL DEFAULT    [0-9] ' + symbol, stdout)[0]
+    #txt = re.findall('[0-9]+: [0-9]+[ \t]+0 NOTYPE +GLOBAL DEFAULT    [0-9] ' + symbol, stdout)[0]
 
-    addr = re.split(' ', txt)[1]
+    #addr = re.split(' ', txt)[1]
 
-    print(addr)
+    #print(addr)
 
 
 if __name__ == '__main__':
