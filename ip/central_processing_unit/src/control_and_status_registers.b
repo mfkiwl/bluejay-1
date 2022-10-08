@@ -217,6 +217,41 @@ always_ff @(posedge clk) begin
     end
 end
 
+//============================================== 
+// Machine Cycle Register (mcycle) 
+//==============================================
+logic [63:0] mcycle;
+logic mcycle__we;
+
+always_ff @(posedge clk) begin
+    if (rst) begin
+        mcycle[CSR__MCYCLE__MCYCLE__FIELD] <= CSR__MCYCLE__MCYCLE__RESET_VALUE;
+    end
+    else begin
+        if (mcycle__we) begin
+            mcycle[CSR__MCYCLE__MCYCLE__FIELD] <= wr_data[CSR__MCYCLE__MCYCLE__FIELD];
+        end
+    end
+end
+
+//============================================== 
+// Machine Instruction Retire Register (minstret) 
+//==============================================
+logic [63:0] minstret;
+logic minstret__we;
+
+always_ff @(posedge clk) begin
+    if (rst) begin
+        minstret[CSR__MINSTRET__MINSTRET__FIELD] <= CSR__MINSTRET__MINSTRET__RESET_VALUE;
+    end
+    else begin
+        if (minstret__we) begin
+            minstret[CSR__MINSTRET__MINSTRET__FIELD] <= wr_data[CSR__MINSTRET__MINSTRET__FIELD];
+        end
+    end
+end
+
+
 
 
 //logic [63:0] mcause;
