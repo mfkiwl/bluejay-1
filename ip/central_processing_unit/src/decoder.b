@@ -17,6 +17,7 @@ module decoder
 logic [6:0] opcode;
 logic [2:0] funct3;
 logic [6:0] funct7;
+logic [11:0] funct12;
 logic [2:0] format;
 
 // Breakout instruction fields.
@@ -26,6 +27,7 @@ assign rs2 = ir[24:20];
 assign rd = ir[11:7];
 assign funct3 = ir[14:12];
 assign funct7 = ir[31:25];
+assign funct7 = ir[31:20];
 assign uimm = {{59{1'b0}}, ir[19:15]};
 
 // Generate immediate.
@@ -384,7 +386,7 @@ always_comb begin
             case (funct3)
                 3'h0:
                 begin
-                    case (ir[31:20])
+                    case (funct12)
                         12'h000:
                         begin
                             op = OP__ECALL;
@@ -392,6 +394,14 @@ always_comb begin
                         12'h001:
                         begin
                             op = OP__EBREAK;
+                        end
+                        12'h105:
+                        begin
+                            op = OP__WFI;
+                        end
+                        12'h302
+                        begin
+                            op = OP__MRET;
                         end
                     endcase
                 end

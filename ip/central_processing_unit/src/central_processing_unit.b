@@ -305,6 +305,7 @@ states = [
     'STATE__BGEU__5',
     'STATE__ECALL',
     'STATE__EBREAK',
+    'STATE__WFI',
     'STATE__FENCE',
     'STATE__FENCE_I',
     'STATE__CSRRW__0',
@@ -325,10 +326,14 @@ states = [
     'STATE__CSRRCI__0',
     'STATE__CSRRCI__1',
     'STATE__CSRRCI__2',
-    'STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED',
+    'STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__0',
+    'STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__0__JALR',
+    'STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__1',
     'STATE__EXCEPTION__ILLEGAL_INSTRUCTION',
-    'STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED',
-    'STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED',
+    'STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0',
+    'STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__1',
+    'STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__0',
+    'STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__1',
 ]
 
 
@@ -644,6 +649,10 @@ always_comb begin
                 begin
                     state__n = STATE__EBREAK;
                 end
+                OP__WFI:
+                begin
+                    state__n = STATE__WFI;
+                end
                 OP__CSRRW:
                 begin
                     state__n = STATE__CSRRW__0;
@@ -667,6 +676,10 @@ always_comb begin
                 OP__CSRRCI:
                 begin
                     state__n = STATE__CSRRCI__0;
+                end
+                OP__MRET:
+                begin
+                    state__n = STATE__MRET__0;
                 end
                 default:
                 begin
@@ -1533,7 +1546,7 @@ always_comb begin
             addr = rs1;
             a__n = rd_data;
             b__n = imm;
-            state__n = (rd_data[0] + imm[0] != 1'b0) ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED : STATE__LH__1;
+            state__n = (rd_data[0] + imm[0] != 1'b0) ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0 : STATE__LH__1;
         end
 
         //==============================
@@ -1576,7 +1589,7 @@ always_comb begin
             addr = rs1;
             a__n = rd_data;
             b__n = imm;
-            state__n = (rd_data[1:0] + imm[1:0] != 2'h0) ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED : STATE__LW__1;
+            state__n = (rd_data[1:0] + imm[1:0] != 2'h0) ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0 : STATE__LW__1;
         end
 
         //==============================
@@ -1619,7 +1632,7 @@ always_comb begin
             addr = rs1;
             a__n = rd_data;
             b__n = imm;
-            state__n = (rd_data[2:0] + imm[2:0] != 3'h0) ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED : STATE__LD__1;
+            state__n = (rd_data[2:0] + imm[2:0] != 3'h0) ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0 : STATE__LD__1;
         end
 
         //==============================
@@ -1705,7 +1718,7 @@ always_comb begin
             addr = rs1;
             a__n = rd_data;
             b__n = imm;
-            state__n = (rd_data[0] + imm[0] != 1'b0) ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED : STATE__LHU__1;
+            state__n = (rd_data[0] + imm[0] != 1'b0) ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0 : STATE__LHU__1;
         end
 
         //==============================
@@ -1748,7 +1761,7 @@ always_comb begin
             addr = rs1;
             a__n = rd_data;
             b__n = imm;
-            state__n = (rd_data[1:0] + imm[1:0] != 2'h0) ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED : STATE__LWU__1;
+            state__n = (rd_data[1:0] + imm[1:0] != 2'h0) ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0 : STATE__LWU__1;
         end
 
         //==============================
@@ -1827,7 +1840,7 @@ always_comb begin
             a__n = rd_data;
             b__n = imm;
             state__n = STATE__SH__1;
-            // state__n = (rd_data[0] + imm[0] != 1'b0) ? STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED : STATE__SH__1;
+            // state__n = (rd_data[0] + imm[0] != 1'b0) ? STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__0 : STATE__SH__1;
         end
 
         //==============================
@@ -1863,7 +1876,7 @@ always_comb begin
             a__n = rd_data;
             b__n = imm;
             state__n = STATE__SW__1;
-            // state__n = (rd_data[1:0] + imm[1:0] != 2'h0) ? STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED : STATE__SW__1;
+            // state__n = (rd_data[1:0] + imm[1:0] != 2'h0) ? STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__0 : STATE__SW__1;
         end
 
         //==============================
@@ -1899,7 +1912,7 @@ always_comb begin
             a__n = rd_data;
             b__n = imm;
             state__n = STATE__SD__1;
-            // state__n = (rd_data[2:0] + imm[2:0] != 3'h0) ? STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED : STATE__SD__1;
+            // state__n = (rd_data[2:0] + imm[2:0] != 3'h0) ? STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__0 : STATE__SD__1;
         end
 
         //==============================
@@ -1957,7 +1970,7 @@ always_comb begin
             addr = rs1;
             a__n = rd_data;  
             b__n = imm;  
-            state__n = (rd_data[1:0] + imm[1:0] == 2'b10) || (rd_data[1:0] + imm[1:0] == 2'b11) ? STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED : STATE__JALR__1;
+            state__n = (rd_data[1:0] + imm[1:0] == 2'b10) || (rd_data[1:0] + imm[1:0] == 2'b11) ? STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__0__JALR : STATE__JALR__1;
         end
 
         //==============================
@@ -1980,7 +1993,7 @@ always_comb begin
         begin
             a__n = pc;
             b__n = imm;
-            state__n = (imm[1:0] != 2'h0) ? STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED : STATE__JAL__1;
+            state__n = (imm[1:0] != 2'h0) ? STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__0 : STATE__JAL__1;
         end
 
         //==============================
@@ -2040,7 +2053,7 @@ always_comb begin
         begin
             a__n = pc;
             b__n = imm;
-            state__n = (imm[1:0] != 2'h0) ? STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED : STATE__BEQ__5;
+            state__n = (imm[1:0] != 2'h0) ? STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__0 : STATE__BEQ__5;
         end
 
         //==============================
@@ -2097,7 +2110,7 @@ always_comb begin
         begin
             a__n = pc;
             b__n = imm;
-            state__n = (imm[1:0] != 2'h0) ? STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED : STATE__BNE__5;
+            state__n = (imm[1:0] != 2'h0) ? STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__0 : STATE__BNE__5;
         end
 
         //==============================
@@ -2154,7 +2167,7 @@ always_comb begin
         begin
             a__n = pc;
             b__n = imm;
-            state__n = (imm[1:0] != 2'h0) ? STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED : STATE__BLT__5;
+            state__n = (imm[1:0] != 2'h0) ? STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__0 : STATE__BLT__5;
         end
 
         //==============================
@@ -2211,7 +2224,7 @@ always_comb begin
         begin
             a__n = pc;
             b__n = imm;
-            state__n = (imm[1:0] != 2'h0) ? STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED : STATE__BGE__5;
+            state__n = (imm[1:0] != 2'h0) ? STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__0 : STATE__BGE__5;
         end
 
         //==============================
@@ -2268,7 +2281,7 @@ always_comb begin
         begin
             a__n = pc;
             b__n = imm;
-            state__n = (imm[1:0] != 2'h0) ? STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED : STATE__BLTU__5;
+            state__n = (imm[1:0] != 2'h0) ? STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__0 : STATE__BLTU__5;
         end
 
         //==============================
@@ -2325,7 +2338,7 @@ always_comb begin
         begin
             a__n = pc;
             b__n = imm;
-            state__n = (imm[1:0] != 2'h0) ? STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED : STATE__BGEU__5;
+            state__n = (imm[1:0] != 2'h0) ? STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__0 : STATE__BGEU__5;
         end
 
         //==============================
@@ -2338,13 +2351,17 @@ always_comb begin
             state__n = STATE__FETCH__0;
         end
 
-
         //==============================
         // STATE__ECALL
         //==============================
         STATE__ECALL:
         begin
-            state__n = STATE__ECALL;
+            csr__addr = CSR__MCAUSE;
+            csr__we = 1'b1;
+            csr__wr_data = csr__rd_data;
+            csr__wr_data[CSR__MCAUSE__EXCEPTION_CODE__FIELD] = CSR__MCAUSE__EXCEPTION_CODE__ENVIRONMENT_CALL_FROM_M_MODE;
+            csr__wr_data[CSR__MCAUSE__INTERRUPT__FIELD] = CSR__MCAUSE__INTERRUPT__NOT_INTERRUPT;
+            state__n = STATE__TRAP__0;
         end
 
         //==============================
@@ -2352,7 +2369,21 @@ always_comb begin
         //==============================
         STATE__EBREAK:
         begin
-            state__n = STATE__EBREAK;
+            csr__addr = CSR__MCAUSE;
+            csr__we = 1'b1;
+            csr__wr_data = csr__rd_data;
+            csr__wr_data[CSR__MCAUSE__EXCEPTION_CODE__FIELD] = CSR__MCAUSE__EXCEPTION_CODE__BREAKPOINT;
+            csr__wr_data[CSR__MCAUSE__INTERRUPT__FIELD] = CSR__MCAUSE__INTERRUPT__NOT_INTERRUPT;
+            state__n = STATE__TRAP__0;
+        end
+
+        //==============================
+        // STATE__WFI
+        //==============================
+        STATE__WFI:
+        begin
+            pc__n = pc + 4;
+            state__n = STATE__FETCH__0;
         end
 
         //==============================
@@ -2605,50 +2636,167 @@ always_comb begin
         end
 
         //==============================
+        // STATE__MRET__0
+        //==============================
+        STATE__MRET__0:
+        begin
+            csr__addr = CSR__MSTATUS;
+            csr__we = 1'b1;
+            csr__wr_data = csr__rd_data;
+            csr__wr_data[CSR__MSTATUS__MIE__FIELD] <= csr__rd_data[CSR__MSTATUS__MPIE__FIELD];
+            csr__wr_data[CSR__MSTATUS__MPIE__FIELD] <= CSR__MSTATUS__MIE__ENABLED;
+            state__n = STATE__MRET__1;
+        end
+
+        //==============================
+        // STATE__MRET__1
+        //==============================
+        STATE__MRET__1:
+        begin
+            csr__addr = CSR__MEPC;
+            pc__n = csr__rd_data;
+            state__n = STATE__FETCH__0;
+        end
+
+        //==============================
         // STATE__EXCEPTION__ILLEGAL_INSTRUCTION
         //==============================
         STATE__EXCEPTION__ILLEGAL_INSTRUCTION:
         begin
-            state__n = STATE__EXCEPTION__ILLEGAL_INSTRUCTION;
+            csr__addr = CSR__MCAUSE;
+            csr__we = 1'b1;
+            csr__wr_data = csr__rd_data;
+            csr__wr_data[CSR__MCAUSE__EXCEPTION_CODE__FIELD] = CSR__MCAUSE__EXCEPTION_CODE__ILLEGAL_INSTRUCTION;
+            csr__wr_data[CSR__MCAUSE__INTERRUPT__FIELD] = CSR__MCAUSE__INTERRUPT__NOT_INTERRUPT;
+            state__n = STATE__TRAP__0;
         end
 
         //==============================
-        // STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED
+        // STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__0
         //==============================
-        STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED:
+        STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__0:
         begin
-            state__n = STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED;
+            func = FUNC__ADD; 
+            csr__addr = CSR__MBADADDR;
+            csr__we = 1'b1;
+            csr__wr_data = csr__rd_data;
+            csr__wr_data[CSR__MBADADDR__MBADADDR__FIELD] = c;
+            state__n = STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__1;
         end
 
         //==============================
-        // STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED
+        // STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__0__JALR
         //==============================
-        STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED:
+        STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__0__JALR:
         begin
-            state__n = STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED;
+            func = FUNC__ADD; 
+            csr__addr = CSR__MBADADDR;
+            csr__we = 1'b1;
+            csr__wr_data = csr__rd_data;
+            csr__wr_data[CSR__MBADADDR__MBADADDR__FIELD] = {c[63:1], 1'b0};
+            state__n = STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__1;
         end
 
         //==============================
-        // STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED
+        // STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__1
         //==============================
-        STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED:
+        STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__1:
         begin
-            state__n = STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED;
+            csr__addr = CSR__MCAUSE;
+            csr__we = 1'b1;
+            csr__wr_data = csr__rd_data;
+            csr__wr_data[CSR__MCAUSE__EXCEPTION_CODE__FIELD] = CSR__MCAUSE__EXCEPTION_CODE__INSTRUCTION_ADDRESS_MISALIGNED;
+            csr__wr_data[CSR__MCAUSE__INTERRUPT__FIELD] = CSR__MCAUSE__INTERRUPT__NOT_INTERRUPT;
+            state__n = STATE__TRAP__0;
         end
 
+        //==============================
+        // STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0
+        //==============================
+        STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0:
+        begin
+            func = FUNC__ADD; 
+            csr__addr = CSR__MBADADDR;
+            csr__we = 1'b1;
+            csr__wr_data = csr__rd_data;
+            csr__wr_data[CSR__MBADADDR__MBADADDR__FIELD] = c;
+            state__n = STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__1;
+        end
 
+        //==============================
+        // STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__1
+        //==============================
+        STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__1:
+        begin
+            csr__addr = CSR__MCAUSE;
+            csr__we = 1'b1;
+            csr__wr_data = csr__rd_data;
+            csr__wr_data[CSR__MCAUSE__EXCEPTION_CODE__FIELD] = CSR__MCAUSE__EXCEPTION_CODE__LOAD_ADDRESS_MISALIGNED;
+            csr__wr_data[CSR__MCAUSE__INTERRUPT__FIELD] = CSR__MCAUSE__INTERRUPT__NOT_INTERRUPT;
+            state__n = STATE__TRAP__0;
+        end
+
+        //==============================
+        // STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__0
+        //==============================
+        STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__0:
+        begin
+            func = FUNC__ADD; 
+            csr__addr = CSR__MBADADDR;
+            csr__we = 1'b1;
+            csr__wr_data = csr__rd_data;
+            csr__wr_data[CSR__MBADADDR__MBADADDR__FIELD] = c;
+            state__n = STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__1;
+        end
+
+        //==============================
+        // STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__1
+        //==============================
+        STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__1:
+        begin
+            csr__addr = CSR__MCAUSE;
+            csr__we = 1'b1;
+            csr__wr_data = csr__rd_data;
+            csr__wr_data[CSR__MCAUSE__EXCEPTION_CODE__FIELD] = CSR__MCAUSE__EXCEPTION_CODE__STORE_ADDRESS_MISALIGNED;
+            csr__wr_data[CSR__MCAUSE__INTERRUPT__FIELD] = CSR__MCAUSE__INTERRUPT__NOT_INTERRUPT;
+            state__n = STATE__TRAP__0;
+        end
+
+        //==============================
+        // STATE__TRAP__0
+        //==============================
+        STATE__TRAP__0:
+        begin
+            csr__addr = CSR__MSTATUS;
+            csr__we = 1'b1;
+            csr__wr_data = csr__rd_data;
+            csr__wr_data[CSR__MSTATUS__MIE__FIELD] <= CSR__MSTATUS__MIE__DISABLED;
+            csr__wr_data[CSR__MSTATUS__MPIE__FIELD] <= csr__rd_data[CSR__MSTATUS__MIE__FIELD];
+            state__n = STATE__TRAP__2;
+        end
+
+        //==============================
+        // STATE__TRAP__1
+        //==============================
+        STATE__TRAP__1:
+        begin
+            csr__addr = CSR__MEPC;
+            csr__we = 1'b1;
+            csr__wr_data = csr__rd_data;
+            csr__wr_data[CSR__MEPC__MEPC__FIELD] = pc;
+            state__n = STATE__TRAP__1;
+        end
+
+        //==============================
+        // STATE__TRAP__2
+        //==============================
+        STATE__TRAP__2:
+        begin
+            csr__addr = CSR__MTVEC;
+            pc__n = csr__rd_data; 
+            state__n = STATE__FETCH__0;
+        end
         
-//        //==============================
-//        // STATE__EXCEPTION__ILLEGAL_INSTRUCTION
-//        //==============================
-//        STATE__EXCEPTION__ILLEGAL_INSTRUCTION:
-//        begin
-//            csr__addr = CSR__MCAUSE;
-//            csr__we = 1'b1;
-//            csr__wr_data[CSR__MCAUSE__EXCEPTION_CODE__FIELD] = CSR__MCAUSE__EXEPTION_CODE__ILLEGAL_INSTRUCTION;
-//            csr__wr_data[CSR__MCAUSE__INTERRUPT__FIELD] = CSR__MCAUSE__INTERRUPT__NOT_INTERRUPT;
-//            state__n = STATE__TRAP__0;
-//        end
 //
 //
 //        //==============================
@@ -2663,38 +2811,6 @@ always_comb begin
 //            state__n = STATE__TRAP__0;
 //        end
 //
-//        //==============================
-//        // STATE__TRAP__0
-//        //==============================
-//        STATE__TRAP__0:
-//        begin
-//            csr__addr = CSR__MEPC;
-//            csr__we = 1'b1;
-//            csr__wr_data[CSR__MEPC__MEPC__FIELD] = pc;
-//            state__n = STATE__TRAP__1;
-//        end
-//
-//        //==============================
-//        // STATE__TRAP__1
-//        //==============================
-//        STATE__TRAP__1:
-//        begin
-//            csr__addr = CSR__MSTATUS;
-//            csr__we = 1'b1;
-//            csr__wr_data[CSR__MSTATUS__MIE__FIELD] <= CSR__MSTATUS__MIE__DISABLED;
-//            csr__wr_data[CSR__MSTATUS__MPIE__FIELD] <= csr__rd_data[CSR__MSTATUS__MIE__FIELD];
-//            state__n = STATE__TRAP__2;
-//        end
-//
-//        //==============================
-//        // STATE__TRAP__2
-//        //==============================
-//        STATE__TRAP__2:
-//        begin
-//            csr__addr = CSR__MTVEC;
-//            pc__n = csr__rd_data; 
-//            state__n = STATE__FETCH__0;
-//        end
     endcase
 end
 
@@ -2710,7 +2826,7 @@ end
 
 always_ff @(posedge clk) begin
     if (rst) begin
-        pc <= 64'h80000000;
+        pc <= PC_RESET_VALUE;
     end
     else begin
         pc <= pc__n;
