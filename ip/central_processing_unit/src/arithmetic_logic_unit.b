@@ -5,12 +5,16 @@ module arithmetic_logic_unit
 (
     input clk,
     input rst,
-    input [4:0] func,
-    input [63:0] a,
-    input [63:0] b,
-    output logic [63:0] c
+    input func,
+    input a,
+    input b,
+    output c
 );
 
+logic [4:0] func;
+logic [63:0] a;
+logic [63:0] b;
+logic [63:0] c;
 logic [63:0] x;
 
 // Mathmatical/logical operations.

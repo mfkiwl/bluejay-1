@@ -13,14 +13,16 @@ module central_processing_unit__tb();
 //==============================================
 logic clk;
 logic rst;
-logic cpu_to_l1__valid;
-logic cpu_to_l1__ready;
-logic cpu_to_l1__we;
-logic [63:0] cpu_to_l1__addr;
-logic [2:0] cpu_to_l1__dtype;
-logic [63:0] cpu_to_l1__wr_data;
-logic [63:0] cpu_to_l1__rd_data;
-logic cpu_to_l1__rd_valid_next;
+logic cpu_to_mem__valid;
+logic cpu_to_mem__ready;
+logic cpu_to_mem__we;
+logic [63:0] cpu_to_mem__addr;
+logic [2:0] cpu_to_mem__dtype;
+logic [63:0] cpu_to_mem__wr_data;
+logic [63:0] cpu_to_mem__rd_data;
+logic cpu_to_mem__done;
+logic cpu_to_mem__access_fault;
+logic cpu_to_mem__address_misaligned_fault;
 
 
 //==============================
@@ -30,31 +32,35 @@ central_processing_unit dut
 (
     .clk(clk),
     .rst(rst),
-    .cpu_to_l1__valid(cpu_to_l1__valid),
-    .cpu_to_l1__ready(cpu_to_l1__ready),
-    .cpu_to_l1__we(cpu_to_l1__we),
-    .cpu_to_l1__addr(cpu_to_l1__addr),
-    .cpu_to_l1__dtype(cpu_to_l1__dtype),
-    .cpu_to_l1__wr_data(cpu_to_l1__wr_data),
-    .cpu_to_l1__rd_data(cpu_to_l1__rd_data),
-    .cpu_to_l1__rd_valid_next(cpu_to_l1__rd_valid_next)
+    .cpu_to_mem__valid(cpu_to_mem__valid),
+    .cpu_to_mem__ready(cpu_to_mem__ready),
+    .cpu_to_mem__we(cpu_to_mem__we),
+    .cpu_to_mem__addr(cpu_to_mem__addr),
+    .cpu_to_mem__dtype(cpu_to_mem__dtype),
+    .cpu_to_mem__wr_data(cpu_to_mem__wr_data),
+    .cpu_to_mem__rd_data(cpu_to_mem__rd_data),
+    .cpu_to_mem__done(cpu_to_mem__done),
+    .cpu_to_mem__access_fault(cpu_to_mem__access_fault),
+    .cpu_to_mem__address_misaligned_fault(cpu_to_mem__address_misaligned_fault)
 );
 
 //==============================
-// l1 
+// mem 
 //==============================
-l1 #(.DEPTH(64'h10000), .DEPTH__LOG2(16)) l1_cache 
+memory #(.DEPTH(64'h10000), .DEPTH__LOG2(16)) mem 
 (
     .clk(clk),
     .rst(rst),
-    .cpu_to_l1__valid(cpu_to_l1__valid),
-    .cpu_to_l1__ready(cpu_to_l1__ready),
-    .cpu_to_l1__we(cpu_to_l1__we),
-    .cpu_to_l1__addr(cpu_to_l1__addr),
-    .cpu_to_l1__dtype(cpu_to_l1__dtype),
-    .cpu_to_l1__wr_data(cpu_to_l1__wr_data),
-    .cpu_to_l1__rd_data(cpu_to_l1__rd_data),
-    .cpu_to_l1__rd_valid_next(cpu_to_l1__rd_valid_next)
+    .cpu_to_mem__valid(cpu_to_mem__valid),
+    .cpu_to_mem__ready(cpu_to_mem__ready),
+    .cpu_to_mem__we(cpu_to_mem__we),
+    .cpu_to_mem__addr(cpu_to_mem__addr),
+    .cpu_to_mem__dtype(cpu_to_mem__dtype),
+    .cpu_to_mem__wr_data(cpu_to_mem__wr_data),
+    .cpu_to_mem__rd_data(cpu_to_mem__rd_data),
+    .cpu_to_mem__done(cpu_to_mem__done),
+    .cpu_to_mem__access_fault(cpu_to_mem__access_fault),
+    .cpu_to_mem__address_misaligned_fault(cpu_to_mem__address_misaligned_fault)
 );
 
 
@@ -78,7 +84,7 @@ integer fd;
 
 initial begin
     if ($value$plusargs("filename__mem=%s", filename__mem)) begin
-        $readmemh(filename__mem, l1.memory);
+        $readmemh(filename__mem, mem.memory);
     end
     //if ($value$plusargs("filename__sig=%s", filename__sig)) begin
     //    $display("filename__sig = %s", filename__sig);
@@ -122,10 +128,10 @@ initial begin
                 fd = $fopen(filename__sig);
                 for (addr = begin_signature; addr < end_signature; addr += 4) begin
                     addr_short = addr[15:0];
-                    $fwrite(fd, "%02h", l1_cache.memory[addr_short + 3]);
-                    $fwrite(fd, "%02h", l1_cache.memory[addr_short + 2]);
-                    $fwrite(fd, "%02h", l1_cache.memory[addr_short + 1]);
-                    $fwrite(fd, "%02h\n", l1_cache.memory[addr_short]);
+                    $fwrite(fd, "%02h", mem.memory[addr_short + 3]);
+                    $fwrite(fd, "%02h", mem.memory[addr_short + 2]);
+                    $fwrite(fd, "%02h", mem.memory[addr_short + 1]);
+                    $fwrite(fd, "%02h\n", mem.memory[addr_short]);
                 end
                 ////$fdisplay(fd, "%016h", dut.central_processing_unit__0.register_file__0.x__10);
                 $fclose(fd);

@@ -1,18 +1,20 @@
 //==============================================================
-// l1 
+// memory 
 //==============================================================
-module l1 
+module memory 
 (
     input clk,
     input rst,
-    input cpu_to_l1__valid,
-    output logic cpu_to_l1__ready,
-    input logic cpu_to_l1__we,
-    input [63:0] cpu_to_l1__addr,
-    input [2:0] cpu_to_l1__dtype,
-    input [63:0] cpu_to_l1__wr_data,
-    output logic [63:0] cpu_to_l1__rd_data,
-    output logic cpu_to_l1__rd_valid_next
+    input cpu_to_mem__valid,
+    output cpu_to_mem__ready,
+    input cpu_to_mem__we,
+    input cpu_to_mem__addr,
+    input cpu_to_mem__dtype,
+    input cpu_to_mem__wr_data,
+    output cpu_to_mem__rd_data,
+    output cpu_to_mem__done,
+    output cpu_to_mem__access_fault,
+    output cpu_to_mem__address_misaligned_fault,
 );
 
 // parameters
@@ -33,6 +35,19 @@ logic we;
 logic [1:0] state;
 logic [1:0] state__n;
 
+logic cpu_to_mem__valid;
+logic cpu_to_mem__ready;
+logic cpu_to_mem__we;
+logic [63:0] cpu_to_mem__addr;
+logic [2:0] cpu_to_mem__dtype;
+logic [63:0] cpu_to_mem__wr_data;
+logic cpu_to_mem__done;
+logic [63:0] cpu_to_mem__rd_data
+logic cpu_to_mem__access_fault;
+logic cpu_to_mem__address_misaligned_fault;
+
+assign cpu_to_mem__access_fault = 0;
+assign cpu_to_mem__address_misaligned_fault = 0;
 
 //==============================================
 // Reads 
@@ -187,9 +202,9 @@ always_comb begin
     addr__n = addr;
     dtype__n = dtype;
     wr_data__n = wr_data;
-    cpu_to_l1__ready = 1'b0;
-    cpu_to_l1__rd_valid_next = 1'b0;
-    cpu_to_l1__rd_data = rd_data;
+    cpu_to_mem__ready = 1'b0;
+    cpu_to_mem__done = 1'b0;
+    cpu_to_mem__rd_data = rd_data;
     we = 1'b0;
 
     case (state)
@@ -198,12 +213,12 @@ always_comb begin
         //==============================
         STATE__READY:
         begin
-            cpu_to_l1__ready = 1'b1;
+            cpu_to_mem__ready = 1'b1;
 
-            if (cpu_to_l1__valid) begin
-                addr__n = cpu_to_l1__addr[DEPTH__LOG2-1:0];
-                dtype__n = cpu_to_l1__dtype;
-                state__n = cpu_to_l1__we ? STATE__WRITE__0 : STATE__READ;
+            if (cpu_to_mem__valid) begin
+                addr__n = cpu_to_mem__addr[DEPTH__LOG2-1:0];
+                dtype__n = cpu_to_mem__dtype;
+                state__n = cpu_to_mem__we ? STATE__WRITE__0 : STATE__READ;
             end
         end
 
@@ -212,7 +227,7 @@ always_comb begin
         //==============================
         STATE__READ:
         begin
-            cpu_to_l1__rd_valid_next = 1'b1;  
+            cpu_to_mem__done = 1'b1;  
             state__n = STATE__READY;
         end
 
@@ -221,7 +236,7 @@ always_comb begin
         //==============================
         STATE__WRITE__0:
         begin
-            wr_data__n = cpu_to_l1__wr_data;
+            wr_data__n = cpu_to_mem__wr_data;
             state__n = STATE__WRITE__1;
         end
 

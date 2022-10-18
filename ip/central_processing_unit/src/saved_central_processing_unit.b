@@ -5,16 +5,14 @@ module central_processing_unit
 (
     input clk,
     input rst,
-    output cpu_to_mem__valid,
-    input cpu_to_mem__ready,
-    output cpu_to_mem__we,
-    output cpu_to_mem__addr,
-    output cpu_to_mem__dtype,
-    output cpu_to_mem__wr_data,
-    input cpu_to_mem__done,
-    input cpu_to_mem__rd_data
-    input cpu_to_mem__access_fault,
-    input cpu_to_mem__address_misaligned_fault
+    output logic cpu_to_l1__valid,
+    input cpu_to_l1__ready,
+    output logic cpu_to_l1__we,
+    output logic [63:0] cpu_to_l1__addr,
+    output logic [2:0] cpu_to_l1__dtype,
+    output logic [63:0] cpu_to_l1__wr_data,
+    input cpu_to_l1__rd_valid_next,
+    input [63:0] cpu_to_l1__rd_data
 );
 
 
@@ -32,13 +30,13 @@ logic [4:0] rd;
 logic [63:0] imm;
 logic [63:0] uimm;
 
-// Register File
+// Register File.
 logic we;
 logic [4:0] addr;
 logic [63:0] rd_data;
 logic [63:0] wr_data;
 
-// ALU
+// ALU.
 logic [4:0] func;
 logic [63:0] a;
 logic [63:0] a__n;
@@ -46,7 +44,7 @@ logic [63:0] b;
 logic [63:0] b__n;
 logic [63:0] c;
 
-// Comparator
+// Comparator.
 logic eq;
 logic ne;
 logic lt;
@@ -59,18 +57,6 @@ logic csr__we;
 logic [11:0] csr__addr;
 logic [63:0] csr__wr_data;
 logic [63:0] csr__rd_data;
-
-// Memory Interface
-logic cpu_to_mem__valid;
-logic cpu_to_mem__ready;
-logic cpu_to_mem__we;
-logic [63:0] cpu_to_mem__addr;
-logic [2:0] cpu_to_mem__dtype;
-logic [63:0] cpu_to_mem__wr_data;
-logic cpu_to_mem__done;
-logic [63:0] cpu_to_mem__rd_data
-logic cpu_to_mem__access_fault;
-logic cpu_to_mem__address_misaligned_fault;
 
 // FSM
 logic [7:0] state;
@@ -343,17 +329,11 @@ states = [
     'STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__0',
     'STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__0__JALR',
     'STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__1',
-    'STATE__EXCEPTION__INSTRUCTION_ACCESS_FAULT__0',
-    'STATE__EXCEPTION__INSTRUCTION_ACCESS_FAULT__1',
     'STATE__EXCEPTION__ILLEGAL_INSTRUCTION',
     'STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0',
     'STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__1',
-    'STATE__EXCEPTION__LOAD_ACCESS_FAULT__0',
-    'STATE__EXCEPTION__LOAD_ACCESS_FAULT__1',
     'STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__0',
     'STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__1',
-    'STATE__EXCEPTION__STORE_ACCESS_FAULT__0',
-    'STATE__EXCEPTION__STORE_ACCESS_FAULT__1',
 ]
 
 
@@ -372,10 +352,10 @@ always_comb begin
     addr = rd;
     we = 1'b0;
     wr_data = c;
-    cpu_to_mem__valid = 1'b0;
-    cpu_to_mem__we = 1'b0;
-    cpu_to_mem__dtype = DTYPE__W;
-    cpu_to_mem__wr_data = rd_data;
+    cpu_to_l1__valid = 1'b0;
+    cpu_to_l1__we = 1'b0;
+    cpu_to_l1__dtype = DTYPE__W;
+    cpu_to_l1__wr_data = rd_data;
     csr__addr = imm[11:0];
     csr__we = 1'b0;
     csr__wr_data = c;
@@ -394,9 +374,9 @@ always_comb begin
 //        //==============================
 //        STATE__FETCH:
 //        begin
-//            cpu_to_mem__valid = 1'b1;
-//            cpu_to_mem__addr = pc;
-//            cpu_to_mem__dtype = DTYPE__W;
+//            cpu_to_l1__valid = 1'b1;
+//            cpu_to_l1__addr = pc;
+//            cpu_to_l1__dtype = DTYPE__W;
 //            
 //            if (mstatus[CSR__MSTATUS__MIE__FIELD] && mip[CSR__MIP__MEIP__FIELD] && mie[CSR__MIE__MEIE__FIELD]) begin
 //                state__n = STATE__INTERRUPT__EXTERNAL;
@@ -408,8 +388,8 @@ always_comb begin
 //                state__n = STATE__INTERRUPT__TIMER;
 //            end
 //            else begin
-//                if (cpu_to_mem__hit) begin
-//                    ir__n = cpu_to_mem__rd_data[31:0];
+//                if (cpu_to_l1__hit) begin
+//                    ir__n = cpu_to_l1__rd_data[31:0];
 //                    state__n = STATE__DECODE;
 //                end
 //            end
@@ -428,10 +408,10 @@ always_comb begin
         //==============================
         STATE__FETCH__1:
         begin
-            cpu_to_mem__valid = 1'b1;
-            cpu_to_mem__addr = pc;
-            cpu_to_mem__dtype = DTYPE__W;
-            state__n = STATE__FETCH__2;
+            cpu_to_l1__valid = 1'b1;
+            cpu_to_l1__addr = pc;
+            cpu_to_l1__dtype = DTYPE__W;
+            state__n = cpu_to_l1__ready ? STATE__FETCH__2 : STATE__FETCH__1;
         end
 
         //==============================
@@ -439,7 +419,7 @@ always_comb begin
         //==============================
         STATE__FETCH__2:
         begin
-            state__n = cpu_to_mem__access_fault ? STATE__EXCEPTION__INSTRUCTION_ACCESS_FAULT__0 : cpu_to_mem__address_misaligned_fault ? STATE__FATAL : cpu_to_mem__done ? STATE__FETCH__3 : STATE__FETCH__2;
+            state__n = cpu_to_l1__rd_valid_next ? STATE__FETCH__3 : STATE__FETCH__2;
         end
 
         //==============================
@@ -447,7 +427,7 @@ always_comb begin
         //==============================
         STATE__FETCH__3:
         begin
-            ir__n = cpu_to_mem__rd_data[31:0];
+            ir__n = cpu_to_l1__rd_data[31:0];
             state__n = STATE__DECODE; 
         end
 
@@ -1532,10 +1512,10 @@ always_comb begin
         STATE__LB__1:
         begin
             func = FUNC__ADD;
-            cpu_to_mem__valid = 1'b1;
-            cpu_to_mem__addr = c;
-            cpu_to_mem__dtype = DTYPE__B;
-            state__n = STATE__LB__2;
+            cpu_to_l1__valid = 1'b1;
+            cpu_to_l1__addr = c;
+            cpu_to_l1__dtype = DTYPE__B;
+            state__n = cpu_to_l1__ready ? STATE__LB__2 : STATE__LB__1;
         end
 
         //==============================
@@ -1543,7 +1523,7 @@ always_comb begin
         //==============================
         STATE__LB__2:
         begin
-            state__n = cpu_to_mem__access_fault ? STATE__EXCEPTION__LOAD_ACCESS_FAULT__0 : cpu_to_mem__address_misaligned_fault ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0 : cpu_to_mem__done ? STATE__LB__3 : STATE__LB__2;
+            state__n = cpu_to_l1__rd_valid_next ? STATE__LB__3 : STATE__LB__2;
         end
 
         //==============================
@@ -1553,7 +1533,7 @@ always_comb begin
         begin
             addr = rd;
             we = 1'b1;
-            wr_data = cpu_to_mem__rd_data;
+            wr_data = cpu_to_l1__rd_data;
             pc__n = pc + 4;
             state__n = STATE__FETCH__0;
         end
@@ -1566,7 +1546,7 @@ always_comb begin
             addr = rs1;
             a__n = rd_data;
             b__n = imm;
-            state__n = STATE__LH__1;
+            state__n = (rd_data[0] + imm[0] != 1'b0) ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0 : STATE__LH__1;
         end
 
         //==============================
@@ -1575,10 +1555,10 @@ always_comb begin
         STATE__LH__1:
         begin
             func = FUNC__ADD;
-            cpu_to_mem__valid = 1'b1;
-            cpu_to_mem__addr = c;
-            cpu_to_mem__dtype = DTYPE__H;
-            state__n = STATE__LH__2;
+            cpu_to_l1__valid = 1'b1;
+            cpu_to_l1__addr = c;
+            cpu_to_l1__dtype = DTYPE__H;
+            state__n = cpu_to_l1__ready ? STATE__LH__2 : STATE__LH__1;
         end
 
         //==============================
@@ -1586,7 +1566,7 @@ always_comb begin
         //==============================
         STATE__LH__2:
         begin
-            state__n = cpu_to_mem__access_fault ? STATE__EXCEPTION__LOAD_ACCESS_FAULT__0 : cpu_to_mem__address_misaligned_fault ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0 : cpu_to_mem__done ? STATE__LH__3 : STATE__LH__2;
+            state__n = cpu_to_l1__rd_valid_next ? STATE__LH__3 : STATE__LH__2;
         end
 
         //==============================
@@ -1596,7 +1576,7 @@ always_comb begin
         begin
             addr = rd;
             we = 1'b1;
-            wr_data = cpu_to_mem__rd_data;
+            wr_data = cpu_to_l1__rd_data;
             pc__n = pc + 4;
             state__n = STATE__FETCH__0;
         end
@@ -1609,7 +1589,7 @@ always_comb begin
             addr = rs1;
             a__n = rd_data;
             b__n = imm;
-            state__n = STATE__LW__1;
+            state__n = (rd_data[1:0] + imm[1:0] != 2'h0) ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0 : STATE__LW__1;
         end
 
         //==============================
@@ -1618,10 +1598,10 @@ always_comb begin
         STATE__LW__1:
         begin
             func = FUNC__ADD;
-            cpu_to_mem__valid = 1'b1;
-            cpu_to_mem__addr = c;
-            cpu_to_mem__dtype = DTYPE__W;
-            state__n = STATE__LW__2;
+            cpu_to_l1__valid = 1'b1;
+            cpu_to_l1__addr = c;
+            cpu_to_l1__dtype = DTYPE__W;
+            state__n = cpu_to_l1__ready ? STATE__LW__2 : STATE__LW__1;
         end
 
         //==============================
@@ -1629,7 +1609,7 @@ always_comb begin
         //==============================
         STATE__LW__2:
         begin
-            state__n = cpu_to_mem__access_fault ? STATE__EXCEPTION__LOAD_ACCESS_FAULT__0 : cpu_to_mem__address_misaligned_fault ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0 : cpu_to_mem__done ? STATE__LW__3 : STATE__LW__2;
+            state__n = cpu_to_l1__rd_valid_next ? STATE__LW__3 : STATE__LW__2;
         end
 
         //==============================
@@ -1639,7 +1619,7 @@ always_comb begin
         begin
             addr = rd;
             we = 1'b1;
-            wr_data = cpu_to_mem__rd_data;
+            wr_data = cpu_to_l1__rd_data;
             pc__n = pc + 4;
             state__n = STATE__FETCH__0;
         end
@@ -1652,7 +1632,7 @@ always_comb begin
             addr = rs1;
             a__n = rd_data;
             b__n = imm;
-            state__n = STATE__LD__1;
+            state__n = (rd_data[2:0] + imm[2:0] != 3'h0) ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0 : STATE__LD__1;
         end
 
         //==============================
@@ -1661,10 +1641,10 @@ always_comb begin
         STATE__LD__1:
         begin
             func = FUNC__ADD;
-            cpu_to_mem__valid = 1'b1;
-            cpu_to_mem__addr = c;
-            cpu_to_mem__dtype = DTYPE__D;
-            state__n = STATE__LD__2;
+            cpu_to_l1__valid = 1'b1;
+            cpu_to_l1__addr = c;
+            cpu_to_l1__dtype = DTYPE__D;
+            state__n = cpu_to_l1__ready ? STATE__LD__2 : STATE__LD__1;
         end
 
         //==============================
@@ -1672,7 +1652,7 @@ always_comb begin
         //==============================
         STATE__LD__2:
         begin
-            state__n = cpu_to_mem__access_fault ? STATE__EXCEPTION__LOAD_ACCESS_FAULT__0 : cpu_to_mem__address_misaligned_fault ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0 : cpu_to_mem__done ? STATE__LD__3 : STATE__LD__2;
+            state__n = cpu_to_l1__rd_valid_next ? STATE__LD__3 : STATE__LD__2;
         end
 
         //==============================
@@ -1682,7 +1662,7 @@ always_comb begin
         begin
             addr = rd;
             we = 1'b1;
-            wr_data = cpu_to_mem__rd_data;
+            wr_data = cpu_to_l1__rd_data;
             pc__n = pc + 4;
             state__n = STATE__FETCH__0;
         end
@@ -1704,10 +1684,10 @@ always_comb begin
         STATE__LBU__1:
         begin
             func = FUNC__ADD;
-            cpu_to_mem__valid = 1'b1;
-            cpu_to_mem__addr = c;
-            cpu_to_mem__dtype = DTYPE__BU;
-            state__n = STATE__LBU__2;
+            cpu_to_l1__valid = 1'b1;
+            cpu_to_l1__addr = c;
+            cpu_to_l1__dtype = DTYPE__BU;
+            state__n = cpu_to_l1__ready ? STATE__LBU__2 : STATE__LBU__1;
         end
 
         //==============================
@@ -1715,7 +1695,7 @@ always_comb begin
         //==============================
         STATE__LBU__2:
         begin
-            state__n = cpu_to_mem__access_fault ? STATE__EXCEPTION__LOAD_ACCESS_FAULT__0 : cpu_to_mem__address_misaligned_fault ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0 : cpu_to_mem__done ? STATE__LBU__3 : STATE__LBU__2;
+            state__n = cpu_to_l1__rd_valid_next ? STATE__LBU__3 : STATE__LBU__2;
         end
 
         //==============================
@@ -1725,7 +1705,7 @@ always_comb begin
         begin
             addr = rd;
             we = 1'b1;
-            wr_data = cpu_to_mem__rd_data;
+            wr_data = cpu_to_l1__rd_data;
             pc__n = pc + 4;
             state__n = STATE__FETCH__0;
         end
@@ -1738,7 +1718,7 @@ always_comb begin
             addr = rs1;
             a__n = rd_data;
             b__n = imm;
-            state__n = STATE__LHU__1;
+            state__n = (rd_data[0] + imm[0] != 1'b0) ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0 : STATE__LHU__1;
         end
 
         //==============================
@@ -1747,10 +1727,10 @@ always_comb begin
         STATE__LHU__1:
         begin
             func = FUNC__ADD;
-            cpu_to_mem__valid = 1'b1;
-            cpu_to_mem__addr = c;
-            cpu_to_mem__dtype = DTYPE__HU;
-            state__n = STATE__LHU__2;
+            cpu_to_l1__valid = 1'b1;
+            cpu_to_l1__addr = c;
+            cpu_to_l1__dtype = DTYPE__HU;
+            state__n = cpu_to_l1__ready ? STATE__LHU__2 : STATE__LHU__1;
         end
 
         //==============================
@@ -1758,7 +1738,7 @@ always_comb begin
         //==============================
         STATE__LHU__2:
         begin
-            state__n = cpu_to_mem__access_fault ? STATE__EXCEPTION__LOAD_ACCESS_FAULT__0 : cpu_to_mem__address_misaligned_fault ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0 : cpu_to_mem__done ? STATE__LHU__3 : STATE__LHU__2;
+            state__n = cpu_to_l1__rd_valid_next ? STATE__LHU__3 : STATE__LHU__2;
         end
 
         //==============================
@@ -1768,7 +1748,7 @@ always_comb begin
         begin
             addr = rd;
             we = 1'b1;
-            wr_data = cpu_to_mem__rd_data;
+            wr_data = cpu_to_l1__rd_data;
             pc__n = pc + 4;
             state__n = STATE__FETCH__0;
         end
@@ -1781,7 +1761,7 @@ always_comb begin
             addr = rs1;
             a__n = rd_data;
             b__n = imm;
-            state__n = STATE__LWU__1;
+            state__n = (rd_data[1:0] + imm[1:0] != 2'h0) ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0 : STATE__LWU__1;
         end
 
         //==============================
@@ -1790,10 +1770,10 @@ always_comb begin
         STATE__LWU__1:
         begin
             func = FUNC__ADD;
-            cpu_to_mem__valid = 1'b1;
-            cpu_to_mem__addr = c;
-            cpu_to_mem__dtype = DTYPE__WU;
-            state__n = STATE__LWU__2;
+            cpu_to_l1__valid = 1'b1;
+            cpu_to_l1__addr = c;
+            cpu_to_l1__dtype = DTYPE__WU;
+            state__n = cpu_to_l1__ready ? STATE__LWU__2 : STATE__LWU__1;
         end
 
         //==============================
@@ -1801,7 +1781,7 @@ always_comb begin
         //==============================
         STATE__LWU__2:
         begin
-            state__n = cpu_to_mem__access_fault ? STATE__EXCEPTION__LOAD_ACCESS_FAULT__0 : cpu_to_mem__address_misaligned_fault ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0 : cpu_to_mem__done ? STATE__LWU__3 : STATE__LWU__2;
+            state__n = cpu_to_l1__rd_valid_next ? STATE__LWU__3 : STATE__LWU__2;
         end
 
         //==============================
@@ -1811,7 +1791,7 @@ always_comb begin
         begin
             addr = rd;
             we = 1'b1;
-            wr_data = cpu_to_mem__rd_data;
+            wr_data = cpu_to_l1__rd_data;
             pc__n = pc + 4;
             state__n = STATE__FETCH__0;
         end
@@ -1833,11 +1813,11 @@ always_comb begin
         STATE__SB__1:
         begin
             func = FUNC__ADD;
-            cpu_to_mem__valid = 1'b1;
-            cpu_to_mem__we = 1'b1;
-            cpu_to_mem__addr = c;
-            cpu_to_mem__dtype = DTYPE__B;
-            state__n = STATE__SB__2;
+            cpu_to_l1__valid = 1'b1;
+            cpu_to_l1__we = 1'b1;
+            cpu_to_l1__addr = c;
+            cpu_to_l1__dtype = DTYPE__B;
+            state__n = cpu_to_l1__ready ? STATE__SB__2 : STATE__SB__1;
         end
 
         //==============================
@@ -1845,17 +1825,8 @@ always_comb begin
         //==============================
         STATE__SB__2:
         begin
-            state__n = cpu_to_mem__access_fault ? STATE__EXCEPTION__STORE_ACCESS_FAULT__0 : cpu_to_mem__address_misaligned_fault ? STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__0 : cpu_to_mem__done ? STATE__SB__3 : STATE__SB__2;
-        end
-
-
-        //==============================
-        // STATE__SB__3
-        //==============================
-        STATE__SB__3:
-        begin
             addr = rs2;
-            cpu_to_mem__wr_data = rd_data;
+            cpu_to_l1__wr_data = rd_data;
             pc__n = pc + 4;
             state__n = STATE__FETCH__0;
         end
@@ -1869,6 +1840,7 @@ always_comb begin
             a__n = rd_data;
             b__n = imm;
             state__n = STATE__SH__1;
+            // state__n = (rd_data[0] + imm[0] != 1'b0) ? STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__0 : STATE__SH__1;
         end
 
         //==============================
@@ -1877,11 +1849,11 @@ always_comb begin
         STATE__SH__1:
         begin
             func = FUNC__ADD;
-            cpu_to_mem__valid = 1'b1;
-            cpu_to_mem__we = 1'b1;
-            cpu_to_mem__addr = c;
-            cpu_to_mem__dtype = DTYPE__H;
-            state__n = STATE__SH__2;
+            cpu_to_l1__valid = 1'b1;
+            cpu_to_l1__we = 1'b1;
+            cpu_to_l1__addr = c;
+            cpu_to_l1__dtype = DTYPE__H;
+            state__n = cpu_to_l1__ready ? STATE__SH__2 : STATE__SH__1;
         end
 
         //==============================
@@ -1889,16 +1861,8 @@ always_comb begin
         //==============================
         STATE__SH__2:
         begin
-            state__n = cpu_to_mem__access_fault ? STATE__EXCEPTION__STORE_ACCESS_FAULT__0 : cpu_to_mem__address_misaligned_fault ? STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__0 : cpu_to_mem__done ? STATE__SH__3 : STATE__SH__2;
-        end
-
-        //==============================
-        // STATE__SH__3
-        //==============================
-        STATE__SH__3:
-        begin
             addr = rs2;
-            cpu_to_mem__wr_data = rd_data;
+            cpu_to_l1__wr_data = rd_data;
             pc__n = pc + 4;
             state__n = STATE__FETCH__0;
         end
@@ -1912,6 +1876,7 @@ always_comb begin
             a__n = rd_data;
             b__n = imm;
             state__n = STATE__SW__1;
+            // state__n = (rd_data[1:0] + imm[1:0] != 2'h0) ? STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__0 : STATE__SW__1;
         end
 
         //==============================
@@ -1920,11 +1885,11 @@ always_comb begin
         STATE__SW__1:
         begin
             func = FUNC__ADD;
-            cpu_to_mem__valid = 1'b1;
-            cpu_to_mem__we = 1'b1;
-            cpu_to_mem__addr = c;
-            cpu_to_mem__dtype = DTYPE__W;
-            state__n = STATE__SW__2;
+            cpu_to_l1__valid = 1'b1;
+            cpu_to_l1__we = 1'b1;
+            cpu_to_l1__addr = c;
+            cpu_to_l1__dtype = DTYPE__W;
+            state__n = cpu_to_l1__ready ? STATE__SW__2 : STATE__SW__1;
         end
 
         //==============================
@@ -1932,16 +1897,8 @@ always_comb begin
         //==============================
         STATE__SW__2:
         begin
-            state__n = cpu_to_mem__access_fault ? STATE__EXCEPTION__STORE_ACCESS_FAULT__0 : cpu_to_mem__address_misaligned_fault ? STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__0 : cpu_to_mem__done ? STATE__SW__3 : STATE__SW__2;
-        end
-
-        //==============================
-        // STATE__SW__3
-        //==============================
-        STATE__SW__3:
-        begin
             addr = rs2;
-            cpu_to_mem__wr_data = rd_data;
+            cpu_to_l1__wr_data = rd_data;
             pc__n = pc + 4;
             state__n = STATE__FETCH__0;
         end
@@ -1955,6 +1912,7 @@ always_comb begin
             a__n = rd_data;
             b__n = imm;
             state__n = STATE__SD__1;
+            // state__n = (rd_data[2:0] + imm[2:0] != 3'h0) ? STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__0 : STATE__SD__1;
         end
 
         //==============================
@@ -1963,11 +1921,11 @@ always_comb begin
         STATE__SD__1:
         begin
             func = FUNC__ADD;
-            cpu_to_mem__valid = 1'b1;
-            cpu_to_mem__we = 1'b1;
-            cpu_to_mem__addr = c;
-            cpu_to_mem__dtype = DTYPE__D;
-            state__n =STATE__SD__2;
+            cpu_to_l1__valid = 1'b1;
+            cpu_to_l1__we = 1'b1;
+            cpu_to_l1__addr = c;
+            cpu_to_l1__dtype = DTYPE__D;
+            state__n = cpu_to_l1__ready ? STATE__SD__2 : STATE__SD__1;
         end
 
         //==============================
@@ -1975,17 +1933,8 @@ always_comb begin
         //==============================
         STATE__SD__2:
         begin
-            state__n = cpu_to_mem__access_fault ? STATE__EXCEPTION__STORE_ACCESS_FAULT__0 : cpu_to_mem__address_misaligned_fault ? STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__0 : cpu_to_mem__done ? STATE__SD__3 : STATE__SD__2;
-        end
-
-
-        //==============================
-        // STATE__SD__3
-        //==============================
-        STATE__SD__3:
-        begin
             addr = rs2;
-            cpu_to_mem__wr_data = rd_data;
+            cpu_to_l1__wr_data = rd_data;
             pc__n = pc + 4;
             state__n = STATE__FETCH__0;
         end
@@ -2726,32 +2675,6 @@ always_comb begin
         //==============================
         // STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__0
         //==============================
-        STATE__EXCEPTION__INSTRUCTION_ACCESS_FAULT__0:
-        begin
-            func = FUNC__ADD; 
-            csr__addr = CSR__MBADADDR;
-            csr__we = 1'b1;
-            csr__wr_data = csr__rd_data;
-            csr__wr_data[CSR__MBADADDR__MBADADDR__FIELD] = pc;
-            state__n = STATE__EXCEPTION__INSTRUCTION_ACCESS_FAULT__1;
-        end
-
-        //==============================
-        // STATE__EXCEPTION__INSTRUCTION_ACCESS_FAULT__1
-        //==============================
-        STATE__EXCEPTION__INSTRUCTION_ACCESS_FAULT__1:
-        begin
-            csr__addr = CSR__MCAUSE;
-            csr__we = 1'b1;
-            csr__wr_data = csr__rd_data;
-            csr__wr_data[CSR__MCAUSE__EXCEPTION_CODE__FIELD] = CSR__MCAUSE__EXCEPTION_CODE__INSTRUCTION_ACCESS_FAULT;
-            csr__wr_data[CSR__MCAUSE__INTERRUPT__FIELD] = CSR__MCAUSE__INTERRUPT__NOT_INTERRUPT;
-            state__n = STATE__TRAP__0;
-        end
-
-        //==============================
-        // STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__0
-        //==============================
         STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__0:
         begin
             func = FUNC__ADD; 
@@ -2789,32 +2712,6 @@ always_comb begin
         end
 
         //==============================
-        // STATE__EXCEPTION__LOAD_ACCESS_FAULT__0
-        //==============================
-        STATE__EXCEPTION__LOAD_ACCESS_FAULT__0:
-        begin
-            func = FUNC__ADD; 
-            csr__addr = CSR__MBADADDR;
-            csr__we = 1'b1;
-            csr__wr_data = csr__rd_data;
-            csr__wr_data[CSR__MBADADDR__MBADADDR__FIELD] = c;
-            state__n = STATE__EXCEPTION__LOAD_ACCESS_FAULT__1;
-        end
-
-        //==============================
-        // STATE__EXCEPTION__LOAD_ACCESS_FAULT__1
-        //==============================
-        STATE__EXCEPTION__LOAD_ACCESS_FAULT__1:
-        begin
-            csr__addr = CSR__MCAUSE;
-            csr__we = 1'b1;
-            csr__wr_data = csr__rd_data;
-            csr__wr_data[CSR__MCAUSE__EXCEPTION_CODE__FIELD] = CSR__MCAUSE__EXCEPTION_CODE__LOAD_ACCESS_FAULT;
-            csr__wr_data[CSR__MCAUSE__INTERRUPT__FIELD] = CSR__MCAUSE__INTERRUPT__NOT_INTERRUPT;
-            state__n = STATE__TRAP__0;
-        end
-
-        //==============================
         // STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0
         //==============================
         STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0:
@@ -2836,32 +2733,6 @@ always_comb begin
             csr__we = 1'b1;
             csr__wr_data = csr__rd_data;
             csr__wr_data[CSR__MCAUSE__EXCEPTION_CODE__FIELD] = CSR__MCAUSE__EXCEPTION_CODE__LOAD_ADDRESS_MISALIGNED;
-            csr__wr_data[CSR__MCAUSE__INTERRUPT__FIELD] = CSR__MCAUSE__INTERRUPT__NOT_INTERRUPT;
-            state__n = STATE__TRAP__0;
-        end
-
-        //==============================
-        // STATE__EXCEPTION__STORE_ACCESS_FAULT__0
-        //==============================
-        STATE__EXCEPTION__STORE_ACCESS_FAULT__0:
-        begin
-            func = FUNC__ADD; 
-            csr__addr = CSR__MBADADDR;
-            csr__we = 1'b1;
-            csr__wr_data = csr__rd_data;
-            csr__wr_data[CSR__MBADADDR__MBADADDR__FIELD] = c;
-            state__n = STATE__EXCEPTION__STORE_ACCESS_FAULT__1;
-        end
-
-        //==============================
-        // STATE__EXCEPTION__STORE_ACCESS_FAULT__1
-        //==============================
-        STATE__EXCEPTION__STORE_ACCESS_FAULT__1:
-        begin
-            csr__addr = CSR__MCAUSE;
-            csr__we = 1'b1;
-            csr__wr_data = csr__rd_data;
-            csr__wr_data[CSR__MCAUSE__EXCEPTION_CODE__FIELD] = CSR__MCAUSE__EXCEPTION_CODE__STORE_ACCESS_FAULT;
             csr__wr_data[CSR__MCAUSE__INTERRUPT__FIELD] = CSR__MCAUSE__INTERRUPT__NOT_INTERRUPT;
             state__n = STATE__TRAP__0;
         end

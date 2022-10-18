@@ -6,10 +6,16 @@ module control_and_status_registers
     input clk,
     input rst,
     input we,
-    input [11:0] addr,
-    output logic [63:0] rd_data,
-    input [63:0] wr_data
+    input addr,
+    output rd_data,
+    input wr_data
 );
+
+logic we;
+logic [11:0] addr;
+logic [63:0] rd_data;
+logic [63:0] wr_data;
+
 
 always_comb begin
     rd_data = misa;
