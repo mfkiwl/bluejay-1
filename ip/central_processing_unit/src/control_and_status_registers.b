@@ -6,27 +6,27 @@ module control_and_status_registers
     input clk,
     input rst,
     input we,
-    input addr,
-    output rd_data,
-    input wr_data
+    input [11:0] addr,
+    output logic [63:0] rd_data,
+    input [63:0] wr_data
 );
 
-logic we;
-logic [11:0] addr;
-logic [63:0] rd_data;
-logic [63:0] wr_data;
+//logic we;
+//logic [11:0] addr;
+//logic [63:0] rd_data;
+//logic [63:0] wr_data;
 
 
 always_comb begin
     rd_data = misa;
     misa__we = 1'b0;
     mvendorid__we = 1'b0;
-    marchid__we 1'b0;
+    marchid__we = 1'b0;
     mimpid__we = 1'b0;
     mhartid__we = 1'b0;
     mstatus__we = 1'b0;
     mtvec__we = 1'b0;
-    mdedelg__we = 1'b0;
+    medeleg__we = 1'b0;
     mideleg__we = 1'b0;
     mip__we = 1'b0;
     mie__we = 1'b0;
@@ -78,7 +78,7 @@ always_comb begin
         CSR__MEDELEG:
         begin
             rd_data = medeleg;
-            mdedelg__we = we;
+            medeleg__we = we;
         end
         CSR__MIDELEG:
         begin
@@ -110,7 +110,7 @@ always_comb begin
             rd_data = mhpmcounter3;
             mhpmcounter3__we = we;
         end
-        CSR__MHPWEVENT3:
+        CSR__MHPMEVENT3:
         begin
             rd_data = mhpmevent3;
             mhpmevent3__we = we;

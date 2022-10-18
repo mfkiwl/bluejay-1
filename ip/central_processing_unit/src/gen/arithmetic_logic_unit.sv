@@ -11,6 +11,10 @@ module arithmetic_logic_unit
     output logic [63:0] c
 );
 
+//logic [4:0] func;
+//logic [63:0] a;
+//logic [63:0] b;
+//logic [63:0] c;
 logic [63:0] x;
 
 // Mathmatical/logical operations.

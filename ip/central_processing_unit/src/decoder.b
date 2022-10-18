@@ -27,7 +27,7 @@ assign rs2 = ir[24:20];
 assign rd = ir[11:7];
 assign funct3 = ir[14:12];
 assign funct7 = ir[31:25];
-assign funct7 = ir[31:20];
+assign funct12 = ir[31:20];
 assign uimm = {{59{1'b0}}, ir[19:15]};
 
 // Generate immediate.
@@ -399,7 +399,7 @@ always_comb begin
                         begin
                             op = OP__WFI;
                         end
-                        12'h302
+                        12'h302:
                         begin
                             op = OP__MRET;
                         end

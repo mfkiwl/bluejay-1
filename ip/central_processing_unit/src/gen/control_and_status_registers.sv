@@ -11,28 +11,59 @@ module control_and_status_registers
     input [63:0] wr_data
 );
 
+//logic we;
+//logic [11:0] addr;
+//logic [63:0] rd_data;
+//logic [63:0] wr_data;
 
 
 always_comb begin
+    rd_data = misa;
+    misa__we = 1'b0;
+    mvendorid__we = 1'b0;
+    marchid__we = 1'b0;
+    mimpid__we = 1'b0;
+    mhartid__we = 1'b0;
     mstatus__we = 1'b0;
+    mtvec__we = 1'b0;
+    medeleg__we = 1'b0;
+    mideleg__we = 1'b0;
+    mip__we = 1'b0;
     mie__we = 1'b0;
+    mcycle__we = 1'b0;
+    minstret__we = 1'b0;
+    mhpmcounter3__we = 1'b0;
+    mhpmevent3__we = 1'b0;
+    mscratch__we = 1'b0;
+    mepc__we = 1'b0;
+    mcause__we = 1'b0;
+    mbadaddr__we = 1'b0;
 
     case (addr)
         12'h301:
         begin
             rd_data = misa;
+            misa__we = we;
         end
         12'hf11:
         begin
             rd_data = mvendorid;
+            mvendorid__we = we;
+        end
+        12'hf12:
+        begin
+            rd_data = marchid;
+            marchid__we = we;
         end
         12'hf13:
         begin
             rd_data = mimpid;
+            mimpid__we = we;
         end
         12'hf14:
         begin
             rd_data = mhartid;
+            mhartid__we = we;
         end
         12'h300:
         begin
@@ -42,33 +73,77 @@ always_comb begin
         12'h305:
         begin
             rd_data = mtvec;
+            mtvec__we = we;
         end
         12'h302:
         begin
             rd_data = medeleg;
+            medeleg__we = we;
         end
         12'h303:
         begin
             rd_data = mideleg;
+            mideleg__we = we;
         end
         12'h344:
         begin
             rd_data = mip;
+            mip__we = we;
         end
         12'h304:
         begin
             rd_data = mie;
             mie__we = we;
         end
+        12'hb00:
+        begin
+            rd_data = mcycle;
+            mcycle__we = we;
+        end
+        12'hb02:
+        begin
+            rd_data = minstret;
+            minstret__we = we;
+        end
+        12'hb03:
+        begin
+            rd_data = mhpmcounter3;
+            mhpmcounter3__we = we;
+        end
+        12'h323:
+        begin
+            rd_data = mhpmevent3;
+            mhpmevent3__we = we;
+        end
+        12'h340:
+        begin
+            rd_data = mscratch; 
+            mscratch__we = we;
+        end
+        12'h341:
+        begin
+            rd_data = mepc;
+            mepc__we = we;
+        end
+        12'h342:
+        begin
+            rd_data = mcause;
+            mcause__we = we;
+        end
+        12'h343:
+        begin
+            rd_data = mbadaddr;
+            mbadaddr__we = we;
+        end
     endcase
 end
-
 
 
 //==============================================
 // Machine ISA Register (misa)
 //==============================================
 logic [63:0] misa;
+logic misa__we;
 
 assign misa[25:0] = 26'h0_00_01_00;
 assign misa[61:26] = 36'h0;
@@ -79,14 +154,26 @@ assign misa[63:62] = 2'h2;
 // Machine Vendor ID Register (mvendorid)
 //==============================================
 logic [63:0] mvendorid;
+logic mvendorid__we;
 
 assign mvendorid[63:0] = 64'h0;
+
+
+//==============================================
+// Machine Architecture ID Register (marchid)
+//==============================================
+logic [63:0] marchid;
+logic marchid__we;
+
+assign marchid[63:0] = 64'h0;
+
 
 
 //==============================================
 // Machine Implementation ID Register (mimpid)
 //==============================================
 logic [63:0] mimpid;
+logic mimpid__we;
 
 assign mimpid[63:0] = 64'h0;
 
@@ -95,6 +182,7 @@ assign mimpid[63:0] = 64'h0;
 // Hart ID Register (mhartid) 
 //==============================================
 logic [63:0] mhartid;
+logic mhartid__we;
 
 assign mhartid[63:0] = 64'h0;
 
@@ -123,7 +211,7 @@ assign mstatus[63] = 1'b0;
 always_ff @(posedge clk) begin
     if (rst) begin
         mstatus[3] <= 1'b0;
-        mstatus[7] <= 1'b0;
+        mstatus[7] <= 1'b1;
         mstatus[23:20] <= 4'h0;
         mstatus[62:29] <= 33'h0;
     end
@@ -137,10 +225,12 @@ always_ff @(posedge clk) begin
     end
 end
 
+
 //============================================== 
 // Machine Trap-Vector Base-Address Register (mtvec)
 //==============================================
 logic [63:0] mtvec;
+logic mtvec__we;
 
 assign mtvec[1:0] = 2'h0;
 assign mtvec[63:2] = 62'h0;
@@ -150,6 +240,7 @@ assign mtvec[63:2] = 62'h0;
 // Machine Exception Delegation Register (medeleg) 
 //==============================================
 logic [63:0] medeleg;
+logic medeleg__we;
 
 assign medeleg[63:0] = 64'h0;
 
@@ -157,6 +248,7 @@ assign medeleg[63:0] = 64'h0;
 // Machine Interrupt Delegation Register (mideleg) 
 //==============================================
 logic [63:0] mideleg;
+logic mideleg__we;
 
 assign mideleg[63:0] = 64'h0;
 
@@ -165,6 +257,7 @@ assign mideleg[63:0] = 64'h0;
 // Machine Interrupt-Pending Register (mip) 
 //==============================================
 logic [63:0] mip;
+logic mip__we;
 
 assign mip[0] = 1'b0;
 assign mip[1] = 1'b0;
@@ -217,92 +310,134 @@ always_ff @(posedge clk) begin
     end
 end
 
+//============================================== 
+// Machine Cycle Register (mcycle) 
+//==============================================
+logic [63:0] mcycle;
+logic mcycle__we;
+
+always_ff @(posedge clk) begin
+    if (rst) begin
+        mcycle[63:0] <= 64'h0;
+    end
+    else begin
+        if (mcycle__we) begin
+            mcycle[63:0] <= wr_data[63:0];
+        end
+        else begin
+            mcycle[63:0] <= mcycle[63:0] + 1;
+        end
+    end
+end
+
+//============================================== 
+// Machine Instruction Retire Register (minstret) 
+//==============================================
+logic [63:0] minstret;
+logic minstret__we;
+
+always_ff @(posedge clk) begin
+    if (rst) begin
+        minstret[63:0] <= 64'h0;
+    end
+    else begin
+        if (minstret__we) begin
+            minstret[63:0] <= wr_data[63:0];
+        end
+    end
+end
 
 
-//logic [63:0] mcause;
-//logic [63:0] mepc;
-//
-//
-//
-//// mcause
-//always_ff @(posedge clk) begin
-//    mcause[62:0] <= mcause__n[62:0];
-//    mcause[63] <= mcause__n[63];
-//end
-//
-//// mepc
-//always_ff @(posedge clk) begin
-//    mepc[63:0] <= mepc__n[63:0];
-//end
-//
+//============================================== 
+// Machine Hardware Performance Monitor Counter 3 (mhpmcounter3)
+//==============================================
+logic [63:0] mhpmcounter3;
+logic mhpmcounter3__we;
+
+assign mhpmcounter3[63:0] = 64'h0;
 
 
+//============================================== 
+// Machine Hardware Performance Monitor Event 3 (mhpmevent3)
+//==============================================
+logic [63:0] mhpmevent3;
+logic mhpmevent3__we;
+
+assign mhpmevent3[63:0] = 64'h0;
 
 
+//============================================== 
+// Machine Scratch Register (mscratch) 
+//==============================================
+logic [63:0] mscratch;
+logic mscratch__we;
+
+always_ff @(posedge clk) begin
+    if (rst) begin
+        mscratch[63:0] <= 64'h0;
+    end
+    else begin
+        if (mscratch__we) begin
+            mscratch[63:0] <= wr_data[63:0];
+        end
+    end
+end
 
 
+//============================================== 
+// Machine Exception Program Counter (mepc) 
+//==============================================
+logic [63:0] mepc;
+logic mepc__we;
 
-// marchid
-//assign marchid[63:0] = 64'h0;
+always_ff @(posedge clk) begin
+    if (rst) begin
+        mepc[63:0] <= 64'h0;
+    end
+    else begin
+        if (mepc__we) begin
+            mepc[63:0] <= wr_data[63:0];
+        end
+    end
+end
 
 
-// medeleg
+//============================================== 
+// Machine Cause Register (mcause) 
+//==============================================
+logic [63:0] mcause;
+logic mcause__we;
 
-// mideleg
+always_ff @(posedge clk) begin
+    if (rst) begin
+        mcause[62:0] <= 63'h0;
+        mcause[63] <= 1'b0;
+    end
+    else begin
+        if (mcause__we) begin
+            mcause[62:0] <= wr_data[62:0];
+            mcause[63] <= wr_data[63];
+        end
+    end
+end
 
 
-//// mtime (EDIT: Memory Mapped?)
-//always_ff @(posedge clk) begin
-//    if (rst) begin
-//        mtime[63:0] <= 64'h0;
-//    end
-//end
-//
-//// mtimecmp (EDIT: Memory Mapped?)
-//always_ff @(posedge clk) begin
-//    if (rst) begin
-//        mtimecmp[63:0] <= 64'h0;
-//    end
-//end
-//
-//// mcycle
-//always_ff @(posedge clk) begin
-//    if (rst) begin
-//        mcycle[63:0] <= 64'h0;
-//    end
-//    else begin
-//        mcycle[63:0] <= 64'h0;
-//    end
-//end
-//
-//
-//// minstret
-//always_ff @(posedge clk) begin
-//    if (rst) begin
-//        minstret[CSR__MINSTRET__MINSTRET__FIELD] <= CSR__MCYCLE__MINSTRET__RESET_VALUE;
-//    end
-//    else begin
-//        if (we) begin
-//            case (op)
-//                CSR_OP__WRITE:
-//                begin
-//                    minstret[CSR__MINSTRET__MINSTRET__FIELD] <= wr_data;
-//                end
-//                CSR_OP__SET:
-//                begin
-//                    minstret[CSR__MINSTRET__MINSTRET__FIELD] <= minstret[CSR__MINSTRET__MINSTRET__FIELD] | wr_data;
-//                end
-//                CSR_OP__CLEAR:
-//                begin
-//                    minstret[CSR__MINSTRET__MINSTRET__FIELD] <= minstret[CSR__MINSTRET__MINSTRET__FIELD] & ~wr_data;
-//                end
-//            endcase
-//        end
-//        else if (instret) begin
-//            minstret[CSR__MINSTRET__MINSTRET__FIELD] <= minstret[CSR__MINSTRET__MINSTRET__FIELD] + 1;
-//        end
-//    end
-//end
+//============================================== 
+// Machine Bad Address Register (mbadaddr) 
+//==============================================
+logic [63:0] mbadaddr;
+logic mbadaddr__we;
+
+always_ff @(posedge clk) begin
+    if (rst) begin
+        mbadaddr[63:0] <= 64'h0;
+    end
+    else begin
+        if (mbadaddr__we) begin
+            mbadaddr[63:0] <= wr_data[63:0];
+        end
+    end
+end
 
 
 endmodule

@@ -5,14 +5,15 @@ module central_processing_unit
 (
     input clk,
     input rst,
-    output logic cpu_to_l1__valid,
-    input cpu_to_l1__ready,
-    output logic cpu_to_l1__we,
-    output logic [63:0] cpu_to_l1__addr,
-    output logic [2:0] cpu_to_l1__dtype,
-    output logic [63:0] cpu_to_l1__wr_data,
-    input cpu_to_l1__rd_valid_next,
-    input [63:0] cpu_to_l1__rd_data
+    output logic cpu_to_mem__valid,
+    output logic cpu_to_mem__we,
+    output logic [63:0] cpu_to_mem__addr,
+    output logic [2:0] cpu_to_mem__dtype,
+    output logic [63:0] cpu_to_mem__wr_data,
+    input cpu_to_mem__done,
+    input [63:0] cpu_to_mem__rd_data,
+    input cpu_to_mem__access_fault,
+    input cpu_to_mem__address_misaligned_fault
 );
 
 
@@ -30,13 +31,13 @@ logic [4:0] rd;
 logic [63:0] imm;
 logic [63:0] uimm;
 
-// Register File.
+// Register File
 logic we;
 logic [4:0] addr;
 logic [63:0] rd_data;
 logic [63:0] wr_data;
 
-// ALU.
+// ALU
 logic [4:0] func;
 logic [63:0] a;
 logic [63:0] a__n;
@@ -44,7 +45,7 @@ logic [63:0] b;
 logic [63:0] b__n;
 logic [63:0] c;
 
-// Comparator.
+// Comparator
 logic eq;
 logic ne;
 logic lt;
@@ -57,6 +58,18 @@ logic csr__we;
 logic [11:0] csr__addr;
 logic [63:0] csr__wr_data;
 logic [63:0] csr__rd_data;
+
+// Memory Interface
+//logic cpu_to_mem__valid;
+//logic cpu_to_mem__ready;
+//logic cpu_to_mem__we;
+//logic [63:0] cpu_to_mem__addr;
+//logic [2:0] cpu_to_mem__dtype;
+//logic [63:0] cpu_to_mem__wr_data;
+//logic cpu_to_mem__done;
+//logic [63:0] cpu_to_mem__rd_data;
+//logic cpu_to_mem__access_fault;
+//logic cpu_to_mem__address_misaligned_fault;
 
 // FSM
 logic [7:0] state;
@@ -178,155 +191,176 @@ localparam STATE__LWU__3 = 8'h21;
 localparam STATE__SB__0 = 8'h22;
 localparam STATE__SB__1 = 8'h23;
 localparam STATE__SB__2 = 8'h24;
-localparam STATE__SH__0 = 8'h25;
-localparam STATE__SH__1 = 8'h26;
-localparam STATE__SH__2 = 8'h27;
-localparam STATE__SW__0 = 8'h28;
-localparam STATE__SW__1 = 8'h29;
-localparam STATE__SW__2 = 8'h2a;
-localparam STATE__SD__0 = 8'h2b;
-localparam STATE__SD__1 = 8'h2c;
-localparam STATE__SD__2 = 8'h2d;
-localparam STATE__ADD__0 = 8'h2e;
-localparam STATE__ADD__1 = 8'h2f;
-localparam STATE__ADD__2 = 8'h30;
-localparam STATE__SUB__0 = 8'h31;
-localparam STATE__SUB__1 = 8'h32;
-localparam STATE__SUB__2 = 8'h33;
-localparam STATE__SLL__0 = 8'h34;
-localparam STATE__SLL__1 = 8'h35;
-localparam STATE__SLL__2 = 8'h36;
-localparam STATE__SLT__0 = 8'h37;
-localparam STATE__SLT__1 = 8'h38;
-localparam STATE__SLT__2 = 8'h39;
-localparam STATE__SLTU__0 = 8'h3a;
-localparam STATE__SLTU__1 = 8'h3b;
-localparam STATE__SLTU__2 = 8'h3c;
-localparam STATE__XOR__0 = 8'h3d;
-localparam STATE__XOR__1 = 8'h3e;
-localparam STATE__XOR__2 = 8'h3f;
-localparam STATE__SRL__0 = 8'h40;
-localparam STATE__SRL__1 = 8'h41;
-localparam STATE__SRL__2 = 8'h42;
-localparam STATE__SRA__0 = 8'h43;
-localparam STATE__SRA__1 = 8'h44;
-localparam STATE__SRA__2 = 8'h45;
-localparam STATE__OR__0 = 8'h46;
-localparam STATE__OR__1 = 8'h47;
-localparam STATE__OR__2 = 8'h48;
-localparam STATE__AND__0 = 8'h49;
-localparam STATE__AND__1 = 8'h4a;
-localparam STATE__AND__2 = 8'h4b;
-localparam STATE__LUI = 8'h4c;
-localparam STATE__ADDW__0 = 8'h4d;
-localparam STATE__ADDW__1 = 8'h4e;
-localparam STATE__ADDW__2 = 8'h4f;
-localparam STATE__SUBW__0 = 8'h50;
-localparam STATE__SUBW__1 = 8'h51;
-localparam STATE__SUBW__2 = 8'h52;
-localparam STATE__SLLW__0 = 8'h53;
-localparam STATE__SLLW__1 = 8'h54;
-localparam STATE__SLLW__2 = 8'h55;
-localparam STATE__SRLW__0 = 8'h56;
-localparam STATE__SRLW__1 = 8'h57;
-localparam STATE__SRLW__2 = 8'h58;
-localparam STATE__SRAW__0 = 8'h59;
-localparam STATE__SRAW__1 = 8'h5a;
-localparam STATE__SRAW__2 = 8'h5b;
-localparam STATE__ADDI__0 = 8'h5c;
-localparam STATE__ADDI__1 = 8'h5d;
-localparam STATE__SLLI__0 = 8'h5e;
-localparam STATE__SLLI__1 = 8'h5f;
-localparam STATE__SLTI__0 = 8'h60;
-localparam STATE__SLTI__1 = 8'h61;
-localparam STATE__SLTIU__0 = 8'h62;
-localparam STATE__SLTIU__1 = 8'h63;
-localparam STATE__XORI__0 = 8'h64;
-localparam STATE__XORI__1 = 8'h65;
-localparam STATE__SRLI__0 = 8'h66;
-localparam STATE__SRLI__1 = 8'h67;
-localparam STATE__SRAI__0 = 8'h68;
-localparam STATE__SRAI__1 = 8'h69;
-localparam STATE__ORI__0 = 8'h6a;
-localparam STATE__ORI__1 = 8'h6b;
-localparam STATE__ANDI__0 = 8'h6c;
-localparam STATE__ANDI__1 = 8'h6d;
-localparam STATE__ADDIW__0 = 8'h6e;
-localparam STATE__ADDIW__1 = 8'h6f;
-localparam STATE__SLLIW__0 = 8'h70;
-localparam STATE__SLLIW__1 = 8'h71;
-localparam STATE__SRLIW__0 = 8'h72;
-localparam STATE__SRLIW__1 = 8'h73;
-localparam STATE__SRAIW__0 = 8'h74;
-localparam STATE__SRAIW__1 = 8'h75;
-localparam STATE__AUIPC__0 = 8'h76;
-localparam STATE__AUIPC__1 = 8'h77;
-localparam STATE__JALR__0 = 8'h78;
-localparam STATE__JALR__1 = 8'h79;
-localparam STATE__JAL__0 = 8'h7a;
-localparam STATE__JAL__1 = 8'h7b;
-localparam STATE__BEQ__0 = 8'h7c;
-localparam STATE__BEQ__1 = 8'h7d;
-localparam STATE__BEQ__2 = 8'h7e;
-localparam STATE__BEQ__3 = 8'h7f;
-localparam STATE__BEQ__4 = 8'h80;
-localparam STATE__BEQ__5 = 8'h81;
-localparam STATE__BNE__0 = 8'h82;
-localparam STATE__BNE__1 = 8'h83;
-localparam STATE__BNE__2 = 8'h84;
-localparam STATE__BNE__3 = 8'h85;
-localparam STATE__BNE__4 = 8'h86;
-localparam STATE__BNE__5 = 8'h87;
-localparam STATE__BLT__0 = 8'h88;
-localparam STATE__BLT__1 = 8'h89;
-localparam STATE__BLT__2 = 8'h8a;
-localparam STATE__BLT__3 = 8'h8b;
-localparam STATE__BLT__4 = 8'h8c;
-localparam STATE__BLT__5 = 8'h8d;
-localparam STATE__BGE__0 = 8'h8e;
-localparam STATE__BGE__1 = 8'h8f;
-localparam STATE__BGE__2 = 8'h90;
-localparam STATE__BGE__3 = 8'h91;
-localparam STATE__BGE__4 = 8'h92;
-localparam STATE__BGE__5 = 8'h93;
-localparam STATE__BLTU__0 = 8'h94;
-localparam STATE__BLTU__1 = 8'h95;
-localparam STATE__BLTU__2 = 8'h96;
-localparam STATE__BLTU__3 = 8'h97;
-localparam STATE__BLTU__4 = 8'h98;
-localparam STATE__BLTU__5 = 8'h99;
-localparam STATE__BGEU__0 = 8'h9a;
-localparam STATE__BGEU__1 = 8'h9b;
-localparam STATE__BGEU__2 = 8'h9c;
-localparam STATE__BGEU__3 = 8'h9d;
-localparam STATE__BGEU__4 = 8'h9e;
-localparam STATE__BGEU__5 = 8'h9f;
-localparam STATE__ECALL = 8'ha0;
-localparam STATE__EBREAK = 8'ha1;
-localparam STATE__FENCE = 8'ha2;
-localparam STATE__FENCE_I = 8'ha3;
-localparam STATE__CSRRW__0 = 8'ha4;
-localparam STATE__CSRRW__1 = 8'ha5;
-localparam STATE__CSRRW__2 = 8'ha6;
-localparam STATE__CSRRS__0 = 8'ha7;
-localparam STATE__CSRRS__1 = 8'ha8;
-localparam STATE__CSRRS__2 = 8'ha9;
-localparam STATE__CSRRC__0 = 8'haa;
-localparam STATE__CSRRC__1 = 8'hab;
-localparam STATE__CSRRC__2 = 8'hac;
-localparam STATE__CSRRWI__0 = 8'had;
-localparam STATE__CSRRWI__1 = 8'hae;
-localparam STATE__CSRRWI__2 = 8'haf;
-localparam STATE__CSRRSI__0 = 8'hb0;
-localparam STATE__CSRRSI__1 = 8'hb1;
-localparam STATE__CSRRSI__2 = 8'hb2;
-localparam STATE__CSRRCI__0 = 8'hb3;
-localparam STATE__CSRRCI__1 = 8'hb4;
-localparam STATE__CSRRCI__2 = 8'hb5;
-localparam STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED = 8'hb6;
-localparam STATE__EXCEPTION__ILLEGAL_INSTRUCTION = 8'hb7;
-localparam STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED = 8'hb8;
-localparam STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED = 8'hb9;
+localparam STATE__SB__3 = 8'h25;
+localparam STATE__SH__0 = 8'h26;
+localparam STATE__SH__1 = 8'h27;
+localparam STATE__SH__2 = 8'h28;
+localparam STATE__SH__3 = 8'h29;
+localparam STATE__SW__0 = 8'h2a;
+localparam STATE__SW__1 = 8'h2b;
+localparam STATE__SW__2 = 8'h2c;
+localparam STATE__SW__3 = 8'h2d;
+localparam STATE__SD__0 = 8'h2e;
+localparam STATE__SD__1 = 8'h2f;
+localparam STATE__SD__2 = 8'h30;
+localparam STATE__SD__3 = 8'h31;
+localparam STATE__ADD__0 = 8'h32;
+localparam STATE__ADD__1 = 8'h33;
+localparam STATE__ADD__2 = 8'h34;
+localparam STATE__SUB__0 = 8'h35;
+localparam STATE__SUB__1 = 8'h36;
+localparam STATE__SUB__2 = 8'h37;
+localparam STATE__SLL__0 = 8'h38;
+localparam STATE__SLL__1 = 8'h39;
+localparam STATE__SLL__2 = 8'h3a;
+localparam STATE__SLT__0 = 8'h3b;
+localparam STATE__SLT__1 = 8'h3c;
+localparam STATE__SLT__2 = 8'h3d;
+localparam STATE__SLTU__0 = 8'h3e;
+localparam STATE__SLTU__1 = 8'h3f;
+localparam STATE__SLTU__2 = 8'h40;
+localparam STATE__XOR__0 = 8'h41;
+localparam STATE__XOR__1 = 8'h42;
+localparam STATE__XOR__2 = 8'h43;
+localparam STATE__SRL__0 = 8'h44;
+localparam STATE__SRL__1 = 8'h45;
+localparam STATE__SRL__2 = 8'h46;
+localparam STATE__SRA__0 = 8'h47;
+localparam STATE__SRA__1 = 8'h48;
+localparam STATE__SRA__2 = 8'h49;
+localparam STATE__OR__0 = 8'h4a;
+localparam STATE__OR__1 = 8'h4b;
+localparam STATE__OR__2 = 8'h4c;
+localparam STATE__AND__0 = 8'h4d;
+localparam STATE__AND__1 = 8'h4e;
+localparam STATE__AND__2 = 8'h4f;
+localparam STATE__LUI = 8'h50;
+localparam STATE__ADDW__0 = 8'h51;
+localparam STATE__ADDW__1 = 8'h52;
+localparam STATE__ADDW__2 = 8'h53;
+localparam STATE__SUBW__0 = 8'h54;
+localparam STATE__SUBW__1 = 8'h55;
+localparam STATE__SUBW__2 = 8'h56;
+localparam STATE__SLLW__0 = 8'h57;
+localparam STATE__SLLW__1 = 8'h58;
+localparam STATE__SLLW__2 = 8'h59;
+localparam STATE__SRLW__0 = 8'h5a;
+localparam STATE__SRLW__1 = 8'h5b;
+localparam STATE__SRLW__2 = 8'h5c;
+localparam STATE__SRAW__0 = 8'h5d;
+localparam STATE__SRAW__1 = 8'h5e;
+localparam STATE__SRAW__2 = 8'h5f;
+localparam STATE__ADDI__0 = 8'h60;
+localparam STATE__ADDI__1 = 8'h61;
+localparam STATE__SLLI__0 = 8'h62;
+localparam STATE__SLLI__1 = 8'h63;
+localparam STATE__SLTI__0 = 8'h64;
+localparam STATE__SLTI__1 = 8'h65;
+localparam STATE__SLTIU__0 = 8'h66;
+localparam STATE__SLTIU__1 = 8'h67;
+localparam STATE__XORI__0 = 8'h68;
+localparam STATE__XORI__1 = 8'h69;
+localparam STATE__SRLI__0 = 8'h6a;
+localparam STATE__SRLI__1 = 8'h6b;
+localparam STATE__SRAI__0 = 8'h6c;
+localparam STATE__SRAI__1 = 8'h6d;
+localparam STATE__ORI__0 = 8'h6e;
+localparam STATE__ORI__1 = 8'h6f;
+localparam STATE__ANDI__0 = 8'h70;
+localparam STATE__ANDI__1 = 8'h71;
+localparam STATE__ADDIW__0 = 8'h72;
+localparam STATE__ADDIW__1 = 8'h73;
+localparam STATE__SLLIW__0 = 8'h74;
+localparam STATE__SLLIW__1 = 8'h75;
+localparam STATE__SRLIW__0 = 8'h76;
+localparam STATE__SRLIW__1 = 8'h77;
+localparam STATE__SRAIW__0 = 8'h78;
+localparam STATE__SRAIW__1 = 8'h79;
+localparam STATE__AUIPC__0 = 8'h7a;
+localparam STATE__AUIPC__1 = 8'h7b;
+localparam STATE__JALR__0 = 8'h7c;
+localparam STATE__JALR__1 = 8'h7d;
+localparam STATE__JAL__0 = 8'h7e;
+localparam STATE__JAL__1 = 8'h7f;
+localparam STATE__BEQ__0 = 8'h80;
+localparam STATE__BEQ__1 = 8'h81;
+localparam STATE__BEQ__2 = 8'h82;
+localparam STATE__BEQ__3 = 8'h83;
+localparam STATE__BEQ__4 = 8'h84;
+localparam STATE__BEQ__5 = 8'h85;
+localparam STATE__BNE__0 = 8'h86;
+localparam STATE__BNE__1 = 8'h87;
+localparam STATE__BNE__2 = 8'h88;
+localparam STATE__BNE__3 = 8'h89;
+localparam STATE__BNE__4 = 8'h8a;
+localparam STATE__BNE__5 = 8'h8b;
+localparam STATE__BLT__0 = 8'h8c;
+localparam STATE__BLT__1 = 8'h8d;
+localparam STATE__BLT__2 = 8'h8e;
+localparam STATE__BLT__3 = 8'h8f;
+localparam STATE__BLT__4 = 8'h90;
+localparam STATE__BLT__5 = 8'h91;
+localparam STATE__BGE__0 = 8'h92;
+localparam STATE__BGE__1 = 8'h93;
+localparam STATE__BGE__2 = 8'h94;
+localparam STATE__BGE__3 = 8'h95;
+localparam STATE__BGE__4 = 8'h96;
+localparam STATE__BGE__5 = 8'h97;
+localparam STATE__BLTU__0 = 8'h98;
+localparam STATE__BLTU__1 = 8'h99;
+localparam STATE__BLTU__2 = 8'h9a;
+localparam STATE__BLTU__3 = 8'h9b;
+localparam STATE__BLTU__4 = 8'h9c;
+localparam STATE__BLTU__5 = 8'h9d;
+localparam STATE__BGEU__0 = 8'h9e;
+localparam STATE__BGEU__1 = 8'h9f;
+localparam STATE__BGEU__2 = 8'ha0;
+localparam STATE__BGEU__3 = 8'ha1;
+localparam STATE__BGEU__4 = 8'ha2;
+localparam STATE__BGEU__5 = 8'ha3;
+localparam STATE__ECALL = 8'ha4;
+localparam STATE__EBREAK = 8'ha5;
+localparam STATE__WFI = 8'ha6;
+localparam STATE__FENCE = 8'ha7;
+localparam STATE__FENCE_I = 8'ha8;
+localparam STATE__CSRRW__0 = 8'ha9;
+localparam STATE__CSRRW__1 = 8'haa;
+localparam STATE__CSRRW__2 = 8'hab;
+localparam STATE__CSRRS__0 = 8'hac;
+localparam STATE__CSRRS__1 = 8'had;
+localparam STATE__CSRRS__2 = 8'hae;
+localparam STATE__CSRRC__0 = 8'haf;
+localparam STATE__CSRRC__1 = 8'hb0;
+localparam STATE__CSRRC__2 = 8'hb1;
+localparam STATE__CSRRWI__0 = 8'hb2;
+localparam STATE__CSRRWI__1 = 8'hb3;
+localparam STATE__CSRRWI__2 = 8'hb4;
+localparam STATE__CSRRSI__0 = 8'hb5;
+localparam STATE__CSRRSI__1 = 8'hb6;
+localparam STATE__CSRRSI__2 = 8'hb7;
+localparam STATE__CSRRCI__0 = 8'hb8;
+localparam STATE__CSRRCI__1 = 8'hb9;
+localparam STATE__CSRRCI__2 = 8'hba;
+localparam STATE__MRET__0 = 8'hbb;
+localparam STATE__MRET__1 = 8'hbc;
+localparam STATE__TRAP__0 = 8'hbd;
+localparam STATE__TRAP__1 = 8'hbe;
+localparam STATE__TRAP__2 = 8'hbf;
+localparam STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__0 = 8'hc0;
+localparam STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__0__JALR = 8'hc1;
+localparam STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__1 = 8'hc2;
+localparam STATE__EXCEPTION__INSTRUCTION_ACCESS_FAULT__0 = 8'hc3;
+localparam STATE__EXCEPTION__INSTRUCTION_ACCESS_FAULT__1 = 8'hc4;
+localparam STATE__EXCEPTION__ILLEGAL_INSTRUCTION = 8'hc5;
+localparam STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0 = 8'hc6;
+localparam STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__1 = 8'hc7;
+localparam STATE__EXCEPTION__LOAD_ACCESS_FAULT__0 = 8'hc8;
+localparam STATE__EXCEPTION__LOAD_ACCESS_FAULT__1 = 8'hc9;
+localparam STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__0 = 8'hca;
+localparam STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__1 = 8'hcb;
+localparam STATE__EXCEPTION__STORE_ACCESS_FAULT__0 = 8'hcc;
+localparam STATE__EXCEPTION__STORE_ACCESS_FAULT__1 = 8'hcd;
+localparam STATE__FATAL = 8'hce;
 
 
 always_comb begin
@@ -339,10 +373,10 @@ always_comb begin
     addr = rd;
     we = 1'b0;
     wr_data = c;
-    cpu_to_l1__valid = 1'b0;
-    cpu_to_l1__we = 1'b0;
-    cpu_to_l1__dtype = 3'h1;
-    cpu_to_l1__wr_data = rd_data;
+    cpu_to_mem__valid = 1'b0;
+    cpu_to_mem__we = 1'b0;
+    cpu_to_mem__dtype = 3'h1;
+    cpu_to_mem__wr_data = rd_data;
     csr__addr = imm[11:0];
     csr__we = 1'b0;
     csr__wr_data = c;
@@ -361,9 +395,9 @@ always_comb begin
 //        //==============================
 //        STATE__FETCH:
 //        begin
-//            cpu_to_l1__valid = 1'b1;
-//            cpu_to_l1__addr = pc;
-//            cpu_to_l1__dtype = 3'h1;
+//            cpu_to_mem__valid = 1'b1;
+//            cpu_to_mem__addr = pc;
+//            cpu_to_mem__dtype = 3'h1;
 //            
 //            if (mstatus[3] && mip[11] && mie[11]) begin
 //                state__n = STATE__INTERRUPT__EXTERNAL;
@@ -375,8 +409,8 @@ always_comb begin
 //                state__n = STATE__INTERRUPT__TIMER;
 //            end
 //            else begin
-//                if (cpu_to_l1__hit) begin
-//                    ir__n = cpu_to_l1__rd_data[31:0];
+//                if (cpu_to_mem__hit) begin
+//                    ir__n = cpu_to_mem__rd_data[31:0];
 //                    state__n = STATE__DECODE;
 //                end
 //            end
@@ -395,10 +429,10 @@ always_comb begin
         //==============================
         STATE__FETCH__1:
         begin
-            cpu_to_l1__valid = 1'b1;
-            cpu_to_l1__addr = pc;
-            cpu_to_l1__dtype = 3'h1;
-            state__n = cpu_to_l1__ready ? STATE__FETCH__2 : STATE__FETCH__1;
+            cpu_to_mem__valid = 1'b1;
+            cpu_to_mem__addr = pc;
+            cpu_to_mem__dtype = 3'h1;
+            state__n = STATE__FETCH__2;
         end
 
         //==============================
@@ -406,7 +440,7 @@ always_comb begin
         //==============================
         STATE__FETCH__2:
         begin
-            state__n = cpu_to_l1__rd_valid_next ? STATE__FETCH__3 : STATE__FETCH__2;
+            state__n = cpu_to_mem__access_fault ? STATE__EXCEPTION__INSTRUCTION_ACCESS_FAULT__0 : cpu_to_mem__address_misaligned_fault ? STATE__FATAL : cpu_to_mem__done ? STATE__FETCH__3 : STATE__FETCH__2;
         end
 
         //==============================
@@ -414,7 +448,7 @@ always_comb begin
         //==============================
         STATE__FETCH__3:
         begin
-            ir__n = cpu_to_l1__rd_data[31:0];
+            ir__n = cpu_to_mem__rd_data[31:0];
             state__n = STATE__DECODE; 
         end
 
@@ -636,6 +670,10 @@ always_comb begin
                 begin
                     state__n = STATE__EBREAK;
                 end
+                6'h3d:
+                begin
+                    state__n = STATE__WFI;
+                end
                 6'h36:
                 begin
                     state__n = STATE__CSRRW__0;
@@ -659,6 +697,10 @@ always_comb begin
                 6'h3b:
                 begin
                     state__n = STATE__CSRRCI__0;
+                end
+                6'h3c:
+                begin
+                    state__n = STATE__MRET__0;
                 end
                 default:
                 begin
@@ -1491,10 +1533,10 @@ always_comb begin
         STATE__LB__1:
         begin
             func = 5'h0;
-            cpu_to_l1__valid = 1'b1;
-            cpu_to_l1__addr = c;
-            cpu_to_l1__dtype = 3'h5;
-            state__n = cpu_to_l1__ready ? STATE__LB__2 : STATE__LB__1;
+            cpu_to_mem__valid = 1'b1;
+            cpu_to_mem__addr = c;
+            cpu_to_mem__dtype = 3'h5;
+            state__n = STATE__LB__2;
         end
 
         //==============================
@@ -1502,7 +1544,7 @@ always_comb begin
         //==============================
         STATE__LB__2:
         begin
-            state__n = cpu_to_l1__rd_valid_next ? STATE__LB__3 : STATE__LB__2;
+            state__n = cpu_to_mem__access_fault ? STATE__EXCEPTION__LOAD_ACCESS_FAULT__0 : cpu_to_mem__address_misaligned_fault ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0 : cpu_to_mem__done ? STATE__LB__3 : STATE__LB__2;
         end
 
         //==============================
@@ -1512,7 +1554,7 @@ always_comb begin
         begin
             addr = rd;
             we = 1'b1;
-            wr_data = cpu_to_l1__rd_data;
+            wr_data = cpu_to_mem__rd_data;
             pc__n = pc + 4;
             state__n = STATE__FETCH__0;
         end
@@ -1525,7 +1567,7 @@ always_comb begin
             addr = rs1;
             a__n = rd_data;
             b__n = imm;
-            state__n = (rd_data[0] + imm[0] != 1'b0) ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED : STATE__LH__1;
+            state__n = STATE__LH__1;
         end
 
         //==============================
@@ -1534,10 +1576,10 @@ always_comb begin
         STATE__LH__1:
         begin
             func = 5'h0;
-            cpu_to_l1__valid = 1'b1;
-            cpu_to_l1__addr = c;
-            cpu_to_l1__dtype = 3'h3;
-            state__n = cpu_to_l1__ready ? STATE__LH__2 : STATE__LH__1;
+            cpu_to_mem__valid = 1'b1;
+            cpu_to_mem__addr = c;
+            cpu_to_mem__dtype = 3'h3;
+            state__n = STATE__LH__2;
         end
 
         //==============================
@@ -1545,7 +1587,7 @@ always_comb begin
         //==============================
         STATE__LH__2:
         begin
-            state__n = cpu_to_l1__rd_valid_next ? STATE__LH__3 : STATE__LH__2;
+            state__n = cpu_to_mem__access_fault ? STATE__EXCEPTION__LOAD_ACCESS_FAULT__0 : cpu_to_mem__address_misaligned_fault ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0 : cpu_to_mem__done ? STATE__LH__3 : STATE__LH__2;
         end
 
         //==============================
@@ -1555,7 +1597,7 @@ always_comb begin
         begin
             addr = rd;
             we = 1'b1;
-            wr_data = cpu_to_l1__rd_data;
+            wr_data = cpu_to_mem__rd_data;
             pc__n = pc + 4;
             state__n = STATE__FETCH__0;
         end
@@ -1568,7 +1610,7 @@ always_comb begin
             addr = rs1;
             a__n = rd_data;
             b__n = imm;
-            state__n = (rd_data[1:0] + imm[1:0] != 2'h0) ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED : STATE__LW__1;
+            state__n = STATE__LW__1;
         end
 
         //==============================
@@ -1577,10 +1619,10 @@ always_comb begin
         STATE__LW__1:
         begin
             func = 5'h0;
-            cpu_to_l1__valid = 1'b1;
-            cpu_to_l1__addr = c;
-            cpu_to_l1__dtype = 3'h1;
-            state__n = cpu_to_l1__ready ? STATE__LW__2 : STATE__LW__1;
+            cpu_to_mem__valid = 1'b1;
+            cpu_to_mem__addr = c;
+            cpu_to_mem__dtype = 3'h1;
+            state__n = STATE__LW__2;
         end
 
         //==============================
@@ -1588,7 +1630,7 @@ always_comb begin
         //==============================
         STATE__LW__2:
         begin
-            state__n = cpu_to_l1__rd_valid_next ? STATE__LW__3 : STATE__LW__2;
+            state__n = cpu_to_mem__access_fault ? STATE__EXCEPTION__LOAD_ACCESS_FAULT__0 : cpu_to_mem__address_misaligned_fault ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0 : cpu_to_mem__done ? STATE__LW__3 : STATE__LW__2;
         end
 
         //==============================
@@ -1598,7 +1640,7 @@ always_comb begin
         begin
             addr = rd;
             we = 1'b1;
-            wr_data = cpu_to_l1__rd_data;
+            wr_data = cpu_to_mem__rd_data;
             pc__n = pc + 4;
             state__n = STATE__FETCH__0;
         end
@@ -1611,7 +1653,7 @@ always_comb begin
             addr = rs1;
             a__n = rd_data;
             b__n = imm;
-            state__n = (rd_data[2:0] + imm[2:0] != 3'h0) ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED : STATE__LD__1;
+            state__n = STATE__LD__1;
         end
 
         //==============================
@@ -1620,10 +1662,10 @@ always_comb begin
         STATE__LD__1:
         begin
             func = 5'h0;
-            cpu_to_l1__valid = 1'b1;
-            cpu_to_l1__addr = c;
-            cpu_to_l1__dtype = 3'h0;
-            state__n = cpu_to_l1__ready ? STATE__LD__2 : STATE__LD__1;
+            cpu_to_mem__valid = 1'b1;
+            cpu_to_mem__addr = c;
+            cpu_to_mem__dtype = 3'h0;
+            state__n = STATE__LD__2;
         end
 
         //==============================
@@ -1631,7 +1673,7 @@ always_comb begin
         //==============================
         STATE__LD__2:
         begin
-            state__n = cpu_to_l1__rd_valid_next ? STATE__LD__3 : STATE__LD__2;
+            state__n = cpu_to_mem__access_fault ? STATE__EXCEPTION__LOAD_ACCESS_FAULT__0 : cpu_to_mem__address_misaligned_fault ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0 : cpu_to_mem__done ? STATE__LD__3 : STATE__LD__2;
         end
 
         //==============================
@@ -1641,7 +1683,7 @@ always_comb begin
         begin
             addr = rd;
             we = 1'b1;
-            wr_data = cpu_to_l1__rd_data;
+            wr_data = cpu_to_mem__rd_data;
             pc__n = pc + 4;
             state__n = STATE__FETCH__0;
         end
@@ -1663,10 +1705,10 @@ always_comb begin
         STATE__LBU__1:
         begin
             func = 5'h0;
-            cpu_to_l1__valid = 1'b1;
-            cpu_to_l1__addr = c;
-            cpu_to_l1__dtype = 3'h6;
-            state__n = cpu_to_l1__ready ? STATE__LBU__2 : STATE__LBU__1;
+            cpu_to_mem__valid = 1'b1;
+            cpu_to_mem__addr = c;
+            cpu_to_mem__dtype = 3'h6;
+            state__n = STATE__LBU__2;
         end
 
         //==============================
@@ -1674,7 +1716,7 @@ always_comb begin
         //==============================
         STATE__LBU__2:
         begin
-            state__n = cpu_to_l1__rd_valid_next ? STATE__LBU__3 : STATE__LBU__2;
+            state__n = cpu_to_mem__access_fault ? STATE__EXCEPTION__LOAD_ACCESS_FAULT__0 : cpu_to_mem__address_misaligned_fault ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0 : cpu_to_mem__done ? STATE__LBU__3 : STATE__LBU__2;
         end
 
         //==============================
@@ -1684,7 +1726,7 @@ always_comb begin
         begin
             addr = rd;
             we = 1'b1;
-            wr_data = cpu_to_l1__rd_data;
+            wr_data = cpu_to_mem__rd_data;
             pc__n = pc + 4;
             state__n = STATE__FETCH__0;
         end
@@ -1697,7 +1739,7 @@ always_comb begin
             addr = rs1;
             a__n = rd_data;
             b__n = imm;
-            state__n = (rd_data[0] + imm[0] != 1'b0) ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED : STATE__LHU__1;
+            state__n = STATE__LHU__1;
         end
 
         //==============================
@@ -1706,10 +1748,10 @@ always_comb begin
         STATE__LHU__1:
         begin
             func = 5'h0;
-            cpu_to_l1__valid = 1'b1;
-            cpu_to_l1__addr = c;
-            cpu_to_l1__dtype = 3'h4;
-            state__n = cpu_to_l1__ready ? STATE__LHU__2 : STATE__LHU__1;
+            cpu_to_mem__valid = 1'b1;
+            cpu_to_mem__addr = c;
+            cpu_to_mem__dtype = 3'h4;
+            state__n = STATE__LHU__2;
         end
 
         //==============================
@@ -1717,7 +1759,7 @@ always_comb begin
         //==============================
         STATE__LHU__2:
         begin
-            state__n = cpu_to_l1__rd_valid_next ? STATE__LHU__3 : STATE__LHU__2;
+            state__n = cpu_to_mem__access_fault ? STATE__EXCEPTION__LOAD_ACCESS_FAULT__0 : cpu_to_mem__address_misaligned_fault ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0 : cpu_to_mem__done ? STATE__LHU__3 : STATE__LHU__2;
         end
 
         //==============================
@@ -1727,7 +1769,7 @@ always_comb begin
         begin
             addr = rd;
             we = 1'b1;
-            wr_data = cpu_to_l1__rd_data;
+            wr_data = cpu_to_mem__rd_data;
             pc__n = pc + 4;
             state__n = STATE__FETCH__0;
         end
@@ -1740,7 +1782,7 @@ always_comb begin
             addr = rs1;
             a__n = rd_data;
             b__n = imm;
-            state__n = (rd_data[1:0] + imm[1:0] != 2'h0) ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED : STATE__LWU__1;
+            state__n = STATE__LWU__1;
         end
 
         //==============================
@@ -1749,10 +1791,10 @@ always_comb begin
         STATE__LWU__1:
         begin
             func = 5'h0;
-            cpu_to_l1__valid = 1'b1;
-            cpu_to_l1__addr = c;
-            cpu_to_l1__dtype = 3'h2;
-            state__n = cpu_to_l1__ready ? STATE__LWU__2 : STATE__LWU__1;
+            cpu_to_mem__valid = 1'b1;
+            cpu_to_mem__addr = c;
+            cpu_to_mem__dtype = 3'h2;
+            state__n = STATE__LWU__2;
         end
 
         //==============================
@@ -1760,7 +1802,7 @@ always_comb begin
         //==============================
         STATE__LWU__2:
         begin
-            state__n = cpu_to_l1__rd_valid_next ? STATE__LWU__3 : STATE__LWU__2;
+            state__n = cpu_to_mem__access_fault ? STATE__EXCEPTION__LOAD_ACCESS_FAULT__0 : cpu_to_mem__address_misaligned_fault ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0 : cpu_to_mem__done ? STATE__LWU__3 : STATE__LWU__2;
         end
 
         //==============================
@@ -1770,7 +1812,7 @@ always_comb begin
         begin
             addr = rd;
             we = 1'b1;
-            wr_data = cpu_to_l1__rd_data;
+            wr_data = cpu_to_mem__rd_data;
             pc__n = pc + 4;
             state__n = STATE__FETCH__0;
         end
@@ -1792,11 +1834,13 @@ always_comb begin
         STATE__SB__1:
         begin
             func = 5'h0;
-            cpu_to_l1__valid = 1'b1;
-            cpu_to_l1__we = 1'b1;
-            cpu_to_l1__addr = c;
-            cpu_to_l1__dtype = 3'h5;
-            state__n = cpu_to_l1__ready ? STATE__SB__2 : STATE__SB__1;
+            addr = rs2;
+            cpu_to_mem__valid = 1'b1;
+            cpu_to_mem__we = 1'b1;
+            cpu_to_mem__addr = c;
+            cpu_to_mem__dtype = 3'h5;
+            cpu_to_mem__wr_data = rd_data;
+            state__n = STATE__SB__2;
         end
 
         //==============================
@@ -1804,8 +1848,17 @@ always_comb begin
         //==============================
         STATE__SB__2:
         begin
+            state__n = cpu_to_mem__access_fault ? STATE__EXCEPTION__STORE_ACCESS_FAULT__0 : cpu_to_mem__address_misaligned_fault ? STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__0 : cpu_to_mem__done ? STATE__SB__3 : STATE__SB__2;
+        end
+
+
+        //==============================
+        // STATE__SB__3
+        //==============================
+        STATE__SB__3:
+        begin
             addr = rs2;
-            cpu_to_l1__wr_data = rd_data;
+            cpu_to_mem__wr_data = rd_data;
             pc__n = pc + 4;
             state__n = STATE__FETCH__0;
         end
@@ -1819,7 +1872,6 @@ always_comb begin
             a__n = rd_data;
             b__n = imm;
             state__n = STATE__SH__1;
-            // state__n = (rd_data[0] + imm[0] != 1'b0) ? STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED : STATE__SH__1;
         end
 
         //==============================
@@ -1828,11 +1880,13 @@ always_comb begin
         STATE__SH__1:
         begin
             func = 5'h0;
-            cpu_to_l1__valid = 1'b1;
-            cpu_to_l1__we = 1'b1;
-            cpu_to_l1__addr = c;
-            cpu_to_l1__dtype = 3'h3;
-            state__n = cpu_to_l1__ready ? STATE__SH__2 : STATE__SH__1;
+            addr = rs2;
+            cpu_to_mem__valid = 1'b1;
+            cpu_to_mem__we = 1'b1;
+            cpu_to_mem__addr = c;
+            cpu_to_mem__dtype = 3'h3;
+            cpu_to_mem__wr_data = rd_data;
+            state__n = STATE__SH__2;
         end
 
         //==============================
@@ -1840,8 +1894,16 @@ always_comb begin
         //==============================
         STATE__SH__2:
         begin
+            state__n = cpu_to_mem__access_fault ? STATE__EXCEPTION__STORE_ACCESS_FAULT__0 : cpu_to_mem__address_misaligned_fault ? STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__0 : cpu_to_mem__done ? STATE__SH__3 : STATE__SH__2;
+        end
+
+        //==============================
+        // STATE__SH__3
+        //==============================
+        STATE__SH__3:
+        begin
             addr = rs2;
-            cpu_to_l1__wr_data = rd_data;
+            cpu_to_mem__wr_data = rd_data;
             pc__n = pc + 4;
             state__n = STATE__FETCH__0;
         end
@@ -1855,7 +1917,6 @@ always_comb begin
             a__n = rd_data;
             b__n = imm;
             state__n = STATE__SW__1;
-            // state__n = (rd_data[1:0] + imm[1:0] != 2'h0) ? STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED : STATE__SW__1;
         end
 
         //==============================
@@ -1864,11 +1925,13 @@ always_comb begin
         STATE__SW__1:
         begin
             func = 5'h0;
-            cpu_to_l1__valid = 1'b1;
-            cpu_to_l1__we = 1'b1;
-            cpu_to_l1__addr = c;
-            cpu_to_l1__dtype = 3'h1;
-            state__n = cpu_to_l1__ready ? STATE__SW__2 : STATE__SW__1;
+            addr = rs2;
+            cpu_to_mem__valid = 1'b1;
+            cpu_to_mem__we = 1'b1;
+            cpu_to_mem__addr = c;
+            cpu_to_mem__dtype = 3'h1;
+            cpu_to_mem__wr_data = rd_data;
+            state__n = STATE__SW__2;
         end
 
         //==============================
@@ -1876,8 +1939,16 @@ always_comb begin
         //==============================
         STATE__SW__2:
         begin
+            state__n = cpu_to_mem__access_fault ? STATE__EXCEPTION__STORE_ACCESS_FAULT__0 : cpu_to_mem__address_misaligned_fault ? STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__0 : cpu_to_mem__done ? STATE__SW__3 : STATE__SW__2;
+        end
+
+        //==============================
+        // STATE__SW__3
+        //==============================
+        STATE__SW__3:
+        begin
             addr = rs2;
-            cpu_to_l1__wr_data = rd_data;
+            cpu_to_mem__wr_data = rd_data;
             pc__n = pc + 4;
             state__n = STATE__FETCH__0;
         end
@@ -1891,7 +1962,6 @@ always_comb begin
             a__n = rd_data;
             b__n = imm;
             state__n = STATE__SD__1;
-            // state__n = (rd_data[2:0] + imm[2:0] != 3'h0) ? STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED : STATE__SD__1;
         end
 
         //==============================
@@ -1900,11 +1970,13 @@ always_comb begin
         STATE__SD__1:
         begin
             func = 5'h0;
-            cpu_to_l1__valid = 1'b1;
-            cpu_to_l1__we = 1'b1;
-            cpu_to_l1__addr = c;
-            cpu_to_l1__dtype = 3'h0;
-            state__n = cpu_to_l1__ready ? STATE__SD__2 : STATE__SD__1;
+            addr = rs2;
+            cpu_to_mem__valid = 1'b1;
+            cpu_to_mem__we = 1'b1;
+            cpu_to_mem__addr = c;
+            cpu_to_mem__dtype = 3'h0;
+            cpu_to_mem__wr_data = rd_data;
+            state__n = STATE__SD__2;
         end
 
         //==============================
@@ -1912,8 +1984,17 @@ always_comb begin
         //==============================
         STATE__SD__2:
         begin
+            state__n = cpu_to_mem__access_fault ? STATE__EXCEPTION__STORE_ACCESS_FAULT__0 : cpu_to_mem__address_misaligned_fault ? STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__0 : cpu_to_mem__done ? STATE__SD__3 : STATE__SD__2;
+        end
+
+
+        //==============================
+        // STATE__SD__3
+        //==============================
+        STATE__SD__3:
+        begin
             addr = rs2;
-            cpu_to_l1__wr_data = rd_data;
+            cpu_to_mem__wr_data = rd_data;
             pc__n = pc + 4;
             state__n = STATE__FETCH__0;
         end
@@ -1949,7 +2030,8 @@ always_comb begin
             addr = rs1;
             a__n = rd_data;  
             b__n = imm;  
-            state__n = (rd_data[1:0] + imm[1:0] == 2'b10) || (rd_data[1:0] + imm[1:0] == 2'b11) ? STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED : STATE__JALR__1;
+            //state__n = ((rd_data[1:0] == 2'b00) && (imm[1:0] == 2'b10)) || ((rd_data[1:0] == 2'b00) && (imm[1:0] == 2'b11)) || ((rd_data[1:0] == 2'b01) && (imm[1:0] == 2'b01)) || ((rd_data[1:0] == 2'b01) && (imm[1:0] == 2'b10)) ||((rd_data[1:0] == 2'b10) && (imm[1:0] == 2'b00)) ||((rd_data[1:0] == 2'b10) && (imm[1:0] == 2'b01)) || ((rd_data[1:0] == 2'b11) && (imm[1:0] == 2'b00)) || ((rd_data[1:0] == 2'b11) && (imm[1:0] == 2'b11)) ? STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__0__JALR : STATE__JALR__1;
+            state__n = (rd_data[1:0] + imm[1:0] == 2'b10) || (rd_data[1:0] + imm[1:0] == 2'b11) ? STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__0__JALR : STATE__JALR__1;
         end
 
         //==============================
@@ -1972,7 +2054,7 @@ always_comb begin
         begin
             a__n = pc;
             b__n = imm;
-            state__n = (imm[1:0] != 2'h0) ? STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED : STATE__JAL__1;
+            state__n = (imm[1:0] != 2'h0) ? STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__0 : STATE__JAL__1;
         end
 
         //==============================
@@ -2032,7 +2114,7 @@ always_comb begin
         begin
             a__n = pc;
             b__n = imm;
-            state__n = (imm[1:0] != 2'h0) ? STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED : STATE__BEQ__5;
+            state__n = (imm[1:0] != 2'h0) ? STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__0 : STATE__BEQ__5;
         end
 
         //==============================
@@ -2089,7 +2171,7 @@ always_comb begin
         begin
             a__n = pc;
             b__n = imm;
-            state__n = (imm[1:0] != 2'h0) ? STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED : STATE__BNE__5;
+            state__n = (imm[1:0] != 2'h0) ? STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__0 : STATE__BNE__5;
         end
 
         //==============================
@@ -2146,7 +2228,7 @@ always_comb begin
         begin
             a__n = pc;
             b__n = imm;
-            state__n = (imm[1:0] != 2'h0) ? STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED : STATE__BLT__5;
+            state__n = (imm[1:0] != 2'h0) ? STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__0 : STATE__BLT__5;
         end
 
         //==============================
@@ -2203,7 +2285,7 @@ always_comb begin
         begin
             a__n = pc;
             b__n = imm;
-            state__n = (imm[1:0] != 2'h0) ? STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED : STATE__BGE__5;
+            state__n = (imm[1:0] != 2'h0) ? STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__0 : STATE__BGE__5;
         end
 
         //==============================
@@ -2260,7 +2342,7 @@ always_comb begin
         begin
             a__n = pc;
             b__n = imm;
-            state__n = (imm[1:0] != 2'h0) ? STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED : STATE__BLTU__5;
+            state__n = (imm[1:0] != 2'h0) ? STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__0 : STATE__BLTU__5;
         end
 
         //==============================
@@ -2317,7 +2399,7 @@ always_comb begin
         begin
             a__n = pc;
             b__n = imm;
-            state__n = (imm[1:0] != 2'h0) ? STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED : STATE__BGEU__5;
+            state__n = (imm[1:0] != 2'h0) ? STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__0 : STATE__BGEU__5;
         end
 
         //==============================
@@ -2330,13 +2412,17 @@ always_comb begin
             state__n = STATE__FETCH__0;
         end
 
-
         //==============================
         // STATE__ECALL
         //==============================
         STATE__ECALL:
         begin
-            state__n = STATE__ECALL;
+            csr__addr = 12'h342;
+            csr__we = 1'b1;
+            csr__wr_data = csr__rd_data;
+            csr__wr_data[62:0] = 63'hb;
+            csr__wr_data[63] = 1'b0;
+            state__n = STATE__TRAP__0;
         end
 
         //==============================
@@ -2344,7 +2430,21 @@ always_comb begin
         //==============================
         STATE__EBREAK:
         begin
-            state__n = STATE__EBREAK;
+            csr__addr = 12'h342;
+            csr__we = 1'b1;
+            csr__wr_data = csr__rd_data;
+            csr__wr_data[62:0] = 63'h3;
+            csr__wr_data[63] = 1'b0;
+            state__n = STATE__TRAP__0;
+        end
+
+        //==============================
+        // STATE__WFI
+        //==============================
+        STATE__WFI:
+        begin
+            pc__n = pc + 4;
+            state__n = STATE__FETCH__0;
         end
 
         //==============================
@@ -2597,50 +2697,253 @@ always_comb begin
         end
 
         //==============================
+        // STATE__MRET__0
+        //==============================
+        STATE__MRET__0:
+        begin
+            csr__addr = 12'h300;
+            csr__we = 1'b1;
+            csr__wr_data = csr__rd_data;
+            csr__wr_data[3] <= csr__rd_data[7];
+            csr__wr_data[7] <= 1'b1;
+            state__n = STATE__MRET__1;
+        end
+
+        //==============================
+        // STATE__MRET__1
+        //==============================
+        STATE__MRET__1:
+        begin
+            csr__addr = 12'h341;
+            pc__n = csr__rd_data;
+            state__n = STATE__FETCH__0;
+        end
+
+        //==============================
         // STATE__EXCEPTION__ILLEGAL_INSTRUCTION
         //==============================
         STATE__EXCEPTION__ILLEGAL_INSTRUCTION:
         begin
-            state__n = STATE__EXCEPTION__ILLEGAL_INSTRUCTION;
+            csr__addr = 12'h342;
+            csr__we = 1'b1;
+            csr__wr_data = csr__rd_data;
+            csr__wr_data[62:0] = 63'h2;
+            csr__wr_data[63] = 1'b0;
+            state__n = STATE__TRAP__0;
         end
 
         //==============================
-        // STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED
+        // STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__0
         //==============================
-        STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED:
+        STATE__EXCEPTION__INSTRUCTION_ACCESS_FAULT__0:
         begin
-            state__n = STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED;
+            func = 5'h0; 
+            csr__addr = 12'h343;
+            csr__we = 1'b1;
+            csr__wr_data = csr__rd_data;
+            csr__wr_data[63:0] = pc;
+            state__n = STATE__EXCEPTION__INSTRUCTION_ACCESS_FAULT__1;
         end
 
         //==============================
-        // STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED
+        // STATE__EXCEPTION__INSTRUCTION_ACCESS_FAULT__1
         //==============================
-        STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED:
+        STATE__EXCEPTION__INSTRUCTION_ACCESS_FAULT__1:
         begin
-            state__n = STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED;
+            csr__addr = 12'h342;
+            csr__we = 1'b1;
+            csr__wr_data = csr__rd_data;
+            csr__wr_data[62:0] = 63'h1;
+            csr__wr_data[63] = 1'b0;
+            state__n = STATE__TRAP__0;
         end
 
         //==============================
-        // STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED
+        // STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__0
         //==============================
-        STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED:
+        STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__0:
         begin
-            state__n = STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED;
+            func = 5'h0; 
+            csr__addr = 12'h343;
+            csr__we = 1'b1;
+            csr__wr_data = csr__rd_data;
+            csr__wr_data[63:0] = c;
+            state__n = STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__1;
         end
 
+        //==============================
+        // STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__0__JALR
+        //==============================
+        STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__0__JALR:
+        begin
+            func = 5'h0; 
+            csr__addr = 12'h343;
+            csr__we = 1'b1;
+            csr__wr_data = csr__rd_data;
+            csr__wr_data[63:0] = {c[63:1], 1'b0};
+            state__n = STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__1;
+        end
 
+        //==============================
+        // STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__1
+        //==============================
+        STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__1:
+        begin
+            csr__addr = 12'h342;
+            csr__we = 1'b1;
+            csr__wr_data = csr__rd_data;
+            csr__wr_data[62:0] = 63'h0;
+            csr__wr_data[63] = 1'b0;
+            state__n = STATE__TRAP__0;
+        end
+
+        //==============================
+        // STATE__EXCEPTION__LOAD_ACCESS_FAULT__0
+        //==============================
+        STATE__EXCEPTION__LOAD_ACCESS_FAULT__0:
+        begin
+            func = 5'h0; 
+            csr__addr = 12'h343;
+            csr__we = 1'b1;
+            csr__wr_data = csr__rd_data;
+            csr__wr_data[63:0] = c;
+            state__n = STATE__EXCEPTION__LOAD_ACCESS_FAULT__1;
+        end
+
+        //==============================
+        // STATE__EXCEPTION__LOAD_ACCESS_FAULT__1
+        //==============================
+        STATE__EXCEPTION__LOAD_ACCESS_FAULT__1:
+        begin
+            csr__addr = 12'h342;
+            csr__we = 1'b1;
+            csr__wr_data = csr__rd_data;
+            csr__wr_data[62:0] = 63'h5;
+            csr__wr_data[63] = 1'b0;
+            state__n = STATE__TRAP__0;
+        end
+
+        //==============================
+        // STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0
+        //==============================
+        STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0:
+        begin
+            func = 5'h0; 
+            csr__addr = 12'h343;
+            csr__we = 1'b1;
+            csr__wr_data = csr__rd_data;
+            csr__wr_data[63:0] = c;
+            state__n = STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__1;
+        end
+
+        //==============================
+        // STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__1
+        //==============================
+        STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__1:
+        begin
+            csr__addr = 12'h342;
+            csr__we = 1'b1;
+            csr__wr_data = csr__rd_data;
+            csr__wr_data[62:0] = 63'h4;
+            csr__wr_data[63] = 1'b0;
+            state__n = STATE__TRAP__0;
+        end
+
+        //==============================
+        // STATE__EXCEPTION__STORE_ACCESS_FAULT__0
+        //==============================
+        STATE__EXCEPTION__STORE_ACCESS_FAULT__0:
+        begin
+            func = 5'h0; 
+            csr__addr = 12'h343;
+            csr__we = 1'b1;
+            csr__wr_data = csr__rd_data;
+            csr__wr_data[63:0] = c;
+            state__n = STATE__EXCEPTION__STORE_ACCESS_FAULT__1;
+        end
+
+        //==============================
+        // STATE__EXCEPTION__STORE_ACCESS_FAULT__1
+        //==============================
+        STATE__EXCEPTION__STORE_ACCESS_FAULT__1:
+        begin
+            csr__addr = 12'h342;
+            csr__we = 1'b1;
+            csr__wr_data = csr__rd_data;
+            csr__wr_data[62:0] = 63'h7;
+            csr__wr_data[63] = 1'b0;
+            state__n = STATE__TRAP__0;
+        end
+
+        //==============================
+        // STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__0
+        //==============================
+        STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__0:
+        begin
+            func = 5'h0; 
+            csr__addr = 12'h343;
+            csr__we = 1'b1;
+            csr__wr_data = csr__rd_data;
+            csr__wr_data[63:0] = c;
+            state__n = STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__1;
+        end
+
+        //==============================
+        // STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__1
+        //==============================
+        STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__1:
+        begin
+            csr__addr = 12'h342;
+            csr__we = 1'b1;
+            csr__wr_data = csr__rd_data;
+            csr__wr_data[62:0] = 63'h6;
+            csr__wr_data[63] = 1'b0;
+            state__n = STATE__TRAP__0;
+        end
+
+        //==============================
+        // STATE__TRAP__0
+        //==============================
+        STATE__TRAP__0:
+        begin
+            csr__addr = 12'h300;
+            csr__we = 1'b1;
+            csr__wr_data = csr__rd_data;
+            csr__wr_data[3] <= 1'b0;
+            csr__wr_data[7] <= csr__rd_data[3];
+            state__n = STATE__TRAP__2;
+        end
+
+        //==============================
+        // STATE__TRAP__1
+        //==============================
+        STATE__TRAP__1:
+        begin
+            csr__addr = 12'h341;
+            csr__we = 1'b1;
+            csr__wr_data = csr__rd_data;
+            csr__wr_data[63:0] = pc;
+            state__n = STATE__TRAP__1;
+        end
+
+        //==============================
+        // STATE__TRAP__2
+        //==============================
+        STATE__TRAP__2:
+        begin
+            csr__addr = 12'h305;
+            pc__n = csr__rd_data; 
+            state__n = STATE__FETCH__0;
+        end
+
+        //==============================
+        // STATE__FATAL
+        //==============================
+        STATE__FATAL:
+        begin
+            state__n = STATE__FATAL;
+        end
         
-//        //==============================
-//        // STATE__EXCEPTION__ILLEGAL_INSTRUCTION
-//        //==============================
-//        STATE__EXCEPTION__ILLEGAL_INSTRUCTION:
-//        begin
-//            csr__addr = 12'h342;
-//            csr__we = 1'b1;
-//            csr__wr_data[62:0] = CSR__MCAUSE__EXEPTION_CODE__ILLEGAL_INSTRUCTION;
-//            csr__wr_data[63] = 1'b0;
-//            state__n = STATE__TRAP__0;
-//        end
 //
 //
 //        //==============================
@@ -2655,38 +2958,6 @@ always_comb begin
 //            state__n = STATE__TRAP__0;
 //        end
 //
-//        //==============================
-//        // STATE__TRAP__0
-//        //==============================
-//        STATE__TRAP__0:
-//        begin
-//            csr__addr = 12'h341;
-//            csr__we = 1'b1;
-//            csr__wr_data[63:0] = pc;
-//            state__n = STATE__TRAP__1;
-//        end
-//
-//        //==============================
-//        // STATE__TRAP__1
-//        //==============================
-//        STATE__TRAP__1:
-//        begin
-//            csr__addr = 12'h300;
-//            csr__we = 1'b1;
-//            csr__wr_data[3] <= 1'b0;
-//            csr__wr_data[7] <= csr__rd_data[3];
-//            state__n = STATE__TRAP__2;
-//        end
-//
-//        //==============================
-//        // STATE__TRAP__2
-//        //==============================
-//        STATE__TRAP__2:
-//        begin
-//            csr__addr = 12'h305;
-//            pc__n = csr__rd_data; 
-//            state__n = STATE__FETCH__0;
-//        end
     endcase
 end
 

@@ -5,14 +5,13 @@ module central_processing_unit
 (
     input clk,
     input rst,
-    output cpu_to_mem__valid,
-    input cpu_to_mem__ready,
-    output cpu_to_mem__we,
-    output cpu_to_mem__addr,
-    output cpu_to_mem__dtype,
-    output cpu_to_mem__wr_data,
+    output logic cpu_to_mem__valid,
+    output logic cpu_to_mem__we,
+    output logic [63:0] cpu_to_mem__addr,
+    output logic [2:0] cpu_to_mem__dtype,
+    output logic [63:0] cpu_to_mem__wr_data,
     input cpu_to_mem__done,
-    input cpu_to_mem__rd_data
+    input [63:0] cpu_to_mem__rd_data,
     input cpu_to_mem__access_fault,
     input cpu_to_mem__address_misaligned_fault
 );
@@ -61,16 +60,16 @@ logic [63:0] csr__wr_data;
 logic [63:0] csr__rd_data;
 
 // Memory Interface
-logic cpu_to_mem__valid;
-logic cpu_to_mem__ready;
-logic cpu_to_mem__we;
-logic [63:0] cpu_to_mem__addr;
-logic [2:0] cpu_to_mem__dtype;
-logic [63:0] cpu_to_mem__wr_data;
-logic cpu_to_mem__done;
-logic [63:0] cpu_to_mem__rd_data
-logic cpu_to_mem__access_fault;
-logic cpu_to_mem__address_misaligned_fault;
+//logic cpu_to_mem__valid;
+//logic cpu_to_mem__ready;
+//logic cpu_to_mem__we;
+//logic [63:0] cpu_to_mem__addr;
+//logic [2:0] cpu_to_mem__dtype;
+//logic [63:0] cpu_to_mem__wr_data;
+//logic cpu_to_mem__done;
+//logic [63:0] cpu_to_mem__rd_data;
+//logic cpu_to_mem__access_fault;
+//logic cpu_to_mem__address_misaligned_fault;
 
 // FSM
 logic [7:0] state;
@@ -194,15 +193,19 @@ states = [
     'STATE__SB__0', 
     'STATE__SB__1', 
     'STATE__SB__2', 
+    'STATE__SB__3', 
     'STATE__SH__0', 
     'STATE__SH__1', 
     'STATE__SH__2', 
+    'STATE__SH__3', 
     'STATE__SW__0', 
     'STATE__SW__1', 
     'STATE__SW__2', 
+    'STATE__SW__3', 
     'STATE__SD__0', 
     'STATE__SD__1', 
     'STATE__SD__2', 
+    'STATE__SD__3', 
     'STATE__ADD__0',
     'STATE__ADD__1',
     'STATE__ADD__2',
@@ -340,6 +343,11 @@ states = [
     'STATE__CSRRCI__0',
     'STATE__CSRRCI__1',
     'STATE__CSRRCI__2',
+    'STATE__MRET__0',
+    'STATE__MRET__1',
+    'STATE__TRAP__0',
+    'STATE__TRAP__1',
+    'STATE__TRAP__2',
     'STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__0',
     'STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__0__JALR',
     'STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__1',
@@ -354,6 +362,7 @@ states = [
     'STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__1',
     'STATE__EXCEPTION__STORE_ACCESS_FAULT__0',
     'STATE__EXCEPTION__STORE_ACCESS_FAULT__1',
+    'STATE__FATAL',
 ]
 
 
@@ -1833,10 +1842,12 @@ always_comb begin
         STATE__SB__1:
         begin
             func = FUNC__ADD;
+            addr = rs2;
             cpu_to_mem__valid = 1'b1;
             cpu_to_mem__we = 1'b1;
             cpu_to_mem__addr = c;
             cpu_to_mem__dtype = DTYPE__B;
+            cpu_to_mem__wr_data = rd_data;
             state__n = STATE__SB__2;
         end
 
@@ -1877,10 +1888,12 @@ always_comb begin
         STATE__SH__1:
         begin
             func = FUNC__ADD;
+            addr = rs2;
             cpu_to_mem__valid = 1'b1;
             cpu_to_mem__we = 1'b1;
             cpu_to_mem__addr = c;
             cpu_to_mem__dtype = DTYPE__H;
+            cpu_to_mem__wr_data = rd_data;
             state__n = STATE__SH__2;
         end
 
@@ -1920,10 +1933,12 @@ always_comb begin
         STATE__SW__1:
         begin
             func = FUNC__ADD;
+            addr = rs2;
             cpu_to_mem__valid = 1'b1;
             cpu_to_mem__we = 1'b1;
             cpu_to_mem__addr = c;
             cpu_to_mem__dtype = DTYPE__W;
+            cpu_to_mem__wr_data = rd_data;
             state__n = STATE__SW__2;
         end
 
@@ -1963,11 +1978,13 @@ always_comb begin
         STATE__SD__1:
         begin
             func = FUNC__ADD;
+            addr = rs2;
             cpu_to_mem__valid = 1'b1;
             cpu_to_mem__we = 1'b1;
             cpu_to_mem__addr = c;
             cpu_to_mem__dtype = DTYPE__D;
-            state__n =STATE__SD__2;
+            cpu_to_mem__wr_data = rd_data;
+            state__n = STATE__SD__2;
         end
 
         //==============================
@@ -2925,6 +2942,14 @@ always_comb begin
             csr__addr = CSR__MTVEC;
             pc__n = csr__rd_data; 
             state__n = STATE__FETCH__0;
+        end
+
+        //==============================
+        // STATE__FATAL
+        //==============================
+        STATE__FATAL:
+        begin
+            state__n = STATE__FATAL;
         end
         
 //

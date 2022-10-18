@@ -14,10 +14,10 @@ Compiling module work.arithmetic_logic_unit
 Compiling module work.comparator
 Compiling module work.control_and_status_registers
 Compiling module work.central_processing_unit
-Compiling module work.l1(DEPTH=64'b010000000000000000,...
+Compiling module work.tb_mem(DEPTH=64'b010000000000000...
 Compiling module work.central_processing_unit__tb
-WARNING: [XSIM 43-3373] "/home/seankent/bluejay/ip/central_processing_unit/tb/gen/central_processing_unit__tb.sv" Line 116. System function $value$plusargs is used as system task. This system function should have a LHS e.g. x=$value$plusargs().
-WARNING: [XSIM 43-3373] "/home/seankent/bluejay/ip/central_processing_unit/tb/gen/central_processing_unit__tb.sv" Line 118. System function $value$plusargs is used as system task. This system function should have a LHS e.g. x=$value$plusargs().
-WARNING: [XSIM 43-3373] "/home/seankent/bluejay/ip/central_processing_unit/tb/gen/central_processing_unit__tb.sv" Line 120. System function $value$plusargs is used as system task. This system function should have a LHS e.g. x=$value$plusargs().
-WARNING: [XSIM 43-3373] "/home/seankent/bluejay/ip/central_processing_unit/tb/gen/central_processing_unit__tb.sv" Line 143. System function $value$plusargs is used as system task. This system function should have a LHS e.g. x=$value$plusargs().
+WARNING: [XSIM 43-3373] "/home/seankent/bluejay/ip/central_processing_unit/tb/gen/central_processing_unit__tb.sv" Line 119. System function $value$plusargs is used as system task. This system function should have a LHS e.g. x=$value$plusargs().
+WARNING: [XSIM 43-3373] "/home/seankent/bluejay/ip/central_processing_unit/tb/gen/central_processing_unit__tb.sv" Line 121. System function $value$plusargs is used as system task. This system function should have a LHS e.g. x=$value$plusargs().
+WARNING: [XSIM 43-3373] "/home/seankent/bluejay/ip/central_processing_unit/tb/gen/central_processing_unit__tb.sv" Line 123. System function $value$plusargs is used as system task. This system function should have a LHS e.g. x=$value$plusargs().
+WARNING: [XSIM 43-3373] "/home/seankent/bluejay/ip/central_processing_unit/tb/gen/central_processing_unit__tb.sv" Line 146. System function $value$plusargs is used as system task. This system function should have a LHS e.g. x=$value$plusargs().
 Built simulation snapshot central_processing_unit__tb__snapshot
