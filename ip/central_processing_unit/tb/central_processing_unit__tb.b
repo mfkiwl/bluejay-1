@@ -17,11 +17,9 @@ logic cpu_to_mem__valid;
 logic cpu_to_mem__we;
 logic [63:0] cpu_to_mem__addr;
 logic [2:0] cpu_to_mem__dtype;
-logic [63:0] cpu_to_mem__wr_data;
-logic [63:0] cpu_to_mem__rd_data;
-logic cpu_to_mem__done;
-logic cpu_to_mem__access_fault;
-logic cpu_to_mem__address_misaligned_fault;
+logic [63:0] cpu_to_mem__data;
+logic mem_to_cpu__valid;
+logic [63:0] mem_to_cpu__data;
 
 
 //==============================
@@ -35,11 +33,9 @@ central_processing_unit dut
     .cpu_to_mem__we(cpu_to_mem__we),
     .cpu_to_mem__addr(cpu_to_mem__addr),
     .cpu_to_mem__dtype(cpu_to_mem__dtype),
-    .cpu_to_mem__wr_data(cpu_to_mem__wr_data),
-    .cpu_to_mem__rd_data(cpu_to_mem__rd_data),
-    .cpu_to_mem__done(cpu_to_mem__done),
-    .cpu_to_mem__access_fault(cpu_to_mem__access_fault),
-    .cpu_to_mem__address_misaligned_fault(cpu_to_mem__address_misaligned_fault)
+    .cpu_to_mem__data(cpu_to_mem__data),
+    .mem_to_cpu__valid(mem_to_cpu__valid),
+    .mem_to_cpu__data(mem_to_cpu__data)
 );
 
 //==============================
@@ -53,11 +49,9 @@ tb_mem #(.DEPTH(64'h10000), .DEPTH__LOG2(16)) mem
     .cpu_to_mem__we(cpu_to_mem__we),
     .cpu_to_mem__addr(cpu_to_mem__addr),
     .cpu_to_mem__dtype(cpu_to_mem__dtype),
-    .cpu_to_mem__wr_data(cpu_to_mem__wr_data),
-    .cpu_to_mem__rd_data(cpu_to_mem__rd_data),
-    .cpu_to_mem__done(cpu_to_mem__done),
-    .cpu_to_mem__access_fault(cpu_to_mem__access_fault),
-    .cpu_to_mem__address_misaligned_fault(cpu_to_mem__address_misaligned_fault)
+    .cpu_to_mem__data(cpu_to_mem__data),
+    .mem_to_cpu__valid(mem_to_cpu__valid),
+    .mem_to_cpu__data(mem_to_cpu__data)
 );
 
 
@@ -73,6 +67,7 @@ string filename__mem;
 string filename__sig;
 logic [63:0] begin_signature;
 logic [63:0] end_signature;
+logic [63:0] tohost;
 logic [63:0] addr;
 logic [15:0] addr_short;
 
@@ -112,10 +107,12 @@ end
 
 
 initial begin
+    $value$plusargs("tohost=%h", tohost);
+    $display("tohost = %0h", tohost);
     forever begin
         @(posedge clk) begin
             //if ((dut.op == OP__JALR) && (dut.rs1 == 5'h1) && (dut.register_file__0.x__1 = 64'hffffffffffffffff)) begin
-            if (dut.op == OP__ECALL) begin
+            if (cpu_to_mem__valid && (cpu_to_mem__addr == tohost)) begin
                 $value$plusargs("filename__sig=%s", filename__sig);
                 $display("filename__sig = %s", filename__sig);
                 $value$plusargs("begin_signature=%h", begin_signature);

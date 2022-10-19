@@ -4,7 +4,7 @@ AUIPC-01...pass!
 BGEU-01...pass!
 BNE-01...pass!
 I-ECALL-01...fail.
-I-MISALIGN_JMP-01...fail.
+I-MISALIGN_JMP-01...pass!
 I-RF_size-01...pass!
 JAL-01...pass!
 LBU-01...pass!

@@ -199,6 +199,8 @@ assign mstatus[CSR__MSTATUS__HIE__FIELD] = CSR__MSTATUS__HIE__DISABLED;
 assign mstatus[CSR__MSTATUS__UPIE__FIELD] = CSR__MSTATUS__UPIE__DISABLED;
 assign mstatus[CSR__MSTATUS__SPIE__FIELD] = CSR__MSTATUS__SPIE__DISABLED;
 assign mstatus[CSR__MSTATUS__HPIE__FIELD] = CSR__MSTATUS__HPIE__DISABLED;
+assign mstatus[CSR__MSTATUS__SPP__FIELD] = CSR__MSTATUS__SPP__USER;
+assign mstatus[CSR__MSTATUS__HPP__FIELD] = CSR__MSTATUS__HPP__USER;
 assign mstatus[CSR__MSTATUS__MPP__FIELD] = CSR__MSTATUS__MPP__MACHINE;
 assign mstatus[CSR__MSTATUS__FS__FIELD] = CSR__MSTATUS__FS__OFF;
 assign mstatus[CSR__MSTATUS__XS__FIELD] = CSR__MSTATUS__XS__OFF;
@@ -233,7 +235,19 @@ logic [63:0] mtvec;
 logic mtvec__we;
 
 assign mtvec[CSR__MTVEC__OFFSET__FIELD] = CSR__MTVEC__OFFSET__VALUE;
-assign mtvec[CSR__MTVEC__TRAP_VECTOR_BASE_ADDRESS__FIELD] = CSR__MTVEC__TRAP_VECTOR_BASE_ADDRESS__VALUE;
+
+always_ff @(posedge clk) begin
+    if (rst) begin
+        mtvec[CSR__MTVEC__TRAP_VECTOR_BASE_ADDRESS__FIELD] <= CSR__MTVEC__TRAP_VECTOR_BASE_ADDRESS__VALUE;
+    end
+    else begin
+        if (mtvec__we) begin
+            mtvec[CSR__MTVEC__TRAP_VECTOR_BASE_ADDRESS__FIELD] <= wr_data[CSR__MTVEC__TRAP_VECTOR_BASE_ADDRESS__FIELD];
+        end
+    end
+end
+
+
 
 
 //============================================== 

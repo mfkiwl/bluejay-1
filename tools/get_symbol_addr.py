@@ -22,7 +22,10 @@ def get_symbol_addr(elf, symbol):
         if symbol in line:
             tokens = re.split(r' +', line)
             addr = tokens[2]
-            print(addr)
+            if tokens[-1] == symbol:
+                print(addr)
+                return
+
 
     #stdout = 'abcd'
     #match = re.search('^ *[0-9a-f]+: *[0-9a-f]+ *0 NOTYPE *GLOBAL DEFAULT *\d end_signature', stdout)
