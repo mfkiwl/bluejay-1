@@ -37,7 +37,7 @@ always_comb begin
     mscratch__we = 1'b0;
     mepc__we = 1'b0;
     mcause__we = 1'b0;
-    mbadaddr__we = 1'b0;
+    mtval__we = 1'b0;
 
     case (addr)
         CSR__MISA:
@@ -130,10 +130,10 @@ always_comb begin
             rd_data = mcause;
             mcause__we = we;
         end
-        CSR__MBADADDR:
+        CSR__MTVAL:
         begin
-            rd_data = mbadaddr;
-            mbadaddr__we = we;
+            rd_data = mtval;
+            mtval__we = we;
         end
     endcase
 end
@@ -437,18 +437,18 @@ end
 
 
 //============================================== 
-// Machine Bad Address Register (mbadaddr) 
+// Machine Trap Value Register (mtval) 
 //==============================================
-logic [63:0] mbadaddr;
-logic mbadaddr__we;
+logic [63:0] mtval;
+logic mtval__we;
 
 always_ff @(posedge clk) begin
     if (rst) begin
-        mbadaddr[CSR__MBADADDR__MBADADDR__FIELD] <= CSR__MBADADDR__MBADADDR__RESET_VALUE;
+        mtval[CSR__MTVAL__MTVAL__FIELD] <= CSR__MTVAL__MTVAL__RESET_VALUE;
     end
     else begin
-        if (mbadaddr__we) begin
-            mbadaddr[CSR__MBADADDR__MBADADDR__FIELD] <= wr_data[CSR__MBADADDR__MBADADDR__FIELD];
+        if (mtval__we) begin
+            mtval[CSR__MTVAL__MTVAL__FIELD] <= wr_data[CSR__MTVAL__MTVAL__FIELD];
         end
     end
 end

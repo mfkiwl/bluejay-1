@@ -2727,10 +2727,10 @@ always_comb begin
         STATE__EXCEPTION__INSTRUCTION_ACCESS_FAULT__0:
         begin
             func = FUNC__ADD; 
-            csr__addr = CSR__MBADADDR;
+            csr__addr = CSR__MTVAL;
             csr__we = 1'b1;
             csr__wr_data = csr__rd_data;
-            csr__wr_data[CSR__MBADADDR__MBADADDR__FIELD] = pc;
+            csr__wr_data[CSR__MTVAL__MTVAL__FIELD] = pc;
             state__n = STATE__EXCEPTION__INSTRUCTION_ACCESS_FAULT__1;
         end
 
@@ -2753,10 +2753,10 @@ always_comb begin
         STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__0:
         begin
             func = FUNC__ADD; 
-            csr__addr = CSR__MBADADDR;
+            csr__addr = CSR__MTVAL;
             csr__we = 1'b1;
             csr__wr_data = csr__rd_data;
-            csr__wr_data[CSR__MBADADDR__MBADADDR__FIELD] = c;
+            csr__wr_data[CSR__MTVAL__MTVAL__FIELD] = c;
             state__n = STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__1;
         end
 
@@ -2766,10 +2766,10 @@ always_comb begin
         STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__0__JALR:
         begin
             func = FUNC__ADD; 
-            csr__addr = CSR__MBADADDR;
+            csr__addr = CSR__MTVAL;
             csr__we = 1'b1;
             csr__wr_data = csr__rd_data;
-            csr__wr_data[CSR__MBADADDR__MBADADDR__FIELD] = {c[63:1], 1'b0};
+            csr__wr_data[CSR__MTVAL__MTVAL__FIELD] = {c[63:1], 1'b0};
             state__n = STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__1;
         end
 
@@ -2792,10 +2792,10 @@ always_comb begin
         STATE__EXCEPTION__LOAD_ACCESS_FAULT__0:
         begin
             func = FUNC__ADD; 
-            csr__addr = CSR__MBADADDR;
+            csr__addr = CSR__MTVAL;
             csr__we = 1'b1;
             csr__wr_data = csr__rd_data;
-            csr__wr_data[CSR__MBADADDR__MBADADDR__FIELD] = c;
+            csr__wr_data[CSR__MTVAL__MTVAL__FIELD] = c;
             state__n = STATE__EXCEPTION__LOAD_ACCESS_FAULT__1;
         end
 
@@ -2818,10 +2818,10 @@ always_comb begin
         STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0:
         begin
             func = FUNC__ADD; 
-            csr__addr = CSR__MBADADDR;
+            csr__addr = CSR__MTVAL;
             csr__we = 1'b1;
             csr__wr_data = csr__rd_data;
-            csr__wr_data[CSR__MBADADDR__MBADADDR__FIELD] = c;
+            csr__wr_data[CSR__MTVAL__MTVAL__FIELD] = c;
             state__n = STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__1;
         end
 
@@ -2844,10 +2844,10 @@ always_comb begin
         STATE__EXCEPTION__STORE_ACCESS_FAULT__0:
         begin
             func = FUNC__ADD; 
-            csr__addr = CSR__MBADADDR;
+            csr__addr = CSR__MTVAL;
             csr__we = 1'b1;
             csr__wr_data = csr__rd_data;
-            csr__wr_data[CSR__MBADADDR__MBADADDR__FIELD] = c;
+            csr__wr_data[CSR__MTVAL__MTVAL__FIELD] = c;
             state__n = STATE__EXCEPTION__STORE_ACCESS_FAULT__1;
         end
 
@@ -2870,10 +2870,10 @@ always_comb begin
         STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__0:
         begin
             func = FUNC__ADD; 
-            csr__addr = CSR__MBADADDR;
+            csr__addr = CSR__MTVAL;
             csr__we = 1'b1;
             csr__wr_data = csr__rd_data;
-            csr__wr_data[CSR__MBADADDR__MBADADDR__FIELD] = c;
+            csr__wr_data[CSR__MTVAL__MTVAL__FIELD] = c;
             state__n = STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__1;
         end
 
@@ -2900,7 +2900,7 @@ always_comb begin
             csr__wr_data = csr__rd_data;
             csr__wr_data[CSR__MSTATUS__MIE__FIELD] <= CSR__MSTATUS__MIE__DISABLED;
             csr__wr_data[CSR__MSTATUS__MPIE__FIELD] <= csr__rd_data[CSR__MSTATUS__MIE__FIELD];
-            state__n = STATE__TRAP__2;
+            state__n = STATE__TRAP__1;
         end
 
         //==============================
@@ -2912,7 +2912,7 @@ always_comb begin
             csr__we = 1'b1;
             csr__wr_data = csr__rd_data;
             csr__wr_data[CSR__MEPC__MEPC__FIELD] = pc;
-            state__n = STATE__TRAP__1;
+            state__n = STATE__TRAP__2;
         end
 
         //==============================
