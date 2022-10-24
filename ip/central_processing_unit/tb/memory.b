@@ -11,6 +11,8 @@ module tb_mem
     input [2:0] cpu_to_mem__dtype,
     input [63:0] cpu_to_mem__data,
     output logic mem_to_cpu__valid,
+    output logic mem_to_cpu__access_fault,
+    output logic mem_to_cpu__address_misaligned,
     output logic [63:0] mem_to_cpu__data
 );
 
@@ -172,6 +174,39 @@ always_ff @(posedge clk) begin
 end
 
 
+always_comb begin
+    case (dtype)
+        DTYPE__D:
+        begin
+            mem_to_cpu__address_misaligned = (addr[2:0] != 3'b0);
+        end
+        DTYPE__W:
+        begin
+            mem_to_cpu__address_misaligned = (addr[1:0] != 2'b0);
+        end
+        DTYPE__WU:
+        begin
+            mem_to_cpu__address_misaligned = (addr[1:0] != 2'b0);
+        end
+        DTYPE__H:
+        begin
+            mem_to_cpu__address_misaligned = (addr[0] != 1'b0);
+        end
+        DTYPE__HU:
+        begin
+            mem_to_cpu__address_misaligned = (addr[0] != 1'b0);
+        end
+        DTYPE__B:
+        begin
+            mem_to_cpu__address_misaligned = 1'b0;
+        end
+        DTYPE__BU:
+        begin
+            mem_to_cpu__address_misaligned = 1'b0;
+        end
+    endcase
+end
+
 //==============================================
 // Finite State Machine
 //==============================================
@@ -185,6 +220,7 @@ always_comb begin
     dtype__n = dtype;
     wr_data__n = wr_data;
     mem_to_cpu__valid = 1'b0;
+    mem_to_cpu__access_fault = 1'b0;
     we = 1'b0;
 
     case (state)
@@ -206,7 +242,7 @@ always_comb begin
         //==============================
         STATE__READ:
         begin
-            mem_to_cpu__valid = 1'b1;  
+            mem_to_cpu__valid = 1'b1; 
             state__n = STATE__READY;
         end
 
@@ -215,7 +251,7 @@ always_comb begin
         //==============================
         STATE__WRITE:
         begin
-            we = 1'b1;
+            we = !(mem_to_cpu__access_fault || mem_to_cpu__address_misaligned);
             mem_to_cpu__valid = 1'b1;  
             state__n = STATE__READY;
         end

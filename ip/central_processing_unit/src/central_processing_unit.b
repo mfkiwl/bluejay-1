@@ -11,6 +11,8 @@ module central_processing_unit
     output logic [2:0] cpu_to_mem__dtype,
     output logic [63:0] cpu_to_mem__data,
     input mem_to_cpu__valid,
+    input mem_to_cpu__access_fault,
+    input mem_to_cpu__address_misaligned,
     input [63:0] mem_to_cpu__data
 );
 
@@ -446,7 +448,7 @@ always_comb begin
         STATE__FETCH__2:
         begin
             ir__n = mem_to_cpu__data[31:0];
-            state__n = mem_to_cpu__valid ? STATE__DECODE : STATE__FETCH__2;
+            state__n = mem_to_cpu__valid ? mem_to_cpu__access_fault ? STATE__EXCEPTION__INSTRUCTION_ACCESS_FAULT__0 : mem_to_cpu__address_misaligned ? STATE__FATAL : STATE__DECODE : STATE__FETCH__2;
         end
 
         //==============================
@@ -1542,9 +1544,9 @@ always_comb begin
         STATE__LB__2:
         begin
             addr = rd;
-            we = mem_to_cpu__valid;
+            we = mem_to_cpu__valid & !mem_to_cpu__access_fault & !mem_to_cpu__address_misaligned;
             wr_data = mem_to_cpu__data;
-            state__n = mem_to_cpu__valid ? STATE__LB__3 : STATE__LB__2;
+            state__n = mem_to_cpu__valid ? mem_to_cpu__access_fault ? STATE__EXCEPTION__LOAD_ACCESS_FAULT__0 : mem_to_cpu__address_misaligned ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0 : STATE__LB__3 : STATE__LB__2;
         end
 
         //==============================
@@ -1585,9 +1587,9 @@ always_comb begin
         STATE__LH__2:
         begin
             addr = rd;
-            we = mem_to_cpu__valid;
+            we = mem_to_cpu__valid & !mem_to_cpu__access_fault & !mem_to_cpu__address_misaligned;
             wr_data = mem_to_cpu__data;
-            state__n = mem_to_cpu__valid ? STATE__LH__3 : STATE__LH__2;
+            state__n = mem_to_cpu__valid ? mem_to_cpu__access_fault ? STATE__EXCEPTION__LOAD_ACCESS_FAULT__0 : mem_to_cpu__address_misaligned ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0 : STATE__LH__3 : STATE__LH__2;
         end
 
         //==============================
@@ -1628,9 +1630,9 @@ always_comb begin
         STATE__LW__2:
         begin
             addr = rd;
-            we = mem_to_cpu__valid;
+            we = mem_to_cpu__valid & !mem_to_cpu__access_fault & !mem_to_cpu__address_misaligned;
             wr_data = mem_to_cpu__data;
-            state__n = mem_to_cpu__valid ? STATE__LW__3 : STATE__LW__2;
+            state__n = mem_to_cpu__valid ? mem_to_cpu__access_fault ? STATE__EXCEPTION__LOAD_ACCESS_FAULT__0 : mem_to_cpu__address_misaligned ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0 : STATE__LW__3 : STATE__LW__2;
         end
 
         //==============================
@@ -1671,9 +1673,9 @@ always_comb begin
         STATE__LD__2:
         begin
             addr = rd;
-            we = mem_to_cpu__valid;
+            we = mem_to_cpu__valid & !mem_to_cpu__access_fault & !mem_to_cpu__address_misaligned;
             wr_data = mem_to_cpu__data;
-            state__n = mem_to_cpu__valid ? STATE__LD__3 : STATE__LD__2;
+            state__n = mem_to_cpu__valid ? mem_to_cpu__access_fault ? STATE__EXCEPTION__LOAD_ACCESS_FAULT__0 : mem_to_cpu__address_misaligned ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0 : STATE__LD__3 : STATE__LD__2;
         end
 
         //==============================
@@ -1714,9 +1716,9 @@ always_comb begin
         STATE__LBU__2:
         begin
             addr = rd;
-            we = mem_to_cpu__valid;
+            we = mem_to_cpu__valid & !mem_to_cpu__access_fault & !mem_to_cpu__address_misaligned;
             wr_data = mem_to_cpu__data;
-            state__n = mem_to_cpu__valid ? STATE__LBU__3 : STATE__LBU__2;
+            state__n = mem_to_cpu__valid ? mem_to_cpu__access_fault ? STATE__EXCEPTION__LOAD_ACCESS_FAULT__0 : mem_to_cpu__address_misaligned ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0 : STATE__LBU__3 : STATE__LBU__2;
         end
 
         //==============================
@@ -1757,9 +1759,9 @@ always_comb begin
         STATE__LHU__2:
         begin
             addr = rd;
-            we = mem_to_cpu__valid;
+            we = mem_to_cpu__valid & !mem_to_cpu__access_fault & !mem_to_cpu__address_misaligned;
             wr_data = mem_to_cpu__data;
-            state__n = mem_to_cpu__valid ? STATE__LHU__3 : STATE__LHU__2;
+            state__n = mem_to_cpu__valid ? mem_to_cpu__access_fault ? STATE__EXCEPTION__LOAD_ACCESS_FAULT__0 : mem_to_cpu__address_misaligned ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0 : STATE__LHU__3 : STATE__LHU__2;
         end
 
         //==============================
@@ -1800,9 +1802,9 @@ always_comb begin
         STATE__LWU__2:
         begin
             addr = rd;
-            we = mem_to_cpu__valid;
+            we = mem_to_cpu__valid & !mem_to_cpu__access_fault & !mem_to_cpu__address_misaligned;
             wr_data = mem_to_cpu__data;
-            state__n = mem_to_cpu__valid ? STATE__LWU__3 : STATE__LWU__2;
+            state__n = mem_to_cpu__valid ? mem_to_cpu__access_fault ? STATE__EXCEPTION__LOAD_ACCESS_FAULT__0 : mem_to_cpu__address_misaligned ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0 : STATE__LWU__3 : STATE__LWU__2;
         end
 
         //==============================
@@ -1845,7 +1847,7 @@ always_comb begin
         //==============================
         STATE__SB__2:
         begin
-            state__n = mem_to_cpu__valid ? STATE__SB__3 : STATE__SB__2;
+            state__n = mem_to_cpu__valid ? mem_to_cpu__access_fault ? STATE__EXCEPTION__STORE_ACCESS_FAULT__0 : mem_to_cpu__address_misaligned ? STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__0 : STATE__SB__3 : STATE__SB__2;
         end
 
 
@@ -1889,7 +1891,7 @@ always_comb begin
         //==============================
         STATE__SH__2:
         begin
-            state__n = mem_to_cpu__valid ? STATE__SH__3 : STATE__SH__2;
+            state__n = mem_to_cpu__valid ? mem_to_cpu__access_fault ? STATE__EXCEPTION__STORE_ACCESS_FAULT__0 : mem_to_cpu__address_misaligned ? STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__0 : STATE__SH__3 : STATE__SH__2;
         end
 
         //==============================
@@ -1932,7 +1934,7 @@ always_comb begin
         //==============================
         STATE__SW__2:
         begin
-            state__n = mem_to_cpu__valid ? STATE__SW__3 : STATE__SW__2;
+            state__n = mem_to_cpu__valid ? mem_to_cpu__access_fault ? STATE__EXCEPTION__STORE_ACCESS_FAULT__0 : mem_to_cpu__address_misaligned ? STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__0 : STATE__SW__3 : STATE__SW__2;
         end
 
         //==============================
@@ -1975,7 +1977,7 @@ always_comb begin
         //==============================
         STATE__SD__2:
         begin
-            state__n = mem_to_cpu__valid ? STATE__SD__3 : STATE__SD__2;
+            state__n = mem_to_cpu__valid ? mem_to_cpu__access_fault ? STATE__EXCEPTION__STORE_ACCESS_FAULT__0 : mem_to_cpu__address_misaligned ? STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__0 : STATE__SD__3 : STATE__SD__2;
         end
 
 
@@ -2722,7 +2724,7 @@ always_comb begin
         end
 
         //==============================
-        // STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__0
+        // STATE__EXCEPTION__INSTRUCTION_ACCESS_FAULT__0
         //==============================
         STATE__EXCEPTION__INSTRUCTION_ACCESS_FAULT__0:
         begin
