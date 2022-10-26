@@ -6,13 +6,14 @@ module tb_mem
     input clk,
     input rst,
     input cpu_to_mem__valid,
+    output logic cpu_to_mem__ready,
     input cpu_to_mem__we,
     input [63:0] cpu_to_mem__addr,
     input [2:0] cpu_to_mem__dtype,
     input [63:0] cpu_to_mem__data,
     output logic mem_to_cpu__valid,
-    output logic mem_to_cpu__access_fault,
-    output logic mem_to_cpu__address_misaligned,
+    input mem_to_cpu__ready,
+    output logic mem_to_cpu__error,
     output logic [63:0] mem_to_cpu__data
 );
 
@@ -23,6 +24,7 @@ parameter DEPTH__LOG2 = 1;
 // internal logic
 logic [DEPTH__LOG2-1:0] addr;
 logic [DEPTH__LOG2-1:0] addr__n;
+logic [63:0] rd_data;
 logic [63:0] wr_data;
 logic [63:0] wr_data__n;
 logic [2:0] dtype;
@@ -31,6 +33,7 @@ logic [7:0] memory [DEPTH-1:0];
 logic we;
 logic [1:0] state;
 logic [1:0] state__n;
+logic address_misaligned;
 
 
 
@@ -41,80 +44,80 @@ always_comb begin
     case (dtype)
         3'h0:
         begin
-            mem_to_cpu__data[7:0] = memory[addr];
-            mem_to_cpu__data[15:8] = memory[addr + 1];
-            mem_to_cpu__data[23:16] = memory[addr + 2];
-            mem_to_cpu__data[31:24] = memory[addr + 3];
-            mem_to_cpu__data[39:32] = memory[addr + 4];
-            mem_to_cpu__data[47:40] = memory[addr + 5];
-            mem_to_cpu__data[55:48] = memory[addr + 6];
-            mem_to_cpu__data[63:56] = memory[addr + 7];
+            rd_data[7:0] = memory[addr];
+            rd_data[15:8] = memory[addr + 1];
+            rd_data[23:16] = memory[addr + 2];
+            rd_data[31:24] = memory[addr + 3];
+            rd_data[39:32] = memory[addr + 4];
+            rd_data[47:40] = memory[addr + 5];
+            rd_data[55:48] = memory[addr + 6];
+            rd_data[63:56] = memory[addr + 7];
         end
         3'h1:
         begin
-            mem_to_cpu__data[7:0] = memory[addr];
-            mem_to_cpu__data[15:8] = memory[addr + 1];
-            mem_to_cpu__data[23:16] = memory[addr + 2];
-            mem_to_cpu__data[31:24] = memory[addr + 3];
-            mem_to_cpu__data[39:32] = {8{memory[addr + 3][7]}};
-            mem_to_cpu__data[47:40] = {8{memory[addr + 3][7]}};
-            mem_to_cpu__data[55:48] = {8{memory[addr + 3][7]}}; 
-            mem_to_cpu__data[63:56] = {8{memory[addr + 3][7]}};
+            rd_data[7:0] = memory[addr];
+            rd_data[15:8] = memory[addr + 1];
+            rd_data[23:16] = memory[addr + 2];
+            rd_data[31:24] = memory[addr + 3];
+            rd_data[39:32] = {8{memory[addr + 3][7]}};
+            rd_data[47:40] = {8{memory[addr + 3][7]}};
+            rd_data[55:48] = {8{memory[addr + 3][7]}}; 
+            rd_data[63:56] = {8{memory[addr + 3][7]}};
         end
         3'h2:
         begin
-            mem_to_cpu__data[7:0] = memory[addr];
-            mem_to_cpu__data[15:8] = memory[addr + 1];
-            mem_to_cpu__data[23:16] = memory[addr + 2];
-            mem_to_cpu__data[31:24] = memory[addr + 3];
-            mem_to_cpu__data[39:32] = 8'h0;
-            mem_to_cpu__data[47:40] = 8'h0;
-            mem_to_cpu__data[55:48] = 8'h0; 
-            mem_to_cpu__data[63:56] = 8'h0;
+            rd_data[7:0] = memory[addr];
+            rd_data[15:8] = memory[addr + 1];
+            rd_data[23:16] = memory[addr + 2];
+            rd_data[31:24] = memory[addr + 3];
+            rd_data[39:32] = 8'h0;
+            rd_data[47:40] = 8'h0;
+            rd_data[55:48] = 8'h0; 
+            rd_data[63:56] = 8'h0;
         end
         3'h3:
         begin
-            mem_to_cpu__data[7:0] = memory[addr];
-            mem_to_cpu__data[15:8] = memory[addr + 1];
-            mem_to_cpu__data[23:16] = {8{memory[addr + 1][7]}};
-            mem_to_cpu__data[31:24] = {8{memory[addr + 1][7]}};
-            mem_to_cpu__data[39:32] = {8{memory[addr + 1][7]}};
-            mem_to_cpu__data[47:40] = {8{memory[addr + 1][7]}};
-            mem_to_cpu__data[55:48] = {8{memory[addr + 1][7]}}; 
-            mem_to_cpu__data[63:56] = {8{memory[addr + 1][7]}};
+            rd_data[7:0] = memory[addr];
+            rd_data[15:8] = memory[addr + 1];
+            rd_data[23:16] = {8{memory[addr + 1][7]}};
+            rd_data[31:24] = {8{memory[addr + 1][7]}};
+            rd_data[39:32] = {8{memory[addr + 1][7]}};
+            rd_data[47:40] = {8{memory[addr + 1][7]}};
+            rd_data[55:48] = {8{memory[addr + 1][7]}}; 
+            rd_data[63:56] = {8{memory[addr + 1][7]}};
         end
         3'h4:
         begin
-            mem_to_cpu__data[7:0] = memory[addr];
-            mem_to_cpu__data[15:8] = memory[addr + 1];
-            mem_to_cpu__data[23:16] = 8'h0;
-            mem_to_cpu__data[31:24] = 8'h0;
-            mem_to_cpu__data[39:32] = 8'h0;
-            mem_to_cpu__data[47:40] = 8'h0;
-            mem_to_cpu__data[55:48] = 8'h0; 
-            mem_to_cpu__data[63:56] = 8'h0; 
+            rd_data[7:0] = memory[addr];
+            rd_data[15:8] = memory[addr + 1];
+            rd_data[23:16] = 8'h0;
+            rd_data[31:24] = 8'h0;
+            rd_data[39:32] = 8'h0;
+            rd_data[47:40] = 8'h0;
+            rd_data[55:48] = 8'h0; 
+            rd_data[63:56] = 8'h0; 
         end
         3'h5:
         begin
-            mem_to_cpu__data[7:0] = memory[addr];
-            mem_to_cpu__data[15:8] = {8{memory[addr][7]}};
-            mem_to_cpu__data[23:16] = {8{memory[addr][7]}};
-            mem_to_cpu__data[31:24] = {8{memory[addr][7]}};
-            mem_to_cpu__data[39:32] = {8{memory[addr][7]}};
-            mem_to_cpu__data[47:40] = {8{memory[addr][7]}};
-            mem_to_cpu__data[55:48] = {8{memory[addr][7]}}; 
-            mem_to_cpu__data[63:56] = {8{memory[addr][7]}};
+            rd_data[7:0] = memory[addr];
+            rd_data[15:8] = {8{memory[addr][7]}};
+            rd_data[23:16] = {8{memory[addr][7]}};
+            rd_data[31:24] = {8{memory[addr][7]}};
+            rd_data[39:32] = {8{memory[addr][7]}};
+            rd_data[47:40] = {8{memory[addr][7]}};
+            rd_data[55:48] = {8{memory[addr][7]}}; 
+            rd_data[63:56] = {8{memory[addr][7]}};
         end
         3'h6:
         begin
-            mem_to_cpu__data[7:0] = memory[addr];
-            mem_to_cpu__data[15:8] = 8'h0;
-            mem_to_cpu__data[23:16] = 8'h0;
-            mem_to_cpu__data[31:24] = 8'h0;
-            mem_to_cpu__data[39:32] = 8'h0;
-            mem_to_cpu__data[47:40] = 8'h0;
-            mem_to_cpu__data[55:48] = 8'h0; 
-            mem_to_cpu__data[63:56] = 8'h0; 
+            rd_data[7:0] = memory[addr];
+            rd_data[15:8] = 8'h0;
+            rd_data[23:16] = 8'h0;
+            rd_data[31:24] = 8'h0;
+            rd_data[39:32] = 8'h0;
+            rd_data[47:40] = 8'h0;
+            rd_data[55:48] = 8'h0; 
+            rd_data[63:56] = 8'h0; 
         end
     endcase
 end
@@ -178,31 +181,31 @@ always_comb begin
     case (dtype)
         3'h0:
         begin
-            mem_to_cpu__address_misaligned = (addr[2:0] != 3'b0);
+            address_misaligned = (addr[2:0] != 3'b0);
         end
         3'h1:
         begin
-            mem_to_cpu__address_misaligned = (addr[1:0] != 2'b0);
+            address_misaligned = (addr[1:0] != 2'b0);
         end
         3'h2:
         begin
-            mem_to_cpu__address_misaligned = (addr[1:0] != 2'b0);
+            address_misaligned = (addr[1:0] != 2'b0);
         end
         3'h3:
         begin
-            mem_to_cpu__address_misaligned = (addr[0] != 1'b0);
+            address_misaligned = (addr[0] != 1'b0);
         end
         3'h4:
         begin
-            mem_to_cpu__address_misaligned = (addr[0] != 1'b0);
+            address_misaligned = (addr[0] != 1'b0);
         end
         3'h5:
         begin
-            mem_to_cpu__address_misaligned = 1'b0;
+            address_misaligned = 1'b0;
         end
         3'h6:
         begin
-            mem_to_cpu__address_misaligned = 1'b0;
+            address_misaligned = 1'b0;
         end
     endcase
 end
@@ -219,8 +222,10 @@ always_comb begin
     addr__n = addr;
     dtype__n = dtype;
     wr_data__n = wr_data;
+    cpu_to_mem__ready = 1'b0;
     mem_to_cpu__valid = 1'b0;
-    mem_to_cpu__access_fault = 1'b0;
+    mem_to_cpu__error = 1'b0;
+    mem_to_cpu__data = rd_data;
     we = 1'b0;
 
     case (state)
@@ -229,6 +234,8 @@ always_comb begin
         //==============================
         STATE__READY:
         begin
+            cpu_to_mem__ready = 1'b1;
+
             if (cpu_to_mem__valid) begin
                 addr__n = cpu_to_mem__addr[DEPTH__LOG2-1:0];
                 dtype__n = cpu_to_mem__dtype;
@@ -243,7 +250,14 @@ always_comb begin
         STATE__READ:
         begin
             mem_to_cpu__valid = 1'b1; 
-            state__n = STATE__READY;
+            if (address_misaligned) begin
+                mem_to_cpu__error = 1'b1; 
+                mem_to_cpu__data = 64'h1;
+            end
+            else begin
+                mem_to_cpu__data = rd_data;
+            end
+            state__n = mem_to_cpu__ready ? STATE__READY : STATE__READ;
         end
 
         //==============================
@@ -251,9 +265,15 @@ always_comb begin
         //==============================
         STATE__WRITE:
         begin
-            we = !(mem_to_cpu__access_fault || mem_to_cpu__address_misaligned);
-            mem_to_cpu__valid = 1'b1;  
-            state__n = STATE__READY;
+            mem_to_cpu__valid = 1'b1; 
+            if (address_misaligned) begin
+                mem_to_cpu__error = 1'b1; 
+                mem_to_cpu__data = 64'h1;
+            end
+            else begin
+                we = 1'b1;
+            end
+            state__n = mem_to_cpu__ready ? STATE__READY : STATE__WRITE;
         end
 
     endcase

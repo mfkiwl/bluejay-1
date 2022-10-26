@@ -12,6 +12,8 @@
 #define FUNCT3__ORI 3'h6
 #define FUNCT3__ANDI 3'h7
 
+#define ERRORCODE__ACCESS_FAULT 64'h0
+#define ERRORCODE__MISALIGNED_ADDRESS 64'h1
 
 #define SIZE__DOUBLE 2'h0
 #define SIZE__WORD 2'h1
