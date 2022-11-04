@@ -1,4 +1,4 @@
-Running: xsim.dir/central_processing_unit__tb__snapshot/xsimk -wdb XORI-01.wdb -simmode gui -testplusarg filename__mem=/home/seankent/bluejay/ip/central_processing_unit/sim/XORI-01.mem -testplusarg filename__sig=/home/seankent/bluejay/ip/central_processing_unit/sim/XORI-01.signature -testplusarg begin_signature=0000000080003010 -testplusarg end_signature=0000000080003970 -testplusarg tohost=0000000080002000 -simrunnum 0 -socket 40879
+Running: xsim.dir/central_processing_unit__tb__snapshot/xsimk -wdb XORI-01.wdb -simmode gui -testplusarg filename__mem=/home/seankent/bluejay/ip/central_processing_unit/sim/XORI-01.mem -testplusarg filename__sig=/home/seankent/bluejay/ip/central_processing_unit/sim/XORI-01.signature -testplusarg begin_signature=0000000080003010 -testplusarg end_signature=0000000080003970 -testplusarg tohost=0000000080002000 -simrunnum 0 -socket 36917
 Design successfully loaded
 Design Loading Memory Usage: 30072 KB (Peak: 30388 KB)
 Design Loading CPU Usage: 0 ms
