@@ -108,7 +108,7 @@ always_comb begin
             cpu_to_mmu__ready = 1'b1;
             we__n = cpu_to_mmu__we;
             addr__n = cpu_to_mmu__addr; 
-            data__n = cpu_to_mmu__data
+            wr_data__n = cpu_to_mmu__data
             state__n = STATE__PMA_CHECK;
         end
 
@@ -117,21 +117,26 @@ always_comb begin
         //==============================
         STATE__PMA_CHECK:
         begin
-            case (addr)
-                MMIO__RANGE__0:
+            casez (addr)
+                MEMORY_MAP__R0:
                 begin
                     state__n = 
+                end
+                MEMORY_MAP__R1:
+                begin
+                    state__n =  
                 end
             endcase
         end
 
         //==============================
-        // STATE__RANGE__0__REQUEST
+        // STATE__R0__0
         //==============================
-        STATE__RANGE__0__REQUEST:
+        STATE__R0__0:
         begin
-            range__0__valid = 1'b1;
-            range__0__data[] = 
+            ena = 1'b1;
+            wea = we;
+            dina = wr_data;
             range__0__data[] = 
             state__n = range__0__ready ? 
         end

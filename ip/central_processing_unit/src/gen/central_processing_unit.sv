@@ -59,6 +59,9 @@ logic csr__we;
 logic [11:0] csr__addr;
 logic [63:0] csr__wr_data;
 logic [63:0] csr__rd_data;
+logic [63:0] mstatus;
+logic [63:0] mie;
+logic [63:0] mip;
 
 // Memory Interface
 //logic cpu_to_mem__valid;
@@ -147,7 +150,10 @@ control_and_status_registers control_and_status_registers__0
     .we(csr__we),
     .addr(csr__addr),
     .rd_data(csr__rd_data),
-    .wr_data(csr__wr_data)
+    .wr_data(csr__wr_data),
+    .mstatus(mstatus),
+    .mie(mie),
+    .mip(mip)
 );
 
 
@@ -373,7 +379,10 @@ localparam STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__0 = 8'hd6;
 localparam STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__1 = 8'hd7;
 localparam STATE__EXCEPTION__STORE_ACCESS_FAULT__0 = 8'hd8;
 localparam STATE__EXCEPTION__STORE_ACCESS_FAULT__1 = 8'hd9;
-localparam STATE__FATAL = 8'hda;
+localparam STATE__INTERRUPT__SOFTWARE = 8'hda;
+localparam STATE__INTERRUPT__TIMER = 8'hdb;
+localparam STATE__INTERRUPT__EXTERNAL = 8'hdc;
+localparam STATE__FATAL = 8'hdd;
 
 
 always_comb begin
@@ -435,6 +444,7 @@ always_comb begin
         //==============================
         STATE__FETCH__0:
         begin
+            state__n = (mstatus[3] && mip[11] && mie[11]) ? STATE__INTERRUPT__EXTERNAL : (mstatus[3] && mip[3] && mie[3]) ? STATE__INTERRUPT__SOFTWARE : (mstatus[3] && mip[7] && mie[7]) ? STATE__INTERRUPT__TIMER : STATE__FETCH__1;
             state__n = STATE__FETCH__1;
         end
 
@@ -3030,6 +3040,43 @@ always_comb begin
         end
 
         //==============================
+        // STATE__INTERRUPT__SOFTWARE
+        //==============================
+        STATE__INTERRUPT__SOFTWARE:
+        begin
+            csr__addr = 12'h342;
+            csr__we = 1'b1;
+            csr__wr_data[62:0] = 63'h3;
+            csr__wr_data[63] = 1'b1;
+            state__n = STATE__TRAP__0;
+        end
+
+        //==============================
+        // STATE__INTERRUPT__TIMER
+        //==============================
+        STATE__INTERRUPT__TIMER:
+        begin
+            csr__addr = 12'h342;
+            csr__we = 1'b1;
+            csr__wr_data[62:0] = 63'h7;
+            csr__wr_data[63] = 1'b1;
+            state__n = STATE__TRAP__0;
+        end
+
+        //==============================
+        // STATE__INTERRUPT__EXTERNAL
+        //==============================
+        STATE__INTERRUPT__EXTERNAL:
+        begin
+            csr__addr = 12'h342;
+            csr__we = 1'b1;
+            csr__wr_data[62:0] = 63'hb;
+            csr__wr_data[63] = 1'b1;
+            state__n = STATE__TRAP__0;
+        end
+
+
+        //==============================
         // STATE__TRAP__0
         //==============================
         STATE__TRAP__0:
@@ -3072,20 +3119,6 @@ always_comb begin
             state__n = STATE__FATAL;
         end
         
-//
-//
-//        //==============================
-//        // STATE__INTERRUPT__EXTERNAL
-//        //==============================
-//        STATE__INTERRUPT__EXTERNAL:
-//        begin
-//            csr__addr = 12'h342;
-//            csr__we = 1'b1;
-//            csr__wr_data[62:0] = CSR__MCAUSE__EXEPTION_CODE__ILLEGAL_INSTRUCTION;
-//            csr__wr_data[63] = 1'b0;
-//            state__n = STATE__TRAP__0;
-//        end
-//
     endcase
 end
 

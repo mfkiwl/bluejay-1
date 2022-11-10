@@ -8,7 +8,10 @@ module control_and_status_registers
     input we,
     input [11:0] addr,
     output logic [63:0] rd_data,
-    input [63:0] wr_data
+    input [63:0] wr_data,
+    output [63:0] mstatus,
+    output [63:0] mie,
+    output [63:0] mip
 );
 
 //logic we;

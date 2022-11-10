@@ -59,6 +59,9 @@ logic csr__we;
 logic [11:0] csr__addr;
 logic [63:0] csr__wr_data;
 logic [63:0] csr__rd_data;
+logic [63:0] mstatus;
+logic [63:0] mie;
+logic [63:0] mip;
 
 // Memory Interface
 //logic cpu_to_mem__valid;
@@ -147,7 +150,10 @@ control_and_status_registers control_and_status_registers__0
     .we(csr__we),
     .addr(csr__addr),
     .rd_data(csr__rd_data),
-    .wr_data(csr__wr_data)
+    .wr_data(csr__wr_data),
+    .mstatus(mstatus),
+    .mie(mie),
+    .mip(mip)
 );
 
 
