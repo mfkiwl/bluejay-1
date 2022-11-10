@@ -34,6 +34,20 @@ module physical_memory_attribute_checker
 );
 
 
+//==============================
+// tx
+//==============================
+tx tx__range__0
+(
+    .clk(clk),
+    .rst(rst),
+    .valid(),
+    .ready(),
+    .data(),
+    .tx__valid(),
+    .tx__data(),
+    .tx__credit()
+);
 
 
 mmu_to_mem__0__valid;
@@ -92,6 +106,9 @@ always_comb begin
         STATE__ACCEPT_REQ:
         begin
             cpu_to_mmu__ready = 1'b1;
+            we__n = cpu_to_mmu__we;
+            addr__n = cpu_to_mmu__addr; 
+            data__n = cpu_to_mmu__data
             state__n = STATE__PMA_CHECK;
         end
 
@@ -100,15 +117,42 @@ always_comb begin
         //==============================
         STATE__PMA_CHECK:
         begin
-            state__n = STATE__;
+            case (addr)
+                MMIO__RANGE__0:
+                begin
+                    state__n = 
+                end
+            endcase
+        end
+
+        //==============================
+        // STATE__RANGE__0__REQUEST
+        //==============================
+        STATE__RANGE__0__REQUEST:
+        begin
+            range__0__valid = 1'b1;
+            range__0__data[] = 
+            range__0__data[] = 
+            state__n = range__0__ready ? 
         end
 
 
+             
+
+        //==============================
+        // STATE__RANGE__0__0
+        //==============================
+        STATE__RANGE__0__0:
+        begin
+            cpu_to_
+            cpu_to_mmu__ready = 1'b1;
+            addr__n = 
+            
+            state__n = STATE__PMA_CHECK;
+        end
+
 
             if (cpu_to_mmu__valid) begin
-                we__n = cpu_to_mmu__we;
-                addr__n = cpu_to_mmu__addr; 
-                data__n = cpu_to_mmu__data
 
                 state__n = STATE__PMA_CHECK;
             end

@@ -375,9 +375,6 @@ states = [
     'STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__1',
     'STATE__EXCEPTION__STORE_ACCESS_FAULT__0',
     'STATE__EXCEPTION__STORE_ACCESS_FAULT__1',
-    'STATE__INTERRUPT__SOFTWARE',
-    'STATE__INTERRUPT__TIMER',
-    'STATE__INTERRUPT__EXTERNAL',
     'STATE__FATAL',
 ]
 
@@ -446,7 +443,6 @@ always_comb begin
         //==============================
         STATE__FETCH__0:
         begin
-            state__n = (mstatus[CSR__MSTATUS__MIE__FIELD] && mip[CSR__MIP__MEIP__FIELD] && mie[CSR__MIE__MEIE__FIELD]) ? STATE__INTERRUPT__EXTERNAL : (mstatus[CSR__MSTATUS__MIE__FIELD] && mip[CSR__MIP__MSIP__FIELD] && mie[CSR__MIE__MSIE__FIELD]) ? STATE__INTERRUPT__SOFTWARE : (mstatus[CSR__MSTATUS__MIE__FIELD] && mip[CSR__MIP__MTIP__FIELD] && mie[CSR__MIE__MTIE__FIELD]) ? STATE__INTERRUPT__TIMER : STATE__FETCH__1;
             state__n = STATE__FETCH__1;
         end
 
@@ -458,7 +454,10 @@ always_comb begin
             cpu_to_mem__valid = 1'b1;
             cpu_to_mem__addr = pc;
             cpu_to_mem__dtype = DTYPE__W;
-            state__n = cpu_to_mem__ready ? STATE__FETCH__2 : STATE__FETCH__1;
+
+            if (cpu_to_mem__ready) begin
+                state__n = STATE__FETCH__2;
+            end
         end
 
         //==============================
@@ -466,26 +465,22 @@ always_comb begin
         //==============================
         STATE__FETCH__2:
         begin
-            state__n = mem_to_cpu__valid ? (mem_to_cpu__error ? STATE__FETCH__4 : STATE__FETCH__3) : STATE__FETCH__2;
-        end
-
-        //==============================
-        // STATE__FETCH__3
-        //==============================
-        STATE__FETCH__3:
-        begin
-            ir__n = mem_to_cpu__data[31:0];
             mem_to_cpu__ready = 1'b1;
-            state__n = STATE__DECODE;
-        end
 
-        //==============================
-        // STATE__FETCH__4
-        //==============================
-        STATE__FETCH__4:
-        begin
-            mem_to_cpu__ready = 1'b1;
-            state__n = (mem_to_cpu__data == ERRORCODE__ACCESS_FAULT) ? STATE__EXCEPTION__INSTRUCTION_ACCESS_FAULT__0 : STATE__FATAL;
+            if (mem_to_cpu__valid) begin
+                if (mem_to_cpu__error) begin
+                    if (mem_to_cpu__data == ERRORCODE__ACCESS_FAULT) begin
+                        state__n = STATE__EXCEPTION__INSTRUCTION_ACCESS_FAULT__0;
+                    end
+                    else begin
+                        state__n = STATE__FATAL; 
+                    end
+                end
+                else begin
+                    ir__n = mem_to_cpu__data[31:0];
+                    state__n = STATE__DECODE;
+                end
+            end
         end
 
         //==============================
@@ -770,6 +765,9 @@ always_comb begin
         //==============================
         STATE__ADD__2:
         begin
+            case (op)
+
+            endcase
             func = FUNC__ADD;
             addr = rd;
             we = 1'b1;
@@ -1571,17 +1569,15 @@ always_comb begin
             func = FUNC__ADD;
             cpu_to_mem__valid = 1'b1;
             cpu_to_mem__addr = c;
-            cpu_to_mem__dtype = DTYPE__B;
-            state__n = cpu_to_mem__ready ? STATE__LB__2 : STATE__LB__1;
+            case (op)
+                cpu_to_mem__dtype = DTYPE__B;
+            endcase
+
+            if (cpu_to_mem__ready) begin
+                state__n = STATE__LB__2;
+            end
         end
 
-        //==============================
-        // STATE__LB__2
-        //==============================
-        STATE__LB__2:
-        begin
-            state__n = mem_to_cpu__valid ? (mem_to_cpu__error ? STATE__LB__4 : STATE__LB__3) : STATE__LB__2;
-        end
 
         //==============================
         // STATE__LB__3
@@ -1589,11 +1585,24 @@ always_comb begin
         STATE__LB__3:
         begin
             addr = rd;
-            we = 1'b1;
             wr_data = mem_to_cpu__data;
             mem_to_cpu__ready = 1'b1;
-            pc__n = pc + 4;
-            state__n = STATE__FETCH__0;
+
+            if (mem_to_cpu__valid) begin
+                if (mem_to_cpu__error) begin
+                    if (mem_to_cpu__data == ) begin
+
+                    end
+                    else begin
+
+                    end
+                end
+                else begin
+                    we = 1'b1;
+                    pc__n = pc + 4;
+                    state__n = STATE__FETCH__0;
+                end
+            end
         end
 
         //==============================
@@ -3042,43 +3051,6 @@ always_comb begin
         end
 
         //==============================
-        // STATE__INTERRUPT__SOFTWARE
-        //==============================
-        STATE__INTERRUPT__SOFTWARE:
-        begin
-            csr__addr = CSR__MCAUSE;
-            csr__we = 1'b1;
-            csr__wr_data[CSR__MCAUSE__EXCEPTION_CODE__FIELD] = CSR__MCAUSE__EXCEPTION_CODE__MACHINE_SOFTWARE_INTERRUPT;
-            csr__wr_data[CSR__MCAUSE__INTERRUPT__FIELD] = CSR__MCAUSE__INTERRUPT__INTERRUPT;
-            state__n = STATE__TRAP__0;
-        end
-
-        //==============================
-        // STATE__INTERRUPT__TIMER
-        //==============================
-        STATE__INTERRUPT__TIMER:
-        begin
-            csr__addr = CSR__MCAUSE;
-            csr__we = 1'b1;
-            csr__wr_data[CSR__MCAUSE__EXCEPTION_CODE__FIELD] = CSR__MCAUSE__EXCEPTION_CODE__MACHINE_TIMER_INTERRUPT;
-            csr__wr_data[CSR__MCAUSE__INTERRUPT__FIELD] = CSR__MCAUSE__INTERRUPT__INTERRUPT;
-            state__n = STATE__TRAP__0;
-        end
-
-        //==============================
-        // STATE__INTERRUPT__EXTERNAL
-        //==============================
-        STATE__INTERRUPT__EXTERNAL:
-        begin
-            csr__addr = CSR__MCAUSE;
-            csr__we = 1'b1;
-            csr__wr_data[CSR__MCAUSE__EXCEPTION_CODE__FIELD] = CSR__MCAUSE__EXCEPTION_CODE__MACHINE_EXTERNAL_INTERRUPT;
-            csr__wr_data[CSR__MCAUSE__INTERRUPT__FIELD] = CSR__MCAUSE__INTERRUPT__INTERRUPT;
-            state__n = STATE__TRAP__0;
-        end
-
-
-        //==============================
         // STATE__TRAP__0
         //==============================
         STATE__TRAP__0:
@@ -3121,6 +3093,20 @@ always_comb begin
             state__n = STATE__FATAL;
         end
         
+//
+//
+//        //==============================
+//        // STATE__INTERRUPT__EXTERNAL
+//        //==============================
+//        STATE__INTERRUPT__EXTERNAL:
+//        begin
+//            csr__addr = CSR__MCAUSE;
+//            csr__we = 1'b1;
+//            csr__wr_data[CSR__MCAUSE__EXCEPTION_CODE__FIELD] = CSR__MCAUSE__EXEPTION_CODE__ILLEGAL_INSTRUCTION;
+//            csr__wr_data[CSR__MCAUSE__INTERRUPT__FIELD] = CSR__MCAUSE__INTERRUPT__NOT_INTERRUPT;
+//            state__n = STATE__TRAP__0;
+//        end
+//
     endcase
 end
 

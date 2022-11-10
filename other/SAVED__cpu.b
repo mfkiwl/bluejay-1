@@ -375,9 +375,6 @@ states = [
     'STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__1',
     'STATE__EXCEPTION__STORE_ACCESS_FAULT__0',
     'STATE__EXCEPTION__STORE_ACCESS_FAULT__1',
-    'STATE__INTERRUPT__SOFTWARE',
-    'STATE__INTERRUPT__TIMER',
-    'STATE__INTERRUPT__EXTERNAL',
     'STATE__FATAL',
 ]
 
@@ -446,7 +443,6 @@ always_comb begin
         //==============================
         STATE__FETCH__0:
         begin
-            state__n = (mstatus[CSR__MSTATUS__MIE__FIELD] && mip[CSR__MIP__MEIP__FIELD] && mie[CSR__MIE__MEIE__FIELD]) ? STATE__INTERRUPT__EXTERNAL : (mstatus[CSR__MSTATUS__MIE__FIELD] && mip[CSR__MIP__MSIP__FIELD] && mie[CSR__MIE__MSIE__FIELD]) ? STATE__INTERRUPT__SOFTWARE : (mstatus[CSR__MSTATUS__MIE__FIELD] && mip[CSR__MIP__MTIP__FIELD] && mie[CSR__MIE__MTIE__FIELD]) ? STATE__INTERRUPT__TIMER : STATE__FETCH__1;
             state__n = STATE__FETCH__1;
         end
 
@@ -3042,43 +3038,6 @@ always_comb begin
         end
 
         //==============================
-        // STATE__INTERRUPT__SOFTWARE
-        //==============================
-        STATE__INTERRUPT__SOFTWARE:
-        begin
-            csr__addr = CSR__MCAUSE;
-            csr__we = 1'b1;
-            csr__wr_data[CSR__MCAUSE__EXCEPTION_CODE__FIELD] = CSR__MCAUSE__EXCEPTION_CODE__MACHINE_SOFTWARE_INTERRUPT;
-            csr__wr_data[CSR__MCAUSE__INTERRUPT__FIELD] = CSR__MCAUSE__INTERRUPT__INTERRUPT;
-            state__n = STATE__TRAP__0;
-        end
-
-        //==============================
-        // STATE__INTERRUPT__TIMER
-        //==============================
-        STATE__INTERRUPT__TIMER:
-        begin
-            csr__addr = CSR__MCAUSE;
-            csr__we = 1'b1;
-            csr__wr_data[CSR__MCAUSE__EXCEPTION_CODE__FIELD] = CSR__MCAUSE__EXCEPTION_CODE__MACHINE_TIMER_INTERRUPT;
-            csr__wr_data[CSR__MCAUSE__INTERRUPT__FIELD] = CSR__MCAUSE__INTERRUPT__INTERRUPT;
-            state__n = STATE__TRAP__0;
-        end
-
-        //==============================
-        // STATE__INTERRUPT__EXTERNAL
-        //==============================
-        STATE__INTERRUPT__EXTERNAL:
-        begin
-            csr__addr = CSR__MCAUSE;
-            csr__we = 1'b1;
-            csr__wr_data[CSR__MCAUSE__EXCEPTION_CODE__FIELD] = CSR__MCAUSE__EXCEPTION_CODE__MACHINE_EXTERNAL_INTERRUPT;
-            csr__wr_data[CSR__MCAUSE__INTERRUPT__FIELD] = CSR__MCAUSE__INTERRUPT__INTERRUPT;
-            state__n = STATE__TRAP__0;
-        end
-
-
-        //==============================
         // STATE__TRAP__0
         //==============================
         STATE__TRAP__0:
@@ -3121,6 +3080,20 @@ always_comb begin
             state__n = STATE__FATAL;
         end
         
+//
+//
+//        //==============================
+//        // STATE__INTERRUPT__EXTERNAL
+//        //==============================
+//        STATE__INTERRUPT__EXTERNAL:
+//        begin
+//            csr__addr = CSR__MCAUSE;
+//            csr__we = 1'b1;
+//            csr__wr_data[CSR__MCAUSE__EXCEPTION_CODE__FIELD] = CSR__MCAUSE__EXEPTION_CODE__ILLEGAL_INSTRUCTION;
+//            csr__wr_data[CSR__MCAUSE__INTERRUPT__FIELD] = CSR__MCAUSE__INTERRUPT__NOT_INTERRUPT;
+//            state__n = STATE__TRAP__0;
+//        end
+//
     endcase
 end
 

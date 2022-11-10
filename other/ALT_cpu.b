@@ -5,16 +5,12 @@ module central_processing_unit
 (
     input clk,
     input rst,
-    output logic cpu_to_mem__valid,
-    input cpu_to_mem__ready,
-    output logic cpu_to_mem__we,
-    output logic [63:0] cpu_to_mem__addr,
-    output logic [2:0] cpu_to_mem__dtype,
-    output logic [63:0] cpu_to_mem__data,
-    input mem_to_cpu__valid,
-    output logic mem_to_cpu__ready,
-    input mem_to_cpu__error,
-    input [63:0] mem_to_cpu__data
+    output logic tx__cpu_to_mem__valid,
+    input tx__cpu_to_mem__credit,
+    output [131:0] tx__cpu_to_mem__data,
+    input rx__mem_to_cpu__valid,
+    output logic rx__mem_to_cpu__credit,
+    input [65:0] rx__mem_to_cpu__data
 );
 
 
@@ -61,8 +57,56 @@ logic [63:0] csr__wr_data;
 logic [63:0] csr__rd_data;
 
 // Memory Interface
-//logic cpu_to_mem__valid;
-//logic cpu_to_mem__ready;
+logic cpu_to_mem__valid;
+logic cpu_to_mem__ready;
+logic [131:0] cpu_to_mem__data;
+
+logic mem_to_cpu__valid;
+logic mem_to_cpu__credit;
+logic [65:0] mem_to_cpu__data;
+
+
+
+cpu_to_mem__valid
+cpu_to_mem__ready
+
+mem__valid
+
+    logic cpu_to_mem__we,
+    output logic [63:0] cpu_to_mem__addr,
+    output logic [2:0] cpu_to_mem__dtype,
+    output logic [63:0] cpu_to_mem__data,
+
+//============================== 
+// tx__cpu_to_mem
+//============================== 
+tx tx__cpu_to_mem
+( 
+    .clk(clk), 
+    .rst(rst), 
+    .valid(cpu_to_mem__valid), 
+    .ready(cpu_to_mem__ready), 
+    .data(cpu_to_mem_data), 
+    .tx__valid(tx__cpu_to_mem__valid), 
+    .tx__data(tx__cpu_to_mem__data), 
+    .tx__credit(tx__cpu_to_mem__credit) 
+); 
+
+//============================== 
+// rx__mem_to_cpu
+//============================== 
+rx rx__mem_to_cpu
+( 
+    .clk(clk), 
+    .rst(rst), 
+    .valid(mem_to_cpu__valid), 
+    .ready(mem_to_cpu__ready), 
+    .data(mem_to_cpu_data), 
+    .rx__valid(rx__mem_to_cpu__valid), 
+    .rx__data(rx__mem_to_cpu__data), 
+    .rx__credit(rx__mem_to_cpu__credit) 
+); 
+
 //logic cpu_to_mem__we;
 //logic [63:0] cpu_to_mem__addr;
 //logic [2:0] cpu_to_mem__dtype;
@@ -375,9 +419,6 @@ states = [
     'STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__1',
     'STATE__EXCEPTION__STORE_ACCESS_FAULT__0',
     'STATE__EXCEPTION__STORE_ACCESS_FAULT__1',
-    'STATE__INTERRUPT__SOFTWARE',
-    'STATE__INTERRUPT__TIMER',
-    'STATE__INTERRUPT__EXTERNAL',
     'STATE__FATAL',
 ]
 
@@ -446,7 +487,6 @@ always_comb begin
         //==============================
         STATE__FETCH__0:
         begin
-            state__n = (mstatus[CSR__MSTATUS__MIE__FIELD] && mip[CSR__MIP__MEIP__FIELD] && mie[CSR__MIE__MEIE__FIELD]) ? STATE__INTERRUPT__EXTERNAL : (mstatus[CSR__MSTATUS__MIE__FIELD] && mip[CSR__MIP__MSIP__FIELD] && mie[CSR__MIE__MSIE__FIELD]) ? STATE__INTERRUPT__SOFTWARE : (mstatus[CSR__MSTATUS__MIE__FIELD] && mip[CSR__MIP__MTIP__FIELD] && mie[CSR__MIE__MTIE__FIELD]) ? STATE__INTERRUPT__TIMER : STATE__FETCH__1;
             state__n = STATE__FETCH__1;
         end
 
@@ -456,8 +496,9 @@ always_comb begin
         STATE__FETCH__1:
         begin
             cpu_to_mem__valid = 1'b1;
-            cpu_to_mem__addr = pc;
-            cpu_to_mem__dtype = DTYPE__W;
+            cpu_to_mem__data[MEMORY_REQUEST__ADDR__FEILD] = pc;
+            cpu_to_mem__data[MEMORY_REQUEST__DTYPE__FEILD] = DTYPE__W;
+            cpu_to_mem__data[MEMORY_REQUEST__WE__FEILD] = 1'b0;
             state__n = cpu_to_mem__ready ? STATE__FETCH__2 : STATE__FETCH__1;
         end
 
@@ -466,7 +507,7 @@ always_comb begin
         //==============================
         STATE__FETCH__2:
         begin
-            state__n = mem_to_cpu__valid ? (mem_to_cpu__error ? STATE__FETCH__4 : STATE__FETCH__3) : STATE__FETCH__2;
+            state__n = mem_to_cpu__valid ? (mem_to_cpu__data[MEMORY_RESPONSE__STATUS__FIELD] == MEMORY_RESPONSE__STATUS__OK) ? STATE__FETCH__3 : STATE__FETCH__4) : STATE__FETCH__2;
         end
 
         //==============================
@@ -3042,43 +3083,6 @@ always_comb begin
         end
 
         //==============================
-        // STATE__INTERRUPT__SOFTWARE
-        //==============================
-        STATE__INTERRUPT__SOFTWARE:
-        begin
-            csr__addr = CSR__MCAUSE;
-            csr__we = 1'b1;
-            csr__wr_data[CSR__MCAUSE__EXCEPTION_CODE__FIELD] = CSR__MCAUSE__EXCEPTION_CODE__MACHINE_SOFTWARE_INTERRUPT;
-            csr__wr_data[CSR__MCAUSE__INTERRUPT__FIELD] = CSR__MCAUSE__INTERRUPT__INTERRUPT;
-            state__n = STATE__TRAP__0;
-        end
-
-        //==============================
-        // STATE__INTERRUPT__TIMER
-        //==============================
-        STATE__INTERRUPT__TIMER:
-        begin
-            csr__addr = CSR__MCAUSE;
-            csr__we = 1'b1;
-            csr__wr_data[CSR__MCAUSE__EXCEPTION_CODE__FIELD] = CSR__MCAUSE__EXCEPTION_CODE__MACHINE_TIMER_INTERRUPT;
-            csr__wr_data[CSR__MCAUSE__INTERRUPT__FIELD] = CSR__MCAUSE__INTERRUPT__INTERRUPT;
-            state__n = STATE__TRAP__0;
-        end
-
-        //==============================
-        // STATE__INTERRUPT__EXTERNAL
-        //==============================
-        STATE__INTERRUPT__EXTERNAL:
-        begin
-            csr__addr = CSR__MCAUSE;
-            csr__we = 1'b1;
-            csr__wr_data[CSR__MCAUSE__EXCEPTION_CODE__FIELD] = CSR__MCAUSE__EXCEPTION_CODE__MACHINE_EXTERNAL_INTERRUPT;
-            csr__wr_data[CSR__MCAUSE__INTERRUPT__FIELD] = CSR__MCAUSE__INTERRUPT__INTERRUPT;
-            state__n = STATE__TRAP__0;
-        end
-
-
-        //==============================
         // STATE__TRAP__0
         //==============================
         STATE__TRAP__0:
@@ -3121,6 +3125,20 @@ always_comb begin
             state__n = STATE__FATAL;
         end
         
+//
+//
+//        //==============================
+//        // STATE__INTERRUPT__EXTERNAL
+//        //==============================
+//        STATE__INTERRUPT__EXTERNAL:
+//        begin
+//            csr__addr = CSR__MCAUSE;
+//            csr__we = 1'b1;
+//            csr__wr_data[CSR__MCAUSE__EXCEPTION_CODE__FIELD] = CSR__MCAUSE__EXEPTION_CODE__ILLEGAL_INSTRUCTION;
+//            csr__wr_data[CSR__MCAUSE__INTERRUPT__FIELD] = CSR__MCAUSE__INTERRUPT__NOT_INTERRUPT;
+//            state__n = STATE__TRAP__0;
+//        end
+//
     endcase
 end
 

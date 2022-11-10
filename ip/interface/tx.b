@@ -23,7 +23,9 @@ logic [MAX_CREDITS__LOG2:0] credits;
 assign ready = (credits != 0) & ~rst;
 
 always_ff @(posedge clk) begin
-    if (rst) credits <= MAX_CREDITS;
+    if (rst) begin
+        credits <= MAX_CREDITS;
+    end 
     else begin
         if (valid & ready) begin
             if (tx__credit) begin
