@@ -47,6 +47,7 @@
 -- DO NOT MODIFY THIS FILE.
 -- IP VLNV: xilinx.com:ip:blk_mem_gen:8.4
 -- IP Revision: 5
+
 -- The following code must appear in the VHDL architecture header.
 
 ------------- Begin Cut here for COMPONENT Declaration ------ COMP_TAG
@@ -55,7 +56,7 @@ COMPONENT memory
     clka : IN STD_LOGIC;
     ena : IN STD_LOGIC;
     wea : IN STD_LOGIC_VECTOR(0 DOWNTO 0);
-    addra : IN STD_LOGIC_VECTOR(11 DOWNTO 0);
+    addra : IN STD_LOGIC_VECTOR(5 DOWNTO 0);
     dina : IN STD_LOGIC_VECTOR(63 DOWNTO 0);
     douta : OUT STD_LOGIC_VECTOR(63 DOWNTO 0) 
   );

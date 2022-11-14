@@ -1,0 +1,13 @@
+
+LED:     file format elf64-littleriscv
+
+
+Disassembly of section .text:
+
+0000000000000000 <_start>:
+   0:	00008537          	lui	x10,0x8
+   4:	00100593          	addi	x11,x0,1
+   8:	00b50023          	sb	x11,0(x10) # 8000 <__global_pointer$+0x67f0>
+
+000000000000000c <loop>:
+   c:	0000006f          	jal	x0,c <loop>

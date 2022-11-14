@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="top__tb_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="top__tb" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="400,999,990 ps"></ZoomStartTime>
+      <ZoomEndTime time="401,000,002 ps"></ZoomEndTime>
+      <Cursor1Time time="401,000,000 ps"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="276"></NameColumnWidth>
+      <ValueColumnWidth column_width="120"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="23" />
+   <wvobject type="logic" fp_name="/top__tb/clk_100mhz">
+      <obj_property name="ElementShortName">clk_100mhz</obj_property>
+      <obj_property name="ObjectShortName">clk_100mhz</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/top__tb/sw">
+      <obj_property name="ElementShortName">sw[15:0]</obj_property>
+      <obj_property name="ObjectShortName">sw[15:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/top__tb/btnc">
+      <obj_property name="ElementShortName">btnc</obj_property>
+      <obj_property name="ObjectShortName">btnc</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/top__tb/btnu">
+      <obj_property name="ElementShortName">btnu</obj_property>
+      <obj_property name="ObjectShortName">btnu</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/top__tb/btnl">
+      <obj_property name="ElementShortName">btnl</obj_property>
+      <obj_property name="ObjectShortName">btnl</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/top__tb/btnr">
+      <obj_property name="ElementShortName">btnr</obj_property>
+      <obj_property name="ObjectShortName">btnr</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/top__tb/btnd">
+      <obj_property name="ElementShortName">btnd</obj_property>
+      <obj_property name="ObjectShortName">btnd</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/top__tb/led">
+      <obj_property name="ElementShortName">led[15:0]</obj_property>
+      <obj_property name="ObjectShortName">led[15:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/top__tb/led16_b">
+      <obj_property name="ElementShortName">led16_b</obj_property>
+      <obj_property name="ObjectShortName">led16_b</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/top__tb/led16_g">
+      <obj_property name="ElementShortName">led16_g</obj_property>
+      <obj_property name="ObjectShortName">led16_g</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/top__tb/led16_r">
+      <obj_property name="ElementShortName">led16_r</obj_property>
+      <obj_property name="ObjectShortName">led16_r</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/top__tb/led17_b">
+      <obj_property name="ElementShortName">led17_b</obj_property>
+      <obj_property name="ObjectShortName">led17_b</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/top__tb/led17_g">
+      <obj_property name="ElementShortName">led17_g</obj_property>
+      <obj_property name="ObjectShortName">led17_g</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/top__tb/led17_r">
+      <obj_property name="ElementShortName">led17_r</obj_property>
+      <obj_property name="ObjectShortName">led17_r</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/top__tb/an">
+      <obj_property name="ElementShortName">an[7:0]</obj_property>
+      <obj_property name="ObjectShortName">an[7:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/top__tb/ca">
+      <obj_property name="ElementShortName">ca</obj_property>
+      <obj_property name="ObjectShortName">ca</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/top__tb/cb">
+      <obj_property name="ElementShortName">cb</obj_property>
+      <obj_property name="ObjectShortName">cb</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/top__tb/cc">
+      <obj_property name="ElementShortName">cc</obj_property>
+      <obj_property name="ObjectShortName">cc</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/top__tb/cd">
+      <obj_property name="ElementShortName">cd</obj_property>
+      <obj_property name="ObjectShortName">cd</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/top__tb/ce">
+      <obj_property name="ElementShortName">ce</obj_property>
+      <obj_property name="ObjectShortName">ce</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/top__tb/cf">
+      <obj_property name="ElementShortName">cf</obj_property>
+      <obj_property name="ObjectShortName">cf</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/top__tb/cg">
+      <obj_property name="ElementShortName">cg</obj_property>
+      <obj_property name="ObjectShortName">cg</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/top__tb/dut/jay__0/cpu/register_file__0/x__12">
+      <obj_property name="ElementShortName">x__12[63:0]</obj_property>
+      <obj_property name="ObjectShortName">x__12[63:0]</obj_property>
+   </wvobject>
+</wave_config>

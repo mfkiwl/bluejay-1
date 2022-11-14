@@ -1,34 +1,75 @@
-INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/arithmetic_logic_unit.sv" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module arithmetic_logic_unit
-INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/central_processing_unit.sv" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module central_processing_unit
-INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/comparator.sv" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module comparator
-INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/decoder.sv" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module decoder
-INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/jay.sv" into library xil_defaultlib
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module top
 INFO: [VRFC 10-311] analyzing module jay
-INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l1.sv" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module l1
-WARNING: [VRFC 10-3380] identifier 'STATE__IDLE' is used before its declaration [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/l1.sv:39]
-INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/mem.sv" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module mem
-WARNING: [VRFC 10-3380] identifier 'DEPTH__LOG2' is used before its declaration [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/mem.sv:8]
-WARNING: [VRFC 10-3380] identifier 'WIDTH' is used before its declaration [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/mem.sv:11]
-WARNING: [VRFC 10-3380] identifier 'WIDTH' is used before its declaration [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/mem.sv:12]
-INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/register_file.sv" into library xil_defaultlib
+WARNING: [VRFC 10-9336] redeclaration of ANSI port 'clk' is not allowed [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:318]
+WARNING: [VRFC 10-9336] redeclaration of ANSI port 'rst' is not allowed [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:319]
+INFO: [VRFC 10-311] analyzing module central_processing_unit
 INFO: [VRFC 10-311] analyzing module register_file
-INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sim_1/new/jay__tb.sv" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module jay__tb
-WARNING: [VRFC 10-2938] 'clk' is already implicitly declared on line 16 [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sim_1/new/jay__tb.sv:40]
-WARNING: [VRFC 10-2938] 'rst' is already implicitly declared on line 17 [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sim_1/new/jay__tb.sv:41]
-WARNING: [VRFC 10-2938] 'l1_to_mem__addr' is already implicitly declared on line 18 [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sim_1/new/jay__tb.sv:42]
-WARNING: [VRFC 10-2938] 'l1_to_mem__wr_data' is already implicitly declared on line 19 [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sim_1/new/jay__tb.sv:43]
-WARNING: [VRFC 10-2938] 'l1_to_mem__rd_data' is already implicitly declared on line 20 [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sim_1/new/jay__tb.sv:44]
-WARNING: [VRFC 10-2938] 'l1_to_mem__en' is already implicitly declared on line 21 [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sim_1/new/jay__tb.sv:45]
-WARNING: [VRFC 10-2938] 'l1_to_mem__we' is already implicitly declared on line 22 [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sim_1/new/jay__tb.sv:46]
-WARNING: [VRFC 10-2938] 'addr' is already implicitly declared on line 32 [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sim_1/new/jay__tb.sv:49]
-WARNING: [VRFC 10-2938] 'wr_data' is already implicitly declared on line 33 [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sim_1/new/jay__tb.sv:50]
-WARNING: [VRFC 10-2938] 'rd_data' is already implicitly declared on line 34 [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sim_1/new/jay__tb.sv:51]
-WARNING: [VRFC 10-2938] 'en' is already implicitly declared on line 35 [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sim_1/new/jay__tb.sv:52]
-WARNING: [VRFC 10-2938] 'we' is already implicitly declared on line 36 [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sim_1/new/jay__tb.sv:53]
+INFO: [VRFC 10-311] analyzing module decoder
+INFO: [VRFC 10-311] analyzing module arithmetic_logic_unit
+INFO: [VRFC 10-311] analyzing module comparator
+INFO: [VRFC 10-311] analyzing module control_and_status_registers
+WARNING: [VRFC 10-9336] redeclaration of ANSI port 'mstatus' is not allowed [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4784]
+WARNING: [VRFC 10-9336] redeclaration of ANSI port 'mip' is not allowed [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4864]
+WARNING: [VRFC 10-9336] redeclaration of ANSI port 'mie' is not allowed [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4889]
+WARNING: [VRFC 10-3380] identifier 'misa' is used before its declaration [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4612]
+WARNING: [VRFC 10-3380] identifier 'misa__we' is used before its declaration [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4613]
+WARNING: [VRFC 10-3380] identifier 'mvendorid__we' is used before its declaration [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4614]
+WARNING: [VRFC 10-3380] identifier 'marchid__we' is used before its declaration [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4615]
+WARNING: [VRFC 10-3380] identifier 'mimpid__we' is used before its declaration [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4616]
+WARNING: [VRFC 10-3380] identifier 'mhartid__we' is used before its declaration [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4617]
+WARNING: [VRFC 10-3380] identifier 'mstatus__we' is used before its declaration [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4618]
+WARNING: [VRFC 10-3380] identifier 'mtvec__we' is used before its declaration [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4619]
+WARNING: [VRFC 10-3380] identifier 'medeleg__we' is used before its declaration [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4620]
+WARNING: [VRFC 10-3380] identifier 'mideleg__we' is used before its declaration [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4621]
+WARNING: [VRFC 10-3380] identifier 'mip__we' is used before its declaration [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4622]
+WARNING: [VRFC 10-3380] identifier 'mie__we' is used before its declaration [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4623]
+WARNING: [VRFC 10-3380] identifier 'mcycle__we' is used before its declaration [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4624]
+WARNING: [VRFC 10-3380] identifier 'minstret__we' is used before its declaration [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4625]
+WARNING: [VRFC 10-3380] identifier 'mhpmcounter3__we' is used before its declaration [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4626]
+WARNING: [VRFC 10-3380] identifier 'mhpmevent3__we' is used before its declaration [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4627]
+WARNING: [VRFC 10-3380] identifier 'mscratch__we' is used before its declaration [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4628]
+WARNING: [VRFC 10-3380] identifier 'mepc__we' is used before its declaration [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4629]
+WARNING: [VRFC 10-3380] identifier 'mcause__we' is used before its declaration [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4630]
+WARNING: [VRFC 10-3380] identifier 'mtval__we' is used before its declaration [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4631]
+WARNING: [VRFC 10-3380] identifier 'misa' is used before its declaration [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4636]
+WARNING: [VRFC 10-3380] identifier 'misa__we' is used before its declaration [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4637]
+WARNING: [VRFC 10-3380] identifier 'mvendorid' is used before its declaration [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4641]
+WARNING: [VRFC 10-3380] identifier 'mvendorid__we' is used before its declaration [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4642]
+WARNING: [VRFC 10-3380] identifier 'marchid' is used before its declaration [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4646]
+WARNING: [VRFC 10-3380] identifier 'marchid__we' is used before its declaration [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4647]
+WARNING: [VRFC 10-3380] identifier 'mimpid' is used before its declaration [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4651]
+WARNING: [VRFC 10-3380] identifier 'mimpid__we' is used before its declaration [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4652]
+WARNING: [VRFC 10-3380] identifier 'mhartid' is used before its declaration [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4656]
+WARNING: [VRFC 10-3380] identifier 'mhartid__we' is used before its declaration [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4657]
+WARNING: [VRFC 10-3380] identifier 'mstatus__we' is used before its declaration [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4662]
+WARNING: [VRFC 10-3380] identifier 'mtvec' is used before its declaration [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4666]
+WARNING: [VRFC 10-3380] identifier 'mtvec__we' is used before its declaration [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4667]
+WARNING: [VRFC 10-3380] identifier 'medeleg' is used before its declaration [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4671]
+WARNING: [VRFC 10-3380] identifier 'medeleg__we' is used before its declaration [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4672]
+WARNING: [VRFC 10-3380] identifier 'mideleg' is used before its declaration [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4676]
+WARNING: [VRFC 10-3380] identifier 'mideleg__we' is used before its declaration [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4677]
+WARNING: [VRFC 10-3380] identifier 'mip__we' is used before its declaration [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4682]
+WARNING: [VRFC 10-3380] identifier 'mie__we' is used before its declaration [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4687]
+WARNING: [VRFC 10-3380] identifier 'mcycle' is used before its declaration [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4691]
+WARNING: [VRFC 10-3380] identifier 'mcycle__we' is used before its declaration [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4692]
+WARNING: [VRFC 10-3380] identifier 'minstret' is used before its declaration [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4696]
+WARNING: [VRFC 10-3380] identifier 'minstret__we' is used before its declaration [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4697]
+WARNING: [VRFC 10-3380] identifier 'mhpmcounter3' is used before its declaration [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4701]
+WARNING: [VRFC 10-3380] identifier 'mhpmcounter3__we' is used before its declaration [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4702]
+WARNING: [VRFC 10-3380] identifier 'mhpmevent3' is used before its declaration [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4706]
+WARNING: [VRFC 10-3380] identifier 'mhpmevent3__we' is used before its declaration [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4707]
+WARNING: [VRFC 10-3380] identifier 'mscratch' is used before its declaration [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4711]
+WARNING: [VRFC 10-3380] identifier 'mscratch__we' is used before its declaration [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4712]
+WARNING: [VRFC 10-3380] identifier 'mepc' is used before its declaration [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4716]
+WARNING: [VRFC 10-3380] identifier 'mepc__we' is used before its declaration [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4717]
+WARNING: [VRFC 10-3380] identifier 'mcause' is used before its declaration [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4721]
+WARNING: [VRFC 10-3380] identifier 'mcause__we' is used before its declaration [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4722]
+WARNING: [VRFC 10-3380] identifier 'mtval' is used before its declaration [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4726]
+WARNING: [VRFC 10-3380] identifier 'mtval__we' is used before its declaration [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4727]
+INFO: [VRFC 10-311] analyzing module memory_management_unit
+INFO: [VRFC 10-311] analyzing module read_dtype
+INFO: [VRFC 10-311] analyzing module store_dtype
+INFO: [VRFC 10-311] analyzing module debouncer
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sim_1/new/top__tb.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module top__tb
