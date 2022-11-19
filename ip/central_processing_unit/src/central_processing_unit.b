@@ -3131,33 +3131,42 @@ always_comb begin
 end
 
 
-always_ff @(posedge clk) begin
-    if (rst) begin
+always_ff @(posedge clk)
+begin
+    if (rst) 
+    begin
         state <= STATE__RESET;
     end
-    else begin
+    else 
+    begin
         state <= state__n;
     end
 end
 
-always_ff @(posedge clk) begin
-    if (rst) begin
+always_ff @(posedge clk)
+begin
+    if (rst) 
+    begin
         pc <= PC_RESET_VALUE;
     end
-    else begin
+    else 
+    begin
         pc <= pc__n;
     end
 end
 
-always_ff @(posedge clk) begin
+always_ff @(posedge clk)
+begin
     ir <= ir__n;
 end
 
-always_ff @(posedge clk) begin
+always_ff @(posedge clk)
+begin
     a <= a__n;
 end
 
-always_ff @(posedge clk) begin
+always_ff @(posedge clk)
+begin
     b <= b__n;
 end
 
