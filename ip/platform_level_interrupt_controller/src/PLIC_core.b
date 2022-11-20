@@ -60,16 +60,18 @@ logic [9:0] context__0__id;
 
 assign ip__0 = 1'b0;
 
-//==============================
-// sr_flip_flop__ip__1
-//==============================
-sr_flip_flop sr_flip_flop__ip__1
-(
-    .clk(clk),
-    .s(ir__1),
-    .r(claim__1 || rst),
-    .q(ip__1)
-)
+
+always_comb
+begin
+    if (claim__1 || rst)
+    begin
+        ip__1 <= 1'b0;
+    end
+    else if (ir__1)
+    begin
+        ip__1 <= 1'b1;
+    end
+end
 
 
 //==============================
@@ -204,17 +206,21 @@ logic context__0__ie__1;
 
 assign context__0__ie__0 = 1'b0;
 
-//==============================
-// d_flip_flop__context__0__ie__1
-//==============================
-d_flip_flop #(.WIDTH(1), .RESET_VALUE(1'b1)) d_flip_flop__context__0__ie__1
-(
-    .clk(clk),
-    .rst(rst),
-    .en(we__context__0__ie__0_to_31),
-    .d(wr_data[1]),
-    .q(context__0__ie__1),
-)
+
+always_comb
+begin
+    if (rst)
+    begin
+        context__0__ie__1 <= 1'b1;
+    end
+    else
+    begin
+        if (we__context__0__ie__0_to_31)
+        begin
+            context__0__ie__1 <= wr_data[1];
+        end
+    end
+end
 
 
 //==============================================
@@ -226,17 +232,21 @@ logic re__context__0__threshold;
 
 assign threshold__context__0 = 32'h0;
 
-//==============================
-// d_flip_flop__context__0__threshold
-//==============================
-d_flip_flop #(.WIDTH(32), .RESET_VALUE(32'h0)) d_flip_flop__context__0__threshold
-(
-    .clk(clk),
-    .rst(rst),
-    .en(we__context__0__threshold),
-    .d(wr_data),
-    .q(context__0__threshold),
-)
+always_comb
+begin
+    if (rst)
+    begin
+        context__0__threshold <= 32'h0;
+    end
+    else
+    begin
+        if (we__context__0__threshold)
+        begin
+            context__0__threshold <= wr_data;
+        end
+    end
+end
+
 
 //==============================================
 // Interrupt Claim/Complete - Context 0 

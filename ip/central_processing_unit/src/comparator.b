@@ -12,7 +12,7 @@ module comparator
     output logic lt,
     output logic ltu,
     output logic ge,
-    output logic geu
+    output geu
 );
 
 // Comparison operations.

@@ -58,16 +58,16 @@ begin
     endcase
 end
 
-//==============================
-// d_flip_flop__state
-//==============================
-d_flip_flop #(.WIDTH(2), .RESET_VALUE(STATE__READY)) d_flip_flop__state
-(
-    .clk(clk),
-    .rst(rst),
-    .en(1'b1),
-    .d(state__n),
-    .q(state),
-)
+always_comb
+begin
+    if (rst)
+    begin
+        state <= STATE__READY;
+    end
+    else
+    begin
+        state <= state__n;
+    end
+end
 
 endmodule

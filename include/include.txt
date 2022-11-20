@@ -1,6 +1,6 @@
 #define XLEN 64
 
-#define PC_RESET_VALUE 64'h00000000
+#define PC_RESET_VALUE 64'h80000000
 
 #define OPCODE__OP_IMM 7'h13
 #define OPCODE__OP_IMM_32 7'h1b
