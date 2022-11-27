@@ -1,7 +1,7 @@
 //==============================================
-// PLIC_mux 
+// platform_level_interrupt_controller__priority_mux
 //==============================================
-module PLIC_mux
+module platform_level_interrupt_controller__priority_mux
 (
     input clk,
     input rst,

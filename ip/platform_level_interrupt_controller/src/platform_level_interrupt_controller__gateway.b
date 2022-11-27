@@ -1,23 +1,15 @@
 //==============================================
-// PLIC_gateway 
+// platform_level_interrupt_controller__gateway 
 //==============================================
-module PLIC_gateway 
+module platform_level_interrupt_controller__gateway 
 (
-    clk,
-    rst,
-    signal,
-    ir
+    input clk,
+    input rst,
+    input is,
+    output logic request,
+    input complete
 );
 
-input clk;
-input rst;
-input signal;
-output ir;
-
-logic clk;
-logic rst;
-logic signal;
-logic ir;
 logic [1:0] state;
 logic [1:0] state__n;
 
@@ -27,7 +19,9 @@ localparam STATE__WAIT = 2'h2;
 
 always_comb
 begin
+    request = 1'b0;
     state__n = state;
+
     case (state)
 
         //==============================
@@ -35,7 +29,7 @@ begin
         //==============================
         STATE__READY:
         begin
-            state__n = signal ? STATE__REQUEST_INTERRUPT : STATE__READY;
+            state__n = is ? STATE__REQUEST_INTERRUPT : STATE__READY;
         end
 
         //==============================
@@ -43,7 +37,7 @@ begin
         //==============================
         STATE__REQUEST_INTERRUPT:
         begin
-            ir = 1'b1;
+            request = 1'b1;
             state__n = STATE__WAIT;
         end
         
