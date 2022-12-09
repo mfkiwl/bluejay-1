@@ -10,20 +10,29 @@ module physical_memory_attribute_checker
     output logic [] status
 );
 
-logic misaligned;
-
-
-always_comb begin
-    casez (addr)
-        40'b0000_0000_0000_0000_0000_????_????_????_????_????:
-        begin
-            
-        end
-        40'b0000_0000_0000_0000_0001_????_????_????_????_????:
+always_comb
+begin
+    case (addr)
+        4'h0:
         begin
         end
     endcase
 end
+
+
+//==============================================
+// Physical Memory Attribute Register 
+//==============================================
+logic [7:0] pma__0;
+assign pma__0 = 
+
+B
+H
+W
+D
+BU
+HU
+WU
 
 alway_comb begin
     case (dtype)

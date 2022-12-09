@@ -12,12 +12,30 @@ module memory_management_unit
 
 
 
+
 logic [3:0] state;
 logic [3:0] state__n;
 
+always_comb
+begin
+    casez (addr)
+        MEMORY_MAP__R0:
+        begin
+            pma__addr = 4'b0;
+        end
+        MEMORY_MAP__R1:
+        begin
+            state__n = we ? STATE__R1__WRITE__0 : STATE__R1__READ__0;
+        end
+    endcase
+end
 
 
-always_comb begin
+
+
+
+always_comb 
+begin
     state__n = state;
         
     case (state)
@@ -35,24 +53,59 @@ always_comb begin
         //==============================
         STATE__READY:
         begin
-            state__n = cpu_to_mem__valid ? STATE__ACCEPT_REQ : STATE__READY;
+            state__n = cpu_to_mem__valid ? STATE__DECODE : STATE__READY;
         end
 
         //==============================
-        // STATE__ACCEPT_REQ
+        // STATE__DECODE
         //==============================
-        STATE__ACCEPT_REQ:
+        STATE__DECODE:
         begin
-            cpu_to_mem__ready = 1'b1;
-            we__n = cpu_to_mem__we;
-            addr__n = cpu_to_mem__addr; 
-            dtype__n = cpu_to_mem__dtype;
-            wr_data__n = cpu_to_mem__data;
-            state__n = STATE__PMA_CHECK;
+            casez (addr)
+                MEMORY_MAP__R0:
+                begin
+                    state__n = STATE__MM__0__0;
+                end
+                MEMORY_MAP__R1:
+                begin
+                    state__n = we ? STATE__R1__WRITE__0 : STATE__R1__READ__0;
+                end
+            endcase
+        end
+
+        //==============================
+        // STATE__M
+        //==============================
+        STATE__M:
+        begin
+            ce__0 = 1'b1;    
+            state__n = 
         end
 
     endcase
 end
+
+always_ff @(posedge clk) begin
+    if (rst) begin
+        state <= STATE__RESET;
+    end
+    else begin
+        state <= state__n;
+    end
+end
+
+always__ff @(posedge clk)
+begin
+    if (cpu_to_mem__valid)
+    begin
+        we <= cpu_to_mem__we;
+        addr <= cpu_to_mem__addr;
+        dtype <= cpu_to_mem__dtype;
+        data <= cpu_to_mem__data;
+    end
+end
+
+
 
 always_ff @(posedge clk) begin
     we <= we__n;
