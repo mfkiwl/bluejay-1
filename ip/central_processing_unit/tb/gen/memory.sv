@@ -6,13 +6,11 @@ module tb_mem
     input clk,
     input rst,
     input cpu_to_mem__valid,
-    output logic cpu_to_mem__ready,
     input cpu_to_mem__we,
     input [63:0] cpu_to_mem__addr,
     input [2:0] cpu_to_mem__dtype,
     input [63:0] cpu_to_mem__data,
     output logic mem_to_cpu__valid,
-    input mem_to_cpu__ready,
     output logic mem_to_cpu__error,
     output logic [63:0] mem_to_cpu__data
 );
@@ -222,7 +220,6 @@ always_comb begin
     addr__n = addr;
     dtype__n = dtype;
     wr_data__n = wr_data;
-    cpu_to_mem__ready = 1'b0;
     mem_to_cpu__valid = 1'b0;
     mem_to_cpu__error = 1'b0;
     mem_to_cpu__data = rd_data;
@@ -234,8 +231,6 @@ always_comb begin
         //==============================
         STATE__READY:
         begin
-            cpu_to_mem__ready = 1'b1;
-
             if (cpu_to_mem__valid) begin
                 addr__n = cpu_to_mem__addr[DEPTH__LOG2-1:0];
                 dtype__n = cpu_to_mem__dtype;
@@ -257,7 +252,7 @@ always_comb begin
             else begin
                 mem_to_cpu__data = rd_data;
             end
-            state__n = mem_to_cpu__ready ? STATE__READY : STATE__READ;
+            state__n = STATE__READY;
         end
 
         //==============================
@@ -273,7 +268,7 @@ always_comb begin
             else begin
                 we = 1'b1;
             end
-            state__n = mem_to_cpu__ready ? STATE__READY : STATE__WRITE;
+            state__n = STATE__READY;
         end
 
     endcase

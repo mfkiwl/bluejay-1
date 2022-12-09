@@ -379,7 +379,7 @@ end
 //==============================================
 logic [63:0] minstret;
 logic we__minstret;
-logic minstret__write_occured;
+logic minstret__write_occurred;
 logic state__minstret;
 logic state__minstret__n;
 
@@ -423,7 +423,7 @@ begin
         STATE__MINSTRET__WRITE_OCCURED:
         begin
             minstret__write_occurred = 1'b1; 
-            state__n = instret ? STATE__MINSTRET__NORMAL : STATE__MINSTRET__WRITE_OCCURED;
+            state__minstret__n = instret ? STATE__MINSTRET__NORMAL : STATE__MINSTRET__WRITE_OCCURED;
         end
     endcase
 end

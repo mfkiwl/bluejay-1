@@ -4,6 +4,7 @@ Running: /tools/Xilinx/Vivado/2022.2/bin/unwrapped/lnx64.o/xelab -debug all --re
 Multi-threading is on. Using 18 slave threads.
 Starting static elaboration
 Pass Through NonSizing Optimizer
+WARNING: [VRFC 10-5021] port 'eip' is not connected on this instance [/home/seankent/bluejay/ip/central_processing_unit/tb/gen/central_processing_unit__tb.sv:29]
 Completed static elaboration
 Starting simulation data flow analysis
 Completed simulation data flow analysis
@@ -16,9 +17,9 @@ Compiling module work.control_and_status_registers
 Compiling module work.central_processing_unit
 Compiling module work.tb_mem(DEPTH=64'b010000000000000...
 Compiling module work.central_processing_unit__tb
+WARNING: [XSIM 43-3373] "/home/seankent/bluejay/ip/central_processing_unit/tb/gen/central_processing_unit__tb.sv" Line 113. System function $value$plusargs is used as system task. This system function should have a LHS e.g. x=$value$plusargs().
 WARNING: [XSIM 43-3373] "/home/seankent/bluejay/ip/central_processing_unit/tb/gen/central_processing_unit__tb.sv" Line 119. System function $value$plusargs is used as system task. This system function should have a LHS e.g. x=$value$plusargs().
-WARNING: [XSIM 43-3373] "/home/seankent/bluejay/ip/central_processing_unit/tb/gen/central_processing_unit__tb.sv" Line 125. System function $value$plusargs is used as system task. This system function should have a LHS e.g. x=$value$plusargs().
-WARNING: [XSIM 43-3373] "/home/seankent/bluejay/ip/central_processing_unit/tb/gen/central_processing_unit__tb.sv" Line 127. System function $value$plusargs is used as system task. This system function should have a LHS e.g. x=$value$plusargs().
-WARNING: [XSIM 43-3373] "/home/seankent/bluejay/ip/central_processing_unit/tb/gen/central_processing_unit__tb.sv" Line 129. System function $value$plusargs is used as system task. This system function should have a LHS e.g. x=$value$plusargs().
-WARNING: [XSIM 43-3373] "/home/seankent/bluejay/ip/central_processing_unit/tb/gen/central_processing_unit__tb.sv" Line 152. System function $value$plusargs is used as system task. This system function should have a LHS e.g. x=$value$plusargs().
+WARNING: [XSIM 43-3373] "/home/seankent/bluejay/ip/central_processing_unit/tb/gen/central_processing_unit__tb.sv" Line 121. System function $value$plusargs is used as system task. This system function should have a LHS e.g. x=$value$plusargs().
+WARNING: [XSIM 43-3373] "/home/seankent/bluejay/ip/central_processing_unit/tb/gen/central_processing_unit__tb.sv" Line 123. System function $value$plusargs is used as system task. This system function should have a LHS e.g. x=$value$plusargs().
+WARNING: [XSIM 43-3373] "/home/seankent/bluejay/ip/central_processing_unit/tb/gen/central_processing_unit__tb.sv" Line 146. System function $value$plusargs is used as system task. This system function should have a LHS e.g. x=$value$plusargs().
 Built simulation snapshot central_processing_unit__tb__snapshot
