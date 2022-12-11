@@ -6,15 +6,20 @@ module physical_memory_attribute_checker
     input clk,
     input rst,
     input [39:0] addr,
+    
     input [2:0] dtype,
     output logic [] status
 );
 
+
+
+
 always_comb
 begin
-    case (addr)
-        4'h0:
+    casez (addr)
+        :
         begin
+                     
         end
     endcase
 end
