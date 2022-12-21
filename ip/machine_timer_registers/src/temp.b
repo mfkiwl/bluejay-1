@@ -5,7 +5,6 @@ module machine_timer_registers
 (
     input clk,
     input rst,
-    input cs,
     input we,
     input addr,
     input [64:0] wr_data,
@@ -45,7 +44,7 @@ begin
     end
     else
     begin
-        if (cs & we__mtime)
+        if (we__mtime)
         begin
             mtime <= wr_data;
         end
@@ -64,7 +63,7 @@ begin
     end
     else
     begin
-        if (cs & we__mtimecmp)
+        if (we__mtimecmp)
         begin
             mtimecmp <= wr_data;    
         end

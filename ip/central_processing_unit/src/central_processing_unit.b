@@ -107,6 +107,7 @@ register_file register_file__0
 (
     .clk(clk),
     .rst(rst),
+    .cs(1'b1),
     .we(we),
     .addr(addr),
     .rd_data(rd_data),
@@ -150,6 +151,7 @@ control_and_status_registers control_and_status_registers__0
 (
     .clk(clk),
     .rst(rst),
+    .cs(1'b1),
     .we(csr__we),
     .addr(csr__addr),
     .rd_data(csr__rd_data),

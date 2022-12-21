@@ -5,6 +5,7 @@ module control_and_status_registers
 (
     input clk,
     input rst,
+    input cs,
     input we,
     input [11:0] addr,
     output logic [63:0] rd_data,
@@ -19,7 +20,6 @@ module control_and_status_registers
 
 
 always_comb begin
-    rd_data = misa;
     we__misa = 1'b0;
     we__mvendorid = 1'b0;
     we__marchid = 1'b0;
@@ -222,7 +222,7 @@ begin
     end
     else
     begin
-        if (we__mstatus)
+        if (cs & we__mstatus)
         begin
             mstatus[CSR__MSTATUS__MIE__FIELD] <= wr_data[CSR__MSTATUS__MIE__FIELD];
             mstatus[CSR__MSTATUS__MPIE__FIELD] <= wr_data[CSR__MSTATUS__MPIE__FIELD];
@@ -249,7 +249,7 @@ begin
     end
     else
     begin
-        if (we__mtvec)
+        if (cs & we__mtvec)
         begin
             mtvec[CSR__MTVEC__TRAP_VECTOR_BASE_ADDRESS__FIELD] <= wr_data[CSR__MTVEC__TRAP_VECTOR_BASE_ADDRESS__FIELD];
         end
@@ -340,7 +340,7 @@ begin
     end
     else
     begin
-        if (we__mie)
+        if (cs & we__mie)
         begin
             mie[CSR__MIE__MSIE__FIELD] <= wr_data[CSR__MIE__MSIE__FIELD];
             mie[CSR__MIE__MTIE__FIELD] <= wr_data[CSR__MIE__MTIE__FIELD];
@@ -363,7 +363,7 @@ begin
     end
     else
     begin
-        if (we__mcycle)
+        if (cs & we__mcycle)
         begin
             mcycle[CSR__MCYCLE__MCYCLE__FIELD] <= wr_data[CSR__MCYCLE__MCYCLE__FIELD];
         end
@@ -391,7 +391,7 @@ begin
     end
     else
     begin
-        if (we__minstret)
+        if (cs & we__minstret)
         begin
             minstret[CSR__MINSTRET__MINSTRET__FIELD] <= wr_data[CSR__MINSTRET__MINSTRET__FIELD];
         end
@@ -414,7 +414,7 @@ begin
         STATE__MINSTRET__NORMAL:
         begin
             minstret__write_occurred = 1'b0; 
-            state__minstret__n = we__minstret & ~instret ? STATE__MINSTRET__WRITE_OCCURED : STATE__MINSTRET__NORMAL;
+            state__minstret__n = cs & we__minstret & ~instret ? STATE__MINSTRET__WRITE_OCCURED : STATE__MINSTRET__NORMAL;
         end
 
         //==============================
@@ -461,7 +461,7 @@ begin
     end
     else
     begin
-        if (we__mscratch)
+        if (cs & we__mscratch)
         begin
             mscratch[CSR__MSCRATCH__MSCRATCH__FIELD] <= wr_data[CSR__MSCRATCH__MSCRATCH__FIELD];
         end
@@ -483,7 +483,7 @@ begin
     end
     else
     begin
-        if (we__mepc)
+        if (cs & we__mepc)
         begin
             mepc[CSR__MEPC__MEPC__FIELD] <= wr_data[CSR__MEPC__MEPC__FIELD];
         end
@@ -506,7 +506,7 @@ begin
     end
     else
     begin
-        if (we__mcause)
+        if (cs & we__mcause)
         begin
             mcause[CSR__MCAUSE__EXCEPTION_CODE__FIELD] <= wr_data[CSR__MCAUSE__EXCEPTION_CODE__FIELD];
             mcause[CSR__MCAUSE__INTERRUPT__FIELD] <= wr_data[CSR__MCAUSE__INTERRUPT__FIELD];
@@ -529,7 +529,7 @@ begin
     end
     else
     begin
-        if (we__mtval)
+        if (cs & we__mtval)
         begin
             mtval[CSR__MTVAL__MTVAL__FIELD] <= wr_data[CSR__MTVAL__MTVAL__FIELD];
         end

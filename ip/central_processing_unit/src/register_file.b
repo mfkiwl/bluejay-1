@@ -5,6 +5,7 @@ module register_file
 (
     input clk,
     input rst,
+    input cs,
     input we,
     input [4:0] addr,
     output [63:0] rd_data,
@@ -287,7 +288,7 @@ assign x__0 = 64'h0;
 
 always_ff @(posedge clk)
 begin
-    if (we__1)
+    if (cs & we__1)
     begin
         x__1 <= wr_data;
     end
@@ -295,7 +296,7 @@ end
 
 always_ff @(posedge clk)
 begin
-    if (we__2)
+    if (cs & we__2)
     begin
         x__2 <= wr_data;
     end
@@ -303,7 +304,7 @@ end
 
 always_ff @(posedge clk)
 begin
-    if (we__3)
+    if (cs & we__3)
     begin
         x__3 <= wr_data;
     end
@@ -311,7 +312,7 @@ end
 
 always_ff @(posedge clk)
 begin
-    if (we__4)
+    if (cs & we__4)
     begin
         x__4 <= wr_data;
     end
@@ -319,7 +320,7 @@ end
 
 always_ff @(posedge clk)
 begin
-    if (we__5)
+    if (cs & we__5)
     begin
         x__5 <= wr_data;
     end
@@ -327,7 +328,7 @@ end
 
 always_ff @(posedge clk)
 begin
-    if (we__6)
+    if (cs & we__6)
     begin
         x__6 <= wr_data;
     end
@@ -335,7 +336,7 @@ end
 
 always_ff @(posedge clk)
 begin
-    if (we__7)
+    if (cs & we__7)
     begin
         x__7 <= wr_data;
     end
@@ -343,7 +344,7 @@ end
 
 always_ff @(posedge clk)
 begin
-    if (we__8)
+    if (cs & we__8)
     begin
         x__8 <= wr_data;
     end
@@ -351,7 +352,7 @@ end
 
 always_ff @(posedge clk)
 begin
-    if (we__9)
+    if (cs & we__9)
     begin
         x__9 <= wr_data;
     end
@@ -359,7 +360,7 @@ end
 
 always_ff @(posedge clk)
 begin
-    if (we__10)
+    if (cs & we__10)
     begin
         x__10 <= wr_data;
     end
@@ -367,7 +368,7 @@ end
 
 always_ff @(posedge clk)
 begin
-    if (we__11)
+    if (cs & we__11)
     begin
         x__11 <= wr_data;
     end
@@ -375,7 +376,7 @@ end
 
 always_ff @(posedge clk)
 begin
-    if (we__12)
+    if (cs & we__12)
     begin
         x__12 <= wr_data;
     end
@@ -383,7 +384,7 @@ end
 
 always_ff @(posedge clk)
 begin
-    if (we__13)
+    if (cs & we__13)
     begin
         x__13 <= wr_data;
     end
@@ -391,7 +392,7 @@ end
 
 always_ff @(posedge clk)
 begin
-    if (we__14)
+    if (cs & we__14)
     begin
         x__14 <= wr_data;
     end
@@ -399,7 +400,7 @@ end
 
 always_ff @(posedge clk)
 begin
-    if (we__15)
+    if (cs & we__15)
     begin
         x__15 <= wr_data;
     end
@@ -407,7 +408,7 @@ end
 
 always_ff @(posedge clk)
 begin
-    if (we__16)
+    if (cs & we__16)
     begin
         x__16 <= wr_data;
     end
@@ -415,7 +416,7 @@ end
 
 always_ff @(posedge clk)
 begin
-    if (we__17)
+    if (cs & we__17)
     begin
         x__17 <= wr_data;
     end
@@ -423,7 +424,7 @@ end
 
 always_ff @(posedge clk)
 begin
-    if (we__18)
+    if (cs & we__18)
     begin
         x__18 <= wr_data;
     end
@@ -431,7 +432,7 @@ end
 
 always_ff @(posedge clk)
 begin
-    if (we__19)
+    if (cs & we__19)
     begin
         x__19 <= wr_data;
     end
@@ -439,7 +440,7 @@ end
 
 always_ff @(posedge clk)
 begin
-    if (we__20)
+    if (cs & we__20)
     begin
         x__20 <= wr_data;
     end
@@ -447,7 +448,7 @@ end
 
 always_ff @(posedge clk)
 begin
-    if (we__21)
+    if (cs & we__21)
     begin
         x__21 <= wr_data;
     end
@@ -455,7 +456,7 @@ end
 
 always_ff @(posedge clk)
 begin
-    if (we__22)
+    if (cs & we__22)
     begin
         x__22 <= wr_data;
     end
@@ -463,7 +464,7 @@ end
 
 always_ff @(posedge clk)
 begin
-    if (we__23)
+    if (cs & we__23)
     begin
         x__23 <= wr_data;
     end
@@ -471,7 +472,7 @@ end
 
 always_ff @(posedge clk)
 begin
-    if (we__24)
+    if (cs & we__24)
     begin
         x__24 <= wr_data;
     end
@@ -479,7 +480,7 @@ end
 
 always_ff @(posedge clk)
 begin
-    if (we__25)
+    if (cs & we__25)
     begin
         x__25 <= wr_data;
     end
@@ -487,7 +488,7 @@ end
 
 always_ff @(posedge clk)
 begin
-    if (we__26)
+    if (cs & we__26)
     begin
         x__26 <= wr_data;
     end
@@ -495,7 +496,7 @@ end
 
 always_ff @(posedge clk)
 begin
-    if (we__27)
+    if (cs & we__27)
     begin
         x__27 <= wr_data;
     end
@@ -503,7 +504,7 @@ end
 
 always_ff @(posedge clk)
 begin
-    if (we__28)
+    if (cs & we__28)
     begin
         x__28 <= wr_data;
     end
@@ -511,7 +512,7 @@ end
 
 always_ff @(posedge clk)
 begin
-    if (we__29)
+    if (cs & we__29)
     begin
         x__29 <= wr_data;
     end
@@ -519,7 +520,7 @@ end
 
 always_ff @(posedge clk)
 begin
-    if (we__30)
+    if (cs & we__30)
     begin
         x__30 <= wr_data;
     end
@@ -527,7 +528,7 @@ end
 
 always_ff @(posedge clk)
 begin
-    if (we__31)
+    if (cs & we__31)
     begin
         x__31 <= wr_data;
     end

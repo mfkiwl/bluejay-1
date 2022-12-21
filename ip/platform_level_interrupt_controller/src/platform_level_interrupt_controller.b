@@ -6,7 +6,7 @@ module platform_level_interrupt_controller
     input clk,
     input rst,
     input ce,
-    input rw,
+    input we,
     input [25:0] addr,
     input [31:0] wr_data,
     output logic [31:0] rd_data,
@@ -18,7 +18,7 @@ module platform_level_interrupt_controller
 //input clk;
 //input rst;
 //input ce;
-//input rw;
+//input we;
 //input [25:0] addr;
 //input [31:0] wr_data;
 //output [31:0] rd_data;
@@ -29,7 +29,7 @@ module platform_level_interrupt_controller
 //logic rst;
 //
 //logic ce;
-//logic rw;
+//logic we;
 //logic [25:0] addr;
 //logic [31:0] wr_data;
 //logic [31:0] rd_data;
@@ -56,7 +56,7 @@ platform_level_interrupt_controller__core core
     .clk(clk),
     .rst(rst),
     .ce(ce),
-    .rw(rw),
+    .we(we),
     .addr(addr),
     .wr_data(wr_data),
     .rd_data(rd_data),
@@ -72,11 +72,11 @@ platform_level_interrupt_controller__core core
 //==============================
 platform_level_interrupt_controller__gateway gateway__1
 (
-    clk(clk),
-    rst(rst),
-    is(is__1),
-    request(request__1),
-    complete(complete__1)
+    .clk(clk),
+    .rst(rst),
+    .is(is__1),
+    .request(request__1),
+    .complete(complete__1)
 );
 
 endmodule

@@ -5,8 +5,8 @@ module platform_level_interrupt_controller__core
 (
     input clk,
     input rst,
-    input ce,
-    input rw,
+    input cs,
+    input we,
     input [25:0] addr,
     input [31:0] wr_data,
     output [31:0] logic rd_data,
@@ -17,51 +17,11 @@ module platform_level_interrupt_controller__core
     output logic context__0__eip
 );
 
-//input clk;
-//input rst;
-//input ce;
-//input rw;
-//input [25:0] addr;
-//input [31:0] wr_data;
-//output [31:0] rd_data;
-//input request__0;
-//input request__1;
-//output complete__0;
-//output complete__1;
-//output context__0__eip;
-//
-//
-//logic clk;
-//logic rst;
-//
-//logic ce;
-//logic rw;
-//logic [25:0] addr;
-//logic [31:0] wr_data;
-//logic [31:0] rd_data;
-//
-//logic request__0;
-//logic request__1;
-//
-//logic ip__0;
-//logic ip__1;
-//
-//logic complete;
-//logic complete__0;
-//logic complete__1;
-//
-//logic claim;
-//logic claim__0;
-//logic claim__1;
-//
-//logic context__0__eip;
-//logic [9:0] context__0__id;
-
 
 assign ip__0 = 1'b0;
 
 
-always_comb
+always_ff @(posedge clk)
 begin
     if (claim__1 || rst)
     begin
@@ -117,41 +77,41 @@ begin
     re__context__0__claim_complete = 1'b0;
 
     case (addr)
-        PLIC__MEMORY_MAP__INTERRUPT_SOURCE_PRIORITY__0:
+        PLATFORM_LEVEL_INTERRUPT_CONTROLLER__INTERRUPT_SOURCE_PRIORITY__0:
         begin
             rd_data = priority__0; 
-            we__priority__0 = ce & rw;            
-            re__priority__0 = ce & ~rw;            
+            we__priority__0 = we;            
+            re__priority__0 = ~we;            
         end
-        PLIC__MEMORY_MAP__INTERRUPT_SOURCE_PRIORITY__1:
+        PLATFORM_LEVEL_INTERRUPT_CONTROLLER__INTERRUPT_SOURCE_PRIORITY__1:
         begin
             rd_data = priority__1; 
-            we__priority__1 = ce & rw;            
-            re__priority__1 = ce & ~rw;            
+            we__priority__1 = we;            
+            re__priority__1 = ~we;            
         end
-        PLIC__MEMORY_MAP__INTERRUPT_PENDING_BITS__0_TO_31:
+        PLATFORM_LEVEL_INTERRUPT_CONTROLLER__INTERRUPT_PENDING_BITS__0_TO_31:
         begin
             rd_data = ip__0_to_31;
-            we__ip__0_to_31 = ce & rw;
-            re__ip__0_to_31 = ce & ~rw;
+            we__ip__0_to_31 = we;
+            re__ip__0_to_31 = ~we;
         end
-        PLIC__MEMORY_MAP__INTERRUPT_ENABLE_BITS__0_TO_31__CONTEXT__0:
+        PLATFORM_LEVEL_INTERRUPT_CONTROLLER__INTERRUPT_ENABLE_BITS__0_TO_31__CONTEXT__0:
         begin
             rd_data = context__0__ie__0_to_31;
-            we__context__0__ie__0_to_31 = ce & rw;
-            re__context__0__ie__0_to_31 = ce & ~rw;
+            we__context__0__ie__0_to_31 = we;
+            re__context__0__ie__0_to_31 = ~we;
         end
-        PLIC__MEMORY_MAP__PRIORITY_THRESHOLD__CONTEXT__0:
+        PLATFORM_LEVEL_INTERRUPT_CONTROLLER__PRIORITY_THRESHOLD__CONTEXT__0:
         begin
             rd_data = context__0__threshold;
-            we__context__0__threshold = ce & rw;
-            re__context__0__threshold = ce & ~rw;
+            we__context__0__threshold = we;
+            re__context__0__threshold = ~we;
         end
-        PLIC__MEMORY_MAP__INTERRUPT_CLAIM_COMPLETE__CONTEXT__0:
+        PLATFORM_LEVEL_INTERRUPT_CONTROLLER__INTERRUPT_CLAIM_COMPLETE__CONTEXT__0:
         begin
             rd_data = context__0__claim_complete;
-            we__context__0__claim_complete = ce & rw;
-            re__context__0__claim_complete = ce & ~rw;
+            we__context__0__claim_complete = we;
+            re__context__0__claim_complete = ~we;
         end
     endcase
 end
@@ -207,7 +167,7 @@ logic context__0__ie__1;
 assign context__0__ie__0 = 1'b0;
 
 
-always_comb
+always_ff @(posedge clk)
 begin
     if (rst)
     begin
@@ -215,7 +175,7 @@ begin
     end
     else
     begin
-        if (we__context__0__ie__0_to_31)
+        if (cs & we__context__0__ie__0_to_31)
         begin
             context__0__ie__1 <= wr_data[1];
         end
@@ -232,7 +192,7 @@ logic re__context__0__threshold;
 
 assign threshold__context__0 = 32'h0;
 
-always_comb
+always_ff @(posedge clk)
 begin
     if (rst)
     begin
@@ -240,7 +200,7 @@ begin
     end
     else
     begin
-        if (we__context__0__threshold)
+        if (cs & we__context__0__threshold)
         begin
             context__0__threshold <= wr_data;
         end
@@ -269,11 +229,11 @@ begin
     case (rd_data[9:0]) 
         10'h0:
         begin
-            claim__0 = re__context__x__claim_complete;
+            claim__0 = cs & re__context__x__claim_complete;
         end
         10'h1:
         begin
-            claim__1 = re__context__x__claim_complete;
+            claim__1 = cs & re__context__x__claim_complete;
         end
     endcase
 end
@@ -283,11 +243,11 @@ begin
     case (wr_data[9:0]) 
         10'h0:
         begin
-            complete__0 = we__context__x__claim_complete;
+            complete__0 = cs & we__context__x__claim_complete;
         end
         10'h1:
         begin
-            complete__1 = we__context__x__claim_complete;
+            complete__1 = cs & we__context__x__claim_complete;
         end
     endcase
 end
