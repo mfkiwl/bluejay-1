@@ -187,7 +187,7 @@ always_comb begin
     cpu_to_l1__addr = pc;
     cpu_to_l1__data = rd_data__1;
     cpu_to_l1__we = 1'b0;
-    cpu_to_l1__dtype = DTYPE__D;
+    cpu_to_l1__dtype = DTYPE__DOUBLE_WORD;
     l1_to_cpu__ready = 1'b0;
 
     case (state)
@@ -206,7 +206,7 @@ always_comb begin
         begin
             cpu_to_l1__valid = 1'b1;
             cpu_to_l1__addr = pc;
-            cpu_to_l1__dtype = DTYPE__W;
+            cpu_to_l1__dtype = DTYPE__WORD;
 
             if (cpu_to_l1__ready) begin
                 state__n = STATE__IF__1;

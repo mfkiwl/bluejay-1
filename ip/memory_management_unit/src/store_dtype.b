@@ -16,11 +16,11 @@ always_comb begin
     dout = din;
 
     case (dtype)
-        DTYPE__D:
+        DTYPE__DOUBLE_WORD:
         begin
             dout = wr_data;
         end
-        DTYPE__W:
+        DTYPE__WORD:
         begin
             case (addr[2])
                 1'b0:
@@ -33,7 +33,7 @@ always_comb begin
                 end
             endcase
         end
-        DTYPE__WU:
+        DTYPE__WORD_UNSIGNED:
         begin
             case (addr[2])
                 1'b0:
@@ -46,7 +46,7 @@ always_comb begin
                 end
             endcase
         end
-        DTYPE__H:
+        DTYPE__HALF_WORD:
         begin
             case (addr[2:1])
                 2'h0:
@@ -67,7 +67,7 @@ always_comb begin
                 end
             endcase
         end
-        DTYPE__HU:
+        DTYPE__HALF_WORD_UNSIGNED:
         begin
             case (addr[2:1])
                 2'h0:
@@ -88,7 +88,7 @@ always_comb begin
                 end
             endcase
         end
-        DTYPE__B:
+        DTYPE__BYTE:
         begin
             case (addr[2:0])
                 3'h0:
@@ -125,7 +125,7 @@ always_comb begin
                 end
             endcase
         end
-        DTYPE__BU:
+        DTYPE__BYTE_UNSIGNED:
         begin
             case (addr[2:0])
                 3'h0:

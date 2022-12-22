@@ -38,19 +38,19 @@ assign hrdata = ahb_slave_to_device__rd_data;
 alway_comb
 begin
     case (htrans)
-        AHB__HTRANS__IDLE:
+        ADVANCED_HIGH_PERFORMANCE_BUS__HTRANS__IDLE:
         begin
             en = 1'b0;
         end
-        AHB__HTRANS__BUSY:
+        ADVANCED_HIGH_PERFORMANCE_BUS__HTRANS__BUSY:
         begin
             en = 1'b0;
         end
-        AHB__HTRANS__NONSEQ:
+        ADVANCED_HIGH_PERFORMANCE_BUS__HTRANS__NONSEQ:
         begin
             en = hready & hsel;
         end
-        AHB__HTRANS__SEQ:
+        ADVANCED_HIGH_PERFORMANCE_BUS__HTRANS__SEQ:
         begin
             en = hready & hsel;
         end

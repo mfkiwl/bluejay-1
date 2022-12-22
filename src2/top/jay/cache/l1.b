@@ -200,31 +200,31 @@ end
 
 always_comb begin
     case (dtype)
-        DTYPE__D:
+        DTYPE__DOUBLE_WORD:
         begin
             temp__1 = temp__0[63:0];
         end
-        DTYPE__W:
+        DTYPE__WORD:
         begin
             temp__1 = {{32{temp__0[31]}}, temp__0[31:0]};
         end
-        DTYPE__WU:
+        DTYPE__WORD_UNSIGNED:
         begin
             temp__1 = {32'h0, temp__0[31:0]};
         end
-        DTYPE__H:
+        DTYPE__HALF_WORD:
         begin
             temp__1 = {{48{temp__0[15]}}, temp__0[15:0]};
         end
-        DTYPE__HU:
+        DTYPE__HALF_WORD_UNSIGNED:
         begin
             temp__1 = {48'h0, temp__0[31:0]};
         end
-        DTYPE__B:
+        DTYPE__BYTE:
         begin
             temp__1 = {{56{temp__0[7]}}, temp__0[7:0]};
         end
-        DTYPE__BU:
+        DTYPE__BYTE_UNSIGNED:
         begin
             temp__1 = {56'h0, temp__0[31:0]};
         end
@@ -235,11 +235,11 @@ always_comb begin
     l1_to_mem__wr_data = l1_to_mem__rd_data;
 
     case (dtype)
-        DTYPE__D:
+        DTYPE__DOUBLE_WORD:
         begin
             l1_to_mem__wr_data = wr_data;
         end
-        DTYPE__W:
+        DTYPE__WORD:
         begin
             case (addr[2])
                 1'h0:
@@ -252,7 +252,7 @@ always_comb begin
                 end
             endcase
         end
-        DTYPE__H:
+        DTYPE__HALF_WORD:
         begin
             case (addr[2:1])
                 2'h0:
@@ -273,7 +273,7 @@ always_comb begin
                 end
             endcase
         end
-        DTYPE__B:
+        DTYPE__BYTE:
         begin
             case (addr[2:0])
                 3'h0:

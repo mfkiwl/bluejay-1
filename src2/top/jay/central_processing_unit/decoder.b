@@ -404,36 +404,36 @@ end
 always_comb begin
     format = FORMAT__I_TYPE;
     func = FUNC__ADD;
-    dtype = DTYPE__D;
+    dtype = DTYPE__DOUBLE_WORD;
 
     case (op)
         OP__LB:
         begin
-            dtype = DTYPE__B;
+            dtype = DTYPE__BYTE;
         end
         OP__LH:
         begin
-            dtype = DTYPE__H;
+            dtype = DTYPE__HALF_WORD;
         end
         OP__LW:
         begin
-            dtype = DTYPE__W;
+            dtype = DTYPE__WORD;
         end
         OP__LD:
         begin
-            dtype = DTYPE__D;
+            dtype = DTYPE__DOUBLE_WORD;
         end
         OP__LBU:
         begin
-            dtype = DTYPE__BU;
+            dtype = DTYPE__BYTE_UNSIGNED;
         end
         OP__LHU:
         begin
-            dtype = DTYPE__HU;
+            dtype = DTYPE__HALF_WORD_UNSIGNED;
         end
         OP__LWU:
         begin
-            dtype = DTYPE__HU;
+            dtype = DTYPE__HALF_WORD_UNSIGNED;
         end
         OP__FENCE:
         begin
@@ -500,22 +500,22 @@ always_comb begin
         OP__SB:
         begin
             format = FORMAT__S_TYPE;
-            dtype = DTYPE__B;
+            dtype = DTYPE__BYTE;
         end
         OP__SH:
         begin
             format = FORMAT__S_TYPE;
-            dtype = DTYPE__H;
+            dtype = DTYPE__HALF_WORD;
         end
         OP__SW:
         begin
             format = FORMAT__S_TYPE;
-            dtype = DTYPE__W;
+            dtype = DTYPE__WORD;
         end
         OP__SD:
         begin
             format = FORMAT__S_TYPE;
-            dtype = DTYPE__D;
+            dtype = DTYPE__DOUBLE_WORD;
         end
         OP__ADD:
         begin

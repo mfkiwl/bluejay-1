@@ -31,7 +31,7 @@ logic [7:0] memory [DEPTH-1:0];
 always_ff @(posedge clk) begin
     if (cpu_to_l1__valid && cpu_to_l1__ready && cpu_to_l1__we) begin
         case (cpu_to_l1__dtype)
-            DTYPE__D:
+            DTYPE__DOUBLE_WORD:
             begin
                 memory[addr] <= cpu_to_l1__data[7:0];
                 memory[addr + 1] <= cpu_to_l1__data[15:8];
@@ -42,35 +42,35 @@ always_ff @(posedge clk) begin
                 memory[addr + 6] <= cpu_to_l1__data[55:48];
                 memory[addr + 7] <= cpu_to_l1__data[63:56];
             end
-            DTYPE__W:
+            DTYPE__WORD:
             begin
                 memory[addr] <= cpu_to_l1__data[7:0];
                 memory[addr + 1] <= cpu_to_l1__data[15:8];
                 memory[addr + 2] <= cpu_to_l1__data[23:16];
                 memory[addr + 3] <= cpu_to_l1__data[31:24];
             end
-            DTYPE__WU:
+            DTYPE__WORD_UNSIGNED:
             begin
                 memory[addr] <= cpu_to_l1__data[7:0];
                 memory[addr + 1] <= cpu_to_l1__data[15:8];
                 memory[addr + 2] <= cpu_to_l1__data[23:16];
                 memory[addr + 3] <= cpu_to_l1__data[31:24];
             end
-            DTYPE__H:
+            DTYPE__HALF_WORD:
             begin
                 memory[addr] <= cpu_to_l1__data[7:0];
                 memory[addr + 1] <= cpu_to_l1__data[15:8];
             end
-            DTYPE__HU:
+            DTYPE__HALF_WORD_UNSIGNED:
             begin
                 memory[addr] <= cpu_to_l1__data[7:0];
                 memory[addr + 1] <= cpu_to_l1__data[15:8];
             end
-            DTYPE__B:
+            DTYPE__BYTE:
             begin
                 memory[addr] <= cpu_to_l1__data[7:0];
             end
-            DTYPE__BU:
+            DTYPE__BYTE_UNSIGNED:
             begin
                 memory[addr] <= cpu_to_l1__data[7:0];
             end
@@ -84,7 +84,7 @@ end
 always_ff @(posedge clk) begin
     if (cpu_to_l1__valid && cpu_to_l1__ready && ~cpu_to_l1__we) begin
         case (cpu_to_l1__dtype)
-            DTYPE__D:
+            DTYPE__DOUBLE_WORD:
             begin
                 l1_to_cpu__data[7:0] <= memory[addr];
                 l1_to_cpu__data[15:8] <= memory[addr + 1];
@@ -95,7 +95,7 @@ always_ff @(posedge clk) begin
                 l1_to_cpu__data[55:48] <= memory[addr + 6];
                 l1_to_cpu__data[63:56] <= memory[addr + 7];
             end
-            DTYPE__W:
+            DTYPE__WORD:
             begin
                 l1_to_cpu__data[7:0] <= memory[addr];
                 l1_to_cpu__data[15:8] <= memory[addr + 1];
@@ -106,7 +106,7 @@ always_ff @(posedge clk) begin
                 l1_to_cpu__data[55:48] <= {8{memory[addr + 3][7]}}; 
                 l1_to_cpu__data[63:56] <= {8{memory[addr + 3][7]}};
             end
-            DTYPE__WU:
+            DTYPE__WORD_UNSIGNED:
             begin
                 l1_to_cpu__data[7:0] <= memory[addr];
                 l1_to_cpu__data[15:8] <= memory[addr + 1];
@@ -117,7 +117,7 @@ always_ff @(posedge clk) begin
                 l1_to_cpu__data[55:48] <= 8'h0; 
                 l1_to_cpu__data[63:56] <= 8'h0;
             end
-            DTYPE__H:
+            DTYPE__HALF_WORD:
             begin
                 l1_to_cpu__data[7:0] <= memory[addr];
                 l1_to_cpu__data[15:8] <= memory[addr + 1];
@@ -128,7 +128,7 @@ always_ff @(posedge clk) begin
                 l1_to_cpu__data[55:48] <= {8{memory[addr + 1][7]}}; 
                 l1_to_cpu__data[63:56] <= {8{memory[addr + 1][7]}};
             end
-            DTYPE__HU:
+            DTYPE__HALF_WORD_UNSIGNED:
             begin
                 l1_to_cpu__data[7:0] <= memory[addr];
                 l1_to_cpu__data[15:8] <= memory[addr + 1];
@@ -139,7 +139,7 @@ always_ff @(posedge clk) begin
                 l1_to_cpu__data[55:48] <= 8'h0; 
                 l1_to_cpu__data[63:56] <= 8'h0; 
             end
-            DTYPE__B:
+            DTYPE__BYTE:
             begin
                 l1_to_cpu__data[7:0] <= memory[addr];
                 l1_to_cpu__data[15:8] <= {8{memory[addr][7]}};
@@ -150,7 +150,7 @@ always_ff @(posedge clk) begin
                 l1_to_cpu__data[55:48] <= {8{memory[addr][7]}}; 
                 l1_to_cpu__data[63:56] <= {8{memory[addr][7]}};
             end
-            DTYPE__BU:
+            DTYPE__BYTE_UNSIGNED:
             begin
                 l1_to_cpu__data[7:0] <= memory[addr];
                 l1_to_cpu__data[15:8] <= 8'h0;

@@ -463,7 +463,7 @@ always_comb begin
     sel__wr_data = SEL__WD_DATA__C;
     mem_valid = 1'b0;
     mem_rw = 1'b0;
-    mem_dtype = DTYPE__D;
+    mem_dtype = DTYPE__DOUBLE_WORD;
 
     case (op)
         OP__LB:
@@ -471,49 +471,49 @@ always_comb begin
             we = 1'b1;
             sel__wr_data = SEL__WD_DATA__MEM_RD_DATA;
             mem_valid = 1'b1;
-            mem_dtype = DTYPE__B;
+            mem_dtype = DTYPE__BYTE;
         end
         OP__LH:
         begin
             we = 1'b1;
             sel__wr_data = SEL__WD_DATA__MEM_RD_DATA;
             mem_valid = 1'b1;
-            mem_dtype = DTYPE__H;
+            mem_dtype = DTYPE__HALF_WORD;
         end
         OP__LW:
         begin
             we = 1'b1;
             sel__wr_data = SEL__WD_DATA__MEM_RD_DATA;
             mem_valid = 1'b1;
-            mem_dtype = DTYPE__W;
+            mem_dtype = DTYPE__WORD;
         end
         OP__LD:
         begin
             we = 1'b1;
             sel__wr_data = SEL__WD_DATA__MEM_RD_DATA;
             mem_valid = 1'b1;
-            mem_dtype = DTYPE__D;
+            mem_dtype = DTYPE__DOUBLE_WORD;
         end
         OP__LBU:
         begin
             we = 1'b1;
             sel__wr_data = SEL__WD_DATA__MEM_RD_DATA;
             mem_valid = 1'b1;
-            mem_dtype = DTYPE__BU;
+            mem_dtype = DTYPE__BYTE_UNSIGNED;
         end
         OP__LHU:
         begin
             we = 1'b1;
             sel__wr_data = SEL__WD_DATA__MEM_RD_DATA;
             mem_valid = 1'b1;
-            mem_dtype = DTYPE__HU;
+            mem_dtype = DTYPE__HALF_WORD_UNSIGNED;
         end
         OP__LWU:
         begin
             we = 1'b1;
             sel__wr_data = SEL__WD_DATA__MEM_RD_DATA;
             mem_valid = 1'b1;
-            mem_dtype = DTYPE__HU;
+            mem_dtype = DTYPE__HALF_WORD_UNSIGNED;
         end
         OP__FENCE:
         begin
@@ -595,28 +595,28 @@ always_comb begin
         OP__SB:
         begin
             format = FORMAT__S_TYPE;
-            mem_dtype = DTYPE__B;
+            mem_dtype = DTYPE__BYTE;
             mem_valid = 1'b1;
             mem_rw = 1'b1;
         end
         OP__SH:
         begin
             format = FORMAT__S_TYPE;
-            mem_dtype = DTYPE__H;
+            mem_dtype = DTYPE__HALF_WORD;
             mem_valid = 1'b1;
             mem_rw = 1'b1;
         end
         OP__SW:
         begin
             format = FORMAT__S_TYPE;
-            mem_dtype = DTYPE__W;
+            mem_dtype = DTYPE__WORD;
             mem_valid = 1'b1;
             mem_rw = 1'b1;
         end
         OP__SD:
         begin
             format = FORMAT__S_TYPE;
-            mem_dtype = DTYPE__D;
+            mem_dtype = DTYPE__DOUBLE_WORD;
             mem_valid = 1'b1;
             mem_rw = 1'b1;
         end

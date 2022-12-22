@@ -67,11 +67,11 @@ logic [63:0] rtn__data;
 // Format rd_data.
 always_comb begin
     case (dtype)
-        DTYPE__D:
+        DTYPE__DOUBLE_WORD:
         begin
             rd_data = data_mem__rd_data;
         end
-        DTYPE__W:
+        DTYPE__WORD:
             case (addr[L1__BYTE_OFFSET__FIELD])
                 PYTHON
                 (
@@ -84,7 +84,7 @@ always_comb begin
                         print(f"end")
                 )
             endcase
-        DTYPE__WU:
+        DTYPE__WORD_UNSIGNED:
         begin
             case (addr[L1__BYTE_OFFSET__FIELD])
                 PYTHON
@@ -99,7 +99,7 @@ always_comb begin
                 )
             endcase
         end
-        DTYPE__H:
+        DTYPE__HALF_WORD:
         begin
             case (addr[L1__BYTE_OFFSET__FIELD])
                 PYTHON
@@ -114,7 +114,7 @@ always_comb begin
                 )
             endcase
         end
-        DTYPE__HU:
+        DTYPE__HALF_WORD_UNSIGNED:
         begin
             case (addr[L1__BYTE_OFFSET__FIELD])
                 PYTHON
@@ -129,7 +129,7 @@ always_comb begin
                 )
             endcase            
         end
-        DTYPE__B:
+        DTYPE__BYTE:
         begin
             case (addr[L1__BYTE_OFFSET__FIELD])
                 PYTHON
@@ -144,7 +144,7 @@ always_comb begin
                 )  
             endcase        
         end
-        DTYPE__BU:
+        DTYPE__BYTE_UNSIGNED:
         begin
             case (addr[L1__BYTE_OFFSET__FIELD])
                 PYTHON

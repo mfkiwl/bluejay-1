@@ -40,7 +40,7 @@ logic address_misaligned;
 //==============================================
 always_comb begin
     case (dtype)
-        DTYPE__D:
+        DTYPE__DOUBLE_WORD:
         begin
             rd_data[7:0] = memory[addr];
             rd_data[15:8] = memory[addr + 1];
@@ -51,7 +51,7 @@ always_comb begin
             rd_data[55:48] = memory[addr + 6];
             rd_data[63:56] = memory[addr + 7];
         end
-        DTYPE__W:
+        DTYPE__WORD:
         begin
             rd_data[7:0] = memory[addr];
             rd_data[15:8] = memory[addr + 1];
@@ -62,7 +62,7 @@ always_comb begin
             rd_data[55:48] = {8{memory[addr + 3][7]}}; 
             rd_data[63:56] = {8{memory[addr + 3][7]}};
         end
-        DTYPE__WU:
+        DTYPE__WORD_UNSIGNED:
         begin
             rd_data[7:0] = memory[addr];
             rd_data[15:8] = memory[addr + 1];
@@ -73,7 +73,7 @@ always_comb begin
             rd_data[55:48] = 8'h0; 
             rd_data[63:56] = 8'h0;
         end
-        DTYPE__H:
+        DTYPE__HALF_WORD:
         begin
             rd_data[7:0] = memory[addr];
             rd_data[15:8] = memory[addr + 1];
@@ -84,7 +84,7 @@ always_comb begin
             rd_data[55:48] = {8{memory[addr + 1][7]}}; 
             rd_data[63:56] = {8{memory[addr + 1][7]}};
         end
-        DTYPE__HU:
+        DTYPE__HALF_WORD_UNSIGNED:
         begin
             rd_data[7:0] = memory[addr];
             rd_data[15:8] = memory[addr + 1];
@@ -95,7 +95,7 @@ always_comb begin
             rd_data[55:48] = 8'h0; 
             rd_data[63:56] = 8'h0; 
         end
-        DTYPE__B:
+        DTYPE__BYTE:
         begin
             rd_data[7:0] = memory[addr];
             rd_data[15:8] = {8{memory[addr][7]}};
@@ -106,7 +106,7 @@ always_comb begin
             rd_data[55:48] = {8{memory[addr][7]}}; 
             rd_data[63:56] = {8{memory[addr][7]}};
         end
-        DTYPE__BU:
+        DTYPE__BYTE_UNSIGNED:
         begin
             rd_data[7:0] = memory[addr];
             rd_data[15:8] = 8'h0;
@@ -127,7 +127,7 @@ end
 always_ff @(posedge clk) begin
     if (we) begin
         case (dtype)
-            DTYPE__D:
+            DTYPE__DOUBLE_WORD:
             begin
                 memory[addr] <= wr_data[7:0];
                 memory[addr + 1] <= wr_data[15:8];
@@ -138,35 +138,35 @@ always_ff @(posedge clk) begin
                 memory[addr + 6] <= wr_data[55:48];
                 memory[addr + 7] <= wr_data[63:56];
             end
-            DTYPE__W:
+            DTYPE__WORD:
             begin
                 memory[addr] <= wr_data[7:0];
                 memory[addr + 1] <= wr_data[15:8];
                 memory[addr + 2] <= wr_data[23:16];
                 memory[addr + 3] <= wr_data[31:24];
             end
-            DTYPE__WU:
+            DTYPE__WORD_UNSIGNED:
             begin
                 memory[addr] <= wr_data[7:0];
                 memory[addr + 1] <= wr_data[15:8];
                 memory[addr + 2] <= wr_data[23:16];
                 memory[addr + 3] <= wr_data[31:24];
             end
-            DTYPE__H:
+            DTYPE__HALF_WORD:
             begin
                 memory[addr] <= wr_data[7:0];
                 memory[addr + 1] <= wr_data[15:8];
             end
-            DTYPE__HU:
+            DTYPE__HALF_WORD_UNSIGNED:
             begin
                 memory[addr] <= wr_data[7:0];
                 memory[addr + 1] <= wr_data[15:8];
             end
-            DTYPE__B:
+            DTYPE__BYTE:
             begin
                 memory[addr] <= wr_data[7:0];
             end
-            DTYPE__BU:
+            DTYPE__BYTE_UNSIGNED:
             begin
                 memory[addr] <= wr_data[7:0];
             end
@@ -177,31 +177,31 @@ end
 
 always_comb begin
     case (dtype)
-        DTYPE__D:
+        DTYPE__DOUBLE_WORD:
         begin
             address_misaligned = (addr[2:0] != 3'b0);
         end
-        DTYPE__W:
+        DTYPE__WORD:
         begin
             address_misaligned = (addr[1:0] != 2'b0);
         end
-        DTYPE__WU:
+        DTYPE__WORD_UNSIGNED:
         begin
             address_misaligned = (addr[1:0] != 2'b0);
         end
-        DTYPE__H:
+        DTYPE__HALF_WORD:
         begin
             address_misaligned = (addr[0] != 1'b0);
         end
-        DTYPE__HU:
+        DTYPE__HALF_WORD_UNSIGNED:
         begin
             address_misaligned = (addr[0] != 1'b0);
         end
-        DTYPE__B:
+        DTYPE__BYTE:
         begin
             address_misaligned = 1'b0;
         end
-        DTYPE__BU:
+        DTYPE__BYTE_UNSIGNED:
         begin
             address_misaligned = 1'b0;
         end

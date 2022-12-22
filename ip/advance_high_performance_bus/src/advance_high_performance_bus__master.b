@@ -35,7 +35,7 @@ logic [3:0] state__n;
 always_comb 
 begin
     ahb_master_to_device__valid = 1'b0;
-    htrans = AHB__HTRANS__IDLE; 
+    htrans = ADVANCED_HIGH_PERFORMANCE_BUS__HTRANS__IDLE; 
     en__a = 1'b0;
     en__b = 1'b0;
 
@@ -55,7 +55,7 @@ begin
         //==============================
         STATE__ADDRESS_PHASE:
         begin
-            htrans = AHB__HTRANS__NONSEQ; 
+            htrans = ADVANCED_HIGH_PERFORMANCE_BUS__HTRANS__NONSEQ; 
             state__n = STATE__DATA_PHASE;
         end
 
@@ -81,7 +81,7 @@ begin
 end
 
 
-assign hburst = AHB__HBURST__SINGLE; 
+assign hburst = ADVANCED_HIGH_PERFORMANCE_BUS__HBURST__SINGLE; 
 assign hprot = 4'b0011; 
 assign hmastlock = 1'b0;
 

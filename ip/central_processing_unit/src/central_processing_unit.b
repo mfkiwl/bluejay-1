@@ -399,7 +399,7 @@ always_comb begin
     wr_data = c;
     cpu_to_mem__valid = 1'b0;
     cpu_to_mem__we = 1'b0;
-    cpu_to_mem__dtype = DTYPE__W;
+    cpu_to_mem__dtype = DTYPE__WORD;
     cpu_to_mem__data = rd_data;
     csr__addr = imm[11:0];
     csr__we = 1'b0;
@@ -415,32 +415,6 @@ always_comb begin
             state__n = STATE__FETCH__0;
         end
         
-//        //==============================
-//        // STATE__FETCH
-//        //==============================
-//        STATE__FETCH:
-//        begin
-//            cpu_to_mem__valid = 1'b1;
-//            cpu_to_mem__addr = pc;
-//            cpu_to_mem__dtype = DTYPE__W;
-//            
-//            if (mstatus[CSR__MSTATUS__MIE__FIELD] && mip[CSR__MIP__MEIP__FIELD] && mie[CSR__MIE__MEIE__FIELD]) begin
-//                state__n = STATE__INTERRUPT__EXTERNAL;
-//            end
-//            else if (mstatus[CSR__MSTATUS__MIE__FIELD] && mip[CSR__MIP__MSIP__FIELD] && mie[CSR__MIE__MSIE__FIELD]) begin
-//                state__n = STATE__INTERRUPT__SOFTWARE;
-//            end
-//            else if (mstatus[CSR__MSTATUS__MIE__FIELD] && mip[CSR__MIP__MTIP__FIELD] && mie[CSR__MIE__MTIE__FIELD]) begin
-//                state__n = STATE__INTERRUPT__TIMER;
-//            end
-//            else begin
-//                if (cpu_to_mem__hit) begin
-//                    ir__n = cpu_to_mem__rd_data[31:0];
-//                    state__n = STATE__DECODE;
-//                end
-//            end
-//        end
-
         //==============================
         // STATE__FETCH__0
         //==============================
@@ -457,7 +431,7 @@ always_comb begin
         begin
             cpu_to_mem__valid = 1'b1;
             cpu_to_mem__addr = pc;
-            cpu_to_mem__dtype = DTYPE__W;
+            cpu_to_mem__dtype = DTYPE__WORD;
             state__n = STATE__FETCH__2;
         end
 
@@ -1581,7 +1555,7 @@ always_comb begin
             func = FUNC__ADD;
             cpu_to_mem__valid = 1'b1;
             cpu_to_mem__addr = c;
-            cpu_to_mem__dtype = DTYPE__B;
+            cpu_to_mem__dtype = DTYPE__BYTE;
             state__n = STATE__LB__2;
         end
 
@@ -1625,7 +1599,7 @@ always_comb begin
             func = FUNC__ADD;
             cpu_to_mem__valid = 1'b1;
             cpu_to_mem__addr = c;
-            cpu_to_mem__dtype = DTYPE__H;
+            cpu_to_mem__dtype = DTYPE__HALF_WORD;
             state__n = STATE__LH__2;
         end
 
@@ -1669,7 +1643,7 @@ always_comb begin
             func = FUNC__ADD;
             cpu_to_mem__valid = 1'b1;
             cpu_to_mem__addr = c;
-            cpu_to_mem__dtype = DTYPE__W;
+            cpu_to_mem__dtype = DTYPE__WORD;
             state__n = STATE__LW__2;
         end
 
@@ -1713,7 +1687,7 @@ always_comb begin
             func = FUNC__ADD;
             cpu_to_mem__valid = 1'b1;
             cpu_to_mem__addr = c;
-            cpu_to_mem__dtype = DTYPE__D;
+            cpu_to_mem__dtype = DTYPE__DOUBLE_WORD;
             state__n = STATE__LD__2;
         end
 
@@ -1757,7 +1731,7 @@ always_comb begin
             func = FUNC__ADD;
             cpu_to_mem__valid = 1'b1;
             cpu_to_mem__addr = c;
-            cpu_to_mem__dtype = DTYPE__BU;
+            cpu_to_mem__dtype = DTYPE__BYTE_UNSIGNED;
             state__n = STATE__LBU__2;
         end
 
@@ -1801,7 +1775,7 @@ always_comb begin
             func = FUNC__ADD;
             cpu_to_mem__valid = 1'b1;
             cpu_to_mem__addr = c;
-            cpu_to_mem__dtype = DTYPE__HU;
+            cpu_to_mem__dtype = DTYPE__HALF_WORD_UNSIGNED;
             state__n = STATE__LHU__2;
         end
 
@@ -1845,7 +1819,7 @@ always_comb begin
             func = FUNC__ADD;
             cpu_to_mem__valid = 1'b1;
             cpu_to_mem__addr = c;
-            cpu_to_mem__dtype = DTYPE__WU;
+            cpu_to_mem__dtype = DTYPE__WORD_UNSIGNED;
             state__n = STATE__LWU__2;
         end
 
@@ -1891,7 +1865,7 @@ always_comb begin
             cpu_to_mem__valid = 1'b1;
             cpu_to_mem__we = 1'b1;
             cpu_to_mem__addr = c;
-            cpu_to_mem__dtype = DTYPE__B;
+            cpu_to_mem__dtype = DTYPE__BYTE;
             cpu_to_mem__data = rd_data;
             state__n = STATE__SB__2;
         end
@@ -1935,7 +1909,7 @@ always_comb begin
             cpu_to_mem__valid = 1'b1;
             cpu_to_mem__we = 1'b1;
             cpu_to_mem__addr = c;
-            cpu_to_mem__dtype = DTYPE__H;
+            cpu_to_mem__dtype = DTYPE__HALF_WORD;
             cpu_to_mem__data = rd_data;
             state__n = STATE__SH__2;
         end
@@ -1979,7 +1953,7 @@ always_comb begin
             cpu_to_mem__valid = 1'b1;
             cpu_to_mem__we = 1'b1;
             cpu_to_mem__addr = c;
-            cpu_to_mem__dtype = DTYPE__W;
+            cpu_to_mem__dtype = DTYPE__WORD;
             cpu_to_mem__data = rd_data;
             state__n = STATE__SW__2;
         end
@@ -2023,7 +1997,7 @@ always_comb begin
             cpu_to_mem__valid = 1'b1;
             cpu_to_mem__we = 1'b1;
             cpu_to_mem__addr = c;
-            cpu_to_mem__dtype = DTYPE__D;
+            cpu_to_mem__dtype = DTYPE__DOUBLE_WORD;
             cpu_to_mem__data = rd_data;
             state__n = STATE__SD__2;
         end

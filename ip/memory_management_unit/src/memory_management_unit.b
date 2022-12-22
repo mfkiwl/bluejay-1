@@ -6,139 +6,179 @@ module memory_management_unit
     input clk,
     input rst,
     input cpu_to_mem__valid,
-    output logic cpu_to_mem__ready,
     input cpu_to_mem__we,
     input [63:0] cpu_to_mem__addr,
     input [2:0] cpu_to_mem__dtype,
     input [63:0] cpu_to_mem__data,
     output logic mem_to_cpu__valid,
-    input mem_to_cpu__ready,
     output logic mem_to_cpu__error,
     output logic [63:0] mem_to_cpu__data,
-    output logic [7:0] port__0
+    output logic device_to_ahb_master__valid,
+    output logic device_to_ahb_master__we,
+    output logic [39:0] device_to_ahb_master__addr,
+    output logic [2:0] device_to_ahb_master__size,
+    output logic [63:0] device_to_ahb_master__data,
+    input ahb_master_to_device__valid,
+    input ahb_master_to_device__error,
+    input [63:0] ahb_master_to_device__data,
+    input pmar__0,
+    input pmar__1,
+    input pmar__2,
+    input pmar__3,
+    input pmar__4,
+    input pmar__5,
+    input pmar__6,
+    input pmar__7
 );
 
+logic request__we;
+logic [39:0] request__addr;
+logic [2:0] request__dtype;
+logic [63:0] request__data;
 
-logic we;
-logic we__n;
-logic [63:0] addr;
-logic [63:0] addr__n;
-logic [2:0] dtype;
-logic [2:0] dtype__n;
-logic [63:0] wr_data;
-logic [63:0] wr_data__n;
-
-logic ena;
-logic wea;
-logic [11:0] addra;
-logic [63:0] dina;
-logic [63:0] douta;
-logic [63:0] douta__aligned;
-
-logic [7:0] port__0__n;
-
+logic [7:0] pmar;
+logic [1:0] status;
 logic [3:0] state;
 logic [3:0] state__n;
 
 //==============================
-// store_dtype 
+// physical_memory_attribute_checker 
 //==============================
-store_dtype store_dtype__0
+physical_memory_attribute_checker pmac
 (
     .clk(clk),
     .rst(rst),
-    .addr(addr[2:0]),
-    .dtype(dtype),
-    .wr_data(wr_data),
-    .din(douta),
-    .dout(dina)
-);
-
-//==============================
-// read_dtype 
-//==============================
-read_dtype read_dtype__0
-(
-    .clk(clk),
-    .rst(rst),
-    .addr(addr[2:0]),
-    .dtype(dtype),
-    .din(douta),
-    .dout(douta__aligned)
+    .addr(request__addr[2:0]), 
+    .dtype(request__dtype),
+    .pmar(pmar),
+    .status(status)
 );
 
 
-//==============================
-// mem 
-//==============================
-memory mem 
-(
-    .clka(clk),
-    .addra(addra),
-    .dina(dina),
-    .douta(douta),
-    .ena(ena),
-    .wea(wea)
-);
+always_comb
+begin
+    case ()
+        MEMORY_MAP__0:
+        begin
+            pmar = pmar__0;
+        end
+        MEMORY_MAP__1:
+        begin
+            pmar = pmar__1;
+        end
+        MEMORY_MAP__2:
+        begin
+            pmar = pmar__2;
+        end
+        MEMORY_MAP__3:
+        begin
+            pmar = pmar__3;
+        end
+        MEMORY_MAP__4:
+        begin
+            pmar = pmar__4;
+        end
+        MEMORY_MAP__5:
+        begin
+            pmar = pmar__5;
+        end
+        MEMORY_MAP__6:
+        begin
+            pmar = pmar__6;
+        end
+        MEMORY_MAP__7:
+        begin
+            pmar = pmar__7;
+        end
+    endcase
+end
+
+always_ff @(posedge clk)
+begin
+    if (cpu_to_mem__valid)
+    begin
+        request__we <= cpu_to_mem__we;
+        request__addr <= cpu_to_mem__addr;
+        request__dtype <= cpu_to_mem__dtype;
+        request__data <= cpu_to_mem__data;
+    end
+end
+
+always_ff @(posedge clk)
+begin
+    if (ahb_master_to_device__valid)
+    begin
+        response__data <= ahb_master_to_device__data;
+        response__error <= ahb_master_to_device__error;
+    end
+end
 
 
-assign addra = addr[8:3];
 
-localparam STATE__RESET = 4'h0;
-localparam STATE__READY = 4'h1;
-localparam STATE__ACCEPT_REQ = 4'h2;
-localparam STATE__PMA_CHECK = 4'h3;
-localparam STATE__R0__WRITE__0 = 4'h4;
-localparam STATE__R0__WRITE__1 = 4'h5;
-localparam STATE__R0__WRITE__2 = 4'h6;
-localparam STATE__R0__READ__0 = 4'h7;
-localparam STATE__R0__READ__1 = 4'h8;
-localparam STATE__R0__READ__2 = 4'h9;
-localparam STATE__R1__WRITE__0 = 4'ha;
-localparam STATE__R1__READ__0 = 4'hb;
-localparam STATE__ACCESS_FAULT = 4'hc;
-localparam STATE__MISALIGNED_ADDRESS = 4'hd;
+assign device_to_ahb_master__we = request__we;
+assign device_to_ahb_master__addr = request__addr;
+assign device_to_ahb_master__data = request__data;
 
 always_comb begin
-    state__n = state;
-    cpu_to_mem__ready = 1'b0;
+    case (request__dtype)
+        DTYPE__DOUBLE_WORD:
+        begin
+            device_to_ahb_master__size = ADVANCED_HIGH_PERFORMANCE_BUS__HSIZE__DOUBLE_WORD; 
+        end
+        DTYPE__WORD:
+        begin
+            device_to_ahb_master__size = ADVANCED_HIGH_PERFORMANCE_BUS__HSIZE__WORD; 
+        end
+        DTYPE__WORD_UNSIGNED:
+        begin
+            device_to_ahb_master__size = ADVANCED_HIGH_PERFORMANCE_BUS__HSIZE__WORD; 
+        end
+        DTYPE__HALF_WORD:
+        begin
+            device_to_ahb_master__size = ADVANCED_HIGH_PERFORMANCE_BUS__HSIZE__HALF_WORD; 
+        end
+        DTYPE__HALF_WORD_UNSIGNED:
+        begin
+            device_to_ahb_master__size = ADVANCED_HIGH_PERFORMANCE_BUS__HSIZE__HALF_WORD; 
+        end
+        DTYPE__BYTE:
+        begin
+            device_to_ahb_master__size = ADVANCED_HIGH_PERFORMANCE_BUS__HSIZE__BYTE; 
+        end
+        DTYPE__BYTE_UNSIGNED:
+        begin
+            device_to_ahb_master__size = ADVANCED_HIGH_PERFORMANCE_BUS__HSIZE__BYTE; 
+        end
+    endcase
+end
+
+parameter STATE__RESET =  
+parameter STATE__IDLE =
+parameter STATE__PMA_CHECK =
+
+always_comb
+begin
+    device_to_ahb_master__valid = 1'b0;
     mem_to_cpu__valid = 1'b0;
-    mem_to_cpu__error = 1'b0;
-    we__n = we;
-    addr__n = addr;
-    wr_data__n = wr_data;
-    ena = 1'b0;
-    wea = 1'b0;
+    mem_to_cpu__error = response__error; // FIXME: Figure out how to handle the case when the AHB response with an error
+    mem_to_cpu__data = response__data;
+
         
     case (state)
-
         //==============================
         // STATE__RESET
         //==============================
         STATE__RESET:
         begin
-            state__n = STATE__READY;
+            state__n = STATE__IDLE;
         end
 
         //==============================
-        // STATE__READY
+        // STATE__IDLE
         //==============================
-        STATE__READY:
+        STATE__IDLE:
         begin
-            state__n = cpu_to_mem__valid ? STATE__ACCEPT_REQ : STATE__READY;
-        end
-
-        //==============================
-        // STATE__ACCEPT_REQ
-        //==============================
-        STATE__ACCEPT_REQ:
-        begin
-            cpu_to_mem__ready = 1'b1;
-            we__n = cpu_to_mem__we;
-            addr__n = cpu_to_mem__addr; 
-            dtype__n = cpu_to_mem__dtype;
-            wr_data__n = cpu_to_mem__data;
-            state__n = STATE__PMA_CHECK;
+            state__n = cpu_to_mem__valid ? STATE__PMA_CHECK : STATE__IDLE;
         end
 
         //==============================
@@ -146,97 +186,35 @@ always_comb begin
         //==============================
         STATE__PMA_CHECK:
         begin
-            casez (addr)
-                MEMORY_MAP__R0:
-                begin
-                    state__n = we ? STATE__R0__WRITE__0 : STATE__R0__READ__0;
-                end
-                MEMORY_MAP__R1:
-                begin
-                    state__n = we ? STATE__R1__WRITE__0 : STATE__R1__READ__0;
-                end
-            endcase
+            state__n = (status = PHYSICAL_MEMORY_ATTRIBUTE_CHECKER__STATUS__ACCESS_FAULT) ? STATE__ACCESS_FAULT : (status = PHYSICAL_MEMORY_ATTRIBUTE_CHECKER__STATUS__MISALIGNED_ADDRESS) ? STATE__MISALIGNED_ADDRESS : STATE__REQ;
         end
 
         //==============================
-        // STATE__R0__WRITE__0
+        // STATE__REQ
         //==============================
-        STATE__R0__WRITE__0:
+        STATE__REQ
         begin
-            ena = 1'b1;
-            wea = 1'b0;
-            state__n = STATE__R0__WRITE__1; 
+            device_to_ahb_master__valid = 1'b1;
+            state__n = STATE__WAIT; 
         end
 
         //==============================
-        // STATE__R0__WRITE__1
+        // STATE__WAIT
         //==============================
-        STATE__R0__WRITE__1:
+        STATE__WAIT:
         begin
-            ena = 1'b1;
-            state__n = STATE__R0__WRITE__2; 
+            state__n = ahb_master_to_device__valid ? STATE__RESP : STATE__WAIT; 
         end
-
+            
         //==============================
-        // STATE__R0__WRITE__2
+        // STATE__RESP
         //==============================
-        STATE__R0__WRITE__2:
+        STATE__RESP:
         begin
             mem_to_cpu__valid = 1'b1;
-            ena = 1'b1;
-            wea = 1'b1;
-            state__n = mem_to_cpu__ready ? STATE__READY : STATE__R0__WRITE__2; 
-        end
-
-        //==============================
-        // STATE__R0__READ__0
-        //==============================
-        STATE__R0__READ__0:
-        begin
-            ena = 1'b1;
-            wea = 1'b0;
-            state__n = STATE__R0__READ__1; 
-        end
-
-        //==============================
-        // STATE__R0__READ__1
-        //==============================
-        STATE__R0__READ__1:
-        begin
-            ena = 1'b1;
-            state__n = STATE__R0__READ__2; 
-        end
-
-        //==============================
-        // STATE__R0__READ__2
-        //==============================
-        STATE__R0__READ__2:
-        begin
-            mem_to_cpu__valid = 1'b1;
-            mem_to_cpu__data = douta__aligned;
-            ena = 1'b1;
-            state__n = mem_to_cpu__ready ? STATE__READY : STATE__R0__READ__2; 
-        end
-
-
-        //==============================
-        // STATE__R1__WRITE__0
-        //==============================
-        STATE__R1__WRITE__0:
-        begin
-            mem_to_cpu__valid = 1'b1;
-            port__0__n = wr_data[7:0];
-            state__n = mem_to_cpu__ready ? STATE__READY : STATE__R1__WRITE__0; 
-        end
-
-        //==============================
-        // STATE__R1__READ__0
-        //==============================
-        STATE__R1__READ__0:
-        begin
-            mem_to_cpu__valid = 1'b1;
-            mem_to_cpu__data = {56'b0, port__0};
-            state__n = mem_to_cpu__ready ? STATE__READY : STATE__R1__READ__0; 
+            mem_to_cpu__error = response__error;
+            mem_to_cpu__data = response__data;
+            state__n = STATE__IDLE; 
         end
 
         //==============================
@@ -245,6 +223,7 @@ always_comb begin
         STATE__ACCESS_FAULT:
         begin
             mem_to_cpu__valid = 1'b1;
+            mem_to_cpu__error = 1'b1;
             mem_to_cpu__data = ERRORCODE__ACCESS_FAULT;
             state__n = mem_to_cpu__ready ? STATE__READY : STATE__ACCESS_FAULT;
         end
@@ -255,44 +234,23 @@ always_comb begin
         STATE__MISALIGNED_ADDRESS:
         begin
             mem_to_cpu__valid = 1'b1;
+            mem_to_cpu__error = 1'b1;
             mem_to_cpu__data = ERRORCODE__MISALIGNED_ADDRESS;
             state__n = mem_to_cpu__ready ? STATE__READY : STATE__ACCESS_FAULT;
         end
-
     endcase
 end
 
-always_ff @(posedge clk) begin
-    we <= we__n;
-end
 
-always_ff @(posedge clk) begin
-    addr <= addr__n;
-end
-
-always_ff @(posedge clk) begin
-    dtype <= dtype__n;
-end
-
-always_ff @(posedge clk) begin
-    wr_data <= wr_data__n;
-end
-
-always_ff @(posedge clk) begin
-    if (rst) begin
+always_ff @(posedge clk) 
+begin
+    if (rst)
+    begin
         state <= STATE__RESET;
     end
-    else begin
+    else 
+    begin
         state <= state__n;
-    end
-end
-
-always_ff @(posedge clk) begin
-    if (rst) begin
-        port__0 <= 8'h0;
-    end
-    else begin
-        port__0 <= port__0__n;
     end
 end
 

@@ -25,6 +25,15 @@ logic [63:0] mem_to_cpu__data;
 logic context__0__eip;
 logic tip;
 
+logic [7:0] pmar__0;
+logic [7:0] pmar__1;
+logic [7:0] pmar__2;
+logic [7:0] pmar__3;
+logic [7:0] pmar__4;
+logic [7:0] pmar__5;
+logic [7:0] pmar__6;
+logic [7:0] pmar__7;
+
 logic ahb_slave_to_device__0__cs;
 logic ahb_slave_to_device__0__ready;
 logic ahb_slave_to_device__0__we;
@@ -143,8 +152,19 @@ physical_memory_attribute_registers pmar
 (   
     .clk(clk),
     .rst(rst),
+    .cs(),
+    .we()
     .addr(addr[2:0]),
+    .wr_data(),
     .rd_data(),
+    .pmar__0(pmar__0),
+    .pmar__1(pmar__1),
+    .pmar__2(pmar__2),
+    .pmar__3(pmar__3),
+    .pmar__4(pmar__4),
+    .pmar__5(pmar__5),
+    .pmar__6(pmar__6),
+    .pmar__7(pmar__7)
 )
 
 endmodule

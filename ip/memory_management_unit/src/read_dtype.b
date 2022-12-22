@@ -52,36 +52,36 @@ end
 
 always_comb begin
     case (dtype)
-        DTYPE__D:
+        DTYPE__DOUBLE_WORD:
         begin
             dout[63:0] = x[63:0];
         end
-        DTYPE__W:
+        DTYPE__WORD:
         begin
             dout[31:0] = x[31:0];
             dout[63:32] = {32{x[31]}};
         end
-        DTYPE__WU:
+        DTYPE__WORD_UNSIGNED:
         begin
             dout[31:0] = x[31:0];
             dout[63:32] = {32{1'b0}};
         end
-        DTYPE__H:
+        DTYPE__HALF_WORD:
         begin
             dout[15:0] = x[15:0];
             dout[63:16] = {48{x[15]}};
         end
-        DTYPE__HU:
+        DTYPE__HALF_WORD_UNSIGNED:
         begin
             dout[15:0] = x[15:0];
             dout[63:16] = {48{1'b0}};
         end
-        DTYPE__B:
+        DTYPE__BYTE:
         begin
             dout[7:0] = x[7:0];
             dout[63:8] = {56{x[7]}};
         end
-        DTYPE__BU:
+        DTYPE__BYTE_UNSIGNED:
         begin
             dout[7:0] = x[7:0];
             dout[63:8] = {56{1'b0}};

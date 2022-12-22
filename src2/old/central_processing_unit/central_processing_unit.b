@@ -191,7 +191,7 @@ assign IF__ready = IF__valid ? (ID__ready & IF__il1__hit) : ID__ready;
 assign IF__il1__addr = IF__pc;
 assign IF__il1__rw = 1'b0;
 assign IF__il1__wr_data = 0;
-assign IF__il1__dtype = DTYPE__WU;
+assign IF__il1__dtype = DTYPE__WORD_UNSIGNED;
 assign IF__ir = IF__il1__rd_data[31:0];
 
 
