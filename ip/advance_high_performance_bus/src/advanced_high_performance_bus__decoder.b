@@ -1,7 +1,7 @@
 //==============================================
-// advance_high_performance_bus__decoder
+// advanced_high_performance_bus__decoder
 //==============================================
-module advance_high_performance_bus__decoder
+module advanced_high_performance_bus__decoder
 (
     input hclk,
     input hresetn,

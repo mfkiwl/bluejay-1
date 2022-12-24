@@ -1,7 +1,7 @@
 //==============================================
-// advance_high_performance_bus__multiplexor
+// advanced_high_performance_bus__multiplexor
 //==============================================
-module advance_high_performance_bus__multiplexor
+module advanced_high_performance_bus__multiplexor
 (
     input hclk,
     input hresetn,

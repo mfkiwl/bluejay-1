@@ -12,18 +12,28 @@ module memory_management_unit
     input [63:0] cpu_to_mem__data,
     output logic mem_to_cpu__valid,
     output logic mem_to_cpu__error,
+
+ 10     [39:0] haddr,
+  9     output logic hwrite,
+  8     output logic [2:0] hsize,
+  7     output logic [2:0] hburst,
+  6     output logic [3:0] hprot,
+  5     output logic [1:0] htrans,
+  4     output logic hmastlock,
+  3     output logic [63:0] hwdata,
+  2     input hready,
+  1     input hresp,
+109     input [63:0] hrdata,
+
     output logic [63:0] mem_to_cpu__data,
-    output [39:0] haddr,
-    output logic hwrite,
-    output logic [2:0] hsize,
-    output logic [2:0] hburst,
-    output logic [3:0] hprot,
-    output logic [1:0] htrans,
-    output logic hmastlock,
-    output logic [63:0] hwdata,
-    input hready,
-    input hresp,
-    input [63:0] hrdata,
+    output logic device_to_ahb_master__valid,
+    output logic device_to_ahb_master__we,
+    output logic [39:0] device_to_ahb_master__addr,
+    output logic [2:0] device_to_ahb_master__size,
+    output logic [63:0] device_to_ahb_master__data,
+    input ahb_master_to_device__valid,
+    input ahb_master_to_device__error,
+    input [63:0] ahb_master_to_device__data,
     input pmar__0,
     input pmar__1,
     input pmar__2,
@@ -139,11 +149,6 @@ always_comb begin
     endcase
 end
 
-
-
-
-
-
 always_comb begin
     case (request__dtype)
         DTYPE__DOUBLE_WORD:
@@ -193,9 +198,6 @@ begin
     mem_to_cpu__error = response__error; // FIXME: Figure out how to handle the case when the AHB response with an error
     mem_to_cpu__data = response__data__extended;
 
-
-    htrans = ADVANCED_HIGH_PERFORMANCE_BUS__HTRANS__IDLE; 
-
         
     case (state)
         //==============================
@@ -219,59 +221,8 @@ begin
         //==============================
         STATE__PMA_CHECK:
         begin
-            state__n = (status = PHYSICAL_MEMORY_ATTRIBUTE_CHECKER__STATUS__ACCESS_FAULT) ? STATE__ACCESS_FAULT : (status = PHYSICAL_MEMORY_ATTRIBUTE_CHECKER__STATUS__MISALIGNED_ADDRESS) ? STATE__MISALIGNED_ADDRESS : STATE__ADDRESS_PHASE;
+            state__n = (status = PHYSICAL_MEMORY_ATTRIBUTE_CHECKER__STATUS__ACCESS_FAULT) ? STATE__ACCESS_FAULT : (status = PHYSICAL_MEMORY_ATTRIBUTE_CHECKER__STATUS__MISALIGNED_ADDRESS) ? STATE__MISALIGNED_ADDRESS : STATE__REQ;
         end
-
-        //==============================
-        // STATE__ADDRESS_PHASE
-        //==============================
-        STATE__ADDRESS_PHASE:
-        begin
-            htrans = ADVANCED_HIGH_PERFORMANCE_BUS__HTRANS__NONSEQ; 
-            state__n = STATE__DATA_PHASE;
-        end
-
-        //==============================
-        // STATE__DATA_PHASE
-        //==============================
-        STATE__DATA_PHASE:
-        begin
-            en__b = hready;
-            state__n = hready ? STATE__RETURN : STATE__DATA_PHASE;
-        end
-
-        //==============================
-        // STATE__RETURN
-        //==============================
-        STATE__RETURN:
-        begin
-            ahb_master_to_device__valid = 1'b1;
-            state__n = STATE__IDLE;
-        end
-
-        //==============================
-        // STATE__ACCESS_FAULT
-        //==============================
-        STATE__ACCESS_FAULT:
-        begin
-            mem_to_cpu__valid = 1'b1;
-            mem_to_cpu__error = 1'b1;
-            mem_to_cpu__data = ERRORCODE__ACCESS_FAULT;
-            state__n = mem_to_cpu__ready ? STATE__READY : STATE__ACCESS_FAULT;
-        end
-
-        //==============================
-        // STATE__MISALIGNED_ADDRESS
-        //==============================
-        STATE__MISALIGNED_ADDRESS:
-        begin
-            mem_to_cpu__valid = 1'b1;
-            mem_to_cpu__error = 1'b1;
-            mem_to_cpu__data = ERRORCODE__MISALIGNED_ADDRESS;
-            state__n = mem_to_cpu__ready ? STATE__READY : STATE__ACCESS_FAULT;
-        end
-    endcase
-end
 
         //==============================
         // STATE__REQ
@@ -301,53 +252,36 @@ end
             state__n = STATE__IDLE; 
         end
 
-assign haddr = request__addr;
-assign hwrite = request__we; 
-assign hwdata = request__data;
-assign hburst = ADVANCED_HIGH_PERFORMANCE_BUS__HBURST__SINGLE; 
-assign hprot = 4'b0011; 
-assign hmastlock = 1'b0;
+        //==============================
+        // STATE__ACCESS_FAULT
+        //==============================
+        STATE__ACCESS_FAULT:
+        begin
+            mem_to_cpu__valid = 1'b1;
+            mem_to_cpu__error = 1'b1;
+            mem_to_cpu__data = ERRORCODE__ACCESS_FAULT;
+            state__n = mem_to_cpu__ready ? STATE__READY : STATE__ACCESS_FAULT;
+        end
 
-always_comb begin
-    case (request__dtype)
-        DTYPE__DOUBLE_WORD:
+        //==============================
+        // STATE__MISALIGNED_ADDRESS
+        //==============================
+        STATE__MISALIGNED_ADDRESS:
         begin
-            hsize = ADVANCED_HIGH_PERFORMANCE_BUS__HSIZE__DOUBLE_WORD; 
-        end
-        DTYPE__WORD:
-        begin
-            hsize = ADVANCED_HIGH_PERFORMANCE_BUS__HSIZE__WORD; 
-        end
-        DTYPE__WORD_UNSIGNED:
-        begin
-            hsize = ADVANCED_HIGH_PERFORMANCE_BUS__HSIZE__WORD; 
-        end
-        DTYPE__HALF_WORD:
-        begin
-            hsize = ADVANCED_HIGH_PERFORMANCE_BUS__HSIZE__HALF_WORD; 
-        end
-        DTYPE__HALF_WORD_UNSIGNED:
-        begin
-            hsize = ADVANCED_HIGH_PERFORMANCE_BUS__HSIZE__HALF_WORD; 
-        end
-        DTYPE__BYTE:
-        begin
-            hsize = ADVANCED_HIGH_PERFORMANCE_BUS__HSIZE__BYTE; 
-        end
-        DTYPE__BYTE_UNSIGNED:
-        begin
-            hsize = ADVANCED_HIGH_PERFORMANCE_BUS__HSIZE__BYTE; 
+            mem_to_cpu__valid = 1'b1;
+            mem_to_cpu__error = 1'b1;
+            mem_to_cpu__data = ERRORCODE__MISALIGNED_ADDRESS;
+            state__n = mem_to_cpu__ready ? STATE__READY : STATE__ACCESS_FAULT;
         end
     endcase
 end
-
 
 always_ff @(posedge clk)
 begin
     if (cpu_to_mem__valid)
     begin
         request__we <= cpu_to_mem__we;
-        request__addr <= cpu_to_mem__addr[39:0];
+        request__addr <= cpu_to_mem__addr;
         request__dtype <= cpu_to_mem__dtype;
         request__data <= cpu_to_mem__data;
     end
