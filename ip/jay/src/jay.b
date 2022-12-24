@@ -185,7 +185,7 @@ machine_timer_registers mtr
 //==============================
 // physical_memory_attribute_registers
 //==============================
-physical_memory_attribute_registers pmar 
+physical_memory_attribute_registers pma_registers
 (   
     .clk(clk),
     .rst(rst),

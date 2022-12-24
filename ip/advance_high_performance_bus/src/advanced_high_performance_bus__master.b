@@ -107,8 +107,6 @@ always_ff @(posedge clk) begin
 end
 
 
-
-
 always_ff @(posedge clk) begin
     if (~hresetn)
     begin

@@ -53,7 +53,6 @@ logic [63:0] response__error;
 logic [63:0] response__data;
 logic [63:0] response__data__extended;
 
-
 logic [7:0] pmar;
 logic [1:0] status;
 logic [3:0] state;
