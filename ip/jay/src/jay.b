@@ -7,6 +7,8 @@ module jay
     input rst,
 );
 
+logic clk;
+logic rst;
 
 logic hclk;
 logic hresetn;
@@ -22,6 +24,7 @@ logic hready;
 logic hresp;
 logic hreadyout;
 logic [63:0] hrdata;
+
 logic hsel__default;
 logic hresp__default;
 logic hreadyout__default;
@@ -32,8 +35,6 @@ logic hsel__1;
 logic hresp__1;
 logic hreadyout__1;
 
-logic clk;
-logic rst;
 logic cpu_to_mem__valid;
 logic cpu_to_mem__we;
 logic [63:0] cpu_to_mem__addr;
