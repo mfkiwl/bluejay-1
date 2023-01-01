@@ -10,6 +10,30 @@ module jay
 logic clk;
 logic rst;
 
+logic cpu_to_mem__valid;
+logic cpu_to_mem__we;
+logic [63:0] cpu_to_mem__addr;
+logic [2:0] cpu_to_mem__dtype;
+logic [63:0] cpu_to_mem__data;
+logic mem_to_cpu__valid;
+logic mem_to_cpu__error;
+logic [63:0] mem_to_cpu__data;
+
+logic is__0;
+logic is__1;
+logic context__0__eip;
+
+logic tip;
+
+logic [7:0] pmar__0;
+logic [7:0] pmar__1;
+logic [7:0] pmar__2;
+logic [7:0] pmar__3;
+logic [7:0] pmar__4;
+logic [7:0] pmar__5;
+logic [7:0] pmar__6;
+logic [7:0] pmar__7;
+
 logic hclk;
 logic hresetn;
 logic [39:0] haddr;
@@ -35,29 +59,14 @@ logic hsel__1;
 logic hresp__1;
 logic hreadyout__1;
 
-logic cpu_to_mem__valid;
-logic cpu_to_mem__we;
-logic [63:0] cpu_to_mem__addr;
-logic [2:0] cpu_to_mem__dtype;
-logic [63:0] cpu_to_mem__data;
-logic mem_to_cpu__valid;
-logic mem_to_cpu__error;
-logic [63:0] mem_to_cpu__data;
-
-logic is__0;
-logic is__1;
-logic context__0__eip;
-
-logic tip;
-
-logic [7:0] pmar__0;
-logic [7:0] pmar__1;
-logic [7:0] pmar__2;
-logic [7:0] pmar__3;
-logic [7:0] pmar__4;
-logic [7:0] pmar__5;
-logic [7:0] pmar__6;
-logic [7:0] pmar__7;
+logic device_to_ahb_master__valid;
+logic device_to_ahb_master__we;
+logic [39:0] device_to_ahb_master__addr;
+logic [2:0] device_to_ahb_master__size;
+logic [63:0] device_to_ahb_master__data;
+logic ahb_master_to_device__valid;
+logic ahb_master_to_device__error;
+logic [63:0] ahb_master_to_device__data;
 
 logic ahb_slave_to_device__0__cs;
 logic ahb_slave_to_device__0__ready;
@@ -184,7 +193,7 @@ machine_timer_registers mtr
 );
 
 //==============================
-// physical_memory_attribute_registers
+// pma_registers 
 //==============================
 physical_memory_attribute_registers pma_registers
 (   
@@ -203,6 +212,15 @@ physical_memory_attribute_registers pma_registers
     .pmar__5(pmar__5),
     .pmar__6(pmar__6),
     .pmar__7(pmar__7)
+);
+    
+//==============================
+// mem_controller 
+//==============================
+memory_controller mem_controller 
+(   
+    .clk(clk),
+    .rst(rst),
 );
 
 
@@ -252,6 +270,36 @@ advanced_high_performance_bus__multiplexor ahb__multiplexor
     .hresp__3(hresp__3),
     .hreadyout__3(hreadyout__3)
 );
+
+//==============================================                                                                                                          
+// ahb__master 
+//==============================================
+advance_high_performance_bus__master ahb__master
+(
+    .hclk(hclk),
+    .hresetn(hresetn),
+    .haddr(haddr),
+    .hwrite(hwrite),
+    .hsize(hsize),
+    .hburst(hburst),
+    .hprot(hprot),
+    .htrans(htrans),
+    .hmastlock(hmastlock),
+    .hwdata(hwdata),
+    .hready(hready),
+    .hresp(hresp),
+    .hrdata(hrdata),
+    .device_to_ahb_master__valid(device_to_ahb_master__valid),
+    .device_to_ahb_master__we(device_to_ahb_master__we),
+    .device_to_ahb_master__addr(device_to_ahb_master__addr),
+    .device_to_ahb_master__size(device_to_ahb_master__size),
+    .device_to_ahb_master__data(device_to_ahb_master__data),
+    .ahb_master_to_device__valid(ahb_master_to_device__valid),
+    .ahb_master_to_device__error(ahb_master_to_device__error),
+    .ahb_master_to_device__data(ahb_master_to_device__data)
+);
+
+
 
 //==============================
 // ahb__default_slave 

@@ -3055,10 +3055,11 @@ d_flip_flop #(.WIDTH(64), .RESET_VALUE(PC_RESET_VALUE)) d_flip_flop__pc
     .q(pc)
 );
 
+
 //==============================
 // d_flip_flop__ir
 //==============================
-d_flip_flop #(.WIDTH(32)) d_flip_flop__ir
+d_flip_flop #(.WIDTH(32), .RESET_VALUE()) d_flip_flop__ir
 (
     .clk(clk),
     .rst(1'b0),
@@ -3070,7 +3071,7 @@ d_flip_flop #(.WIDTH(32)) d_flip_flop__ir
 //==============================
 // d_flip_flop__a
 //==============================
-d_flip_flop #(.WIDTH(64)) d_flip_flop__a
+d_flip_flop #(.WIDTH(64), .RESET_VALUE()) d_flip_flop__a
 (
     .clk(clk),
     .rst(1'b0),
@@ -3082,7 +3083,7 @@ d_flip_flop #(.WIDTH(64)) d_flip_flop__a
 //==============================
 // d_flip_flop__b
 //==============================
-d_flip_flop #(.WIDTH(64)) d_flip_flop__b
+d_flip_flop #(.WIDTH(64), .RESET_VALUE()) d_flip_flop__b
 (
     .clk(clk),
     .rst(1'b0),
@@ -3091,6 +3092,46 @@ d_flip_flop #(.WIDTH(64)) d_flip_flop__b
     .q(b)
 );
 
+
+
+//always_ff @(posedge clk)
+//begin
+//    if (rst) 
+//    begin
+//        state <= STATE__RESET;
+//    end
+//    else 
+//    begin
+//        state <= state__n;
+//    end
+//end
+//
+//always_ff @(posedge clk)
+//begin
+//    if (rst) 
+//    begin
+//        pc <= PC_RESET_VALUE;
+//    end
+//    else 
+//    begin
+//        pc <= pc__n;
+//    end
+//end
+//
+//always_ff @(posedge clk)
+//begin
+//    ir <= ir__n;
+//end
+//
+//always_ff @(posedge clk)
+//begin
+//    a <= a__n;
+//end
+//
+//always_ff @(posedge clk)
+//begin
+//    b <= b__n;
+//end
 
 endmodule
 

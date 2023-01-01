@@ -31,7 +31,6 @@ logic en__b;
 logic [3:0] state;
 logic [3:0] state__n;
 
-
 always_comb 
 begin
     ahb_master_to_device__valid = 1'b0;

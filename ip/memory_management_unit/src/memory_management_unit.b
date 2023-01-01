@@ -13,17 +13,14 @@ module memory_management_unit
     output logic mem_to_cpu__valid,
     output logic mem_to_cpu__error,
     output logic [63:0] mem_to_cpu__data,
-    output [39:0] haddr,
-    output logic hwrite,
-    output logic [2:0] hsize,
-    output logic [2:0] hburst,
-    output logic [3:0] hprot,
-    output logic [1:0] htrans,
-    output logic hmastlock,
-    output logic [63:0] hwdata,
-    input hready,
-    input hresp,
-    input [63:0] hrdata,
+    output logic device_to_ahb_master__valid,
+    output logic device_to_ahb_master__we,
+    output logic [39:0] device_to_ahb_master__addr,
+    output logic [2:0] device_to_ahb_master__size,
+    output logic [63:0] device_to_ahb_master__data,
+    input ahb_master_to_device__valid,
+    input ahb_master_to_device__error,
+    input [63:0] ahb_master_to_device__data,
     input pmar__0,
     input pmar__1,
     input pmar__2,
@@ -34,11 +31,23 @@ module memory_management_unit
     input pmar__7
 );
 
+logic we;
+logic [39:0] addr;
+logic [2:0] dtype;
+logic [63:0] wr_data;
+logic [63:0] rd_data;
+logic [63:0] rd_data__n;
+
+logic [7:0] pmar;
+logic [1:0] status;
+
+logic [3:0] state;
+logic [3:0] state__n;
 
 //==============================
 // physical_memory_attribute_checker 
 //==============================
-physical_memory_attribute_checker pma_checker
+physical_memory_attribute_checker pmac
 (
     .clk(clk),
     .rst(rst),
@@ -47,6 +56,7 @@ physical_memory_attribute_checker pma_checker
     .pmar(pmar),
     .status(status)
 );
+
 
 always_comb
 begin
@@ -86,102 +96,73 @@ begin
     endcase
 end
 
-logic we;
-logic [39:0] addr;
-logic [2:0] dtype;
-logic [63:0] wr_data;
-logic [63:0] rd_data;
-
-
-logic request__we;
-logic [39:0] request__addr;
-logic [2:0] request__dtype;
-logic [63:0] request__data;
-
-logic [63:0] response__error;
-logic [63:0] response__data;
-logic [63:0] response__data__extended;
-
-
-logic [7:0] pmar;
-logic [1:0] status;
-logic [3:0] state;
-logic [3:0] state__n;
-
-
-
-
-assign device_to_ahb_master__we = request__we;
-assign device_to_ahb_master__addr = request__addr;
-assign device_to_ahb_master__data = request__data;
+// Advanced High-Performance Bus Master Interface
+assign device_to_ahb_master__we = we;
+assign device_to_ahb_master__addr = addr;
+assign device_to_ahb_master__data = wr_data;
 
 always_comb begin
     case (dtype)
         DTYPE__DOUBLE_WORD:
         begin
-            hsize = ADVANCED_HIGH_PERFORMANCE_BUS__HSIZE__DOUBLE_WORD; 
+            device_to_ahb_master__size = ADVANCED_HIGH_PERFORMANCE_BUS__HSIZE__DOUBLE_WORD; 
         end
         DTYPE__WORD:
         begin
-            hsize = ADVANCED_HIGH_PERFORMANCE_BUS__HSIZE__WORD; 
+            device_to_ahb_master__size = ADVANCED_HIGH_PERFORMANCE_BUS__HSIZE__WORD; 
         end
         DTYPE__WORD_UNSIGNED:
         begin
-            hsize = ADVANCED_HIGH_PERFORMANCE_BUS__HSIZE__WORD; 
+            device_to_ahb_master__size = ADVANCED_HIGH_PERFORMANCE_BUS__HSIZE__WORD; 
         end
         DTYPE__HALF_WORD:
         begin
-            hsize = ADVANCED_HIGH_PERFORMANCE_BUS__HSIZE__HALF_WORD; 
+            device_to_ahb_master__size = ADVANCED_HIGH_PERFORMANCE_BUS__HSIZE__HALF_WORD; 
         end
         DTYPE__HALF_WORD_UNSIGNED:
         begin
-            hsize = ADVANCED_HIGH_PERFORMANCE_BUS__HSIZE__HALF_WORD; 
+            device_to_ahb_master__size = ADVANCED_HIGH_PERFORMANCE_BUS__HSIZE__HALF_WORD; 
         end
         DTYPE__BYTE:
         begin
-            hsize = ADVANCED_HIGH_PERFORMANCE_BUS__HSIZE__BYTE; 
+            device_to_ahb_master__size = ADVANCED_HIGH_PERFORMANCE_BUS__HSIZE__BYTE; 
         end
         DTYPE__BYTE_UNSIGNED:
         begin
-            hsize = ADVANCED_HIGH_PERFORMANCE_BUS__HSIZE__BYTE; 
+            device_to_ahb_master__size = ADVANCED_HIGH_PERFORMANCE_BUS__HSIZE__BYTE; 
         end
     endcase
 end
 
-
-
-
-
-
 always_comb begin
-    case (request__dtype)
+    case (dtype)
         DTYPE__DOUBLE_WORD:
         begin
-            response__data__extended = response__data; 
+            rd_data__n = device_to_ahb_master__data; 
         end
         DTYPE__WORD:
         begin
-            response__data__extended = {{32{response__data[31]}}, response__data[31:0]}; 
+            rd_data__n = {{32{device_to_ahb_master__data[31]}}, device_to_ahb_master__data[31:0]}; 
         end
         DTYPE__WORD_UNSIGNED:
         begin
-            response__data__extended = {32'h0, response__data[31:0]}; 
+            rd_data__n = {32'h0, device_to_ahb_master__data[31:0]}; 
         end
         DTYPE__HALF_WORD:
         begin
-            response__data__extended = {{48{response__data[15]}}, response__data[15:0]}; 
+            rd_data__n = {{48{device_to_ahb_master__data[15]}}, device_to_ahb_master__data[15:0]}; 
         end
         DTYPE__HALF_WORD_UNSIGNED:
         begin
-            response__data__extended = {48'h0, response__data[15:0]}; 
+            rd_data__n = {48'h0, device_to_ahb_master__data[15:0]}; 
         end
         DTYPE__BYTE:
         begin
-            response__data__extended = {{56{response__data[7]}}, response__data[7:0]}; 
+            rd_data__n = {{56{device_to_ahb_master__data[7]}}, device_to_ahb_master__data[7:0]}; 
         end
         DTYPE__BYTE_UNSIGNED:
         begin
-            response__data__extended = {56'h0, response__data[7:0]}; 
+            rd_data__n = {56'h0, device_to_ahb_master__data[7:0]}; 
         end
     endcase
 end
@@ -199,12 +180,8 @@ always_comb
 begin
     device_to_ahb_master__valid = 1'b0;
     mem_to_cpu__valid = 1'b0;
-    mem_to_cpu__error = response__error; // FIXME: Figure out how to handle the case when the AHB response with an error
-    mem_to_cpu__data = response__data__extended;
-
-
-    htrans = ADVANCED_HIGH_PERFORMANCE_BUS__HTRANS__IDLE; 
-
+    mem_to_cpu__error = 1'b0; 
+    mem_to_cpu__data = rd_data;
         
     case (state)
         //==============================
@@ -228,34 +205,35 @@ begin
         //==============================
         STATE__PMA_CHECK:
         begin
-            state__n = (status = PHYSICAL_MEMORY_ATTRIBUTE_CHECKER__STATUS__ACCESS_FAULT) ? STATE__ACCESS_FAULT : (status = PHYSICAL_MEMORY_ATTRIBUTE_CHECKER__STATUS__MISALIGNED_ADDRESS) ? STATE__MISALIGNED_ADDRESS : STATE__ADDRESS_PHASE;
+            state__n = (status = PHYSICAL_MEMORY_ATTRIBUTE_CHECKER__STATUS__ACCESS_FAULT) ? STATE__ACCESS_FAULT : (status = PHYSICAL_MEMORY_ATTRIBUTE_CHECKER__STATUS__MISALIGNED_ADDRESS) ? STATE__MISALIGNED_ADDRESS : STATE__REQ;
         end
 
         //==============================
-        // STATE__ADDRESS_PHASE
+        // STATE__REQ
         //==============================
-        STATE__ADDRESS_PHASE:
+        STATE__REQ
         begin
-            htrans = ADVANCED_HIGH_PERFORMANCE_BUS__HTRANS__NONSEQ; 
-            state__n = STATE__DATA_PHASE;
+            device_to_ahb_master__valid = 1'b1;
+            state__n = STATE__WAIT; 
         end
 
         //==============================
-        // STATE__DATA_PHASE
+        // STATE__WAIT
         //==============================
-        STATE__DATA_PHASE:
+        STATE__WAIT:
         begin
-            en__b = hready;
-            state__n = hready ? STATE__RETURN : STATE__DATA_PHASE;
+            state__n = (ahb_master_to_device__valid & ahb_master_to_device__error) ? STATE__ACCESS_FAULT : (ahb_master_to_device__valid & ~ahb_master_to_device__error) ? STATE__RESP : STATE__WAIT; 
         end
-
+            
         //==============================
-        // STATE__RETURN
+        // STATE__RESP
         //==============================
-        STATE__RETURN:
+        STATE__RESP:
         begin
-            ahb_master_to_device__valid = 1'b1;
-            state__n = STATE__IDLE;
+            mem_to_cpu__valid = 1'b1;
+            mem_to_cpu__error = 1'b0;
+            mem_to_cpu__data = rd_data;
+            state__n = STATE__IDLE; 
         end
 
         //==============================
@@ -282,48 +260,6 @@ begin
     endcase
 end
 
-
-assign haddr = addr;
-assign hwrite = we; 
-assign hwdata = wr_data;
-assign hburst = ADVANCED_HIGH_PERFORMANCE_BUS__HBURST__SINGLE; 
-assign hprot = 4'b0011; 
-assign hmastlock = 1'b0;
-
-always_comb
-begin
-    case (dtype)
-        DTYPE__DOUBLE_WORD:
-        begin
-            hsize = ADVANCED_HIGH_PERFORMANCE_BUS__HSIZE__DOUBLE_WORD; 
-        end
-        DTYPE__WORD:
-        begin
-            hsize = ADVANCED_HIGH_PERFORMANCE_BUS__HSIZE__WORD; 
-        end
-        DTYPE__WORD_UNSIGNED:
-        begin
-            hsize = ADVANCED_HIGH_PERFORMANCE_BUS__HSIZE__WORD; 
-        end
-        DTYPE__HALF_WORD:
-        begin
-            hsize = ADVANCED_HIGH_PERFORMANCE_BUS__HSIZE__HALF_WORD; 
-        end
-        DTYPE__HALF_WORD_UNSIGNED:
-        begin
-            hsize = ADVANCED_HIGH_PERFORMANCE_BUS__HSIZE__HALF_WORD; 
-        end
-        DTYPE__BYTE:
-        begin
-            hsize = ADVANCED_HIGH_PERFORMANCE_BUS__HSIZE__BYTE; 
-        end
-        DTYPE__BYTE_UNSIGNED:
-        begin
-            hsize = ADVANCED_HIGH_PERFORMANCE_BUS__HSIZE__BYTE; 
-        end
-    endcase
-end
-
 always_ff @(posedge clk)
 begin
     if (cpu_to_mem__valid)
@@ -337,9 +273,9 @@ end
 
 always_ff @(posedge clk)
 begin
-    if ()
+    if (ahb_master_to_device__valid)
     begin
-        rd_data <= hrdata;
+        rd_data <= rd_data__n;
     end
 end
 
