@@ -17,21 +17,21 @@ module platform_level_interrupt_controller__core
     output logic context__0__eip
 );
 
+logic ip__0;
+logic ip__1;
 
 assign ip__0 = 1'b0;
 
-
-always_ff @(posedge clk)
-begin
-    if (claim__1 || rst)
-    begin
-        ip__1 <= 1'b0;
-    end
-    else if (request__1)
-    begin
-        ip__1 <= 1'b1;
-    end
-end
+//==============================================
+// sr_flip_flop__ip__1
+//==============================================
+sr_flip_flop sr_flip_flop__ip__1 
+(
+    .clk(clk),
+    .s(request__1),
+    .r(claim__1 || rst),
+    .q(ip__1)
+);
 
 
 //==============================
@@ -123,6 +123,7 @@ end
 logic [31:0] priority__0;
 logic we__priority__0;
 logic re__priority__0;
+logic en__priority__0;
 
 assign priority__0 = 32'h0;
 
@@ -133,6 +134,7 @@ assign priority__0 = 32'h0;
 logic [31:0] priority__1;
 logic we__priority__1;
 logic re__priority__1;
+logic en__priority__1;
 
 assign priority__1 = 32'h1;
 
@@ -143,6 +145,7 @@ assign priority__1 = 32'h1;
 logic [31:0] ip__0_to_31;
 logic we__ip__0_to_31;
 logic re__ip__0_to_31;
+logic en__ip__0_to_31;
 
 assign ip__0_to_31[0] = ip__0;
 assign ip__0_to_31[1] = ip__1;
@@ -155,32 +158,29 @@ assign ip__0_to_31[31:2] = 0;
 logic [31:0] context__0__ie__0_to_31;
 logic we__context__0__ie__0_to_31;
 logic re__context__0__ie__0_to_31;
+logic en__context__0__ie__0_to_31;
+logic context__0__ie__0;
+logic context__0__ie__1;
 
 assign context__0__ie__0_to_31[0] = context__0__ie__0;
 assign context__0__ie__0_to_31[1] = context__0__ie__1;
 assign context__0__ie__0_to_31[31:2] = 0;
 
-
-logic context__0__ie__0;
-logic context__0__ie__1;
+assign context__0__ie__0_to_31 = cs & we__context__0__ie__0_to_31;
 
 assign context__0__ie__0 = 1'b0;
 
-
-always_ff @(posedge clk)
-begin
-    if (rst)
-    begin
-        context__0__ie__1 <= 1'b1;
-    end
-    else
-    begin
-        if (cs & we__context__0__ie__0_to_31)
-        begin
-            context__0__ie__1 <= wr_data[1];
-        end
-    end
-end
+//==============================
+// d_flip_flop__context__0__ie__0
+//==============================
+d_flip_flop #(.WIDTH(1), .RESET_VALUE(1'b1)) d_flip_flop__context__0__ie__0
+(
+    .clk(clk),
+    .rst(rst),
+    .en(en__context__0__ie__0_to_31),
+    .d(wr_data[1]),
+    .q(context__0__ie__1)
+);
 
 
 //==============================================
@@ -189,23 +189,21 @@ end
 logic [31:0] context__0__threshold;
 logic we__context__0__threshold;
 logic re__context__0__threshold;
+logic en__context__0__threshold;
 
-assign threshold__context__0 = 32'h0;
+assign en__context__0__threshold = cs & we__context__0__threshold;
 
-always_ff @(posedge clk)
-begin
-    if (rst)
-    begin
-        context__0__threshold <= 32'h0;
-    end
-    else
-    begin
-        if (cs & we__context__0__threshold)
-        begin
-            context__0__threshold <= wr_data;
-        end
-    end
-end
+//==============================
+// d_flip_flop__context__0__threshold
+//==============================
+d_flip_flop #(.WIDTH(32), .RESET_VALUE(32'h0)) d_flip_flop__context__0__threshold
+(
+    .clk(clk),
+    .rst(rst),
+    .en(en__context__0__threshold),
+    .d(wr_data),
+    .q(context__0__threshold)
+);
 
 
 //==============================================
@@ -214,12 +212,17 @@ end
 logic [31:0] context__0__claim_complete;
 logic we__context__0__claim_complete;
 logic re__context__0__claim_complete;
+logic en__context__0__claim_complete;
 
 assign context__0__claim_complete[9:0] = context__0__id;
 assign context__0__claim_complete[31:10] = 22'h0;
 
 
 
+logic we__context__x__claim_complete;
+logic re__context__x__claim_complete;
+logic claim__0;
+logic claim__1;
 
 assign re__context__x__claim_complete = re__context__0__claim_complete; 
 assign we__context__x__claim_complete = we__context__0__claim_complete;

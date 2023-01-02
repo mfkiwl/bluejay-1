@@ -14,11 +14,8 @@ module machine_timer_registers
 );
 
 
-logic [63:0] mtime;
-logic [63:0] mtimecmp;
-
-
 assign tip = mtime >= mtimecmp;
+
 
 always_comb
 begin
@@ -37,39 +34,69 @@ begin
 end
 
 
-always_ff @(posedge clk)
+//============================================== 
+// Machine Time Register (mtime)
+//==============================================
+logic [63:0] mtime;
+logic [CSR__MTIME__MTIME__WIDTH-1:0] mtime__mtime;
+logic [CSR__MTIME__MTIME__WIDTH-1:0] mtime__mtime__n;
+logic we__mtime;
+logic en__mtime;
+
+assign mtime[CSR__MTIME__MTIME__FIELD] = mtime__mtime;
+
+assign en__mtime = 1'b1; 
+
+always_comb
 begin
-    if (rst) 
-    begin
-        mtime <= 64'h0;
-    end
-    else
-    begin
-        if (cs & we__mtime)
+    case (en__mtime & we__mtime)
+        1'b0:
         begin
-            mtime <= wr_data;
+            mtime__mtime__n = mtime__mtime + 1;
         end
-        else
+        1'b1:
         begin
-            mtime <= mtime + 1;
+            mtime__mtime__n = wr_data[CSR__MTIME__MTIME__FIELD];
         end
-    end
+    endcase
 end
 
-always_ff @(posedge clk)
-begin
-    if (rst)
-    begin
-        mtimecmp <= 64'h0;
-    end
-    else
-    begin
-        if (cs & we__mtimecmp)
-        begin
-            mtimecmp <= wr_data;    
-        end
-    end
-end
+//==============================
+// d_flip_flop__mtime__mtime
+//==============================
+d_flip_flop #(.WIDTH(CSR__MTIME__MTIME__WIDTH), .RESET_VALUE(CSR__MTIME__MTIME__RESET_VALUE)) d_flip_flop__mtime__mtime
+(
+    .clk(clk),
+    .rst(rst),
+    .en(en__mtime),
+    .d(mtime__mtime__n),
+    .q(mtime__mtime)
+);
+
+
+//============================================== 
+// Machine Time Compare Register (mtimecmp)
+//==============================================
+logic [63:0] mtimecmp;
+logic [CSR__MTIMECMP__MTIMECMP__WIDTH-1:0] mtimecmp__mtimecmp;
+logic we__mtimecmp;
+logic en__mtimecmp;
+
+assign mtimecmp[CSR__MTIMECMP__MTIMECMP__FIELD] = mtimecmp__mtimecmp;
+
+assign en__mtimecmp = cs & we__mtimecmp;
+
+//==============================
+// d_flip_flop__mtimecmp__mtimecmp
+//==============================
+d_flip_flop #(.WIDTH(CSR__MTIMECMP__MTIMECMP__WIDTH), .RESET_VALUE(CSR__MTIMECMP__MTIMECMP__RESET_VALUE)) d_flip_flop__mtimecmp__mtimecmp
+(
+    .clk(clk),
+    .rst(rst),
+    .en(en__mtimecmp),
+    .d(wr_data[CSR__MTIMECMP__MTIMECMP__FIELD]),
+    .q(mtimecmp__mtimecmp)
+);
 
 
 endmodule

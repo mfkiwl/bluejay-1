@@ -23,7 +23,6 @@ begin
     state__n = state;
 
     case (state)
-
         //==============================
         // STATE__READY
         //==============================
@@ -48,20 +47,20 @@ begin
         begin
             state__n = complete ? STATE__READY : STATE__WAIT;
         end
-
     endcase
 end
 
-always_comb
-begin
-    if (rst)
-    begin
-        state <= STATE__READY;
-    end
-    else
-    begin
-        state <= state__n;
-    end
-end
+//==============================
+// d_flip_flop__state
+//==============================
+d_flip_flop #(.WIDTH(2), .RESET_VALUE(STATE__READY)) d_flip_flop__state
+(
+    .clk(clk),
+    .rst(rst),
+    .en(1'b1),
+    .d(state__n),
+    .q(state)
+);
+
 
 endmodule

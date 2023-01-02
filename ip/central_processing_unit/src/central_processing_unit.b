@@ -59,9 +59,13 @@ logic csr__we;
 logic [11:0] csr__addr;
 logic [63:0] csr__wr_data;
 logic [63:0] csr__rd_data;
-logic [63:0] mstatus;
-logic [63:0] mie;
-logic [63:0] mip;
+logic [63:0] mstatus__mie;
+logic [63:0] mie__meie;
+logic [63:0] mie__msie;
+logic [63:0] mie__mtie;
+logic [63:0] mip__meip;
+logic [63:0] mip__msip;
+logic [63:0] mip__mtip;
 
 // Memory Interface
 //logic cpu_to_mem__valid;
@@ -159,9 +163,13 @@ control_and_status_registers control_and_status_registers__0
     .eip(eip),
     .tip(tip),
     .instret(instret),
-    .mstatus(mstatus),
-    .mie(mie),
-    .mip(mip)
+    .mstatus__mie(mstatus__mie),
+    .mie__meie(mie__meie),
+    .mie__msie(mie__msie),
+    .mie__mtie(mie__mtie),
+    .mip__meip(mip__meip),
+    .mip__msip(mip__msip),
+    .mip__mtip(mip__mtip)
 );
 
 
@@ -420,7 +428,7 @@ always_comb begin
         //==============================
         STATE__FETCH__0:
         begin
-            state__n = (mstatus[CSR__MSTATUS__MIE__FIELD] && mip[CSR__MIP__MEIP__FIELD] && mie[CSR__MIE__MEIE__FIELD]) ? STATE__INTERRUPT__EXTERNAL : (mstatus[CSR__MSTATUS__MIE__FIELD] && mip[CSR__MIP__MSIP__FIELD] && mie[CSR__MIE__MSIE__FIELD]) ? STATE__INTERRUPT__SOFTWARE : (mstatus[CSR__MSTATUS__MIE__FIELD] && mip[CSR__MIP__MTIP__FIELD] && mie[CSR__MIE__MTIE__FIELD]) ? STATE__INTERRUPT__TIMER : STATE__FETCH__1;
+            state__n = (mstatus__mie & mie__meie & mip__meip) ? STATE__INTERRUPT__EXTERNAL : (mstatus__mie & mie__msie & mip__msip) ? STATE__INTERRUPT__SOFTWARE : (mstatus__mie & mie__mtie & mip__mtip) ? STATE__INTERRUPT__TIMER : STATE__FETCH__1;
             state__n = STATE__FETCH__1;
         end
 

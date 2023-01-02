@@ -13,9 +13,13 @@ module control_and_status_registers
     input eip,
     input tip,
     input instret,
-    output logic [63:0] mstatus,
-    output logic [63:0] mie,
-    output logic [63:0] mip
+    output logic mstatus__mie,
+    output logic mie__meie,
+    output logic mie__msie,
+    output logic mie__mtie,
+    output logic mip__meip,
+    output logic mip__msip,
+    output logic mip__mtip
 );
 
 
@@ -277,7 +281,7 @@ assign en__mstatus = cs & we__mstatus;
 //==============================
 // d_flip_flop__mstatus__mie
 //==============================
-d_flip_flop #(.WIDTH(64), .RESET_VALUE(CSR__MSTATUS__MIE__DISABLED)) d_flip_flop__mstatus__mie
+d_flip_flop #(.WIDTH(CSR__MSTATUS__MIE__WIDTH), .RESET_VALUE(CSR__MSTATUS__MIE__DISABLED)) d_flip_flop__mstatus__mie
 (
     .clk(clk),
     .rst(rst),
@@ -306,7 +310,7 @@ assign en__mtvec = cs & we__mtvec;
 //==============================
 // d_flip_flop__mtvec__trap_vector_base_address
 //==============================
-d_flip_flop #(.WIDTH(64), .RESET_VALUE(CSR__MTVEC__TRAP_VECTOR_BASE_ADDRESS__VALUE)) d_flip_flop__mtvec__trap_vector_base_address
+d_flip_flop #(.WIDTH(CSR__MTVEC__TRAP_VECTOR_BASE_ADDRESS__WDITH), .RESET_VALUE(CSR__MTVEC__TRAP_VECTOR_BASE_ADDRESS__VALUE)) d_flip_flop__mtvec__trap_vector_base_address
 (
     .clk(clk),
     .rst(rst),
@@ -392,7 +396,7 @@ assign en__mip = cs & we__mip;
 //==============================
 // d_flip_flop__mip__msip
 //==============================
-d_flip_flop #(.WIDTH(64), .RESET_VALUE(CSR__MIP__MSIP__NOT_PENDING)) d_flip_flop__mip__msip
+d_flip_flop #(.WIDTH(CSR__MIP__MSIP__WIDTH), .RESET_VALUE(CSR__MIP__MSIP__NOT_PENDING)) d_flip_flop__mip__msip
 (
     .clk(clk),
     .rst(rst),
@@ -405,7 +409,7 @@ d_flip_flop #(.WIDTH(64), .RESET_VALUE(CSR__MIP__MSIP__NOT_PENDING)) d_flip_flop
 //==============================
 // d_flip_flop__mip__mtip
 //==============================
-d_flip_flop #(.WIDTH(64), .RESET_VALUE()) d_flip_flop__mip__mtip
+d_flip_flop #(.WIDTH(CSR__MIP__MTIP__WIDTH), .RESET_VALUE()) d_flip_flop__mip__mtip
 (
     .clk(clk),
     .rst(1'b0),
@@ -417,7 +421,7 @@ d_flip_flop #(.WIDTH(64), .RESET_VALUE()) d_flip_flop__mip__mtip
 //==============================
 // d_flip_flop__mip__meip
 //==============================
-d_flip_flop #(.WIDTH(64), .RESET_VALUE()) d_flip_flop__mip__meip
+d_flip_flop #(.WIDTH(CSR__MIP__MEIP__WIDTH), .RESET_VALUE()) d_flip_flop__mip__meip
 (
     .clk(clk),
     .rst(1'b0),
@@ -477,7 +481,7 @@ assign en__mie = cs & we__mie;
 //==============================
 // d_flip_flop__mie__msie
 //==============================
-d_flip_flop #(.WIDTH(64), .RESET_VALUE(CSR__MIE__MSIE__DISABLED)) d_flip_flop__mie__msie
+d_flip_flop #(.WIDTH(CSR__MIE__MSIE__WIDTH), .RESET_VALUE(CSR__MIE__MSIE__DISABLED)) d_flip_flop__mie__msie
 (
     .clk(clk),
     .rst(rst),
@@ -489,7 +493,7 @@ d_flip_flop #(.WIDTH(64), .RESET_VALUE(CSR__MIE__MSIE__DISABLED)) d_flip_flop__m
 //==============================
 // d_flip_flop__mie__mtie
 //==============================
-d_flip_flop #(.WIDTH(64), .RESET_VALUE(CSR__MIE__MTIE__DISABLED)) d_flip_flop__mie__mtie
+d_flip_flop #(.WIDTH(CSR__MIE__MTIE__WIDTH), .RESET_VALUE(CSR__MIE__MTIE__DISABLED)) d_flip_flop__mie__mtie
 (
     .clk(clk),
     .rst(rst),
@@ -501,7 +505,7 @@ d_flip_flop #(.WIDTH(64), .RESET_VALUE(CSR__MIE__MTIE__DISABLED)) d_flip_flop__m
 //==============================
 // d_flip_flop__mie__meie
 //==============================
-d_flip_flop #(.WIDTH(64), .RESET_VALUE(CSR__MIE__MEIE__DISABLED)) d_flip_flop__mie__meie
+d_flip_flop #(.WIDTH(CSR__MIE__MEIE__WIDTH), .RESET_VALUE(CSR__MIE__MEIE__DISABLED)) d_flip_flop__mie__meie
 (
     .clk(clk),
     .rst(rst),
@@ -542,7 +546,7 @@ end
 //==============================
 // d_flip_flop__mcycle__mcycle
 //==============================
-d_flip_flop #(.WIDTH(64), .RESET_VALUE(CSR__MCYCLE__MCYCLE__RESET_VALUE)) d_flip_flop__mcycle__mcycle
+d_flip_flop #(.WIDTH(CSR__MCYCLE__MCYCLE__WIDTH), .RESET_VALUE(CSR__MCYCLE__MCYCLE__RESET_VALUE)) d_flip_flop__mcycle__mcycle
 (
     .clk(clk),
     .rst(rst),
@@ -594,7 +598,7 @@ end
 //==============================
 // d_flip_flop__minstret__minstret
 //==============================
-d_flip_flop #(.WIDTH(64), .RESET_VALUE(CSR__MINSTRET__MINSTRET__RESET_VALUE)) d_flip_flop__minstret__minstret
+d_flip_flop #(.WIDTH(CSR__MINSTRET__MINSTRET__WIDTH), .RESET_VALUE(CSR__MINSTRET__MINSTRET__RESET_VALUE)) d_flip_flop__minstret__minstret
 (
     .clk(clk),
     .rst(rst),
@@ -632,7 +636,7 @@ end
 //==============================
 // d_flip_flop__state__minstret
 //==============================
-d_flip_flop #(.WIDTH(64), .RESET_VALUE(STATE__MINSTRET__NORMAL)) d_flip_flop__state__minstret
+d_flip_flop #(.WIDTH(1), .RESET_VALUE(STATE__MINSTRET__NORMAL)) d_flip_flop__state__minstret
 (
     .clk(clk),
     .rst(rst),
@@ -683,7 +687,7 @@ assign en__scratch = cs & we__mscratch;
 //==============================
 // d_flip_flop__mscratch__mscratch
 //==============================
-d_flip_flop #(.WIDTH(64), .RESET_VALUE(CSR__MSCRATCH__MSCRATCH__RESET_VALUE)) d_flip_flop__mscratch__mscratch
+d_flip_flop #(.WIDTH(CSR__MSCRATCH__MSCRATCH__WIDTH), .RESET_VALUE(CSR__MSCRATCH__MSCRATCH__RESET_VALUE)) d_flip_flop__mscratch__mscratch
 (
     .clk(clk),
     .rst(rst),
@@ -708,7 +712,7 @@ assign en__mepc = cs & we__mepc;
 //==============================
 // d_flip_flop__mepc__mepc
 //==============================
-d_flip_flop #(.WIDTH(64), .RESET_VALUE(CSR__MEPC__MEPC__RESET_VALUE)) d_flip_flop__mepc__mepc
+d_flip_flop #(.WIDTH(CSR__MEPC__MEPC__WIDTH), .RESET_VALUE(CSR__MEPC__MEPC__RESET_VALUE)) d_flip_flop__mepc__mepc
 (
     .clk(clk),
     .rst(rst),
@@ -735,7 +739,7 @@ assign en__mcause = cs & we__mcause;
 //==============================
 // d_flip_flop__mcause__exception_code
 //==============================
-d_flip_flop #(.WIDTH(64), .RESET_VALUE(CSR__MCAUSE__EXCEPTION_CODE__HARD_RESET)) d_flip_flop__mcause__exception_code
+d_flip_flop #(.WIDTH(CSR__MCAUSE__EXCEPTION_CODE__WIDTH), .RESET_VALUE(CSR__MCAUSE__EXCEPTION_CODE__HARD_RESET)) d_flip_flop__mcause__exception_code
 (
     .clk(clk),
     .rst(rst),
@@ -747,7 +751,7 @@ d_flip_flop #(.WIDTH(64), .RESET_VALUE(CSR__MCAUSE__EXCEPTION_CODE__HARD_RESET))
 //==============================
 // d_flip_flop__mcause__interrupt
 //==============================
-d_flip_flop #(.WIDTH(64), .RESET_VALUE(CSR__MCAUSE__INTERRUPT__NOT_INTERRUPT)) d_flip_flop__mcause__interrupt
+d_flip_flop #(.WIDTH(CSR__MCAUSE__INTERRUPT__WIDTH), .RESET_VALUE(CSR__MCAUSE__INTERRUPT__NOT_INTERRUPT)) d_flip_flop__mcause__interrupt
 (
     .clk(clk),
     .rst(rst),
@@ -772,7 +776,7 @@ assign en__mtval = cs & we__mtval;
 //==============================
 // d_flip_flop__mtval__mtval
 //==============================
-d_flip_flop #(.WIDTH(64), .RESET_VALUE(CSR__MTVAL__MTVAL__RESET_VALUE)) d_flip_flop__mtval__mtval
+d_flip_flop #(.WIDTH(CSR__MTVAL__MTVAL__WIDTH), .RESET_VALUE(CSR__MTVAL__MTVAL__RESET_VALUE)) d_flip_flop__mtval__mtval
 (
     .clk(clk),
     .rst(rst),
