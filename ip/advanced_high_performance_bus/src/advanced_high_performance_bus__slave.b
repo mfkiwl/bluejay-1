@@ -57,8 +57,8 @@ begin
     endcase
 end
 
-parameter STATE__IDLE = 2'h0;
-parameter STATE__RESP = 2'h1;
+localparam STATE__IDLE = 2'h0;
+localparam STATE__RESP = 2'h1;
 
 always_comb
 begin
@@ -84,28 +84,53 @@ begin
 end
 
 
-always_ff @(posedge hclk)
-begin
-    if (en)
-    begin
-        ahb_slave_to_device__we <= hwrite;
-        ahb_slave_to_device__addr <= haddr;
-        ahb_slave_to_device__size <= hsize;
-    end
-end
+//==============================
+// d_flip_flop__ahb_slave_to_device__we
+//==============================
+d_flip_flop #(.WIDTH(1)) d_flip_flop__ahb_slave_to_device__we
+(
+    .clk(clk),
+    .rst(1'b0),
+    .en(en),
+    .d(hwrite),
+    .q(ahb_slave_to_device__we)
+);
 
+//==============================
+// d_flip_flop__ahb_slave_to_device__addr
+//==============================
+d_flip_flop #(.WIDTH(40)) d_flip_flop__ahb_slave_to_device__addr
+(
+    .clk(clk),
+    .rst(1'b0),
+    .en(en),
+    .d(haddr),
+    .q(ahb_slave_to_device__addr)
+);
 
-always_ff @(posedge hclk)
-begin
-    if (~hresetn)
-    begin
-        state <= STATE__IDLE;
-    end
-    else
-    begin
-        state <= state__n;
-    end
-end
+//==============================
+// d_flip_flop__ahb_slave_to_device__size
+//==============================
+d_flip_flop #(.WIDTH(3)) d_flip_flop__ahb_slave_to_device__size
+(
+    .clk(clk),
+    .rst(1'b0),
+    .en(en),
+    .d(hsize),
+    .q(ahb_slave_to_device__size)
+);
+
+//==============================
+// d_flip_flop__state
+//==============================
+d_flip_flop #(.WIDTH(2), .RESET_VALUE(STATE__IDLE)) d_flip_flop__state
+(
+    .clk(clk),
+    .rst(~hresetn),
+    .en(1'b1),
+    .d(state__n),
+    .q(state)
+);
 
 
 endmodule

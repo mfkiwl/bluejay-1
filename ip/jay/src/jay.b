@@ -19,8 +19,8 @@ logic mem_to_cpu__valid;
 logic mem_to_cpu__error;
 logic [63:0] mem_to_cpu__data;
 
-logic is__0;
-logic is__1;
+logic irq__0;
+logic irq__1;
 logic context__0__eip;
 
 logic tip;
@@ -172,8 +172,8 @@ platform_level_interrupt_controller plic
     .addr(ahb_slave_to_device__0__addr[25:0]),
     .wr_data(ahb_slave_to_device__0__wr_data[31:0]),
     .rd_data(ahb_slave_to_device__0__rd_data[31:0]),
-    .is__0(is__0),
-    .is__1(is__0),
+    .irq__0(irq__0),
+    .irq__1(irq__1),
     .context__0__eip(context__0__eip)
 );
 

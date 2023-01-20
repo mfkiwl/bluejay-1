@@ -47,7 +47,7 @@ logic [3:0] state__n;
 //==============================
 // physical_memory_attribute_checker 
 //==============================
-physical_memory_attribute_checker pmac
+physical_memory_attribute_checker pma_checker
 (
     .clk(clk),
     .rst(rst),

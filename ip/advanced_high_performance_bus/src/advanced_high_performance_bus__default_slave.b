@@ -86,16 +86,17 @@ begin
 end
 
 
-always_ff @(posedge hclk)
-begin
-    if (~hresetn)
-    begin
-        state <= STATE__IDLE;
-    end
-    else
-    begin
-        state <= state__n;
-    end
-end
+//==============================
+// d_flip_flop__state
+//==============================
+d_flip_flop #(.WIDTH(3), .RESET_VALUE(STATE__IDLE)) d_flip_flop__state
+(
+    .clk(clk),
+    .rst(~hresetn),
+    .en(1'b1),
+    .d(state__n),
+    .q(state)
+);
+
 
 endmodule

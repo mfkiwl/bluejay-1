@@ -5,7 +5,7 @@ module platform_level_interrupt_controller__gateway
 (
     input clk,
     input rst,
-    input is,
+    input irq,
     output logic request,
     input complete
 );
@@ -28,7 +28,7 @@ begin
         //==============================
         STATE__READY:
         begin
-            state__n = is ? STATE__REQUEST_INTERRUPT : STATE__READY;
+            state__n = irq ? STATE__REQUEST_INTERRUPT : STATE__READY;
         end
 
         //==============================

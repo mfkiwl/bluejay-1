@@ -84,11 +84,16 @@ begin
     sel__n = hsel__3 ? SEL__3 : hsel__2 ? SEL__2 : hsel__1 ? SEL__1 : hsel__0 ? SEL__0 : SEL__DEFAULT;
 end
 
-
-always_ff @(posedge clk)
-begin
-    sel <= hready ? sel__n : sel; 
-end
-
+//==============================
+// d_flip_flop__sel
+//==============================
+d_flip_flop #(.WIDTH(3), .RESET_VALUE(STATE__IDLE)) d_flip_flop__sel
+(
+    .clk(clk),
+    .rst(1'b0),
+    .en(hready),
+    .d(sel__n),
+    .q(sel)
+);
 
 endmodule
