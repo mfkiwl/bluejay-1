@@ -21,11 +21,10 @@ logic [63:0] cpu_to_mem__data;
 logic mem_to_cpu__valid;
 logic mem_to_cpu__error;
 logic [63:0] mem_to_cpu__data;
+logic eip;
+logic tip;
 
 
-//==============================
-// dut
-//==============================
 central_processing_unit dut
 (
     .clk(clk),
@@ -37,7 +36,9 @@ central_processing_unit dut
     .cpu_to_mem__data(cpu_to_mem__data),
     .mem_to_cpu__valid(mem_to_cpu__valid),
     .mem_to_cpu__error(mem_to_cpu__error),
-    .mem_to_cpu__data(mem_to_cpu__data)
+    .mem_to_cpu__data(mem_to_cpu__data),
+    .eip(eip),
+    .tip(tip)
 );
 
 //==============================

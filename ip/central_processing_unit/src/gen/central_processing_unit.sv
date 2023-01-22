@@ -59,9 +59,13 @@ logic csr__we;
 logic [11:0] csr__addr;
 logic [63:0] csr__wr_data;
 logic [63:0] csr__rd_data;
-logic [63:0] mstatus;
-logic [63:0] mie;
-logic [63:0] mip;
+logic mstatus__mie;
+logic mie__meie;
+logic mie__msie;
+logic mie__mtie;
+logic mip__meip;
+logic mip__msip;
+logic mip__mtip;
 
 // Memory Interface
 //logic cpu_to_mem__valid;
@@ -107,6 +111,7 @@ register_file register_file__0
 (
     .clk(clk),
     .rst(rst),
+    .cs(1'b1),
     .we(we),
     .addr(addr),
     .rd_data(rd_data),
@@ -150,6 +155,7 @@ control_and_status_registers control_and_status_registers__0
 (
     .clk(clk),
     .rst(rst),
+    .cs(1'b1),
     .we(csr__we),
     .addr(csr__addr),
     .rd_data(csr__rd_data),
@@ -157,9 +163,13 @@ control_and_status_registers control_and_status_registers__0
     .eip(eip),
     .tip(tip),
     .instret(instret),
-    .mstatus(mstatus),
-    .mie(mie),
-    .mip(mip)
+    .mstatus__mie(mstatus__mie),
+    .mie__meie(mie__meie),
+    .mie__msie(mie__msie),
+    .mie__mtie(mie__mtie),
+    .mip__meip(mip__meip),
+    .mip__msip(mip__msip),
+    .mip__mtip(mip__mtip)
 );
 
 
@@ -405,38 +415,12 @@ always_comb begin
             state__n = STATE__FETCH__0;
         end
         
-//        //==============================
-//        // STATE__FETCH
-//        //==============================
-//        STATE__FETCH:
-//        begin
-//            cpu_to_mem__valid = 1'b1;
-//            cpu_to_mem__addr = pc;
-//            cpu_to_mem__dtype = 3'h1;
-//            
-//            if (mstatus[3] && mip[11] && mie[11]) begin
-//                state__n = STATE__INTERRUPT__EXTERNAL;
-//            end
-//            else if (mstatus[3] && mip[3] && mie[3]) begin
-//                state__n = STATE__INTERRUPT__SOFTWARE;
-//            end
-//            else if (mstatus[3] && mip[7] && mie[7]) begin
-//                state__n = STATE__INTERRUPT__TIMER;
-//            end
-//            else begin
-//                if (cpu_to_mem__hit) begin
-//                    ir__n = cpu_to_mem__rd_data[31:0];
-//                    state__n = STATE__DECODE;
-//                end
-//            end
-//        end
-
         //==============================
         // STATE__FETCH__0
         //==============================
         STATE__FETCH__0:
         begin
-            state__n = (mstatus[3] && mip[11] && mie[11]) ? STATE__INTERRUPT__EXTERNAL : (mstatus[3] && mip[3] && mie[3]) ? STATE__INTERRUPT__SOFTWARE : (mstatus[3] && mip[7] && mie[7]) ? STATE__INTERRUPT__TIMER : STATE__FETCH__1;
+            state__n = (mstatus__mie & mie__meie & mip__meip) ? STATE__INTERRUPT__EXTERNAL : (mstatus__mie & mie__msie & mip__msip) ? STATE__INTERRUPT__SOFTWARE : (mstatus__mie & mie__mtie & mip__mtip) ? STATE__INTERRUPT__TIMER : STATE__FETCH__1;
             state__n = STATE__FETCH__1;
         end
 
@@ -3047,45 +3031,66 @@ always_comb begin
     endcase
 end
 
+//==============================
+// d_flip_flop__state
+//==============================
+d_flip_flop #(.WIDTH(8), .RESET_VALUE(STATE__RESET)) d_flip_flop__state
+(
+    .clk(clk),
+    .rst(rst),
+    .en(1'b1),
+    .d(state__n),
+    .q(state)
+);
 
-always_ff @(posedge clk)
-begin
-    if (rst) 
-    begin
-        state <= STATE__RESET;
-    end
-    else 
-    begin
-        state <= state__n;
-    end
-end
+//==============================
+// d_flip_flop__pc
+//==============================
+d_flip_flop #(.WIDTH(64), .RESET_VALUE(64'h80000000)) d_flip_flop__pc
+(
+    .clk(clk),
+    .rst(rst),
+    .en(1'b1),
+    .d(pc__n),
+    .q(pc)
+);
 
-always_ff @(posedge clk)
-begin
-    if (rst) 
-    begin
-        pc <= 64'h80000000;
-    end
-    else 
-    begin
-        pc <= pc__n;
-    end
-end
+//==============================
+// d_flip_flop__ir
+//==============================
+d_flip_flop #(.WIDTH(32)) d_flip_flop__ir
+(
+    .clk(clk),
+    .rst(1'b0),
+    .en(1'b1),
+    .d(ir__n),
+    .q(ir)
+);
 
-always_ff @(posedge clk)
-begin
-    ir <= ir__n;
-end
+//==============================
+// d_flip_flop__a
+//==============================
+d_flip_flop #(.WIDTH(64)) d_flip_flop__a
+(
+    .clk(clk),
+    .rst(1'b0),
+    .en(1'b1),
+    .d(a__n),
+    .q(a)
+);
 
-always_ff @(posedge clk)
-begin
-    a <= a__n;
-end
+//==============================
+// d_flip_flop__b
+//==============================
+d_flip_flop #(.WIDTH(64)) d_flip_flop__b
+(
+    .clk(clk),
+    .rst(1'b0),
+    .en(1'b1),
+    .d(b__n),
+    .q(b)
+);
 
-always_ff @(posedge clk)
-begin
-    b <= b__n;
-end
 
 endmodule
 

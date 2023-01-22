@@ -59,13 +59,13 @@ logic csr__we;
 logic [11:0] csr__addr;
 logic [63:0] csr__wr_data;
 logic [63:0] csr__rd_data;
-logic [63:0] mstatus__mie;
-logic [63:0] mie__meie;
-logic [63:0] mie__msie;
-logic [63:0] mie__mtie;
-logic [63:0] mip__meip;
-logic [63:0] mip__msip;
-logic [63:0] mip__mtip;
+logic mstatus__mie;
+logic mie__meie;
+logic mie__msie;
+logic mie__mtie;
+logic mip__meip;
+logic mip__msip;
+logic mip__mtip;
 
 // Memory Interface
 //logic cpu_to_mem__valid;

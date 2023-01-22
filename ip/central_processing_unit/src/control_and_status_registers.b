@@ -3,24 +3,45 @@
 //==============================================
 module control_and_status_registers
 (
-    input clk,
-    input rst,
-    input cs,
-    input we,
-    input [11:0] addr,
-    output logic [63:0] rd_data,
-    input [63:0] wr_data,
-    input eip,
-    input tip,
-    input instret,
-    output logic mstatus__mie,
-    output logic mie__meie,
-    output logic mie__msie,
-    output logic mie__mtie,
-    output logic mip__meip,
-    output logic mip__msip,
-    output logic mip__mtip
+    clk,
+    rst,
+    cs,
+    we,
+    addr,
+    rd_data,
+    wr_data,
+    eip,
+    tip,
+    instret,
+    mstatus__mie,
+    mie__meie,
+    mie__msie,
+    mie__mtie,
+    mip__meip,
+    mip__msip,
+    mip__mtip
 );
+
+
+input clk;
+input rst;
+input cs;
+input we;
+input [11:0] addr;
+output logic [63:0] rd_data;
+input [63:0] wr_data;
+input eip;
+input tip;
+input instret;
+
+output mstatus__mie;
+output mie__meie;
+output mie__msie;
+output mie__mtie;
+output mip__meip;
+output mip__msip;
+output mip__mtip;
+
 
 
 always_comb begin
@@ -142,7 +163,6 @@ always_comb begin
         end
     endcase
 end
-
 
 //==============================================
 // Machine ISA Register (misa)
@@ -296,7 +316,7 @@ d_flip_flop #(.WIDTH(CSR__MSTATUS__MIE__WIDTH), .RESET_VALUE(CSR__MSTATUS__MIE__
 //==============================================
 logic [63:0] mtvec;
 logic [CSR__MTVEC__OFFSET__WIDTH-1:0] mtvec__offset;
-logic [CSR__MTVEC__TRAP_VECTOR_BASE_ADDRESS__WDITH-1:0] mtvec__trap_vector_base_address;
+logic [CSR__MTVEC__TRAP_VECTOR_BASE_ADDRESS__WIDTH-1:0] mtvec__trap_vector_base_address;
 logic we__mtvec;
 logic en__mtvec;
 
@@ -310,7 +330,7 @@ assign en__mtvec = cs & we__mtvec;
 //==============================
 // d_flip_flop__mtvec__trap_vector_base_address
 //==============================
-d_flip_flop #(.WIDTH(CSR__MTVEC__TRAP_VECTOR_BASE_ADDRESS__WDITH), .RESET_VALUE(CSR__MTVEC__TRAP_VECTOR_BASE_ADDRESS__VALUE)) d_flip_flop__mtvec__trap_vector_base_address
+d_flip_flop #(.WIDTH(CSR__MTVEC__TRAP_VECTOR_BASE_ADDRESS__WIDTH), .RESET_VALUE(CSR__MTVEC__TRAP_VECTOR_BASE_ADDRESS__VALUE)) d_flip_flop__mtvec__trap_vector_base_address
 (
     .clk(clk),
     .rst(rst),
@@ -684,18 +704,18 @@ assign mscratch[CSR__MSCRATCH__MSCRATCH__FIELD] = mscratch__mscratch;
 
 assign en__scratch = cs & we__mscratch;
 
-//==============================
-// d_flip_flop__mscratch__mscratch
-//==============================
-d_flip_flop #(.WIDTH(CSR__MSCRATCH__MSCRATCH__WIDTH), .RESET_VALUE(CSR__MSCRATCH__MSCRATCH__RESET_VALUE)) d_flip_flop__mscratch__mscratch
-(
-    .clk(clk),
-    .rst(rst),
-    .en(en__mscratch),
-    .d(wr_data[CSR__MSCRATCH__MSCRATCH__FIELD]),
-    .q(mscratch__mscratch)
-);
-
+////==============================
+//// d_flip_flop__mscratch__mscratch
+////==============================
+//d_flip_flop #(.WIDTH(CSR__MSCRATCH__MSCRATCH__WIDTH), .RESET_VALUE(CSR__MSCRATCH__MSCRATCH__RESET_VALUE)) d_flip_flop__mscratch__mscratch
+//(
+//    .clk(clk),
+//    .rst(rst),
+//    .en(en__mscratch),
+//    .d(wr_data[CSR__MSCRATCH__MSCRATCH__FIELD]),
+//    .q(mscratch__mscratch)
+//);
+//
 
 //============================================== 
 // Machine Exception Program Counter (mepc) 
@@ -745,7 +765,7 @@ d_flip_flop #(.WIDTH(CSR__MCAUSE__EXCEPTION_CODE__WIDTH), .RESET_VALUE(CSR__MCAU
     .rst(rst),
     .en(en__mcause),
     .d(wr_data[CSR__MCAUSE__EXCEPTION_CODE__FIELD]),
-    .q(mepc__mcause__exception_code)
+    .q(mcause__exception_code)
 );
 
 //==============================
@@ -784,6 +804,7 @@ d_flip_flop #(.WIDTH(CSR__MTVAL__MTVAL__WIDTH), .RESET_VALUE(CSR__MTVAL__MTVAL__
     .d(wr_data[CSR__MTVAL__MTVAL__FIELD]),
     .q(mtval__mtval)
 );
+
 
 endmodule
 

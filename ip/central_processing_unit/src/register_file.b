@@ -8,16 +8,9 @@ module register_file
     input cs,
     input we,
     input [4:0] addr,
-    output [63:0] rd_data,
+    output logic [63:0] rd_data,
     input [63:0] wr_data
 );
-
-logic clk;
-logic rst;
-logic we;
-logic [4:0] addr;
-logic [63:0] rd_data;
-logic [63:0] wr_data;
 
 logic [63:0] x__0;
 logic [63:0] x__1;
@@ -351,19 +344,6 @@ assign en__x__30 = cs & we__x__30;
 assign en__x__31 = cs & we__x__31;
 
 assign x__0 = 64'h0;
-
-//==============================
-// d_flip_flop__x__0
-//==============================
-d_flip_flop #(.WIDTH(64)) d_flip_flop__x__0
-(
-    .clk(clk),
-    .rst(1'b0),
-    .en(en__x__0),
-    .d(wr_data),
-    .q(x__0)
-);
-
 
 //==============================
 // d_flip_flop__x__1

@@ -4,6 +4,7 @@
 BLUEJAY := /home/seankent/bluejay
 TOOLS := $(BLUEJAY)/tools
 SRC := $(BLUEJAY)/ip/central_processing_unit/src
+LIB := $(BLUEJAY)/ip/library/src
 SIM := $(BLUEJAY)/ip/central_processing_unit/sim
 TB := $(BLUEJAY)/ip/central_processing_unit/tb
 
@@ -29,7 +30,7 @@ MEM := $(TEST_NAME).mem
 #===============================================
 # Sources/Targets
 #===============================================
-SOURCES_SV := $(wildcard $(SRC)/gen/*.sv) $(wildcard $(TB)/gen/*.sv)
+SOURCES_SV := $(wildcard $(SRC)/gen/*.sv) $(wildcard $(TB)/gen/*.sv) $(wildcard $(LIB)/gen/*.sv)
 TB_TOP := central_processing_unit__tb
 #BEGIN_SIGNATURE := $(shell python3 $(TOOLS)/get_symbol_addr.py $(ELF) begin_signature)
 #END_SIGNATURE := $(shell python3 $(TOOLS)/get_symbol_addr.py $(ELF) end_signature)
@@ -69,7 +70,7 @@ all: $(DIFFS)
 .PRECIOUS: %.wdb
 %.wdb: xelab.timestamp %_build.timestamp
 	#xsim $(SNAPSHOT) --tclbatch xsim_cfg.tcl --testplusarg $(PLUSARGS) --wdb $(@)
-	xsim $(SNAPSHOT) --tclbatch xsim_cfg.tcl -testplusarg filename__mem=$(SIM)/$(*).mem  -testplusarg filename__sig=$(SIM)/$(*).signature -testplusarg begin_signature=$(shell python3 $(TOOLS)/get_symbol_addr.py $(*).elf begin_signature) -testplusarg end_signature=$(shell python3 $(TOOLS)/get_symbol_addr.py $(*).elf end_signature) -testplusarg tohost=$(shell python3 $(TOOLS)/get_symbol_addr.py $(*).elf tohost) --wdb $(@)
+	xsim $(SNAPSHOT) --tclbatch xsim_cfg.tcl -testplusarg filename__mem=$(SIM)/$(*).mem  -testplusarg filename__sig=$(SIM)/$(*).signature -testplusarg begin_signature=$(shell python3 $(TOOLS)/get_symbol_addr.py $(*).elf begin_signature) -testplusarg end_signature=$(shell python3 $(TOOLS)/get_symbol_addr.py $(*).elf end_signature) -testplusarg tohost=$(shell python3 $(TOOLS)/get_symbol_addr.py $(*).elf tohost) --wdb $(@) 
 
 #===============================
 # xelab.timestamp
@@ -90,6 +91,7 @@ xvlog.timestamp: $(SOURCES_SV)
 #===============================
 .PHONY: waves
 waves: $(TEST_NAME).wdb
+	echo $(TEST_NAME)
 	xsim --gui $(TEST_NAME).wdb
     
 #===============================
