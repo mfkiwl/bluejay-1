@@ -22,16 +22,18 @@ module control_and_status_registers
     mip__mtip
 );
 
-
 input clk;
 input rst;
+
 input cs;
 input we;
 input [11:0] addr;
 output logic [63:0] rd_data;
 input [63:0] wr_data;
+
 input eip;
 input tip;
+
 input instret;
 
 output mstatus__mie;
@@ -41,7 +43,6 @@ output mie__mtie;
 output mip__meip;
 output mip__msip;
 output mip__mtip;
-
 
 
 always_comb begin

@@ -1,0 +1,15 @@
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/machine_timer_registers/src/gen/machine_timer_registers.sv" into library work
+INFO: [VRFC 10-311] analyzing module machine_timer_registers
+WARNING: [VRFC 10-3380] identifier 'mtime' is used before its declaration [/home/seankent/bluejay/ip/machine_timer_registers/src/gen/machine_timer_registers.sv:17]
+WARNING: [VRFC 10-3380] identifier 'we__mtime' is used before its declaration [/home/seankent/bluejay/ip/machine_timer_registers/src/gen/machine_timer_registers.sv:22]
+WARNING: [VRFC 10-3380] identifier 'we__mtimecmp' is used before its declaration [/home/seankent/bluejay/ip/machine_timer_registers/src/gen/machine_timer_registers.sv:23]
+WARNING: [VRFC 10-3380] identifier 'mtime' is used before its declaration [/home/seankent/bluejay/ip/machine_timer_registers/src/gen/machine_timer_registers.sv:28]
+WARNING: [VRFC 10-3380] identifier 'we__mtime' is used before its declaration [/home/seankent/bluejay/ip/machine_timer_registers/src/gen/machine_timer_registers.sv:29]
+WARNING: [VRFC 10-3380] identifier 'mtimecmp' is used before its declaration [/home/seankent/bluejay/ip/machine_timer_registers/src/gen/machine_timer_registers.sv:33]
+WARNING: [VRFC 10-3380] identifier 'we__mtimecmp' is used before its declaration [/home/seankent/bluejay/ip/machine_timer_registers/src/gen/machine_timer_registers.sv:34]
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/machine_timer_registers/tb/gen/tb.sv" into library work
+INFO: [VRFC 10-311] analyzing module tb
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/library/src/gen/d_flip_flop.sv" into library work
+INFO: [VRFC 10-311] analyzing module d_flip_flop
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/library/src/gen/sr_flip_flop.sv" into library work
+INFO: [VRFC 10-311] analyzing module sr_flip_flop

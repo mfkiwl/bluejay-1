@@ -2,7 +2,7 @@
 // d_flip_flop 
 //==============================================
 module d_flip_flop 
-#(parameter WIDTH=1, parameter RESET_VALUE=0)
+#(parameter WIDTH = 1, parameter RESET_VALUE = 0)
 (
     input clk,
     input rst,

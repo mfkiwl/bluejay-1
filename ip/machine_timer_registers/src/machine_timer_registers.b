@@ -19,6 +19,9 @@ assign tip = mtime >= mtimecmp;
 
 always_comb
 begin
+    we__mtime = 1'b0;
+    we__mtimecmp = 1'b0;
+            
     case (addr)
         MACHINE_TIMER_REGISTERS__MTIME:
         begin
@@ -49,7 +52,7 @@ assign en__mtime = 1'b1;
 
 always_comb
 begin
-    case (en__mtime & we__mtime)
+    case (en__mtime & we__mtime & cs)
         1'b0:
         begin
             mtime__mtime__n = mtime__mtime + 1;

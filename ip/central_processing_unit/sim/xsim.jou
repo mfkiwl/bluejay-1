@@ -2,14 +2,12 @@
 # xsim v2019.2 (64-bit)
 # SW Build 2708876 on Wed Nov  6 21:39:14 MST 2019
 # IP Build 2700528 on Thu Nov  7 00:09:20 MST 2019
-# Start of session at: Sat Jan 21 18:53:50 2023
-# Process ID: 19373
+# Start of session at: Sun Jan 22 13:21:24 2023
+# Process ID: 6904
 # Current directory: /home/seankent/bluejay/ip/central_processing_unit/sim
-# Command line: xsim -source {xsim.dir/ADD-01.wdb/xsim_script.tcl}
+# Command line: xsim -mode tcl -source {xsim.dir/central_processing_unit__tb__snapshot/xsim_script.tcl}
 # Log file: /home/seankent/bluejay/ip/central_processing_unit/sim/xsim.log
 # Journal file: /home/seankent/bluejay/ip/central_processing_unit/sim/xsim.jou
 #-----------------------------------------------------------
-start_gui
-source xsim.dir/ADD-01.wdb/xsim_script.tcl
-create_wave_config; add_wave /; set_property needs_save false [current_wave_config]
-close_sim
+source xsim.dir/central_processing_unit__tb__snapshot/xsim_script.tcl
+source xsim_cfg.tcl

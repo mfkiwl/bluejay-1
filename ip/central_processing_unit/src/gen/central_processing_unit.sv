@@ -3,20 +3,37 @@
 //==============================================
 module central_processing_unit
 (
-    input clk,
-    input rst,
-    output logic cpu_to_mem__valid,
-    output logic cpu_to_mem__we,
-    output logic [63:0] cpu_to_mem__addr,
-    output logic [2:0] cpu_to_mem__dtype,
-    output logic [63:0] cpu_to_mem__data,
-    input mem_to_cpu__valid,
-    input mem_to_cpu__error,
-    input [63:0] mem_to_cpu__data,
-    input eip,
-    input tip
+    clk,
+    rst,
+    cpu_to_mem__valid,
+    cpu_to_mem__we,
+    cpu_to_mem__addr,
+    cpu_to_mem__dtype,
+    cpu_to_mem__data,
+    mem_to_cpu__valid,
+    mem_to_cpu__error,
+    mem_to_cpu__data,
+    eip,
+    tip
 );
 
+
+input clk;
+input rst;
+output cpu_to_mem__valid;
+output cpu_to_mem__we;
+output [63:0] cpu_to_mem__addr;
+output [2:0] cpu_to_mem__dtype;
+output [63:0] cpu_to_mem__data;
+input mem_to_cpu__valid;
+input mem_to_cpu__error;
+input [63:0] mem_to_cpu__data;
+input eip;
+input tip;
+
+// Clock, Reset
+logic clk;
+logic rst;
 
 // Program Counter/Instruction Register
 logic [63:0] pc;
@@ -67,17 +84,21 @@ logic mip__meip;
 logic mip__msip;
 logic mip__mtip;
 
-// Memory Interface
-//logic cpu_to_mem__valid;
-//logic cpu_to_mem__ready;
-//logic cpu_to_mem__we;
-//logic [63:0] cpu_to_mem__addr;
-//logic [2:0] cpu_to_mem__dtype;
-//logic [63:0] cpu_to_mem__wr_data;
-//logic cpu_to_mem__done;
-//logic [63:0] cpu_to_mem__rd_data;
-//logic cpu_to_mem__access_fault;
-//logic cpu_to_mem__address_misaligned_fault;
+// CPU to Memory Interface
+logic cpu_to_mem__valid;
+logic cpu_to_mem__we;
+logic [63:0] cpu_to_mem__addr;
+logic [2:0] cpu_to_mem__dtype;
+logic [63:0] cpu_to_mem__data;
+
+// Memory to CPU Interface
+logic mem_to_cpu__valid;
+logic mem_to_cpu__error;
+logic [63:0] mem_to_cpu__data;
+
+// Interrupt Signals
+logic eip;
+logic tip;
 
 // CSR logic
 logic instret;
