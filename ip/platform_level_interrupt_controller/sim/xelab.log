@@ -1,0 +1,22 @@
+Vivado Simulator 2019.2
+Copyright 1986-1999, 2001-2019 Xilinx, Inc. All Rights Reserved.
+Running: /tools/Xilinx/Vivado/2019.2/bin/unwrapped/lnx64.o/xelab -debug all --relax -top tb__platform_level_interrupt_controller -snapshot tb__platform_level_interrupt_controller__snapshot 
+Multi-threading is on. Using 18 slave threads.
+Starting static elaboration
+Pass Through NonSizing Optimizer
+WARNING: [VRFC 10-3091] actual bit length 1 differs from formal bit length 10 for port 'id__c' [/home/seankent/bluejay/ip/platform_level_interrupt_controller/src/gen/platform_level_interrupt_controller__core.sv:52]
+WARNING: [VRFC 10-3091] actual bit length 1 differs from formal bit length 32 for port 'priority__c' [/home/seankent/bluejay/ip/platform_level_interrupt_controller/src/gen/platform_level_interrupt_controller__core.sv:55]
+Completed static elaboration
+Starting simulation data flow analysis
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling module work.sr_flip_flop
+Compiling module work.platform_level_interrupt_control...
+Compiling module work.d_flip_flop
+Compiling module work.d_flip_flop(WIDTH=32)
+Compiling module work.platform_level_interrupt_control...
+Compiling module work.d_flip_flop(WIDTH=2)
+Compiling module work.platform_level_interrupt_control...
+Compiling module work.platform_level_interrupt_control...
+Compiling module work.tb__platform_level_interrupt_con...
+Built simulation snapshot tb__platform_level_interrupt_controller__snapshot

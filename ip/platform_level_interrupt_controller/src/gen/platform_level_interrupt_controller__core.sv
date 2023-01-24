@@ -77,37 +77,37 @@ begin
     re__context__0__claim_complete = 1'b0;
 
     case (addr)
-        PLATFORM_LEVEL_INTERRUPT_CONTROLLER__INTERRUPT_SOURCE_PRIORITY__0:
+        26'h0_00_00_00:
         begin
             rd_data = priority__0; 
             we__priority__0 = we;            
             re__priority__0 = ~we;            
         end
-        PLATFORM_LEVEL_INTERRUPT_CONTROLLER__INTERRUPT_SOURCE_PRIORITY__1:
+        26'h0_00_00_04:
         begin
             rd_data = priority__1; 
             we__priority__1 = we;            
             re__priority__1 = ~we;            
         end
-        PLATFORM_LEVEL_INTERRUPT_CONTROLLER__INTERRUPT_PENDING_BITS__0_TO_31:
+        26'h0_00_10_00:
         begin
             rd_data = ip__0_to_31;
             we__ip__0_to_31 = we;
             re__ip__0_to_31 = ~we;
         end
-        PLATFORM_LEVEL_INTERRUPT_CONTROLLER__INTERRUPT_ENABLE_BITS__0_TO_31__CONTEXT__0:
+        26'h0_00_20_00:
         begin
             rd_data = context__0__ie__0_to_31;
             we__context__0__ie__0_to_31 = we;
             re__context__0__ie__0_to_31 = ~we;
         end
-        PLATFORM_LEVEL_INTERRUPT_CONTROLLER__PRIORITY_THRESHOLD__CONTEXT__0:
+        26'h20_00_00:
         begin
             rd_data = context__0__threshold;
             we__context__0__threshold = we;
             re__context__0__threshold = ~we;
         end
-        PLATFORM_LEVEL_INTERRUPT_CONTROLLER__INTERRUPT_CLAIM_COMPLETE__CONTEXT__0:
+        26'h20_00_04:
         begin
             rd_data = context__0__claim_complete;
             we__context__0__claim_complete = we;
@@ -140,7 +140,7 @@ assign priority__1 = 32'h1;
 
 
 //==============================================
-// Interrupt Pending Bits - Source 0-31
+// Interrupt Pending Bits - Source -31
 //==============================================
 logic [31:0] ip__0_to_31;
 logic we__ip__0_to_31;
@@ -153,7 +153,7 @@ assign ip__0_to_31[31:2] = 0;
 
 
 //==============================================
-// Interrupt Enable Bits - Context 0 - Source 0-31
+// Interrupt Enable Bits - Context 0 - Source -31
 //==============================================
 logic [31:0] context__0__ie__0_to_31;
 logic we__context__0__ie__0_to_31;
