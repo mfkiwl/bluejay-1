@@ -1,0 +1,137 @@
+TOP := /home/seankent/bluejay
+
+IP := /home/seankent/bluejay
+
+MKDIR := mkdir -p
+RM := rm -rf
+TOUCH := touch
+AWK := awk
+CHMOD := chmod
+
+
+GEN = gen
+
+SRC :=
+
+ 
+
+DIR := $(TOP)/ip/lib/src
+include $(DIR)/module.mk
+DIR := $(TOP)/ip/central_processing_unit/src
+include $(DIR)/module.mk
+DIR := $(TOP)/ip/central_processing_unit/tb
+include $(DIR)/module.mk
+DIR := $(TOP)/ip/machine_timer_registers/src
+include $(DIR)/module.mk
+DIR := $(TOP)/ip/machine_timer_registers/tb
+include $(DIR)/module.mk
+DIR := $(TOP)/ip/platform_level_interrupt_controller/src
+include $(DIR)/module.mk
+DIR := $(TOP)/ip/platform_level_interrupt_controller/tb
+include $(DIR)/module.mk
+
+
+#SV := $(foreach i,$(SRC),$(dir $(i))$(GEN)/$(subst .b,.sv,$(notdir $(i))))
+SV := $(subst .b,.sv,$(SRC))
+
+
+all: $(SV) test 
+
+$(SV): %.sv : %.b
+	python3 $(TOP)/tools/bluejay.py $< $@
+
+
+
+XVLOG := xvlog
+XVLOG_OPTS := --sv --incr --relax
+XELAB := xelab
+ELAB_OPTS := --relax
+XSIM := xsim
+
+
+#SEED := $(shell $(AWK) 'BEGIN{srand();printf("%d", 65536*rand())}') 
+SEED := 233453451 
+RAND := 2023
+#DIR := $(TOP)/ip/machine_timer_registers/sim
+DIR := $(TOP)/ip/platform_level_interrupt_controller/sim
+SIM_DIR := $(DIR)/sim_$(RAND)
+XVLOG_TIMESTAMP := $(SIM_DIR)/xvlog.timestamp 
+XELAB_TIMESTAMP := $(SIM_DIR)/xelab.timestamp 
+#TB_TOP := tb
+TB_TOP := tb__platform_level_interrupt_controller
+SNAPSHOT := $(TB_TOP)__snapshot
+XSIM_CFG := $(TOP)/tcl/xsim_cfg.tcl
+ #$(XELAB_TIMESTAMP)
+TESTNAME := t_$(SEED)
+TESTDIR := $(SIM_DIR)/$(TESTNAME)
+#SNAPSHOT_WDB := $(TESTDIR)/$(SNAPSHOT).wdb
+SNAPSHOT_WDB := $(SIM_DIR)/t_233453451/tb__snapshot.wdb
+
+.PHONY: test
+test:
+	echo Done 
+
+.PHONY: sim
+sim: $(SIM_DIR) $(TESTNAME)
+	echo Done 
+
+.PHONY: $(TESTNAME) 
+$(TESTNAME): $(SNAPSHOT_WDB)
+
+$(SNAPSHOT_WDB): $(XELAB_TIMESTAMP)
+	$(MKDIR) $(TESTDIR) 
+	cd $(SIM_DIR) ; xsim $(SNAPSHOT) --tclbatch $(XSIM_CFG) --wdb $(@) ; cd -
+
+$(XELAB_TIMESTAMP): $(XVLOG_TIMESTAMP)
+	cd $(SIM_DIR) ; $(XELAB) -debug all $(ELAB_OPTS) -top $(TB_TOP) -snapshot $(SNAPSHOT) ; cd -
+	$(TOUCH) $(@) 
+
+$(XVLOG_TIMESTAMP): $(SV) 
+	cd $(SIM_DIR) ; $(XVLOG) $(XVLOG_OPTS) $(SV) ; cd -
+	$(TOUCH) $(@) 
+
+
+$(SIM_DIR):
+	$(MKDIR) $(SIM_DIR) 
+
+
+.PHONY: waves
+waves: $(SNAPSHOT_WDB)
+	xsim --gui $(SNAPSHOT_WDB)
+
+
+
+
+
+
+.PHONY: clean 
+clean: 
+	echo $(SV)
+	$(RM) $(SV)
+
+
+
+#DIR := $(TOP)/ip/machine_timer_registers/src
+#include $(DIR)/module.mk
+#
+#GEN = gen
+#
+#MODULES := central_processing_unit d_flip_flop 
+#
+#TARGET = CPU_SIM
+#
+#
+#SV :=  
+#
+#
+#
+#
+#SV := $(subst .b,.sv,$(dir $(SRC))$(GEN)/$(notdir $(SRC)))
+#
+#.PHONY: all
+#all: $(SV)
+#	echo $(SV)
+#
+#$(SV):
+#	$(MKDIR) $(dir $(@)) 
+#    

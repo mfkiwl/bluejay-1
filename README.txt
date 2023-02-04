@@ -46,3 +46,5 @@ Resources:
             $ make clean simulate verify postverify XLEN=64 RISCV_DEVICE=I RISCV_TARGET=riscvOVPsimPlus
     - SiFive Interrupt Cookbook
         - https://starfivetech.com/uploads/sifive-interrupt-cookbook-v1p2.pdf
+    Recursive Make Considered Harmful - Peter Miller
+        - https://aegis.sourceforge.net/auug97.pdf

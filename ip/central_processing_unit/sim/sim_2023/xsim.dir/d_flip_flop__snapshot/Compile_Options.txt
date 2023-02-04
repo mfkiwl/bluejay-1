@@ -1,0 +1,1 @@
+-debug "all" --relax -top "d_flip_flop" -snapshot "d_flip_flop__snapshot" 

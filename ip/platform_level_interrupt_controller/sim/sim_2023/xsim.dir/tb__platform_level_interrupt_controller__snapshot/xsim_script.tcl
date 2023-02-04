@@ -1,0 +1,1 @@
+xsim {tb__platform_level_interrupt_controller__snapshot} -wdb {/home/seankent/bluejay/ip/platform_level_interrupt_controller/sim/sim_2023/t_233453451/tb__snapshot.wdb} -autoloadwcfg -tclbatch {/home/seankent/bluejay/tcl/xsim_cfg.tcl}
