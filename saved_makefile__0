@@ -1,0 +1,175 @@
+TOP := /home/seankent/bluejay
+
+# shell commands
+MKDIR := mkdir
+MKDIR__OPTS := -p
+
+RM := rm
+RM__OPTS := -rf
+
+TOUCH := touch
+TOUCH__OPTS :=
+
+AWK := awk
+AWK__OPTS :=
+
+CHMOD := chmod
+CHMOD__OPTS :=
+
+CP := cp
+CP__OPTS :=
+
+CD := cd
+CD__OPTS :=
+
+XVLOG := xvlog
+XVLOG__OPTS := --sv --incr --relax
+
+XELAB := xelab
+XELAB__OPTS := -relax
+
+XSIM := xsim
+XSIM__OPTS :=
+XSIM__CFG := $(TOP)/tcl/xsim_cfg.tcl
+
+PYTHON := python3
+PYTHON__OPTS :=
+
+
+
+# system verilog files
+SYSTEM_VERILOG__LIST :=
+SYSTEM_VERILOG__LIST += $(TOP)/ip/lib/src/gen/d_flip_flop.sv
+SYSTEM_VERILOG__LIST += $(TOP)/ip/lib/src/gen/sr_flip_flop.sv
+SYSTEM_VERILOG__LIST += $(TOP)/ip/machine_timer_registers/src/gen/machine_timer_registers.sv
+SYSTEM_VERILOG__LIST += $(TOP)/ip/machine_timer_registers/tb/gen/tb.sv
+
+#
+
+
+
+
+
+TEST__LIST := test__0 test__1
+SIM_DIR := $(TOP)/ip/machine_timer_registers/sim/sim__xyz
+TEST_DIR__LIST := $(addprefix $(SIM_DIR)/,$(TEST__LIST))
+#TB := $(TOP)/ip/machine_timer_registers/tb/gen/tb.sv
+TB_TOP := tb
+SNAPSHOT := snapshot
+SNAPSHOT_WDB__LIST := $(addsuffix /$(SNAPSHOT).wdb,$(TEST_DIR__LIST))
+PRE_TEST__TIMESTAMP__LIST := $(addsuffix /pre_test.timestamp,$(TEST_DIR__LIST))
+
+#SIM_DIR := $(CURDIR)/unit__0/sim/sim__xyz
+
+
+XELAB__TIMESTAMP := $(SIM_DIR)/xelab.timestamp 
+XVLOG__TIMESTAMP := $(SIM_DIR)/xvlog.timestamp 
+#$(XVLOG) $(XELAB__OPTS) -top $(TB) -snapshot $(SNAPSHOT) 
+
+all: $(SNAPSHOT_WDB__LIST)
+#all: $(SYSTEM_VERILOG__LIST)
+	@echo Done 
+
+
+#$(SYSTEM_VERILOG__LIST):
+#	$(MKDIR) $(MKDIR__OPTS) $(dir $(@)) 
+#	$(PYTHON) $(PYTHON__OPTS) $(TOP)/tools/bluejay.py $(subst .sv,.b,$(subst gen/,,$(@))) $(@)
+
+#%.sv: $(subst .sv,.b,$(subst gen/,,%))
+#	$(MKDIR) $(MKDIR__OPTS) $(dir $(@)) 
+#	$(PYTHON) $(PYTHON__OPTS) $(TOP)/tools/bluejay.py $(subst .sv,.b,$(subst gen/,,$(@))) $(@)
+#
+
+define build-bluejay 
+	$(MKDIR) $(MKDIR__OPTS) $(dir $(@)) 
+	$(PYTHON) $(PYTHON__OPTS) $(TOP)/tools/bluejay.py $(^) $(@)
+endef
+
+IP := ip
+LIB := lib
+MACHINE_TIMER_REGISTERS := machine_timer_registers
+SRC := src
+TB := tb
+SIM := sim
+GEN := gen
+
+
+
+$(TOP)/$(IP)/$(LIB)/$(SRC)/$(GEN)/%.sv: $(TOP)/$(IP)/$(LIB)/$(SRC)/%.b
+	$(build-bluejay)
+
+$(TOP)/$(IP)/$(MACHINE_TIMER_REGISTERS)/$(SRC)/$(GEN)/%.sv: $(TOP)/$(IP)/$(MACHINE_TIMER_REGISTERS)/$(SRC)/%.b
+	$(build-bluejay)
+
+$(TOP)/$(IP)/$(MACHINE_TIMER_REGISTERS)/$(SIM)/sim__xyz/%/$(SNAPSHOT).wdb: $(TOP)/$(IP)/$(MACHINE_TIMER_REGISTERS)/$(SIM)/sim__xyz/%/pre_test.timestamp $(TOP)/$(IP)/$(MACHINE_TIMER_REGISTERS)/$(SIM)/sim__xyz/xelab.timestamp
+	$(MKDIR) $(MKDIR__OPTS) $(dir $(@)) 
+	$(CD) $(SIM_DIR) ; $(XSIM) $(SNAPSHOT) --tclbatch $(XSIM__CFG) --wdb $(@)
+
+.PRECIOUS: %/xelab.timestamp
+%/xelab.timestamp: %/xvlog.timestamp
+	$(CD) $(SIM_DIR) ; $(XELAB) -debug all $(XELAB__OPTS) -top $(TB_TOP) -snapshot $(SNAPSHOT) 
+	$(TOUCH) $(@) 
+
+.PRECIOUS: %/xvlog.timestamp
+%/xvlog.timestamp:
+	$(MKDIR) $(MKDIR__OPTS) $(dir $(@)) 
+	$(CD) $(dir $(@)) ; $(XVLOG) $(XVLOG__OPTS) $(SYSTEM_VERILOG__LIST)
+	$(TOUCH) $(@) 
+
+#$(SNAPSHOT_WDB__LIST): $(XELAB__TIMESTAMP)
+#	$(MKDIR) $(MKDIR__OPTS) $(dir $(@)) 
+#	$(CD) $(SIM_DIR) ; $(XSIM) $(SNAPSHOT) --tclbatch $(XSIM__CFG) --wdb $(@)
+#
+#$(SNAPSHOT_WDB__LIST): %/$(SNAPSHOT).wdb : %/pre_test.timestamp 
+#
+#
+#$(XELAB__TIMESTAMP): $(XVLOG__TIMESTAMP)
+#
+#$(XVLOG__TIMESTAMP): $(SYSTEM_VERILOG__LIST)
+#	$(MKDIR) $(MKDIR__OPTS) $(dir $(@)) 
+#	$(CD) $(SIM_DIR) ; $(XVLOG) $(XVLOG__OPTS) $(SYSTEM_VERILOG__LIST)
+#	$(TOUCH) $(@) 
+#
+
+.PRECIOUS: %/pre_test.timestamp
+%/pre_test.timestamp:
+	$(MKDIR) $(MKDIR__OPTS) $(dir $(@)) 
+	$(TOUCH) $(dir $(@))$(notdir $(notdir $(@)))
+	$(TOUCH) $(@) 
+
+
+
+#$(TEST_DIR__LIST):
+#	$(MKDIR) $(MKDIR__OPTS) $(@) 
+#
+
+
+#XELAB_TIMESTAMPS := $(addsuffix /xelab.timestamp,$(TEST_DIRS))
+#XVLOG_TIMESTAMPS := $(addsuffix /xvlog.timestamp,$(TEST_DIRS))
+
+#X := $(subst xelab,xvlog,$(XELAB_TIMESTAMPS))
+#
+#
+#$(SNAPSHOT_WDBS): 
+#	$(TOUCH) $(@) 
+#
+##    $(MKDIR) $(TESTDIR) 
+##    cd $(SIM_DIR) ; xsim $(SNAPSHOT) --tclbatch $(XSIM_CFG) --wdb $(@) ; cd -
+#
+#$(XELAB_TIMESTAMPS): $(subst xelab,xvlog,$%)  
+#	$(TOUCH) $(@) 
+#
+##    cd $(SIM_DIR) ; $(XELAB) -debug all $(ELAB_OPTS) -top $(TB_TOP) -snapshot $(SNAPSHOT) ; cd -
+##    $(TOUCH) $(@) 
+#
+#$(XVLOG_TIMESTAMPS): 
+#	$(TOUCH) $(@) 
+#
+#
+#$(TEST_DIRS): $(SIM_DIR)
+#	$(MKDIR) $(@)
+#
+#$(SIM_DIR):
+#	$(MKDIR) $(@)
+#
+

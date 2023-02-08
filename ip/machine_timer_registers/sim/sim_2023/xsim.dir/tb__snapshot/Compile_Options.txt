@@ -1,1 +1,0 @@
--debug "all" --relax -top "tb" -snapshot "tb__snapshot" 
