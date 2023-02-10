@@ -38,65 +38,96 @@ PYTHON__OPTS :=
 
 SNAPSHOT := snapshot
 
-TXT =
+# set the RISCV_BASE environment to either e or i (default)
+RISCV_BASE := i
+# set the proccessor mode
+RISCV_MODE := m
+XLEN := 64
+MARCH := rv64i
+MABI := lp64
+RISCV_PREFIX   := riscv64-unknown-elf-
+RISCV_GCC      := $(RISCV_PREFIX)gcc
+RISCV_OBJDUMP  := $(RISCV_PREFIX)objdump
+RISCV_GCC_OPTS := -march=$(MARCH) -mabi=$(MABI) -DXLEN=$(XLEN) -static -mcmodel=medany -fvisibility=hidden -nostdlib -nostartfiles $(RVTEST_DEFINES)
 
-all: sim-machine_timer_registers 
+define compile-target
+$(RISCV_GCC) $(RISCV_GCC_OPTS) -I $(TOP)/imperas/imperas-riscv-tests/riscv-test-suite/env -I $(TOP)/imperas/imperas-riscv-tests/riscv-target/riscvOVPsimPlus -T $(TOP)/imperas/imperas-riscv-tests/riscv-target/riscvOVPsimPlus/link.ld $(1) -o $(2)
+endef
+
+
+#all: $(TOP)/ip/lib/src/gen/d_flip_flop.sv 
+#all: $(TOP)/ip/lib/src/gen/sr_flip_flop.sv 
+#all: sim-machine_timer_registers 
+#all: $(TOP)/ip/lib/src/gen/d_flip_flop.sv 
+#all: sim-machine_timer_registers 
+all: ADD-01.elf 
+	echo Done
+
+%.elf: %.S
+	$(call compile-target,$(<),$(@))
+
+
+#sim-machine_timer_registers-test__0:
+#	echo Hi 
 
 ############
 # build-ip #
 ############
+# $(call build-ip,$(IP))
 define build-ip
-$$(TOP)/ip/$$(IP)/src/gen/%.sv: $$(TOP)/ip/$$(IP)/src/%.b $$(TOP)/ip/$$(IP)/src/gen
+$(TOP)/ip/$(1)/src/gen/%.sv: $$(TOP)/ip/$(1)/src/%.b $(TOP)/ip/$(1)/src/gen
 	$(PYTHON) $(PYTHON__OPTS) $(TOP)/tools/bluejay.py $$(<) $$(@)
 
-$$(TOP)/ip/$$(IP)/tb/gen/%.sv: $$(TOP)/ip/$$(IP)/tb/%.b $$(TOP)/ip/$$(IP)/tb/gen
+$(TOP)/ip/$(1)/tb/gen/%.sv: $(TOP)/ip/$(1)/tb/%.b $(TOP)/ip/$(1)/tb/gen
 	$(PYTHON) $(PYTHON__OPTS) $(TOP)/tools/bluejay.py $$(<) $$(@)
 
-$$(TOP)/ip/$$(IP)/src/gen:
+$(TOP)/ip/$(1)/src/gen:
 	$(MKDIR) $(MKDIR__OPTS) $$(@)
 
-$$(TOP)/ip/$$(IP)/tb/gen:
+$(TOP)/ip/$(1)/tb/gen:
 	$(MKDIR) $(MKDIR__OPTS) $$(@)
 endef
 
 ##############
 # build-test #
 ##############
+# $(call build-test,$(IP),$(SIM),$(TEST))
 define build-test
-sim-$$(IP)-$$(TEST): $$(addsuffix /$(SNAPSHOT).wdb,$$(addprefix $$(TOP)/ip/$$(IP)/sim/$$(SIM)/,$$(TEST)))
+sim-$(1)-$(3): $(addsuffix /$(SNAPSHOT).wdb,$(addprefix $(TOP)/ip/$(1)/sim/$(2)/,$(3)))
 
-$$(TOP)/ip/$$(IP)/sim/$$(SIM)/$$(TEST)/$(SNAPSHOT).wdb: $$(TOP)/ip/$$(IP)/sim/$$(SIM)/xelab.timestamp | $$(TOP)/ip/$$(IP)/sim/$$(SIM)/$$(TEST)
-	$(CD) $$(TOP)/ip/$$(IP)/sim/$$(SIM); $(XSIM) $(SNAPSHOT) --tclbatch $(XSIM__CFG) --wdb $$(@)
+$(TOP)/ip/$(1)/sim/$(2)/$(3)/$(SNAPSHOT).wdb: $(TOP)/ip/$(1)/sim/$(2)/xelab.timestamp | $(TOP)/ip/$(1)/sim/$(2)/$(3)
+	cd $(TOP)/ip/$(1)/sim/$(2); $(XSIM) $(SNAPSHOT) --tclbatch $(XSIM__CFG) --wdb $$(@)
 
-$$(TOP)/ip/$$(IP)/sim/$$(SIM)/$$(TEST):
+$(TOP)/ip/$(1)/sim/$(2)/$(3):
 	$(MKDIR) $(MKDIR__OPTS) $$(@)
 endef
 
 #############
 # build-sim #
 #############
+# $(call build-sim,$(IP),$(SIM),$(TESTS),$(SV))
 define build-sim
-#sim-$$(IP): $$(addsuffix /$(SNAPSHOT).wdb,$$(addprefix $$(TOP)/ip/$$(IP)/sim/$$(SIM)/,$$(TESTS)))
-sim-$$(IP): $$(addprefix sim-$$(IP)-,$$(TESTS))
+sim-$(1): $(addprefix sim-$(1)-,$(3))
 
-$$(TOP)/ip/$$(IP)/sim/$$(SIM)/xelab.timestamp: $$(TOP)/ip/$$(IP)/sim/$$(SIM)/xvlog.timestamp
-	$(CD) $$(TOP)/ip/$$(IP)/sim/$$(SIM) ; $(XELAB) -debug all $(XELAB__OPTS) -top tb -snapshot $(SNAPSHOT) 
+$(TOP)/ip/$(1)/sim/$(2)/xelab.timestamp: $(TOP)/ip/$(1)/sim/$(2)/xvlog.timestamp
+	cd $(TOP)/ip/$(1)/sim/$(2) ; $(XELAB) -debug all $(XELAB__OPTS) -top tb -snapshot $(SNAPSHOT) 
 	$(TOUCH) $$(@)
 
-$$(TOP)/ip/$$(IP)/sim/$$(SIM)/xvlog.timestamp: $$(SV) |$$(TOP)/ip/$$(IP)/sim/$$(SIM)
-	$(CD) $$(TOP)/ip/$$(IP)/sim/$$(SIM) ; $(XVLOG) $(XVLOG__OPTS) $$(SV)
+$(TOP)/ip/$(1)/sim/$(2)/xvlog.timestamp: $(4) | $(TOP)/ip/$(1)/sim/$(2)
+	cd $(TOP)/ip/$(1)/sim/$(2) ; $(XVLOG) $(XVLOG__OPTS) $(4)
 	$(TOUCH) $$(@)
 
-$$(TOP)/ip/$$(IP)/sim/$$(SIM): 
+$(TOP)/ip/$(1)/sim/$(2): 
 	$(MKDIR) $(MKDIR__OPTS) $$(@)
 endef
 
 #############
 # make-test #
 #############
+# $(call make-test,$(IP),$(SIM),$(TESTS),$(SV))
 define make-test
-$(foreach TEST,$(TESTS),$(eval $(call build-test)))
-$(eval $(call build-sim))
+$(foreach _,$(3),$(eval $(call build-test,$(1),$(2),$(_))))
+$(eval $(call build-sim,$(1),$(2),$(3),$(4)))
 endef
 
 SV :=
@@ -116,6 +147,25 @@ TB_MODULES += tb
 SV += $(addsuffix .sv,$(addprefix $(TOP)/ip/$(IP)/src/gen/,$(MODULES)))
 #SV += $(addsuffix .sv,$(addprefix $(TOP)/ip/$(IP)/tb/gen/,$(TB_MODULES)))
 
+###########################
+# machine_timer_registers #
+###########################
+IP := central_processing_unit
+
+MODULES :=
+MODULES += central_processing_unit
+MODULES += arithmetic_logic_unit
+MODULES += register_file
+MODULES += comparator
+MODULES += decoder
+MODULES += control_and_status_registers
+
+TB_MODULES :=
+TB_MODULES += central_processing_unit__tb
+TB_MODULES += memory
+
+SV += $(addsuffix .sv,$(addprefix $(TOP)/ip/$(IP)/src/gen/,$(MODULES)))
+SV += $(addsuffix .sv,$(addprefix $(TOP)/ip/$(IP)/tb/gen/,$(TB_MODULES)))
 
 ###########################
 # machine_timer_registers #
@@ -151,8 +201,8 @@ IP := lib
 SIM := sim__xyz
 TESTS := test__a test__b test__c test__d
 
-$(eval $(call build-ip))
-$(eval $(call make-test))
+$(eval $(call build-ip,$(IP)))
+#$(eval $(call make-test,$(IP),$(SIM),$(TESTS),$(SV)))
 
 
 ###########################
@@ -163,10 +213,21 @@ IP := machine_timer_registers
 SIM := sim__xyz
 TESTS := test__0 test__1 test__2 test__3
 
-$(eval $(call build-ip))
-$(eval $(call make-test))
+$(eval $(call build-ip,$(IP)))
+$(eval $(call make-test,$(IP),$(SIM),$(TESTS),$(SV)))
 
-TXT += $(addsuffix /$(SNAPSHOT).wdb,$(addprefix $(TOP)/ip/$(IP)/sim/$(SIM)/,$(TESTS)))
+
+###########################
+# central_processing_unit #
+###########################
+IP := central_processing_unit
+
+SIM := sim__xyz
+TESTS := add-01 
+
+$(eval $(call build-ip,$(IP)))
+#$(eval $(call make-test,$(IP),$(SIM),$(TESTS),$(SV)))
+
 
 
 #

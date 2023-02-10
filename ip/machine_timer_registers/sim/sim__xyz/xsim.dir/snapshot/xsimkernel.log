@@ -1,4 +1,4 @@
-Running: xsim.dir/snapshot/xsimk -wdb /home/seankent/bluejay/ip/machine_timer_registers/sim/sim__xyz/test__3/snapshot.wdb -simmode gui -simrunnum 0 -socket 49051
+Running: xsim.dir/snapshot/xsimk -wdb /home/seankent/bluejay/ip/machine_timer_registers/sim/sim__xyz/test__1/snapshot.wdb -simmode gui -simrunnum 0 -socket 35429
 Design successfully loaded
 Design Loading Memory Usage: 33124 KB (Peak: 33696 KB)
 Design Loading CPU Usage: 0 ms
