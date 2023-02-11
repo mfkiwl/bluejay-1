@@ -59,8 +59,10 @@ endef
 #all: $(TOP)/ip/lib/src/gen/sr_flip_flop.sv 
 #all: sim-machine_timer_registers 
 #all: $(TOP)/ip/lib/src/gen/d_flip_flop.sv 
+#all: ADD-01.elf 
 #all: sim-machine_timer_registers 
-all: ADD-01.elf 
+#all: sim-machine_timer_registers 
+all: sim-central_processing_unit
 	echo Done
 
 %.elf: %.S
@@ -91,15 +93,31 @@ endef
 ##############
 # build-test #
 ##############
-# $(call build-test,$(IP),$(SIM),$(TEST))
+# $(call build-test,$(IP),$(SIM),$(TEST),func)
 define build-test
-sim-$(1)-$(3): $(addsuffix /$(SNAPSHOT).wdb,$(addprefix $(TOP)/ip/$(1)/sim/$(2)/,$(3)))
+sim-$(1)-$(3): $(addsuffix /$(SNAPSHOT).wdb,$(addprefix $(TOP)/ip/$(1)/sim/gen/$(2)/,$(3)))
 
-$(TOP)/ip/$(1)/sim/$(2)/$(3)/$(SNAPSHOT).wdb: $(TOP)/ip/$(1)/sim/$(2)/xelab.timestamp | $(TOP)/ip/$(1)/sim/$(2)/$(3)
-	cd $(TOP)/ip/$(1)/sim/$(2); $(XSIM) $(SNAPSHOT) --tclbatch $(XSIM__CFG) --wdb $$(@)
+$(TOP)/ip/$(1)/sim/gen/$(2)/$(3)/$(SNAPSHOT).wdb: $(TOP)/ip/$(1)/sim/gen/$(2)/xelab.timestamp $(TOP)/ip/$(1)/sim/gen/$(2)/$(3)/setup.timestamp | $(TOP)/ip/$(1)/sim/gen/$(2)/$(3) 
+	cd $(TOP)/ip/$(1)/sim/gen/$(2) ; $(XSIM) $(SNAPSHOT) --tclbatch $(XSIM__CFG) --wdb $$(@)
 
-$(TOP)/ip/$(1)/sim/$(2)/$(3):
+$(TOP)/ip/$(1)/sim/gen/$(2)/$(3):
 	$(MKDIR) $(MKDIR__OPTS) $$(@)
+
+$(eval $(call $(4),$(1),$(2),$(3)))
+     
+endef
+
+define default-build-test-addition
+$(TOP)/ip/$(1)/sim/gen/$(2)/$(3)/setup.timestamp:
+	$(TOUCH) $$(@)
+endef
+
+define cpu-build-test-addition
+$(TOP)/ip/$(1)/sim/gen/$(2)/$(3)/setup.timestamp: $(TOP)/ip/$(1)/sim/gen/$(2)/$(3)/$(3).elf
+	$(TOUCH) $$(@)
+
+$(TOP)/ip/$(1)/sim/gen/$(2)/$(3)/$(3).elf:
+	$(TOUCH) $$(@)
 endef
 
 #############
@@ -109,24 +127,24 @@ endef
 define build-sim
 sim-$(1): $(addprefix sim-$(1)-,$(3))
 
-$(TOP)/ip/$(1)/sim/$(2)/xelab.timestamp: $(TOP)/ip/$(1)/sim/$(2)/xvlog.timestamp
-	cd $(TOP)/ip/$(1)/sim/$(2) ; $(XELAB) -debug all $(XELAB__OPTS) -top tb -snapshot $(SNAPSHOT) 
+$(TOP)/ip/$(1)/sim/gen/$(2)/xelab.timestamp: $(TOP)/ip/$(1)/sim/gen/$(2)/xvlog.timestamp
+	cd $(TOP)/ip/$(1)/sim/gen/$(2) ; $(XELAB) -debug all $(XELAB__OPTS) -top tb -snapshot $(SNAPSHOT) 
 	$(TOUCH) $$(@)
 
-$(TOP)/ip/$(1)/sim/$(2)/xvlog.timestamp: $(4) | $(TOP)/ip/$(1)/sim/$(2)
-	cd $(TOP)/ip/$(1)/sim/$(2) ; $(XVLOG) $(XVLOG__OPTS) $(4)
+$(TOP)/ip/$(1)/sim/gen/$(2)/xvlog.timestamp: $(4) | $(TOP)/ip/$(1)/sim/gen/$(2)
+	cd $(TOP)/ip/$(1)/sim/gen/$(2) ; $(XVLOG) $(XVLOG__OPTS) $(4)
 	$(TOUCH) $$(@)
 
-$(TOP)/ip/$(1)/sim/$(2): 
+$(TOP)/ip/$(1)/sim/gen/$(2): 
 	$(MKDIR) $(MKDIR__OPTS) $$(@)
 endef
 
 #############
 # make-test #
 #############
-# $(call make-test,$(IP),$(SIM),$(TESTS),$(SV))
+# $(call make-test,$(IP),$(SIM),$(TESTS),$(SV),func)
 define make-test
-$(foreach _,$(3),$(eval $(call build-test,$(1),$(2),$(_))))
+$(foreach _,$(3),$(eval $(call build-test,$(1),$(2),$(_),$(5))))
 $(eval $(call build-sim,$(1),$(2),$(3),$(4)))
 endef
 
@@ -161,7 +179,7 @@ MODULES += decoder
 MODULES += control_and_status_registers
 
 TB_MODULES :=
-TB_MODULES += central_processing_unit__tb
+TB_MODULES += tb 
 TB_MODULES += memory
 
 SV += $(addsuffix .sv,$(addprefix $(TOP)/ip/$(IP)/src/gen/,$(MODULES)))
@@ -214,7 +232,7 @@ SIM := sim__xyz
 TESTS := test__0 test__1 test__2 test__3
 
 $(eval $(call build-ip,$(IP)))
-$(eval $(call make-test,$(IP),$(SIM),$(TESTS),$(SV)))
+$(eval $(call make-test,$(IP),$(SIM),$(TESTS),$(SV),default-build-test-addition))
 
 
 ###########################
@@ -223,10 +241,10 @@ $(eval $(call make-test,$(IP),$(SIM),$(TESTS),$(SV)))
 IP := central_processing_unit
 
 SIM := sim__xyz
-TESTS := add-01 
+TESTS := ADD-01
 
 $(eval $(call build-ip,$(IP)))
-#$(eval $(call make-test,$(IP),$(SIM),$(TESTS),$(SV)))
+$(eval $(call make-test,$(IP),$(SIM),$(TESTS),$(SV),cpu-build-test-addition))
 
 
 
