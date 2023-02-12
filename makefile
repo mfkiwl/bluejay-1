@@ -1,39 +1,28 @@
 TOP := /home/seankent/bluejay
 
 # shell commands
-MKDIR := mkdir
-MKDIR__OPTS := -p
-
-RM := rm
-RM__OPTS := -rf
-
+MKDIR := mkdir -p
+RM := rm -rf
 TOUCH := touch
-TOUCH__OPTS :=
-
 AWK := awk
-AWK__OPTS :=
-
 CHMOD := chmod
-CHMOD__OPTS :=
-
 CP := cp
-CP__OPTS :=
-
 CD := cd
-CD__OPTS :=
 
+# programs
+PYTHON := python3
 XVLOG := xvlog
-XVLOG__OPTS := --sv --incr --relax
-
 XELAB := xelab
-XELAB__OPTS := -relax
-
 XSIM := xsim
+
+
+XELAB__OPTS := -relax
 XSIM__OPTS :=
 XSIM__CFG := $(TOP)/tcl/xsim_cfg.tcl
+XVLOG__OPTS := --sv --incr --relax
 
-PYTHON := python3
-PYTHON__OPTS :=
+
+
 
 
 SNAPSHOT := snapshot
@@ -90,36 +79,80 @@ all: diff-central_processing_unit
 #sim-machine_timer_registers-test__0:
 #	echo Hi 
 
+
 ############
 # build-ip #
 ############
 # $(call build-ip,$(IP))
-define build-ip
-$(TOP)/ip/$(1)/src/gen/%.sv: $$(TOP)/ip/$(1)/src/%.b $(TOP)/ip/$(1)/src/gen
-	$(PYTHON) $(PYTHON__OPTS) $(TOP)/tools/bluejay.py $$(<) $$(@)
 
-$(TOP)/ip/$(1)/tb/gen/%.sv: $(TOP)/ip/$(1)/tb/%.b $(TOP)/ip/$(1)/tb/gen
-	$(PYTHON) $(PYTHON__OPTS) $(TOP)/tools/bluejay.py $$(<) $$(@)
+#####################
+# ip--src--template #
+#####################
+################################################
+# ip--src--template                                                
+#
+# $(1): ip
+################################################
+define ip--src--template
+$(TOP)/ip/$(1)/src/gen/%.sv: $$(TOP)/ip/$(1)/src/%.b $(TOP)/ip/$(1)/src/gen
+	$(PYTHON) $(TOP)/tools/bluejay.py $$(<) $$(@)
 
 $(TOP)/ip/$(1)/src/gen:
-	$(MKDIR) $(MKDIR__OPTS) $$(@)
+	$(MKDIR) $$(@)
+endef
+
+################################################
+# ip--tb--template                                                
+#
+# $(1): ip name
+################################################
+define ip--tb--template
+$(TOP)/ip/$(1)/tb/gen/%.sv: $(TOP)/ip/$(1)/tb/%.b $(TOP)/ip/$(1)/tb/gen
+	$(PYTHON) $(TOP)/tools/bluejay.py $$(<) $$(@)
 
 $(TOP)/ip/$(1)/tb/gen:
-	$(MKDIR) $(MKDIR__OPTS) $$(@)
+	$(MKDIR) $$(@)
 endef
+
+
+
+define build-ip 
+$(eval $(call ip--src--template,$(1)))
+$(eval $(call ip--tb--template,$(1)))
+endef
+
 
 ##############
 # build-test #
 ##############
 # $(call build-test,$(IP),$(SIM),$(TEST),func)
+
+################################################
+# ip--test--template                                                
+#
+# $(1): ip name
+# $(2): sim directory 
+# $(3): test name 
+################################################
+define ip--test--template 
+$(1)-$(2)-$(3)-sim: $(TOP)/ip/$(1)/sim/gen/$(2)/$(3)/sim.timestamp
+$(1)-$(2)-$(3)-diff: $(TOP)/ip/$(1)/sim/gen/$(2)/$(3)/diff.timestamp
+$(1)-$(2)-$(3)-ref: $(TOP)/ip/$(1)/sim/gen/$(2)/$(3)/ref.timestamp
+$(1)-$(2)-$(3)-setup: $(TOP)/ip/$(1)/sim/gen/$(2)/$(3)/setup.timestamp
+
+setup-$(1)-$(3): $(TOP)/ip/$(1)/sim/gen/$(2)/$(3)/setup.timestamp
+
+endef
+
+
 define build-test
 sim-$(1)-$(3): $(addsuffix /$(SNAPSHOT).wdb,$(addprefix $(TOP)/ip/$(1)/sim/gen/$(2)/,$(3)))
 
 $(TOP)/ip/$(1)/sim/gen/$(2)/$(3)/$(SNAPSHOT).wdb: $(TOP)/ip/$(1)/sim/gen/$(2)/xelab.timestamp $(TOP)/ip/$(1)/sim/gen/$(2)/$(3)/setup.timestamp | $(TOP)/ip/$(1)/sim/gen/$(2)/$(3) 
-	cd $(TOP)/ip/$(1)/sim/gen/$(2) ; $(XSIM) $(SNAPSHOT) --tclbatch $(XSIM__CFG) --wdb $$(@) $(call $(5),$(1),$(2),$(3))
+	$(CD) $(TOP)/ip/$(1)/sim/gen/$(2) ; $(XSIM) $(SNAPSHOT) --tclbatch $(XSIM__CFG) --wdb $$(@) $(call $(5),$(1),$(2),$(3))
 
 $(TOP)/ip/$(1)/sim/gen/$(2)/$(3):
-	$(MKDIR) $(MKDIR__OPTS) $$(@)
+	$(MKDIR) $$(@)
 
 $(eval $(call $(4),$(1),$(2),$(3)))
      
@@ -201,15 +234,15 @@ diff-$(1): $(addprefix diff-$(1)-,$(3))
 
 $(TOP)/ip/$(1)/sim/gen/$(2)/xelab.timestamp: $(TOP)/ip/$(1)/sim/gen/$(2)/xvlog.timestamp
 	echo $(4) 
-	cd $(TOP)/ip/$(1)/sim/gen/$(2) ; $(XELAB) -debug all $(XELAB__OPTS) -top tb -snapshot $(SNAPSHOT) 
+	$(CD) $(TOP)/ip/$(1)/sim/gen/$(2) ; $(XELAB) -debug all $(XELAB__OPTS) -top tb -snapshot $(SNAPSHOT) 
 	$(TOUCH) $$(@)
 
 $(TOP)/ip/$(1)/sim/gen/$(2)/xvlog.timestamp: $(4) | $(TOP)/ip/$(1)/sim/gen/$(2)
-	cd $(TOP)/ip/$(1)/sim/gen/$(2) ; $(XVLOG) $(XVLOG__OPTS) $(4)
+	$(CD) $(TOP)/ip/$(1)/sim/gen/$(2) ; $(XVLOG) $(XVLOG__OPTS) $(4)
 	$(TOUCH) $$(@)
 
 $(TOP)/ip/$(1)/sim/gen/$(2): 
-	$(MKDIR) $(MKDIR__OPTS) $$(@)
+	$(MKDIR) $$(@)
 endef
 
 #############
@@ -328,4 +361,4 @@ $(eval $(call make-test,$(IP),$(SIM),$(TESTS),$(SV),cpu-build-test-addition,cpu-
 
 .PHONY: clean
 clean:
-	echo Done
+	$(RM) $(shell find $(TOP)/ip/* -name 'gen') 
