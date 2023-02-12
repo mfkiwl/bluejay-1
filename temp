@@ -1,3 +1,11 @@
+riscv64-unknown-elf-gcc -march=rv64i -mabi=lp64 -DXLEN=64 -static -mcmodel=medany -fvisibility=hidden -nostdlib -nostartfiles  -I /home/seankent/bluejay/imperas/imperas-riscv-tests/riscv-test-suite/env -I /home/seankent/bluejay/imperas/imperas-riscv-tests/riscv-target/riscvOVPsimPlus -T /home/seankent/bluejay/imperas/imperas-riscv-tests/riscv-target/riscvOVPsimPlus/link.ld /home/seankent/bluejay/ip/central_processing_unit/sim/ADD-01/ADD-01.S -o /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01/ADD-01.elf
+riscv64-unknown-elf-objcopy /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01/ADD-01.elf -O binary /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01/ADD-01.bin
+od -t x1 -An -w1 -v /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01/ADD-01.bin > /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01/ADD-01.mem
+riscv64-unknown-elf-objdump -Mnumeric,no-aliases -dr /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01/ADD-01.elf > /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01/ADD-01.lst
+python3 /home/seankent/bluejay/tools/get_symbol_addr.py /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01/ADD-01.elf
+touch /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01/setup.timestamp
+cd /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz ; xsim snapshot --tclbatch /home/seankent/bluejay/tcl/xsim_cfg.tcl --wdb /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01/snapshot.wdb -testplusarg filename__mem=/home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01/ADD-01.mem -testplusarg filename__sig=/home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01/ADD-01.signature -testplusarg begin_signature=
+echo Done
 # GNU Make 4.3
 # Built for x86_64-pc-linux-gnu
 # Copyright (C) 1988-2020 Free Software Foundation, Inc.
@@ -5,7 +13,7 @@
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Thu Feb  9 16:50:57 2023
+# Make data base, printed on Sat Feb 11 17:52:19 2023
 
 # Variables
 
@@ -25,6 +33,8 @@ SSH_AGENT_LAUNCHER = gnome-keyring
 AR = ar
 # environment
 XILINX_VIVADO = /tools/Xilinx/Vivado/2019.2
+# makefile (from 'makefile', line 48)
+RISCV_PREFIX := riscv64-unknown-elf-
 # makefile (from 'makefile', line 11)
 TOUCH__OPTS := 
 # default
@@ -33,8 +43,12 @@ OBJC = cc
 PYTHON := python3
 # default
 LINK.S = $(CC) $(ASFLAGS) $(CPPFLAGS) $(LDFLAGS) $(TARGET_MACH)
+# makefile (from 'makefile', line 44)
+RISCV_MODE := m
 # default
 LINK.s = $(CC) $(ASFLAGS) $(LDFLAGS) $(TARGET_MACH)
+# makefile (from 'makefile', line 45)
+XLEN := 64
 # default
 MAKE_COMMAND := make
 # environment
@@ -51,15 +65,18 @@ COMPILE.mod = $(M2C) $(M2FLAGS) $(MODFLAGS) $(TARGET_ARCH)
 PWD = /home/seankent/bluejay
 # automatic
 %D = $(patsubst %/,%,$(dir $%))
-# makefile (from 'makefile', line 74)
+# makefile (from 'makefile', line 97)
 define build-test
-sim-$(1)-$(2): $(addsuffix /$(SNAPSHOT).wdb,$(addprefix $(TOP)/ip/$(1)/sim/$(2)/,$(3)))
+sim-$(1)-$(3): $(addsuffix /$(SNAPSHOT).wdb,$(addprefix $(TOP)/ip/$(1)/sim/gen/$(2)/,$(3)))
 
-$(TOP)/ip/$(1)/sim/$(2)/$(3)/$(SNAPSHOT).wdb: $(TOP)/ip/$(1)/sim/$(2)/xelab.timestamp | $(TOP)/ip/$(1)/sim/$(2)/$(3)
-	cd $(TOP)/ip/$(1)/sim/$(2); $(XSIM) $(SNAPSHOT) --tclbatch $(XSIM__CFG) --wdb $$(@)
+$(TOP)/ip/$(1)/sim/gen/$(2)/$(3)/$(SNAPSHOT).wdb: $(TOP)/ip/$(1)/sim/gen/$(2)/xelab.timestamp $(TOP)/ip/$(1)/sim/gen/$(2)/$(3)/setup.timestamp | $(TOP)/ip/$(1)/sim/gen/$(2)/$(3) 
+	cd $(TOP)/ip/$(1)/sim/gen/$(2) ; $(XSIM) $(SNAPSHOT) --tclbatch $(XSIM__CFG) --wdb $$(@) $(call $(5),$(1),$(2),$(3))
 
-$(TOP)/ip/$(1)/sim/$(2)/$(3):
+$(TOP)/ip/$(1)/sim/gen/$(2)/$(3):
 	$(MKDIR) $(MKDIR__OPTS) $$(@)
+
+$(eval $(call $(4),$(1),$(2),$(3)))
+     
 endef
 # makefile (from 'makefile', line 23)
 CD__OPTS := 
@@ -70,7 +87,7 @@ LINK.o = $(CC) $(LDFLAGS) $(TARGET_ARCH)
 # makefile (from 'makefile', line 32)
 XSIM__OPTS := 
 # environment
-OLDPWD = /home/seankent/bluejay/sim
+OLDPWD = /home/seankent
 # default
 TEXI2DVI = texi2dvi
 # automatic
@@ -82,11 +99,13 @@ LEX.l = $(LEX) $(LFLAGS) -t
 # environment
 LANG = en_US.UTF-8
 # environment
-XAUTHORITY = /run/user/1000/.mutter-Xwaylandauth.XRC0Z1
+XAUTHORITY = /run/user/1000/.mutter-Xwaylandauth.8NRF01
 # default
 .LOADED := 
 # default
 .INCLUDE_DIRS = /usr/local/include /usr/include /usr/include
+# makefile (from 'makefile', line 50)
+RISCV_OBJDUMP := riscv64-unknown-elf-objdump
 # default
 COMPILE.c = $(CC) $(CFLAGS) $(CPPFLAGS) $(TARGET_ARCH) -c
 # environment
@@ -95,8 +114,8 @@ GNOME_TERMINAL_SERVICE = :1.104
 MAKEFLAGS = npr
 # default
 LINK.f = $(FC) $(FFLAGS) $(LDFLAGS) $(TARGET_ARCH)
-# makefile (from 'makefile', line 161)
-SV := /home/seankent/bluejay/ip/lib/src/gen/d_flip_flop.sv /home/seankent/bluejay/ip/lib/src/gen/sr_flip_flop.sv /home/seankent/bluejay/ip/central_processing_unit/src/gen/central_processing_unit.sv /home/seankent/bluejay/ip/central_processing_unit/src/gen/arithmetic_logic_unit.sv /home/seankent/bluejay/ip/central_processing_unit/src/gen/register_file.sv /home/seankent/bluejay/ip/central_processing_unit/src/gen/comparator.sv /home/seankent/bluejay/ip/central_processing_unit/src/gen/decoder.sv /home/seankent/bluejay/ip/central_processing_unit/src/gen/control_and_status_registers.sv /home/seankent/bluejay/ip/central_processing_unit/tb/gen/central_processing_unit__tb.sv /home/seankent/bluejay/ip/central_processing_unit/tb/gen/memory.sv /home/seankent/bluejay/ip/machine_timer_registers/src/gen/machine_timer_registers.sv /home/seankent/bluejay/ip/machine_timer_registers/tb/gen/tb.sv
+# makefile (from 'makefile', line 225)
+SV := /home/seankent/bluejay/ip/lib/src/gen/d_flip_flop.sv /home/seankent/bluejay/ip/lib/src/gen/sr_flip_flop.sv /home/seankent/bluejay/ip/central_processing_unit/src/gen/central_processing_unit.sv /home/seankent/bluejay/ip/central_processing_unit/src/gen/arithmetic_logic_unit.sv /home/seankent/bluejay/ip/central_processing_unit/src/gen/register_file.sv /home/seankent/bluejay/ip/central_processing_unit/src/gen/comparator.sv /home/seankent/bluejay/ip/central_processing_unit/src/gen/decoder.sv /home/seankent/bluejay/ip/central_processing_unit/src/gen/control_and_status_registers.sv /home/seankent/bluejay/ip/central_processing_unit/tb/gen/tb.sv /home/seankent/bluejay/ip/central_processing_unit/tb/gen/memory.sv /home/seankent/bluejay/ip/machine_timer_registers/src/gen/machine_timer_registers.sv /home/seankent/bluejay/ip/machine_timer_registers/tb/gen/tb.sv
 # default
 TANGLE = tangle
 # makefile
@@ -105,10 +124,14 @@ CURDIR := /home/seankent/bluejay
 PREPROCESS.F = $(FC) $(FFLAGS) $(CPPFLAGS) $(TARGET_ARCH) -F
 # environment
 LESSOPEN = | /usr/bin/lesspipe %s
+# makefile (from 'makefile', line 137)
+default-xsim-testplusargs = 
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
-# makefile (from 'makefile', line 155)
+# makefile (from 'makefile', line 219)
 MODULES := machine_timer_registers
+# makefile (from 'makefile', line 42)
+RISCV_BASE := i
 # environment
 MFLAGS = -npr
 # environment
@@ -148,7 +171,7 @@ CTANGLE = ctangle
 # makefile (from 'makefile', line 19)
 CP := cp
 # environment
-SESSION_MANAGER = local/seankent:@/tmp/.ICE-unix/1915,unix/seankent:/tmp/.ICE-unix/1915
+SESSION_MANAGER = local/seankent:@/tmp/.ICE-unix/1958,unix/seankent:/tmp/.ICE-unix/1958
 # automatic
 *F = $(notdir $*)
 # makefile (from 'makefile', line 13)
@@ -161,6 +184,8 @@ DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/1000/bus
 COMPILE.C = $(COMPILE.cc)
 # makefile (from 'makefile', line 26)
 XVLOG__OPTS := --sv --incr --relax
+# makefile (from 'makefile', line 144)
+cpu-xsim-testplusargs = -testplusarg filename__mem=$(TOP)/ip/$(1)/sim/gen/$(2)/$(3)/$(3).mem -testplusarg filename__sig=$(TOP)/ip/$(1)/sim/gen/$(2)/$(3)/$(3).signature -testplusarg begin_signature=$(shell sed -n '1p' $(TOP)/ip/$(1)/sim/gen/$(2)/$(3)/begin_signature.sig)
 # default
 YACC.m = $(YACC) $(YFLAGS)
 # makefile (from 'makefile', line 8)
@@ -179,16 +204,39 @@ GNOME_DESKTOP_SESSION_ID = this-is-deprecated
 SHELL = /bin/sh
 # environment
 XMODIFIERS = @im=ibus
+# makefile (from 'makefile', line 51)
+RISCV_GCC_OPTS := -march=rv64i -mabi=lp64 -DXLEN=64 -static -mcmodel=medany -fvisibility=hidden -nostdlib -nostartfiles 
 # default
 LINK.F = $(FC) $(FFLAGS) $(CPPFLAGS) $(LDFLAGS) $(TARGET_ARCH)
 # environment
 SHLVL = 1
 # environment
-GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/e27696aa_5ba0_45f4_b296_bbd338541bde
-# makefile (from 'makefile', line 204)
+GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/f88d66e6_9755_41ec_99fb_d137033737fc
+# makefile (from 'makefile', line 268)
 SIM := sim__xyz
 # environment
 MAKELEVEL := 0
+# makefile (from 'makefile', line 115)
+define cpu-build-test-addition
+$(TOP)/ip/$(1)/sim/gen/$(2)/$(3)/setup.timestamp: $(TOP)/ip/$(1)/sim/gen/$(2)/$(3)/$(3).elf $(TOP)/ip/$(1)/sim/gen/$(2)/$(3)/$(3).mem $(TOP)/ip/$(1)/sim/gen/$(2)/$(3)/$(3).lst $(TOP)/ip/$(1)/sim/gen/$(2)/$(3)/begin_signature.sig
+	$(TOUCH) $$(@)
+
+$(TOP)/ip/$(1)/sim/gen/$(2)/$(3)/%.sig: $(TOP)/ip/$(1)/sim/gen/$(2)/$(3)/$(3).elf
+	$(PYTHON) $(TOP)/tools/get_symbol_addr.py $$(<)
+
+
+$(TOP)/ip/$(1)/sim/gen/$(2)/$(3)/$(3).mem: $(TOP)/ip/$(1)/sim/gen/$(2)/$(3)/$(3).bin
+	od -t x1 -An -w1 -v $$(<) > $$(@)
+
+$(TOP)/ip/$(1)/sim/gen/$(2)/$(3)/$(3).bin: $(TOP)/ip/$(1)/sim/gen/$(2)/$(3)/$(3).elf
+	riscv64-unknown-elf-objcopy $$(<) -O binary $$(@)
+
+$(TOP)/ip/$(1)/sim/gen/$(2)/$(3)/$(3).lst: $(TOP)/ip/$(1)/sim/gen/$(2)/$(3)/$(3).elf
+	riscv64-unknown-elf-objdump -Mnumeric,no-aliases -dr $$(<) > $$(@)
+
+$(TOP)/ip/$(1)/sim/gen/$(2)/$(3)/$(3).elf: $(TOP)/ip/$(1)/sim/$(3)/$(3).S
+	$(call compile-target,$$(<),$$(@))
+endef
 # makefile (from 'makefile', line 4)
 MKDIR := mkdir
 # default
@@ -199,6 +247,8 @@ FC = f77
 PATH = /tools/Xilinx/Vivado/2019.2/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/opt/riscv/bin:/opt/riscv/riscv64-unknown-elf/bin
 # default
 LINT = lint
+# makefile (from 'makefile', line 47)
+MABI := lp64
 # default
 PC = pc
 # default
@@ -207,34 +257,38 @@ MAKEFILES :=
 SNAPSHOT := snapshot
 # automatic
 ^F = $(notdir $^)
-# makefile (from 'makefile', line 88)
+# makefile (from 'makefile', line 152)
 define build-sim
 sim-$(1): $(addprefix sim-$(1)-,$(3))
 
-$(TOP)/ip/$(1)/sim/$(2)/xelab.timestamp: $(TOP)/ip/$(1)/sim/$(2)/xvlog.timestamp
-	cd $(TOP)/ip/$(1)/sim/$(2) ; $(XELAB) -debug all $(XELAB__OPTS) -top tb -snapshot $(SNAPSHOT) 
+$(TOP)/ip/$(1)/sim/gen/$(2)/xelab.timestamp: $(TOP)/ip/$(1)/sim/gen/$(2)/xvlog.timestamp
+	cd $(TOP)/ip/$(1)/sim/gen/$(2) ; $(XELAB) -debug all $(XELAB__OPTS) -top tb -snapshot $(SNAPSHOT) 
 	$(TOUCH) $$(@)
 
-$(TOP)/ip/$(1)/sim/$(2)/xvlog.timestamp: $(4) | $(TOP)/ip/$(1)/sim/$(2)
-	cd $(TOP)/ip/$(1)/sim/$(2) ; $(XVLOG) $(XVLOG__OPTS) $(4)
+$(TOP)/ip/$(1)/sim/gen/$(2)/xvlog.timestamp: $(4) | $(TOP)/ip/$(1)/sim/gen/$(2)
+	cd $(TOP)/ip/$(1)/sim/gen/$(2) ; $(XVLOG) $(XVLOG__OPTS) $(4)
 	$(TOUCH) $$(@)
 
-$(TOP)/ip/$(1)/sim/$(2): 
+$(TOP)/ip/$(1)/sim/gen/$(2): 
 	$(MKDIR) $(MKDIR__OPTS) $$(@)
 endef
 # default
 LEX.m = $(LEX) $(LFLAGS) -t
 # default
 .LIBPATTERNS = lib%.so lib%.a
+# makefile (from 'makefile', line 53)
+compile-target = $(RISCV_GCC) $(RISCV_GCC_OPTS) -I $(TOP)/imperas/imperas-riscv-tests/riscv-test-suite/env -I $(TOP)/imperas/imperas-riscv-tests/riscv-target/riscvOVPsimPlus -T $(TOP)/imperas/imperas-riscv-tests/riscv-target/riscvOVPsimPlus/link.ld $(1) -o $(2)
+# makefile (from 'makefile', line 46)
+MARCH := rv64i
 # environment
 RISCV = /opt/riscv/
 # default
 CPP = $(CC) -E
 # default
 LINK.cc = $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(LDFLAGS) $(TARGET_ARCH)
-# makefile (from 'makefile', line 107)
+# makefile (from 'makefile', line 171)
 define make-test
-$(foreach _,$(3),$(eval $(call build-test,$(1),$(2),$(_))))
+$(foreach _,$(3),$(eval $(call build-test,$(1),$(2),$(_),$(5),$(6))))
 $(eval $(call build-sim,$(1),$(2),$(3),$(4)))
 endef
 # environment
@@ -249,12 +303,19 @@ COMPILE.f = $(FC) $(FFLAGS) $(TARGET_ARCH) -c
 COMPILE.r = $(FC) $(FFLAGS) $(RFLAGS) $(TARGET_ARCH) -c
 # environment
 GNOME_SETUP_DISPLAY = :1
+# makefile (from 'makefile', line 49)
+RISCV_GCC := riscv64-unknown-elf-gcc
 # environment
 LESSCLOSE = /usr/bin/lesspipe %s %s
 # default
 COMPILE.S = $(CC) $(ASFLAGS) $(CPPFLAGS) $(TARGET_MACH) -c
 # automatic
 ?F = $(notdir $?)
+# makefile (from 'makefile', line 110)
+define default-build-test-addition
+$(TOP)/ip/$(1)/sim/gen/$(2)/$(3)/setup.timestamp:
+	$(TOUCH) $$(@)
+endef
 # default
 GET = get
 # default
@@ -285,12 +346,12 @@ LINK.p = $(PC) $(PFLAGS) $(CPPFLAGS) $(LDFLAGS) $(TARGET_ARCH)
 YACC = yacc
 # makefile (from 'makefile', line 28)
 XELAB := xelab
-# makefile (from 'makefile', line 158)
+# makefile (from 'makefile', line 222)
 TB_MODULES := tb
 # makefile
 .DEFAULT_GOAL := all
 # environment
-SYSTEMD_EXEC_PID = 1934
+SYSTEMD_EXEC_PID = 1980
 # makefile (from 'makefile', line 7)
 RM := rm
 # makefile (from 'makefile', line 22)
@@ -307,11 +368,11 @@ GTK_MODULES = gail:atk-bridge
 USER = seankent
 # default
 MAKE_VERSION := 4.3
-# makefile (from 'makefile', line 205)
-TESTS := add-01 
+# makefile (from 'makefile', line 269)
+TESTS := ADD-01
 # default
 F77 = $(FC)
-# makefile (from 'makefile', line 202)
+# makefile (from 'makefile', line 266)
 IP := central_processing_unit
 # default
 CWEAVE = cweave
@@ -381,7 +442,7 @@ XVLOG := xvlog
 XSIM := xsim
 # environment
 XDG_MENU_PREFIX = gnome-
-# makefile (from 'makefile', line 56)
+# makefile (from 'makefile', line 79)
 define build-ip
 $(TOP)/ip/$(1)/src/gen/%.sv: $$(TOP)/ip/$(1)/src/%.b $(TOP)/ip/$(1)/src/gen
 	$(PYTHON) $(PYTHON__OPTS) $(TOP)/tools/bluejay.py $$(<) $$(@)
@@ -402,7 +463,7 @@ XSIM__CFG := /home/seankent/bluejay/tcl/xsim_cfg.tcl
 # environment
 GDMSESSION = ubuntu
 # variable set hash-table stats:
-# Load=178/1024=17%, Rehash=0, Collisions=68/422=16%
+# Load=192/1024=19%, Rehash=0, Collisions=82/565=15%
 
 # Pattern-specific Variable Values
 
@@ -410,171 +471,418 @@ GDMSESSION = ubuntu
 
 # Directories
 
-# /home/seankent/bluejay/ip/central_processing_unit/src (device 2050, inode 59511145): No files, no impossibilities so far.
-# /home/seankent/bluejay/ip/machine_timer_registers/tb (device 2050, inode 1179665): No files, no impossibilities so far.
+# /home/seankent/bluejay/ip/central_processing_unit/src (device 2050, inode 59511145): 9 files, no impossibilities so far.
+# /home/seankent/bluejay/ip/machine_timer_registers/tb (device 2050, inode 1179665): 1 files, no impossibilities so far.
 # /home/seankent/bluejay/ip/lib/tb: could not be stat'd.
-# /home/seankent/bluejay/ip/central_processing_unit/tb (device 2050, inode 59511153): No files, no impossibilities so far.
-# . (device 2050, inode 59507305): 55 files, no impossibilities.
-# /home/seankent/bluejay/ip/machine_timer_registers/src (device 2050, inode 1050528): No files, no impossibilities so far.
-# /home/seankent/bluejay/ip/lib/src (device 2050, inode 1049261): No files, no impossibilities so far.
+# /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01 (device 2050, inode 59527254): No files, no impossibilities so far.
+# /home/seankent/bluejay/ip/central_processing_unit/tb (device 2050, inode 59511153): 5 files, no impossibilities so far.
+# . (device 2050, inode 59507305): 41 files, no impossibilities.
+# /home/seankent/bluejay/ip/machine_timer_registers/src (device 2050, inode 1050528): 3 files, no impossibilities so far.
+# /home/seankent/bluejay/ip/lib/src (device 2050, inode 1049261): 5 files, no impossibilities so far.
 
-# 55 files, no impossibilities in 7 directories.
+# 64 files, no impossibilities in 8 directories.
 
 # Implicit Rules
 
+%.elf: %.S
+#  recipe to execute (from 'makefile', line 69):
+	$(call compile-target,$(<),$(@))
+
 /home/seankent/bluejay/ip/lib/src/gen/%.sv: /home/seankent/bluejay/ip/lib/src/%.b /home/seankent/bluejay/ip/lib/src/gen
-#  recipe to execute (from 'makefile', line 183):
+#  recipe to execute (from 'makefile', line 247):
 	python3  /home/seankent/bluejay/tools/bluejay.py $(<) $(@)
 
 /home/seankent/bluejay/ip/lib/tb/gen/%.sv: /home/seankent/bluejay/ip/lib/tb/%.b /home/seankent/bluejay/ip/lib/tb/gen
-#  recipe to execute (from 'makefile', line 183):
+#  recipe to execute (from 'makefile', line 247):
 	python3  /home/seankent/bluejay/tools/bluejay.py $(<) $(@)
 
 /home/seankent/bluejay/ip/machine_timer_registers/src/gen/%.sv: /home/seankent/bluejay/ip/machine_timer_registers/src/%.b /home/seankent/bluejay/ip/machine_timer_registers/src/gen
-#  recipe to execute (from 'makefile', line 195):
+#  recipe to execute (from 'makefile', line 259):
 	python3  /home/seankent/bluejay/tools/bluejay.py $(<) $(@)
 
 /home/seankent/bluejay/ip/machine_timer_registers/tb/gen/%.sv: /home/seankent/bluejay/ip/machine_timer_registers/tb/%.b /home/seankent/bluejay/ip/machine_timer_registers/tb/gen
-#  recipe to execute (from 'makefile', line 195):
+#  recipe to execute (from 'makefile', line 259):
 	python3  /home/seankent/bluejay/tools/bluejay.py $(<) $(@)
 
 /home/seankent/bluejay/ip/central_processing_unit/src/gen/%.sv: /home/seankent/bluejay/ip/central_processing_unit/src/%.b /home/seankent/bluejay/ip/central_processing_unit/src/gen
-#  recipe to execute (from 'makefile', line 207):
+#  recipe to execute (from 'makefile', line 271):
 	python3  /home/seankent/bluejay/tools/bluejay.py $(<) $(@)
 
 /home/seankent/bluejay/ip/central_processing_unit/tb/gen/%.sv: /home/seankent/bluejay/ip/central_processing_unit/tb/%.b /home/seankent/bluejay/ip/central_processing_unit/tb/gen
-#  recipe to execute (from 'makefile', line 207):
+#  recipe to execute (from 'makefile', line 271):
 	python3  /home/seankent/bluejay/tools/bluejay.py $(<) $(@)
 
-# 6 implicit rules, 0 (0.0%) terminal.
+/home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01/%.sig: /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01/ADD-01.elf
+#  recipe to execute (from 'makefile', line 272):
+	python3 /home/seankent/bluejay/tools/get_symbol_addr.py $(<)
+
+# 8 implicit rules, 0 (0.0%) terminal.
 # Files
 
 /home/seankent/bluejay/ip/central_processing_unit/tb/gen:
 #  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-#  recipe to execute (from 'makefile', line 207):
+#  Last modified 2023-02-10 16:08:34.723493015
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from 'makefile', line 271):
 	mkdir -p $(@)
 
 /home/seankent/bluejay/ip/central_processing_unit/src/gen:
 #  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-#  recipe to execute (from 'makefile', line 207):
+#  Last modified 2023-01-28 20:03:38.50773587
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from 'makefile', line 271):
 	mkdir -p $(@)
 
-/home/seankent/bluejay/ip/machine_timer_registers/sim/sim__xyz/test__0/snapshot.wdb: /home/seankent/bluejay/ip/machine_timer_registers/sim/sim__xyz/xelab.timestamp | /home/seankent/bluejay/ip/machine_timer_registers/sim/sim__xyz/test__0
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-#  recipe to execute (from 'makefile', line 196):
-	cd /home/seankent/bluejay/ip/machine_timer_registers/sim/sim__xyz; xsim snapshot --tclbatch /home/seankent/bluejay/tcl/xsim_cfg.tcl --wdb $(@)
+/home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01/begin_signature.sig: /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01/ADD-01.elf
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: 'begin_signature'
+#  Last modified 2514-05-29 18:53:03.107374182
+#  File has been updated.
+#  Successfully updated.
+# automatic
+# @ := /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01/begin_signature.sig
+# automatic
+# * := begin_signature
+# automatic
+# < := /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01/ADD-01.elf
+# automatic
+# + := /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01/ADD-01.elf
+# automatic
+# % := 
+# automatic
+# ^ := /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01/ADD-01.elf
+# automatic
+# ? := /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01/ADD-01.elf
+# automatic
+# | := 
+# variable set hash-table stats:
+# Load=8/32=25%, Rehash=0, Collisions=1/12=8%
+#  recipe to execute (from 'makefile', line 272):
+	python3 /home/seankent/bluejay/tools/get_symbol_addr.py $(<)
+
+# Not a target:
+/home/seankent/bluejay/ip/machine_timer_registers/tb/tb.b:
+#  Implicit rule search has been done.
+#  Last modified 2023-01-28 23:29:06.865243146
+#  File has been updated.
+#  Successfully updated.
 
 /home/seankent/bluejay/ip/machine_timer_registers/src/gen:
 #  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-#  recipe to execute (from 'makefile', line 195):
+#  Last modified 2023-02-09 16:17:20.9437592
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from 'makefile', line 259):
 	mkdir -p $(@)
 
-/home/seankent/bluejay/ip/machine_timer_registers/sim/sim__xyz/test__1:
+/home/seankent/bluejay/ip/machine_timer_registers/sim/gen/sim__xyz/test__2/setup.timestamp:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'makefile', line 196):
-	mkdir -p $(@)
-
-# Not a target:
-/home/seankent/bluejay/ip/lib/src/gen/sr_flip_flop.sv:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-/home/seankent/bluejay/ip/machine_timer_registers/sim/sim__xyz/xvlog.timestamp: /home/seankent/bluejay/ip/lib/src/gen/d_flip_flop.sv /home/seankent/bluejay/ip/lib/src/gen/sr_flip_flop.sv /home/seankent/bluejay/ip/central_processing_unit/src/gen/central_processing_unit.sv /home/seankent/bluejay/ip/central_processing_unit/src/gen/arithmetic_logic_unit.sv /home/seankent/bluejay/ip/central_processing_unit/src/gen/register_file.sv /home/seankent/bluejay/ip/central_processing_unit/src/gen/comparator.sv /home/seankent/bluejay/ip/central_processing_unit/src/gen/decoder.sv /home/seankent/bluejay/ip/central_processing_unit/src/gen/control_and_status_registers.sv /home/seankent/bluejay/ip/central_processing_unit/tb/gen/central_processing_unit__tb.sv /home/seankent/bluejay/ip/central_processing_unit/tb/gen/memory.sv /home/seankent/bluejay/ip/machine_timer_registers/src/gen/machine_timer_registers.sv /home/seankent/bluejay/ip/machine_timer_registers/tb/gen/tb.sv | /home/seankent/bluejay/ip/machine_timer_registers/sim/sim__xyz
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-#  recipe to execute (from 'makefile', line 196):
-	cd /home/seankent/bluejay/ip/machine_timer_registers/sim/sim__xyz ; xvlog --sv --incr --relax /home/seankent/bluejay/ip/lib/src/gen/d_flip_flop.sv /home/seankent/bluejay/ip/lib/src/gen/sr_flip_flop.sv /home/seankent/bluejay/ip/central_processing_unit/src/gen/central_processing_unit.sv /home/seankent/bluejay/ip/central_processing_unit/src/gen/arithmetic_logic_unit.sv /home/seankent/bluejay/ip/central_processing_unit/src/gen/register_file.sv /home/seankent/bluejay/ip/central_processing_unit/src/gen/comparator.sv /home/seankent/bluejay/ip/central_processing_unit/src/gen/decoder.sv /home/seankent/bluejay/ip/central_processing_unit/src/gen/control_and_status_registers.sv /home/seankent/bluejay/ip/central_processing_unit/tb/gen/central_processing_unit__tb.sv /home/seankent/bluejay/ip/central_processing_unit/tb/gen/memory.sv /home/seankent/bluejay/ip/machine_timer_registers/src/gen/machine_timer_registers.sv /home/seankent/bluejay/ip/machine_timer_registers/tb/gen/tb.sv
+#  recipe to execute (from 'makefile', line 260):
 	touch $(@)
 
-# Not a target:
-/home/seankent/bluejay/ip/central_processing_unit/src/gen/control_and_status_registers.sv:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+/home/seankent/bluejay/ip/lib/src/gen/sr_flip_flop.sv: /home/seankent/bluejay/ip/lib/src/sr_flip_flop.b /home/seankent/bluejay/ip/lib/src/gen
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: 'sr_flip_flop'
+#  Last modified 2023-02-09 16:53:26.433044145
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from 'makefile', line 247):
+	python3  /home/seankent/bluejay/tools/bluejay.py $(<) $(@)
 
 # Not a target:
-/home/seankent/bluejay/ip/central_processing_unit/tb/gen/central_processing_unit__tb.sv:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+/home/seankent/bluejay/ip/central_processing_unit/src/central_processing_unit.b:
+#  Implicit rule search has been done.
+#  Last modified 2023-01-22 13:15:27.456426322
+#  File has been updated.
+#  Successfully updated.
 
-/home/seankent/bluejay/ip/machine_timer_registers/sim/sim__xyz/test__2/snapshot.wdb: /home/seankent/bluejay/ip/machine_timer_registers/sim/sim__xyz/xelab.timestamp | /home/seankent/bluejay/ip/machine_timer_registers/sim/sim__xyz/test__2
+/home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01/ADD-01.lst: /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01/ADD-01.elf
 #  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-#  recipe to execute (from 'makefile', line 196):
-	cd /home/seankent/bluejay/ip/machine_timer_registers/sim/sim__xyz; xsim snapshot --tclbatch /home/seankent/bluejay/tcl/xsim_cfg.tcl --wdb $(@)
+#  Implicit/static pattern stem: ''
+#  Last modified 2514-05-29 18:53:03.107374182
+#  File has been updated.
+#  Successfully updated.
+# automatic
+# @ := /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01/ADD-01.lst
+# automatic
+# * := 
+# automatic
+# < := /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01/ADD-01.elf
+# automatic
+# + := /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01/ADD-01.elf
+# automatic
+# % := 
+# automatic
+# ^ := /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01/ADD-01.elf
+# automatic
+# ? := /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01/ADD-01.elf
+# automatic
+# | := 
+# variable set hash-table stats:
+# Load=8/32=25%, Rehash=0, Collisions=1/13=8%
+#  recipe to execute (from 'makefile', line 272):
+	riscv64-unknown-elf-objdump -Mnumeric,no-aliases -dr $(<) > $(@)
+
+/home/seankent/bluejay/ip/central_processing_unit/src/gen/control_and_status_registers.sv: /home/seankent/bluejay/ip/central_processing_unit/src/control_and_status_registers.b /home/seankent/bluejay/ip/central_processing_unit/src/gen
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: 'control_and_status_registers'
+#  Last modified 2023-02-09 11:22:38.191684266
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from 'makefile', line 271):
+	python3  /home/seankent/bluejay/tools/bluejay.py $(<) $(@)
 
 # Not a target:
-/home/seankent/bluejay/ip/central_processing_unit/src/gen/arithmetic_logic_unit.sv:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+/home/seankent/bluejay/ip/central_processing_unit/src/arithmetic_logic_unit.b:
+#  Implicit rule search has been done.
+#  Last modified 2022-11-19 20:33:40.414656722
+#  File has been updated.
+#  Successfully updated.
 
-# Not a target:
-/home/seankent/bluejay/ip/machine_timer_registers/tb/gen/tb.sv:
+/home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01/ADD-01.bin: /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01/ADD-01.elf
 #  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+#  Implicit/static pattern stem: ''
+#  Last modified 2514-05-29 18:53:03.107374182
+#  File has been updated.
+#  Successfully updated.
+# automatic
+# @ := /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01/ADD-01.bin
+# automatic
+# * := 
+# automatic
+# < := /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01/ADD-01.elf
+# automatic
+# + := /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01/ADD-01.elf
+# automatic
+# % := 
+# automatic
+# ^ := /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01/ADD-01.elf
+# automatic
+# ? := /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01/ADD-01.elf
+# automatic
+# | := 
+# variable set hash-table stats:
+# Load=8/32=25%, Rehash=0, Collisions=1/13=8%
+#  recipe to execute (from 'makefile', line 272):
+	riscv64-unknown-elf-objcopy $(<) -O binary $(@)
 
-# Not a target:
-sim-machine_timer_registers-test__2:
+/home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/xelab.timestamp: /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/xvlog.timestamp
 #  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-/home/seankent/bluejay/ip/machine_timer_registers/sim/sim__xyz:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-#  recipe to execute (from 'makefile', line 196):
-	mkdir -p $(@)
-
-/home/seankent/bluejay/ip/machine_timer_registers/sim/sim__xyz/test__2:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-#  recipe to execute (from 'makefile', line 196):
-	mkdir -p $(@)
-
-/home/seankent/bluejay/ip/machine_timer_registers/sim/sim__xyz/xelab.timestamp: /home/seankent/bluejay/ip/machine_timer_registers/sim/sim__xyz/xvlog.timestamp
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-#  recipe to execute (from 'makefile', line 196):
-	cd /home/seankent/bluejay/ip/machine_timer_registers/sim/sim__xyz ; xelab -debug all -relax -top tb -snapshot snapshot 
+#  Last modified 2023-02-10 16:45:55.559147998
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from 'makefile', line 272):
+	cd /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz ; xelab -debug all -relax -top tb -snapshot snapshot 
 	touch $(@)
 
+/home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01/setup.timestamp: /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01/ADD-01.elf /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01/ADD-01.mem /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01/ADD-01.lst /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01/begin_signature.sig
+#  Implicit rule search has not been done.
+#  Implicit/static pattern stem: ''
+#  Last modified 2514-05-29 18:53:03.107374182
+#  File has been updated.
+#  Successfully updated.
+# automatic
+# @ := /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01/setup.timestamp
+# automatic
+# * := 
+# automatic
+# < := /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01/ADD-01.elf
+# automatic
+# + := /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01/ADD-01.elf /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01/ADD-01.mem /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01/ADD-01.lst /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01/begin_signature.sig
+# automatic
+# % := 
+# automatic
+# ^ := /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01/ADD-01.elf /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01/ADD-01.mem /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01/ADD-01.lst /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01/begin_signature.sig
+# automatic
+# ? := /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01/ADD-01.elf /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01/ADD-01.mem /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01/ADD-01.lst /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01/begin_signature.sig
+# automatic
+# | := 
+# variable set hash-table stats:
+# Load=8/32=25%, Rehash=0, Collisions=1/27=4%
+#  recipe to execute (from 'makefile', line 272):
+	touch $(@)
+
+/home/seankent/bluejay/ip/machine_timer_registers/sim/gen/sim__xyz/test__2:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'makefile', line 260):
+	mkdir -p $(@)
+
+/home/seankent/bluejay/ip/central_processing_unit/src/gen/arithmetic_logic_unit.sv: /home/seankent/bluejay/ip/central_processing_unit/src/arithmetic_logic_unit.b /home/seankent/bluejay/ip/central_processing_unit/src/gen
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: 'arithmetic_logic_unit'
+#  Last modified 2023-02-09 11:22:37.779665184
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from 'makefile', line 271):
+	python3  /home/seankent/bluejay/tools/bluejay.py $(<) $(@)
+
+/home/seankent/bluejay/ip/machine_timer_registers/tb/gen/tb.sv: /home/seankent/bluejay/ip/machine_timer_registers/tb/tb.b /home/seankent/bluejay/ip/machine_timer_registers/tb/gen
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: 'tb'
+#  Last modified 2023-02-07 22:17:57.920563583
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from 'makefile', line 259):
+	python3  /home/seankent/bluejay/tools/bluejay.py $(<) $(@)
+
 # Not a target:
-/home/seankent/bluejay/ip/central_processing_unit/tb/gen/memory.sv:
+/home/seankent/bluejay/ip/central_processing_unit/sim/ADD-01/ADD-01.S:
+#  Implicit rule search has been done.
+#  Last modified 2023-02-10 16:11:35.784140504
+#  File has been updated.
+#  Successfully updated.
+
+sim-machine_timer_registers-test__2: /home/seankent/bluejay/ip/machine_timer_registers/sim/gen/sim__xyz/test__2/snapshot.wdb
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
 
 # Not a target:
-/home/seankent/bluejay/ip/central_processing_unit/src/gen/comparator.sv:
+/home/seankent/bluejay/ip/lib/src/d_flip_flop.b:
+#  Implicit rule search has been done.
+#  Last modified 2023-02-09 16:46:06.927997417
+#  File has been updated.
+#  Successfully updated.
+
+/home/seankent/bluejay/ip/machine_timer_registers/sim/gen/sim__xyz/xelab.timestamp: /home/seankent/bluejay/ip/machine_timer_registers/sim/gen/sim__xyz/xvlog.timestamp
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
+#  recipe to execute (from 'makefile', line 260):
+	cd /home/seankent/bluejay/ip/machine_timer_registers/sim/gen/sim__xyz ; xelab -debug all -relax -top tb -snapshot snapshot 
+	touch $(@)
+
+/home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/xvlog.timestamp: /home/seankent/bluejay/ip/lib/src/gen/d_flip_flop.sv /home/seankent/bluejay/ip/lib/src/gen/sr_flip_flop.sv /home/seankent/bluejay/ip/central_processing_unit/src/gen/central_processing_unit.sv /home/seankent/bluejay/ip/central_processing_unit/src/gen/arithmetic_logic_unit.sv /home/seankent/bluejay/ip/central_processing_unit/src/gen/register_file.sv /home/seankent/bluejay/ip/central_processing_unit/src/gen/comparator.sv /home/seankent/bluejay/ip/central_processing_unit/src/gen/decoder.sv /home/seankent/bluejay/ip/central_processing_unit/src/gen/control_and_status_registers.sv /home/seankent/bluejay/ip/central_processing_unit/tb/gen/tb.sv /home/seankent/bluejay/ip/central_processing_unit/tb/gen/memory.sv /home/seankent/bluejay/ip/machine_timer_registers/src/gen/machine_timer_registers.sv /home/seankent/bluejay/ip/machine_timer_registers/tb/gen/tb.sv | /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz
+#  Implicit rule search has not been done.
+#  Last modified 2023-02-10 16:45:54.623152682
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from 'makefile', line 272):
+	cd /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz ; xvlog --sv --incr --relax /home/seankent/bluejay/ip/lib/src/gen/d_flip_flop.sv /home/seankent/bluejay/ip/lib/src/gen/sr_flip_flop.sv /home/seankent/bluejay/ip/central_processing_unit/src/gen/central_processing_unit.sv /home/seankent/bluejay/ip/central_processing_unit/src/gen/arithmetic_logic_unit.sv /home/seankent/bluejay/ip/central_processing_unit/src/gen/register_file.sv /home/seankent/bluejay/ip/central_processing_unit/src/gen/comparator.sv /home/seankent/bluejay/ip/central_processing_unit/src/gen/decoder.sv /home/seankent/bluejay/ip/central_processing_unit/src/gen/control_and_status_registers.sv /home/seankent/bluejay/ip/central_processing_unit/tb/gen/tb.sv /home/seankent/bluejay/ip/central_processing_unit/tb/gen/memory.sv /home/seankent/bluejay/ip/machine_timer_registers/src/gen/machine_timer_registers.sv /home/seankent/bluejay/ip/machine_timer_registers/tb/gen/tb.sv
+	touch $(@)
+
+/home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01/ADD-01.elf: /home/seankent/bluejay/ip/central_processing_unit/sim/ADD-01/ADD-01.S
+#  Implicit rule search has not been done.
+#  Implicit/static pattern stem: ''
+#  Last modified 2514-05-29 18:53:03.107374182
+#  File has been updated.
+#  Successfully updated.
+# automatic
+# @ := /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01/ADD-01.elf
+# automatic
+# * := 
+# automatic
+# < := /home/seankent/bluejay/ip/central_processing_unit/sim/ADD-01/ADD-01.S
+# automatic
+# + := /home/seankent/bluejay/ip/central_processing_unit/sim/ADD-01/ADD-01.S
+# automatic
+# % := 
+# automatic
+# ^ := /home/seankent/bluejay/ip/central_processing_unit/sim/ADD-01/ADD-01.S
+# automatic
+# ? := /home/seankent/bluejay/ip/central_processing_unit/sim/ADD-01/ADD-01.S
+# automatic
+# | := 
+# variable set hash-table stats:
+# Load=8/32=25%, Rehash=0, Collisions=1/13=8%
+#  recipe to execute (from 'makefile', line 272):
+	riscv64-unknown-elf-gcc -march=rv64i -mabi=lp64 -DXLEN=64 -static -mcmodel=medany -fvisibility=hidden -nostdlib -nostartfiles  -I /home/seankent/bluejay/imperas/imperas-riscv-tests/riscv-test-suite/env -I /home/seankent/bluejay/imperas/imperas-riscv-tests/riscv-target/riscvOVPsimPlus -T /home/seankent/bluejay/imperas/imperas-riscv-tests/riscv-target/riscvOVPsimPlus/link.ld $(<) -o $(@)
+
+/home/seankent/bluejay/ip/machine_timer_registers/sim/gen/sim__xyz/test__3/setup.timestamp:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'makefile', line 260):
+	touch $(@)
+
+sim-central_processing_unit: sim-central_processing_unit-ADD-01
+#  Implicit rule search has been done.
+#  File does not exist.
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/21=0%
+
+/home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz:
+#  Implicit rule search has not been done.
+#  Last modified 2023-02-11 17:49:26.547745513
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from 'makefile', line 272):
+	mkdir -p $(@)
+
+/home/seankent/bluejay/ip/central_processing_unit/tb/gen/memory.sv: /home/seankent/bluejay/ip/central_processing_unit/tb/memory.b /home/seankent/bluejay/ip/central_processing_unit/tb/gen
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: 'memory'
+#  Last modified 2023-02-10 16:45:53.81115673
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from 'makefile', line 271):
+	python3  /home/seankent/bluejay/tools/bluejay.py $(<) $(@)
+
+/home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01/ADD-01.mem: /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01/ADD-01.bin
+#  Implicit rule search has not been done.
+#  Implicit/static pattern stem: ''
+#  Last modified 2514-05-29 18:53:03.107374182
+#  File has been updated.
+#  Successfully updated.
+# automatic
+# @ := /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01/ADD-01.mem
+# automatic
+# * := 
+# automatic
+# < := /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01/ADD-01.bin
+# automatic
+# + := /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01/ADD-01.bin
+# automatic
+# % := 
+# automatic
+# ^ := /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01/ADD-01.bin
+# automatic
+# ? := /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01/ADD-01.bin
+# automatic
+# | := 
+# variable set hash-table stats:
+# Load=8/32=25%, Rehash=0, Collisions=1/16=6%
+#  recipe to execute (from 'makefile', line 272):
+	od -t x1 -An -w1 -v $(<) > $(@)
+
+/home/seankent/bluejay/ip/central_processing_unit/src/gen/comparator.sv: /home/seankent/bluejay/ip/central_processing_unit/src/comparator.b /home/seankent/bluejay/ip/central_processing_unit/src/gen
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: 'comparator'
+#  Last modified 2023-01-28 20:03:38.50773587
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from 'makefile', line 271):
+	python3  /home/seankent/bluejay/tools/bluejay.py $(<) $(@)
 
 /home/seankent/bluejay/ip/machine_timer_registers/tb/gen:
 #  Implicit rule search has not been done.
+#  Last modified 2023-01-22 13:29:05.791145458
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from 'makefile', line 259):
+	mkdir -p $(@)
+
+/home/seankent/bluejay/ip/machine_timer_registers/sim/gen/sim__xyz/test__3/snapshot.wdb: /home/seankent/bluejay/ip/machine_timer_registers/sim/gen/sim__xyz/xelab.timestamp /home/seankent/bluejay/ip/machine_timer_registers/sim/gen/sim__xyz/test__3/setup.timestamp | /home/seankent/bluejay/ip/machine_timer_registers/sim/gen/sim__xyz/test__3
+#  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'makefile', line 195):
-	mkdir -p $(@)
+#  recipe to execute (from 'makefile', line 260):
+	cd /home/seankent/bluejay/ip/machine_timer_registers/sim/gen/sim__xyz ; xsim snapshot --tclbatch /home/seankent/bluejay/tcl/xsim_cfg.tcl --wdb $(@) 
+
+# Not a target:
+/home/seankent/bluejay/ip/central_processing_unit/tb/memory.b:
+#  Implicit rule search has been done.
+#  Last modified 2023-01-20 15:31:14.703812518
+#  File has been updated.
+#  Successfully updated.
 
 # Not a target:
 .DEFAULT:
@@ -582,133 +890,311 @@ sim-machine_timer_registers-test__2:
 #  Modification time never checked.
 #  File has not been updated.
 
-all: sim-machine_timer_registers
+# Not a target:
+/home/seankent/bluejay/ip/central_processing_unit/src/decoder.b:
+#  Implicit rule search has been done.
+#  Last modified 2022-11-19 20:33:28.669934152
+#  File has been updated.
+#  Successfully updated.
+
+all: sim-central_processing_unit
 #  Implicit rule search has not been done.
-#  File does not exist.
-#  File has not been updated.
-#  recipe to execute (from 'makefile', line 47):
+#  Implicit/static pattern stem: ''
+#  Last modified 2514-05-29 18:53:03.107374182
+#  File has been updated.
+#  Successfully updated.
+# automatic
+# @ := all
+# automatic
+# * := 
+# automatic
+# < := sim-central_processing_unit
+# automatic
+# + := sim-central_processing_unit
+# automatic
+# % := 
+# automatic
+# ^ := sim-central_processing_unit
+# automatic
+# ? := sim-central_processing_unit
+# automatic
+# | := 
+# variable set hash-table stats:
+# Load=8/32=25%, Rehash=0, Collisions=1/32=3%
+#  recipe to execute (from 'makefile', line 66):
 	echo Done
 
-# Not a target:
-sim-machine_timer_registers-test__3:
+sim-machine_timer_registers-test__3: /home/seankent/bluejay/ip/machine_timer_registers/sim/gen/sim__xyz/test__3/snapshot.wdb
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
+
+/home/seankent/bluejay/ip/machine_timer_registers/sim/gen/sim__xyz/test__0:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'makefile', line 260):
+	mkdir -p $(@)
+
+/home/seankent/bluejay/ip/central_processing_unit/src/gen/register_file.sv: /home/seankent/bluejay/ip/central_processing_unit/src/register_file.b /home/seankent/bluejay/ip/central_processing_unit/src/gen
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: 'register_file'
+#  Last modified 2023-02-09 11:22:37.963673718
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from 'makefile', line 271):
+	python3  /home/seankent/bluejay/tools/bluejay.py $(<) $(@)
 
 # Not a target:
-/home/seankent/bluejay/ip/central_processing_unit/src/gen/register_file.sv:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-/home/seankent/bluejay/ip/machine_timer_registers/sim/sim__xyz/test__1/snapshot.wdb: /home/seankent/bluejay/ip/machine_timer_registers/sim/sim__xyz/xelab.timestamp | /home/seankent/bluejay/ip/machine_timer_registers/sim/sim__xyz/test__1
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-#  recipe to execute (from 'makefile', line 196):
-	cd /home/seankent/bluejay/ip/machine_timer_registers/sim/sim__xyz; xsim snapshot --tclbatch /home/seankent/bluejay/tcl/xsim_cfg.tcl --wdb $(@)
+/home/seankent/bluejay/ip/central_processing_unit/src/control_and_status_registers.b:
+#  Implicit rule search has been done.
+#  Last modified 2023-01-22 13:06:53.954204335
+#  File has been updated.
+#  Successfully updated.
 
 # Not a target:
-/home/seankent/bluejay/ip/central_processing_unit/src/gen/decoder.sv:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+/home/seankent/bluejay/ip/machine_timer_registers/src/machine_timer_registers.b:
+#  Implicit rule search has been done.
+#  Last modified 2023-02-09 16:17:20.9437592
+#  File has been updated.
+#  Successfully updated.
 
-/home/seankent/bluejay/ip/machine_timer_registers/sim/sim__xyz/test__3:
+# Not a target:
+/home/seankent/bluejay/ip/central_processing_unit/src/comparator.b:
+#  Implicit rule search has been done.
+#  Last modified 2022-11-19 20:33:22.197529783
+#  File has been updated.
+#  Successfully updated.
+
+/home/seankent/bluejay/ip/central_processing_unit/src/gen/decoder.sv: /home/seankent/bluejay/ip/central_processing_unit/src/decoder.b /home/seankent/bluejay/ip/central_processing_unit/src/gen
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: 'decoder'
+#  Last modified 2023-01-28 20:03:38.50773587
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from 'makefile', line 271):
+	python3  /home/seankent/bluejay/tools/bluejay.py $(<) $(@)
+
+/home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01/snapshot.wdb: /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/xelab.timestamp /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01/setup.timestamp | /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01
+#  Implicit rule search has not been done.
+#  Implicit/static pattern stem: ''
+#  Last modified 2514-05-29 18:53:03.107374182
+#  File has been updated.
+#  Successfully updated.
+# automatic
+# @ := /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01/snapshot.wdb
+# automatic
+# * := 
+# automatic
+# < := /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/xelab.timestamp
+# automatic
+# + := /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/xelab.timestamp /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01/setup.timestamp
+# automatic
+# % := 
+# automatic
+# ^ := /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/xelab.timestamp /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01/setup.timestamp
+# automatic
+# ? := /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/xelab.timestamp /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01/setup.timestamp
+# automatic
+# | := /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01
+# variable set hash-table stats:
+# Load=8/32=25%, Rehash=0, Collisions=1/30=3%
+#  recipe to execute (from 'makefile', line 272):
+	cd /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz ; xsim snapshot --tclbatch /home/seankent/bluejay/tcl/xsim_cfg.tcl --wdb $(@) -testplusarg filename__mem=/home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01/ADD-01.mem -testplusarg filename__sig=/home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01/ADD-01.signature -testplusarg begin_signature=
+
+/home/seankent/bluejay/ip/machine_timer_registers/sim/gen/sim__xyz/test__1/setup.timestamp:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'makefile', line 196):
+#  recipe to execute (from 'makefile', line 260):
+	touch $(@)
+
+/home/seankent/bluejay/ip/machine_timer_registers/sim/gen/sim__xyz:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'makefile', line 260):
 	mkdir -p $(@)
 
 # Not a target:
 makefile:
 #  Implicit rule search has been done.
-#  Last modified 2023-02-09 16:50:09.301317184
+#  Last modified 2023-02-11 17:51:53.516091879
 #  File has been updated.
 #  Successfully updated.
 
-# Not a target:
-/home/seankent/bluejay/ip/lib/src/gen/d_flip_flop.sv:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-# Not a target:
-sim-machine_timer_registers-test__0:
+/home/seankent/bluejay/ip/lib/src/gen/d_flip_flop.sv: /home/seankent/bluejay/ip/lib/src/d_flip_flop.b /home/seankent/bluejay/ip/lib/src/gen
 #  Implicit rule search has been done.
-#  File does not exist.
+#  Implicit/static pattern stem: 'd_flip_flop'
+#  Last modified 2023-02-09 16:46:09.591912736
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from 'makefile', line 247):
+	python3  /home/seankent/bluejay/tools/bluejay.py $(<) $(@)
+
+/home/seankent/bluejay/ip/machine_timer_registers/sim/gen/sim__xyz/test__1/snapshot.wdb: /home/seankent/bluejay/ip/machine_timer_registers/sim/gen/sim__xyz/xelab.timestamp /home/seankent/bluejay/ip/machine_timer_registers/sim/gen/sim__xyz/test__1/setup.timestamp | /home/seankent/bluejay/ip/machine_timer_registers/sim/gen/sim__xyz/test__1
+#  Implicit rule search has not been done.
+#  Modification time never checked.
 #  File has not been updated.
+#  recipe to execute (from 'makefile', line 260):
+	cd /home/seankent/bluejay/ip/machine_timer_registers/sim/gen/sim__xyz ; xsim snapshot --tclbatch /home/seankent/bluejay/tcl/xsim_cfg.tcl --wdb $(@) 
 
 # Not a target:
-/home/seankent/bluejay/ip/machine_timer_registers/src/gen/machine_timer_registers.sv:
+/home/seankent/bluejay/ip/lib/src/sr_flip_flop.b:
+#  Implicit rule search has been done.
+#  Last modified 2023-02-09 16:46:06.927997417
+#  File has been updated.
+#  Successfully updated.
+
+/home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01:
+#  Implicit rule search has not been done.
+#  Last modified 2023-02-11 17:52:05.927242732
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from 'makefile', line 272):
+	mkdir -p $(@)
+
+sim-machine_timer_registers-test__0: /home/seankent/bluejay/ip/machine_timer_registers/sim/gen/sim__xyz/test__0/snapshot.wdb
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
 
-sim-machine_timer_registers-sim__xyz: /home/seankent/bluejay/ip/machine_timer_registers/sim/sim__xyz/test__0/snapshot.wdb /home/seankent/bluejay/ip/machine_timer_registers/sim/sim__xyz/test__1/snapshot.wdb /home/seankent/bluejay/ip/machine_timer_registers/sim/sim__xyz/test__2/snapshot.wdb /home/seankent/bluejay/ip/machine_timer_registers/sim/sim__xyz/test__3/snapshot.wdb
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+/home/seankent/bluejay/ip/machine_timer_registers/src/gen/machine_timer_registers.sv: /home/seankent/bluejay/ip/machine_timer_registers/src/machine_timer_registers.b /home/seankent/bluejay/ip/machine_timer_registers/src/gen
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: 'machine_timer_registers'
+#  Last modified 2023-02-09 16:53:26.52104241
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from 'makefile', line 259):
+	python3  /home/seankent/bluejay/tools/bluejay.py $(<) $(@)
 
 /home/seankent/bluejay/ip/lib/tb/gen:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'makefile', line 183):
+#  recipe to execute (from 'makefile', line 247):
 	mkdir -p $(@)
 
+/home/seankent/bluejay/ip/machine_timer_registers/sim/gen/sim__xyz/test__0/setup.timestamp:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'makefile', line 260):
+	touch $(@)
+
 sim-machine_timer_registers: sim-machine_timer_registers-test__0 sim-machine_timer_registers-test__1 sim-machine_timer_registers-test__2 sim-machine_timer_registers-test__3
-#  Implicit rule search has been done.
-#  File does not exist.
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/home/seankent/bluejay/ip/machine_timer_registers/sim/gen/sim__xyz/test__3:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'makefile', line 260):
+	mkdir -p $(@)
+
+/home/seankent/bluejay/ip/machine_timer_registers/sim/gen/sim__xyz/test__0/snapshot.wdb: /home/seankent/bluejay/ip/machine_timer_registers/sim/gen/sim__xyz/xelab.timestamp /home/seankent/bluejay/ip/machine_timer_registers/sim/gen/sim__xyz/test__0/setup.timestamp | /home/seankent/bluejay/ip/machine_timer_registers/sim/gen/sim__xyz/test__0
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'makefile', line 260):
+	cd /home/seankent/bluejay/ip/machine_timer_registers/sim/gen/sim__xyz ; xsim snapshot --tclbatch /home/seankent/bluejay/tcl/xsim_cfg.tcl --wdb $(@) 
+
+# Not a target:
+.SUFFIXES:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
 #  File has not been updated.
 
 /home/seankent/bluejay/ip/lib/src/gen:
 #  Implicit rule search has not been done.
+#  Last modified 2023-02-09 16:46:06.927997417
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from 'makefile', line 247):
+	mkdir -p $(@)
+
+/home/seankent/bluejay/ip/central_processing_unit/src/gen/central_processing_unit.sv: /home/seankent/bluejay/ip/central_processing_unit/src/central_processing_unit.b /home/seankent/bluejay/ip/central_processing_unit/src/gen
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: 'central_processing_unit'
+#  Last modified 2023-02-09 11:22:37.663659804
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from 'makefile', line 271):
+	python3  /home/seankent/bluejay/tools/bluejay.py $(<) $(@)
+
+sim-central_processing_unit-ADD-01: /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01/snapshot.wdb
+#  Implicit rule search has been done.
+#  File does not exist.
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/21=0%
+
+/home/seankent/bluejay/ip/machine_timer_registers/sim/gen/sim__xyz/xvlog.timestamp: /home/seankent/bluejay/ip/lib/src/gen/d_flip_flop.sv /home/seankent/bluejay/ip/lib/src/gen/sr_flip_flop.sv /home/seankent/bluejay/ip/central_processing_unit/src/gen/central_processing_unit.sv /home/seankent/bluejay/ip/central_processing_unit/src/gen/arithmetic_logic_unit.sv /home/seankent/bluejay/ip/central_processing_unit/src/gen/register_file.sv /home/seankent/bluejay/ip/central_processing_unit/src/gen/comparator.sv /home/seankent/bluejay/ip/central_processing_unit/src/gen/decoder.sv /home/seankent/bluejay/ip/central_processing_unit/src/gen/control_and_status_registers.sv /home/seankent/bluejay/ip/central_processing_unit/tb/gen/tb.sv /home/seankent/bluejay/ip/central_processing_unit/tb/gen/memory.sv /home/seankent/bluejay/ip/machine_timer_registers/src/gen/machine_timer_registers.sv /home/seankent/bluejay/ip/machine_timer_registers/tb/gen/tb.sv | /home/seankent/bluejay/ip/machine_timer_registers/sim/gen/sim__xyz
+#  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'makefile', line 183):
+#  recipe to execute (from 'makefile', line 260):
+	cd /home/seankent/bluejay/ip/machine_timer_registers/sim/gen/sim__xyz ; xvlog --sv --incr --relax /home/seankent/bluejay/ip/lib/src/gen/d_flip_flop.sv /home/seankent/bluejay/ip/lib/src/gen/sr_flip_flop.sv /home/seankent/bluejay/ip/central_processing_unit/src/gen/central_processing_unit.sv /home/seankent/bluejay/ip/central_processing_unit/src/gen/arithmetic_logic_unit.sv /home/seankent/bluejay/ip/central_processing_unit/src/gen/register_file.sv /home/seankent/bluejay/ip/central_processing_unit/src/gen/comparator.sv /home/seankent/bluejay/ip/central_processing_unit/src/gen/decoder.sv /home/seankent/bluejay/ip/central_processing_unit/src/gen/control_and_status_registers.sv /home/seankent/bluejay/ip/central_processing_unit/tb/gen/tb.sv /home/seankent/bluejay/ip/central_processing_unit/tb/gen/memory.sv /home/seankent/bluejay/ip/machine_timer_registers/src/gen/machine_timer_registers.sv /home/seankent/bluejay/ip/machine_timer_registers/tb/gen/tb.sv
+	touch $(@)
+
+/home/seankent/bluejay/ip/machine_timer_registers/sim/gen/sim__xyz/test__2/snapshot.wdb: /home/seankent/bluejay/ip/machine_timer_registers/sim/gen/sim__xyz/xelab.timestamp /home/seankent/bluejay/ip/machine_timer_registers/sim/gen/sim__xyz/test__2/setup.timestamp | /home/seankent/bluejay/ip/machine_timer_registers/sim/gen/sim__xyz/test__2
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'makefile', line 260):
+	cd /home/seankent/bluejay/ip/machine_timer_registers/sim/gen/sim__xyz ; xsim snapshot --tclbatch /home/seankent/bluejay/tcl/xsim_cfg.tcl --wdb $(@) 
+
+/home/seankent/bluejay/ip/machine_timer_registers/sim/gen/sim__xyz/test__1:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'makefile', line 260):
 	mkdir -p $(@)
 
 # Not a target:
-/home/seankent/bluejay/ip/central_processing_unit/src/gen/central_processing_unit.sv:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+/home/seankent/bluejay/ip/central_processing_unit/tb/tb.b:
+#  Implicit rule search has been done.
+#  Last modified 2023-02-10 16:06:35.012603255
+#  File has been updated.
+#  Successfully updated.
 
-/home/seankent/bluejay/ip/machine_timer_registers/sim/sim__xyz/test__3/snapshot.wdb: /home/seankent/bluejay/ip/machine_timer_registers/sim/sim__xyz/xelab.timestamp | /home/seankent/bluejay/ip/machine_timer_registers/sim/sim__xyz/test__3
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-#  recipe to execute (from 'makefile', line 196):
-	cd /home/seankent/bluejay/ip/machine_timer_registers/sim/sim__xyz; xsim snapshot --tclbatch /home/seankent/bluejay/tcl/xsim_cfg.tcl --wdb $(@)
+/home/seankent/bluejay/ip/central_processing_unit/tb/gen/tb.sv: /home/seankent/bluejay/ip/central_processing_unit/tb/tb.b /home/seankent/bluejay/ip/central_processing_unit/tb/gen
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: 'tb'
+#  Last modified 2023-02-10 16:08:34.723493015
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from 'makefile', line 271):
+	python3  /home/seankent/bluejay/tools/bluejay.py $(<) $(@)
 
-/home/seankent/bluejay/ip/machine_timer_registers/sim/sim__xyz/test__0:
+sim-machine_timer_registers-test__1: /home/seankent/bluejay/ip/machine_timer_registers/sim/gen/sim__xyz/test__1/snapshot.wdb
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'makefile', line 196):
-	mkdir -p $(@)
 
 # Not a target:
-sim-machine_timer_registers-test__1:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+/home/seankent/bluejay/ip/central_processing_unit/src/register_file.b:
+#  Implicit rule search has been done.
+#  Last modified 2023-01-20 17:22:49.597203581
+#  File has been updated.
+#  Successfully updated.
 
 # files hash-table stats:
-# Load=39/1024=4%, Rehash=0, Collisions=3/96=3%
+# Load=68/1024=7%, Rehash=0, Collisions=13/232=6%
 # VPATH Search Paths
 
 # No 'vpath' search paths.
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 113 / storage = 3791 B / avg = 33 B
-# current buf: size = 8162 B / used = 3791 B / count = 113 / avg = 33 B
+# strcache buffers: 1 (0) / strings = 154 / storage = 6172 B / avg = 40 B
+# current buf: size = 8162 B / used = 6172 B / count = 154 / avg = 40 B
 
-# strcache performance: lookups = 163 / hit rate = 30%
+# strcache performance: lookups = 310 / hit rate = 50%
 # hash-table stats:
-# Load=113/8192=1%, Rehash=0, Collisions=2/163=1%
-# Finished Make data base on Thu Feb  9 16:50:57 2023
+# Load=154/8192=2%, Rehash=0, Collisions=2/310=1%
+# Finished Make data base on Sat Feb 11 17:52:19 2023
 

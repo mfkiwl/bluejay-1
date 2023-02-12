@@ -69,6 +69,9 @@ end
 
 string filename__mem;
 string filename__sig;
+string filename__begin_signature;
+string filename__end_signature;
+string filename__tohost;
 logic [63:0] begin_signature;
 logic [63:0] end_signature;
 logic [63:0] tohost;

@@ -45,4 +45,5 @@ if __name__ == '__main__':
         get_symbol_addr(elf, symbol) 
 
     else:
+        print(sys.argv)
         print('[ERROR] invalid args.')

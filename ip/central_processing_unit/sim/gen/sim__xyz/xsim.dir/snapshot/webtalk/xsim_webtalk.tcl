@@ -1,6 +1,6 @@
 webtalk_init -webtalk_dir /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/xsim.dir/snapshot/webtalk/
 webtalk_register_client -client project
-webtalk_add_data -client project -key date_generated -value "Fri Feb 10 16:54:58 2023" -context "software_version_and_target_device"
+webtalk_add_data -client project -key date_generated -value "Sat Feb 11 20:01:05 2023" -context "software_version_and_target_device"
 webtalk_add_data -client project -key product_version -value "XSIM v2019.2 (64-bit)" -context "software_version_and_target_device"
 webtalk_add_data -client project -key build_version -value "2708876" -context "software_version_and_target_device"
 webtalk_add_data -client project -key os_platform -value "LIN64" -context "software_version_and_target_device"
@@ -13,8 +13,8 @@ webtalk_add_data -client project -key target_device -value "not_applicable" -con
 webtalk_add_data -client project -key target_package -value "not_applicable" -context "software_version_and_target_device"
 webtalk_add_data -client project -key target_speed -value "not_applicable" -context "software_version_and_target_device"
 webtalk_add_data -client project -key random_id -value "e3168381-eee8-4956-8b80-0d204ac8deb7" -context "software_version_and_target_device"
-webtalk_add_data -client project -key project_id -value "985f4a85-2ef6-43af-a431-b16d5156404f" -context "software_version_and_target_device"
-webtalk_add_data -client project -key project_iteration -value "10" -context "software_version_and_target_device"
+webtalk_add_data -client project -key project_id -value "8b5b1267-6a14-47b2-97d7-2120ae86b935" -context "software_version_and_target_device"
+webtalk_add_data -client project -key project_iteration -value "7" -context "software_version_and_target_device"
 webtalk_add_data -client project -key os_name -value "Ubuntu" -context "user_environment"
 webtalk_add_data -client project -key os_release -value "Ubuntu 22.04.1 LTS" -context "user_environment"
 webtalk_add_data -client project -key cpu_name -value "Intel(R) Core(TM) i9-10850K CPU @ 3.60GHz" -context "user_environment"
@@ -25,9 +25,9 @@ webtalk_register_client -client xsim
 webtalk_add_data -client xsim -key runall -value "true" -context "xsim\\command_line_options"
 webtalk_add_data -client xsim -key Command -value "xsim" -context "xsim\\command_line_options"
 webtalk_add_data -client xsim -key trace_waveform -value "true" -context "xsim\\usage"
-webtalk_add_data -client xsim -key runtime -value "100 ns" -context "xsim\\usage"
+webtalk_add_data -client xsim -key runtime -value "113310 ns" -context "xsim\\usage"
 webtalk_add_data -client xsim -key iteration -value "0" -context "xsim\\usage"
-webtalk_add_data -client xsim -key Simulation_Time -value "0.00_sec" -context "xsim\\usage"
-webtalk_add_data -client xsim -key Simulation_Memory -value "114860_KB" -context "xsim\\usage"
-webtalk_transmit -clientid 3740636948 -regid "" -xml /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/xsim.dir/snapshot/webtalk/usage_statistics_ext_xsim.xml -html /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/xsim.dir/snapshot/webtalk/usage_statistics_ext_xsim.html -wdm /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/xsim.dir/snapshot/webtalk/usage_statistics_ext_xsim.wdm -intro "<H3>XSIM Usage Report</H3><BR>"
+webtalk_add_data -client xsim -key Simulation_Time -value "0.17_sec" -context "xsim\\usage"
+webtalk_add_data -client xsim -key Simulation_Memory -value "128180_KB" -context "xsim\\usage"
+webtalk_transmit -clientid 2154175864 -regid "" -xml /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/xsim.dir/snapshot/webtalk/usage_statistics_ext_xsim.xml -html /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/xsim.dir/snapshot/webtalk/usage_statistics_ext_xsim.html -wdm /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/xsim.dir/snapshot/webtalk/usage_statistics_ext_xsim.wdm -intro "<H3>XSIM Usage Report</H3><BR>"
 webtalk_terminate

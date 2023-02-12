@@ -1,7 +1,7 @@
-Running: xsim.dir/snapshot/xsimk -wdb /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ADD-01/snapshot.wdb -simmode gui -simrunnum 0 -socket 39841
+Running: xsim.dir/snapshot/xsimk -wdb /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ANDI-01/snapshot.wdb -simmode gui -testplusarg filename__mem=/home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ANDI-01/ANDI-01.mem -testplusarg filename__sig=/home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/ANDI-01/ANDI-01.signature -testplusarg begin_signature=0000000080003010 -testplusarg end_signature=0000000080003970 -testplusarg tohost=0000000080002000 -simrunnum 0 -socket 34719
 Design successfully loaded
-Design Loading Memory Usage: 33124 KB (Peak: 33696 KB)
+Design Loading Memory Usage: 33888 KB (Peak: 34016 KB)
 Design Loading CPU Usage: 0 ms
 Simulation completed
-Simulation Memory Usage: 114860 KB (Peak: 172392 KB)
-Simulation CPU Usage: 0 ms
+Simulation Memory Usage: 128180 KB (Peak: 173156 KB)
+Simulation CPU Usage: 170 ms

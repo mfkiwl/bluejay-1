@@ -9,7 +9,9 @@ INFO: [VRFC 10-311] analyzing module arithmetic_logic_unit
 INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/central_processing_unit/src/gen/register_file.sv" into library work
 INFO: [VRFC 10-311] analyzing module register_file
 INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/central_processing_unit/src/gen/comparator.sv" into library work
+INFO: [VRFC 10-311] analyzing module comparator
 INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/central_processing_unit/src/gen/decoder.sv" into library work
+INFO: [VRFC 10-311] analyzing module decoder
 INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/central_processing_unit/src/gen/control_and_status_registers.sv" into library work
 INFO: [VRFC 10-311] analyzing module control_and_status_registers
 INFO: [VRFC 10-2458] undeclared symbol mstatus___spie, assumed default net type wire [/home/seankent/bluejay/ip/central_processing_unit/src/gen/control_and_status_registers.sv:287]
@@ -71,10 +73,6 @@ WARNING: [VRFC 10-3380] identifier 'mcause' is used before its declaration [/hom
 WARNING: [VRFC 10-3380] identifier 'we__mcause' is used before its declaration [/home/seankent/bluejay/ip/central_processing_unit/src/gen/control_and_status_registers.sv:158]
 WARNING: [VRFC 10-3380] identifier 'mtval' is used before its declaration [/home/seankent/bluejay/ip/central_processing_unit/src/gen/control_and_status_registers.sv:162]
 WARNING: [VRFC 10-3380] identifier 'we__mtval' is used before its declaration [/home/seankent/bluejay/ip/central_processing_unit/src/gen/control_and_status_registers.sv:163]
-INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/central_processing_unit/tb/gen/tb.sv" into library work
-INFO: [VRFC 10-311] analyzing module tb
-INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/central_processing_unit/tb/gen/memory.sv" into library work
-INFO: [VRFC 10-311] analyzing module tb_mem
 INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/machine_timer_registers/src/gen/machine_timer_registers.sv" into library work
 INFO: [VRFC 10-311] analyzing module machine_timer_registers
 WARNING: [VRFC 10-3380] identifier 'mtime' is used before its declaration [/home/seankent/bluejay/ip/machine_timer_registers/src/gen/machine_timer_registers.sv:17]
@@ -86,4 +84,3 @@ WARNING: [VRFC 10-3380] identifier 'mtimecmp' is used before its declaration [/h
 WARNING: [VRFC 10-3380] identifier 'we__mtimecmp' is used before its declaration [/home/seankent/bluejay/ip/machine_timer_registers/src/gen/machine_timer_registers.sv:34]
 INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/machine_timer_registers/tb/gen/tb.sv" into library work
 INFO: [VRFC 10-311] analyzing module tb
-WARNING: [VRFC 10-3609] overwriting previous definition of module 'tb' [/home/seankent/bluejay/ip/machine_timer_registers/tb/gen/tb.sv:9]
