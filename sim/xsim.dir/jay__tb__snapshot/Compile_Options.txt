@@ -1,1 +1,0 @@
--debug "all" --relax -top "jay__tb" -snapshot "jay__tb__snapshot" 

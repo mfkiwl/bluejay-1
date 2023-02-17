@@ -3,9 +3,12 @@
 //==============================================
 module jay 
 (
-    input clk,
-    input rst,
+    clk,
+    rst
 );
+
+input clk;
+input rst;
 
 logic clk;
 logic rst;
@@ -34,84 +37,39 @@ logic [7:0] pmar__5;
 logic [7:0] pmar__6;
 logic [7:0] pmar__7;
 
-logic hclk;
-logic hresetn;
-logic [39:0] haddr;
-logic hwrite;
-logic [2:0] hsize;
-logic [2:0] hburst;
-logic [3:0] hprot;
-logic [1:0] htrans;
-logic hmastlock;
-logic [63:0] hwdata;
-logic hready;
-logic hresp;
-logic hreadyout;
-logic [63:0] hrdata;
+logic cs__0;
+logic we__0;
+logic [39:0] addr__0;
+logic [2:0] size__0;
+logic [63:0] wr_data__0;
+logic [63:0] rd_data__0;
 
-logic hsel__default;
-logic hresp__default;
-logic hreadyout__default;
-logic hsel__0;
-logic hresp__0;
-logic hreadyout__0;
-logic hsel__1;
-logic hresp__1;
-logic hreadyout__1;
+logic cs__1;
+logic we__1;
+logic [39:0] addr__1;
+logic [2:0] size__1;
+logic [63:0] wr_data__1;
+logic [63:0] rd_data__1;
 
-logic device_to_ahb_master__valid;
-logic device_to_ahb_master__we;
-logic [39:0] device_to_ahb_master__addr;
-logic [2:0] device_to_ahb_master__size;
-logic [63:0] device_to_ahb_master__data;
-logic ahb_master_to_device__valid;
-logic ahb_master_to_device__error;
-logic [63:0] ahb_master_to_device__data;
+logic cs__2;
+logic we__2;
+logic [39:0] addr__2;
+logic [2:0] size__2;
+logic [63:0] wr_data__2;
+logic [63:0] rd_data__2;
 
-logic ahb_slave_to_device__0__cs;
-logic ahb_slave_to_device__0__ready;
-logic ahb_slave_to_device__0__we;
-logic [39:0] ahb_slave_to_device__0__addr;
-logic [2:0] ahb_slave_to_device__0__size;
-logic [63:0] ahb_slave_to_device__0__wr_data;
-logic ahb_slave_to_device__0__error;
-logic ahb_slave_to_device__0__rd_data;
+logic cs__3;
+logic we__3;
+logic [39:0] addr__3;
+logic [2:0] size__3;
+logic [63:0] wr_data__3;
+logic [63:0] rd_data__3;
 
-logic ahb_slave_to_device__1__cs;
-logic ahb_slave_to_device__1__ready;
-logic ahb_slave_to_device__1__we;
-logic [39:0] ahb_slave_to_device__1__addr;
-logic [2:0] ahb_slave_to_device__1__size;
-logic [63:0] ahb_slave_to_device__1__wr_data;
-logic ahb_slave_to_device__1__error;
-logic ahb_slave_to_device__1__rd_data;
-
-logic ahb_slave_to_device__2__cs;
-logic ahb_slave_to_device__2__ready;
-logic ahb_slave_to_device__2__we;
-logic [39:0] ahb_slave_to_device__2__addr;
-logic [2:0] ahb_slave_to_device__2__size;
-logic [63:0] ahb_slave_to_device__2__wr_data;
-logic ahb_slave_to_device__2__error;
-logic ahb_slave_to_device__2__rd_data;
-
-logic ahb_slave_to_device__3__cs;
-logic ahb_slave_to_device__3__ready;
-logic ahb_slave_to_device__3__we;
-logic [39:0] ahb_slave_to_device__3__addr;
-logic [2:0] ahb_slave_to_device__3__size;
-logic [63:0] ahb_slave_to_device__3__wr_data;
-logic ahb_slave_to_device__3__error;
-logic ahb_slave_to_device__3__rd_data;
-
-
-assign hclk = clk;
-assign hresetn = ~rst;
 
 //==============================
-// cpu 
+// central_processing_unit__0
 //==============================
-central_processing_unit cpu 
+central_processing_unit central_processing_unit__0 
 (
     .clk(clk),
     .rst(rst),
@@ -128,9 +86,9 @@ central_processing_unit cpu
 );
 
 //==============================
-// memory_management_unit 
+// memory_management_unit
 //==============================
-memory_management_unit mmu
+memory_management_unit memory_management_unit__0
 (
     .clk(clk),
     .rst(rst),
@@ -163,47 +121,47 @@ memory_management_unit mmu
 //==============================================
 // platform_level_interrupt_controller 
 //==============================================
-platform_level_interrupt_controller plic
+platform_level_interrupt_controller platform_level_interrupt_controller__0
 (
     .clk(clk),
     .rst(rst),
-    .cs(ahb_slave_to_device__0__cs),
-    .we(ahb_slave_to_device__0__we),
-    .addr(ahb_slave_to_device__0__addr[25:0]),
-    .wr_data(ahb_slave_to_device__0__wr_data[31:0]),
-    .rd_data(ahb_slave_to_device__0__rd_data[31:0]),
+    .cs(cs__0),
+    .we(we__0),
+    .addr(addr__0[25:0]),
+    .wr_data(wr_data__0[31:0]),
+    .rd_data(rd_data__0[31:0]),
     .irq__0(irq__0),
     .irq__1(irq__1),
     .context__0__eip(context__0__eip)
 );
 
 //==============================================
-// machine_timer_registers
+// machine_timer_registers__0 
 //==============================================
-machine_timer_registers mtr 
+machine_timer_registers machine_timer_registers__0 
 (
     .clk(clk),
     .rst(rst),
-    .cs(ahb_slave_to_device__1__cs),
-    .we(ahb_slave_to_device__1__we),
-    .addr(ahb_slave_to_device__1__addr[0]),
-    .wr_data(ahb_slave_to_device__1__wr_data),
-    .rd_data(ahb_slave_to_device__1__rd_data),
+    .cs(cs__1),
+    .we(we__1),
+    .addr(addr__1[0]),
+    .wr_data(wr_data__1),
+    .rd_data(rd_data__1),
     .tip(tip)
 );
 
 //==============================
-// pma_registers 
+// physical_memory_attribute_registers__0
 //==============================
-physical_memory_attribute_registers pma_registers
+physical_memory_attribute_registers physical_memory_attribute_registers__0
 (   
     .clk(clk),
     .rst(rst),
-    .cs(ahb_slave_to_device__2__cs),
-    .we(ahb_slave_to_device__2__we)
-    .addr(ahb_slave_to_device__2__addr[2:0]),
-    .wr_data(ahb_slave_to_device__2__wr_data),
-    .rd_data(ahb_slave_to_device__2__rd_data),
+    .cs(cs__2),
+    .we(we__2)
+    .addr(addr__2[2:0]),
+    .wr_data(wr_data__2),
+    .rd_data(rd_data__2),
     .pmar__0(pmar__0),
     .pmar__1(pmar__1),
     .pmar__2(pmar__2),
@@ -213,21 +171,61 @@ physical_memory_attribute_registers pma_registers
     .pmar__6(pmar__6),
     .pmar__7(pmar__7)
 );
-    
+
 //==============================
-// mem_controller 
+// advanced_high_performance_bus__0
 //==============================
-memory_controller mem_controller 
-(   
-    .clk(clk),
-    .rst(rst),
+advanced_high_performance_bus advanced_high_performance_bus__0
+(
+    .hclk(clk),
+    .hresetn(~rst),
+    .cs__0(cs__0),
+    .we__0(we__0),
+    .addr__0(addr__0),
+    .size__0(size__0),
+    .wr_data__0(wr_data__0),
+    .rd_data__0(rd_data__0),
+    .cs__1(cs__1),
+    .we__1(we__1),
+    .addr__1(addr__1),
+    .size__1(size__1),
+    .wr_data__1(wr_data__1),
+    .rd_data__1(rd_data__1),
+    .cs__2(cs__2),
+    .we__2(we__2),
+    .addr__2(addr__2),
+    .size__2(size__2),
+    .wr_data__2(wr_data__2),
+    .rd_data__2(rd_data__2),
+    .cs__3(cs__3),
+    .we__3(we__3),
+    .addr__3(addr__3),
+    .size__3(size__3),
+    .wr_data__3(wr_data__3),
+    .rd_data__3(rd_data__3)
 );
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //==============================================
-// ahb__decoder
+// advanced_high_performance_bus__decoder__0
 //==============================================
-advanced_high_performance_bus__decoder ahb__decoder
+advanced_high_performance_bus__decoder advanced_high_performance_bus__decoder__0
 (
     .hclk(hclk),
     .hresetn(hresetn),
@@ -240,9 +238,9 @@ advanced_high_performance_bus__decoder ahb__decoder
 );
 
 //==============================
-// ahb__multiplexor
+// advanced_high_performance_bus__multiplexor__0
 //==============================
-advanced_high_performance_bus__multiplexor ahb__multiplexor
+advanced_high_performance_bus__multiplexor advanced_high_performance_bus__multiplexor__0
 (
     .hclk(hclk),
     .hresetn(hresetn),
@@ -272,9 +270,9 @@ advanced_high_performance_bus__multiplexor ahb__multiplexor
 );
 
 //==============================================                                                                                                          
-// ahb__master 
+// advance_high_performance_bus__master__0
 //==============================================
-advance_high_performance_bus__master ahb__master
+advance_high_performance_bus__master advance_high_performance_bus__master__0
 (
     .hclk(hclk),
     .hresetn(hresetn),
@@ -299,12 +297,10 @@ advance_high_performance_bus__master ahb__master
     .ahb_master_to_device__data(ahb_master_to_device__data)
 );
 
-
-
 //==============================
-// ahb__default_slave 
+// advanced_high_performance_bus__default_slave__0
 //==============================
-advanced_high_performance_bus__default_slave ahb__default_slave 
+advanced_high_performance_bus__default_slave advanced_high_performance_bus__default_slave__0
 (
     .hclk(hclk),
     .hresetn(hresetn),
@@ -324,9 +320,9 @@ advanced_high_performance_bus__default_slave ahb__default_slave
 );
 
 //==============================
-// ahb__slave__0
+// advance_high_performance_bus__slave__0
 //==============================
-advance_high_performance_bus__slave ahb__slave__0
+advance_high_performance_bus__slave advance_high_performance_bus__slave__0
 (
     .hclk(hclk),
     .hresetn(hresetn),                                                                                                                                    
@@ -343,19 +339,18 @@ advance_high_performance_bus__slave ahb__slave__0
     .hresp(hresp__0),
     .hreadyout(hreadyout__0),
     .hrdata(hrdata__0),
-    .ahb_slave_to_device__cs(ahb_slave_to_device__0__cs),
-    .ahb_slave_to_device__ready(ahb_slave_to_device__0__ready),
-    .ahb_slave_to_device__we(ahb_slave_to_device__0__we),
-    .ahb_slave_to_device__addr(ahb_slave_to_device__0__addr),
-    .ahb_slave_to_device__size(ahb_slave_to_device__0__size),
-    .ahb_slave_to_device__wr_data(ahb_slave_to_device__0__wr_data),
-    .ahb_slave_to_device__rd_data(ahb_slave_to_device__0__rd_data)
+    .cs(cs__0),
+    .we(we__0),
+    .addr(addr__0),
+    .size(size__0),
+    .wr_data(wr_data__0),
+    .rd_data(rd_data__0)
 );
 
 //==============================
-// ahb__slave__1
+// advance_high_performance_bus__slave__1
 //==============================
-advance_high_performance_bus__slave ahb__slave__1
+advance_high_performance_bus__slave advance_high_performance_bus__slave__1
 (
     .hclk(hclk),
     .hresetn(hresetn),                                                                                                                                    
@@ -372,19 +367,18 @@ advance_high_performance_bus__slave ahb__slave__1
     .hresp(hresp__1),
     .hreadyout(hreadyout__1),
     .hrdata(hrdata__1),
-    .ahb_slave_to_device__cs(ahb_slave_to_device__1__cs),
-    .ahb_slave_to_device__ready(ahb_slave_to_device__1__ready),
-    .ahb_slave_to_device__we(ahb_slave_to_device__1__we),
-    .ahb_slave_to_device__addr(ahb_slave_to_device__1__addr),
-    .ahb_slave_to_device__size(ahb_slave_to_device__1__size),
-    .ahb_slave_to_device__wr_data(ahb_slave_to_device__1__wr_data),
-    .ahb_slave_to_device__rd_data(ahb_slave_to_device__1__rd_data)
+    .cs(cs__1),
+    .we(we__1),
+    .addr(addr__1),
+    .size(size__1),
+    .wr_data(wr_data__1),
+    .rd_data(rd_data__1)
 );
 
 //==============================
-// ahb__slave__2
+// advance_high_performance_bus__slave__2
 //==============================
-advance_high_performance_bus__slave ahb__slave__2
+advance_high_performance_bus__slave advance_high_performance_bus__slave__2
 (
     .hclk(hclk),
     .hresetn(hresetn),                                                                                                                                    
@@ -401,13 +395,12 @@ advance_high_performance_bus__slave ahb__slave__2
     .hresp(hresp__2),
     .hreadyout(hreadyout__2),
     .hrdata(hrdata__2),
-    .ahb_slave_to_device__cs(ahb_slave_to_device__2__cs),
-    .ahb_slave_to_device__ready(ahb_slave_to_device__2__ready),
-    .ahb_slave_to_device__we(ahb_slave_to_device__2__we),
-    .ahb_slave_to_device__addr(ahb_slave_to_device__2__addr),
-    .ahb_slave_to_device__size(ahb_slave_to_device__2__size),
-    .ahb_slave_to_device__wr_data(ahb_slave_to_device__2__wr_data),
-    .ahb_slave_to_device__rd_data(ahb_slave_to_device__2__rd_data)
+    .cs(cs__2),
+    .we(we__2),
+    .addr(addr__2),
+    .size(size__2),
+    .wr_data(wr_data__2),
+    .rd_data(rd_data__2)
 );
 
 

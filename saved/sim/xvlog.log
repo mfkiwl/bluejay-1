@@ -1,0 +1,59 @@
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/build/arithmetic_logic_unit.sv" into library work
+INFO: [VRFC 10-311] analyzing module arithmetic_logic_unit
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/build/binary_to_seven_segment.sv" into library work
+INFO: [VRFC 10-311] analyzing module binary_to_seven_segment
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/build/central_processing_unit.sv" into library work
+INFO: [VRFC 10-311] analyzing module central_processing_unit
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/build/comparator.sv" into library work
+INFO: [VRFC 10-311] analyzing module comparator
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/build/debouncer.sv" into library work
+INFO: [VRFC 10-311] analyzing module debouncer
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/build/decoder.sv" into library work
+INFO: [VRFC 10-311] analyzing module decoder
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/build/edge_detector.sv" into library work
+INFO: [VRFC 10-311] analyzing module counter
+INFO: [VRFC 10-311] analyzing module edge_detector
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/build/jay.sv" into library work
+INFO: [VRFC 10-311] analyzing module jay
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/build/jay__tb.sv" into library work
+INFO: [VRFC 10-311] analyzing module jay__tb
+WARNING: [VRFC 10-2938] 'clk' is already implicitly declared on line 16 [/home/seankent/bluejay/build/jay__tb.sv:40]
+WARNING: [VRFC 10-2938] 'rst' is already implicitly declared on line 17 [/home/seankent/bluejay/build/jay__tb.sv:41]
+WARNING: [VRFC 10-2938] 'l1_to_mem__addr' is already implicitly declared on line 18 [/home/seankent/bluejay/build/jay__tb.sv:42]
+WARNING: [VRFC 10-2938] 'l1_to_mem__wr_data' is already implicitly declared on line 19 [/home/seankent/bluejay/build/jay__tb.sv:43]
+WARNING: [VRFC 10-2938] 'l1_to_mem__rd_data' is already implicitly declared on line 20 [/home/seankent/bluejay/build/jay__tb.sv:44]
+WARNING: [VRFC 10-2938] 'l1_to_mem__en' is already implicitly declared on line 21 [/home/seankent/bluejay/build/jay__tb.sv:45]
+WARNING: [VRFC 10-2938] 'l1_to_mem__we' is already implicitly declared on line 22 [/home/seankent/bluejay/build/jay__tb.sv:46]
+WARNING: [VRFC 10-2938] 'addr' is already implicitly declared on line 32 [/home/seankent/bluejay/build/jay__tb.sv:49]
+WARNING: [VRFC 10-2938] 'wr_data' is already implicitly declared on line 33 [/home/seankent/bluejay/build/jay__tb.sv:50]
+WARNING: [VRFC 10-2938] 'rd_data' is already implicitly declared on line 34 [/home/seankent/bluejay/build/jay__tb.sv:51]
+WARNING: [VRFC 10-2938] 'en' is already implicitly declared on line 35 [/home/seankent/bluejay/build/jay__tb.sv:52]
+WARNING: [VRFC 10-2938] 'we' is already implicitly declared on line 36 [/home/seankent/bluejay/build/jay__tb.sv:53]
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/build/l1.sv" into library work
+INFO: [VRFC 10-311] analyzing module l1
+WARNING: [VRFC 10-3380] identifier 'STATE__IDLE' is used before its declaration [/home/seankent/bluejay/build/l1.sv:39]
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/build/memory.sv" into library work
+INFO: [VRFC 10-311] analyzing module memory
+WARNING: [VRFC 10-3380] identifier 'DEPTH__LOG2' is used before its declaration [/home/seankent/bluejay/build/memory.sv:8]
+WARNING: [VRFC 10-3380] identifier 'WIDTH' is used before its declaration [/home/seankent/bluejay/build/memory.sv:10]
+WARNING: [VRFC 10-3380] identifier 'WIDTH' is used before its declaration [/home/seankent/bluejay/build/memory.sv:11]
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/build/mem.sv" into library work
+INFO: [VRFC 10-311] analyzing module mem
+WARNING: [VRFC 10-3380] identifier 'DEPTH__LOG2' is used before its declaration [/home/seankent/bluejay/build/mem.sv:8]
+WARNING: [VRFC 10-3380] identifier 'WIDTH' is used before its declaration [/home/seankent/bluejay/build/mem.sv:11]
+WARNING: [VRFC 10-3380] identifier 'WIDTH' is used before its declaration [/home/seankent/bluejay/build/mem.sv:12]
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/build/register_file.sv" into library work
+INFO: [VRFC 10-311] analyzing module register_file
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/build/rx.sv" into library work
+INFO: [VRFC 10-311] analyzing module rx
+WARNING: [VRFC 10-3380] identifier 'WIDTH' is used before its declaration [/home/seankent/bluejay/build/rx.sv:10]
+WARNING: [VRFC 10-3380] identifier 'WIDTH' is used before its declaration [/home/seankent/bluejay/build/rx.sv:12]
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/build/seven_segment_display.sv" into library work
+INFO: [VRFC 10-311] analyzing module seven_segment_display
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/build/timer.sv" into library work
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/build/top.sv" into library work
+INFO: [VRFC 10-311] analyzing module top
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/build/tx.sv" into library work
+INFO: [VRFC 10-311] analyzing module tx
+WARNING: [VRFC 10-3380] identifier 'WIDTH' is used before its declaration [/home/seankent/bluejay/build/tx.sv:10]
+WARNING: [VRFC 10-3380] identifier 'WIDTH' is used before its declaration [/home/seankent/bluejay/build/tx.sv:12]

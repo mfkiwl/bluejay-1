@@ -1,0 +1,13 @@
+
+sraiw:     file format elf64-littleriscv
+
+
+Disassembly of section .text:
+
+0000000000000000 <_start>:
+   0:	000ff2b7          	lui	x5,0xff
+   4:	00f2829b          	addiw	x5,x5,15 # ff00f <__global_pointer$+0xfd7f7>
+   8:	00c29293          	slli	x5,x5,0xc
+   c:	ba528293          	addi	x5,x5,-1115
+  10:	0072851b          	addiw	x10,x5,7
+  14:	00100073          	ebreak

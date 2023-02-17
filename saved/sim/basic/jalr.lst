@@ -1,0 +1,16 @@
+
+jalr:     file format elf64-littleriscv
+
+
+Disassembly of section .text:
+
+0000000000000000 <_start>:
+   0:	00000297          	auipc	x5,0x0
+   4:	01428293          	addi	x5,x5,20 # 14 <foo>
+   8:	000280e7          	jalr	x1,0(x5)
+   c:	00000513          	addi	x10,x0,0
+  10:	00100073          	ebreak
+
+0000000000000014 <foo>:
+  14:	00a00513          	addi	x10,x0,10
+  18:	00408567          	jalr	x10,4(x1)

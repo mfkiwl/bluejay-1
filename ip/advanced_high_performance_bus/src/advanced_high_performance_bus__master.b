@@ -3,50 +3,102 @@
 //==============================================
 module advance_high_performance_bus__master
 (
-    input hclk,
-    input hresetn,
-    output logic [39:0] haddr,
-    output logic hwrite,
-    output logic [2:0] hsize,
-    output logic [2:0] hburst,
-    output logic [3:0] hprot,
-    output logic [1:0] htrans,
-    output logic hmastlock,
-    output logic [63:0] hwdata,
-    input hready,
-    input hresp,
-    input [63:0] hrdata,
-    input device_to_ahb_master__valid,
-    input device_to_ahb_master__we,
-    input [39:0] device_to_ahb_master__addr,
-    input [2:0] device_to_ahb_master__size,
-    input [63:0] device_to_ahb_master__data,
-    output logic ahb_master_to_device__valid,
-    output logic ahb_master_to_device__error,
-    output logic [63:0] ahb_master_to_device__data
+    hclk,
+    hresetn,
+    haddr,
+    hwrite,
+    hsize,
+    hburst,
+    hprot,
+    htrans,
+    hmastlock,
+    hwdata,
+    hready,
+    hresp,
+    hrdata,
+    device_to_master__valid,
+    device_to_master__we,
+    device_to_master__addr,
+    device_to_master__size,
+    device_to_master__data,
+    master_to_device__valid,
+    master_to_device__error,
+    master_to_device__data
 );
 
-logic en__a;
-logic en__b;
-logic [3:0] state;
-logic [3:0] state__n;
+input hclk;
+input hresetn;
+output [39:0] haddr;
+output hwrite;
+output [2:0] hsize;
+output [2:0] hburst;
+output [3:0] hprot;
+output [1:0] htrans;
+output hmastlock;
+output [63:0] hwdata;
+input hready;
+input hresp;
+input [63:0] hrdata;
+
+input device_to_master__valid;
+input device_to_master__we;
+input [39:0] device_to_master__addr;
+input [2:0] device_to_master__size;
+input [63:0] device_to_master__data;
+
+output master_to_device__valid;
+output master_to_device__error;
+output [63:0] master_to_device__data;
+
+logic hclk;
+logic hresetn;
+logic [39:0] haddr;
+logic hwrite;
+logic [2:0] hsize;
+logic [2:0] hburst;
+logic [3:0] hprot;
+logic [1:0] htrans;
+logic hmastlock;
+logic [63:0] hwdata;
+logic hready;
+logic hresp;
+logic [63:0] hrdata;
+
+logic device_to_master__valid;
+logic device_to_master__we;
+logic [39:0] device_to_master__addr;
+logic [2:0] device_to_master__size;
+logic [63:0] device_to_master__data;
+
+logic master_to_device__valid;
+logic master_to_device__error;
+logic [63:0] master_to_device__data;
+
+logic [1:0] state;
+logic [1:0] state__n;
+
+localparam STATE__READY = 2'h0;
+localparam STATE__ADDRESS_PHASE = 2'h1;
+localparam STATE__DATA_PHASE = 2'h2;
 
 always_comb 
 begin
-    ahb_master_to_device__valid = 1'b0;
     htrans = ADVANCED_HIGH_PERFORMANCE_BUS__HTRANS__IDLE; 
-    en__a = 1'b0;
-    en__b = 1'b0;
+    hburst = ADVANCED_HIGH_PERFORMANCE_BUS__HBURST__SINGLE; 
+    hprot = ADVANCED_HIGH_PERFORMANCE_BUS__HPROT__NON_CACHEABLE__NON_BUFFERABLE__PRIVILEGED_ACCESS__DATA_ACCESS; 
+    hmastlock = ADVANCED_HIGH_PERFORMANCE_BUS__HMASTLOCK__UNLOCKED;
+    master_to_device__valid = 1'b0;
+    master_to_device__error = hresp;
+    master_to_device__data = hrdata;
 
     case (state)
 
         //==============================
-        // STATE__IDLE
+        // STATE__READY
         //==============================
-        STATE__IDLE:
+        STATE__READY:
         begin
-            en__a = device_to_ahb_master__valid;
-            state__n = device_to_ahb_master__valid ? STATE__ADDRESS_PHASE : STATE__IDLE;
+            state__n = device_to_ahb_master__valid ? STATE__ADDRESS_PHASE : STATE__READY;
         end
 
         //==============================
@@ -63,58 +115,70 @@ begin
         //==============================
         STATE__DATA_PHASE:
         begin
-            en__b = hready;
-            state__n = hready ? STATE__RETURN : STATE__DATA_PHASE;
+            master_to_device__valid = hready;
+            state__n = hready ? STATE__READY : STATE__DATA_PHASE;
         end
-
-        //==============================
-        // STATE__RETURN
-        //==============================
-        STATE__RETURN:
-        begin
-            ahb_master_to_device__valid = 1'b1;
-            state__n = STATE__IDLE;
-        end
-
     endcase
 end
 
+//==============================
+// d_flip_flop__haddr
+//==============================
+d_flip_flop #(.WIDTH(40)) d_flip_flop__haddr
+(
+    .clk(clk),
+    .rst(~hresetn),
+    .en(device_to_master__valid),
+    .d(device_to_master__addr),
+    .q(haddr)
+);
 
-assign hburst = ADVANCED_HIGH_PERFORMANCE_BUS__HBURST__SINGLE; 
-assign hprot = 4'b0011; 
-assign hmastlock = 1'b0;
+//==============================
+// d_flip_flop__hwrite
+//==============================
+d_flip_flop #(.WIDTH(1)) d_flip_flop__hwrite
+(
+    .clk(clk),
+    .rst(~hresetn),
+    .en(device_to_master__valid),
+    .d(device_to_master__we),
+    .q(hwrite)
+);
 
+//==============================
+// d_flip_flop__hsize
+//==============================
+d_flip_flop #(.WIDTH(1)) d_flip_flop__hsize
+(
+    .clk(clk),
+    .rst(~hresetn),
+    .en(device_to_master__valid),
+    .d(device_to_master__size),
+    .q(hsize)
+);
 
-always_ff @(posedge clk) begin
-    if (en__a)
-    begin
-        haddr <= device_to_ahb_master__addr;
-        hwrite <= device_to_ahb_master__we;
-        hsize <= device_to_ahb_master__size;
-        hwdata <= device_to_ahb_master__data;
-    end
-    else
-end
+//==============================
+// d_flip_flop__hwdata
+//==============================
+d_flip_flop #(.WIDTH(64)) d_flip_flop__hwdata
+(
+    .clk(clk),
+    .rst(~hresetn),
+    .en(device_to_master__valid),
+    .d(device_to_master__data),
+    .q(hwdata)
+);
 
-always_ff @(posedge clk) begin
-    if (en__b)
-    begin
-        ahb_master_to_device__error <= hresp;
-        ahb_master_to_device__data <= hrdata;
-    end
-    else
-end
-
-
-always_ff @(posedge clk) begin
-    if (~hresetn)
-    begin
-        state <= STATE__IDLE;
-    end
-    else
-    begin
-        state <= state__n;
-    end
-end
+//==============================
+// d_flip_flop__state
+//==============================
+d_flip_flop #(.WIDTH(2), .RESET_VALUE(STATE__READY)) d_flip_flop__state
+(
+    .clk(clk),
+    .rst(~hresetn),
+    .en(1'b1),
+    .d(state__n),
+    .q(state)
+);
 
 endmodule

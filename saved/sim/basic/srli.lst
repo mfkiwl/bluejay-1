@@ -1,0 +1,11 @@
+
+srli:     file format elf64-littleriscv
+
+
+Disassembly of section .text:
+
+0000000000000000 <_start>:
+   0:	00100293          	addi	x5,x0,1
+   4:	03f29293          	slli	x5,x5,0x3f
+   8:	0012d513          	srli	x10,x5,0x1
+   c:	00100073          	ebreak

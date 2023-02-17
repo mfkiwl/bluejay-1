@@ -1,0 +1,29 @@
+
+bgeu:     file format elf64-littleriscv
+
+
+Disassembly of section .text:
+
+0000000000000000 <_start>:
+   0:	fc0002b7          	lui	x5,0xfc000
+   4:	7ff2829b          	addiw	x5,x5,2047 # fffffffffc0007ff <__global_pointer$+0xfffffffffbffefbf>
+   8:	00c29293          	slli	x5,x5,0xc
+   c:	35528293          	addi	x5,x5,853
+  10:	01929293          	slli	x5,x5,0x19
+  14:	00000313          	addi	x6,x0,0
+  18:	00400393          	addi	x7,x0,4
+  1c:	00300e13          	addi	x28,x0,3
+  20:	00000513          	addi	x10,x0,0
+  24:	0062f463          	bgeu	x5,x6,2c <l0>
+  28:	00106513          	ori	x10,x0,1
+
+000000000000002c <l0>:
+  2c:	01c3f463          	bgeu	x7,x28,34 <l1>
+  30:	00206513          	ori	x10,x0,2
+
+0000000000000034 <l1>:
+  34:	00607463          	bgeu	x0,x6,3c <l2>
+  38:	00406513          	ori	x10,x0,4
+
+000000000000003c <l2>:
+  3c:	00100073          	ebreak

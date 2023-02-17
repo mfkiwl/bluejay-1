@@ -1,0 +1,15 @@
+#-----------------------------------------------------------
+# xsim v2022.1 (64-bit)
+# SW Build 3526262 on Mon Apr 18 15:47:01 MDT 2022
+# IP Build 3524634 on Mon Apr 18 20:55:01 MDT 2022
+# Start of session at: Mon Aug 22 22:40:09 2022
+# Process ID: 11554
+# Current directory: /home/seankent/bluejay/sim
+# Command line: xsim -mode tcl -source {xsim.dir/jay__tb__snapshot/xsim_script.tcl}
+# Log file: /home/seankent/bluejay/sim/xsim.log
+# Journal file: /home/seankent/bluejay/sim/xsim.jou
+# Running On: seankent, OS: Linux, CPU Frequency: 2341.042 MHz, CPU Physical cores: 10, Host memory: 33524 MB
+#-----------------------------------------------------------
+source xsim.dir/jay__tb__snapshot/xsim_script.tcl
+open_wave_config /home/seankent/bluejay/sim/jay__tb__snapshot.wcfg
+source xsim_cfg.tcl

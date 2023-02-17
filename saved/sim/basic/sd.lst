@@ -1,0 +1,13 @@
+
+sd:     file format elf64-littleriscv
+
+
+Disassembly of section .text:
+
+0000000000000000 <_start>:
+   0:	00001297          	auipc	x5,0x1
+   4:	01828293          	addi	x5,x5,24 # 1018 <__DATA_BEGIN__>
+   8:	1f100313          	addi	x6,x0,497
+   c:	0062b023          	sd	x6,0(x5)
+  10:	0002b503          	ld	x10,0(x5)
+  14:	00100073          	ebreak
