@@ -157,7 +157,6 @@ logic we;
 logic [39:0] addr;
 logic [1:0] size;
 logic [63:0] wr_data;
-logic [63:0] rd_data;
 logic ready;
 logic [63:0] rd_data;
 
@@ -230,21 +229,37 @@ assign we__0 = we;
 assign we__1 = we; 
 assign we__2 = we; 
 assign we__3 = we; 
+assign we__4 = we; 
+assign we__5 = we; 
+assign we__6 = we; 
+assign we__7 = we; 
 
 assign addr__0 = addr;
 assign addr__1 = addr;
 assign addr__2 = addr;
 assign addr__3 = addr;
+assign addr__4 = addr;
+assign addr__5 = addr;
+assign addr__6 = addr;
+assign addr__7 = addr;
 
 assign size__0 = size;
 assign size__1 = size;
 assign size__2 = size;
 assign size__3 = size;
+assign size__4 = size;
+assign size__5 = size;
+assign size__6 = size;
+assign size__7 = size;
 
 assign wr_data__0 = wr_data;
 assign wr_data__1 = wr_data;
 assign wr_data__2 = wr_data;
 assign wr_data__3 = wr_data;
+assign wr_data__4 = wr_data;
+assign wr_data__5 = wr_data;
+assign wr_data__6 = wr_data;
+assign wr_data__7 = wr_data;
 
 //==============================================
 // decoder

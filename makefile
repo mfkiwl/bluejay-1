@@ -468,6 +468,24 @@ ifeq ($(SIM_IP),$(IP))
 SV += $(addsuffix .sv,$(addprefix $(TOP)/ip/$(IP)/tb/gen/,$(TB_MODULES)))
 endif
 
+#######################################
+# physical_memory_attribute_registers #
+#######################################
+IP := physical_memory_attribute_registers
+
+MODULES :=
+MODULES += physical_memory_attribute_registers
+MODULES += physical_memory_attribute_checker
+
+
+TB_MODULES :=
+TB_MODULES += tb
+
+SV += $(addsuffix .sv,$(addprefix $(TOP)/ip/$(IP)/src/gen/,$(MODULES)))
+ifeq ($(SIM_IP),$(IP))
+SV += $(addsuffix .sv,$(addprefix $(TOP)/ip/$(IP)/tb/gen/,$(TB_MODULES)))
+endif
+
 
 
 #

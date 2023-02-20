@@ -37,7 +37,6 @@ logic [7:0] pmar__5;
 logic [7:0] pmar__6;
 logic [7:0] pmar__7;
 
-
 logic cs;
 logic we;
 logic [39:0] addr;
@@ -79,6 +78,37 @@ logic [63:0] wr_data__3;
 logic ready__3;
 logic [63:0] rd_data__3;
 
+logic cs__4;
+logic we__4;
+logic [39:0] addr__4;
+logic [1:0] size__4;
+logic [63:0] wr_data__4;
+logic ready__4;
+logic [63:0] rd_data__4;
+
+logic cs__5;
+logic we__5;
+logic [39:0] addr__5;
+logic [1:0] size__5;
+logic [63:0] wr_data__5;
+logic ready__5;
+logic [63:0] rd_data__5;
+
+logic cs__6;
+logic we__6;
+logic [39:0] addr__6;
+logic [1:0] size__6;
+logic [63:0] wr_data__6;
+logic ready__6;
+logic [63:0] rd_data__6;
+
+logic cs__7;
+logic we__7;
+logic [39:0] addr__7;
+logic [1:0] size__7;
+logic [63:0] wr_data__7;
+logic ready__7;
+logic [63:0] rd_data__7;
 
 //==============================
 // central_processing_unit__0
@@ -226,8 +256,36 @@ bus bus__0
     .addr__3(addr__3),
     .size__3(size__3),
     .wr_data__3(wr_data__3),
-    .ready__3(ready__3),
-    .rd_data__3(rd_data__3)
+    .ready__3(1'b1),
+    .rd_data__3(rd_data__3),
+    .cs__4(cs__4),
+    .we__4(we__4),
+    .addr__4(addr__4),
+    .size__4(size__4),
+    .wr_data__4(wr_data__4),
+    .ready__4(1'b1),
+    .rd_data__4(rd_data__4),
+    .cs__5(cs__5),
+    .we__5(we__5),
+    .addr__5(addr__5),
+    .size__5(size__5),
+    .wr_data__5(wr_data__5),
+    .ready__5(1'b1),
+    .rd_data__5(rd_data__5),
+    .cs__6(cs__6),
+    .we__6(we__6),
+    .addr__6(addr__6),
+    .size__6(size__6),
+    .wr_data__6(wr_data__6),
+    .ready__6(1'b1),
+    .rd_data__6(rd_data__6),
+    .cs__7(cs__7),
+    .we__7(we__7),
+    .addr__7(addr__7),
+    .size__7(size__7),
+    .wr_data__7(wr_data__7),
+    .ready__7(1'b1),
+    .rd_data__7(rd_data__7)
 );
 
 endmodule

@@ -131,35 +131,35 @@ memory_management_unit__sign_or_zero_extender memory_management_unit__sign_or_ze
 always_comb
 begin
     casez (addr)
-        MEMORY_MAP_REGION__0:
+        MEMORY_MAPPED_REGION__0:
         begin
             pmar = pmar__0;
         end
-        MEMORY_MAP_REGION__1:
+        MEMORY_MAPPED_REGION__1:
         begin
             pmar = pmar__1;
         end
-        MEMORY_MAP_REGION__2:
+        MEMORY_MAPPED_REGION__2:
         begin
             pmar = pmar__2;
         end
-        MEMORY_MAP_REGION__3:
+        MEMORY_MAPPED_REGION__3:
         begin
             pmar = pmar__3;
         end
-        MEMORY_MAP_REGION__4:
+        MEMORY_MAPPED_REGION__4:
         begin
             pmar = pmar__4;
         end
-        MEMORY_MAP_REGION__5:
+        MEMORY_MAPPED_REGION__5:
         begin
             pmar = pmar__5;
         end
-        MEMORY_MAP_REGION__6:
+        MEMORY_MAPPED_REGION__6:
         begin
             pmar = pmar__6;
         end
-        MEMORY_MAP_REGION__7:
+        MEMORY_MAPPED_REGION__7:
         begin
             pmar = pmar__7;
         end
