@@ -15,9 +15,9 @@
 #define ERRORCODE__ACCESS_FAULT 64'h0
 #define ERRORCODE__MISALIGNED_ADDRESS 64'h1
 
-#define SIZE__DOUBLE 2'h0
+#define SIZE__DOUBLE_WORD 2'h0
 #define SIZE__WORD 2'h1
-#define SIZE__HALF 2'h2
+#define SIZE__HALF_WORD 2'h2
 #define SIZE__BYTE 2'h3
 
 #define NUM_GPR 32

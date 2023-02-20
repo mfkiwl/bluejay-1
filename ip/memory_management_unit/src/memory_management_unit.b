@@ -3,40 +3,96 @@
 //==============================================
 module memory_management_unit
 (
-    input clk,
-    input rst,
-    input cpu_to_mem__valid,
-    input cpu_to_mem__we,
-    input [63:0] cpu_to_mem__addr,
-    input [2:0] cpu_to_mem__dtype,
-    input [63:0] cpu_to_mem__data,
-    output logic mem_to_cpu__valid,
-    output logic mem_to_cpu__error,
-    output logic [63:0] mem_to_cpu__data,
-    output logic device_to_ahb_master__valid,
-    output logic device_to_ahb_master__we,
-    output logic [39:0] device_to_ahb_master__addr,
-    output logic [2:0] device_to_ahb_master__size,
-    output logic [63:0] device_to_ahb_master__data,
-    input ahb_master_to_device__valid,
-    input ahb_master_to_device__error,
-    input [63:0] ahb_master_to_device__data,
-    input pmar__0,
-    input pmar__1,
-    input pmar__2,
-    input pmar__3,
-    input pmar__4,
-    input pmar__5,
-    input pmar__6,
-    input pmar__7
+    clk,
+    rst,
+    cpu_to_mem__valid,
+    cpu_to_mem__we,
+    cpu_to_mem__addr,
+    cpu_to_mem__dtype,
+    cpu_to_mem__data,
+    mem_to_cpu__valid,
+    mem_to_cpu__error,
+    mem_to_cpu__data,
+    cs,
+    we,
+    addr,
+    size,
+    wr_data,
+    ready,
+    rd_data,
+    pmar__0,
+    pmar__1,
+    pmar__2,
+    pmar__3,
+    pmar__4,
+    pmar__5,
+    pmar__6,
+    pmar__7
 );
 
+input clk;
+input rst;
+
+input cpu_to_mem__valid;
+input cpu_to_mem__we;
+input [63:0] cpu_to_mem__addr;
+input [2:0] cpu_to_mem__dtype;
+input [63:0] cpu_to_mem__data;
+
+output mem_to_cpu__valid;
+output mem_to_cpu__error;
+output [63:0] mem_to_cpu__data;
+
+output cs;
+output we;
+output [39:0] addr;
+output [1:0] size;
+output [63:0] wr_data;
+input ready;
+input [63:0] rd_data;
+
+input pmar__0;
+input pmar__1;
+input pmar__2;
+input pmar__3;
+input pmar__4;
+input pmar__5;
+input pmar__6;
+input pmar__7
+
+logic clk;
+logic rst;
+
+logic cpu_to_mem__valid;
+logic cpu_to_mem__we;
+logic [63:0] cpu_to_mem__addr;
+logic [2:0] cpu_to_mem__dtype;
+logic [63:0] cpu_to_mem__data;
+
+logic mem_to_cpu__valid;
+logic mem_to_cpu__error;
+logic [63:0] mem_to_cpu__data;
+
+logic cs;
 logic we;
 logic [39:0] addr;
-logic [2:0] dtype;
+logic [1:0] size;
 logic [63:0] wr_data;
+logic ready;
 logic [63:0] rd_data;
-logic [63:0] rd_data__n;
+logic [2:0] dtype;
+
+logic pmar__0;
+logic pmar__1;
+logic pmar__2;
+logic pmar__3;
+logic pmar__4;
+logic pmar__5;
+logic pmar__6;
+logic pmar__7
+
+logic [63:0] rd_data__pre_sign_or_zero_extender;
+logic [63:0] rd_data__post_sign_or_zero_extender;
 
 logic [7:0] pmar;
 logic [1:0] status;
@@ -45,9 +101,9 @@ logic [3:0] state;
 logic [3:0] state__n;
 
 //==============================
-// physical_memory_attribute_checker 
+// physical_memory_attribute_checker__0
 //==============================
-physical_memory_attribute_checker pma_checker
+physical_memory_attribute_checker physical_memory_attribute_checker__0
 (
     .clk(clk),
     .rst(rst),
@@ -58,130 +114,116 @@ physical_memory_attribute_checker pma_checker
 );
 
 
+//==============================
+// memory_management_unit__sign_or_zero_extender__0
+//==============================
+memory_management_unit__sign_or_zero_extender memory_management_unit__sign_or_zero_extender__0
+(
+    .clk(clk),
+    .rst(rst),
+    .addr(addr[2:0]), 
+    .dtype(dtype),
+    .data__in(rd_data__pre_sign_or_zero_extender),
+    .data__out(rd_data__post_sign_or_zero_extender)
+);
+
+
 always_comb
 begin
-    case (addr)
-        MEMORY_MAP__0:
+    casez (addr)
+        MEMORY_MAP_REGION__0:
         begin
             pmar = pmar__0;
         end
-        MEMORY_MAP__1:
+        MEMORY_MAP_REGION__1:
         begin
             pmar = pmar__1;
         end
-        MEMORY_MAP__2:
+        MEMORY_MAP_REGION__2:
         begin
             pmar = pmar__2;
         end
-        MEMORY_MAP__3:
+        MEMORY_MAP_REGION__3:
         begin
             pmar = pmar__3;
         end
-        MEMORY_MAP__4:
+        MEMORY_MAP_REGION__4:
         begin
             pmar = pmar__4;
         end
-        MEMORY_MAP__5:
+        MEMORY_MAP_REGION__5:
         begin
             pmar = pmar__5;
         end
-        MEMORY_MAP__6:
+        MEMORY_MAP_REGION__6:
         begin
             pmar = pmar__6;
         end
-        MEMORY_MAP__7:
+        MEMORY_MAP_REGION__7:
         begin
             pmar = pmar__7;
         end
-    endcase
-end
-
-// Advanced High-Performance Bus Master Interface
-assign device_to_ahb_master__we = we;
-assign device_to_ahb_master__addr = addr;
-assign device_to_ahb_master__data = wr_data;
-
-always_comb begin
-    case (dtype)
-        DTYPE__DOUBLE_WORD:
+        default:
         begin
-            device_to_ahb_master__size = ADVANCED_HIGH_PERFORMANCE_BUS__HSIZE__DOUBLE_WORD; 
-        end
-        DTYPE__WORD:
-        begin
-            device_to_ahb_master__size = ADVANCED_HIGH_PERFORMANCE_BUS__HSIZE__WORD; 
-        end
-        DTYPE__WORD_UNSIGNED:
-        begin
-            device_to_ahb_master__size = ADVANCED_HIGH_PERFORMANCE_BUS__HSIZE__WORD; 
-        end
-        DTYPE__HALF_WORD:
-        begin
-            device_to_ahb_master__size = ADVANCED_HIGH_PERFORMANCE_BUS__HSIZE__HALF_WORD; 
-        end
-        DTYPE__HALF_WORD_UNSIGNED:
-        begin
-            device_to_ahb_master__size = ADVANCED_HIGH_PERFORMANCE_BUS__HSIZE__HALF_WORD; 
-        end
-        DTYPE__BYTE:
-        begin
-            device_to_ahb_master__size = ADVANCED_HIGH_PERFORMANCE_BUS__HSIZE__BYTE; 
-        end
-        DTYPE__BYTE_UNSIGNED:
-        begin
-            device_to_ahb_master__size = ADVANCED_HIGH_PERFORMANCE_BUS__HSIZE__BYTE; 
+            pmar[PHYSICAL_MEMORY_ATTRIBUTE_REGISTER__MEMORY_TYPE__FIELD] = PHYSICAL_MEMORY_ATTRIBUTE_REGISTER__MEMORY_TYPE__IO;
+            pmar[PHYSICAL_MEMORY_ATTRIBUTE_REGISTER__BYTE_ACCESS_SUPPORTED__FIELD] = 1'b0;
+            pmar[PHYSICAL_MEMORY_ATTRIBUTE_REGISTER__HALF_WORD_ACCESS_SUPPORTED__FIELD] = 1'b0;
+            pmar[PHYSICAL_MEMORY_ATTRIBUTE_REGISTER__WORD_ACCESS_SUPPORTED__FIELD] = 1'b0;
+            pmar[PHYSICAL_MEMORY_ATTRIBUTE_REGISTER__DOUBLE_WORD_ACCESS_SUPPORTED__FIELD] = 1'b0;
+            pmar[PHYSICAL_MEMORY_ATTRIBUTE_REGISTER__MISALIGNED_ACCESS_SUPPORTED__FIELD] = 1'b0;
         end
     endcase
 end
-
-always_comb begin
-    case (dtype)
-        DTYPE__DOUBLE_WORD:
-        begin
-            rd_data__n = device_to_ahb_master__data; 
-        end
-        DTYPE__WORD:
-        begin
-            rd_data__n = {{32{device_to_ahb_master__data[31]}}, device_to_ahb_master__data[31:0]}; 
-        end
-        DTYPE__WORD_UNSIGNED:
-        begin
-            rd_data__n = {32'h0, device_to_ahb_master__data[31:0]}; 
-        end
-        DTYPE__HALF_WORD:
-        begin
-            rd_data__n = {{48{device_to_ahb_master__data[15]}}, device_to_ahb_master__data[15:0]}; 
-        end
-        DTYPE__HALF_WORD_UNSIGNED:
-        begin
-            rd_data__n = {48'h0, device_to_ahb_master__data[15:0]}; 
-        end
-        DTYPE__BYTE:
-        begin
-            rd_data__n = {{56{device_to_ahb_master__data[7]}}, device_to_ahb_master__data[7:0]}; 
-        end
-        DTYPE__BYTE_UNSIGNED:
-        begin
-            rd_data__n = {56'h0, device_to_ahb_master__data[7:0]}; 
-        end
-    endcase
-end
-
-parameter STATE__RESET = 4'h0;
-parameter STATE__IDLE = 4'h1;
-parameter STATE__PMA_CHECK = 4'h2;
-parameter STATE__REQ = 4'h3;
-parameter STATE__WAIT = 4'h4; 
-parameter STATE__RESP = 4'h5;
-parameter STATE__ACCESS_FAULT = 4'h6; 
-parameter STATE__MISALIGNED_ADDRESS = 4'h7; 
 
 always_comb
 begin
-    device_to_ahb_master__valid = 1'b0;
+    case (dtype)
+        DTYPE__BYTE:
+        begin
+            size = SIZE__BYTE; 
+        end
+        DTYPE__BYTE_UNSIGNED:
+        begin
+            size = SIZE__BYTE; 
+        end
+        DTYPE__HALF_WORD:
+        begin
+            size = SIZE__HALF_WORD; 
+        end
+        DTYPE__HALF_WORD_UNSIGNED:
+        begin
+            size = SIZE__HALF_WORD; 
+        end
+        DTYPE__WORD:
+        begin
+            size = SIZE__WORD; 
+        end
+        DTYPE__WORD_UNSIGNED:
+        begin
+            size = SIZE__WORD; 
+        end
+        DTYPE__DOUBLE_WORD:
+        begin
+            size = SIZE__DOUBLE_WORD; 
+        end
+    endcase
+end
+
+
+localparam STATE__RESET = 4'h0;
+localparam STATE__READY = 4'h1;
+localparam STATE__PMA_CHECK = 4'h2;
+localparam STATE__REQ = 4'h3;
+localparam STATE__RESP = 4'h4;
+localparam STATE__ACCESS_FAULT = 4'h5; 
+localparam STATE__MISALIGNED_ADDRESS = 4'h6; 
+
+always_comb
+begin
+    cs = 1'b0;
     mem_to_cpu__valid = 1'b0;
     mem_to_cpu__error = 1'b0; 
-    mem_to_cpu__data = rd_data;
+    mem_to_cpu__data = rd_data__post_sign_or_zero_extender;
         
     case (state)
         //==============================
@@ -189,15 +231,15 @@ begin
         //==============================
         STATE__RESET:
         begin
-            state__n = STATE__IDLE;
+            state__n = STATE__READY;
         end
 
         //==============================
-        // STATE__IDLE
+        // STATE__READY
         //==============================
-        STATE__IDLE:
+        STATE__READY:
         begin
-            state__n = cpu_to_mem__valid ? STATE__PMA_CHECK : STATE__IDLE;
+            state__n = cpu_to_mem__valid ? STATE__PMA_CHECK : STATE__READY;
         end
 
         //==============================
@@ -213,16 +255,8 @@ begin
         //==============================
         STATE__REQ
         begin
-            device_to_ahb_master__valid = 1'b1;
-            state__n = STATE__WAIT; 
-        end
-
-        //==============================
-        // STATE__WAIT
-        //==============================
-        STATE__WAIT:
-        begin
-            state__n = (ahb_master_to_device__valid & ahb_master_to_device__error) ? STATE__ACCESS_FAULT : (ahb_master_to_device__valid & ~ahb_master_to_device__error) ? STATE__RESP : STATE__WAIT; 
+            cs = 1'b1;
+            state__n = ready ? STATE__RESP : STATE__REQ;
         end
             
         //==============================
@@ -232,8 +266,8 @@ begin
         begin
             mem_to_cpu__valid = 1'b1;
             mem_to_cpu__error = 1'b0;
-            mem_to_cpu__data = rd_data;
-            state__n = STATE__IDLE; 
+            mem_to_cpu__data = rd_data__post_sign_or_zero_extender;
+            state__n = STATE__READY; 
         end
 
         //==============================
@@ -260,36 +294,79 @@ begin
     endcase
 end
 
-always_ff @(posedge clk)
-begin
-    if (cpu_to_mem__valid)
-    begin
-        we <= cpu_to_mem__we;
-        addr <= cpu_to_mem__addr[39:0];
-        dtype <= cpu_to_mem__dtype;
-        wr_data <= cpu_to_mem__data;
-    end
-end
 
-always_ff @(posedge clk)
-begin
-    if (ahb_master_to_device__valid)
-    begin
-        rd_data <= rd_data__n;
-    end
-end
+//==============================
+// d_flip_flop__rd_data__pre_sign_or_zero_extender
+//==============================
+d_flip_flop #(.WIDTH(64)) d_flip_flop__rd_data__pre_sign_or_zero_extender
+(
+    .clk(clk),
+    .rst(rst),
+    .en(1'b1),
+    .d(rd_data),
+    .q(rd_data__pre_sign_or_zero_extender)
+);
 
-always_ff @(posedge clk) 
-begin
-    if (rst)
-    begin
-        state <= STATE__RESET;
-    end
-    else 
-    begin
-        state <= state__n;
-    end
-end
+
+//==============================
+// d_flip_flop__we
+//==============================
+d_flip_flop #(.WIDTH(1)) d_flip_flop__we
+(
+    .clk(clk),
+    .rst(rst),
+    .en(cpu_to_mem__valid),
+    .d(cpu_to_mem__we),
+    .q(we)
+);
+
+//==============================
+// d_flip_flop__addr
+//==============================
+d_flip_flop #(.WIDTH(40)) d_flip_flop__addr
+(
+    .clk(clk),
+    .rst(rst),
+    .en(cpu_to_mem__valid),
+    .d(cpu_to_mem__addr[39:0]),
+    .q(addr)
+);
+
+//==============================
+// d_flip_flop__dtype
+//==============================
+d_flip_flop #(.WIDTH(3)) d_flip_flop__dtype
+(
+    .clk(clk),
+    .rst(rst),
+    .en(cpu_to_mem__valid),
+    .d(cpu_to_mem__dtype),
+    .q(dtype)
+);
+
+//==============================
+// d_flip_flop__wr_data
+//==============================
+d_flip_flop #(.WIDTH(3)) d_flip_flop__wr_data
+(
+    .clk(clk),
+    .rst(rst),
+    .en(cpu_to_mem__valid),
+    .d(cpu_to_mem__data),
+    .q(wr_data)
+);
+
+//==============================
+// d_flip_flop__state
+//==============================
+d_flip_flop #(.WIDTH(4), .RESET_VALUE(STATE__RESET)) d_flip_flop__state
+(
+    .clk(clk),
+    .rst(rst),
+    .en(1'b1),
+    .d(state__n),
+    .q(state)
+);
 
 
 endmodule
