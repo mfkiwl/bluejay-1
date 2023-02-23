@@ -20,7 +20,7 @@ module memory_controller
 
 input cs;
 input we;
-input [39:0] addr;
+input [11:0] addr;
 input [1:0] size;
 input [63:0] wr_data;
 output ready;
@@ -35,7 +35,7 @@ input [63:0] douta
 
 logic cs;
 logic we;
-logic [39:0] addr;
+logic [11:0] addr;
 logic [1:0] size;
 logic [63:0] wr_data;
 logic ready;
@@ -52,11 +52,15 @@ logic [7:0] state;
 logic [7:0] state__n;
 
 
+assign addra = addr;
+assign dina = wr_data;
+
 always_comb begin
     ena = 1'b0;
     wea = 1'b0;
     wrbe = 8'hff; 
     ready = 1'b0;
+    rd_data = douta;
         
     case (state)
         //==============================
@@ -64,10 +68,51 @@ always_comb begin
         //==============================
         STATE__IDLE:
         begin
-            state__n = cs ? (size == SIZE__BYTE) STATE__READ__HALF_WORD : STATE__IDLE;
+            state__n = cs ? (we ? ((size == SIZE__DOUBLE_WORD) ? STATE__WRITE__DOUBLE_WORD : (size == SIZE__WORD) ? STATE__WRITE__WORD : (size == SIZE__HALF_WORD) ? STATE__WRITE__HALF_WORD : STATE__WRITE__BYTE) : STATE__READ__0) : STATE__IDLE; 
+            state__n = (cs & we) ? STATE__WRTE : (cs & ~we) ? STATE__READ__0 : STATE__IDLE; 
+        end
+
+        //==============================
+        // STATE__READ__0
+        //==============================
+        STATE__READ__0:
+        begin
+            ena = 1'b1;
+            state__n = STATE__READ__BYTE__1; 
+        end
+
+        //==============================
+        // STATE__READ__1
+        //==============================
+        STATE__READ__1:
+        begin
+            ena = 1'b1;
+            state__n = STATE__READ__BYTE__2; 
+        end
+
+        //==============================
+        // STATE__READ__2
+        //==============================
+        STATE__READ__2:
+        begin
+            ena = 1'b1;
+            ready = 1'b1;
+            rd_data = douta >> addr[2:0]; 
+            state__n = STATE__IDLE; 
+        end
+
+        //==============================
+        // STATE__WRITE
+        //==============================
+        STATE__WRITE:
+        begin
+            ena = 1'b1;
+            wea = 1'b1;
+            wrbe = (size == SIZE__BYTE) : 8'b0000_0001 << addr[2:0] : ...
+            ready = 1'b1;
+            state__n = STATE__IDLE; 
         end
 endcase
-
 
 
 endmodule

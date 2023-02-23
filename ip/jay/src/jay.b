@@ -4,14 +4,28 @@
 module jay 
 (
     clk,
-    rst
+    rst,
+    port__0,
+    port__1,
+    port__2,
+    port__3
 );
 
 input clk;
 input rst;
 
+inout [7:0] port__0;
+inout [7:0] port__1;
+inout [7:0] port__2;
+inout [7:0] port__3;
+
 logic clk;
 logic rst;
+
+logic [7:0] port__0;
+logic [7:0] port__1;
+logic [7:0] port__2;
+logic [7:0] port__3;
 
 logic cpu_to_mem__valid;
 logic cpu_to_mem__we;
@@ -215,6 +229,25 @@ physical_memory_attribute_registers physical_memory_attribute_registers__0
     .pmar__6(pmar__6),
     .pmar__7(pmar__7)
 );
+
+//==============================
+// general_purpose_input_output__0
+//==============================
+general_purpose_input_output general_purpose_input_output__0
+(
+    .clk(clk),
+    .rst(rst),
+    .cs(cs__3),
+    .we(we__3),
+    .addr(addr__3),
+    .wr_data(wr_data__3),
+    .rd_data(rd_data__3),
+    .port__0(port__0),
+    .port__1(port__1),
+    .port__2(port__2),
+    .port__3(port__3)
+);
+
 
 //==============================
 // bus__0
