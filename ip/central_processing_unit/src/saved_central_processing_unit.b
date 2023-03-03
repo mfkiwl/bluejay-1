@@ -5,14 +5,14 @@ module central_processing_unit
 (
     clk,
     rst,
-    cs,
-    we,
-    addr,
-    size,
-    wr_data,
-    ready,
-    resp,
-    rd_data,
+    cpu_to_mem__valid,
+    cpu_to_mem__we,
+    cpu_to_mem__addr,
+    cpu_to_mem__dtype,
+    cpu_to_mem__data,
+    mem_to_cpu__valid,
+    mem_to_cpu__error,
+    mem_to_cpu__data,
     eip,
     tip
 );
@@ -20,14 +20,14 @@ module central_processing_unit
 
 input clk;
 input rst;
-output cs;
-output we;
-output [63:0] addr;
-output [1:0] size;
-output [63:0] wr_data;
-input ready;
-input resp;
-input [63:0] rd_data;
+output cpu_to_mem__valid;
+output cpu_to_mem__we;
+output [63:0] cpu_to_mem__addr;
+output [2:0] cpu_to_mem__dtype;
+output [63:0] cpu_to_mem__data;
+input mem_to_cpu__valid;
+input mem_to_cpu__error;
+input [63:0] mem_to_cpu__data;
 input eip;
 input tip;
 
@@ -50,11 +50,10 @@ logic [63:0] imm;
 logic [63:0] uimm;
 
 // Register File
-logic rf__cs;
-logic rf__we;
-logic [4:0] rf__addr;
-logic [63:0] rf__rd_data;
-logic [63:0] rf__wr_data;
+logic we;
+logic [4:0] addr;
+logic [63:0] rd_data;
+logic [63:0] wr_data;
 
 // ALU
 logic [4:0] func;
@@ -73,7 +72,6 @@ logic ltu;
 logic geu;
 
 // Control and Status Registers
-logic csr__cs;
 logic csr__we;
 logic [11:0] csr__addr;
 logic [63:0] csr__wr_data;
@@ -87,16 +85,16 @@ logic mip__msip;
 logic mip__mtip;
 
 // CPU to Memory Interface
-logic cs;
-logic we;
-logic [63:0] addr;
-logic [1:0] size;
-logic [2:0] dtype;
-logic [63:0] wr_data;
-logic ready;
-logic resp;
-logic [63:0] rd_data;
-logic [63:0] rd_data__sign_or_zero_extended;
+logic cpu_to_mem__valid;
+logic cpu_to_mem__we;
+logic [63:0] cpu_to_mem__addr;
+logic [2:0] cpu_to_mem__dtype;
+logic [63:0] cpu_to_mem__data;
+
+// Memory to CPU Interface
+logic mem_to_cpu__valid;
+logic mem_to_cpu__error;
+logic [63:0] mem_to_cpu__data;
 
 // Interrupt Signals
 logic eip;
@@ -134,11 +132,11 @@ register_file register_file__0
 (
     .clk(clk),
     .rst(rst),
-    .cs(rf__cs),
-    .we(rf__we),
-    .addr(rf__addr),
-    .rd_data(rf__rd_data),
-    .wr_data(rf__wr_data)
+    .cs(1'b1),
+    .we(we),
+    .addr(addr),
+    .rd_data(rd_data),
+    .wr_data(wr_data)
 );
 
 //==============================
@@ -172,25 +170,13 @@ comparator comparator__0
 );
 
 //==============================
-// sign_or_zero_extender
-//==============================
-sign_or_zero_extender sign_or_zero_extender__0
-(
-    .clk(clk),
-    .rst(rst),
-    .dtype(dtype),
-    .din(rd_data),
-    .dout(rd_data__sign_or_zero_extended),
-);
-
-//==============================
 // control_and_status_registers__0
 //==============================
 control_and_status_registers control_and_status_registers__0
 (
     .clk(clk),
     .rst(rst),
-    .cs(csr__cs),
+    .cs(1'b1),
     .we(csr__we),
     .addr(csr__addr),
     .rd_data(csr__rd_data),
@@ -216,6 +202,7 @@ states = [
     'STATE__RESET',
     'STATE__FETCH__0',
     'STATE__FETCH__1',
+    'STATE__FETCH__2',
     'STATE__DECODE',
     'STATE__LB__0',
     'STATE__LB__1',
@@ -436,15 +423,13 @@ always_comb begin
     a__n = a;
     b__n = b;
     func = FUNC__ADD;
-    rf__cs = 1'b0;
-    rf__we = 1'b0;
-    rf__addr = rd;
-    rf__wr_data = c;
-    cs = 1'b0;
+    addr = rd;
     we = 1'b0;
-    size = SIZE__WORD;
-    dtype = DTYPE__WORD;
-    wr_data = rf__rd_data;
+    wr_data = c;
+    cpu_to_mem__valid = 1'b0;
+    cpu_to_mem__we = 1'b0;
+    cpu_to_mem__dtype = DTYPE__WORD;
+    cpu_to_mem__data = rd_data;
     csr__addr = imm[11:0];
     csr__we = 1'b0;
     csr__wr_data = c;
@@ -473,12 +458,19 @@ always_comb begin
         //==============================
         STATE__FETCH__1:
         begin
-            cs = 1'b1;
-            addr = pc;
-            size = SIZE__WORD;
-            dtype = DTYPE__WORD;
-            ir__n = rd_data[31:0];
-            state__n = (ready & ~resp) ? STATE__DECODE : (ready & resp & (rd_data == ERRORCODE__ACCESS_FAULT)) ? STATE__EXCEPTION__INSTRUCTION_ACCESS_FAULT__0 : STATE__FETCH__1;
+            cpu_to_mem__valid = 1'b1;
+            cpu_to_mem__addr = pc;
+            cpu_to_mem__dtype = DTYPE__WORD;
+            state__n = STATE__FETCH__2;
+        end
+
+        //==============================
+        // STATE__FETCH__2
+        //==============================
+        STATE__FETCH__2:
+        begin
+            ir__n = mem_to_cpu__data[31:0];
+            state__n = (mem_to_cpu__valid & ~mem_to_cpu__error) ? STATE__DECODE : (mem_to_cpu__valid & mem_to_cpu__error & (mem_to_cpu__data == ERRORCODE__ACCESS_FAULT)) ? STATE__EXCEPTION__INSTRUCTION_ACCESS_FAULT__0 : STATE__FETCH__2;
         end
 
         //==============================
@@ -743,9 +735,8 @@ always_comb begin
         //==============================
         STATE__ADD__0:
         begin
-            rf__cs = 1'b1;
-            rf__addr = rs1;
-            a__n = rf__rd_data;
+            addr = rs1;
+            a__n = rd_data;
             state__n = STATE__ADD__1;
         end
 
@@ -754,9 +745,8 @@ always_comb begin
         //==============================
         STATE__ADD__1:
         begin
-            rf__cs = 1'b1;
-            rf__addr = rs2;
-            b__n = rf__rd_data;
+            addr = rs2;
+            b__n = rd_data;
             state__n = STATE__ADD__2;
         end
 
@@ -766,10 +756,9 @@ always_comb begin
         STATE__ADD__2:
         begin
             func = FUNC__ADD;
-            rf__cs = 1'b1;
-            rf__addr = rd;
-            rf__we = 1'b1;
-            rf__wr_data = c;
+            addr = rd;
+            we = 1'b1;
+            wr_data = c;
             pc__n = pc + 4;
             instret = 1'b1;
             state__n = STATE__FETCH__0;
@@ -780,9 +769,8 @@ always_comb begin
         //==============================
         STATE__SUB__0:
         begin
-            rf__cs = 1'b1;
-            rf__addr = rs1;
-            a__n = rf__rd_data;
+            addr = rs1;
+            a__n = rd_data;
             state__n = STATE__SUB__1;
         end
 
@@ -791,9 +779,8 @@ always_comb begin
         //==============================
         STATE__SUB__1:
         begin
-            rf__cs = 1'b1;
-            rf__addr = rs2;
-            b__n = rf__rd_data;
+            addr = rs2;
+            b__n = rd_data;
             state__n = STATE__SUB__2;
         end
 
@@ -803,10 +790,9 @@ always_comb begin
         STATE__SUB__2:
         begin
             func = FUNC__SUB;
-            rf__cs = 1'b1;
-            rf__addr = rd;
-            rf__we = 1'b1;
-            rf__wr_data = c;
+            addr = rd;
+            we = 1'b1;
+            wr_data = c;
             pc__n = pc + 4;
             instret = 1'b1;
             state__n = STATE__FETCH__0;
@@ -817,9 +803,8 @@ always_comb begin
         //==============================
         STATE__SLL__0:
         begin
-            rf__cs = 1'b1;
-            rf__addr = rs1;
-            a__n = rf__rd_data;
+            addr = rs1;
+            a__n = rd_data;
             state__n = STATE__SLL__1;
         end
 
@@ -828,9 +813,8 @@ always_comb begin
         //==============================
         STATE__SLL__1:
         begin
-            rf__cs = 1'b1;
-            rf__addr = rs2;
-            b__n = rf__rd_data;
+            addr = rs2;
+            b__n = rd_data;
             state__n = STATE__SLL__2;
         end
 
@@ -840,10 +824,9 @@ always_comb begin
         STATE__SLL__2:
         begin
             func = FUNC__SLL;
-            rf__cs = 1'b1;
-            rf__addr = rd;
-            rf__we = 1'b1;
-            rf__wr_data = c;
+            addr = rd;
+            we = 1'b1;
+            wr_data = c;
             pc__n = pc + 4;
             instret = 1'b1;
             state__n = STATE__FETCH__0;
@@ -854,9 +837,8 @@ always_comb begin
         //==============================
         STATE__SLT__0:
         begin
-            rf__cs = 1'b1;
-            rf__addr = rs1;
-            a__n = rf__rd_data;
+            addr = rs1;
+            a__n = rd_data;
             state__n = STATE__SLT__1;
         end
 
@@ -865,9 +847,8 @@ always_comb begin
         //==============================
         STATE__SLT__1:
         begin
-            rf__cs = 1'b1;
-            rf__addr = rs2;
-            b__n = rf__rd_data;
+            addr = rs2;
+            b__n = rd_data;
             state__n = STATE__SLT__2;
         end
 
@@ -877,10 +858,9 @@ always_comb begin
         STATE__SLT__2:
         begin
             func = FUNC__SLT;
-            rf__cs = 1'b1;
-            rf__addr = rd;
-            rf__we = 1'b1;
-            rf__wr_data = c;
+            addr = rd;
+            we = 1'b1;
+            wr_data = c;
             pc__n = pc + 4;
             instret = 1'b1;
             state__n = STATE__FETCH__0;
@@ -891,9 +871,8 @@ always_comb begin
         //==============================
         STATE__SLTU__0:
         begin
-            rf__cs = 1'b1;
-            rf__addr = rs1;
-            a__n = rf__rd_data;
+            addr = rs1;
+            a__n = rd_data;
             state__n = STATE__SLTU__1;
         end
 
@@ -902,9 +881,8 @@ always_comb begin
         //==============================
         STATE__SLTU__1:
         begin
-            rf__cs = 1'b1;
-            rf__addr = rs2;
-            b__n = rf__rd_data;
+            addr = rs2;
+            b__n = rd_data;
             state__n = STATE__SLTU__2;
         end
 
@@ -914,10 +892,9 @@ always_comb begin
         STATE__SLTU__2:
         begin
             func = FUNC__SLTU;
-            rf__cs = 1'b1;
-            rf__addr = rd;
-            rf__we = 1'b1;
-            rf__wr_data = c;
+            addr = rd;
+            we = 1'b1;
+            wr_data = c;
             pc__n = pc + 4;
             instret = 1'b1;
             state__n = STATE__FETCH__0;
@@ -928,9 +905,8 @@ always_comb begin
         //==============================
         STATE__XOR__0:
         begin
-            rf__cs = 1'b1;
-            rf__addr = rs1;
-            a__n = rf__rd_data;
+            addr = rs1;
+            a__n = rd_data;
             state__n = STATE__XOR__1;
         end
 
@@ -939,9 +915,8 @@ always_comb begin
         //==============================
         STATE__XOR__1:
         begin
-            rf__cs = 1'b1;
-            rf__addr = rs2;
-            b__n = rf__rd_data;
+            addr = rs2;
+            b__n = rd_data;
             state__n = STATE__XOR__2;
         end
 
@@ -951,10 +926,9 @@ always_comb begin
         STATE__XOR__2:
         begin
             func = FUNC__XOR;
-            rf__cs = 1'b1;
-            rf__addr = rd;
-            rf__we = 1'b1;
-            rf__wr_data = c;
+            addr = rd;
+            we = 1'b1;
+            wr_data = c;
             pc__n = pc + 4;
             instret = 1'b1;
             state__n = STATE__FETCH__0;
@@ -965,9 +939,8 @@ always_comb begin
         //==============================
         STATE__SRL__0:
         begin
-            rf__cs = 1'b1;
-            rf__addr = rs1;
-            a__n = rf__rd_data;
+            addr = rs1;
+            a__n = rd_data;
             state__n = STATE__SRL__1;
         end
 
@@ -976,9 +949,8 @@ always_comb begin
         //==============================
         STATE__SRL__1:
         begin
-            rf__cs = 1'b1;
-            rf__addr = rs2;
-            b__n = rf__rd_data;
+            addr = rs2;
+            b__n = rd_data;
             state__n = STATE__SRL__2;
         end
 
@@ -988,10 +960,9 @@ always_comb begin
         STATE__SRL__2:
         begin
             func = FUNC__SRL;
-            rf__cs = 1'b1;
-            rf__addr = rd;
-            rf__we = 1'b1;
-            rf__wr_data = c;
+            addr = rd;
+            we = 1'b1;
+            wr_data = c;
             pc__n = pc + 4;
             instret = 1'b1;
             state__n = STATE__FETCH__0;
@@ -1002,9 +973,8 @@ always_comb begin
         //==============================
         STATE__SRA__0:
         begin
-            rf__cs = 1'b1;
-            rf__addr = rs1;
-            a__n = rf__rd_data;
+            addr = rs1;
+            a__n = rd_data;
             state__n = STATE__SRA__1;
         end
 
@@ -1013,9 +983,8 @@ always_comb begin
         //==============================
         STATE__SRA__1:
         begin
-            rf__cs = 1'b1;
-            rf__addr = rs2;
-            b__n = rf__rd_data;
+            addr = rs2;
+            b__n = rd_data;
             state__n = STATE__SRA__2;
         end
 
@@ -1025,10 +994,9 @@ always_comb begin
         STATE__SRA__2:
         begin
             func = FUNC__SRA;
-            rf__cs = 1'b1;
-            rf__addr = rd;
-            rf__we = 1'b1;
-            rf__wr_data = c;
+            addr = rd;
+            we = 1'b1;
+            wr_data = c;
             pc__n = pc + 4;
             instret = 1'b1;
             state__n = STATE__FETCH__0;
@@ -1039,9 +1007,8 @@ always_comb begin
         //==============================
         STATE__OR__0:
         begin
-            rf__cs = 1'b1;
-            rf__addr = rs1;
-            a__n = rf__rd_data;
+            addr = rs1;
+            a__n = rd_data;
             state__n = STATE__OR__1;
         end
 
@@ -1050,9 +1017,8 @@ always_comb begin
         //==============================
         STATE__OR__1:
         begin
-            rf__cs = 1'b1;
-            rf__addr = rs2;
-            b__n = rf__rd_data;
+            addr = rs2;
+            b__n = rd_data;
             state__n = STATE__OR__2;
         end
 
@@ -1062,10 +1028,9 @@ always_comb begin
         STATE__OR__2:
         begin
             func = FUNC__OR;
-            rf__cs = 1'b1;
-            rf__addr = rd;
-            rf__we = 1'b1;
-            rf__wr_data = c;
+            addr = rd;
+            we = 1'b1;
+            wr_data = c;
             pc__n = pc + 4;
             instret = 1'b1;
             state__n = STATE__FETCH__0;
@@ -1076,9 +1041,8 @@ always_comb begin
         //==============================
         STATE__AND__0:
         begin
-            rf__cs = 1'b1;
-            rf__addr = rs1;
-            a__n = rf__rd_data;
+            addr = rs1;
+            a__n = rd_data;
             state__n = STATE__AND__1;
         end
 
@@ -1087,9 +1051,8 @@ always_comb begin
         //==============================
         STATE__AND__1:
         begin
-            rf__cs = 1'b1;
-            rf__addr = rs2;
-            b__n = rf__rd_data;
+            addr = rs2;
+            b__n = rd_data;
             state__n = STATE__AND__2;
         end
 
@@ -1099,10 +1062,9 @@ always_comb begin
         STATE__AND__2:
         begin
             func = FUNC__AND;
-            rf__cs = 1'b1;
-            rf__addr = rd;
-            rf__we = 1'b1;
-            rf__wr_data = c;
+            addr = rd;
+            we = 1'b1;
+            wr_data = c;
             pc__n = pc + 4;
             instret = 1'b1;
             state__n = STATE__FETCH__0;
@@ -1113,9 +1075,8 @@ always_comb begin
         //==============================
         STATE__ADDW__0:
         begin
-            rf__cs = 1'b1;
-            rf__addr = rs1;
-            a__n = rf__rd_data;
+            addr = rs1;
+            a__n = rd_data;
             state__n = STATE__ADDW__1;
         end
 
@@ -1124,9 +1085,8 @@ always_comb begin
         //==============================
         STATE__ADDW__1:
         begin
-            rf__cs = 1'b1;
-            rf__addr = rs2;
-            b__n = rf__rd_data;
+            addr = rs2;
+            b__n = rd_data;
             state__n = STATE__ADDW__2;
         end
 
@@ -1136,10 +1096,9 @@ always_comb begin
         STATE__ADDW__2:
         begin
             func = FUNC__ADDW;
-            rf__cs = 1'b1;
-            rf__addr = rd;
-            rf__we = 1'b1;
-            rf__wr_data = c;
+            addr = rd;
+            we = 1'b1;
+            wr_data = c;
             pc__n = pc + 4;
             instret = 1'b1;
             state__n = STATE__FETCH__0;
@@ -1150,9 +1109,8 @@ always_comb begin
         //==============================
         STATE__SUBW__0:
         begin
-            rf__cs = 1'b1;
-            rf__addr = rs1;
-            a__n = rf__rd_data;
+            addr = rs1;
+            a__n = rd_data;
             state__n = STATE__SUBW__1;
         end
 
@@ -1161,9 +1119,8 @@ always_comb begin
         //==============================
         STATE__SUBW__1:
         begin
-            rf__cs = 1'b1;
-            rf__addr = rs2;
-            b__n = rf__rd_data;
+            addr = rs2;
+            b__n = rd_data;
             state__n = STATE__SUBW__2;
         end
 
@@ -1173,10 +1130,9 @@ always_comb begin
         STATE__SUBW__2:
         begin
             func = FUNC__SUBW;
-            rf__cs = 1'b1;
-            rf__addr = rd;
-            rf__we = 1'b1;
-            rf__wr_data = c;
+            addr = rd;
+            we = 1'b1;
+            wr_data = c;
             pc__n = pc + 4;
             instret = 1'b1;
             state__n = STATE__FETCH__0;
@@ -1187,9 +1143,8 @@ always_comb begin
         //==============================
         STATE__SLLW__0:
         begin
-            rf__cs = 1'b1;
-            rf__addr = rs1;
-            a__n = rf__rd_data;
+            addr = rs1;
+            a__n = rd_data;
             state__n = STATE__SLLW__1;
         end
 
@@ -1198,9 +1153,8 @@ always_comb begin
         //==============================
         STATE__SLLW__1:
         begin
-            rf__cs = 1'b1;
-            rf__addr = rs2;
-            b__n = rf__rd_data;
+            addr = rs2;
+            b__n = rd_data;
             state__n = STATE__SLLW__2;
         end
 
@@ -1210,10 +1164,9 @@ always_comb begin
         STATE__SLLW__2:
         begin
             func = FUNC__SLLW;
-            rf__cs = 1'b1;
-            rf__addr = rd;
-            rf__we = 1'b1;
-            rf__wr_data = c;
+            addr = rd;
+            we = 1'b1;
+            wr_data = c;
             pc__n = pc + 4;
             instret = 1'b1;
             state__n = STATE__FETCH__0;
@@ -1224,9 +1177,8 @@ always_comb begin
         //==============================
         STATE__SRLW__0:
         begin
-            rf__cs = 1'b1;
-            rf__addr = rs1;
-            a__n = rf__rd_data;
+            addr = rs1;
+            a__n = rd_data;
             state__n = STATE__SRLW__1;
         end
 
@@ -1235,9 +1187,8 @@ always_comb begin
         //==============================
         STATE__SRLW__1:
         begin
-            rf__cs = 1'b1;
-            rf__addr = rs2;
-            b__n = rf__rd_data;
+            addr = rs2;
+            b__n = rd_data;
             state__n = STATE__SRLW__2;
         end
 
@@ -1247,10 +1198,9 @@ always_comb begin
         STATE__SRLW__2:
         begin
             func = FUNC__SRLW;
-            rf__cs = 1'b1;
-            rf__addr = rd;
-            rf__we = 1'b1;
-            rf__wr_data = c;
+            addr = rd;
+            we = 1'b1;
+            wr_data = c;
             pc__n = pc + 4;
             instret = 1'b1;
             state__n = STATE__FETCH__0;
@@ -1261,9 +1211,8 @@ always_comb begin
         //==============================
         STATE__SRAW__0:
         begin
-            rf__cs = 1'b1;
-            rf__addr = rs1;
-            a__n = rf__rd_data;
+            addr = rs1;
+            a__n = rd_data;
             state__n = STATE__SRAW__1;
         end
 
@@ -1272,9 +1221,8 @@ always_comb begin
         //==============================
         STATE__SRAW__1:
         begin
-            rf__cs = 1'b1;
-            rf__addr = rs2;
-            b__n = rf__rd_data;
+            addr = rs2;
+            b__n = rd_data;
             state__n = STATE__SRAW__2;
         end
 
@@ -1284,10 +1232,9 @@ always_comb begin
         STATE__SRAW__2:
         begin
             func = FUNC__SRAW;
-            rf__cs = 1'b1;
-            rf__addr = rd;
-            rf__we = 1'b1;
-            rf__wr_data = c;
+            addr = rd;
+            we = 1'b1;
+            wr_data = c;
             pc__n = pc + 4;
             instret = 1'b1;
             state__n = STATE__FETCH__0;
@@ -1298,9 +1245,8 @@ always_comb begin
         //==============================
         STATE__ADDI__0:
         begin
-            rf__cs = 1'b1;
-            rf__addr = rs1;
-            a__n = rf__rd_data;
+            addr = rs1;
+            a__n = rd_data;
             b__n = imm;
             state__n = STATE__ADDI__1;
         end
@@ -1311,10 +1257,9 @@ always_comb begin
         STATE__ADDI__1:
         begin
             func = FUNC__ADD;
-            rf__cs = 1'b1;
-            rf__addr = rd;
-            rf__we = 1'b1;
-            rf__wr_data = c;
+            addr = rd;
+            we = 1'b1;
+            wr_data = c;
             pc__n = pc + 4;
             instret = 1'b1;
             state__n = STATE__FETCH__0;
@@ -1325,9 +1270,8 @@ always_comb begin
         //==============================
         STATE__SLLI__0:
         begin
-            rf__cs = 1'b1;
-            rf__addr = rs1;
-            a__n = rf__rd_data;
+            addr = rs1;
+            a__n = rd_data;
             b__n = imm;
             state__n = STATE__SLLI__1;
         end
@@ -1338,10 +1282,9 @@ always_comb begin
         STATE__SLLI__1:
         begin
             func = FUNC__SLL;
-            rf__cs = 1'b1;
-            rf__addr = rd;
-            rf__we = 1'b1;
-            rf__wr_data = c;
+            addr = rd;
+            we = 1'b1;
+            wr_data = c;
             pc__n = pc + 4;
             instret = 1'b1;
             state__n = STATE__FETCH__0;
@@ -1352,9 +1295,8 @@ always_comb begin
         //==============================
         STATE__SLTI__0:
         begin
-            rf__cs = 1'b1;
-            rf__addr = rs1;
-            a__n = rf__rd_data;
+            addr = rs1;
+            a__n = rd_data;
             b__n = imm;
             state__n = STATE__SLTI__1;
         end
@@ -1365,10 +1307,9 @@ always_comb begin
         STATE__SLTI__1:
         begin
             func = FUNC__SLT;
-            rf__cs = 1'b1;
-            rf__addr = rd;
-            rf__we = 1'b1;
-            rf__wr_data = c;
+            addr = rd;
+            we = 1'b1;
+            wr_data = c;
             pc__n = pc + 4;
             instret = 1'b1;
             state__n = STATE__FETCH__0;
@@ -1379,9 +1320,8 @@ always_comb begin
         //==============================
         STATE__SLTIU__0:
         begin
-            rf__cs = 1'b1;
-            rf__addr = rs1;
-            a__n = rf__rd_data;
+            addr = rs1;
+            a__n = rd_data;
             b__n = imm;
             state__n = STATE__SLTIU__1;
         end
@@ -1392,10 +1332,9 @@ always_comb begin
         STATE__SLTIU__1:
         begin
             func = FUNC__SLTU;
-            rf__cs = 1'b1;
-            rf__addr = rd;
-            rf__we = 1'b1;
-            rf__wr_data = c;
+            addr = rd;
+            we = 1'b1;
+            wr_data = c;
             pc__n = pc + 4;
             instret = 1'b1;
             state__n = STATE__FETCH__0;
@@ -1406,9 +1345,8 @@ always_comb begin
         //==============================
         STATE__XORI__0:
         begin
-            rf__cs = 1'b1;
-            rf__addr = rs1;
-            a__n = rf__rd_data;
+            addr = rs1;
+            a__n = rd_data;
             b__n = imm;
             state__n = STATE__XORI__1;
         end
@@ -1419,10 +1357,9 @@ always_comb begin
         STATE__XORI__1:
         begin
             func = FUNC__XOR;
-            rf__cs = 1'b1;
-            rf__addr = rd;
-            rf__we = 1'b1;
-            rf__wr_data = c;
+            addr = rd;
+            we = 1'b1;
+            wr_data = c;
             pc__n = pc + 4;
             instret = 1'b1;
             state__n = STATE__FETCH__0;
@@ -1433,9 +1370,8 @@ always_comb begin
         //==============================
         STATE__SRLI__0:
         begin
-            rf__cs = 1'b1;
-            rf__addr = rs1;
-            a__n = rf__rd_data;
+            addr = rs1;
+            a__n = rd_data;
             b__n = imm;
             state__n = STATE__SRLI__1;
         end
@@ -1446,10 +1382,9 @@ always_comb begin
         STATE__SRLI__1:
         begin
             func = FUNC__SRL;
-            rf__cs = 1'b1;
-            rf__addr = rd;
-            rf__we = 1'b1;
-            rf__wr_data = c;
+            addr = rd;
+            we = 1'b1;
+            wr_data = c;
             pc__n = pc + 4;
             instret = 1'b1;
             state__n = STATE__FETCH__0;
@@ -1460,9 +1395,8 @@ always_comb begin
         //==============================
         STATE__SRAI__0:
         begin
-            rf__cs = 1'b1;
-            rf__addr = rs1;
-            a__n = rf__rd_data;
+            addr = rs1;
+            a__n = rd_data;
             b__n = imm;
             state__n = STATE__SRAI__1;
         end
@@ -1473,10 +1407,9 @@ always_comb begin
         STATE__SRAI__1:
         begin
             func = FUNC__SRA;
-            rf__cs = 1'b1;
-            rf__addr = rd;
-            rf__we = 1'b1;
-            rf__wr_data = c;
+            addr = rd;
+            we = 1'b1;
+            wr_data = c;
             pc__n = pc + 4;
             instret = 1'b1;
             state__n = STATE__FETCH__0;
@@ -1487,9 +1420,8 @@ always_comb begin
         //==============================
         STATE__ORI__0:
         begin
-            rf__cs = 1'b1;
-            rf__addr = rs1;
-            a__n = rf__rd_data;
+            addr = rs1;
+            a__n = rd_data;
             b__n = imm;
             state__n = STATE__ORI__1;
         end
@@ -1500,10 +1432,9 @@ always_comb begin
         STATE__ORI__1:
         begin
             func = FUNC__OR;
-            rf__cs = 1'b1;
-            rf__addr = rd;
-            rf__we = 1'b1;
-            rf__wr_data = c;
+            addr = rd;
+            we = 1'b1;
+            wr_data = c;
             pc__n = pc + 4;
             instret = 1'b1;
             state__n = STATE__FETCH__0;
@@ -1514,9 +1445,8 @@ always_comb begin
         //==============================
         STATE__ANDI__0:
         begin
-            rf__cs = 1'b1;
-            rf__addr = rs1;
-            a__n = rf__rd_data;
+            addr = rs1;
+            a__n = rd_data;
             b__n = imm;
             state__n = STATE__ANDI__1;
         end
@@ -1527,10 +1457,9 @@ always_comb begin
         STATE__ANDI__1:
         begin
             func = FUNC__AND;
-            rf__cs = 1'b1;
-            rf__addr = rd;
-            rf__we = 1'b1;
-            rf__wr_data = c;
+            addr = rd;
+            we = 1'b1;
+            wr_data = c;
             pc__n = pc + 4;
             instret = 1'b1;
             state__n = STATE__FETCH__0;
@@ -1541,9 +1470,8 @@ always_comb begin
         //==============================
         STATE__ADDIW__0:
         begin
-            rf__cs = 1'b1;
-            rf__addr = rs1;
-            a__n = rf__rd_data;
+            addr = rs1;
+            a__n = rd_data;
             b__n = imm;
             state__n = STATE__ADDIW__1;
         end
@@ -1554,10 +1482,9 @@ always_comb begin
         STATE__ADDIW__1:
         begin
             func = FUNC__ADDW;
-            rf__cs = 1'b1;
-            rf__addr = rd;
-            rf__we = 1'b1;
-            rf__wr_data = c;
+            addr = rd;
+            we = 1'b1;
+            wr_data = c;
             pc__n = pc + 4;
             instret = 1'b1;
             state__n = STATE__FETCH__0;
@@ -1568,9 +1495,8 @@ always_comb begin
         //==============================
         STATE__SLLIW__0:
         begin
-            rf__cs = 1'b1;
-            rf__addr = rs1;
-            a__n = rf__rd_data;
+            addr = rs1;
+            a__n = rd_data;
             b__n = imm;
             state__n = STATE__SLLIW__1;
         end
@@ -1581,10 +1507,9 @@ always_comb begin
         STATE__SLLIW__1:
         begin
             func = FUNC__SLLW;
-            rf__cs = 1'b1;
-            rf__addr = rd;
-            rf__we = 1'b1;
-            rf__wr_data = c;
+            addr = rd;
+            we = 1'b1;
+            wr_data = c;
             pc__n = pc + 4;
             instret = 1'b1;
             state__n = STATE__FETCH__0;
@@ -1595,9 +1520,8 @@ always_comb begin
         //==============================
         STATE__SRLIW__0:
         begin
-            rf__cs = 1'b1;
-            rf__addr = rs1;
-            a__n = rf__rd_data;
+            addr = rs1;
+            a__n = rd_data;
             b__n = imm;
             state__n = STATE__SRLIW__1;
         end
@@ -1608,10 +1532,9 @@ always_comb begin
         STATE__SRLIW__1:
         begin
             func = FUNC__SRLW;
-            rf__cs = 1'b1;
-            rf__addr = rd;
-            rf__we = 1'b1;
-            rf__wr_data = c;
+            addr = rd;
+            we = 1'b1;
+            wr_data = c;
             pc__n = pc + 4;
             instret = 1'b1;
             state__n = STATE__FETCH__0;
@@ -1622,9 +1545,8 @@ always_comb begin
         //==============================
         STATE__SRAIW__0:
         begin
-            rf__cs = 1'b1;
-            rf__addr = rs1;
-            a__n = rf__rd_data;
+            addr = rs1;
+            a__n = rd_data;
             b__n = imm;
             state__n = STATE__SRAIW__1;
         end
@@ -1635,10 +1557,9 @@ always_comb begin
         STATE__SRAIW__1:
         begin
             func = FUNC__SRAW;
-            rf__cs = 1'b1;
-            rf__addr = rd;
-            rf__we = 1'b1;
-            rf__wr_data = c;
+            addr = rd;
+            we = 1'b1;
+            wr_data = c;
             pc__n = pc + 4;
             instret = 1'b1;
             state__n = STATE__FETCH__0;
@@ -1649,9 +1570,8 @@ always_comb begin
         //==============================
         STATE__LB__0:
         begin
-            rf__cs = 1'b1;
-            rf__addr = rs1;
-            a__n = rf__rd_data;
+            addr = rs1;
+            a__n = rd_data;
             b__n = imm;
             state__n = STATE__LB__1;
         end
@@ -1662,21 +1582,27 @@ always_comb begin
         STATE__LB__1:
         begin
             func = FUNC__ADD;
-            cs = 1'b1;
-            addr = c;
-            size = SIZE__BYTE;
-            dtype = DTYPE__BYTE;
-            rf__cs = 1'b1;
-            rf__addr = rd;
-            rf__we = ready & ~resp;
-            rf__wr_data = rd_data__sign_or_zero_extended;
-            state__n = (ready & ~resp) ? STATE__LB__2 : (ready & resp & (rd_data == ERRORCODE__ACCESS_FAULT)) ? STATE__EXCEPTION__LOAD_ACCESS_FAULT__0 : (ready & resp & (rd_data == ERRORCODE__MISALIGNED_ADDRESS)) ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0 : STATE__LB__1;
+            cpu_to_mem__valid = 1'b1;
+            cpu_to_mem__addr = c;
+            cpu_to_mem__dtype = DTYPE__BYTE;
+            state__n = STATE__LB__2;
         end
 
         //==============================
         // STATE__LB__2
         //==============================
         STATE__LB__2:
+        begin
+            addr = rd;
+            we = mem_to_cpu__valid & ~mem_to_cpu__error;
+            wr_data = mem_to_cpu__data;
+            state__n = (mem_to_cpu__valid & ~mem_to_cpu__error) ? STATE__LB__3 : (mem_to_cpu__valid & mem_to_cpu__error & (mem_to_cpu__data == ERRORCODE__ACCESS_FAULT)) ? STATE__EXCEPTION__LOAD_ACCESS_FAULT__0 : (mem_to_cpu__valid & mem_to_cpu__error & (mem_to_cpu__data == ERRORCODE__MISALIGNED_ADDRESS)) ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0 : STATE__LB__2;
+        end
+
+        //==============================
+        // STATE__LB__3
+        //==============================
+        STATE__LB__3:
         begin
             pc__n = pc + 4;
             instret = 1'b1;
@@ -1688,9 +1614,8 @@ always_comb begin
         //==============================
         STATE__LH__0:
         begin
-            rf__cs = 1'b1;
-            rf__addr = rs1;
-            a__n = rf__rd_data;
+            addr = rs1;
+            a__n = rd_data;
             b__n = imm;
             state__n = STATE__LH__1;
         end
@@ -1701,21 +1626,27 @@ always_comb begin
         STATE__LH__1:
         begin
             func = FUNC__ADD;
-            cs = 1'b1;
-            addr = c;
-            size = SIZE__HALF_WORD;
-            dtype = DTYPE__HALF_WORD;
-            rf__cs = 1'b1;
-            rf__addr = rd;
-            rf__we = ready & ~resp;
-            rf__wr_data = rd_data__sign_or_zero_extended;
-            state__n = (ready & ~resp) ? STATE__LH__2 : (ready & resp & (rd_data == ERRORCODE__ACCESS_FAULT)) ? STATE__EXCEPTION__LOAD_ACCESS_FAULT__0 : (ready & resp & (rd_data == ERRORCODE__MISALIGNED_ADDRESS)) ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0 : STATE__LH__1;
+            cpu_to_mem__valid = 1'b1;
+            cpu_to_mem__addr = c;
+            cpu_to_mem__dtype = DTYPE__HALF_WORD;
+            state__n = STATE__LH__2;
         end
 
         //==============================
         // STATE__LH__2
         //==============================
         STATE__LH__2:
+        begin
+            addr = rd;
+            we = mem_to_cpu__valid & ~mem_to_cpu__error;
+            wr_data = mem_to_cpu__data;
+            state__n = (mem_to_cpu__valid & ~mem_to_cpu__error) ? STATE__LH__3 : (mem_to_cpu__valid & mem_to_cpu__error & (mem_to_cpu__data == ERRORCODE__ACCESS_FAULT)) ? STATE__EXCEPTION__LOAD_ACCESS_FAULT__0 : (mem_to_cpu__valid & mem_to_cpu__error & (mem_to_cpu__data == ERRORCODE__MISALIGNED_ADDRESS)) ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0 : STATE__LH__2;
+        end
+
+        //==============================
+        // STATE__LH__3
+        //==============================
+        STATE__LH__3:
         begin
             pc__n = pc + 4;
             instret = 1'b1;
@@ -1727,9 +1658,8 @@ always_comb begin
         //==============================
         STATE__LW__0:
         begin
-            rf__cs = 1'b1;
-            rf__addr = rs1;
-            a__n = rf__rd_data;
+            addr = rs1;
+            a__n = rd_data;
             b__n = imm;
             state__n = STATE__LW__1;
         end
@@ -1740,21 +1670,27 @@ always_comb begin
         STATE__LW__1:
         begin
             func = FUNC__ADD;
-            cs = 1'b1;
-            addr = c;
-            size = SIZE__WORD;
-            dtype = DTYPE__WORD;
-            rf__cs = 1'b1;
-            rf__addr = rd;
-            rf__we = ready & ~resp;
-            rf__wr_data = rd_data__sign_or_zero_extended;
-            state__n = (ready & ~resp) ? STATE__LW__2 : (ready & resp & (rd_data == ERRORCODE__ACCESS_FAULT)) ? STATE__EXCEPTION__LOAD_ACCESS_FAULT__0 : (ready & resp & (rd_data == ERRORCODE__MISALIGNED_ADDRESS)) ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0 : STATE__LW__1;
+            cpu_to_mem__valid = 1'b1;
+            cpu_to_mem__addr = c;
+            cpu_to_mem__dtype = DTYPE__WORD;
+            state__n = STATE__LW__2;
         end
 
         //==============================
         // STATE__LW__2
         //==============================
         STATE__LW__2:
+        begin
+            addr = rd;
+            we = mem_to_cpu__valid & ~mem_to_cpu__error;
+            wr_data = mem_to_cpu__data;
+            state__n = (mem_to_cpu__valid & ~mem_to_cpu__error) ? STATE__LW__3 : (mem_to_cpu__valid & mem_to_cpu__error & (mem_to_cpu__data == ERRORCODE__ACCESS_FAULT)) ? STATE__EXCEPTION__LOAD_ACCESS_FAULT__0 : (mem_to_cpu__valid & mem_to_cpu__error & (mem_to_cpu__data == ERRORCODE__MISALIGNED_ADDRESS)) ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0 : STATE__LW__2;
+        end
+
+        //==============================
+        // STATE__LW__3
+        //==============================
+        STATE__LW__3:
         begin
             pc__n = pc + 4;
             instret = 1'b1;
@@ -1766,9 +1702,8 @@ always_comb begin
         //==============================
         STATE__LD__0:
         begin
-            rf__cs = 1'b1;
-            rf__addr = rs1;
-            a__n = rf__rd_data;
+            addr = rs1;
+            a__n = rd_data;
             b__n = imm;
             state__n = STATE__LD__1;
         end
@@ -1779,21 +1714,27 @@ always_comb begin
         STATE__LD__1:
         begin
             func = FUNC__ADD;
-            cs = 1'b1;
-            addr = c;
-            size = SIZE__DOUBLE_WORD;
-            dtype = DTYPE__DOUBLE_WORD;
-            rf__cs = 1'b1;
-            rf__addr = rd;
-            rf__we = ready & ~resp;
-            rf__wr_data = rd_data__sign_or_zero_extended;
-            state__n = (ready & ~resp) ? STATE__LD__2 : (ready & resp & (rd_data == ERRORCODE__ACCESS_FAULT)) ? STATE__EXCEPTION__LOAD_ACCESS_FAULT__0 : (ready & resp & (rd_data == ERRORCODE__MISALIGNED_ADDRESS)) ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0 : STATE__LD__1;
+            cpu_to_mem__valid = 1'b1;
+            cpu_to_mem__addr = c;
+            cpu_to_mem__dtype = DTYPE__DOUBLE_WORD;
+            state__n = STATE__LD__2;
         end
 
         //==============================
         // STATE__LD__2
         //==============================
         STATE__LD__2:
+        begin
+            addr = rd;
+            we = mem_to_cpu__valid & ~mem_to_cpu__error;
+            wr_data = mem_to_cpu__data;
+            state__n = (mem_to_cpu__valid & ~mem_to_cpu__error) ? STATE__LD__3 : (mem_to_cpu__valid & mem_to_cpu__error & (mem_to_cpu__data == ERRORCODE__ACCESS_FAULT)) ? STATE__EXCEPTION__LOAD_ACCESS_FAULT__0 : (mem_to_cpu__valid & mem_to_cpu__error & (mem_to_cpu__data == ERRORCODE__MISALIGNED_ADDRESS)) ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0 : STATE__LD__2;
+        end
+
+        //==============================
+        // STATE__LD__3
+        //==============================
+        STATE__LD__3:
         begin
             pc__n = pc + 4;
             instret = 1'b1;
@@ -1805,9 +1746,8 @@ always_comb begin
         //==============================
         STATE__LBU__0:
         begin
-            rf__cs = 1'b1;
-            rf__addr = rs1;
-            a__n = rf__rd_data;
+            addr = rs1;
+            a__n = rd_data;
             b__n = imm;
             state__n = STATE__LBU__1;
         end
@@ -1818,21 +1758,27 @@ always_comb begin
         STATE__LBU__1:
         begin
             func = FUNC__ADD;
-            cs = 1'b1;
-            addr = c;
-            size = SIZE__BYTE;
-            dtype = DTYPE__BYTE_UNSIGNED;
-            rf__cs = 1'b1;
-            rf__addr = rd;
-            rf__we = ready & ~resp;
-            rf__wr_data = rd_data__sign_or_zero_extended;
-            state__n = (ready & ~resp) ? STATE__LBU__2 : (ready & resp & (rd_data == ERRORCODE__ACCESS_FAULT)) ? STATE__EXCEPTION__LOAD_ACCESS_FAULT__0 : (ready & resp & (rd_data == ERRORCODE__MISALIGNED_ADDRESS)) ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0 : STATE__LBU__1;
+            cpu_to_mem__valid = 1'b1;
+            cpu_to_mem__addr = c;
+            cpu_to_mem__dtype = DTYPE__BYTE_UNSIGNED;
+            state__n = STATE__LBU__2;
         end
 
         //==============================
         // STATE__LBU__2
         //==============================
         STATE__LBU__2:
+        begin
+            addr = rd;
+            we = mem_to_cpu__valid & ~mem_to_cpu__error;
+            wr_data = mem_to_cpu__data;
+            state__n = (mem_to_cpu__valid & ~mem_to_cpu__error) ? STATE__LBU__3 : (mem_to_cpu__valid & mem_to_cpu__error & (mem_to_cpu__data == ERRORCODE__ACCESS_FAULT)) ? STATE__EXCEPTION__LOAD_ACCESS_FAULT__0 : (mem_to_cpu__valid & mem_to_cpu__error & (mem_to_cpu__data == ERRORCODE__MISALIGNED_ADDRESS)) ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0 : STATE__LBU__2;
+        end
+
+        //==============================
+        // STATE__LBU__3
+        //==============================
+        STATE__LBU__3:
         begin
             pc__n = pc + 4;
             instret = 1'b1;
@@ -1844,9 +1790,8 @@ always_comb begin
         //==============================
         STATE__LHU__0:
         begin
-            rf__cs = 1'b1;
-            rf__addr = rs1;
-            a__n = rf__rd_data;
+            addr = rs1;
+            a__n = rd_data;
             b__n = imm;
             state__n = STATE__LHU__1;
         end
@@ -1857,21 +1802,27 @@ always_comb begin
         STATE__LHU__1:
         begin
             func = FUNC__ADD;
-            cs = 1'b1;
-            addr = c;
-            size = SIZE__HALF_WORD;
-            dtype = DTYPE__HALF_WORD_UNSIGNED;
-            rf__cs = 1'b1;
-            rf__addr = rd;
-            rf__we = ready & ~resp;
-            rf__wr_data = rd_data__sign_or_zero_extended;
-            state__n = (ready & ~resp) ? STATE__LHU__2 : (ready & resp & (rd_data == ERRORCODE__ACCESS_FAULT)) ? STATE__EXCEPTION__LOAD_ACCESS_FAULT__0 : (ready & resp & (rd_data == ERRORCODE__MISALIGNED_ADDRESS)) ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0 : STATE__LHU__1;
+            cpu_to_mem__valid = 1'b1;
+            cpu_to_mem__addr = c;
+            cpu_to_mem__dtype = DTYPE__HALF_WORD_UNSIGNED;
+            state__n = STATE__LHU__2;
         end
 
         //==============================
         // STATE__LHU__2
         //==============================
         STATE__LHU__2:
+        begin
+            addr = rd;
+            we = mem_to_cpu__valid & ~mem_to_cpu__error;
+            wr_data = mem_to_cpu__data;
+            state__n = (mem_to_cpu__valid & ~mem_to_cpu__error) ? STATE__LHU__3 : (mem_to_cpu__valid & mem_to_cpu__error & (mem_to_cpu__data == ERRORCODE__ACCESS_FAULT)) ? STATE__EXCEPTION__LOAD_ACCESS_FAULT__0 : (mem_to_cpu__valid & mem_to_cpu__error & (mem_to_cpu__data == ERRORCODE__MISALIGNED_ADDRESS)) ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0 : STATE__LHU__2;
+        end
+
+        //==============================
+        // STATE__LHU__3
+        //==============================
+        STATE__LHU__3:
         begin
             pc__n = pc + 4;
             instret = 1'b1;
@@ -1883,9 +1834,8 @@ always_comb begin
         //==============================
         STATE__LWU__0:
         begin
-            rf__cs = 1'b1;
-            rf__addr = rs1;
-            a__n = rf__rd_data;
+            addr = rs1;
+            a__n = rd_data;
             b__n = imm;
             state__n = STATE__LWU__1;
         end
@@ -1896,21 +1846,27 @@ always_comb begin
         STATE__LWU__1:
         begin
             func = FUNC__ADD;
-            cs = 1'b1;
-            addr = c;
-            size = SIZE__WORD;
-            dtype = DTYPE__WORD_UNSIGNED;
-            rf__cs = 1'b1;
-            rf__addr = rd;
-            rf__we = ready & ~resp;
-            rf__wr_data = rd_data__sign_or_zero_extended;
-            state__n = (ready & ~resp) ? STATE__LWU__2 : (ready & resp & (rd_data == ERRORCODE__ACCESS_FAULT)) ? STATE__EXCEPTION__LOAD_ACCESS_FAULT__0 : (ready & resp & (rd_data == ERRORCODE__MISALIGNED_ADDRESS)) ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0 : STATE__LWU__1;
+            cpu_to_mem__valid = 1'b1;
+            cpu_to_mem__addr = c;
+            cpu_to_mem__dtype = DTYPE__WORD_UNSIGNED;
+            state__n = STATE__LWU__2;
         end
 
         //==============================
         // STATE__LWU__2
         //==============================
         STATE__LWU__2:
+        begin
+            addr = rd;
+            we = mem_to_cpu__valid & ~mem_to_cpu__error;
+            wr_data = mem_to_cpu__data;
+            state__n = (mem_to_cpu__valid & ~mem_to_cpu__error) ? STATE__LWU__3 : (mem_to_cpu__valid & mem_to_cpu__error & (mem_to_cpu__data == ERRORCODE__ACCESS_FAULT)) ? STATE__EXCEPTION__LOAD_ACCESS_FAULT__0 : (mem_to_cpu__valid & mem_to_cpu__error & (mem_to_cpu__data == ERRORCODE__MISALIGNED_ADDRESS)) ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0 : STATE__LWU__2;
+        end
+
+        //==============================
+        // STATE__LWU__3
+        //==============================
+        STATE__LWU__3:
         begin
             pc__n = pc + 4;
             instret = 1'b1;
@@ -1922,9 +1878,8 @@ always_comb begin
         //==============================
         STATE__SB__0:
         begin
-            rf__cs = 1'b1;
-            rf__addr = rs1;
-            a__n = rf__rd_data;
+            addr = rs1;
+            a__n = rd_data;
             b__n = imm;
             state__n = STATE__SB__1;
         end
@@ -1935,22 +1890,27 @@ always_comb begin
         STATE__SB__1:
         begin
             func = FUNC__ADD;
-            rf__cs = 1'b1;
-            rf__addr = rs2;
-            cs = 1'b1;
-            we = 1'b1;
-            addr = c;
-            size = SIZE__BYTE;
-            dtype = DTYPE__BYTE;
-            wr_data = rf__rd_data;
-            state__n = (ready & ~resp) ? STATE__SB__2 : (ready & resp & (rd_data == ERRORCODE__ACCESS_FAULT)) ? STATE__EXCEPTION__STORE_ACCESS_FAULT__0 : (ready & resp & (rd_data == ERRORCODE__MISALIGNED_ADDRESS)) ? STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__0 : STATE__SB__1;
+            addr = rs2;
+            cpu_to_mem__valid = 1'b1;
+            cpu_to_mem__we = 1'b1;
+            cpu_to_mem__addr = c;
+            cpu_to_mem__dtype = DTYPE__BYTE;
+            cpu_to_mem__data = rd_data;
+            state__n = STATE__SB__2;
         end
-
 
         //==============================
         // STATE__SB__2
         //==============================
         STATE__SB__2:
+        begin
+            state__n = (mem_to_cpu__valid & ~mem_to_cpu__error) ? STATE__SB__3 : (mem_to_cpu__valid & mem_to_cpu__error & (mem_to_cpu__data == ERRORCODE__ACCESS_FAULT)) ? STATE__EXCEPTION__STORE_ACCESS_FAULT__0 : (mem_to_cpu__valid & mem_to_cpu__error & (mem_to_cpu__data == ERRORCODE__MISALIGNED_ADDRESS)) ? STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__0 : STATE__SB__2;
+        end
+
+        //==============================
+        // STATE__SB__3
+        //==============================
+        STATE__SB__3:
         begin
             pc__n = pc + 4;
             instret = 1'b1;
@@ -1962,9 +1922,8 @@ always_comb begin
         //==============================
         STATE__SH__0:
         begin
-            rf__cs = 1'b1;
-            rf__addr = rs1;
-            a__n = rf__rd_data;
+            addr = rs1;
+            a__n = rd_data;
             b__n = imm;
             state__n = STATE__SH__1;
         end
@@ -1975,21 +1934,27 @@ always_comb begin
         STATE__SH__1:
         begin
             func = FUNC__ADD;
-            rf__cs = 1'b1;
-            rf__addr = rs2;
-            cs = 1'b1;
-            we = 1'b1;
-            addr = c;
-            size = SIZE__HALF_WORD;
-            dtype = DTYPE__HALF_WORD;
-            wr_data = rf__rd_data;
-            state__n = (ready & ~resp) ? STATE__SH__2 : (ready & resp & (rd_data == ERRORCODE__ACCESS_FAULT)) ? STATE__EXCEPTION__STORE_ACCESS_FAULT__0 : (ready & resp & (rd_data == ERRORCODE__MISALIGNED_ADDRESS)) ? STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__0 : STATE__SH__1;
+            addr = rs2;
+            cpu_to_mem__valid = 1'b1;
+            cpu_to_mem__we = 1'b1;
+            cpu_to_mem__addr = c;
+            cpu_to_mem__dtype = DTYPE__HALF_WORD;
+            cpu_to_mem__data = rd_data;
+            state__n = STATE__SH__2;
         end
 
         //==============================
         // STATE__SH__2
         //==============================
         STATE__SH__2:
+        begin
+            state__n = (mem_to_cpu__valid & ~mem_to_cpu__error) ? STATE__SH__3 : (mem_to_cpu__valid & mem_to_cpu__error & (mem_to_cpu__data == ERRORCODE__ACCESS_FAULT)) ? STATE__EXCEPTION__STORE_ACCESS_FAULT__0 : (mem_to_cpu__valid & mem_to_cpu__error & (mem_to_cpu__data == ERRORCODE__MISALIGNED_ADDRESS)) ? STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__0 : STATE__SH__2;
+        end
+
+        //==============================
+        // STATE__SH__3
+        //==============================
+        STATE__SH__3:
         begin
             pc__n = pc + 4;
             instret = 1'b1;
@@ -2001,9 +1966,8 @@ always_comb begin
         //==============================
         STATE__SW__0:
         begin
-            rf__cs = 1'b1;
-            rf__addr = rs1;
-            a__n = rf__rd_data;
+            addr = rs1;
+            a__n = rd_data;
             b__n = imm;
             state__n = STATE__SW__1;
         end
@@ -2014,21 +1978,27 @@ always_comb begin
         STATE__SW__1:
         begin
             func = FUNC__ADD;
-            rf__cs = 1'b1;
-            rf__addr = rs2;
-            cs = 1'b1;
-            we = 1'b1;
-            addr = c;
-            size = SIZE__WORD;
-            dtype = DTYPE__WORD;
-            wr_data = rf__rd_data;
-            state__n = (ready & ~resp) ? STATE__SW__2 : (ready & resp & (rd_data == ERRORCODE__ACCESS_FAULT)) ? STATE__EXCEPTION__STORE_ACCESS_FAULT__0 : (ready & resp & (rd_data == ERRORCODE__MISALIGNED_ADDRESS)) ? STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__0 : STATE__SW__1;
+            addr = rs2;
+            cpu_to_mem__valid = 1'b1;
+            cpu_to_mem__we = 1'b1;
+            cpu_to_mem__addr = c;
+            cpu_to_mem__dtype = DTYPE__WORD;
+            cpu_to_mem__data = rd_data;
+            state__n = STATE__SW__2;
         end
 
         //==============================
         // STATE__SW__2
         //==============================
         STATE__SW__2:
+        begin
+            state__n = (mem_to_cpu__valid & ~mem_to_cpu__error) ? STATE__SW__3 : (mem_to_cpu__valid & mem_to_cpu__error & (mem_to_cpu__data == ERRORCODE__ACCESS_FAULT)) ? STATE__EXCEPTION__STORE_ACCESS_FAULT__0 : (mem_to_cpu__valid & mem_to_cpu__error & (mem_to_cpu__data == ERRORCODE__MISALIGNED_ADDRESS)) ? STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__0 : STATE__SW__2;
+        end
+
+        //==============================
+        // STATE__SW__3
+        //==============================
+        STATE__SW__3:
         begin
             pc__n = pc + 4;
             instret = 1'b1;
@@ -2040,9 +2010,8 @@ always_comb begin
         //==============================
         STATE__SD__0:
         begin
-            rf__cs = 1'b1;
-            rf__addr = rs1;
-            a__n = rf__rd_data;
+            addr = rs1;
+            a__n = rd_data;
             b__n = imm;
             state__n = STATE__SD__1;
         end
@@ -2053,21 +2022,27 @@ always_comb begin
         STATE__SD__1:
         begin
             func = FUNC__ADD;
-            rf__cs = 1'b1;
-            rf__addr = rs2;
-            cs = 1'b1;
-            we = 1'b1;
-            addr = c;
-            size = SIZE__DOUBLE_WORD;
-            dtype = DTYPE__DOUBLE_WORD;
-            wr_data = rf__rd_data;
-            state__n = (ready & ~resp) ? STATE__SD__2 : (ready & resp & (rd_data == ERRORCODE__ACCESS_FAULT)) ? STATE__EXCEPTION__STORE_ACCESS_FAULT__0 : (ready & resp & (rd_data == ERRORCODE__MISALIGNED_ADDRESS)) ? STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__0 : STATE__SD__1;
+            addr = rs2;
+            cpu_to_mem__valid = 1'b1;
+            cpu_to_mem__we = 1'b1;
+            cpu_to_mem__addr = c;
+            cpu_to_mem__dtype = DTYPE__DOUBLE_WORD;
+            cpu_to_mem__data = rd_data;
+            state__n = STATE__SD__2;
         end
 
         //==============================
         // STATE__SD__2
         //==============================
         STATE__SD__2:
+        begin
+            state__n = (mem_to_cpu__valid & ~mem_to_cpu__error) ? STATE__SD__3 : (mem_to_cpu__valid & mem_to_cpu__error & (mem_to_cpu__data == ERRORCODE__ACCESS_FAULT)) ? STATE__EXCEPTION__STORE_ACCESS_FAULT__0 : (mem_to_cpu__valid & mem_to_cpu__error & (mem_to_cpu__data == ERRORCODE__MISALIGNED_ADDRESS)) ? STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__0 : STATE__SD__2;
+        end
+
+        //==============================
+        // STATE__SD__3
+        //==============================
+        STATE__SD__3:
         begin
             pc__n = pc + 4;
             instret = 1'b1;
@@ -2090,10 +2065,9 @@ always_comb begin
         STATE__AUIPC__1:
         begin
             func = FUNC__ADD;
-            rf__cs = 1'b1;
-            rf__addr = rd;
-            rf__we = 1'b1;
-            rf__wr_data = c;
+            addr = rd;
+            we = 1'b1;
+            wr_data = c;
             pc__n = pc + 4;
             instret = 1'b1;
             state__n = STATE__FETCH__0;
@@ -2104,12 +2078,11 @@ always_comb begin
         //==============================
         STATE__JALR__0:
         begin
-            rf__cs = 1'b1;
-            rf__addr = rs1;
-            a__n = rf__rd_data;  
+            addr = rs1;
+            a__n = rd_data;  
             b__n = imm;  
-            //state__n = ((rf__rd_data[1:0] == 2'b00) && (imm[1:0] == 2'b10)) || ((rf__rd_data[1:0] == 2'b00) && (imm[1:0] == 2'b11)) || ((rf__rd_data[1:0] == 2'b01) && (imm[1:0] == 2'b01)) || ((rf__rd_data[1:0] == 2'b01) && (imm[1:0] == 2'b10)) ||((rf__rd_data[1:0] == 2'b10) && (imm[1:0] == 2'b00)) ||((rf__rd_data[1:0] == 2'b10) && (imm[1:0] == 2'b01)) || ((rf__rd_data[1:0] == 2'b11) && (imm[1:0] == 2'b00)) || ((rf__rd_data[1:0] == 2'b11) && (imm[1:0] == 2'b11)) ? STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__0__JALR : STATE__JALR__1;
-            state__n = (rf__rd_data[1:0] + imm[1:0] == 2'b10) || (rf__rd_data[1:0] + imm[1:0] == 2'b11) ? STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__0__JALR : STATE__JALR__1;
+            //state__n = ((rd_data[1:0] == 2'b00) && (imm[1:0] == 2'b10)) || ((rd_data[1:0] == 2'b00) && (imm[1:0] == 2'b11)) || ((rd_data[1:0] == 2'b01) && (imm[1:0] == 2'b01)) || ((rd_data[1:0] == 2'b01) && (imm[1:0] == 2'b10)) ||((rd_data[1:0] == 2'b10) && (imm[1:0] == 2'b00)) ||((rd_data[1:0] == 2'b10) && (imm[1:0] == 2'b01)) || ((rd_data[1:0] == 2'b11) && (imm[1:0] == 2'b00)) || ((rd_data[1:0] == 2'b11) && (imm[1:0] == 2'b11)) ? STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__0__JALR : STATE__JALR__1;
+            state__n = (rd_data[1:0] + imm[1:0] == 2'b10) || (rd_data[1:0] + imm[1:0] == 2'b11) ? STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__0__JALR : STATE__JALR__1;
         end
 
         //==============================
@@ -2118,10 +2091,9 @@ always_comb begin
         STATE__JALR__1:
         begin
             func = FUNC__ADD;
-            rf__cs = 1'b1;
-            rf__addr = rd;
-            rf__we = 1'b1;     
-            rf__wr_data = pc + 4;
+            addr = rd;
+            we = 1'b1;     
+            wr_data = pc + 4;
             pc__n = {c[63:1], 1'b0};
             instret = 1'b1;
             state__n = STATE__FETCH__0;
@@ -2143,10 +2115,9 @@ always_comb begin
         STATE__JAL__1:
         begin
             func = FUNC__ADD;
-            rf__cs = 1'b1;
-            rf__addr = rd;
-            rf__we = 1'b1;     
-            rf__wr_data = pc + 4;
+            addr = rd;
+            we = 1'b1;     
+            wr_data = pc + 4;
             pc__n = c;
             instret = 1'b1;
             state__n = STATE__FETCH__0;
@@ -2157,9 +2128,8 @@ always_comb begin
         //==============================
         STATE__BEQ__0:
         begin
-            rf__cs = 1'b1;
-            rf__addr = rs1;
-            a__n = rf__rd_data;
+            addr = rs1;
+            a__n = rd_data;
             state__n = STATE__BEQ__1;
         end
 
@@ -2168,9 +2138,8 @@ always_comb begin
         //==============================
         STATE__BEQ__1:
         begin
-            rf__cs = 1'b1;
-            rf__addr = rs2;
-            b__n = rf__rd_data;
+            addr = rs2;
+            b__n = rd_data;
             state__n = STATE__BEQ__2;
         end
 
@@ -2218,9 +2187,8 @@ always_comb begin
         //==============================
         STATE__BNE__0:
         begin
-            rf__cs = 1'b1;
-            rf__addr = rs1;
-            a__n = rf__rd_data;
+            addr = rs1;
+            a__n = rd_data;
             state__n = STATE__BNE__1;
         end
 
@@ -2229,9 +2197,8 @@ always_comb begin
         //==============================
         STATE__BNE__1:
         begin
-            rf__cs = 1'b1;
-            rf__addr = rs2;
-            b__n = rf__rd_data;
+            addr = rs2;
+            b__n = rd_data;
             state__n = STATE__BNE__2;
         end
 
@@ -2279,9 +2246,8 @@ always_comb begin
         //==============================
         STATE__BLT__0:
         begin
-            rf__cs = 1'b1;
-            rf__addr = rs1;
-            a__n = rf__rd_data;
+            addr = rs1;
+            a__n = rd_data;
             state__n = STATE__BLT__1;
         end
 
@@ -2290,9 +2256,8 @@ always_comb begin
         //==============================
         STATE__BLT__1:
         begin
-            rf__cs = 1'b1;
-            rf__addr = rs2;
-            b__n = rf__rd_data;
+            addr = rs2;
+            b__n = rd_data;
             state__n = STATE__BLT__2;
         end
 
@@ -2340,9 +2305,8 @@ always_comb begin
         //==============================
         STATE__BGE__0:
         begin
-            rf__cs = 1'b1;
-            rf__addr = rs1;
-            a__n = rf__rd_data;
+            addr = rs1;
+            a__n = rd_data;
             state__n = STATE__BGE__1;
         end
 
@@ -2351,9 +2315,8 @@ always_comb begin
         //==============================
         STATE__BGE__1:
         begin
-            rf__cs = 1'b1;
-            rf__addr = rs2;
-            b__n = rf__rd_data;
+            addr = rs2;
+            b__n = rd_data;
             state__n = STATE__BGE__2;
         end
 
@@ -2401,9 +2364,8 @@ always_comb begin
         //==============================
         STATE__BLTU__0:
         begin
-            rf__cs = 1'b1;
-            rf__addr = rs1;
-            a__n = rf__rd_data;
+            addr = rs1;
+            a__n = rd_data;
             state__n = STATE__BLTU__1;
         end
 
@@ -2412,9 +2374,8 @@ always_comb begin
         //==============================
         STATE__BLTU__1:
         begin
-            rf__cs = 1'b1;
-            rf__addr = rs2;
-            b__n = rf__rd_data;
+            addr = rs2;
+            b__n = rd_data;
             state__n = STATE__BLTU__2;
         end
 
@@ -2462,9 +2423,8 @@ always_comb begin
         //==============================
         STATE__BGEU__0:
         begin
-            rf__cs = 1'b1;
-            rf__addr = rs1;
-            a__n = rf__rd_data;
+            addr = rs1;
+            a__n = rd_data;
             state__n = STATE__BGEU__1;
         end
 
@@ -2473,9 +2433,8 @@ always_comb begin
         //==============================
         STATE__BGEU__1:
         begin
-            rf__cs = 1'b1;
-            rf__addr = rs2;
-            b__n = rf__rd_data;
+            addr = rs2;
+            b__n = rd_data;
             state__n = STATE__BGEU__2;
         end
 
@@ -2579,10 +2538,9 @@ always_comb begin
         //==============================
         STATE__LUI:
         begin
-            rf__cs = 1'b1;
-            rf__addr = rd;
-            rf__we = 1'b1;
-            rf__wr_data = imm;
+            addr = rd;
+            we = 1'b1;
+            wr_data = imm;
             pc__n = pc + 4;
             instret = 1'b1;
             state__n = STATE__FETCH__0;
@@ -2593,9 +2551,8 @@ always_comb begin
         //==============================
         STATE__CSRRW__0:
         begin
-            rf__cs = 1'b1;
-            rf__addr = rs1;
-            a__n = rf__rd_data;
+            addr = rs1;
+            a__n = rd_data;
             csr__addr = imm[11:0];
             b__n = csr__rd_data;
             state__n = (imm[11:10] == 2'h3) ? STATE__EXCEPTION__ILLEGAL_INSTRUCTION : (rd == 5'h0) ? STATE__CSRRW__2 : STATE__CSRRW__1; 
@@ -2607,10 +2564,9 @@ always_comb begin
         STATE__CSRRW__1:
         begin
             func = FUNC__NULL_B;
-            rf__cs = 1'b1;
-            rf__addr = rd;
-            rf__we = 1'b1;
-            rf__wr_data = c;
+            addr = rd;
+            we = 1'b1;
+            wr_data = c;
             state__n = STATE__CSRRW__2;
         end
 
@@ -2633,9 +2589,8 @@ always_comb begin
         //==============================
         STATE__CSRRS__0:
         begin
-            rf__cs = 1'b1;
-            rf__addr = rs1;
-            a__n = rf__rd_data;
+            addr = rs1;
+            a__n = rd_data;
             csr__addr = imm[11:0];
             b__n = csr__rd_data;
             state__n = (rs1 == 5'h0) ? STATE__CSRRS__2 : (imm[11:10] == 2'h3) ? STATE__EXCEPTION__ILLEGAL_INSTRUCTION : STATE__CSRRS__1; 
@@ -2659,10 +2614,9 @@ always_comb begin
         STATE__CSRRS__2:
         begin
             func = FUNC__NULL_B;
-            rf__cs = 1'b1;
-            rf__addr = rd;
-            rf__we = 1'b1;
-            rf__wr_data = c;
+            addr = rd;
+            we = 1'b1;
+            wr_data = c;
             pc__n = pc + 4;
             instret = 1'b1;
             state__n = STATE__FETCH__0;
@@ -2673,9 +2627,8 @@ always_comb begin
         //==============================
         STATE__CSRRC__0:
         begin
-            rf__cs = 1'b1;
-            rf__addr = rs1;
-            a__n = rf__rd_data;
+            addr = rs1;
+            a__n = rd_data;
             csr__addr = imm[11:0];
             b__n = csr__rd_data;
             state__n = (rs1 == 5'h0) ? STATE__CSRRC__2 : (imm[11:10] == 2'h3) ? STATE__EXCEPTION__ILLEGAL_INSTRUCTION : STATE__CSRRC__1; 
@@ -2699,10 +2652,9 @@ always_comb begin
         STATE__CSRRC__2:
         begin
             func = FUNC__NULL_B;
-            rf__cs = 1'b1;
-            rf__addr = rd;
-            rf__we = 1'b1;
-            rf__wr_data = c;
+            addr = rd;
+            we = 1'b1;
+            wr_data = c;
             pc__n = pc + 4;
             instret = 1'b1;
             state__n = STATE__FETCH__0;
@@ -2725,10 +2677,9 @@ always_comb begin
         STATE__CSRRWI__1:
         begin
             func = FUNC__NULL_B;
-            rf__cs = 1'b1;
-            rf__addr = rd;
-            rf__we = 1'b1;
-            rf__wr_data = c;
+            addr = rd;
+            we = 1'b1;
+            wr_data = c;
             state__n = STATE__CSRRWI__2;
         end
 
@@ -2775,10 +2726,9 @@ always_comb begin
         STATE__CSRRSI__2:
         begin
             func = FUNC__NULL_B;
-            rf__cs = 1'b1;
-            rf__addr = rd;
-            rf__we = 1'b1;
-            rf__wr_data = c;
+            addr = rd;
+            we = 1'b1;
+            wr_data = c;
             pc__n = pc + 4;
             instret = 1'b1;
             state__n = STATE__FETCH__0;
@@ -2813,10 +2763,9 @@ always_comb begin
         STATE__CSRRCI__2:
         begin
             func = FUNC__NULL_B;
-            rf__cs = 1'b1;
-            rf__addr = rd;
-            rf__we = 1'b1;
-            rf__wr_data = c;
+            addr = rd;
+            we = 1'b1;
+            wr_data = c;
             pc__n = pc + 4;
             instret = 1'b1;
             state__n = STATE__FETCH__0;

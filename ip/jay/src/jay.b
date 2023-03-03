@@ -131,14 +131,14 @@ central_processing_unit central_processing_unit__0
 (
     .clk(clk),
     .rst(rst),
-    .cpu_to_mem__valid(cpu_to_mem__valid),
-    .cpu_to_mem__we(cpu_to_mem__we),
-    .cpu_to_mem__addr(cpu_to_mem__addr),
-    .cpu_to_mem__dtype(cpu_to_mem__dtype),
-    .cpu_to_mem__data(cpu_to_mem__data),
-    .mem_to_cpu__valid(mem_to_cpu__valid),
-    .mem_to_cpu__error(mem_to_cpu__error),
-    .mem_to_cpu__data(mem_to_cpu__data)
+    .cs(cs),
+    .we(we),
+    .addr(addr),
+    .size(size),
+    .wr_data(wr_data),
+    .ready(ready),
+    .resp(resp),
+    .rd_data(rd_data)
     .eip(context__0__eip),
     .tip(tip)
 );

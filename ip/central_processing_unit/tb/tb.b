@@ -13,14 +13,14 @@ module tb;
 //==============================================
 logic clk;
 logic rst;
-logic cpu_to_mem__valid;
-logic cpu_to_mem__we;
-logic [63:0] cpu_to_mem__addr;
-logic [2:0] cpu_to_mem__dtype;
-logic [63:0] cpu_to_mem__data;
-logic mem_to_cpu__valid;
-logic mem_to_cpu__error;
-logic [63:0] mem_to_cpu__data;
+logic cs;
+logic we;
+logic [63:0] addr;
+logic [1:0] size;
+logic [63:0] wr_data;
+logic ready;
+logic resp;
+logic [63:0] rd_data;
 logic eip;
 logic tip;
 
@@ -29,14 +29,14 @@ central_processing_unit dut
 (
     .clk(clk),
     .rst(rst),
-    .cpu_to_mem__valid(cpu_to_mem__valid),
-    .cpu_to_mem__we(cpu_to_mem__we),
-    .cpu_to_mem__addr(cpu_to_mem__addr),
-    .cpu_to_mem__dtype(cpu_to_mem__dtype),
-    .cpu_to_mem__data(cpu_to_mem__data),
-    .mem_to_cpu__valid(mem_to_cpu__valid),
-    .mem_to_cpu__error(mem_to_cpu__error),
-    .mem_to_cpu__data(mem_to_cpu__data),
+    .cs(cs),
+    .we(we),
+    .addr(addr),
+    .size(size),
+    .wr_data(wr_data),
+    .ready(ready),
+    .resp(resp),
+    .rd_data(rd_data),
     .eip(eip),
     .tip(tip)
 );
@@ -48,14 +48,14 @@ tb_mem #(.DEPTH(64'h10000), .DEPTH__LOG2(16)) mem
 (
     .clk(clk),
     .rst(rst),
-    .cpu_to_mem__valid(cpu_to_mem__valid),
-    .cpu_to_mem__we(cpu_to_mem__we),
-    .cpu_to_mem__addr(cpu_to_mem__addr),
-    .cpu_to_mem__dtype(cpu_to_mem__dtype),
-    .cpu_to_mem__data(cpu_to_mem__data),
-    .mem_to_cpu__valid(mem_to_cpu__valid),
-    .mem_to_cpu__error(mem_to_cpu__error),
-    .mem_to_cpu__data(mem_to_cpu__data)
+    .cs(cs),
+    .we(we),
+    .addr(addr),
+    .size(size),
+    .wr_data(wr_data),
+    .ready(ready),
+    .resp(resp),
+    .rd_data(rd_data)
 );
 
 
@@ -75,7 +75,7 @@ string filename__tohost;
 logic [63:0] begin_signature;
 logic [63:0] end_signature;
 logic [63:0] tohost;
-logic [63:0] addr;
+logic [63:0] addr_long;
 logic [15:0] addr_short;
 
 // file descriptor handle
@@ -119,7 +119,7 @@ initial begin
     forever begin
         @(posedge clk) begin
             //if ((dut.op == OP__JALR) && (dut.rs1 == 5'h1) && (dut.register_file__0.x__1 = 64'hffffffffffffffff)) begin
-            if (cpu_to_mem__valid && (cpu_to_mem__addr == tohost)) begin
+            if (cs && (addr == tohost)) begin
                 $value$plusargs("filename__sig=%s", filename__sig);
                 $display("filename__sig = %s", filename__sig);
                 $value$plusargs("begin_signature=%h", begin_signature);
@@ -127,8 +127,8 @@ initial begin
                 $value$plusargs("end_signature=%h", end_signature);
                 $display("end_signature = %0h", end_signature);
                 fd = $fopen(filename__sig);
-                for (addr = begin_signature; addr < end_signature; addr += 4) begin
-                    addr_short = addr[15:0];
+                for (addr_long = begin_signature; addr_long < end_signature; addr_long += 4) begin
+                    addr_short = addr_long[15:0];
                     $fwrite(fd, "%02h", mem.memory[addr_short + 3]);
                     $fwrite(fd, "%02h", mem.memory[addr_short + 2]);
                     $fwrite(fd, "%02h", mem.memory[addr_short + 1]);
