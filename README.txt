@@ -49,3 +49,6 @@ Resources:
         - https://starfivetech.com/uploads/sifive-interrupt-cookbook-v1p2.pdf
     Recursive Make Considered Harmful - Peter Miller
         - https://aegis.sourceforge.net/auug97.pdf
+    - Vivado simulation hangs when two FSMs communicate with eachother and one of the signals is assinged a default value in an always_comb block
+        - Someone with a similar issue: https://support.xilinx.com/s/question/0D52E00006iHmQxSAK/simulation-freezing-with-systemverilog-interfaces-fsm-handshake?language=en_US
+        - -delay_trigger swithc: https://community.cadence.com/cadence_technology_forums/f/logic-design/15558/problem-with-simvision-hanging-in-an-endless-loop

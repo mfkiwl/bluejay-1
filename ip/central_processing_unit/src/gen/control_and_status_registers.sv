@@ -24,17 +24,22 @@ module control_and_status_registers
 
 input clk;
 input rst;
-
 input cs;
 input we;
 input [11:0] addr;
 output [63:0] rd_data;
 input [63:0] wr_data;
-
 input eip;
 input tip;
-
 input instret;
+
+output mstatus__mie;
+output mie__meie;
+output mie__msie;
+output mie__mtie;
+output mip__meip;
+output mip__msip;
+output mip__mtip;
 
 logic clk;
 logic rst;
@@ -50,15 +55,169 @@ logic tip;
 
 logic instret;
 
+// Machine ISA Register (misa)
+logic [63:0] misa;
+logic [25:0] misa__extensions;
+logic [35:0] misa__wiri__0;
+logic [1:0] misa__base;
+logic we__misa;
+logic en__misa;
 
+// Machine Vendor ID Register (mvendorid)
+logic [63:0] mvendorid;
+logic [63:0] mvendorid__vendor;
+logic we__mvendorid;
+logic en__mvendorid;
 
-output mstatus__mie;
-output mie__meie;
-output mie__msie;
-output mie__mtie;
-output mip__meip;
-output mip__msip;
-output mip__mtip;
+// Machine Architecture ID Register (marchid)
+logic [63:0] marchid;
+logic [63:0] marchid__architecture_id;
+logic we__marchid;
+logic en__marchid;
+
+// Machine Implementation ID Register (mimpid)
+logic [63:0] mimpid;
+logic [63:0] mimpid__implementation;
+logic we__mimpid;
+logic en__mimpid;
+
+// Hart ID Register (mhartid) 
+logic [63:0] mhartid;
+logic [63:0] mhartid__hart_id;
+logic we__mhartid;
+logic en__mhartid;
+
+// Machine Status Register (mstatus) 
+logic [63:0] mstatus;
+logic [0:0] mstatus__uie;
+logic [0:0] mstatus__sie;
+logic [0:0] mstatus__hie;
+logic [0:0] mstatus__mie;
+logic [0:0] mstatus__upie;
+logic [0:0] mstatus__spie;
+logic [0:0] mstatus__hpie;
+logic [0:0] mstatus__mpie;
+logic [0:0] mstatus__spp;
+logic [1:0] mstatus__hpp;
+logic [1:0] mstatus__mpp;
+logic [1:0] mstatus__fs;
+logic [1:0] mstatus__xs;
+logic [0:0] mstatus__mprv;
+logic [0:0] mstatus__pum;
+logic [0:0] mstatus__mxr;
+logic [4:0] mstatus__vm;
+logic [0:0] mstatus__sd;
+logic we__mstatus;
+logic en__mstatus;
+
+// Machine Trap-Vector Base-Address Register (mtvec)
+logic [63:0] mtvec;
+logic [1:0] mtvec__offset;
+logic [61:0] mtvec__trap_vector_base_address;
+logic we__mtvec;
+logic en__mtvec;
+
+// Machine Exception Delegation Register (medeleg) 
+logic [63:0] medeleg;
+logic [63:0] medeleg__synchronous_exceptions;
+logic we__medeleg;
+logic en__medeleg;
+
+// Machine Interrupt Delegation Register (mideleg) 
+logic [63:0] mideleg;
+logic [63:0] mideleg__interrupts;
+logic we__mideleg;
+logic en__mideleg;
+
+// Machine Interrupt-Pending Register (mip) 
+logic [63:0] mip;
+logic [0:0] mip__usip;
+logic [0:0] mip__ssip;
+logic [0:0] mip__hsip;
+logic [0:0] mip__msip;
+logic [0:0] mip__utip;
+logic [0:0] mip__stip;
+logic [0:0] mip__htip;
+logic [0:0] mip__mtip;
+logic [0:0] mip__ueip;
+logic [0:0] mip__seip;
+logic [0:0] mip__heip;
+logic [0:0] mip__meip;
+logic [51:0] mip__wiri__0;
+logic we__mip;
+logic en__mip;
+
+// Machine Interrupt-Enable Register (mie) 
+logic [63:0] mie;
+logic [0:0] mie__usie;
+logic [0:0] mie__ssie;
+logic [0:0] mie__hsie;
+logic [0:0] mie__msie;
+logic [0:0] mie__utie;
+logic [0:0] mie__stie;
+logic [0:0] mie__htie;
+logic [0:0] mie__mtie;
+logic [0:0] mie__ueie;
+logic [0:0] mie__seie;
+logic [0:0] mie__heie;
+logic [0:0] mie__meie;
+logic [51:0] mie__wpri__0;
+logic we__mie;
+logic en__mie;
+
+// Machine Cycle Register (mcycle) 
+logic [63:0] mcycle;
+logic [63:0] mcycle__mcycle;
+logic [63:0] mcycle__mcycle__n;
+logic we__mcycle;
+logic en__mcycle;
+
+// Machine Instruction Retire Register (minstret) 
+logic [63:0] minstret;
+logic [63:0] minstret__minstret;
+logic [63:0] minstret__minstret__n;
+logic we__minstret;
+logic en__minstret;
+logic minstret__write_occurred;
+logic state__minstret;
+logic state__minstret__n;
+
+// Machine Hardware Performance Monitor Counter 3 (mhpmcounter3)
+logic [63:0] mhpmcounter3;
+logic [63:0] mhpmcounter3__mhpmcounter3;
+logic we__mhpmcounter3;
+logic en__mhpmcounter3;
+
+// Machine Hardware Performance Monitor Event 3 (mhpmevent3)
+logic [63:0] mhpmevent3;
+logic [63:0] mhpmevent3__mhpmevent3;
+logic we__mhpmevent3;
+logic en__mhpmevent3;
+
+// Machine Scratch Register (mscratch) 
+logic [63:0] mscratch;
+logic [63:0] mscratch__mscratch;
+logic we__mscratch;
+logic en__mscratch;
+
+// Machine Exception Program Counter (mepc) 
+logic [63:0] mepc;
+logic [63:0] mepc__mepc;
+logic we__mepc;
+logic en__mepc;
+
+// Machine Cause Register (mcause) 
+logic [63:0] mcause;
+logic [62:0] mcause__exception_code;
+logic [0:0] mcause__interrupt;
+logic we__mcause;
+logic en__mcause;
+
+// Machine Trap Value Register (mtval) 
+logic [63:0] mtval;
+logic [63:0] mtval__mtval;
+logic we__mtval;
+logic en__mtval;
 
 
 always_comb begin
@@ -184,13 +343,6 @@ end
 //==============================================
 // Machine ISA Register (misa)
 //==============================================
-logic [63:0] misa;
-logic [25:0] misa__extensions;
-logic [35:0] misa__wiri__0;
-logic [1:0] misa__base;
-logic we__misa;
-logic en__misa;
-
 assign misa[25:0] = misa__extensions;
 assign misa[61:26] = misa__wiri__0;
 assign misa[63:62] = misa__base;
@@ -203,11 +355,6 @@ assign misa__base = 2'h2;
 //==============================================
 // Machine Vendor ID Register (mvendorid)
 //==============================================
-logic [63:0] mvendorid;
-logic [63:0] mvendorid__vendor;
-logic we__mvendorid;
-logic en__mvendorid;
-
 assign mvendorid[63:0] = mvendorid__vendor;
 
 assign mvendorid__vendor = 64'h0;
@@ -216,11 +363,6 @@ assign mvendorid__vendor = 64'h0;
 //==============================================
 // Machine Architecture ID Register (marchid)
 //==============================================
-logic [63:0] marchid;
-logic [63:0] marchid__architecture_id;
-logic we__marchid;
-logic en__marchid;
-
 assign marchid[63:0] = marchid__architecture_id;
 
 assign marchid__architecture_id = 64'h0;
@@ -229,11 +371,6 @@ assign marchid__architecture_id = 64'h0;
 //==============================================
 // Machine Implementation ID Register (mimpid)
 //==============================================
-logic [63:0] mimpid;
-logic [63:0] mimpid__implementation;
-logic we__mimpid;
-logic en__mimpid;
-
 assign mimpid[63:0] = mimpid__implementation;
 
 assign mimpid__implementation = 64'h0;
@@ -242,11 +379,6 @@ assign mimpid__implementation = 64'h0;
 //==============================================
 // Hart ID Register (mhartid) 
 //==============================================
-logic [63:0] mhartid;
-logic [63:0] mhartid__hart_id;
-logic we__mhartid;
-logic en__mhartid;
-
 assign mhartid[63:0] = mhartid__hart_id;
 
 assign mhartid__hart_id = 64'h0;
@@ -255,28 +387,6 @@ assign mhartid__hart_id = 64'h0;
 //============================================== 
 // Machine Status Register (mstatus) 
 //==============================================
-logic [63:0] mstatus;
-logic [0:0] mstatus__uie;
-logic [0:0] mstatus__sie;
-logic [0:0] mstatus__hie;
-logic [0:0] mstatus__mie;
-logic [0:0] mstatus__upie;
-logic [0:0] mstatus__spie;
-logic [0:0] mstatus__hpie;
-logic [0:0] mstatus__mpie;
-logic [0:0] mstatus__spp;
-logic [1:0] mstatus__hpp;
-logic [1:0] mstatus__mpp;
-logic [1:0] mstatus__fs;
-logic [1:0] mstatus__xs;
-logic [0:0] mstatus__mprv;
-logic [0:0] mstatus__pum;
-logic [0:0] mstatus__mxr;
-logic [4:0] mstatus__vm;
-logic [0:0] mstatus__sd;
-logic we__mstatus;
-logic en__mstatus;
-
 assign mstatus[0] = mstatus__uie;
 assign mstatus[1] = mstatus__sie;
 assign mstatus[2] = mstatus__hie;
@@ -331,12 +441,6 @@ d_flip_flop #(.WIDTH(1), .RESET_VALUE(1'b0)) d_flip_flop__mstatus__mie
 //============================================== 
 // Machine Trap-Vector Base-Address Register (mtvec)
 //==============================================
-logic [63:0] mtvec;
-logic [1:0] mtvec__offset;
-logic [61:0] mtvec__trap_vector_base_address;
-logic we__mtvec;
-logic en__mtvec;
-
 assign mtvec[1:0] = mtvec__offset;
 assign mtvec[63:2] = mtvec__trap_vector_base_address;
 
@@ -360,11 +464,6 @@ d_flip_flop #(.WIDTH(62), .RESET_VALUE(62'h0)) d_flip_flop__mtvec__trap_vector_b
 //============================================== 
 // Machine Exception Delegation Register (medeleg) 
 //==============================================
-logic [63:0] medeleg;
-logic [63:0] medeleg__synchronous_exceptions;
-logic we__medeleg;
-logic en__medeleg;
-
 assign medeleg[63:0] = medeleg__synchronous_exceptions;
 
 assign medeleg__synchronous_exceptions = 64'h0;
@@ -373,11 +472,6 @@ assign medeleg__synchronous_exceptions = 64'h0;
 //============================================== 
 // Machine Interrupt Delegation Register (mideleg) 
 //==============================================
-logic [63:0] mideleg;
-logic [63:0] mideleg__interrupts;
-logic we__mideleg;
-logic en__mideleg;
-
 assign mideleg[63:0] = mideleg__interrupts;
 
 assign mideleg__interrupts = 64'h0;
@@ -386,23 +480,6 @@ assign mideleg__interrupts = 64'h0;
 //============================================== 
 // Machine Interrupt-Pending Register (mip) 
 //==============================================
-logic [63:0] mip;
-logic [0:0] mip__usip;
-logic [0:0] mip__ssip;
-logic [0:0] mip__hsip;
-logic [0:0] mip__msip;
-logic [0:0] mip__utip;
-logic [0:0] mip__stip;
-logic [0:0] mip__htip;
-logic [0:0] mip__mtip;
-logic [0:0] mip__ueip;
-logic [0:0] mip__seip;
-logic [0:0] mip__heip;
-logic [0:0] mip__meip;
-logic [51:0] mip__wiri__0;
-logic we__mip;
-logic en__mip;
-
 assign mip[0] = mip__usip;
 assign mip[1] = mip__ssip;
 assign mip[2] = mip__hsip;
@@ -471,23 +548,6 @@ d_flip_flop #(.WIDTH(1), .RESET_VALUE()) d_flip_flop__mip__meip
 //============================================== 
 // Machine Interrupt-Enable Register (mie) 
 //==============================================
-logic [63:0] mie;
-logic [0:0] mie__usie;
-logic [0:0] mie__ssie;
-logic [0:0] mie__hsie;
-logic [0:0] mie__msie;
-logic [0:0] mie__utie;
-logic [0:0] mie__stie;
-logic [0:0] mie__htie;
-logic [0:0] mie__mtie;
-logic [0:0] mie__ueie;
-logic [0:0] mie__seie;
-logic [0:0] mie__heie;
-logic [0:0] mie__meie;
-logic [51:0] mie__wpri__0;
-logic we__mie;
-logic en__mie;
-
 assign mie[0] = mie__usie;
 assign mie[1] = mie__ssie;
 assign mie[2] = mie__hsie;
@@ -555,12 +615,6 @@ d_flip_flop #(.WIDTH(1), .RESET_VALUE(1'b0)) d_flip_flop__mie__meie
 //============================================== 
 // Machine Cycle Register (mcycle) 
 //==============================================
-logic [63:0] mcycle;
-logic [63:0] mcycle__mcycle;
-logic [63:0] mcycle__mcycle__n;
-logic we__mcycle;
-logic en__mcycle;
-
 assign mcycle[63:0] = mcycle__mcycle;
 assign mcycle[63:0] = mcycle__mcycle__n;
 
@@ -596,15 +650,6 @@ d_flip_flop #(.WIDTH(64), .RESET_VALUE(64'h0)) d_flip_flop__mcycle__mcycle
 //============================================== 
 // Machine Instruction Retire Register (minstret) 
 //==============================================
-logic [63:0] minstret;
-logic [63:0] minstret__minstret;
-logic [63:0] minstret__minstret__n;
-logic we__minstret;
-logic en__minstret;
-logic minstret__write_occurred;
-logic state__minstret;
-logic state__minstret__n;
-
 assign minstret[63:0] = minstret__minstret;
 
 assign en__minstret = 1'b1;
@@ -686,11 +731,6 @@ d_flip_flop #(.WIDTH(1), .RESET_VALUE(STATE__MINSTRET__NORMAL)) d_flip_flop__sta
 //============================================== 
 // Machine Hardware Performance Monitor Counter 3 (mhpmcounter3)
 //==============================================
-logic [63:0] mhpmcounter3;
-logic [63:0] mhpmcounter3__mhpmcounter3;
-logic we__mhpmcounter3;
-logic en__mhpmcounter3;
-
 assign mhpmcounter3[63:0] = mhpmcounter3__mhpmcounter3;
 
 assign mhpmcounter3__mhpmcounter3 = 64'h0;
@@ -699,11 +739,6 @@ assign mhpmcounter3__mhpmcounter3 = 64'h0;
 //============================================== 
 // Machine Hardware Performance Monitor Event 3 (mhpmevent3)
 //==============================================
-logic [63:0] mhpmevent3;
-logic [63:0] mhpmevent3__mhpmevent3;
-logic we__mhpmevent3;
-logic en__mhpmevent3;
-
 assign mhpmevent3[63:0] = mhpmevent3__mhpmevent3;
 
 assign mhpmevent3__mhpmevent3 = 64'h0;
@@ -712,36 +747,26 @@ assign mhpmevent3__mhpmevent3 = 64'h0;
 //============================================== 
 // Machine Scratch Register (mscratch) 
 //==============================================
-logic [63:0] mscratch;
-logic [63:0] mscratch__mscratch;
-logic we__mscratch;
-logic en__mscratch;
-
 assign mscratch[63:0] = mscratch__mscratch;
 
 assign en__scratch = cs & we__mscratch;
 
-////==============================
-//// d_flip_flop__mscratch__mscratch
-////==============================
-//d_flip_flop #(.WIDTH(64), .RESET_VALUE(64'h0)) d_flip_flop__mscratch__mscratch
-//(
-//    .clk(clk),
-//    .rst(rst),
-//    .en(en__mscratch),
-//    .d(wr_data[63:0]),
-//    .q(mscratch__mscratch)
-//);
-//
+//==============================
+// d_flip_flop__mscratch__mscratch
+//==============================
+d_flip_flop #(.WIDTH(64), .RESET_VALUE(64'h0)) d_flip_flop__mscratch__mscratch
+(
+    .clk(clk),
+    .rst(rst),
+    .en(en__mscratch),
+    .d(wr_data[63:0]),
+    .q(mscratch__mscratch)
+);
+
 
 //============================================== 
 // Machine Exception Program Counter (mepc) 
 //==============================================
-logic [63:0] mepc;
-logic [63:0] mepc__mepc;
-logic we__mepc;
-logic en__mepc;
-
 assign mepc[63:0] = mepc__mepc;
 
 assign en__mepc = cs & we__mepc;
@@ -762,12 +787,6 @@ d_flip_flop #(.WIDTH(64), .RESET_VALUE(64'h0)) d_flip_flop__mepc__mepc
 //============================================== 
 // Machine Cause Register (mcause) 
 //==============================================
-logic [63:0] mcause;
-logic [62:0] mcause__exception_code;
-logic [0:0] mcause__interrupt;
-logic we__mcause;
-logic en__mcause;
-
 assign mcause[62:0] = mcause__exception_code;
 assign mcause[63] = mcause__interrupt;
 
@@ -801,11 +820,6 @@ d_flip_flop #(.WIDTH(1), .RESET_VALUE(1'b0)) d_flip_flop__mcause__interrupt
 //============================================== 
 // Machine Trap Value Register (mtval) 
 //==============================================
-logic [63:0] mtval;
-logic [63:0] mtval__mtval;
-logic we__mtval;
-logic en__mtval;
-
 assign mtval[63:0] = mtval__mtval;
 
 assign en__mtval = cs & we__mtval;

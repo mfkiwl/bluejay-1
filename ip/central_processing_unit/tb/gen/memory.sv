@@ -54,6 +54,8 @@ localparam STATE__READY = 1'b0;
 localparam STATE__NOT_READY = 1'b1;
 
 
+logic test;
+
 always_comb 
 begin
     case (state)

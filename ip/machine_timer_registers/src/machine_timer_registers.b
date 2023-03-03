@@ -3,15 +3,48 @@
 //==============================================
 module machine_timer_registers
 (
-    input clk,
-    input rst,
-    input cs,
-    input we,
-    input addr,
-    input [64:0] wr_data,
-    output logic [64:0] rd_data,
-    output logic tip 
+    clk,
+    rst,
+    cs,
+    we,
+    addr,
+    wr_data,
+    rd_data,
+    tip 
 );
+
+input clk;
+input rst;
+input cs;
+input we;
+input addr;
+input [63:0] wr_data;
+output [63:0] rd_data;
+output tip;
+
+logic clk;
+logic rst;
+
+logic cs;
+logic we;
+logic addr;
+logic [63:0] wr_data;
+logic [63:0] rd_data;
+
+logic tip;
+
+// Machine Time Register (mtime)
+logic [63:0] mtime;
+logic [CSR__MTIME__MTIME__WIDTH-1:0] mtime__mtime;
+logic [CSR__MTIME__MTIME__WIDTH-1:0] mtime__mtime__n;
+logic we__mtime;
+logic en__mtime;
+
+// Machine Time Compare Register (mtimecmp)
+logic [63:0] mtimecmp;
+logic [CSR__MTIMECMP__MTIMECMP__WIDTH-1:0] mtimecmp__mtimecmp;
+logic we__mtimecmp;
+logic en__mtimecmp;
 
 
 assign tip = mtime >= mtimecmp;
@@ -36,16 +69,9 @@ begin
     endcase
 end
 
-
 //============================================== 
 // Machine Time Register (mtime)
 //==============================================
-logic [63:0] mtime;
-logic [CSR__MTIME__MTIME__WIDTH-1:0] mtime__mtime;
-logic [CSR__MTIME__MTIME__WIDTH-1:0] mtime__mtime__n;
-logic we__mtime;
-logic en__mtime;
-
 assign mtime[CSR__MTIME__MTIME__FIELD] = mtime__mtime;
 
 assign en__mtime = 1'b1; 
@@ -76,15 +102,9 @@ d_flip_flop #(.WIDTH(CSR__MTIME__MTIME__WIDTH), .RESET_VALUE(CSR__MTIME__MTIME__
     .q(mtime__mtime)
 );
 
-
 //============================================== 
 // Machine Time Compare Register (mtimecmp)
 //==============================================
-logic [63:0] mtimecmp;
-logic [CSR__MTIMECMP__MTIMECMP__WIDTH-1:0] mtimecmp__mtimecmp;
-logic we__mtimecmp;
-logic en__mtimecmp;
-
 assign mtimecmp[CSR__MTIMECMP__MTIMECMP__FIELD] = mtimecmp__mtimecmp;
 
 assign en__mtimecmp = cs & we__mtimecmp;

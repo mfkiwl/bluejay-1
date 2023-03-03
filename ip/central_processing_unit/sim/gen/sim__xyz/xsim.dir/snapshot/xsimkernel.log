@@ -1,7 +1,7 @@
-Running: xsim.dir/snapshot/xsimk -wdb /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/XORI-01/snapshot.wdb -simmode gui -testplusarg filename__mem=/home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/XORI-01/XORI-01.mem -testplusarg filename__sig=/home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/XORI-01/XORI-01.signature -testplusarg begin_signature=0000000080003010 -testplusarg end_signature=0000000080003970 -testplusarg tohost=0000000080002000 -simrunnum 0 -socket 46867
+Running: xsim.dir/snapshot/xsimk -wdb /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/BEQ-01/snapshot.wdb -simmode gui -testplusarg filename__mem=/home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/BEQ-01/BEQ-01.mem -testplusarg filename__sig=/home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/BEQ-01/BEQ-01.signature -testplusarg begin_signature=0000000080005010 -testplusarg end_signature=0000000080005970 -testplusarg tohost=0000000080004000 -simrunnum 0 -socket 59061
 Design successfully loaded
-Design Loading Memory Usage: 33900 KB (Peak: 34016 KB)
+Design Loading Memory Usage: 33904 KB (Peak: 34016 KB)
 Design Loading CPU Usage: 0 ms
 Simulation completed
-Simulation Memory Usage: 128192 KB (Peak: 173168 KB)
-Simulation CPU Usage: 210 ms
+Simulation Memory Usage: 128196 KB (Peak: 173172 KB)
+Simulation CPU Usage: 430 ms

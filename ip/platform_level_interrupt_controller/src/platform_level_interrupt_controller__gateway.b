@@ -3,12 +3,24 @@
 //==============================================
 module platform_level_interrupt_controller__gateway 
 (
-    input clk,
-    input rst,
-    input irq,
-    output logic request,
-    input complete
+    clk,
+    rst,
+    irq,
+    request,
+    complete
 );
+
+input clk;
+input rst;
+input irq;
+output request;
+input complete;
+
+logic clk;
+logic rst;
+logic irq;
+logic request;
+logic complete;
 
 logic [1:0] state;
 logic [1:0] state__n;

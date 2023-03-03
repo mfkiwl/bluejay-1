@@ -24,17 +24,22 @@ module control_and_status_registers
 
 input clk;
 input rst;
-
 input cs;
 input we;
 input [11:0] addr;
 output [63:0] rd_data;
 input [63:0] wr_data;
-
 input eip;
 input tip;
-
 input instret;
+
+output mstatus__mie;
+output mie__meie;
+output mie__msie;
+output mie__mtie;
+output mip__meip;
+output mip__msip;
+output mip__mtip;
 
 logic clk;
 logic rst;
@@ -50,15 +55,169 @@ logic tip;
 
 logic instret;
 
+// Machine ISA Register (misa)
+logic [63:0] misa;
+logic [CSR__MISA__EXTENSIONS__WIDTH-1:0] misa__extensions;
+logic [CSR__MISA__WIRI__0__WIDTH-1:0] misa__wiri__0;
+logic [CSR__MISA__BASE__WIDTH-1:0] misa__base;
+logic we__misa;
+logic en__misa;
 
+// Machine Vendor ID Register (mvendorid)
+logic [63:0] mvendorid;
+logic [CSR__MVENDORID__VENDOR__WIDTH-1:0] mvendorid__vendor;
+logic we__mvendorid;
+logic en__mvendorid;
 
-output mstatus__mie;
-output mie__meie;
-output mie__msie;
-output mie__mtie;
-output mip__meip;
-output mip__msip;
-output mip__mtip;
+// Machine Architecture ID Register (marchid)
+logic [63:0] marchid;
+logic [CSR__MARCHID__ARCHITECTURE_ID__WIDTH-1:0] marchid__architecture_id;
+logic we__marchid;
+logic en__marchid;
+
+// Machine Implementation ID Register (mimpid)
+logic [63:0] mimpid;
+logic [CSR__MIMPID__IMPLEMENTATION__WIDTH-1:0] mimpid__implementation;
+logic we__mimpid;
+logic en__mimpid;
+
+// Hart ID Register (mhartid) 
+logic [63:0] mhartid;
+logic [CSR__MHARTID__HART_ID__WIDTH-1:0] mhartid__hart_id;
+logic we__mhartid;
+logic en__mhartid;
+
+// Machine Status Register (mstatus) 
+logic [63:0] mstatus;
+logic [CSR__MSTATUS__UIE__WIDTH-1:0] mstatus__uie;
+logic [CSR__MSTATUS__SIE__WIDTH-1:0] mstatus__sie;
+logic [CSR__MSTATUS__HIE__WIDTH-1:0] mstatus__hie;
+logic [CSR__MSTATUS__MIE__WIDTH-1:0] mstatus__mie;
+logic [CSR__MSTATUS__UPIE__WIDTH-1:0] mstatus__upie;
+logic [CSR__MSTATUS__SPIE__WIDTH-1:0] mstatus__spie;
+logic [CSR__MSTATUS__HPIE__WIDTH-1:0] mstatus__hpie;
+logic [CSR__MSTATUS__MPIE__WIDTH-1:0] mstatus__mpie;
+logic [CSR__MSTATUS__SPP__WIDTH-1:0] mstatus__spp;
+logic [CSR__MSTATUS__HPP__WIDTH-1:0] mstatus__hpp;
+logic [CSR__MSTATUS__MPP__WIDTH-1:0] mstatus__mpp;
+logic [CSR__MSTATUS__FS__WIDTH-1:0] mstatus__fs;
+logic [CSR__MSTATUS__XS__WIDTH-1:0] mstatus__xs;
+logic [CSR__MSTATUS__MPRV__WIDTH-1:0] mstatus__mprv;
+logic [CSR__MSTATUS__PUM__WIDTH-1:0] mstatus__pum;
+logic [CSR__MSTATUS__MXR__WIDTH-1:0] mstatus__mxr;
+logic [CSR__MSTATUS__VM__WIDTH-1:0] mstatus__vm;
+logic [CSR__MSTATUS__SD__WIDTH-1:0] mstatus__sd;
+logic we__mstatus;
+logic en__mstatus;
+
+// Machine Trap-Vector Base-Address Register (mtvec)
+logic [63:0] mtvec;
+logic [CSR__MTVEC__OFFSET__WIDTH-1:0] mtvec__offset;
+logic [CSR__MTVEC__TRAP_VECTOR_BASE_ADDRESS__WIDTH-1:0] mtvec__trap_vector_base_address;
+logic we__mtvec;
+logic en__mtvec;
+
+// Machine Exception Delegation Register (medeleg) 
+logic [63:0] medeleg;
+logic [CSR__MEDELEG__SYNCHRONOUS_EXCEPTIONS__WIDTH-1:0] medeleg__synchronous_exceptions;
+logic we__medeleg;
+logic en__medeleg;
+
+// Machine Interrupt Delegation Register (mideleg) 
+logic [63:0] mideleg;
+logic [CSR__MIDELEG__INTERRUPTS__WIDTH-1:0] mideleg__interrupts;
+logic we__mideleg;
+logic en__mideleg;
+
+// Machine Interrupt-Pending Register (mip) 
+logic [63:0] mip;
+logic [CSR__MIP__USIP__WIDTH-1:0] mip__usip;
+logic [CSR__MIP__SSIP__WIDTH-1:0] mip__ssip;
+logic [CSR__MIP__HSIP__WIDTH-1:0] mip__hsip;
+logic [CSR__MIP__MSIP__WIDTH-1:0] mip__msip;
+logic [CSR__MIP__UTIP__WIDTH-1:0] mip__utip;
+logic [CSR__MIP__STIP__WIDTH-1:0] mip__stip;
+logic [CSR__MIP__HTIP__WIDTH-1:0] mip__htip;
+logic [CSR__MIP__MTIP__WIDTH-1:0] mip__mtip;
+logic [CSR__MIP__UEIP__WIDTH-1:0] mip__ueip;
+logic [CSR__MIP__SEIP__WIDTH-1:0] mip__seip;
+logic [CSR__MIP__HEIP__WIDTH-1:0] mip__heip;
+logic [CSR__MIP__MEIP__WIDTH-1:0] mip__meip;
+logic [CSR__MIP__WIRI__0__WIDTH-1:0] mip__wiri__0;
+logic we__mip;
+logic en__mip;
+
+// Machine Interrupt-Enable Register (mie) 
+logic [63:0] mie;
+logic [CSR__MIE__USIE__WIDTH-1:0] mie__usie;
+logic [CSR__MIE__SSIE__WIDTH-1:0] mie__ssie;
+logic [CSR__MIE__HSIE__WIDTH-1:0] mie__hsie;
+logic [CSR__MIE__MSIE__WIDTH-1:0] mie__msie;
+logic [CSR__MIE__UTIE__WIDTH-1:0] mie__utie;
+logic [CSR__MIE__STIE__WIDTH-1:0] mie__stie;
+logic [CSR__MIE__HTIE__WIDTH-1:0] mie__htie;
+logic [CSR__MIE__MTIE__WIDTH-1:0] mie__mtie;
+logic [CSR__MIE__UEIE__WIDTH-1:0] mie__ueie;
+logic [CSR__MIE__SEIE__WIDTH-1:0] mie__seie;
+logic [CSR__MIE__HEIE__WIDTH-1:0] mie__heie;
+logic [CSR__MIE__MEIE__WIDTH-1:0] mie__meie;
+logic [CSR__MIE__WPRI__0__WIDTH-1:0] mie__wpri__0;
+logic we__mie;
+logic en__mie;
+
+// Machine Cycle Register (mcycle) 
+logic [63:0] mcycle;
+logic [CSR__MCYCLE__MCYCLE__WIDTH-1:0] mcycle__mcycle;
+logic [CSR__MCYCLE__MCYCLE__WIDTH-1:0] mcycle__mcycle__n;
+logic we__mcycle;
+logic en__mcycle;
+
+// Machine Instruction Retire Register (minstret) 
+logic [63:0] minstret;
+logic [CSR__MINSTRET__MINSTRET__WIDTH-1:0] minstret__minstret;
+logic [CSR__MINSTRET__MINSTRET__WIDTH-1:0] minstret__minstret__n;
+logic we__minstret;
+logic en__minstret;
+logic minstret__write_occurred;
+logic state__minstret;
+logic state__minstret__n;
+
+// Machine Hardware Performance Monitor Counter 3 (mhpmcounter3)
+logic [63:0] mhpmcounter3;
+logic [CSR__MHPMCOUNTER3__MHPMCOUNTER3__WIDTH-1:0] mhpmcounter3__mhpmcounter3;
+logic we__mhpmcounter3;
+logic en__mhpmcounter3;
+
+// Machine Hardware Performance Monitor Event 3 (mhpmevent3)
+logic [63:0] mhpmevent3;
+logic [CSR__MHPMEVENT3__MHPMEVENT3__WIDTH-1:0] mhpmevent3__mhpmevent3;
+logic we__mhpmevent3;
+logic en__mhpmevent3;
+
+// Machine Scratch Register (mscratch) 
+logic [63:0] mscratch;
+logic [CSR__MSCRATCH__MSCRATCH__WIDTH-1:0] mscratch__mscratch;
+logic we__mscratch;
+logic en__mscratch;
+
+// Machine Exception Program Counter (mepc) 
+logic [63:0] mepc;
+logic [CSR__MEPC__MEPC__WIDTH-1:0] mepc__mepc;
+logic we__mepc;
+logic en__mepc;
+
+// Machine Cause Register (mcause) 
+logic [63:0] mcause;
+logic [CSR__MCAUSE__EXCEPTION_CODE__WIDTH-1:0] mcause__exception_code;
+logic [CSR__MCAUSE__INTERRUPT__WIDTH-1:0] mcause__interrupt;
+logic we__mcause;
+logic en__mcause;
+
+// Machine Trap Value Register (mtval) 
+logic [63:0] mtval;
+logic [CSR__MTVAL__MTVAL__WIDTH-1:0] mtval__mtval;
+logic we__mtval;
+logic en__mtval;
 
 
 always_comb begin
@@ -184,13 +343,6 @@ end
 //==============================================
 // Machine ISA Register (misa)
 //==============================================
-logic [63:0] misa;
-logic [CSR__MISA__EXTENSIONS__WIDTH-1:0] misa__extensions;
-logic [CSR__MISA__WIRI__0__WIDTH-1:0] misa__wiri__0;
-logic [CSR__MISA__BASE__WIDTH-1:0] misa__base;
-logic we__misa;
-logic en__misa;
-
 assign misa[CSR__MISA__EXTENSIONS__FIELD] = misa__extensions;
 assign misa[CSR__MISA__WIRI__0__FIELD] = misa__wiri__0;
 assign misa[CSR__MISA__BASE__FIELD] = misa__base;
@@ -203,11 +355,6 @@ assign misa__base = CSR__MISA__BASE__RV64;
 //==============================================
 // Machine Vendor ID Register (mvendorid)
 //==============================================
-logic [63:0] mvendorid;
-logic [CSR__MVENDORID__VENDOR__WIDTH-1:0] mvendorid__vendor;
-logic we__mvendorid;
-logic en__mvendorid;
-
 assign mvendorid[CSR__MVENDORID__VENDOR__FIELD] = mvendorid__vendor;
 
 assign mvendorid__vendor = CSR__MVENDORID__VENDOR__VALUE;
@@ -216,11 +363,6 @@ assign mvendorid__vendor = CSR__MVENDORID__VENDOR__VALUE;
 //==============================================
 // Machine Architecture ID Register (marchid)
 //==============================================
-logic [63:0] marchid;
-logic [CSR__MARCHID__ARCHITECTURE_ID__WIDTH-1:0] marchid__architecture_id;
-logic we__marchid;
-logic en__marchid;
-
 assign marchid[CSR__MARCHID__ARCHITECTURE_ID__FIELD] = marchid__architecture_id;
 
 assign marchid__architecture_id = CSR__MARCHID__ARCHITECTURE_ID__VALUE;
@@ -229,11 +371,6 @@ assign marchid__architecture_id = CSR__MARCHID__ARCHITECTURE_ID__VALUE;
 //==============================================
 // Machine Implementation ID Register (mimpid)
 //==============================================
-logic [63:0] mimpid;
-logic [CSR__MIMPID__IMPLEMENTATION__WIDTH-1:0] mimpid__implementation;
-logic we__mimpid;
-logic en__mimpid;
-
 assign mimpid[CSR__MIMPID__IMPLEMENTATION__FIELD] = mimpid__implementation;
 
 assign mimpid__implementation = CSR__MIMPID__IMPLEMENTATION__VALUE;
@@ -242,11 +379,6 @@ assign mimpid__implementation = CSR__MIMPID__IMPLEMENTATION__VALUE;
 //==============================================
 // Hart ID Register (mhartid) 
 //==============================================
-logic [63:0] mhartid;
-logic [CSR__MHARTID__HART_ID__WIDTH-1:0] mhartid__hart_id;
-logic we__mhartid;
-logic en__mhartid;
-
 assign mhartid[CSR__MHARTID__HART_ID__FIELD] = mhartid__hart_id;
 
 assign mhartid__hart_id = CSR__MHARTID__HART_ID__VALUE;
@@ -255,28 +387,6 @@ assign mhartid__hart_id = CSR__MHARTID__HART_ID__VALUE;
 //============================================== 
 // Machine Status Register (mstatus) 
 //==============================================
-logic [63:0] mstatus;
-logic [CSR__MSTATUS__UIE__WIDTH-1:0] mstatus__uie;
-logic [CSR__MSTATUS__SIE__WIDTH-1:0] mstatus__sie;
-logic [CSR__MSTATUS__HIE__WIDTH-1:0] mstatus__hie;
-logic [CSR__MSTATUS__MIE__WIDTH-1:0] mstatus__mie;
-logic [CSR__MSTATUS__UPIE__WIDTH-1:0] mstatus__upie;
-logic [CSR__MSTATUS__SPIE__WIDTH-1:0] mstatus__spie;
-logic [CSR__MSTATUS__HPIE__WIDTH-1:0] mstatus__hpie;
-logic [CSR__MSTATUS__MPIE__WIDTH-1:0] mstatus__mpie;
-logic [CSR__MSTATUS__SPP__WIDTH-1:0] mstatus__spp;
-logic [CSR__MSTATUS__HPP__WIDTH-1:0] mstatus__hpp;
-logic [CSR__MSTATUS__MPP__WIDTH-1:0] mstatus__mpp;
-logic [CSR__MSTATUS__FS__WIDTH-1:0] mstatus__fs;
-logic [CSR__MSTATUS__XS__WIDTH-1:0] mstatus__xs;
-logic [CSR__MSTATUS__MPRV__WIDTH-1:0] mstatus__mprv;
-logic [CSR__MSTATUS__PUM__WIDTH-1:0] mstatus__pum;
-logic [CSR__MSTATUS__MXR__WIDTH-1:0] mstatus__mxr;
-logic [CSR__MSTATUS__VM__WIDTH-1:0] mstatus__vm;
-logic [CSR__MSTATUS__SD__WIDTH-1:0] mstatus__sd;
-logic we__mstatus;
-logic en__mstatus;
-
 assign mstatus[CSR__MSTATUS__UIE__FIELD] = mstatus__uie;
 assign mstatus[CSR__MSTATUS__SIE__FIELD] = mstatus__sie;
 assign mstatus[CSR__MSTATUS__HIE__FIELD] = mstatus__hie;
@@ -331,12 +441,6 @@ d_flip_flop #(.WIDTH(CSR__MSTATUS__MIE__WIDTH), .RESET_VALUE(CSR__MSTATUS__MIE__
 //============================================== 
 // Machine Trap-Vector Base-Address Register (mtvec)
 //==============================================
-logic [63:0] mtvec;
-logic [CSR__MTVEC__OFFSET__WIDTH-1:0] mtvec__offset;
-logic [CSR__MTVEC__TRAP_VECTOR_BASE_ADDRESS__WIDTH-1:0] mtvec__trap_vector_base_address;
-logic we__mtvec;
-logic en__mtvec;
-
 assign mtvec[CSR__MTVEC__OFFSET__FIELD] = mtvec__offset;
 assign mtvec[CSR__MTVEC__TRAP_VECTOR_BASE_ADDRESS__FIELD] = mtvec__trap_vector_base_address;
 
@@ -360,11 +464,6 @@ d_flip_flop #(.WIDTH(CSR__MTVEC__TRAP_VECTOR_BASE_ADDRESS__WIDTH), .RESET_VALUE(
 //============================================== 
 // Machine Exception Delegation Register (medeleg) 
 //==============================================
-logic [63:0] medeleg;
-logic [CSR__MEDELEG__SYNCHRONOUS_EXCEPTIONS__WIDTH-1:0] medeleg__synchronous_exceptions;
-logic we__medeleg;
-logic en__medeleg;
-
 assign medeleg[CSR__MEDELEG__SYNCHRONOUS_EXCEPTIONS__FIELD] = medeleg__synchronous_exceptions;
 
 assign medeleg__synchronous_exceptions = CSR__MEDELEG__SYNCHRONOUS_EXCEPTIONS__VALUE;
@@ -373,11 +472,6 @@ assign medeleg__synchronous_exceptions = CSR__MEDELEG__SYNCHRONOUS_EXCEPTIONS__V
 //============================================== 
 // Machine Interrupt Delegation Register (mideleg) 
 //==============================================
-logic [63:0] mideleg;
-logic [CSR__MIDELEG__INTERRUPTS__WIDTH-1:0] mideleg__interrupts;
-logic we__mideleg;
-logic en__mideleg;
-
 assign mideleg[CSR__MIDELEG__INTERRUPTS__FIELD] = mideleg__interrupts;
 
 assign mideleg__interrupts = CSR__MIDELEG__INTERRUPTS__VALUE;
@@ -386,23 +480,6 @@ assign mideleg__interrupts = CSR__MIDELEG__INTERRUPTS__VALUE;
 //============================================== 
 // Machine Interrupt-Pending Register (mip) 
 //==============================================
-logic [63:0] mip;
-logic [CSR__MIP__USIP__WIDTH-1:0] mip__usip;
-logic [CSR__MIP__SSIP__WIDTH-1:0] mip__ssip;
-logic [CSR__MIP__HSIP__WIDTH-1:0] mip__hsip;
-logic [CSR__MIP__MSIP__WIDTH-1:0] mip__msip;
-logic [CSR__MIP__UTIP__WIDTH-1:0] mip__utip;
-logic [CSR__MIP__STIP__WIDTH-1:0] mip__stip;
-logic [CSR__MIP__HTIP__WIDTH-1:0] mip__htip;
-logic [CSR__MIP__MTIP__WIDTH-1:0] mip__mtip;
-logic [CSR__MIP__UEIP__WIDTH-1:0] mip__ueip;
-logic [CSR__MIP__SEIP__WIDTH-1:0] mip__seip;
-logic [CSR__MIP__HEIP__WIDTH-1:0] mip__heip;
-logic [CSR__MIP__MEIP__WIDTH-1:0] mip__meip;
-logic [CSR__MIP__WIRI__0__WIDTH-1:0] mip__wiri__0;
-logic we__mip;
-logic en__mip;
-
 assign mip[CSR__MIP__USIP__FIELD] = mip__usip;
 assign mip[CSR__MIP__SSIP__FIELD] = mip__ssip;
 assign mip[CSR__MIP__HSIP__FIELD] = mip__hsip;
@@ -471,23 +548,6 @@ d_flip_flop #(.WIDTH(CSR__MIP__MEIP__WIDTH), .RESET_VALUE()) d_flip_flop__mip__m
 //============================================== 
 // Machine Interrupt-Enable Register (mie) 
 //==============================================
-logic [63:0] mie;
-logic [CSR__MIE__USIE__WIDTH-1:0] mie__usie;
-logic [CSR__MIE__SSIE__WIDTH-1:0] mie__ssie;
-logic [CSR__MIE__HSIE__WIDTH-1:0] mie__hsie;
-logic [CSR__MIE__MSIE__WIDTH-1:0] mie__msie;
-logic [CSR__MIE__UTIE__WIDTH-1:0] mie__utie;
-logic [CSR__MIE__STIE__WIDTH-1:0] mie__stie;
-logic [CSR__MIE__HTIE__WIDTH-1:0] mie__htie;
-logic [CSR__MIE__MTIE__WIDTH-1:0] mie__mtie;
-logic [CSR__MIE__UEIE__WIDTH-1:0] mie__ueie;
-logic [CSR__MIE__SEIE__WIDTH-1:0] mie__seie;
-logic [CSR__MIE__HEIE__WIDTH-1:0] mie__heie;
-logic [CSR__MIE__MEIE__WIDTH-1:0] mie__meie;
-logic [CSR__MIE__WPRI__0__WIDTH-1:0] mie__wpri__0;
-logic we__mie;
-logic en__mie;
-
 assign mie[CSR__MIE__USIE__FIELD] = mie__usie;
 assign mie[CSR__MIE__SSIE__FIELD] = mie__ssie;
 assign mie[CSR__MIE__HSIE__FIELD] = mie__hsie;
@@ -555,12 +615,6 @@ d_flip_flop #(.WIDTH(CSR__MIE__MEIE__WIDTH), .RESET_VALUE(CSR__MIE__MEIE__DISABL
 //============================================== 
 // Machine Cycle Register (mcycle) 
 //==============================================
-logic [63:0] mcycle;
-logic [CSR__MCYCLE__MCYCLE__WIDTH-1:0] mcycle__mcycle;
-logic [CSR__MCYCLE__MCYCLE__WIDTH-1:0] mcycle__mcycle__n;
-logic we__mcycle;
-logic en__mcycle;
-
 assign mcycle[CSR__MCYCLE__MCYCLE__FIELD] = mcycle__mcycle;
 assign mcycle[CSR__MCYCLE__MCYCLE__FIELD] = mcycle__mcycle__n;
 
@@ -596,15 +650,6 @@ d_flip_flop #(.WIDTH(CSR__MCYCLE__MCYCLE__WIDTH), .RESET_VALUE(CSR__MCYCLE__MCYC
 //============================================== 
 // Machine Instruction Retire Register (minstret) 
 //==============================================
-logic [63:0] minstret;
-logic [CSR__MINSTRET__MINSTRET__WIDTH-1:0] minstret__minstret;
-logic [CSR__MINSTRET__MINSTRET__WIDTH-1:0] minstret__minstret__n;
-logic we__minstret;
-logic en__minstret;
-logic minstret__write_occurred;
-logic state__minstret;
-logic state__minstret__n;
-
 assign minstret[CSR__MINSTRET__MINSTRET__FIELD] = minstret__minstret;
 
 assign en__minstret = 1'b1;
@@ -686,11 +731,6 @@ d_flip_flop #(.WIDTH(1), .RESET_VALUE(STATE__MINSTRET__NORMAL)) d_flip_flop__sta
 //============================================== 
 // Machine Hardware Performance Monitor Counter 3 (mhpmcounter3)
 //==============================================
-logic [63:0] mhpmcounter3;
-logic [CSR__MHPMCOUNTER3__MHPMCOUNTER3__WIDTH-1:0] mhpmcounter3__mhpmcounter3;
-logic we__mhpmcounter3;
-logic en__mhpmcounter3;
-
 assign mhpmcounter3[CSR__MHPMCOUNTER3__MHPMCOUNTER3__FIELD] = mhpmcounter3__mhpmcounter3;
 
 assign mhpmcounter3__mhpmcounter3 = CSR__MHPMCOUNTER3__MHPMCOUNTER3__VALUE;
@@ -699,11 +739,6 @@ assign mhpmcounter3__mhpmcounter3 = CSR__MHPMCOUNTER3__MHPMCOUNTER3__VALUE;
 //============================================== 
 // Machine Hardware Performance Monitor Event 3 (mhpmevent3)
 //==============================================
-logic [63:0] mhpmevent3;
-logic [CSR__MHPMEVENT3__MHPMEVENT3__WIDTH-1:0] mhpmevent3__mhpmevent3;
-logic we__mhpmevent3;
-logic en__mhpmevent3;
-
 assign mhpmevent3[CSR__MHPMEVENT3__MHPMEVENT3__FIELD] = mhpmevent3__mhpmevent3;
 
 assign mhpmevent3__mhpmevent3 = CSR__MHPMEVENT3__MHPMEVENT3__VALUE;
@@ -712,36 +747,26 @@ assign mhpmevent3__mhpmevent3 = CSR__MHPMEVENT3__MHPMEVENT3__VALUE;
 //============================================== 
 // Machine Scratch Register (mscratch) 
 //==============================================
-logic [63:0] mscratch;
-logic [CSR__MSCRATCH__MSCRATCH__WIDTH-1:0] mscratch__mscratch;
-logic we__mscratch;
-logic en__mscratch;
-
 assign mscratch[CSR__MSCRATCH__MSCRATCH__FIELD] = mscratch__mscratch;
 
 assign en__scratch = cs & we__mscratch;
 
-////==============================
-//// d_flip_flop__mscratch__mscratch
-////==============================
-//d_flip_flop #(.WIDTH(CSR__MSCRATCH__MSCRATCH__WIDTH), .RESET_VALUE(CSR__MSCRATCH__MSCRATCH__RESET_VALUE)) d_flip_flop__mscratch__mscratch
-//(
-//    .clk(clk),
-//    .rst(rst),
-//    .en(en__mscratch),
-//    .d(wr_data[CSR__MSCRATCH__MSCRATCH__FIELD]),
-//    .q(mscratch__mscratch)
-//);
-//
+//==============================
+// d_flip_flop__mscratch__mscratch
+//==============================
+d_flip_flop #(.WIDTH(CSR__MSCRATCH__MSCRATCH__WIDTH), .RESET_VALUE(CSR__MSCRATCH__MSCRATCH__RESET_VALUE)) d_flip_flop__mscratch__mscratch
+(
+    .clk(clk),
+    .rst(rst),
+    .en(en__mscratch),
+    .d(wr_data[CSR__MSCRATCH__MSCRATCH__FIELD]),
+    .q(mscratch__mscratch)
+);
+
 
 //============================================== 
 // Machine Exception Program Counter (mepc) 
 //==============================================
-logic [63:0] mepc;
-logic [CSR__MEPC__MEPC__WIDTH-1:0] mepc__mepc;
-logic we__mepc;
-logic en__mepc;
-
 assign mepc[CSR__MEPC__MEPC__FIELD] = mepc__mepc;
 
 assign en__mepc = cs & we__mepc;
@@ -762,12 +787,6 @@ d_flip_flop #(.WIDTH(CSR__MEPC__MEPC__WIDTH), .RESET_VALUE(CSR__MEPC__MEPC__RESE
 //============================================== 
 // Machine Cause Register (mcause) 
 //==============================================
-logic [63:0] mcause;
-logic [CSR__MCAUSE__EXCEPTION_CODE__WIDTH-1:0] mcause__exception_code;
-logic [CSR__MCAUSE__INTERRUPT__WIDTH-1:0] mcause__interrupt;
-logic we__mcause;
-logic en__mcause;
-
 assign mcause[CSR__MCAUSE__EXCEPTION_CODE__FIELD] = mcause__exception_code;
 assign mcause[CSR__MCAUSE__INTERRUPT__FIELD] = mcause__interrupt;
 
@@ -801,11 +820,6 @@ d_flip_flop #(.WIDTH(CSR__MCAUSE__INTERRUPT__WIDTH), .RESET_VALUE(CSR__MCAUSE__I
 //============================================== 
 // Machine Trap Value Register (mtval) 
 //==============================================
-logic [63:0] mtval;
-logic [CSR__MTVAL__MTVAL__WIDTH-1:0] mtval__mtval;
-logic we__mtval;
-logic en__mtval;
-
 assign mtval[CSR__MTVAL__MTVAL__FIELD] = mtval__mtval;
 
 assign en__mtval = cs & we__mtval;
