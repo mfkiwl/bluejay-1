@@ -23,7 +23,7 @@ input clk;
 input rst;
 input cs;
 input we;
-input [63:0] addr;
+input [15:0] addr;
 input [1:0] size;
 input [63:0] wr_data;
 output ready;
@@ -34,7 +34,7 @@ logic clk;
 logic rst;
 logic cs;
 logic we;
-logic [63:0] addr;
+logic [15:0] addr;
 logic [1:0] size;
 logic [63:0] wr_data;
 logic ready;
@@ -53,14 +53,9 @@ logic [7:0] memory [DEPTH-1:0];
 localparam STATE__READY = 1'b0;
 localparam STATE__NOT_READY = 1'b1;
 
+
 always_comb 
 begin
-    state__n = state;
-    ready = 1'b0;
-    resp = 1'b0;
-    rd_data = {64{1'bx}};
-    en = 1'b0;
-
     case (state)
         //==============================
         // STATE__READY
@@ -78,17 +73,17 @@ begin
                 end
                 else
                 begin
-                    en = we; 
+                    en = we;
                     ready = 1'b1;
                     resp = 1'b0;
                     rd_data[7:0] = memory[addr];
-                    rd_data[15:8] = ((size == SIZE__HALF_WORD) || (size == SIZE__WORD) || (size == SIZE__DOUBLE_WORD)) ? memory[addr + 1] : {8{1'bx};
-                    rd_data[23:16] = ((size == SIZE__WORD) || (size == SIZE__DOUBLE_WORD)) ? memory[addr + 2] : {8{1'bx};
-                    rd_data[31:24] = ((size == SIZE__WORD) || (size == SIZE__DOUBLE_WORD)) ? memory[addr + 3] : {8{1'bx};
-                    rd_data[39:32] = (size == SIZE__DOUBLE_WORD) ? memory[addr + 4] : {8{1'bx};
-                    rd_data[47:40] = (size == SIZE__DOUBLE_WORD)) ? memory[addr + 5] : {8{1'bx};
-                    rd_data[55:48] = (size == SIZE__DOUBLE_WORD) ? memory[addr + 6] : {8{1'bx};
-                    rd_data[63:56] = (size == SIZE__DOUBLE_WORD) ? memory[addr + 7] : {8{1'bx};
+                    rd_data[15:8] = ((size == SIZE__HALF_WORD) || (size == SIZE__WORD) || (size == SIZE__DOUBLE_WORD)) ? memory[addr + 1] : {8{1'bx}};
+                    rd_data[23:16] = ((size == SIZE__WORD) || (size == SIZE__DOUBLE_WORD)) ? memory[addr + 2] : {8{1'bx}};
+                    rd_data[31:24] = ((size == SIZE__WORD) || (size == SIZE__DOUBLE_WORD)) ? memory[addr + 3] : {8{1'bx}};
+                    rd_data[39:32] = (size == SIZE__DOUBLE_WORD) ? memory[addr + 4] : {8{1'bx}};
+                    rd_data[47:40] = (size == SIZE__DOUBLE_WORD) ? memory[addr + 5] : {8{1'bx}};
+                    rd_data[55:48] = (size == SIZE__DOUBLE_WORD) ? memory[addr + 6] : {8{1'bx}};
+                    rd_data[63:56] = (size == SIZE__DOUBLE_WORD) ? memory[addr + 7] : {8{1'bx}};
                 end
             end
             state__n = STATE__NOT_READY;
@@ -100,6 +95,8 @@ begin
         STATE__NOT_READY:
         begin
             ready = 1'b0;
+            resp = 1'b0;
+            en = 1'b0;
             state__n = STATE__READY;
         end
     endcase

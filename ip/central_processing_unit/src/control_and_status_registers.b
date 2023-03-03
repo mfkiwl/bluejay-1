@@ -28,13 +28,29 @@ input rst;
 input cs;
 input we;
 input [11:0] addr;
-output logic [63:0] rd_data;
+output [63:0] rd_data;
 input [63:0] wr_data;
 
 input eip;
 input tip;
 
 input instret;
+
+logic clk;
+logic rst;
+
+logic cs;
+logic we;
+logic [11:0] addr;
+logic [63:0] rd_data;
+logic [63:0] wr_data;
+
+logic eip;
+logic tip;
+
+logic instret;
+
+
 
 output mstatus__mie;
 output mie__meie;

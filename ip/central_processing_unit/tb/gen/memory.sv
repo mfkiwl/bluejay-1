@@ -3,278 +3,143 @@
 //==============================================================
 module tb_mem 
 (
-    input clk,
-    input rst,
-    input cpu_to_mem__valid,
-    input cpu_to_mem__we,
-    input [63:0] cpu_to_mem__addr,
-    input [2:0] cpu_to_mem__dtype,
-    input [63:0] cpu_to_mem__data,
-    output logic mem_to_cpu__valid,
-    output logic mem_to_cpu__error,
-    output logic [63:0] mem_to_cpu__data
+    clk,
+    rst,
+    cs,
+    we,
+    addr,
+    size,
+    wr_data,
+    ready,
+    resp,
+    rd_data
 );
 
 // parameters
 parameter DEPTH = 2;
 parameter DEPTH__LOG2 = 1;
 
-// internal logic
-logic [DEPTH__LOG2-1:0] addr;
-logic [DEPTH__LOG2-1:0] addr__n;
-logic [63:0] rd_data;
-logic [63:0] wr_data;
-logic [63:0] wr_data__n;
-logic [2:0] dtype;
-logic [2:0] dtype__n;
-logic [7:0] memory [DEPTH-1:0];
+input clk;
+input rst;
+input cs;
+input we;
+input [15:0] addr;
+input [1:0] size;
+input [63:0] wr_data;
+output ready;
+output resp;
+output [63:0] rd_data; 
+
+logic clk;
+logic rst;
+logic cs;
 logic we;
-logic [1:0] state;
-logic [1:0] state__n;
+logic [15:0] addr;
+logic [1:0] size;
+logic [63:0] wr_data;
+logic ready;
+logic resp;
+logic [63:0] rd_data; 
+
+logic state;
+logic state__n;
+
+
+logic en;
 logic address_misaligned;
 
+logic [7:0] memory [DEPTH-1:0];
+
+localparam STATE__READY = 1'b0;
+localparam STATE__NOT_READY = 1'b1;
 
 
-//==============================================
-// Reads 
-//==============================================
-always_comb begin
-    case (dtype)
-        3'h0:
-        begin
-            rd_data[7:0] = memory[addr];
-            rd_data[15:8] = memory[addr + 1];
-            rd_data[23:16] = memory[addr + 2];
-            rd_data[31:24] = memory[addr + 3];
-            rd_data[39:32] = memory[addr + 4];
-            rd_data[47:40] = memory[addr + 5];
-            rd_data[55:48] = memory[addr + 6];
-            rd_data[63:56] = memory[addr + 7];
-        end
-        3'h1:
-        begin
-            rd_data[7:0] = memory[addr];
-            rd_data[15:8] = memory[addr + 1];
-            rd_data[23:16] = memory[addr + 2];
-            rd_data[31:24] = memory[addr + 3];
-            rd_data[39:32] = {8{memory[addr + 3][7]}};
-            rd_data[47:40] = {8{memory[addr + 3][7]}};
-            rd_data[55:48] = {8{memory[addr + 3][7]}}; 
-            rd_data[63:56] = {8{memory[addr + 3][7]}};
-        end
-        3'h2:
-        begin
-            rd_data[7:0] = memory[addr];
-            rd_data[15:8] = memory[addr + 1];
-            rd_data[23:16] = memory[addr + 2];
-            rd_data[31:24] = memory[addr + 3];
-            rd_data[39:32] = 8'h0;
-            rd_data[47:40] = 8'h0;
-            rd_data[55:48] = 8'h0; 
-            rd_data[63:56] = 8'h0;
-        end
-        3'h3:
-        begin
-            rd_data[7:0] = memory[addr];
-            rd_data[15:8] = memory[addr + 1];
-            rd_data[23:16] = {8{memory[addr + 1][7]}};
-            rd_data[31:24] = {8{memory[addr + 1][7]}};
-            rd_data[39:32] = {8{memory[addr + 1][7]}};
-            rd_data[47:40] = {8{memory[addr + 1][7]}};
-            rd_data[55:48] = {8{memory[addr + 1][7]}}; 
-            rd_data[63:56] = {8{memory[addr + 1][7]}};
-        end
-        3'h4:
-        begin
-            rd_data[7:0] = memory[addr];
-            rd_data[15:8] = memory[addr + 1];
-            rd_data[23:16] = 8'h0;
-            rd_data[31:24] = 8'h0;
-            rd_data[39:32] = 8'h0;
-            rd_data[47:40] = 8'h0;
-            rd_data[55:48] = 8'h0; 
-            rd_data[63:56] = 8'h0; 
-        end
-        3'h5:
-        begin
-            rd_data[7:0] = memory[addr];
-            rd_data[15:8] = {8{memory[addr][7]}};
-            rd_data[23:16] = {8{memory[addr][7]}};
-            rd_data[31:24] = {8{memory[addr][7]}};
-            rd_data[39:32] = {8{memory[addr][7]}};
-            rd_data[47:40] = {8{memory[addr][7]}};
-            rd_data[55:48] = {8{memory[addr][7]}}; 
-            rd_data[63:56] = {8{memory[addr][7]}};
-        end
-        3'h6:
-        begin
-            rd_data[7:0] = memory[addr];
-            rd_data[15:8] = 8'h0;
-            rd_data[23:16] = 8'h0;
-            rd_data[31:24] = 8'h0;
-            rd_data[39:32] = 8'h0;
-            rd_data[47:40] = 8'h0;
-            rd_data[55:48] = 8'h0; 
-            rd_data[63:56] = 8'h0; 
-        end
-    endcase
-end
-
-
-//==============================================
-// Writes 
-//==============================================
-always_ff @(posedge clk) begin
-    if (we) begin
-        case (dtype)
-            3'h0:
-            begin
-                memory[addr] <= wr_data[7:0];
-                memory[addr + 1] <= wr_data[15:8];
-                memory[addr + 2] <= wr_data[23:16];
-                memory[addr + 3] <= wr_data[31:24];
-                memory[addr + 4] <= wr_data[39:32];
-                memory[addr + 5] <= wr_data[47:40];
-                memory[addr + 6] <= wr_data[55:48];
-                memory[addr + 7] <= wr_data[63:56];
-            end
-            3'h1:
-            begin
-                memory[addr] <= wr_data[7:0];
-                memory[addr + 1] <= wr_data[15:8];
-                memory[addr + 2] <= wr_data[23:16];
-                memory[addr + 3] <= wr_data[31:24];
-            end
-            3'h2:
-            begin
-                memory[addr] <= wr_data[7:0];
-                memory[addr + 1] <= wr_data[15:8];
-                memory[addr + 2] <= wr_data[23:16];
-                memory[addr + 3] <= wr_data[31:24];
-            end
-            3'h3:
-            begin
-                memory[addr] <= wr_data[7:0];
-                memory[addr + 1] <= wr_data[15:8];
-            end
-            3'h4:
-            begin
-                memory[addr] <= wr_data[7:0];
-                memory[addr + 1] <= wr_data[15:8];
-            end
-            3'h5:
-            begin
-                memory[addr] <= wr_data[7:0];
-            end
-            3'h6:
-            begin
-                memory[addr] <= wr_data[7:0];
-            end
-        endcase
-    end
-end
-
-
-always_comb begin
-    case (dtype)
-        3'h0:
-        begin
-            address_misaligned = (addr[2:0] != 3'b0);
-        end
-        3'h1:
-        begin
-            address_misaligned = (addr[1:0] != 2'b0);
-        end
-        3'h2:
-        begin
-            address_misaligned = (addr[1:0] != 2'b0);
-        end
-        3'h3:
-        begin
-            address_misaligned = (addr[0] != 1'b0);
-        end
-        3'h4:
-        begin
-            address_misaligned = (addr[0] != 1'b0);
-        end
-        3'h5:
-        begin
-            address_misaligned = 1'b0;
-        end
-        3'h6:
-        begin
-            address_misaligned = 1'b0;
-        end
-    endcase
-end
-
-//==============================================
-// Finite State Machine
-//==============================================
-localparam STATE__READY = 2'h0;
-localparam STATE__READ = 2'h1;
-localparam STATE__WRITE = 2'h2;
-
-always_comb begin
-    state__n = state;
-    addr__n = addr;
-    dtype__n = dtype;
-    wr_data__n = wr_data;
-    mem_to_cpu__valid = 1'b0;
-    mem_to_cpu__error = 1'b0;
-    mem_to_cpu__data = rd_data;
-    we = 1'b0;
-
+always_comb 
+begin
     case (state)
         //==============================
         // STATE__READY
         //==============================
         STATE__READY:
         begin
-            if (cpu_to_mem__valid) begin
-                addr__n = cpu_to_mem__addr[DEPTH__LOG2-1:0];
-                dtype__n = cpu_to_mem__dtype;
-                wr_data__n = cpu_to_mem__data;
-                state__n = cpu_to_mem__we ? STATE__WRITE : STATE__READ;
+            if (cs)
+            begin
+                if (address_misaligned)
+                begin
+                    en = 1'b0;
+                    ready = 1'b1;
+                    resp = 1'b1;
+                    rd_data = 64'h1;
+                end
+                else
+                begin
+                    en = we;
+                    ready = 1'b1;
+                    resp = 1'b0;
+                    rd_data[7:0] = memory[addr];
+                    rd_data[15:8] = ((size == 2'h2) || (size == 2'h1) || (size == 2'h0)) ? memory[addr + 1] : {8{1'bx}};
+                    rd_data[23:16] = ((size == 2'h1) || (size == 2'h0)) ? memory[addr + 2] : {8{1'bx}};
+                    rd_data[31:24] = ((size == 2'h1) || (size == 2'h0)) ? memory[addr + 3] : {8{1'bx}};
+                    rd_data[39:32] = (size == 2'h0) ? memory[addr + 4] : {8{1'bx}};
+                    rd_data[47:40] = (size == 2'h0) ? memory[addr + 5] : {8{1'bx}};
+                    rd_data[55:48] = (size == 2'h0) ? memory[addr + 6] : {8{1'bx}};
+                    rd_data[63:56] = (size == 2'h0) ? memory[addr + 7] : {8{1'bx}};
+                end
             end
+            state__n = STATE__NOT_READY;
         end
 
         //==============================
-        // STATE__READ
+        // STATE__NOT_READY
         //==============================
-        STATE__READ:
+        STATE__NOT_READY:
         begin
-            mem_to_cpu__valid = 1'b1; 
-            if (address_misaligned) begin
-                mem_to_cpu__error = 1'b1; 
-                mem_to_cpu__data = 64'h1;
-            end
-            else begin
-                mem_to_cpu__data = rd_data;
-            end
+            ready = 1'b0;
+            resp = 1'b0;
+            en = 1'b0;
             state__n = STATE__READY;
         end
-
-        //==============================
-        // STATE__WRITE
-        //==============================
-        STATE__WRITE:
-        begin
-            mem_to_cpu__valid = 1'b1; 
-            if (address_misaligned) begin
-                mem_to_cpu__error = 1'b1; 
-                mem_to_cpu__data = 64'h1;
-            end
-            else begin
-                we = 1'b1;
-            end
-            state__n = STATE__READY;
-        end
-
     endcase
 end
 
-always_ff @(posedge clk) begin
+
+always_comb begin
+    case (size)
+        2'h0:
+        begin
+            address_misaligned = (addr[2:0] != 3'b0);
+        end
+        2'h1:
+        begin
+            address_misaligned = (addr[1:0] != 2'b0);
+        end
+        2'h2:
+        begin
+            address_misaligned = (addr[0] != 1'b0);
+        end
+        2'h3:
+        begin
+            address_misaligned = 1'b0;
+        end
+    endcase
+end
+
+always_ff @(posedge clk)
+begin
+    memory[addr] <= en ? wr_data[7:0] : memory[addr];
+    memory[addr + 1] <= en & ((size == 2'h2) || (size == 2'h1) || (size == 2'h0)) ? wr_data[15:8] : memory[addr + 1];
+    memory[addr + 2] <= en & ((size == 2'h1) || (size == 2'h0)) ? wr_data[23:16] : memory[addr + 2];
+    memory[addr + 3] <= en & ((size == 2'h1) || (size == 2'h0)) ? wr_data[31:24] : memory[addr + 3];
+    memory[addr + 4] <= en & (size == 2'h0) ? wr_data[39:32] : memory[addr + 4];
+    memory[addr + 5] <= en & (size == 2'h0) ? wr_data[47:40] : memory[addr + 5];
+    memory[addr + 6] <= en & (size == 2'h0) ? wr_data[55:48] : memory[addr + 6];
+    memory[addr + 7] <= en & (size == 2'h0) ? wr_data[63:56] : memory[addr + 7];
+end
+
+
+
+always_ff @(posedge clk)
+begin
     if (rst) begin
         state <= STATE__READY;
     end
@@ -282,18 +147,5 @@ always_ff @(posedge clk) begin
         state <= state__n;
     end
 end
-
-always_ff @(posedge clk) begin
-    addr <= addr__n;
-end
-
-always_ff @(posedge clk) begin
-    dtype <= dtype__n;
-end
-
-always_ff @(posedge clk) begin
-    wr_data <= wr_data__n;
-end
-
 
 endmodule

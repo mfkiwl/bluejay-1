@@ -41,6 +41,7 @@ central_processing_unit dut
     .tip(tip)
 );
 
+
 //==============================
 // mem 
 //==============================
@@ -50,7 +51,7 @@ tb_mem #(.DEPTH(64'h10000), .DEPTH__LOG2(16)) mem
     .rst(rst),
     .cs(cs),
     .we(we),
-    .addr(addr),
+    .addr(addr[15:0]),
     .size(size),
     .wr_data(wr_data),
     .ready(ready),
@@ -145,6 +146,7 @@ end
 
 
    
+
 initial begin
     #2000000;
     $value$plusargs("filename__sig=%s", filename__sig);
@@ -155,5 +157,9 @@ initial begin
     $finish();
 end
 
+//initial begin
+//    #200;
+//    $finish();
+//end
 
 endmodule

@@ -1,0 +1,1969 @@
+
+/home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/AUIPC-01/AUIPC-01.elf:     file format elf64-littleriscv
+
+
+Disassembly of section .text.init:
+
+0000000080000000 <rvtest_entry_point>:
+    80000000:	0440006f          	jal	x0,80000044 <reset_vector>
+
+0000000080000004 <trap_vector>:
+    80000004:	342022f3          	csrrs	x5,mcause,x0
+    80000008:	00800313          	addi	x6,x0,8
+    8000000c:	02628663          	beq	x5,x6,80000038 <write_tohost>
+    80000010:	00900313          	addi	x6,x0,9
+    80000014:	02628263          	beq	x5,x6,80000038 <write_tohost>
+    80000018:	00b00313          	addi	x6,x0,11
+    8000001c:	00628e63          	beq	x5,x6,80000038 <write_tohost>
+    80000020:	00000293          	addi	x5,x0,0
+    80000024:	00028463          	beq	x5,x0,8000002c <trap_vector+0x28>
+    80000028:	00028067          	jalr	x0,0(x5)
+    8000002c:	342022f3          	csrrs	x5,mcause,x0
+    80000030:	0002d263          	bge	x5,x0,80000034 <handle_exception>
+
+0000000080000034 <handle_exception>:
+    80000034:	5391e193          	ori	x3,x3,1337
+
+0000000080000038 <write_tohost>:
+    80000038:	00002297          	auipc	x5,0x2
+    8000003c:	fc32a423          	sw	x3,-56(x5) # 80002000 <tohost>
+    80000040:	ff9ff06f          	jal	x0,80000038 <write_tohost>
+
+0000000080000044 <reset_vector>:
+    80000044:	00002537          	lui	x10,0x2
+    80000048:	8005051b          	addiw	x10,x10,-2048 # 1800 <offset+0x1800>
+    8000004c:	30052073          	csrrs	x0,mstatus,x10
+    80000050:	00000297          	auipc	x5,0x0
+    80000054:	fb428293          	addi	x5,x5,-76 # 80000004 <trap_vector>
+    80000058:	30529073          	csrrw	x0,mtvec,x5
+    8000005c:	00000297          	auipc	x5,0x0
+    80000060:	02428293          	addi	x5,x5,36 # 80000080 <rvtest_init>
+    80000064:	34129073          	csrrw	x0,mepc,x5
+    80000068:	f1402573          	csrrs	x10,mhartid,x0
+    8000006c:	30200073          	mret
+    80000070:	00000013          	addi	x0,x0,0
+    80000074:	00000013          	addi	x0,x0,0
+    80000078:	00000013          	addi	x0,x0,0
+    8000007c:	00000013          	addi	x0,x0,0
+
+0000000080000080 <rvtest_init>:
+    80000080:	ff76e0b7          	lui	x1,0xff76e
+    80000084:	f570809b          	addiw	x1,x1,-169 # ffffffffff76df57 <_end+0xffffffff7f76a44f>
+    80000088:	01309093          	slli	x1,x1,0x13
+    8000008c:	bb708093          	addi	x1,x1,-1097
+    80000090:	00e09093          	slli	x1,x1,0xe
+    80000094:	ead08093          	addi	x1,x1,-339
+    80000098:	ff76e137          	lui	x2,0xff76e
+    8000009c:	f571011b          	addiw	x2,x2,-169 # ffffffffff76df57 <_end+0xffffffff7f76a44f>
+    800000a0:	01311113          	slli	x2,x2,0x13
+    800000a4:	bb710113          	addi	x2,x2,-1097
+    800000a8:	00d11113          	slli	x2,x2,0xd
+    800000ac:	f5610113          	addi	x2,x2,-170
+    800000b0:	000801b7          	lui	x3,0x80
+    800000b4:	bb71819b          	addiw	x3,x3,-1097 # 7fbb7 <offset+0x7fbb7>
+    800000b8:	00d19193          	slli	x3,x3,0xd
+    800000bc:	f5718193          	addi	x3,x3,-169
+    800000c0:	01319193          	slli	x3,x3,0x13
+    800000c4:	bb718193          	addi	x3,x3,-1097
+    800000c8:	00c19193          	slli	x3,x3,0xc
+    800000cc:	fab18193          	addi	x3,x3,-85
+    800000d0:	fff80237          	lui	x4,0xfff80
+    800000d4:	bb72021b          	addiw	x4,x4,-1097 # fffffffffff7fbb7 <_end+0xffffffff7ff7c0af>
+    800000d8:	00d21213          	slli	x4,x4,0xd
+    800000dc:	f5720213          	addi	x4,x4,-169 # ffffffffffffff57 <_end+0xffffffff7fffc44f>
+    800000e0:	01221213          	slli	x4,x4,0x12
+    800000e4:	ddb20213          	addi	x4,x4,-549 # fffffffffffffddb <_end+0xffffffff7fffc2d3>
+    800000e8:	00c21213          	slli	x4,x4,0xc
+    800000ec:	7d520213          	addi	x4,x4,2005 # 7d5 <offset+0x7d5>
+    800000f0:	00000297          	auipc	x5,0x0
+    800000f4:	32028293          	addi	x5,x5,800 # 80000410 <rvtest_code_begin>
+    800000f8:	00003317          	auipc	x6,0x3
+    800000fc:	f0830313          	addi	x6,x6,-248 # 80003000 <rvtest_data_begin>
+    80000100:	ffb803b7          	lui	x7,0xffb80
+    80000104:	bb73839b          	addiw	x7,x7,-1097 # ffffffffffb7fbb7 <_end+0xffffffff7fb7c0af>
+    80000108:	00d39393          	slli	x7,x7,0xd
+    8000010c:	f5738393          	addi	x7,x7,-169
+    80000110:	00f39393          	slli	x7,x7,0xf
+    80000114:	fbb38393          	addi	x7,x7,-69
+    80000118:	00c39393          	slli	x7,x7,0xc
+    8000011c:	6fa38393          	addi	x7,x7,1786
+    80000120:	00b80437          	lui	x8,0xb80
+    80000124:	bb74041b          	addiw	x8,x8,-1097 # b7fbb7 <offset+0xb7fbb7>
+    80000128:	00d41413          	slli	x8,x8,0xd
+    8000012c:	f5740413          	addi	x8,x8,-169
+    80000130:	00d41413          	slli	x8,x8,0xd
+    80000134:	fef40413          	addi	x8,x8,-17
+    80000138:	00d41413          	slli	x8,x8,0xd
+    8000013c:	b7d40413          	addi	x8,x8,-1155
+    80000140:	feb804b7          	lui	x9,0xfeb80
+    80000144:	bb74849b          	addiw	x9,x9,-1097 # fffffffffeb7fbb7 <_end+0xffffffff7eb7c0af>
+    80000148:	00d49493          	slli	x9,x9,0xd
+    8000014c:	f5748493          	addi	x9,x9,-169
+    80000150:	00d49493          	slli	x9,x9,0xd
+    80000154:	fef48493          	addi	x9,x9,-17
+    80000158:	00c49493          	slli	x9,x9,0xc
+    8000015c:	dbe48493          	addi	x9,x9,-578
+    80000160:	02b80537          	lui	x10,0x2b80
+    80000164:	bb75051b          	addiw	x10,x10,-1097 # 2b7fbb7 <offset+0x2b7fbb7>
+    80000168:	00d51513          	slli	x10,x10,0xd
+    8000016c:	f5750513          	addi	x10,x10,-169
+    80000170:	00c51513          	slli	x10,x10,0xc
+    80000174:	ff750513          	addi	x10,x10,-9
+    80000178:	00c51513          	slli	x10,x10,0xc
+    8000017c:	6df50513          	addi	x10,x10,1759
+    80000180:	ff5705b7          	lui	x11,0xff570
+    80000184:	f775859b          	addiw	x11,x11,-137 # ffffffffff56ff77 <_end+0xffffffff7f56c46f>
+    80000188:	00d59593          	slli	x11,x11,0xd
+    8000018c:	beb58593          	addi	x11,x11,-1045
+    80000190:	00c59593          	slli	x11,x11,0xc
+    80000194:	dff58593          	addi	x11,x11,-513
+    80000198:	00e59593          	slli	x11,x11,0xe
+    8000019c:	b6f58593          	addi	x11,x11,-1169
+    800001a0:	ff570637          	lui	x12,0xff570
+    800001a4:	f776061b          	addiw	x12,x12,-137 # ffffffffff56ff77 <_end+0xffffffff7f56c46f>
+    800001a8:	00d61613          	slli	x12,x12,0xd
+    800001ac:	beb60613          	addi	x12,x12,-1045
+    800001b0:	00c61613          	slli	x12,x12,0xc
+    800001b4:	dff60613          	addi	x12,x12,-513
+    800001b8:	00d61613          	slli	x12,x12,0xd
+    800001bc:	db760613          	addi	x12,x12,-585
+    800001c0:	ff5706b7          	lui	x13,0xff570
+    800001c4:	f776869b          	addiw	x13,x13,-137 # ffffffffff56ff77 <_end+0xffffffff7f56c46f>
+    800001c8:	00d69693          	slli	x13,x13,0xd
+    800001cc:	beb68693          	addi	x13,x13,-1045
+    800001d0:	00c69693          	slli	x13,x13,0xc
+    800001d4:	dff68693          	addi	x13,x13,-513
+    800001d8:	00c69693          	slli	x13,x13,0xc
+    800001dc:	edb68693          	addi	x13,x13,-293
+    800001e0:	ff570737          	lui	x14,0xff570
+    800001e4:	f777071b          	addiw	x14,x14,-137 # ffffffffff56ff77 <_end+0xffffffff7f56c46f>
+    800001e8:	00c71713          	slli	x14,x14,0xc
+    800001ec:	df570713          	addi	x14,x14,-523
+    800001f0:	00c71713          	slli	x14,x14,0xc
+    800001f4:	6ff70713          	addi	x14,x14,1791
+    800001f8:	00c71713          	slli	x14,x14,0xc
+    800001fc:	76d70713          	addi	x14,x14,1901
+    80000200:	fab807b7          	lui	x15,0xfab80
+    80000204:	bb77879b          	addiw	x15,x15,-1097 # fffffffffab7fbb7 <_end+0xffffffff7ab7c0af>
+    80000208:	00d79793          	slli	x15,x15,0xd
+    8000020c:	f5778793          	addi	x15,x15,-169
+    80000210:	01379793          	slli	x15,x15,0x13
+    80000214:	bb678793          	addi	x15,x15,-1098
+    80000218:	00002837          	lui	x16,0x2
+    8000021c:	f578081b          	addiw	x16,x16,-169 # 1f57 <offset+0x1f57>
+    80000220:	01381813          	slli	x16,x16,0x13
+    80000224:	bb780813          	addi	x16,x16,-1097
+    80000228:	00d81813          	slli	x16,x16,0xd
+    8000022c:	f5780813          	addi	x16,x16,-169
+    80000230:	01281813          	slli	x16,x16,0x12
+    80000234:	ddb80813          	addi	x16,x16,-549
+    80000238:	ffffe8b7          	lui	x17,0xffffe
+    8000023c:	f578889b          	addiw	x17,x17,-169 # ffffffffffffdf57 <_end+0xffffffff7fffa44f>
+    80000240:	01389893          	slli	x17,x17,0x13
+    80000244:	bb788893          	addi	x17,x17,-1097
+    80000248:	00d89893          	slli	x17,x17,0xd
+    8000024c:	f5788893          	addi	x17,x17,-169
+    80000250:	01189893          	slli	x17,x17,0x11
+    80000254:	eed88893          	addi	x17,x17,-275
+    80000258:	ffffe937          	lui	x18,0xffffe
+    8000025c:	f579091b          	addiw	x18,x18,-169 # ffffffffffffdf57 <_end+0xffffffff7fffa44f>
+    80000260:	01391913          	slli	x18,x18,0x13
+    80000264:	bb790913          	addi	x18,x18,-1097
+    80000268:	00d91913          	slli	x18,x18,0xd
+    8000026c:	f5790913          	addi	x18,x18,-169
+    80000270:	01091913          	slli	x18,x18,0x10
+    80000274:	f7690913          	addi	x18,x18,-138
+    80000278:	0000e9b7          	lui	x19,0xe
+    8000027c:	f579899b          	addiw	x19,x19,-169 # df57 <offset+0xdf57>
+    80000280:	01399993          	slli	x19,x19,0x13
+    80000284:	bb798993          	addi	x19,x19,-1097
+    80000288:	00d99993          	slli	x19,x19,0xd
+    8000028c:	f5798993          	addi	x19,x19,-169
+    80000290:	00f99993          	slli	x19,x19,0xf
+    80000294:	fbb98993          	addi	x19,x19,-69
+    80000298:	fffeea37          	lui	x20,0xfffee
+    8000029c:	f57a0a1b          	addiw	x20,x20,-169 # fffffffffffedf57 <_end+0xffffffff7ffea44f>
+    800002a0:	013a1a13          	slli	x20,x20,0x13
+    800002a4:	bb7a0a13          	addi	x20,x20,-1097
+    800002a8:	00da1a13          	slli	x20,x20,0xd
+    800002ac:	f57a0a13          	addi	x20,x20,-169
+    800002b0:	00ea1a13          	slli	x20,x20,0xe
+    800002b4:	fdda0a13          	addi	x20,x20,-35
+    800002b8:	fffeeab7          	lui	x21,0xfffee
+    800002bc:	f57a8a9b          	addiw	x21,x21,-169 # fffffffffffedf57 <_end+0xffffffff7ffea44f>
+    800002c0:	013a9a93          	slli	x21,x21,0x13
+    800002c4:	bb7a8a93          	addi	x21,x21,-1097
+    800002c8:	00da9a93          	slli	x21,x21,0xd
+    800002cc:	f57a8a93          	addi	x21,x21,-169
+    800002d0:	00da9a93          	slli	x21,x21,0xd
+    800002d4:	feea8a93          	addi	x21,x21,-18
+    800002d8:	0006eb37          	lui	x22,0x6e
+    800002dc:	f57b0b1b          	addiw	x22,x22,-169 # 6df57 <offset+0x6df57>
+    800002e0:	013b1b13          	slli	x22,x22,0x13
+    800002e4:	bb7b0b13          	addi	x22,x22,-1097
+    800002e8:	00db1b13          	slli	x22,x22,0xd
+    800002ec:	f57b0b13          	addi	x22,x22,-169
+    800002f0:	00cb1b13          	slli	x22,x22,0xc
+    800002f4:	ff7b0b13          	addi	x22,x22,-9
+    800002f8:	fff6ebb7          	lui	x23,0xfff6e
+    800002fc:	f57b8b9b          	addiw	x23,x23,-169 # fffffffffff6df57 <_end+0xffffffff7ff6a44f>
+    80000300:	013b9b93          	slli	x23,x23,0x13
+    80000304:	bb7b8b93          	addi	x23,x23,-1097
+    80000308:	00cb9b93          	slli	x23,x23,0xc
+    8000030c:	fabb8b93          	addi	x23,x23,-85
+    80000310:	00cb9b93          	slli	x23,x23,0xc
+    80000314:	7fbb8b93          	addi	x23,x23,2043
+    80000318:	fff6ec37          	lui	x24,0xfff6e
+    8000031c:	f57c0c1b          	addiw	x24,x24,-169 # fffffffffff6df57 <_end+0xffffffff7ff6a44f>
+    80000320:	010c1c13          	slli	x24,x24,0x10
+    80000324:	f77c0c13          	addi	x24,x24,-137
+    80000328:	00dc1c13          	slli	x24,x24,0xd
+    8000032c:	bebc0c13          	addi	x24,x24,-1045
+    80000330:	00dc1c13          	slli	x24,x24,0xd
+    80000334:	bfdc0c13          	addi	x24,x24,-1027
+    80000338:	fff6ecb7          	lui	x25,0xfff6e
+    8000033c:	f57c8c9b          	addiw	x25,x25,-169 # fffffffffff6df57 <_end+0xffffffff7ff6a44f>
+    80000340:	010c9c93          	slli	x25,x25,0x10
+    80000344:	f77c8c93          	addi	x25,x25,-137
+    80000348:	00dc9c93          	slli	x25,x25,0xd
+    8000034c:	bebc8c93          	addi	x25,x25,-1045
+    80000350:	00cc9c93          	slli	x25,x25,0xc
+    80000354:	dfec8c93          	addi	x25,x25,-514
+    80000358:	0076ed37          	lui	x26,0x76e
+    8000035c:	f57d0d1b          	addiw	x26,x26,-169 # 76df57 <offset+0x76df57>
+    80000360:	010d1d13          	slli	x26,x26,0x10
+    80000364:	f77d0d13          	addi	x26,x26,-137
+    80000368:	00cd1d13          	slli	x26,x26,0xc
+    8000036c:	df5d0d13          	addi	x26,x26,-523
+    80000370:	00cd1d13          	slli	x26,x26,0xc
+    80000374:	6ffd0d13          	addi	x26,x26,1791
+    80000378:	ff76edb7          	lui	x27,0xff76e
+    8000037c:	f57d8d9b          	addiw	x27,x27,-169 # ffffffffff76df57 <_end+0xffffffff7f76a44f>
+    80000380:	00fd9d93          	slli	x27,x27,0xf
+    80000384:	fbbd8d93          	addi	x27,x27,-69
+    80000388:	00cd9d93          	slli	x27,x27,0xc
+    8000038c:	6fbd8d93          	addi	x27,x27,1787
+    80000390:	00cd9d93          	slli	x27,x27,0xc
+    80000394:	b7fd8d93          	addi	x27,x27,-1153
+    80000398:	ff76ee37          	lui	x28,0xff76e
+    8000039c:	f57e0e1b          	addiw	x28,x28,-169 # ffffffffff76df57 <_end+0xffffffff7f76a44f>
+    800003a0:	00de1e13          	slli	x28,x28,0xd
+    800003a4:	fefe0e13          	addi	x28,x28,-17
+    800003a8:	00de1e13          	slli	x28,x28,0xd
+    800003ac:	b7de0e13          	addi	x28,x28,-1155
+    800003b0:	00ce1e13          	slli	x28,x28,0xc
+    800003b4:	5bfe0e13          	addi	x28,x28,1471
+    800003b8:	ff76eeb7          	lui	x29,0xff76e
+    800003bc:	f57e8e9b          	addiw	x29,x29,-169 # ffffffffff76df57 <_end+0xffffffff7f76a44f>
+    800003c0:	00de9e93          	slli	x29,x29,0xd
+    800003c4:	fefe8e93          	addi	x29,x29,-17
+    800003c8:	00ce9e93          	slli	x29,x29,0xc
+    800003cc:	dbfe8e93          	addi	x29,x29,-577
+    800003d0:	00ce9e93          	slli	x29,x29,0xc
+    800003d4:	adfe8e93          	addi	x29,x29,-1313
+    800003d8:	ff76ef37          	lui	x30,0xff76e
+    800003dc:	f57f0f1b          	addiw	x30,x30,-169 # ffffffffff76df57 <_end+0xffffffff7f76a44f>
+    800003e0:	00cf1f13          	slli	x30,x30,0xc
+    800003e4:	ff7f0f13          	addi	x30,x30,-9
+    800003e8:	00cf1f13          	slli	x30,x30,0xc
+    800003ec:	6dff0f13          	addi	x30,x30,1759
+    800003f0:	00cf1f13          	slli	x30,x30,0xc
+    800003f4:	56ff0f13          	addi	x30,x30,1391
+    800003f8:	ff76efb7          	lui	x31,0xff76e
+    800003fc:	f57f8f9b          	addiw	x31,x31,-169 # ffffffffff76df57 <_end+0xffffffff7f76a44f>
+    80000400:	013f9f93          	slli	x31,x31,0x13
+    80000404:	bb7f8f93          	addi	x31,x31,-1097
+    80000408:	010f9f93          	slli	x31,x31,0x10
+    8000040c:	ab7f8f93          	addi	x31,x31,-1353
+
+0000000080000410 <rvtest_code_begin>:
+    80000410:	00003097          	auipc	x1,0x3
+    80000414:	c0008093          	addi	x1,x1,-1024 # 80003010 <begin_signature>
+    80000418:	a01ef997          	auipc	x19,0xa01ef
+    8000041c:	00000197          	auipc	x3,0x0
+    80000420:	ffc18193          	addi	x3,x3,-4 # 80000418 <rvtest_code_begin+0x8>
+    80000424:	403989b3          	sub	x19,x19,x3
+    80000428:	0130b023          	sd	x19,0(x1)
+    8000042c:	69d27e17          	auipc	x28,0x69d27
+    80000430:	00000197          	auipc	x3,0x0
+    80000434:	ffc18193          	addi	x3,x3,-4 # 8000042c <rvtest_code_begin+0x1c>
+    80000438:	403e0e33          	sub	x28,x28,x3
+    8000043c:	01c0b423          	sd	x28,8(x1)
+    80000440:	ede3df17          	auipc	x30,0xede3d
+    80000444:	00000197          	auipc	x3,0x0
+    80000448:	ffc18193          	addi	x3,x3,-4 # 80000440 <rvtest_code_begin+0x30>
+    8000044c:	403f0f33          	sub	x30,x30,x3
+    80000450:	01e0b823          	sd	x30,16(x1)
+    80000454:	00003097          	auipc	x1,0x3
+    80000458:	bd408093          	addi	x1,x1,-1068 # 80003028 <signature_2_0>
+    8000045c:	19a51a17          	auipc	x20,0x19a51
+    80000460:	00000197          	auipc	x3,0x0
+    80000464:	ffc18193          	addi	x3,x3,-4 # 8000045c <rvtest_code_begin+0x4c>
+    80000468:	403a0a33          	sub	x20,x20,x3
+    8000046c:	0140b023          	sd	x20,0(x1)
+    80000470:	8d5fd517          	auipc	x10,0x8d5fd
+    80000474:	00000197          	auipc	x3,0x0
+    80000478:	ffc18193          	addi	x3,x3,-4 # 80000470 <rvtest_code_begin+0x60>
+    8000047c:	40350533          	sub	x10,x10,x3
+    80000480:	00a0b423          	sd	x10,8(x1)
+    80000484:	f6c65017          	auipc	x0,0xf6c65
+    80000488:	00000197          	auipc	x3,0x0
+    8000048c:	ffc18193          	addi	x3,x3,-4 # 80000484 <rvtest_code_begin+0x74>
+    80000490:	40300033          	sub	x0,x0,x3
+    80000494:	0000b823          	sd	x0,16(x1)
+    80000498:	00003097          	auipc	x1,0x3
+    8000049c:	ba808093          	addi	x1,x1,-1112 # 80003040 <signature_3_0>
+    800004a0:	6250f197          	auipc	x3,0x6250f
+    800004a4:	00000217          	auipc	x4,0x0
+    800004a8:	ffc20213          	addi	x4,x4,-4 # 800004a0 <rvtest_code_begin+0x90>
+    800004ac:	404181b3          	sub	x3,x3,x4
+    800004b0:	0030b023          	sd	x3,0(x1)
+    800004b4:	ffa64f97          	auipc	x31,0xffa64
+    800004b8:	00000217          	auipc	x4,0x0
+    800004bc:	ffc20213          	addi	x4,x4,-4 # 800004b4 <rvtest_code_begin+0xa4>
+    800004c0:	404f8fb3          	sub	x31,x31,x4
+    800004c4:	01f0b423          	sd	x31,8(x1)
+    800004c8:	7ad3ae97          	auipc	x29,0x7ad3a
+    800004cc:	00000217          	auipc	x4,0x0
+    800004d0:	ffc20213          	addi	x4,x4,-4 # 800004c8 <rvtest_code_begin+0xb8>
+    800004d4:	404e8eb3          	sub	x29,x29,x4
+    800004d8:	01d0b823          	sd	x29,16(x1)
+    800004dc:	00003097          	auipc	x1,0x3
+    800004e0:	b7c08093          	addi	x1,x1,-1156 # 80003058 <signature_4_0>
+    800004e4:	c8c1e297          	auipc	x5,0xc8c1e
+    800004e8:	00000197          	auipc	x3,0x0
+    800004ec:	ffc18193          	addi	x3,x3,-4 # 800004e4 <rvtest_code_begin+0xd4>
+    800004f0:	403282b3          	sub	x5,x5,x3
+    800004f4:	0050b023          	sd	x5,0(x1)
+    800004f8:	660db017          	auipc	x0,0x660db
+    800004fc:	00000197          	auipc	x3,0x0
+    80000500:	ffc18193          	addi	x3,x3,-4 # 800004f8 <rvtest_code_begin+0xe8>
+    80000504:	40300033          	sub	x0,x0,x3
+    80000508:	0000b423          	sd	x0,8(x1)
+    8000050c:	2dadf697          	auipc	x13,0x2dadf
+    80000510:	00000197          	auipc	x3,0x0
+    80000514:	ffc18193          	addi	x3,x3,-4 # 8000050c <rvtest_code_begin+0xfc>
+    80000518:	403686b3          	sub	x13,x13,x3
+    8000051c:	00d0b823          	sd	x13,16(x1)
+    80000520:	00003097          	auipc	x1,0x3
+    80000524:	b5008093          	addi	x1,x1,-1200 # 80003070 <signature_5_0>
+    80000528:	3c847217          	auipc	x4,0x3c847
+    8000052c:	00000197          	auipc	x3,0x0
+    80000530:	ffc18193          	addi	x3,x3,-4 # 80000528 <rvtest_code_begin+0x118>
+    80000534:	40320233          	sub	x4,x4,x3
+    80000538:	0040b023          	sd	x4,0(x1)
+    8000053c:	a7ae7597          	auipc	x11,0xa7ae7
+    80000540:	00000197          	auipc	x3,0x0
+    80000544:	ffc18193          	addi	x3,x3,-4 # 8000053c <rvtest_code_begin+0x12c>
+    80000548:	403585b3          	sub	x11,x11,x3
+    8000054c:	00b0b423          	sd	x11,8(x1)
+    80000550:	b62bfc97          	auipc	x25,0xb62bf
+    80000554:	00000197          	auipc	x3,0x0
+    80000558:	ffc18193          	addi	x3,x3,-4 # 80000550 <rvtest_code_begin+0x140>
+    8000055c:	403c8cb3          	sub	x25,x25,x3
+    80000560:	0190b823          	sd	x25,16(x1)
+    80000564:	00003097          	auipc	x1,0x3
+    80000568:	b2408093          	addi	x1,x1,-1244 # 80003088 <signature_6_0>
+    8000056c:	0a3d1117          	auipc	x2,0xa3d1
+    80000570:	00000217          	auipc	x4,0x0
+    80000574:	ffc20213          	addi	x4,x4,-4 # 8000056c <rvtest_code_begin+0x15c>
+    80000578:	40410133          	sub	x2,x2,x4
+    8000057c:	0020b023          	sd	x2,0(x1)
+    80000580:	80fd4917          	auipc	x18,0x80fd4
+    80000584:	00000217          	auipc	x4,0x0
+    80000588:	ffc20213          	addi	x4,x4,-4 # 80000580 <rvtest_code_begin+0x170>
+    8000058c:	40490933          	sub	x18,x18,x4
+    80000590:	0120b423          	sd	x18,8(x1)
+    80000594:	f5ff4917          	auipc	x18,0xf5ff4
+    80000598:	00000217          	auipc	x4,0x0
+    8000059c:	ffc20213          	addi	x4,x4,-4 # 80000594 <rvtest_code_begin+0x184>
+    800005a0:	40490933          	sub	x18,x18,x4
+    800005a4:	0120b823          	sd	x18,16(x1)
+    800005a8:	00003097          	auipc	x1,0x3
+    800005ac:	af808093          	addi	x1,x1,-1288 # 800030a0 <signature_7_0>
+    800005b0:	67ad9397          	auipc	x7,0x67ad9
+    800005b4:	00000197          	auipc	x3,0x0
+    800005b8:	ffc18193          	addi	x3,x3,-4 # 800005b0 <rvtest_code_begin+0x1a0>
+    800005bc:	403383b3          	sub	x7,x7,x3
+    800005c0:	0070b023          	sd	x7,0(x1)
+    800005c4:	454c0497          	auipc	x9,0x454c0
+    800005c8:	00000197          	auipc	x3,0x0
+    800005cc:	ffc18193          	addi	x3,x3,-4 # 800005c4 <rvtest_code_begin+0x1b4>
+    800005d0:	403484b3          	sub	x9,x9,x3
+    800005d4:	0090b423          	sd	x9,8(x1)
+    800005d8:	d3492f97          	auipc	x31,0xd3492
+    800005dc:	00000197          	auipc	x3,0x0
+    800005e0:	ffc18193          	addi	x3,x3,-4 # 800005d8 <rvtest_code_begin+0x1c8>
+    800005e4:	403f8fb3          	sub	x31,x31,x3
+    800005e8:	01f0b823          	sd	x31,16(x1)
+    800005ec:	00003097          	auipc	x1,0x3
+    800005f0:	acc08093          	addi	x1,x1,-1332 # 800030b8 <signature_8_0>
+    800005f4:	d663e897          	auipc	x17,0xd663e
+    800005f8:	00000197          	auipc	x3,0x0
+    800005fc:	ffc18193          	addi	x3,x3,-4 # 800005f4 <rvtest_code_begin+0x1e4>
+    80000600:	403888b3          	sub	x17,x17,x3
+    80000604:	0110b023          	sd	x17,0(x1)
+    80000608:	3f1c5b97          	auipc	x23,0x3f1c5
+    8000060c:	00000197          	auipc	x3,0x0
+    80000610:	ffc18193          	addi	x3,x3,-4 # 80000608 <rvtest_code_begin+0x1f8>
+    80000614:	403b8bb3          	sub	x23,x23,x3
+    80000618:	0170b423          	sd	x23,8(x1)
+    8000061c:	d39aef97          	auipc	x31,0xd39ae
+    80000620:	00000197          	auipc	x3,0x0
+    80000624:	ffc18193          	addi	x3,x3,-4 # 8000061c <rvtest_code_begin+0x20c>
+    80000628:	403f8fb3          	sub	x31,x31,x3
+    8000062c:	01f0b823          	sd	x31,16(x1)
+    80000630:	00003097          	auipc	x1,0x3
+    80000634:	aa008093          	addi	x1,x1,-1376 # 800030d0 <signature_9_0>
+    80000638:	3a4dda97          	auipc	x21,0x3a4dd
+    8000063c:	00000197          	auipc	x3,0x0
+    80000640:	ffc18193          	addi	x3,x3,-4 # 80000638 <rvtest_code_begin+0x228>
+    80000644:	403a8ab3          	sub	x21,x21,x3
+    80000648:	0150b023          	sd	x21,0(x1)
+    8000064c:	83650017          	auipc	x0,0x83650
+    80000650:	00000197          	auipc	x3,0x0
+    80000654:	ffc18193          	addi	x3,x3,-4 # 8000064c <rvtest_code_begin+0x23c>
+    80000658:	40300033          	sub	x0,x0,x3
+    8000065c:	0000b423          	sd	x0,8(x1)
+    80000660:	c88d5f17          	auipc	x30,0xc88d5
+    80000664:	00000197          	auipc	x3,0x0
+    80000668:	ffc18193          	addi	x3,x3,-4 # 80000660 <rvtest_code_begin+0x250>
+    8000066c:	403f0f33          	sub	x30,x30,x3
+    80000670:	01e0b823          	sd	x30,16(x1)
+    80000674:	00003097          	auipc	x1,0x3
+    80000678:	a7408093          	addi	x1,x1,-1420 # 800030e8 <signature_10_0>
+    8000067c:	f4071017          	auipc	x0,0xf4071
+    80000680:	00000197          	auipc	x3,0x0
+    80000684:	ffc18193          	addi	x3,x3,-4 # 8000067c <rvtest_code_begin+0x26c>
+    80000688:	40300033          	sub	x0,x0,x3
+    8000068c:	0000b023          	sd	x0,0(x1)
+    80000690:	b3c30897          	auipc	x17,0xb3c30
+    80000694:	00000197          	auipc	x3,0x0
+    80000698:	ffc18193          	addi	x3,x3,-4 # 80000690 <rvtest_code_begin+0x280>
+    8000069c:	403888b3          	sub	x17,x17,x3
+    800006a0:	0110b423          	sd	x17,8(x1)
+    800006a4:	c7dd8f97          	auipc	x31,0xc7dd8
+    800006a8:	00000197          	auipc	x3,0x0
+    800006ac:	ffc18193          	addi	x3,x3,-4 # 800006a4 <rvtest_code_begin+0x294>
+    800006b0:	403f8fb3          	sub	x31,x31,x3
+    800006b4:	01f0b823          	sd	x31,16(x1)
+    800006b8:	00003097          	auipc	x1,0x3
+    800006bc:	a4808093          	addi	x1,x1,-1464 # 80003100 <signature_11_0>
+    800006c0:	00000317          	auipc	x6,0x0
+    800006c4:	00000197          	auipc	x3,0x0
+    800006c8:	ffc18193          	addi	x3,x3,-4 # 800006c0 <rvtest_code_begin+0x2b0>
+    800006cc:	40330333          	sub	x6,x6,x3
+    800006d0:	0060b023          	sd	x6,0(x1)
+    800006d4:	fffff597          	auipc	x11,0xfffff
+    800006d8:	00000197          	auipc	x3,0x0
+    800006dc:	ffc18193          	addi	x3,x3,-4 # 800006d4 <rvtest_code_begin+0x2c4>
+    800006e0:	403585b3          	sub	x11,x11,x3
+    800006e4:	00b0b423          	sd	x11,8(x1)
+    800006e8:	fffffb17          	auipc	x22,0xfffff
+    800006ec:	00000197          	auipc	x3,0x0
+    800006f0:	ffc18193          	addi	x3,x3,-4 # 800006e8 <rvtest_code_begin+0x2d8>
+    800006f4:	403b0b33          	sub	x22,x22,x3
+    800006f8:	0160b823          	sd	x22,16(x1)
+    800006fc:	00003097          	auipc	x1,0x3
+    80000700:	a1c08093          	addi	x1,x1,-1508 # 80003118 <signature_12_0>
+    80000704:	fffff497          	auipc	x9,0xfffff
+    80000708:	00000217          	auipc	x4,0x0
+    8000070c:	ffc20213          	addi	x4,x4,-4 # 80000704 <rvtest_code_begin+0x2f4>
+    80000710:	404484b3          	sub	x9,x9,x4
+    80000714:	0090b023          	sd	x9,0(x1)
+    80000718:	00001117          	auipc	x2,0x1
+    8000071c:	00000217          	auipc	x4,0x0
+    80000720:	ffc20213          	addi	x4,x4,-4 # 80000718 <rvtest_code_begin+0x308>
+    80000724:	40410133          	sub	x2,x2,x4
+    80000728:	0020b423          	sd	x2,8(x1)
+    8000072c:	fffff397          	auipc	x7,0xfffff
+    80000730:	00000217          	auipc	x4,0x0
+    80000734:	ffc20213          	addi	x4,x4,-4 # 8000072c <rvtest_code_begin+0x31c>
+    80000738:	404383b3          	sub	x7,x7,x4
+    8000073c:	0070b823          	sd	x7,16(x1)
+    80000740:	00003097          	auipc	x1,0x3
+    80000744:	9f008093          	addi	x1,x1,-1552 # 80003130 <signature_13_0>
+    80000748:	fffff697          	auipc	x13,0xfffff
+    8000074c:	00000217          	auipc	x4,0x0
+    80000750:	ffc20213          	addi	x4,x4,-4 # 80000748 <rvtest_code_begin+0x338>
+    80000754:	404686b3          	sub	x13,x13,x4
+    80000758:	00d0b023          	sd	x13,0(x1)
+    8000075c:	00000397          	auipc	x7,0x0
+    80000760:	00000217          	auipc	x4,0x0
+    80000764:	ffc20213          	addi	x4,x4,-4 # 8000075c <rvtest_code_begin+0x34c>
+    80000768:	404383b3          	sub	x7,x7,x4
+    8000076c:	0070b423          	sd	x7,8(x1)
+    80000770:	00000197          	auipc	x3,0x0
+    80000774:	00000217          	auipc	x4,0x0
+    80000778:	ffc20213          	addi	x4,x4,-4 # 80000770 <rvtest_code_begin+0x360>
+    8000077c:	404181b3          	sub	x3,x3,x4
+    80000780:	0030b823          	sd	x3,16(x1)
+    80000784:	00003117          	auipc	x2,0x3
+    80000788:	9c410113          	addi	x2,x2,-1596 # 80003148 <signature_14_0>
+    8000078c:	fffff697          	auipc	x13,0xfffff
+    80000790:	00000217          	auipc	x4,0x0
+    80000794:	ffc20213          	addi	x4,x4,-4 # 8000078c <rvtest_code_begin+0x37c>
+    80000798:	404686b3          	sub	x13,x13,x4
+    8000079c:	00d13023          	sd	x13,0(x2)
+    800007a0:	00001097          	auipc	x1,0x1
+    800007a4:	00000217          	auipc	x4,0x0
+    800007a8:	ffc20213          	addi	x4,x4,-4 # 800007a0 <rvtest_code_begin+0x390>
+    800007ac:	404080b3          	sub	x1,x1,x4
+    800007b0:	00113423          	sd	x1,8(x2)
+    800007b4:	00002097          	auipc	x1,0x2
+    800007b8:	00000217          	auipc	x4,0x0
+    800007bc:	ffc20213          	addi	x4,x4,-4 # 800007b4 <rvtest_code_begin+0x3a4>
+    800007c0:	404080b3          	sub	x1,x1,x4
+    800007c4:	00113823          	sd	x1,16(x2)
+    800007c8:	00003097          	auipc	x1,0x3
+    800007cc:	99808093          	addi	x1,x1,-1640 # 80003160 <signature_15_0>
+    800007d0:	00004117          	auipc	x2,0x4
+    800007d4:	00000317          	auipc	x6,0x0
+    800007d8:	ffc30313          	addi	x6,x6,-4 # 800007d0 <rvtest_code_begin+0x3c0>
+    800007dc:	40610133          	sub	x2,x2,x6
+    800007e0:	0020b023          	sd	x2,0(x1)
+    800007e4:	00008197          	auipc	x3,0x8
+    800007e8:	00000317          	auipc	x6,0x0
+    800007ec:	ffc30313          	addi	x6,x6,-4 # 800007e4 <rvtest_code_begin+0x3d4>
+    800007f0:	406181b3          	sub	x3,x3,x6
+    800007f4:	0030b423          	sd	x3,8(x1)
+    800007f8:	00010217          	auipc	x4,0x10
+    800007fc:	00000317          	auipc	x6,0x0
+    80000800:	ffc30313          	addi	x6,x6,-4 # 800007f8 <rvtest_code_begin+0x3e8>
+    80000804:	40620233          	sub	x4,x4,x6
+    80000808:	0040b823          	sd	x4,16(x1)
+    8000080c:	00003097          	auipc	x1,0x3
+    80000810:	96c08093          	addi	x1,x1,-1684 # 80003178 <signature_16_0>
+    80000814:	00020297          	auipc	x5,0x20
+    80000818:	00000197          	auipc	x3,0x0
+    8000081c:	ffc18193          	addi	x3,x3,-4 # 80000814 <rvtest_code_begin+0x404>
+    80000820:	403282b3          	sub	x5,x5,x3
+    80000824:	0050b023          	sd	x5,0(x1)
+    80000828:	00040317          	auipc	x6,0x40
+    8000082c:	00000197          	auipc	x3,0x0
+    80000830:	ffc18193          	addi	x3,x3,-4 # 80000828 <rvtest_code_begin+0x418>
+    80000834:	40330333          	sub	x6,x6,x3
+    80000838:	0060b423          	sd	x6,8(x1)
+    8000083c:	00080397          	auipc	x7,0x80
+    80000840:	00000197          	auipc	x3,0x0
+    80000844:	ffc18193          	addi	x3,x3,-4 # 8000083c <rvtest_code_begin+0x42c>
+    80000848:	403383b3          	sub	x7,x7,x3
+    8000084c:	0070b823          	sd	x7,16(x1)
+    80000850:	00003097          	auipc	x1,0x3
+    80000854:	94008093          	addi	x1,x1,-1728 # 80003190 <signature_17_0>
+    80000858:	00100417          	auipc	x8,0x100
+    8000085c:	00000197          	auipc	x3,0x0
+    80000860:	ffc18193          	addi	x3,x3,-4 # 80000858 <rvtest_code_begin+0x448>
+    80000864:	40340433          	sub	x8,x8,x3
+    80000868:	0080b023          	sd	x8,0(x1)
+    8000086c:	00200497          	auipc	x9,0x200
+    80000870:	00000197          	auipc	x3,0x0
+    80000874:	ffc18193          	addi	x3,x3,-4 # 8000086c <rvtest_code_begin+0x45c>
+    80000878:	403484b3          	sub	x9,x9,x3
+    8000087c:	0090b423          	sd	x9,8(x1)
+    80000880:	00400517          	auipc	x10,0x400
+    80000884:	00000197          	auipc	x3,0x0
+    80000888:	ffc18193          	addi	x3,x3,-4 # 80000880 <rvtest_code_begin+0x470>
+    8000088c:	40350533          	sub	x10,x10,x3
+    80000890:	00a0b823          	sd	x10,16(x1)
+    80000894:	00003097          	auipc	x1,0x3
+    80000898:	91408093          	addi	x1,x1,-1772 # 800031a8 <signature_18_0>
+    8000089c:	00800597          	auipc	x11,0x800
+    800008a0:	00000197          	auipc	x3,0x0
+    800008a4:	ffc18193          	addi	x3,x3,-4 # 8000089c <rvtest_code_begin+0x48c>
+    800008a8:	403585b3          	sub	x11,x11,x3
+    800008ac:	00b0b023          	sd	x11,0(x1)
+    800008b0:	01000617          	auipc	x12,0x1000
+    800008b4:	00000197          	auipc	x3,0x0
+    800008b8:	ffc18193          	addi	x3,x3,-4 # 800008b0 <rvtest_code_begin+0x4a0>
+    800008bc:	40360633          	sub	x12,x12,x3
+    800008c0:	00c0b423          	sd	x12,8(x1)
+    800008c4:	02000697          	auipc	x13,0x2000
+    800008c8:	00000197          	auipc	x3,0x0
+    800008cc:	ffc18193          	addi	x3,x3,-4 # 800008c4 <rvtest_code_begin+0x4b4>
+    800008d0:	403686b3          	sub	x13,x13,x3
+    800008d4:	00d0b823          	sd	x13,16(x1)
+    800008d8:	00003097          	auipc	x1,0x3
+    800008dc:	8e808093          	addi	x1,x1,-1816 # 800031c0 <signature_19_0>
+    800008e0:	04000717          	auipc	x14,0x4000
+    800008e4:	00000197          	auipc	x3,0x0
+    800008e8:	ffc18193          	addi	x3,x3,-4 # 800008e0 <rvtest_code_begin+0x4d0>
+    800008ec:	40370733          	sub	x14,x14,x3
+    800008f0:	00e0b023          	sd	x14,0(x1)
+    800008f4:	08000797          	auipc	x15,0x8000
+    800008f8:	00000197          	auipc	x3,0x0
+    800008fc:	ffc18193          	addi	x3,x3,-4 # 800008f4 <rvtest_code_begin+0x4e4>
+    80000900:	403787b3          	sub	x15,x15,x3
+    80000904:	00f0b423          	sd	x15,8(x1)
+    80000908:	10000817          	auipc	x16,0x10000
+    8000090c:	00000197          	auipc	x3,0x0
+    80000910:	ffc18193          	addi	x3,x3,-4 # 80000908 <rvtest_code_begin+0x4f8>
+    80000914:	40380833          	sub	x16,x16,x3
+    80000918:	0100b823          	sd	x16,16(x1)
+    8000091c:	00003097          	auipc	x1,0x3
+    80000920:	8bc08093          	addi	x1,x1,-1860 # 800031d8 <signature_20_0>
+    80000924:	20000897          	auipc	x17,0x20000
+    80000928:	00000197          	auipc	x3,0x0
+    8000092c:	ffc18193          	addi	x3,x3,-4 # 80000924 <rvtest_code_begin+0x514>
+    80000930:	403888b3          	sub	x17,x17,x3
+    80000934:	0110b023          	sd	x17,0(x1)
+    80000938:	40000917          	auipc	x18,0x40000
+    8000093c:	00000197          	auipc	x3,0x0
+    80000940:	ffc18193          	addi	x3,x3,-4 # 80000938 <rvtest_code_begin+0x528>
+    80000944:	40390933          	sub	x18,x18,x3
+    80000948:	0120b423          	sd	x18,8(x1)
+    8000094c:	80000997          	auipc	x19,0x80000
+    80000950:	00000197          	auipc	x3,0x0
+    80000954:	ffc18193          	addi	x3,x3,-4 # 8000094c <rvtest_code_begin+0x53c>
+    80000958:	403989b3          	sub	x19,x19,x3
+    8000095c:	0130b823          	sd	x19,16(x1)
+    80000960:	00003097          	auipc	x1,0x3
+    80000964:	89008093          	addi	x1,x1,-1904 # 800031f0 <signature_21_0>
+    80000968:	ffffea17          	auipc	x20,0xffffe
+    8000096c:	00000197          	auipc	x3,0x0
+    80000970:	ffc18193          	addi	x3,x3,-4 # 80000968 <rvtest_code_begin+0x558>
+    80000974:	403a0a33          	sub	x20,x20,x3
+    80000978:	0140b023          	sd	x20,0(x1)
+    8000097c:	ffffda97          	auipc	x21,0xffffd
+    80000980:	00000197          	auipc	x3,0x0
+    80000984:	ffc18193          	addi	x3,x3,-4 # 8000097c <rvtest_code_begin+0x56c>
+    80000988:	403a8ab3          	sub	x21,x21,x3
+    8000098c:	0150b423          	sd	x21,8(x1)
+    80000990:	ffffbb17          	auipc	x22,0xffffb
+    80000994:	00000197          	auipc	x3,0x0
+    80000998:	ffc18193          	addi	x3,x3,-4 # 80000990 <rvtest_code_begin+0x580>
+    8000099c:	403b0b33          	sub	x22,x22,x3
+    800009a0:	0160b823          	sd	x22,16(x1)
+    800009a4:	00003097          	auipc	x1,0x3
+    800009a8:	86408093          	addi	x1,x1,-1948 # 80003208 <signature_22_0>
+    800009ac:	ffff7b97          	auipc	x23,0xffff7
+    800009b0:	00000197          	auipc	x3,0x0
+    800009b4:	ffc18193          	addi	x3,x3,-4 # 800009ac <rvtest_code_begin+0x59c>
+    800009b8:	403b8bb3          	sub	x23,x23,x3
+    800009bc:	0170b023          	sd	x23,0(x1)
+    800009c0:	fffefc17          	auipc	x24,0xfffef
+    800009c4:	00000197          	auipc	x3,0x0
+    800009c8:	ffc18193          	addi	x3,x3,-4 # 800009c0 <rvtest_code_begin+0x5b0>
+    800009cc:	403c0c33          	sub	x24,x24,x3
+    800009d0:	0180b423          	sd	x24,8(x1)
+    800009d4:	fffdfc97          	auipc	x25,0xfffdf
+    800009d8:	00000197          	auipc	x3,0x0
+    800009dc:	ffc18193          	addi	x3,x3,-4 # 800009d4 <rvtest_code_begin+0x5c4>
+    800009e0:	403c8cb3          	sub	x25,x25,x3
+    800009e4:	0190b823          	sd	x25,16(x1)
+    800009e8:	00003097          	auipc	x1,0x3
+    800009ec:	83808093          	addi	x1,x1,-1992 # 80003220 <signature_23_0>
+    800009f0:	fffbfd17          	auipc	x26,0xfffbf
+    800009f4:	00000197          	auipc	x3,0x0
+    800009f8:	ffc18193          	addi	x3,x3,-4 # 800009f0 <rvtest_code_begin+0x5e0>
+    800009fc:	403d0d33          	sub	x26,x26,x3
+    80000a00:	01a0b023          	sd	x26,0(x1)
+    80000a04:	fff7fd97          	auipc	x27,0xfff7f
+    80000a08:	00000197          	auipc	x3,0x0
+    80000a0c:	ffc18193          	addi	x3,x3,-4 # 80000a04 <rvtest_code_begin+0x5f4>
+    80000a10:	403d8db3          	sub	x27,x27,x3
+    80000a14:	01b0b423          	sd	x27,8(x1)
+    80000a18:	ffeffe17          	auipc	x28,0xffeff
+    80000a1c:	00000197          	auipc	x3,0x0
+    80000a20:	ffc18193          	addi	x3,x3,-4 # 80000a18 <rvtest_code_begin+0x608>
+    80000a24:	403e0e33          	sub	x28,x28,x3
+    80000a28:	01c0b823          	sd	x28,16(x1)
+    80000a2c:	00003097          	auipc	x1,0x3
+    80000a30:	80c08093          	addi	x1,x1,-2036 # 80003238 <signature_24_0>
+    80000a34:	ffdffe97          	auipc	x29,0xffdff
+    80000a38:	00000197          	auipc	x3,0x0
+    80000a3c:	ffc18193          	addi	x3,x3,-4 # 80000a34 <rvtest_code_begin+0x624>
+    80000a40:	403e8eb3          	sub	x29,x29,x3
+    80000a44:	01d0b023          	sd	x29,0(x1)
+    80000a48:	ffbfff17          	auipc	x30,0xffbff
+    80000a4c:	00000197          	auipc	x3,0x0
+    80000a50:	ffc18193          	addi	x3,x3,-4 # 80000a48 <rvtest_code_begin+0x638>
+    80000a54:	403f0f33          	sub	x30,x30,x3
+    80000a58:	01e0b423          	sd	x30,8(x1)
+    80000a5c:	ff7fff97          	auipc	x31,0xff7ff
+    80000a60:	00000197          	auipc	x3,0x0
+    80000a64:	ffc18193          	addi	x3,x3,-4 # 80000a5c <rvtest_code_begin+0x64c>
+    80000a68:	403f8fb3          	sub	x31,x31,x3
+    80000a6c:	01f0b823          	sd	x31,16(x1)
+    80000a70:	00002197          	auipc	x3,0x2
+    80000a74:	7e018193          	addi	x3,x3,2016 # 80003250 <signature_25_0>
+    80000a78:	fefff097          	auipc	x1,0xfefff
+    80000a7c:	00000297          	auipc	x5,0x0
+    80000a80:	ffc28293          	addi	x5,x5,-4 # 80000a78 <rvtest_code_begin+0x668>
+    80000a84:	405080b3          	sub	x1,x1,x5
+    80000a88:	0011b023          	sd	x1,0(x3)
+    80000a8c:	fdfff097          	auipc	x1,0xfdfff
+    80000a90:	00000297          	auipc	x5,0x0
+    80000a94:	ffc28293          	addi	x5,x5,-4 # 80000a8c <rvtest_code_begin+0x67c>
+    80000a98:	405080b3          	sub	x1,x1,x5
+    80000a9c:	0011b423          	sd	x1,8(x3)
+    80000aa0:	fbfff117          	auipc	x2,0xfbfff
+    80000aa4:	00000297          	auipc	x5,0x0
+    80000aa8:	ffc28293          	addi	x5,x5,-4 # 80000aa0 <rvtest_code_begin+0x690>
+    80000aac:	40510133          	sub	x2,x2,x5
+    80000ab0:	0021b823          	sd	x2,16(x3)
+    80000ab4:	00002097          	auipc	x1,0x2
+    80000ab8:	7b408093          	addi	x1,x1,1972 # 80003268 <signature_26_0>
+    80000abc:	f7fff197          	auipc	x3,0xf7fff
+    80000ac0:	00000317          	auipc	x6,0x0
+    80000ac4:	ffc30313          	addi	x6,x6,-4 # 80000abc <rvtest_code_begin+0x6ac>
+    80000ac8:	406181b3          	sub	x3,x3,x6
+    80000acc:	0030b023          	sd	x3,0(x1)
+    80000ad0:	effff217          	auipc	x4,0xeffff
+    80000ad4:	00000317          	auipc	x6,0x0
+    80000ad8:	ffc30313          	addi	x6,x6,-4 # 80000ad0 <rvtest_code_begin+0x6c0>
+    80000adc:	40620233          	sub	x4,x4,x6
+    80000ae0:	0040b423          	sd	x4,8(x1)
+    80000ae4:	dffff297          	auipc	x5,0xdffff
+    80000ae8:	00000317          	auipc	x6,0x0
+    80000aec:	ffc30313          	addi	x6,x6,-4 # 80000ae4 <rvtest_code_begin+0x6d4>
+    80000af0:	406282b3          	sub	x5,x5,x6
+    80000af4:	0050b823          	sd	x5,16(x1)
+    80000af8:	00002097          	auipc	x1,0x2
+    80000afc:	78808093          	addi	x1,x1,1928 # 80003280 <signature_27_0>
+    80000b00:	bffff317          	auipc	x6,0xbffff
+    80000b04:	00000197          	auipc	x3,0x0
+    80000b08:	ffc18193          	addi	x3,x3,-4 # 80000b00 <rvtest_code_begin+0x6f0>
+    80000b0c:	40330333          	sub	x6,x6,x3
+    80000b10:	0060b023          	sd	x6,0(x1)
+    80000b14:	7ffff397          	auipc	x7,0x7ffff
+    80000b18:	00000197          	auipc	x3,0x0
+    80000b1c:	ffc18193          	addi	x3,x3,-4 # 80000b14 <rvtest_code_begin+0x704>
+    80000b20:	403383b3          	sub	x7,x7,x3
+    80000b24:	0070b423          	sd	x7,8(x1)
+    80000b28:	ffffe417          	auipc	x8,0xffffe
+    80000b2c:	00000197          	auipc	x3,0x0
+    80000b30:	ffc18193          	addi	x3,x3,-4 # 80000b28 <rvtest_code_begin+0x718>
+    80000b34:	40340433          	sub	x8,x8,x3
+    80000b38:	0080b823          	sd	x8,16(x1)
+    80000b3c:	00002097          	auipc	x1,0x2
+    80000b40:	75c08093          	addi	x1,x1,1884 # 80003298 <signature_28_0>
+    80000b44:	ffffd497          	auipc	x9,0xffffd
+    80000b48:	00000197          	auipc	x3,0x0
+    80000b4c:	ffc18193          	addi	x3,x3,-4 # 80000b44 <rvtest_code_begin+0x734>
+    80000b50:	403484b3          	sub	x9,x9,x3
+    80000b54:	0090b023          	sd	x9,0(x1)
+    80000b58:	ffffb517          	auipc	x10,0xffffb
+    80000b5c:	00000197          	auipc	x3,0x0
+    80000b60:	ffc18193          	addi	x3,x3,-4 # 80000b58 <rvtest_code_begin+0x748>
+    80000b64:	40350533          	sub	x10,x10,x3
+    80000b68:	00a0b423          	sd	x10,8(x1)
+    80000b6c:	ffff7597          	auipc	x11,0xffff7
+    80000b70:	00000197          	auipc	x3,0x0
+    80000b74:	ffc18193          	addi	x3,x3,-4 # 80000b6c <rvtest_code_begin+0x75c>
+    80000b78:	403585b3          	sub	x11,x11,x3
+    80000b7c:	00b0b823          	sd	x11,16(x1)
+    80000b80:	00002097          	auipc	x1,0x2
+    80000b84:	73008093          	addi	x1,x1,1840 # 800032b0 <signature_29_0>
+    80000b88:	fffef617          	auipc	x12,0xfffef
+    80000b8c:	00000197          	auipc	x3,0x0
+    80000b90:	ffc18193          	addi	x3,x3,-4 # 80000b88 <rvtest_code_begin+0x778>
+    80000b94:	40360633          	sub	x12,x12,x3
+    80000b98:	00c0b023          	sd	x12,0(x1)
+    80000b9c:	fffdf697          	auipc	x13,0xfffdf
+    80000ba0:	00000197          	auipc	x3,0x0
+    80000ba4:	ffc18193          	addi	x3,x3,-4 # 80000b9c <rvtest_code_begin+0x78c>
+    80000ba8:	403686b3          	sub	x13,x13,x3
+    80000bac:	00d0b423          	sd	x13,8(x1)
+    80000bb0:	fffbf717          	auipc	x14,0xfffbf
+    80000bb4:	00000197          	auipc	x3,0x0
+    80000bb8:	ffc18193          	addi	x3,x3,-4 # 80000bb0 <rvtest_code_begin+0x7a0>
+    80000bbc:	40370733          	sub	x14,x14,x3
+    80000bc0:	00e0b823          	sd	x14,16(x1)
+    80000bc4:	00002097          	auipc	x1,0x2
+    80000bc8:	70408093          	addi	x1,x1,1796 # 800032c8 <signature_30_0>
+    80000bcc:	fff7f797          	auipc	x15,0xfff7f
+    80000bd0:	00000197          	auipc	x3,0x0
+    80000bd4:	ffc18193          	addi	x3,x3,-4 # 80000bcc <rvtest_code_begin+0x7bc>
+    80000bd8:	403787b3          	sub	x15,x15,x3
+    80000bdc:	00f0b023          	sd	x15,0(x1)
+    80000be0:	ffeff817          	auipc	x16,0xffeff
+    80000be4:	00000197          	auipc	x3,0x0
+    80000be8:	ffc18193          	addi	x3,x3,-4 # 80000be0 <rvtest_code_begin+0x7d0>
+    80000bec:	40380833          	sub	x16,x16,x3
+    80000bf0:	0100b423          	sd	x16,8(x1)
+    80000bf4:	ffdff897          	auipc	x17,0xffdff
+    80000bf8:	00000197          	auipc	x3,0x0
+    80000bfc:	ffc18193          	addi	x3,x3,-4 # 80000bf4 <rvtest_code_begin+0x7e4>
+    80000c00:	403888b3          	sub	x17,x17,x3
+    80000c04:	0110b823          	sd	x17,16(x1)
+    80000c08:	00002097          	auipc	x1,0x2
+    80000c0c:	6d808093          	addi	x1,x1,1752 # 800032e0 <signature_31_0>
+    80000c10:	ffbff917          	auipc	x18,0xffbff
+    80000c14:	00000197          	auipc	x3,0x0
+    80000c18:	ffc18193          	addi	x3,x3,-4 # 80000c10 <rvtest_code_begin+0x800>
+    80000c1c:	40390933          	sub	x18,x18,x3
+    80000c20:	0120b023          	sd	x18,0(x1)
+    80000c24:	ff7ff997          	auipc	x19,0xff7ff
+    80000c28:	00000197          	auipc	x3,0x0
+    80000c2c:	ffc18193          	addi	x3,x3,-4 # 80000c24 <rvtest_code_begin+0x814>
+    80000c30:	403989b3          	sub	x19,x19,x3
+    80000c34:	0130b423          	sd	x19,8(x1)
+    80000c38:	fefffa17          	auipc	x20,0xfefff
+    80000c3c:	00000197          	auipc	x3,0x0
+    80000c40:	ffc18193          	addi	x3,x3,-4 # 80000c38 <rvtest_code_begin+0x828>
+    80000c44:	403a0a33          	sub	x20,x20,x3
+    80000c48:	0140b823          	sd	x20,16(x1)
+    80000c4c:	00002097          	auipc	x1,0x2
+    80000c50:	6ac08093          	addi	x1,x1,1708 # 800032f8 <signature_32_0>
+    80000c54:	fdfffa97          	auipc	x21,0xfdfff
+    80000c58:	00000197          	auipc	x3,0x0
+    80000c5c:	ffc18193          	addi	x3,x3,-4 # 80000c54 <rvtest_code_begin+0x844>
+    80000c60:	403a8ab3          	sub	x21,x21,x3
+    80000c64:	0150b023          	sd	x21,0(x1)
+    80000c68:	fbfffb17          	auipc	x22,0xfbfff
+    80000c6c:	00000197          	auipc	x3,0x0
+    80000c70:	ffc18193          	addi	x3,x3,-4 # 80000c68 <rvtest_code_begin+0x858>
+    80000c74:	403b0b33          	sub	x22,x22,x3
+    80000c78:	0160b423          	sd	x22,8(x1)
+    80000c7c:	f7fffb97          	auipc	x23,0xf7fff
+    80000c80:	00000197          	auipc	x3,0x0
+    80000c84:	ffc18193          	addi	x3,x3,-4 # 80000c7c <rvtest_code_begin+0x86c>
+    80000c88:	403b8bb3          	sub	x23,x23,x3
+    80000c8c:	0170b823          	sd	x23,16(x1)
+    80000c90:	00002097          	auipc	x1,0x2
+    80000c94:	68008093          	addi	x1,x1,1664 # 80003310 <signature_33_0>
+    80000c98:	effffc17          	auipc	x24,0xeffff
+    80000c9c:	00000197          	auipc	x3,0x0
+    80000ca0:	ffc18193          	addi	x3,x3,-4 # 80000c98 <rvtest_code_begin+0x888>
+    80000ca4:	403c0c33          	sub	x24,x24,x3
+    80000ca8:	0180b023          	sd	x24,0(x1)
+    80000cac:	dffffc97          	auipc	x25,0xdffff
+    80000cb0:	00000197          	auipc	x3,0x0
+    80000cb4:	ffc18193          	addi	x3,x3,-4 # 80000cac <rvtest_code_begin+0x89c>
+    80000cb8:	403c8cb3          	sub	x25,x25,x3
+    80000cbc:	0190b423          	sd	x25,8(x1)
+    80000cc0:	bffffd17          	auipc	x26,0xbffff
+    80000cc4:	00000197          	auipc	x3,0x0
+    80000cc8:	ffc18193          	addi	x3,x3,-4 # 80000cc0 <rvtest_code_begin+0x8b0>
+    80000ccc:	403d0d33          	sub	x26,x26,x3
+    80000cd0:	01a0b823          	sd	x26,16(x1)
+    80000cd4:	00002097          	auipc	x1,0x2
+    80000cd8:	65408093          	addi	x1,x1,1620 # 80003328 <signature_34_0>
+    80000cdc:	7ffffd97          	auipc	x27,0x7ffff
+    80000ce0:	00000197          	auipc	x3,0x0
+    80000ce4:	ffc18193          	addi	x3,x3,-4 # 80000cdc <rvtest_code_begin+0x8cc>
+    80000ce8:	403d8db3          	sub	x27,x27,x3
+    80000cec:	01b0b023          	sd	x27,0(x1)
+    80000cf0:	ffffee17          	auipc	x28,0xffffe
+    80000cf4:	00000197          	auipc	x3,0x0
+    80000cf8:	ffc18193          	addi	x3,x3,-4 # 80000cf0 <rvtest_code_begin+0x8e0>
+    80000cfc:	403e0e33          	sub	x28,x28,x3
+    80000d00:	01c0b423          	sd	x28,8(x1)
+    80000d04:	ffffde97          	auipc	x29,0xffffd
+    80000d08:	00000197          	auipc	x3,0x0
+    80000d0c:	ffc18193          	addi	x3,x3,-4 # 80000d04 <rvtest_code_begin+0x8f4>
+    80000d10:	403e8eb3          	sub	x29,x29,x3
+    80000d14:	01d0b823          	sd	x29,16(x1)
+    80000d18:	00002117          	auipc	x2,0x2
+    80000d1c:	62810113          	addi	x2,x2,1576 # 80003340 <signature_35_0>
+    80000d20:	ffffbf17          	auipc	x30,0xffffb
+    80000d24:	00000217          	auipc	x4,0x0
+    80000d28:	ffc20213          	addi	x4,x4,-4 # 80000d20 <rvtest_code_begin+0x910>
+    80000d2c:	404f0f33          	sub	x30,x30,x4
+    80000d30:	01e13023          	sd	x30,0(x2)
+    80000d34:	ffff7f97          	auipc	x31,0xffff7
+    80000d38:	00000217          	auipc	x4,0x0
+    80000d3c:	ffc20213          	addi	x4,x4,-4 # 80000d34 <rvtest_code_begin+0x924>
+    80000d40:	404f8fb3          	sub	x31,x31,x4
+    80000d44:	01f13423          	sd	x31,8(x2)
+    80000d48:	fffef097          	auipc	x1,0xfffef
+    80000d4c:	00000217          	auipc	x4,0x0
+    80000d50:	ffc20213          	addi	x4,x4,-4 # 80000d48 <rvtest_code_begin+0x938>
+    80000d54:	404080b3          	sub	x1,x1,x4
+    80000d58:	00113823          	sd	x1,16(x2)
+    80000d5c:	00002217          	auipc	x4,0x2
+    80000d60:	5fc20213          	addi	x4,x4,1532 # 80003358 <signature_36_0>
+    80000d64:	fffdf097          	auipc	x1,0xfffdf
+    80000d68:	00000317          	auipc	x6,0x0
+    80000d6c:	ffc30313          	addi	x6,x6,-4 # 80000d64 <rvtest_code_begin+0x954>
+    80000d70:	406080b3          	sub	x1,x1,x6
+    80000d74:	00123023          	sd	x1,0(x4) # 0 <offset>
+    80000d78:	fffbf117          	auipc	x2,0xfffbf
+    80000d7c:	00000317          	auipc	x6,0x0
+    80000d80:	ffc30313          	addi	x6,x6,-4 # 80000d78 <rvtest_code_begin+0x968>
+    80000d84:	40610133          	sub	x2,x2,x6
+    80000d88:	00223423          	sd	x2,8(x4) # 8 <offset+0x8>
+    80000d8c:	fff7f197          	auipc	x3,0xfff7f
+    80000d90:	00000317          	auipc	x6,0x0
+    80000d94:	ffc30313          	addi	x6,x6,-4 # 80000d8c <rvtest_code_begin+0x97c>
+    80000d98:	406181b3          	sub	x3,x3,x6
+    80000d9c:	00323823          	sd	x3,16(x4) # 10 <offset+0x10>
+    80000da0:	00002097          	auipc	x1,0x2
+    80000da4:	5d008093          	addi	x1,x1,1488 # 80003370 <signature_37_0>
+    80000da8:	ffeff217          	auipc	x4,0xffeff
+    80000dac:	00000197          	auipc	x3,0x0
+    80000db0:	ffc18193          	addi	x3,x3,-4 # 80000da8 <rvtest_code_begin+0x998>
+    80000db4:	40320233          	sub	x4,x4,x3
+    80000db8:	0040b023          	sd	x4,0(x1)
+    80000dbc:	ffdff297          	auipc	x5,0xffdff
+    80000dc0:	00000197          	auipc	x3,0x0
+    80000dc4:	ffc18193          	addi	x3,x3,-4 # 80000dbc <rvtest_code_begin+0x9ac>
+    80000dc8:	403282b3          	sub	x5,x5,x3
+    80000dcc:	0050b423          	sd	x5,8(x1)
+    80000dd0:	ffbff317          	auipc	x6,0xffbff
+    80000dd4:	00000197          	auipc	x3,0x0
+    80000dd8:	ffc18193          	addi	x3,x3,-4 # 80000dd0 <rvtest_code_begin+0x9c0>
+    80000ddc:	40330333          	sub	x6,x6,x3
+    80000de0:	0060b823          	sd	x6,16(x1)
+    80000de4:	00002097          	auipc	x1,0x2
+    80000de8:	5a408093          	addi	x1,x1,1444 # 80003388 <signature_38_0>
+    80000dec:	ff7ff397          	auipc	x7,0xff7ff
+    80000df0:	00000197          	auipc	x3,0x0
+    80000df4:	ffc18193          	addi	x3,x3,-4 # 80000dec <rvtest_code_begin+0x9dc>
+    80000df8:	403383b3          	sub	x7,x7,x3
+    80000dfc:	0070b023          	sd	x7,0(x1)
+    80000e00:	fefff417          	auipc	x8,0xfefff
+    80000e04:	00000197          	auipc	x3,0x0
+    80000e08:	ffc18193          	addi	x3,x3,-4 # 80000e00 <rvtest_code_begin+0x9f0>
+    80000e0c:	40340433          	sub	x8,x8,x3
+    80000e10:	0080b423          	sd	x8,8(x1)
+    80000e14:	fdfff497          	auipc	x9,0xfdfff
+    80000e18:	00000197          	auipc	x3,0x0
+    80000e1c:	ffc18193          	addi	x3,x3,-4 # 80000e14 <rvtest_code_begin+0xa04>
+    80000e20:	403484b3          	sub	x9,x9,x3
+    80000e24:	0090b823          	sd	x9,16(x1)
+    80000e28:	00002097          	auipc	x1,0x2
+    80000e2c:	57808093          	addi	x1,x1,1400 # 800033a0 <signature_39_0>
+    80000e30:	fbfff517          	auipc	x10,0xfbfff
+    80000e34:	00000197          	auipc	x3,0x0
+    80000e38:	ffc18193          	addi	x3,x3,-4 # 80000e30 <rvtest_code_begin+0xa20>
+    80000e3c:	40350533          	sub	x10,x10,x3
+    80000e40:	00a0b023          	sd	x10,0(x1)
+    80000e44:	f7fff597          	auipc	x11,0xf7fff
+    80000e48:	00000197          	auipc	x3,0x0
+    80000e4c:	ffc18193          	addi	x3,x3,-4 # 80000e44 <rvtest_code_begin+0xa34>
+    80000e50:	403585b3          	sub	x11,x11,x3
+    80000e54:	00b0b423          	sd	x11,8(x1)
+    80000e58:	effff617          	auipc	x12,0xeffff
+    80000e5c:	00000197          	auipc	x3,0x0
+    80000e60:	ffc18193          	addi	x3,x3,-4 # 80000e58 <rvtest_code_begin+0xa48>
+    80000e64:	40360633          	sub	x12,x12,x3
+    80000e68:	00c0b823          	sd	x12,16(x1)
+    80000e6c:	00002097          	auipc	x1,0x2
+    80000e70:	54c08093          	addi	x1,x1,1356 # 800033b8 <signature_40_0>
+    80000e74:	dffff697          	auipc	x13,0xdffff
+    80000e78:	00000197          	auipc	x3,0x0
+    80000e7c:	ffc18193          	addi	x3,x3,-4 # 80000e74 <rvtest_code_begin+0xa64>
+    80000e80:	403686b3          	sub	x13,x13,x3
+    80000e84:	00d0b023          	sd	x13,0(x1)
+    80000e88:	bffff717          	auipc	x14,0xbffff
+    80000e8c:	00000197          	auipc	x3,0x0
+    80000e90:	ffc18193          	addi	x3,x3,-4 # 80000e88 <rvtest_code_begin+0xa78>
+    80000e94:	40370733          	sub	x14,x14,x3
+    80000e98:	00e0b423          	sd	x14,8(x1)
+    80000e9c:	7ffff797          	auipc	x15,0x7ffff
+    80000ea0:	00000197          	auipc	x3,0x0
+    80000ea4:	ffc18193          	addi	x3,x3,-4 # 80000e9c <rvtest_code_begin+0xa8c>
+    80000ea8:	403787b3          	sub	x15,x15,x3
+    80000eac:	00f0b823          	sd	x15,16(x1)
+    80000eb0:	00002097          	auipc	x1,0x2
+    80000eb4:	52008093          	addi	x1,x1,1312 # 800033d0 <signature_41_0>
+    80000eb8:	ffffe817          	auipc	x16,0xffffe
+    80000ebc:	00000197          	auipc	x3,0x0
+    80000ec0:	ffc18193          	addi	x3,x3,-4 # 80000eb8 <rvtest_code_begin+0xaa8>
+    80000ec4:	40380833          	sub	x16,x16,x3
+    80000ec8:	0100b023          	sd	x16,0(x1)
+    80000ecc:	ffffd897          	auipc	x17,0xffffd
+    80000ed0:	00000197          	auipc	x3,0x0
+    80000ed4:	ffc18193          	addi	x3,x3,-4 # 80000ecc <rvtest_code_begin+0xabc>
+    80000ed8:	403888b3          	sub	x17,x17,x3
+    80000edc:	0110b423          	sd	x17,8(x1)
+    80000ee0:	ffffb917          	auipc	x18,0xffffb
+    80000ee4:	00000197          	auipc	x3,0x0
+    80000ee8:	ffc18193          	addi	x3,x3,-4 # 80000ee0 <rvtest_code_begin+0xad0>
+    80000eec:	40390933          	sub	x18,x18,x3
+    80000ef0:	0120b823          	sd	x18,16(x1)
+    80000ef4:	00002097          	auipc	x1,0x2
+    80000ef8:	4f408093          	addi	x1,x1,1268 # 800033e8 <signature_42_0>
+    80000efc:	ffff7997          	auipc	x19,0xffff7
+    80000f00:	00000197          	auipc	x3,0x0
+    80000f04:	ffc18193          	addi	x3,x3,-4 # 80000efc <rvtest_code_begin+0xaec>
+    80000f08:	403989b3          	sub	x19,x19,x3
+    80000f0c:	0130b023          	sd	x19,0(x1)
+    80000f10:	fffefa17          	auipc	x20,0xfffef
+    80000f14:	00000197          	auipc	x3,0x0
+    80000f18:	ffc18193          	addi	x3,x3,-4 # 80000f10 <rvtest_code_begin+0xb00>
+    80000f1c:	403a0a33          	sub	x20,x20,x3
+    80000f20:	0140b423          	sd	x20,8(x1)
+    80000f24:	fffdfa97          	auipc	x21,0xfffdf
+    80000f28:	00000197          	auipc	x3,0x0
+    80000f2c:	ffc18193          	addi	x3,x3,-4 # 80000f24 <rvtest_code_begin+0xb14>
+    80000f30:	403a8ab3          	sub	x21,x21,x3
+    80000f34:	0150b823          	sd	x21,16(x1)
+    80000f38:	00002097          	auipc	x1,0x2
+    80000f3c:	4c808093          	addi	x1,x1,1224 # 80003400 <signature_43_0>
+    80000f40:	fffbfb17          	auipc	x22,0xfffbf
+    80000f44:	00000197          	auipc	x3,0x0
+    80000f48:	ffc18193          	addi	x3,x3,-4 # 80000f40 <rvtest_code_begin+0xb30>
+    80000f4c:	403b0b33          	sub	x22,x22,x3
+    80000f50:	0160b023          	sd	x22,0(x1)
+    80000f54:	fff7fb97          	auipc	x23,0xfff7f
+    80000f58:	00000197          	auipc	x3,0x0
+    80000f5c:	ffc18193          	addi	x3,x3,-4 # 80000f54 <rvtest_code_begin+0xb44>
+    80000f60:	403b8bb3          	sub	x23,x23,x3
+    80000f64:	0170b423          	sd	x23,8(x1)
+    80000f68:	ffeffc17          	auipc	x24,0xffeff
+    80000f6c:	00000197          	auipc	x3,0x0
+    80000f70:	ffc18193          	addi	x3,x3,-4 # 80000f68 <rvtest_code_begin+0xb58>
+    80000f74:	403c0c33          	sub	x24,x24,x3
+    80000f78:	0180b823          	sd	x24,16(x1)
+    80000f7c:	00002097          	auipc	x1,0x2
+    80000f80:	49c08093          	addi	x1,x1,1180 # 80003418 <signature_44_0>
+    80000f84:	ffdffc97          	auipc	x25,0xffdff
+    80000f88:	00000197          	auipc	x3,0x0
+    80000f8c:	ffc18193          	addi	x3,x3,-4 # 80000f84 <rvtest_code_begin+0xb74>
+    80000f90:	403c8cb3          	sub	x25,x25,x3
+    80000f94:	0190b023          	sd	x25,0(x1)
+    80000f98:	ffbffd17          	auipc	x26,0xffbff
+    80000f9c:	00000197          	auipc	x3,0x0
+    80000fa0:	ffc18193          	addi	x3,x3,-4 # 80000f98 <rvtest_code_begin+0xb88>
+    80000fa4:	403d0d33          	sub	x26,x26,x3
+    80000fa8:	01a0b423          	sd	x26,8(x1)
+    80000fac:	ff7ffd97          	auipc	x27,0xff7ff
+    80000fb0:	00000197          	auipc	x3,0x0
+    80000fb4:	ffc18193          	addi	x3,x3,-4 # 80000fac <rvtest_code_begin+0xb9c>
+    80000fb8:	403d8db3          	sub	x27,x27,x3
+    80000fbc:	01b0b823          	sd	x27,16(x1)
+    80000fc0:	00002097          	auipc	x1,0x2
+    80000fc4:	47008093          	addi	x1,x1,1136 # 80003430 <signature_45_0>
+    80000fc8:	fefffe17          	auipc	x28,0xfefff
+    80000fcc:	00000197          	auipc	x3,0x0
+    80000fd0:	ffc18193          	addi	x3,x3,-4 # 80000fc8 <rvtest_code_begin+0xbb8>
+    80000fd4:	403e0e33          	sub	x28,x28,x3
+    80000fd8:	01c0b023          	sd	x28,0(x1)
+    80000fdc:	fdfffe97          	auipc	x29,0xfdfff
+    80000fe0:	00000197          	auipc	x3,0x0
+    80000fe4:	ffc18193          	addi	x3,x3,-4 # 80000fdc <rvtest_code_begin+0xbcc>
+    80000fe8:	403e8eb3          	sub	x29,x29,x3
+    80000fec:	01d0b423          	sd	x29,8(x1)
+    80000ff0:	fbffff17          	auipc	x30,0xfbfff
+    80000ff4:	00000197          	auipc	x3,0x0
+    80000ff8:	ffc18193          	addi	x3,x3,-4 # 80000ff0 <rvtest_code_begin+0xbe0>
+    80000ffc:	403f0f33          	sub	x30,x30,x3
+    80001000:	01e0b823          	sd	x30,16(x1)
+    80001004:	00002117          	auipc	x2,0x2
+    80001008:	44410113          	addi	x2,x2,1092 # 80003448 <signature_46_0>
+    8000100c:	f7ffff97          	auipc	x31,0xf7fff
+    80001010:	00000217          	auipc	x4,0x0
+    80001014:	ffc20213          	addi	x4,x4,-4 # 8000100c <rvtest_code_begin+0xbfc>
+    80001018:	404f8fb3          	sub	x31,x31,x4
+    8000101c:	01f13023          	sd	x31,0(x2)
+    80001020:	effff097          	auipc	x1,0xeffff
+    80001024:	00000217          	auipc	x4,0x0
+    80001028:	ffc20213          	addi	x4,x4,-4 # 80001020 <rvtest_code_begin+0xc10>
+    8000102c:	404080b3          	sub	x1,x1,x4
+    80001030:	00113423          	sd	x1,8(x2)
+    80001034:	dffff097          	auipc	x1,0xdffff
+    80001038:	00000217          	auipc	x4,0x0
+    8000103c:	ffc20213          	addi	x4,x4,-4 # 80001034 <rvtest_code_begin+0xc24>
+    80001040:	404080b3          	sub	x1,x1,x4
+    80001044:	00113823          	sd	x1,16(x2)
+    80001048:	00002097          	auipc	x1,0x2
+    8000104c:	41808093          	addi	x1,x1,1048 # 80003460 <signature_47_0>
+    80001050:	bffff117          	auipc	x2,0xbffff
+    80001054:	00000317          	auipc	x6,0x0
+    80001058:	ffc30313          	addi	x6,x6,-4 # 80001050 <rvtest_code_begin+0xc40>
+    8000105c:	40610133          	sub	x2,x2,x6
+    80001060:	0020b023          	sd	x2,0(x1)
+    80001064:	7ffff197          	auipc	x3,0x7ffff
+    80001068:	00000317          	auipc	x6,0x0
+    8000106c:	ffc30313          	addi	x6,x6,-4 # 80001064 <rvtest_code_begin+0xc54>
+    80001070:	406181b3          	sub	x3,x3,x6
+    80001074:	0030b423          	sd	x3,8(x1)
+    80001078:	ffffe217          	auipc	x4,0xffffe
+    8000107c:	00000317          	auipc	x6,0x0
+    80001080:	ffc30313          	addi	x6,x6,-4 # 80001078 <rvtest_code_begin+0xc68>
+    80001084:	40620233          	sub	x4,x4,x6
+    80001088:	0040b823          	sd	x4,16(x1)
+    8000108c:	00002097          	auipc	x1,0x2
+    80001090:	3ec08093          	addi	x1,x1,1004 # 80003478 <signature_48_0>
+    80001094:	ffffd297          	auipc	x5,0xffffd
+    80001098:	00000197          	auipc	x3,0x0
+    8000109c:	ffc18193          	addi	x3,x3,-4 # 80001094 <rvtest_code_begin+0xc84>
+    800010a0:	403282b3          	sub	x5,x5,x3
+    800010a4:	0050b023          	sd	x5,0(x1)
+    800010a8:	ffffb317          	auipc	x6,0xffffb
+    800010ac:	00000197          	auipc	x3,0x0
+    800010b0:	ffc18193          	addi	x3,x3,-4 # 800010a8 <rvtest_code_begin+0xc98>
+    800010b4:	40330333          	sub	x6,x6,x3
+    800010b8:	0060b423          	sd	x6,8(x1)
+    800010bc:	ffff7397          	auipc	x7,0xffff7
+    800010c0:	00000197          	auipc	x3,0x0
+    800010c4:	ffc18193          	addi	x3,x3,-4 # 800010bc <rvtest_code_begin+0xcac>
+    800010c8:	403383b3          	sub	x7,x7,x3
+    800010cc:	0070b823          	sd	x7,16(x1)
+    800010d0:	00002097          	auipc	x1,0x2
+    800010d4:	3c008093          	addi	x1,x1,960 # 80003490 <signature_49_0>
+    800010d8:	fffef417          	auipc	x8,0xfffef
+    800010dc:	00000197          	auipc	x3,0x0
+    800010e0:	ffc18193          	addi	x3,x3,-4 # 800010d8 <rvtest_code_begin+0xcc8>
+    800010e4:	40340433          	sub	x8,x8,x3
+    800010e8:	0080b023          	sd	x8,0(x1)
+    800010ec:	fffdf497          	auipc	x9,0xfffdf
+    800010f0:	00000197          	auipc	x3,0x0
+    800010f4:	ffc18193          	addi	x3,x3,-4 # 800010ec <rvtest_code_begin+0xcdc>
+    800010f8:	403484b3          	sub	x9,x9,x3
+    800010fc:	0090b423          	sd	x9,8(x1)
+    80001100:	fffbf517          	auipc	x10,0xfffbf
+    80001104:	00000197          	auipc	x3,0x0
+    80001108:	ffc18193          	addi	x3,x3,-4 # 80001100 <rvtest_code_begin+0xcf0>
+    8000110c:	40350533          	sub	x10,x10,x3
+    80001110:	00a0b823          	sd	x10,16(x1)
+    80001114:	00002097          	auipc	x1,0x2
+    80001118:	39408093          	addi	x1,x1,916 # 800034a8 <signature_50_0>
+    8000111c:	fff7f597          	auipc	x11,0xfff7f
+    80001120:	00000197          	auipc	x3,0x0
+    80001124:	ffc18193          	addi	x3,x3,-4 # 8000111c <rvtest_code_begin+0xd0c>
+    80001128:	403585b3          	sub	x11,x11,x3
+    8000112c:	00b0b023          	sd	x11,0(x1)
+    80001130:	ffeff617          	auipc	x12,0xffeff
+    80001134:	00000197          	auipc	x3,0x0
+    80001138:	ffc18193          	addi	x3,x3,-4 # 80001130 <rvtest_code_begin+0xd20>
+    8000113c:	40360633          	sub	x12,x12,x3
+    80001140:	00c0b423          	sd	x12,8(x1)
+    80001144:	ffdff697          	auipc	x13,0xffdff
+    80001148:	00000197          	auipc	x3,0x0
+    8000114c:	ffc18193          	addi	x3,x3,-4 # 80001144 <rvtest_code_begin+0xd34>
+    80001150:	403686b3          	sub	x13,x13,x3
+    80001154:	00d0b823          	sd	x13,16(x1)
+    80001158:	00002097          	auipc	x1,0x2
+    8000115c:	36808093          	addi	x1,x1,872 # 800034c0 <signature_51_0>
+    80001160:	ffbff717          	auipc	x14,0xffbff
+    80001164:	00000197          	auipc	x3,0x0
+    80001168:	ffc18193          	addi	x3,x3,-4 # 80001160 <rvtest_code_begin+0xd50>
+    8000116c:	40370733          	sub	x14,x14,x3
+    80001170:	00e0b023          	sd	x14,0(x1)
+    80001174:	ff7ff797          	auipc	x15,0xff7ff
+    80001178:	00000197          	auipc	x3,0x0
+    8000117c:	ffc18193          	addi	x3,x3,-4 # 80001174 <rvtest_code_begin+0xd64>
+    80001180:	403787b3          	sub	x15,x15,x3
+    80001184:	00f0b423          	sd	x15,8(x1)
+    80001188:	fefff817          	auipc	x16,0xfefff
+    8000118c:	00000197          	auipc	x3,0x0
+    80001190:	ffc18193          	addi	x3,x3,-4 # 80001188 <rvtest_code_begin+0xd78>
+    80001194:	40380833          	sub	x16,x16,x3
+    80001198:	0100b823          	sd	x16,16(x1)
+    8000119c:	00002097          	auipc	x1,0x2
+    800011a0:	33c08093          	addi	x1,x1,828 # 800034d8 <signature_52_0>
+    800011a4:	fdfff897          	auipc	x17,0xfdfff
+    800011a8:	00000197          	auipc	x3,0x0
+    800011ac:	ffc18193          	addi	x3,x3,-4 # 800011a4 <rvtest_code_begin+0xd94>
+    800011b0:	403888b3          	sub	x17,x17,x3
+    800011b4:	0110b023          	sd	x17,0(x1)
+    800011b8:	fbfff917          	auipc	x18,0xfbfff
+    800011bc:	00000197          	auipc	x3,0x0
+    800011c0:	ffc18193          	addi	x3,x3,-4 # 800011b8 <rvtest_code_begin+0xda8>
+    800011c4:	40390933          	sub	x18,x18,x3
+    800011c8:	0120b423          	sd	x18,8(x1)
+    800011cc:	f7fff997          	auipc	x19,0xf7fff
+    800011d0:	00000197          	auipc	x3,0x0
+    800011d4:	ffc18193          	addi	x3,x3,-4 # 800011cc <rvtest_code_begin+0xdbc>
+    800011d8:	403989b3          	sub	x19,x19,x3
+    800011dc:	0130b823          	sd	x19,16(x1)
+    800011e0:	00002097          	auipc	x1,0x2
+    800011e4:	31008093          	addi	x1,x1,784 # 800034f0 <signature_53_0>
+    800011e8:	effffa17          	auipc	x20,0xeffff
+    800011ec:	00000197          	auipc	x3,0x0
+    800011f0:	ffc18193          	addi	x3,x3,-4 # 800011e8 <rvtest_code_begin+0xdd8>
+    800011f4:	403a0a33          	sub	x20,x20,x3
+    800011f8:	0140b023          	sd	x20,0(x1)
+    800011fc:	dffffa97          	auipc	x21,0xdffff
+    80001200:	00000197          	auipc	x3,0x0
+    80001204:	ffc18193          	addi	x3,x3,-4 # 800011fc <rvtest_code_begin+0xdec>
+    80001208:	403a8ab3          	sub	x21,x21,x3
+    8000120c:	0150b423          	sd	x21,8(x1)
+    80001210:	bffffb17          	auipc	x22,0xbffff
+    80001214:	00000197          	auipc	x3,0x0
+    80001218:	ffc18193          	addi	x3,x3,-4 # 80001210 <rvtest_code_begin+0xe00>
+    8000121c:	403b0b33          	sub	x22,x22,x3
+    80001220:	0160b823          	sd	x22,16(x1)
+    80001224:	00002097          	auipc	x1,0x2
+    80001228:	2e408093          	addi	x1,x1,740 # 80003508 <signature_54_0>
+    8000122c:	7ffffb97          	auipc	x23,0x7ffff
+    80001230:	00000197          	auipc	x3,0x0
+    80001234:	ffc18193          	addi	x3,x3,-4 # 8000122c <rvtest_code_begin+0xe1c>
+    80001238:	403b8bb3          	sub	x23,x23,x3
+    8000123c:	0170b023          	sd	x23,0(x1)
+    80001240:	ffffec17          	auipc	x24,0xffffe
+    80001244:	00000197          	auipc	x3,0x0
+    80001248:	ffc18193          	addi	x3,x3,-4 # 80001240 <rvtest_code_begin+0xe30>
+    8000124c:	403c0c33          	sub	x24,x24,x3
+    80001250:	0180b423          	sd	x24,8(x1)
+    80001254:	ffffdc97          	auipc	x25,0xffffd
+    80001258:	00000197          	auipc	x3,0x0
+    8000125c:	ffc18193          	addi	x3,x3,-4 # 80001254 <rvtest_code_begin+0xe44>
+    80001260:	403c8cb3          	sub	x25,x25,x3
+    80001264:	0190b823          	sd	x25,16(x1)
+    80001268:	00002097          	auipc	x1,0x2
+    8000126c:	2b808093          	addi	x1,x1,696 # 80003520 <signature_55_0>
+    80001270:	ffffbd17          	auipc	x26,0xffffb
+    80001274:	00000197          	auipc	x3,0x0
+    80001278:	ffc18193          	addi	x3,x3,-4 # 80001270 <rvtest_code_begin+0xe60>
+    8000127c:	403d0d33          	sub	x26,x26,x3
+    80001280:	01a0b023          	sd	x26,0(x1)
+    80001284:	ffff7d97          	auipc	x27,0xffff7
+    80001288:	00000197          	auipc	x3,0x0
+    8000128c:	ffc18193          	addi	x3,x3,-4 # 80001284 <rvtest_code_begin+0xe74>
+    80001290:	403d8db3          	sub	x27,x27,x3
+    80001294:	01b0b423          	sd	x27,8(x1)
+    80001298:	fffefe17          	auipc	x28,0xfffef
+    8000129c:	00000197          	auipc	x3,0x0
+    800012a0:	ffc18193          	addi	x3,x3,-4 # 80001298 <rvtest_code_begin+0xe88>
+    800012a4:	403e0e33          	sub	x28,x28,x3
+    800012a8:	01c0b823          	sd	x28,16(x1)
+    800012ac:	00002097          	auipc	x1,0x2
+    800012b0:	28c08093          	addi	x1,x1,652 # 80003538 <signature_56_0>
+    800012b4:	fffdfe97          	auipc	x29,0xfffdf
+    800012b8:	00000197          	auipc	x3,0x0
+    800012bc:	ffc18193          	addi	x3,x3,-4 # 800012b4 <rvtest_code_begin+0xea4>
+    800012c0:	403e8eb3          	sub	x29,x29,x3
+    800012c4:	01d0b023          	sd	x29,0(x1)
+    800012c8:	fffbff17          	auipc	x30,0xfffbf
+    800012cc:	00000197          	auipc	x3,0x0
+    800012d0:	ffc18193          	addi	x3,x3,-4 # 800012c8 <rvtest_code_begin+0xeb8>
+    800012d4:	403f0f33          	sub	x30,x30,x3
+    800012d8:	01e0b423          	sd	x30,8(x1)
+    800012dc:	fff7ff97          	auipc	x31,0xfff7f
+    800012e0:	00000197          	auipc	x3,0x0
+    800012e4:	ffc18193          	addi	x3,x3,-4 # 800012dc <rvtest_code_begin+0xecc>
+    800012e8:	403f8fb3          	sub	x31,x31,x3
+    800012ec:	01f0b823          	sd	x31,16(x1)
+    800012f0:	00002197          	auipc	x3,0x2
+    800012f4:	26018193          	addi	x3,x3,608 # 80003550 <signature_57_0>
+    800012f8:	00001097          	auipc	x1,0x1
+    800012fc:	00000297          	auipc	x5,0x0
+    80001300:	ffc28293          	addi	x5,x5,-4 # 800012f8 <rvtest_code_begin+0xee8>
+    80001304:	405080b3          	sub	x1,x1,x5
+    80001308:	0011b023          	sd	x1,0(x3)
+    8000130c:	00002097          	auipc	x1,0x2
+    80001310:	00000297          	auipc	x5,0x0
+    80001314:	ffc28293          	addi	x5,x5,-4 # 8000130c <rvtest_code_begin+0xefc>
+    80001318:	405080b3          	sub	x1,x1,x5
+    8000131c:	0011b423          	sd	x1,8(x3)
+    80001320:	00004117          	auipc	x2,0x4
+    80001324:	00000297          	auipc	x5,0x0
+    80001328:	ffc28293          	addi	x5,x5,-4 # 80001320 <rvtest_code_begin+0xf10>
+    8000132c:	40510133          	sub	x2,x2,x5
+    80001330:	0021b823          	sd	x2,16(x3)
+    80001334:	00002097          	auipc	x1,0x2
+    80001338:	23408093          	addi	x1,x1,564 # 80003568 <signature_58_0>
+    8000133c:	00008197          	auipc	x3,0x8
+    80001340:	00000317          	auipc	x6,0x0
+    80001344:	ffc30313          	addi	x6,x6,-4 # 8000133c <rvtest_code_begin+0xf2c>
+    80001348:	406181b3          	sub	x3,x3,x6
+    8000134c:	0030b023          	sd	x3,0(x1)
+    80001350:	00010217          	auipc	x4,0x10
+    80001354:	00000317          	auipc	x6,0x0
+    80001358:	ffc30313          	addi	x6,x6,-4 # 80001350 <rvtest_code_begin+0xf40>
+    8000135c:	40620233          	sub	x4,x4,x6
+    80001360:	0040b423          	sd	x4,8(x1)
+    80001364:	00020297          	auipc	x5,0x20
+    80001368:	00000317          	auipc	x6,0x0
+    8000136c:	ffc30313          	addi	x6,x6,-4 # 80001364 <rvtest_code_begin+0xf54>
+    80001370:	406282b3          	sub	x5,x5,x6
+    80001374:	0050b823          	sd	x5,16(x1)
+    80001378:	00002097          	auipc	x1,0x2
+    8000137c:	20808093          	addi	x1,x1,520 # 80003580 <signature_59_0>
+    80001380:	00040317          	auipc	x6,0x40
+    80001384:	00000197          	auipc	x3,0x0
+    80001388:	ffc18193          	addi	x3,x3,-4 # 80001380 <rvtest_code_begin+0xf70>
+    8000138c:	40330333          	sub	x6,x6,x3
+    80001390:	0060b023          	sd	x6,0(x1)
+    80001394:	00080397          	auipc	x7,0x80
+    80001398:	00000197          	auipc	x3,0x0
+    8000139c:	ffc18193          	addi	x3,x3,-4 # 80001394 <rvtest_code_begin+0xf84>
+    800013a0:	403383b3          	sub	x7,x7,x3
+    800013a4:	0070b423          	sd	x7,8(x1)
+    800013a8:	00100417          	auipc	x8,0x100
+    800013ac:	00000197          	auipc	x3,0x0
+    800013b0:	ffc18193          	addi	x3,x3,-4 # 800013a8 <rvtest_code_begin+0xf98>
+    800013b4:	40340433          	sub	x8,x8,x3
+    800013b8:	0080b823          	sd	x8,16(x1)
+    800013bc:	00002097          	auipc	x1,0x2
+    800013c0:	1dc08093          	addi	x1,x1,476 # 80003598 <signature_60_0>
+    800013c4:	00200497          	auipc	x9,0x200
+    800013c8:	00000197          	auipc	x3,0x0
+    800013cc:	ffc18193          	addi	x3,x3,-4 # 800013c4 <rvtest_code_begin+0xfb4>
+    800013d0:	403484b3          	sub	x9,x9,x3
+    800013d4:	0090b023          	sd	x9,0(x1)
+    800013d8:	00400517          	auipc	x10,0x400
+    800013dc:	00000197          	auipc	x3,0x0
+    800013e0:	ffc18193          	addi	x3,x3,-4 # 800013d8 <rvtest_code_begin+0xfc8>
+    800013e4:	40350533          	sub	x10,x10,x3
+    800013e8:	00a0b423          	sd	x10,8(x1)
+    800013ec:	00800597          	auipc	x11,0x800
+    800013f0:	00000197          	auipc	x3,0x0
+    800013f4:	ffc18193          	addi	x3,x3,-4 # 800013ec <rvtest_code_begin+0xfdc>
+    800013f8:	403585b3          	sub	x11,x11,x3
+    800013fc:	00b0b823          	sd	x11,16(x1)
+    80001400:	00002097          	auipc	x1,0x2
+    80001404:	1b008093          	addi	x1,x1,432 # 800035b0 <signature_61_0>
+    80001408:	01000617          	auipc	x12,0x1000
+    8000140c:	00000197          	auipc	x3,0x0
+    80001410:	ffc18193          	addi	x3,x3,-4 # 80001408 <rvtest_code_begin+0xff8>
+    80001414:	40360633          	sub	x12,x12,x3
+    80001418:	00c0b023          	sd	x12,0(x1)
+    8000141c:	02000697          	auipc	x13,0x2000
+    80001420:	00000197          	auipc	x3,0x0
+    80001424:	ffc18193          	addi	x3,x3,-4 # 8000141c <rvtest_code_begin+0x100c>
+    80001428:	403686b3          	sub	x13,x13,x3
+    8000142c:	00d0b423          	sd	x13,8(x1)
+    80001430:	04000717          	auipc	x14,0x4000
+    80001434:	00000197          	auipc	x3,0x0
+    80001438:	ffc18193          	addi	x3,x3,-4 # 80001430 <rvtest_code_begin+0x1020>
+    8000143c:	40370733          	sub	x14,x14,x3
+    80001440:	00e0b823          	sd	x14,16(x1)
+    80001444:	00002097          	auipc	x1,0x2
+    80001448:	18408093          	addi	x1,x1,388 # 800035c8 <signature_62_0>
+    8000144c:	08000797          	auipc	x15,0x8000
+    80001450:	00000197          	auipc	x3,0x0
+    80001454:	ffc18193          	addi	x3,x3,-4 # 8000144c <rvtest_code_begin+0x103c>
+    80001458:	403787b3          	sub	x15,x15,x3
+    8000145c:	00f0b023          	sd	x15,0(x1)
+    80001460:	10000817          	auipc	x16,0x10000
+    80001464:	00000197          	auipc	x3,0x0
+    80001468:	ffc18193          	addi	x3,x3,-4 # 80001460 <rvtest_code_begin+0x1050>
+    8000146c:	40380833          	sub	x16,x16,x3
+    80001470:	0100b423          	sd	x16,8(x1)
+    80001474:	20000897          	auipc	x17,0x20000
+    80001478:	00000197          	auipc	x3,0x0
+    8000147c:	ffc18193          	addi	x3,x3,-4 # 80001474 <rvtest_code_begin+0x1064>
+    80001480:	403888b3          	sub	x17,x17,x3
+    80001484:	0110b823          	sd	x17,16(x1)
+    80001488:	00002097          	auipc	x1,0x2
+    8000148c:	15808093          	addi	x1,x1,344 # 800035e0 <signature_63_0>
+    80001490:	40000917          	auipc	x18,0x40000
+    80001494:	00000197          	auipc	x3,0x0
+    80001498:	ffc18193          	addi	x3,x3,-4 # 80001490 <rvtest_code_begin+0x1080>
+    8000149c:	40390933          	sub	x18,x18,x3
+    800014a0:	0120b023          	sd	x18,0(x1)
+    800014a4:	80000997          	auipc	x19,0x80000
+    800014a8:	00000197          	auipc	x3,0x0
+    800014ac:	ffc18193          	addi	x3,x3,-4 # 800014a4 <rvtest_code_begin+0x1094>
+    800014b0:	403989b3          	sub	x19,x19,x3
+    800014b4:	0130b423          	sd	x19,8(x1)
+    800014b8:	ffffea17          	auipc	x20,0xffffe
+    800014bc:	00000197          	auipc	x3,0x0
+    800014c0:	ffc18193          	addi	x3,x3,-4 # 800014b8 <rvtest_code_begin+0x10a8>
+    800014c4:	403a0a33          	sub	x20,x20,x3
+    800014c8:	0140b823          	sd	x20,16(x1)
+    800014cc:	00002097          	auipc	x1,0x2
+    800014d0:	12c08093          	addi	x1,x1,300 # 800035f8 <signature_64_0>
+    800014d4:	ffffda97          	auipc	x21,0xffffd
+    800014d8:	00000197          	auipc	x3,0x0
+    800014dc:	ffc18193          	addi	x3,x3,-4 # 800014d4 <rvtest_code_begin+0x10c4>
+    800014e0:	403a8ab3          	sub	x21,x21,x3
+    800014e4:	0150b023          	sd	x21,0(x1)
+    800014e8:	ffffbb17          	auipc	x22,0xffffb
+    800014ec:	00000197          	auipc	x3,0x0
+    800014f0:	ffc18193          	addi	x3,x3,-4 # 800014e8 <rvtest_code_begin+0x10d8>
+    800014f4:	403b0b33          	sub	x22,x22,x3
+    800014f8:	0160b423          	sd	x22,8(x1)
+    800014fc:	ffff7b97          	auipc	x23,0xffff7
+    80001500:	00000197          	auipc	x3,0x0
+    80001504:	ffc18193          	addi	x3,x3,-4 # 800014fc <rvtest_code_begin+0x10ec>
+    80001508:	403b8bb3          	sub	x23,x23,x3
+    8000150c:	0170b823          	sd	x23,16(x1)
+    80001510:	00002097          	auipc	x1,0x2
+    80001514:	10008093          	addi	x1,x1,256 # 80003610 <signature_65_0>
+    80001518:	fffefc17          	auipc	x24,0xfffef
+    8000151c:	00000197          	auipc	x3,0x0
+    80001520:	ffc18193          	addi	x3,x3,-4 # 80001518 <rvtest_code_begin+0x1108>
+    80001524:	403c0c33          	sub	x24,x24,x3
+    80001528:	0180b023          	sd	x24,0(x1)
+    8000152c:	fffdfc97          	auipc	x25,0xfffdf
+    80001530:	00000197          	auipc	x3,0x0
+    80001534:	ffc18193          	addi	x3,x3,-4 # 8000152c <rvtest_code_begin+0x111c>
+    80001538:	403c8cb3          	sub	x25,x25,x3
+    8000153c:	0190b423          	sd	x25,8(x1)
+    80001540:	fffbfd17          	auipc	x26,0xfffbf
+    80001544:	00000197          	auipc	x3,0x0
+    80001548:	ffc18193          	addi	x3,x3,-4 # 80001540 <rvtest_code_begin+0x1130>
+    8000154c:	403d0d33          	sub	x26,x26,x3
+    80001550:	01a0b823          	sd	x26,16(x1)
+    80001554:	00002097          	auipc	x1,0x2
+    80001558:	0d408093          	addi	x1,x1,212 # 80003628 <signature_66_0>
+    8000155c:	fff7fd97          	auipc	x27,0xfff7f
+    80001560:	00000197          	auipc	x3,0x0
+    80001564:	ffc18193          	addi	x3,x3,-4 # 8000155c <rvtest_code_begin+0x114c>
+    80001568:	403d8db3          	sub	x27,x27,x3
+    8000156c:	01b0b023          	sd	x27,0(x1)
+    80001570:	ffeffe17          	auipc	x28,0xffeff
+    80001574:	00000197          	auipc	x3,0x0
+    80001578:	ffc18193          	addi	x3,x3,-4 # 80001570 <rvtest_code_begin+0x1160>
+    8000157c:	403e0e33          	sub	x28,x28,x3
+    80001580:	01c0b423          	sd	x28,8(x1)
+    80001584:	ffdffe97          	auipc	x29,0xffdff
+    80001588:	00000197          	auipc	x3,0x0
+    8000158c:	ffc18193          	addi	x3,x3,-4 # 80001584 <rvtest_code_begin+0x1174>
+    80001590:	403e8eb3          	sub	x29,x29,x3
+    80001594:	01d0b823          	sd	x29,16(x1)
+    80001598:	00002117          	auipc	x2,0x2
+    8000159c:	0a810113          	addi	x2,x2,168 # 80003640 <signature_67_0>
+    800015a0:	ffbfff17          	auipc	x30,0xffbff
+    800015a4:	00000217          	auipc	x4,0x0
+    800015a8:	ffc20213          	addi	x4,x4,-4 # 800015a0 <rvtest_code_begin+0x1190>
+    800015ac:	404f0f33          	sub	x30,x30,x4
+    800015b0:	01e13023          	sd	x30,0(x2)
+    800015b4:	ff7fff97          	auipc	x31,0xff7ff
+    800015b8:	00000217          	auipc	x4,0x0
+    800015bc:	ffc20213          	addi	x4,x4,-4 # 800015b4 <rvtest_code_begin+0x11a4>
+    800015c0:	404f8fb3          	sub	x31,x31,x4
+    800015c4:	01f13423          	sd	x31,8(x2)
+    800015c8:	fefff097          	auipc	x1,0xfefff
+    800015cc:	00000217          	auipc	x4,0x0
+    800015d0:	ffc20213          	addi	x4,x4,-4 # 800015c8 <rvtest_code_begin+0x11b8>
+    800015d4:	404080b3          	sub	x1,x1,x4
+    800015d8:	00113823          	sd	x1,16(x2)
+    800015dc:	00002217          	auipc	x4,0x2
+    800015e0:	07c20213          	addi	x4,x4,124 # 80003658 <signature_68_0>
+    800015e4:	fdfff097          	auipc	x1,0xfdfff
+    800015e8:	00000317          	auipc	x6,0x0
+    800015ec:	ffc30313          	addi	x6,x6,-4 # 800015e4 <rvtest_code_begin+0x11d4>
+    800015f0:	406080b3          	sub	x1,x1,x6
+    800015f4:	00123023          	sd	x1,0(x4) # 0 <offset>
+    800015f8:	fbfff117          	auipc	x2,0xfbfff
+    800015fc:	00000317          	auipc	x6,0x0
+    80001600:	ffc30313          	addi	x6,x6,-4 # 800015f8 <rvtest_code_begin+0x11e8>
+    80001604:	40610133          	sub	x2,x2,x6
+    80001608:	00223423          	sd	x2,8(x4) # 8 <offset+0x8>
+    8000160c:	f7fff197          	auipc	x3,0xf7fff
+    80001610:	00000317          	auipc	x6,0x0
+    80001614:	ffc30313          	addi	x6,x6,-4 # 8000160c <rvtest_code_begin+0x11fc>
+    80001618:	406181b3          	sub	x3,x3,x6
+    8000161c:	00323823          	sd	x3,16(x4) # 10 <offset+0x10>
+    80001620:	00002097          	auipc	x1,0x2
+    80001624:	05008093          	addi	x1,x1,80 # 80003670 <signature_69_0>
+    80001628:	effff217          	auipc	x4,0xeffff
+    8000162c:	00000197          	auipc	x3,0x0
+    80001630:	ffc18193          	addi	x3,x3,-4 # 80001628 <rvtest_code_begin+0x1218>
+    80001634:	40320233          	sub	x4,x4,x3
+    80001638:	0040b023          	sd	x4,0(x1)
+    8000163c:	dffff297          	auipc	x5,0xdffff
+    80001640:	00000197          	auipc	x3,0x0
+    80001644:	ffc18193          	addi	x3,x3,-4 # 8000163c <rvtest_code_begin+0x122c>
+    80001648:	403282b3          	sub	x5,x5,x3
+    8000164c:	0050b423          	sd	x5,8(x1)
+    80001650:	bffff317          	auipc	x6,0xbffff
+    80001654:	00000197          	auipc	x3,0x0
+    80001658:	ffc18193          	addi	x3,x3,-4 # 80001650 <rvtest_code_begin+0x1240>
+    8000165c:	40330333          	sub	x6,x6,x3
+    80001660:	0060b823          	sd	x6,16(x1)
+    80001664:	00002097          	auipc	x1,0x2
+    80001668:	02408093          	addi	x1,x1,36 # 80003688 <signature_70_0>
+    8000166c:	7ffff397          	auipc	x7,0x7ffff
+    80001670:	00000197          	auipc	x3,0x0
+    80001674:	ffc18193          	addi	x3,x3,-4 # 8000166c <rvtest_code_begin+0x125c>
+    80001678:	403383b3          	sub	x7,x7,x3
+    8000167c:	0070b023          	sd	x7,0(x1)
+    80001680:	ffffe417          	auipc	x8,0xffffe
+    80001684:	00000197          	auipc	x3,0x0
+    80001688:	ffc18193          	addi	x3,x3,-4 # 80001680 <rvtest_code_begin+0x1270>
+    8000168c:	40340433          	sub	x8,x8,x3
+    80001690:	0080b423          	sd	x8,8(x1)
+    80001694:	ffffd497          	auipc	x9,0xffffd
+    80001698:	00000197          	auipc	x3,0x0
+    8000169c:	ffc18193          	addi	x3,x3,-4 # 80001694 <rvtest_code_begin+0x1284>
+    800016a0:	403484b3          	sub	x9,x9,x3
+    800016a4:	0090b823          	sd	x9,16(x1)
+    800016a8:	00002097          	auipc	x1,0x2
+    800016ac:	ff808093          	addi	x1,x1,-8 # 800036a0 <signature_71_0>
+    800016b0:	ffffb517          	auipc	x10,0xffffb
+    800016b4:	00000197          	auipc	x3,0x0
+    800016b8:	ffc18193          	addi	x3,x3,-4 # 800016b0 <rvtest_code_begin+0x12a0>
+    800016bc:	40350533          	sub	x10,x10,x3
+    800016c0:	00a0b023          	sd	x10,0(x1)
+    800016c4:	ffff7597          	auipc	x11,0xffff7
+    800016c8:	00000197          	auipc	x3,0x0
+    800016cc:	ffc18193          	addi	x3,x3,-4 # 800016c4 <rvtest_code_begin+0x12b4>
+    800016d0:	403585b3          	sub	x11,x11,x3
+    800016d4:	00b0b423          	sd	x11,8(x1)
+    800016d8:	fffef617          	auipc	x12,0xfffef
+    800016dc:	00000197          	auipc	x3,0x0
+    800016e0:	ffc18193          	addi	x3,x3,-4 # 800016d8 <rvtest_code_begin+0x12c8>
+    800016e4:	40360633          	sub	x12,x12,x3
+    800016e8:	00c0b823          	sd	x12,16(x1)
+    800016ec:	00002097          	auipc	x1,0x2
+    800016f0:	fcc08093          	addi	x1,x1,-52 # 800036b8 <signature_72_0>
+    800016f4:	fffdf697          	auipc	x13,0xfffdf
+    800016f8:	00000197          	auipc	x3,0x0
+    800016fc:	ffc18193          	addi	x3,x3,-4 # 800016f4 <rvtest_code_begin+0x12e4>
+    80001700:	403686b3          	sub	x13,x13,x3
+    80001704:	00d0b023          	sd	x13,0(x1)
+    80001708:	fffbf717          	auipc	x14,0xfffbf
+    8000170c:	00000197          	auipc	x3,0x0
+    80001710:	ffc18193          	addi	x3,x3,-4 # 80001708 <rvtest_code_begin+0x12f8>
+    80001714:	40370733          	sub	x14,x14,x3
+    80001718:	00e0b423          	sd	x14,8(x1)
+    8000171c:	fff7f797          	auipc	x15,0xfff7f
+    80001720:	00000197          	auipc	x3,0x0
+    80001724:	ffc18193          	addi	x3,x3,-4 # 8000171c <rvtest_code_begin+0x130c>
+    80001728:	403787b3          	sub	x15,x15,x3
+    8000172c:	00f0b823          	sd	x15,16(x1)
+    80001730:	00002097          	auipc	x1,0x2
+    80001734:	fa008093          	addi	x1,x1,-96 # 800036d0 <signature_73_0>
+    80001738:	ffeff817          	auipc	x16,0xffeff
+    8000173c:	00000197          	auipc	x3,0x0
+    80001740:	ffc18193          	addi	x3,x3,-4 # 80001738 <rvtest_code_begin+0x1328>
+    80001744:	40380833          	sub	x16,x16,x3
+    80001748:	0100b023          	sd	x16,0(x1)
+    8000174c:	ffdff897          	auipc	x17,0xffdff
+    80001750:	00000197          	auipc	x3,0x0
+    80001754:	ffc18193          	addi	x3,x3,-4 # 8000174c <rvtest_code_begin+0x133c>
+    80001758:	403888b3          	sub	x17,x17,x3
+    8000175c:	0110b423          	sd	x17,8(x1)
+    80001760:	ffbff917          	auipc	x18,0xffbff
+    80001764:	00000197          	auipc	x3,0x0
+    80001768:	ffc18193          	addi	x3,x3,-4 # 80001760 <rvtest_code_begin+0x1350>
+    8000176c:	40390933          	sub	x18,x18,x3
+    80001770:	0120b823          	sd	x18,16(x1)
+    80001774:	00002097          	auipc	x1,0x2
+    80001778:	f7408093          	addi	x1,x1,-140 # 800036e8 <signature_74_0>
+    8000177c:	ff7ff997          	auipc	x19,0xff7ff
+    80001780:	00000197          	auipc	x3,0x0
+    80001784:	ffc18193          	addi	x3,x3,-4 # 8000177c <rvtest_code_begin+0x136c>
+    80001788:	403989b3          	sub	x19,x19,x3
+    8000178c:	0130b023          	sd	x19,0(x1)
+    80001790:	fefffa17          	auipc	x20,0xfefff
+    80001794:	00000197          	auipc	x3,0x0
+    80001798:	ffc18193          	addi	x3,x3,-4 # 80001790 <rvtest_code_begin+0x1380>
+    8000179c:	403a0a33          	sub	x20,x20,x3
+    800017a0:	0140b423          	sd	x20,8(x1)
+    800017a4:	fdfffa97          	auipc	x21,0xfdfff
+    800017a8:	00000197          	auipc	x3,0x0
+    800017ac:	ffc18193          	addi	x3,x3,-4 # 800017a4 <rvtest_code_begin+0x1394>
+    800017b0:	403a8ab3          	sub	x21,x21,x3
+    800017b4:	0150b823          	sd	x21,16(x1)
+    800017b8:	00002097          	auipc	x1,0x2
+    800017bc:	f4808093          	addi	x1,x1,-184 # 80003700 <signature_75_0>
+    800017c0:	fbfffb17          	auipc	x22,0xfbfff
+    800017c4:	00000197          	auipc	x3,0x0
+    800017c8:	ffc18193          	addi	x3,x3,-4 # 800017c0 <rvtest_code_begin+0x13b0>
+    800017cc:	403b0b33          	sub	x22,x22,x3
+    800017d0:	0160b023          	sd	x22,0(x1)
+    800017d4:	f7fffb97          	auipc	x23,0xf7fff
+    800017d8:	00000197          	auipc	x3,0x0
+    800017dc:	ffc18193          	addi	x3,x3,-4 # 800017d4 <rvtest_code_begin+0x13c4>
+    800017e0:	403b8bb3          	sub	x23,x23,x3
+    800017e4:	0170b423          	sd	x23,8(x1)
+    800017e8:	effffc17          	auipc	x24,0xeffff
+    800017ec:	00000197          	auipc	x3,0x0
+    800017f0:	ffc18193          	addi	x3,x3,-4 # 800017e8 <rvtest_code_begin+0x13d8>
+    800017f4:	403c0c33          	sub	x24,x24,x3
+    800017f8:	0180b823          	sd	x24,16(x1)
+    800017fc:	00002097          	auipc	x1,0x2
+    80001800:	f1c08093          	addi	x1,x1,-228 # 80003718 <signature_76_0>
+    80001804:	dffffc97          	auipc	x25,0xdffff
+    80001808:	00000197          	auipc	x3,0x0
+    8000180c:	ffc18193          	addi	x3,x3,-4 # 80001804 <rvtest_code_begin+0x13f4>
+    80001810:	403c8cb3          	sub	x25,x25,x3
+    80001814:	0190b023          	sd	x25,0(x1)
+    80001818:	bffffd17          	auipc	x26,0xbffff
+    8000181c:	00000197          	auipc	x3,0x0
+    80001820:	ffc18193          	addi	x3,x3,-4 # 80001818 <rvtest_code_begin+0x1408>
+    80001824:	403d0d33          	sub	x26,x26,x3
+    80001828:	01a0b423          	sd	x26,8(x1)
+    8000182c:	7ffffd97          	auipc	x27,0x7ffff
+    80001830:	00000197          	auipc	x3,0x0
+    80001834:	ffc18193          	addi	x3,x3,-4 # 8000182c <rvtest_code_begin+0x141c>
+    80001838:	403d8db3          	sub	x27,x27,x3
+    8000183c:	01b0b823          	sd	x27,16(x1)
+    80001840:	00002097          	auipc	x1,0x2
+    80001844:	ef008093          	addi	x1,x1,-272 # 80003730 <signature_77_0>
+    80001848:	ffffee17          	auipc	x28,0xffffe
+    8000184c:	00000197          	auipc	x3,0x0
+    80001850:	ffc18193          	addi	x3,x3,-4 # 80001848 <rvtest_code_begin+0x1438>
+    80001854:	403e0e33          	sub	x28,x28,x3
+    80001858:	01c0b023          	sd	x28,0(x1)
+    8000185c:	ffffde97          	auipc	x29,0xffffd
+    80001860:	00000197          	auipc	x3,0x0
+    80001864:	ffc18193          	addi	x3,x3,-4 # 8000185c <rvtest_code_begin+0x144c>
+    80001868:	403e8eb3          	sub	x29,x29,x3
+    8000186c:	01d0b423          	sd	x29,8(x1)
+    80001870:	ffffbf17          	auipc	x30,0xffffb
+    80001874:	00000197          	auipc	x3,0x0
+    80001878:	ffc18193          	addi	x3,x3,-4 # 80001870 <rvtest_code_begin+0x1460>
+    8000187c:	403f0f33          	sub	x30,x30,x3
+    80001880:	01e0b823          	sd	x30,16(x1)
+    80001884:	00002117          	auipc	x2,0x2
+    80001888:	ec410113          	addi	x2,x2,-316 # 80003748 <signature_78_0>
+    8000188c:	ffff7f97          	auipc	x31,0xffff7
+    80001890:	00000217          	auipc	x4,0x0
+    80001894:	ffc20213          	addi	x4,x4,-4 # 8000188c <rvtest_code_begin+0x147c>
+    80001898:	404f8fb3          	sub	x31,x31,x4
+    8000189c:	01f13023          	sd	x31,0(x2)
+    800018a0:	fffef097          	auipc	x1,0xfffef
+    800018a4:	00000217          	auipc	x4,0x0
+    800018a8:	ffc20213          	addi	x4,x4,-4 # 800018a0 <rvtest_code_begin+0x1490>
+    800018ac:	404080b3          	sub	x1,x1,x4
+    800018b0:	00113423          	sd	x1,8(x2)
+    800018b4:	fffdf097          	auipc	x1,0xfffdf
+    800018b8:	00000217          	auipc	x4,0x0
+    800018bc:	ffc20213          	addi	x4,x4,-4 # 800018b4 <rvtest_code_begin+0x14a4>
+    800018c0:	404080b3          	sub	x1,x1,x4
+    800018c4:	00113823          	sd	x1,16(x2)
+    800018c8:	00002097          	auipc	x1,0x2
+    800018cc:	e9808093          	addi	x1,x1,-360 # 80003760 <signature_79_0>
+    800018d0:	fffbf117          	auipc	x2,0xfffbf
+    800018d4:	00000317          	auipc	x6,0x0
+    800018d8:	ffc30313          	addi	x6,x6,-4 # 800018d0 <rvtest_code_begin+0x14c0>
+    800018dc:	40610133          	sub	x2,x2,x6
+    800018e0:	0020b023          	sd	x2,0(x1)
+    800018e4:	fff7f197          	auipc	x3,0xfff7f
+    800018e8:	00000317          	auipc	x6,0x0
+    800018ec:	ffc30313          	addi	x6,x6,-4 # 800018e4 <rvtest_code_begin+0x14d4>
+    800018f0:	406181b3          	sub	x3,x3,x6
+    800018f4:	0030b423          	sd	x3,8(x1)
+    800018f8:	ffeff217          	auipc	x4,0xffeff
+    800018fc:	00000317          	auipc	x6,0x0
+    80001900:	ffc30313          	addi	x6,x6,-4 # 800018f8 <rvtest_code_begin+0x14e8>
+    80001904:	40620233          	sub	x4,x4,x6
+    80001908:	0040b823          	sd	x4,16(x1)
+    8000190c:	00002097          	auipc	x1,0x2
+    80001910:	e6c08093          	addi	x1,x1,-404 # 80003778 <signature_80_0>
+    80001914:	ffdff297          	auipc	x5,0xffdff
+    80001918:	00000197          	auipc	x3,0x0
+    8000191c:	ffc18193          	addi	x3,x3,-4 # 80001914 <rvtest_code_begin+0x1504>
+    80001920:	403282b3          	sub	x5,x5,x3
+    80001924:	0050b023          	sd	x5,0(x1)
+    80001928:	ffbff317          	auipc	x6,0xffbff
+    8000192c:	00000197          	auipc	x3,0x0
+    80001930:	ffc18193          	addi	x3,x3,-4 # 80001928 <rvtest_code_begin+0x1518>
+    80001934:	40330333          	sub	x6,x6,x3
+    80001938:	0060b423          	sd	x6,8(x1)
+    8000193c:	ff7ff397          	auipc	x7,0xff7ff
+    80001940:	00000197          	auipc	x3,0x0
+    80001944:	ffc18193          	addi	x3,x3,-4 # 8000193c <rvtest_code_begin+0x152c>
+    80001948:	403383b3          	sub	x7,x7,x3
+    8000194c:	0070b823          	sd	x7,16(x1)
+    80001950:	00002097          	auipc	x1,0x2
+    80001954:	e4008093          	addi	x1,x1,-448 # 80003790 <signature_81_0>
+    80001958:	fefff417          	auipc	x8,0xfefff
+    8000195c:	00000197          	auipc	x3,0x0
+    80001960:	ffc18193          	addi	x3,x3,-4 # 80001958 <rvtest_code_begin+0x1548>
+    80001964:	40340433          	sub	x8,x8,x3
+    80001968:	0080b023          	sd	x8,0(x1)
+    8000196c:	fdfff497          	auipc	x9,0xfdfff
+    80001970:	00000197          	auipc	x3,0x0
+    80001974:	ffc18193          	addi	x3,x3,-4 # 8000196c <rvtest_code_begin+0x155c>
+    80001978:	403484b3          	sub	x9,x9,x3
+    8000197c:	0090b423          	sd	x9,8(x1)
+    80001980:	fbfff517          	auipc	x10,0xfbfff
+    80001984:	00000197          	auipc	x3,0x0
+    80001988:	ffc18193          	addi	x3,x3,-4 # 80001980 <rvtest_code_begin+0x1570>
+    8000198c:	40350533          	sub	x10,x10,x3
+    80001990:	00a0b823          	sd	x10,16(x1)
+    80001994:	00002097          	auipc	x1,0x2
+    80001998:	e1408093          	addi	x1,x1,-492 # 800037a8 <signature_82_0>
+    8000199c:	f7fff597          	auipc	x11,0xf7fff
+    800019a0:	00000197          	auipc	x3,0x0
+    800019a4:	ffc18193          	addi	x3,x3,-4 # 8000199c <rvtest_code_begin+0x158c>
+    800019a8:	403585b3          	sub	x11,x11,x3
+    800019ac:	00b0b023          	sd	x11,0(x1)
+    800019b0:	effff617          	auipc	x12,0xeffff
+    800019b4:	00000197          	auipc	x3,0x0
+    800019b8:	ffc18193          	addi	x3,x3,-4 # 800019b0 <rvtest_code_begin+0x15a0>
+    800019bc:	40360633          	sub	x12,x12,x3
+    800019c0:	00c0b423          	sd	x12,8(x1)
+    800019c4:	dffff697          	auipc	x13,0xdffff
+    800019c8:	00000197          	auipc	x3,0x0
+    800019cc:	ffc18193          	addi	x3,x3,-4 # 800019c4 <rvtest_code_begin+0x15b4>
+    800019d0:	403686b3          	sub	x13,x13,x3
+    800019d4:	00d0b823          	sd	x13,16(x1)
+    800019d8:	00002097          	auipc	x1,0x2
+    800019dc:	de808093          	addi	x1,x1,-536 # 800037c0 <signature_83_0>
+    800019e0:	bffff717          	auipc	x14,0xbffff
+    800019e4:	00000197          	auipc	x3,0x0
+    800019e8:	ffc18193          	addi	x3,x3,-4 # 800019e0 <rvtest_code_begin+0x15d0>
+    800019ec:	40370733          	sub	x14,x14,x3
+    800019f0:	00e0b023          	sd	x14,0(x1)
+    800019f4:	7ffff797          	auipc	x15,0x7ffff
+    800019f8:	00000197          	auipc	x3,0x0
+    800019fc:	ffc18193          	addi	x3,x3,-4 # 800019f4 <rvtest_code_begin+0x15e4>
+    80001a00:	403787b3          	sub	x15,x15,x3
+    80001a04:	00f0b423          	sd	x15,8(x1)
+    80001a08:	ffffe817          	auipc	x16,0xffffe
+    80001a0c:	00000197          	auipc	x3,0x0
+    80001a10:	ffc18193          	addi	x3,x3,-4 # 80001a08 <rvtest_code_begin+0x15f8>
+    80001a14:	40380833          	sub	x16,x16,x3
+    80001a18:	0100b823          	sd	x16,16(x1)
+    80001a1c:	00002097          	auipc	x1,0x2
+    80001a20:	dbc08093          	addi	x1,x1,-580 # 800037d8 <signature_84_0>
+    80001a24:	ffffd897          	auipc	x17,0xffffd
+    80001a28:	00000197          	auipc	x3,0x0
+    80001a2c:	ffc18193          	addi	x3,x3,-4 # 80001a24 <rvtest_code_begin+0x1614>
+    80001a30:	403888b3          	sub	x17,x17,x3
+    80001a34:	0110b023          	sd	x17,0(x1)
+    80001a38:	ffffb917          	auipc	x18,0xffffb
+    80001a3c:	00000197          	auipc	x3,0x0
+    80001a40:	ffc18193          	addi	x3,x3,-4 # 80001a38 <rvtest_code_begin+0x1628>
+    80001a44:	40390933          	sub	x18,x18,x3
+    80001a48:	0120b423          	sd	x18,8(x1)
+    80001a4c:	ffff7997          	auipc	x19,0xffff7
+    80001a50:	00000197          	auipc	x3,0x0
+    80001a54:	ffc18193          	addi	x3,x3,-4 # 80001a4c <rvtest_code_begin+0x163c>
+    80001a58:	403989b3          	sub	x19,x19,x3
+    80001a5c:	0130b823          	sd	x19,16(x1)
+    80001a60:	00002097          	auipc	x1,0x2
+    80001a64:	d9008093          	addi	x1,x1,-624 # 800037f0 <signature_85_0>
+    80001a68:	fffefa17          	auipc	x20,0xfffef
+    80001a6c:	00000197          	auipc	x3,0x0
+    80001a70:	ffc18193          	addi	x3,x3,-4 # 80001a68 <rvtest_code_begin+0x1658>
+    80001a74:	403a0a33          	sub	x20,x20,x3
+    80001a78:	0140b023          	sd	x20,0(x1)
+    80001a7c:	fffdfa97          	auipc	x21,0xfffdf
+    80001a80:	00000197          	auipc	x3,0x0
+    80001a84:	ffc18193          	addi	x3,x3,-4 # 80001a7c <rvtest_code_begin+0x166c>
+    80001a88:	403a8ab3          	sub	x21,x21,x3
+    80001a8c:	0150b423          	sd	x21,8(x1)
+    80001a90:	fffbfb17          	auipc	x22,0xfffbf
+    80001a94:	00000197          	auipc	x3,0x0
+    80001a98:	ffc18193          	addi	x3,x3,-4 # 80001a90 <rvtest_code_begin+0x1680>
+    80001a9c:	403b0b33          	sub	x22,x22,x3
+    80001aa0:	0160b823          	sd	x22,16(x1)
+    80001aa4:	00002097          	auipc	x1,0x2
+    80001aa8:	d6408093          	addi	x1,x1,-668 # 80003808 <signature_86_0>
+    80001aac:	fff7fb97          	auipc	x23,0xfff7f
+    80001ab0:	00000197          	auipc	x3,0x0
+    80001ab4:	ffc18193          	addi	x3,x3,-4 # 80001aac <rvtest_code_begin+0x169c>
+    80001ab8:	403b8bb3          	sub	x23,x23,x3
+    80001abc:	0170b023          	sd	x23,0(x1)
+    80001ac0:	ffeffc17          	auipc	x24,0xffeff
+    80001ac4:	00000197          	auipc	x3,0x0
+    80001ac8:	ffc18193          	addi	x3,x3,-4 # 80001ac0 <rvtest_code_begin+0x16b0>
+    80001acc:	403c0c33          	sub	x24,x24,x3
+    80001ad0:	0180b423          	sd	x24,8(x1)
+    80001ad4:	ffdffc97          	auipc	x25,0xffdff
+    80001ad8:	00000197          	auipc	x3,0x0
+    80001adc:	ffc18193          	addi	x3,x3,-4 # 80001ad4 <rvtest_code_begin+0x16c4>
+    80001ae0:	403c8cb3          	sub	x25,x25,x3
+    80001ae4:	0190b823          	sd	x25,16(x1)
+    80001ae8:	00002097          	auipc	x1,0x2
+    80001aec:	d3808093          	addi	x1,x1,-712 # 80003820 <signature_87_0>
+    80001af0:	ffbffd17          	auipc	x26,0xffbff
+    80001af4:	00000197          	auipc	x3,0x0
+    80001af8:	ffc18193          	addi	x3,x3,-4 # 80001af0 <rvtest_code_begin+0x16e0>
+    80001afc:	403d0d33          	sub	x26,x26,x3
+    80001b00:	01a0b023          	sd	x26,0(x1)
+    80001b04:	ff7ffd97          	auipc	x27,0xff7ff
+    80001b08:	00000197          	auipc	x3,0x0
+    80001b0c:	ffc18193          	addi	x3,x3,-4 # 80001b04 <rvtest_code_begin+0x16f4>
+    80001b10:	403d8db3          	sub	x27,x27,x3
+    80001b14:	01b0b423          	sd	x27,8(x1)
+    80001b18:	fefffe17          	auipc	x28,0xfefff
+    80001b1c:	00000197          	auipc	x3,0x0
+    80001b20:	ffc18193          	addi	x3,x3,-4 # 80001b18 <rvtest_code_begin+0x1708>
+    80001b24:	403e0e33          	sub	x28,x28,x3
+    80001b28:	01c0b823          	sd	x28,16(x1)
+    80001b2c:	00002097          	auipc	x1,0x2
+    80001b30:	d0c08093          	addi	x1,x1,-756 # 80003838 <signature_88_0>
+    80001b34:	fdfffe97          	auipc	x29,0xfdfff
+    80001b38:	00000197          	auipc	x3,0x0
+    80001b3c:	ffc18193          	addi	x3,x3,-4 # 80001b34 <rvtest_code_begin+0x1724>
+    80001b40:	403e8eb3          	sub	x29,x29,x3
+    80001b44:	01d0b023          	sd	x29,0(x1)
+    80001b48:	fbffff17          	auipc	x30,0xfbfff
+    80001b4c:	00000197          	auipc	x3,0x0
+    80001b50:	ffc18193          	addi	x3,x3,-4 # 80001b48 <rvtest_code_begin+0x1738>
+    80001b54:	403f0f33          	sub	x30,x30,x3
+    80001b58:	01e0b423          	sd	x30,8(x1)
+    80001b5c:	f7ffff97          	auipc	x31,0xf7fff
+    80001b60:	00000197          	auipc	x3,0x0
+    80001b64:	ffc18193          	addi	x3,x3,-4 # 80001b5c <rvtest_code_begin+0x174c>
+    80001b68:	403f8fb3          	sub	x31,x31,x3
+    80001b6c:	01f0b823          	sd	x31,16(x1)
+    80001b70:	00002197          	auipc	x3,0x2
+    80001b74:	ce018193          	addi	x3,x3,-800 # 80003850 <signature_89_0>
+    80001b78:	effff097          	auipc	x1,0xeffff
+    80001b7c:	00000297          	auipc	x5,0x0
+    80001b80:	ffc28293          	addi	x5,x5,-4 # 80001b78 <rvtest_code_begin+0x1768>
+    80001b84:	405080b3          	sub	x1,x1,x5
+    80001b88:	0011b023          	sd	x1,0(x3)
+    80001b8c:	dffff097          	auipc	x1,0xdffff
+    80001b90:	00000297          	auipc	x5,0x0
+    80001b94:	ffc28293          	addi	x5,x5,-4 # 80001b8c <rvtest_code_begin+0x177c>
+    80001b98:	405080b3          	sub	x1,x1,x5
+    80001b9c:	0011b423          	sd	x1,8(x3)
+    80001ba0:	bffff117          	auipc	x2,0xbffff
+    80001ba4:	00000297          	auipc	x5,0x0
+    80001ba8:	ffc28293          	addi	x5,x5,-4 # 80001ba0 <rvtest_code_begin+0x1790>
+    80001bac:	40510133          	sub	x2,x2,x5
+    80001bb0:	0021b823          	sd	x2,16(x3)
+    80001bb4:	00002097          	auipc	x1,0x2
+    80001bb8:	cb408093          	addi	x1,x1,-844 # 80003868 <signature_90_0>
+    80001bbc:	7ffff197          	auipc	x3,0x7ffff
+    80001bc0:	00000317          	auipc	x6,0x0
+    80001bc4:	ffc30313          	addi	x6,x6,-4 # 80001bbc <rvtest_code_begin+0x17ac>
+    80001bc8:	406181b3          	sub	x3,x3,x6
+    80001bcc:	0030b023          	sd	x3,0(x1)
+    80001bd0:	ffffe217          	auipc	x4,0xffffe
+    80001bd4:	00000317          	auipc	x6,0x0
+    80001bd8:	ffc30313          	addi	x6,x6,-4 # 80001bd0 <rvtest_code_begin+0x17c0>
+    80001bdc:	40620233          	sub	x4,x4,x6
+    80001be0:	0040b423          	sd	x4,8(x1)
+    80001be4:	ffffd297          	auipc	x5,0xffffd
+    80001be8:	00000317          	auipc	x6,0x0
+    80001bec:	ffc30313          	addi	x6,x6,-4 # 80001be4 <rvtest_code_begin+0x17d4>
+    80001bf0:	406282b3          	sub	x5,x5,x6
+    80001bf4:	0050b823          	sd	x5,16(x1)
+    80001bf8:	00002097          	auipc	x1,0x2
+    80001bfc:	c8808093          	addi	x1,x1,-888 # 80003880 <signature_91_0>
+    80001c00:	ffffb317          	auipc	x6,0xffffb
+    80001c04:	00000197          	auipc	x3,0x0
+    80001c08:	ffc18193          	addi	x3,x3,-4 # 80001c00 <rvtest_code_begin+0x17f0>
+    80001c0c:	40330333          	sub	x6,x6,x3
+    80001c10:	0060b023          	sd	x6,0(x1)
+    80001c14:	ffff7397          	auipc	x7,0xffff7
+    80001c18:	00000197          	auipc	x3,0x0
+    80001c1c:	ffc18193          	addi	x3,x3,-4 # 80001c14 <rvtest_code_begin+0x1804>
+    80001c20:	403383b3          	sub	x7,x7,x3
+    80001c24:	0070b423          	sd	x7,8(x1)
+    80001c28:	fffef417          	auipc	x8,0xfffef
+    80001c2c:	00000197          	auipc	x3,0x0
+    80001c30:	ffc18193          	addi	x3,x3,-4 # 80001c28 <rvtest_code_begin+0x1818>
+    80001c34:	40340433          	sub	x8,x8,x3
+    80001c38:	0080b823          	sd	x8,16(x1)
+    80001c3c:	00002097          	auipc	x1,0x2
+    80001c40:	c5c08093          	addi	x1,x1,-932 # 80003898 <signature_92_0>
+    80001c44:	fffdf497          	auipc	x9,0xfffdf
+    80001c48:	00000197          	auipc	x3,0x0
+    80001c4c:	ffc18193          	addi	x3,x3,-4 # 80001c44 <rvtest_code_begin+0x1834>
+    80001c50:	403484b3          	sub	x9,x9,x3
+    80001c54:	0090b023          	sd	x9,0(x1)
+    80001c58:	fffbf517          	auipc	x10,0xfffbf
+    80001c5c:	00000197          	auipc	x3,0x0
+    80001c60:	ffc18193          	addi	x3,x3,-4 # 80001c58 <rvtest_code_begin+0x1848>
+    80001c64:	40350533          	sub	x10,x10,x3
+    80001c68:	00a0b423          	sd	x10,8(x1)
+    80001c6c:	fff7f597          	auipc	x11,0xfff7f
+    80001c70:	00000197          	auipc	x3,0x0
+    80001c74:	ffc18193          	addi	x3,x3,-4 # 80001c6c <rvtest_code_begin+0x185c>
+    80001c78:	403585b3          	sub	x11,x11,x3
+    80001c7c:	00b0b823          	sd	x11,16(x1)
+    80001c80:	00002097          	auipc	x1,0x2
+    80001c84:	c3008093          	addi	x1,x1,-976 # 800038b0 <signature_93_0>
+    80001c88:	ffeff617          	auipc	x12,0xffeff
+    80001c8c:	00000197          	auipc	x3,0x0
+    80001c90:	ffc18193          	addi	x3,x3,-4 # 80001c88 <rvtest_code_begin+0x1878>
+    80001c94:	40360633          	sub	x12,x12,x3
+    80001c98:	00c0b023          	sd	x12,0(x1)
+    80001c9c:	ffdff697          	auipc	x13,0xffdff
+    80001ca0:	00000197          	auipc	x3,0x0
+    80001ca4:	ffc18193          	addi	x3,x3,-4 # 80001c9c <rvtest_code_begin+0x188c>
+    80001ca8:	403686b3          	sub	x13,x13,x3
+    80001cac:	00d0b423          	sd	x13,8(x1)
+    80001cb0:	ffbff717          	auipc	x14,0xffbff
+    80001cb4:	00000197          	auipc	x3,0x0
+    80001cb8:	ffc18193          	addi	x3,x3,-4 # 80001cb0 <rvtest_code_begin+0x18a0>
+    80001cbc:	40370733          	sub	x14,x14,x3
+    80001cc0:	00e0b823          	sd	x14,16(x1)
+    80001cc4:	00002097          	auipc	x1,0x2
+    80001cc8:	c0408093          	addi	x1,x1,-1020 # 800038c8 <signature_94_0>
+    80001ccc:	ff7ff797          	auipc	x15,0xff7ff
+    80001cd0:	00000197          	auipc	x3,0x0
+    80001cd4:	ffc18193          	addi	x3,x3,-4 # 80001ccc <rvtest_code_begin+0x18bc>
+    80001cd8:	403787b3          	sub	x15,x15,x3
+    80001cdc:	00f0b023          	sd	x15,0(x1)
+    80001ce0:	fefff817          	auipc	x16,0xfefff
+    80001ce4:	00000197          	auipc	x3,0x0
+    80001ce8:	ffc18193          	addi	x3,x3,-4 # 80001ce0 <rvtest_code_begin+0x18d0>
+    80001cec:	40380833          	sub	x16,x16,x3
+    80001cf0:	0100b423          	sd	x16,8(x1)
+    80001cf4:	fdfff897          	auipc	x17,0xfdfff
+    80001cf8:	00000197          	auipc	x3,0x0
+    80001cfc:	ffc18193          	addi	x3,x3,-4 # 80001cf4 <rvtest_code_begin+0x18e4>
+    80001d00:	403888b3          	sub	x17,x17,x3
+    80001d04:	0110b823          	sd	x17,16(x1)
+    80001d08:	00002097          	auipc	x1,0x2
+    80001d0c:	bd808093          	addi	x1,x1,-1064 # 800038e0 <signature_95_0>
+    80001d10:	fbfff917          	auipc	x18,0xfbfff
+    80001d14:	00000197          	auipc	x3,0x0
+    80001d18:	ffc18193          	addi	x3,x3,-4 # 80001d10 <rvtest_code_begin+0x1900>
+    80001d1c:	40390933          	sub	x18,x18,x3
+    80001d20:	0120b023          	sd	x18,0(x1)
+    80001d24:	f7fff997          	auipc	x19,0xf7fff
+    80001d28:	00000197          	auipc	x3,0x0
+    80001d2c:	ffc18193          	addi	x3,x3,-4 # 80001d24 <rvtest_code_begin+0x1914>
+    80001d30:	403989b3          	sub	x19,x19,x3
+    80001d34:	0130b423          	sd	x19,8(x1)
+    80001d38:	effffa17          	auipc	x20,0xeffff
+    80001d3c:	00000197          	auipc	x3,0x0
+    80001d40:	ffc18193          	addi	x3,x3,-4 # 80001d38 <rvtest_code_begin+0x1928>
+    80001d44:	403a0a33          	sub	x20,x20,x3
+    80001d48:	0140b823          	sd	x20,16(x1)
+    80001d4c:	00002097          	auipc	x1,0x2
+    80001d50:	bac08093          	addi	x1,x1,-1108 # 800038f8 <signature_96_0>
+    80001d54:	dffffa97          	auipc	x21,0xdffff
+    80001d58:	00000197          	auipc	x3,0x0
+    80001d5c:	ffc18193          	addi	x3,x3,-4 # 80001d54 <rvtest_code_begin+0x1944>
+    80001d60:	403a8ab3          	sub	x21,x21,x3
+    80001d64:	0150b023          	sd	x21,0(x1)
+    80001d68:	bffffb17          	auipc	x22,0xbffff
+    80001d6c:	00000197          	auipc	x3,0x0
+    80001d70:	ffc18193          	addi	x3,x3,-4 # 80001d68 <rvtest_code_begin+0x1958>
+    80001d74:	403b0b33          	sub	x22,x22,x3
+    80001d78:	0160b423          	sd	x22,8(x1)
+    80001d7c:	7ffffb97          	auipc	x23,0x7ffff
+    80001d80:	00000197          	auipc	x3,0x0
+    80001d84:	ffc18193          	addi	x3,x3,-4 # 80001d7c <rvtest_code_begin+0x196c>
+    80001d88:	403b8bb3          	sub	x23,x23,x3
+    80001d8c:	0170b823          	sd	x23,16(x1)
+    80001d90:	00002097          	auipc	x1,0x2
+    80001d94:	b8008093          	addi	x1,x1,-1152 # 80003910 <signature_97_0>
+    80001d98:	ffffec17          	auipc	x24,0xffffe
+    80001d9c:	00000197          	auipc	x3,0x0
+    80001da0:	ffc18193          	addi	x3,x3,-4 # 80001d98 <rvtest_code_begin+0x1988>
+    80001da4:	403c0c33          	sub	x24,x24,x3
+    80001da8:	0180b023          	sd	x24,0(x1)
+    80001dac:	ffffdc97          	auipc	x25,0xffffd
+    80001db0:	00000197          	auipc	x3,0x0
+    80001db4:	ffc18193          	addi	x3,x3,-4 # 80001dac <rvtest_code_begin+0x199c>
+    80001db8:	403c8cb3          	sub	x25,x25,x3
+    80001dbc:	0190b423          	sd	x25,8(x1)
+    80001dc0:	ffffbd17          	auipc	x26,0xffffb
+    80001dc4:	00000197          	auipc	x3,0x0
+    80001dc8:	ffc18193          	addi	x3,x3,-4 # 80001dc0 <rvtest_code_begin+0x19b0>
+    80001dcc:	403d0d33          	sub	x26,x26,x3
+    80001dd0:	01a0b823          	sd	x26,16(x1)
+    80001dd4:	00002097          	auipc	x1,0x2
+    80001dd8:	b5408093          	addi	x1,x1,-1196 # 80003928 <signature_98_0>
+    80001ddc:	ffff7d97          	auipc	x27,0xffff7
+    80001de0:	00000197          	auipc	x3,0x0
+    80001de4:	ffc18193          	addi	x3,x3,-4 # 80001ddc <rvtest_code_begin+0x19cc>
+    80001de8:	403d8db3          	sub	x27,x27,x3
+    80001dec:	01b0b023          	sd	x27,0(x1)
+    80001df0:	fffefe17          	auipc	x28,0xfffef
+    80001df4:	00000197          	auipc	x3,0x0
+    80001df8:	ffc18193          	addi	x3,x3,-4 # 80001df0 <rvtest_code_begin+0x19e0>
+    80001dfc:	403e0e33          	sub	x28,x28,x3
+    80001e00:	01c0b423          	sd	x28,8(x1)
+    80001e04:	fffdfe97          	auipc	x29,0xfffdf
+    80001e08:	00000197          	auipc	x3,0x0
+    80001e0c:	ffc18193          	addi	x3,x3,-4 # 80001e04 <rvtest_code_begin+0x19f4>
+    80001e10:	403e8eb3          	sub	x29,x29,x3
+    80001e14:	01d0b823          	sd	x29,16(x1)
+    80001e18:	00002097          	auipc	x1,0x2
+    80001e1c:	b2808093          	addi	x1,x1,-1240 # 80003940 <signature_99_0>
+    80001e20:	fffbff17          	auipc	x30,0xfffbf
+    80001e24:	00000197          	auipc	x3,0x0
+    80001e28:	ffc18193          	addi	x3,x3,-4 # 80001e20 <rvtest_code_begin+0x1a10>
+    80001e2c:	403f0f33          	sub	x30,x30,x3
+    80001e30:	01e0b023          	sd	x30,0(x1)
+    80001e34:	fff7ff97          	auipc	x31,0xfff7f
+    80001e38:	00000197          	auipc	x3,0x0
+    80001e3c:	ffc18193          	addi	x3,x3,-4 # 80001e34 <rvtest_code_begin+0x1a24>
+    80001e40:	403f8fb3          	sub	x31,x31,x3
+    80001e44:	01f0b423          	sd	x31,8(x1)
+    80001e48:	aa8dc017          	auipc	x0,0xaa8dc
+    80001e4c:	00000197          	auipc	x3,0x0
+    80001e50:	ffc18193          	addi	x3,x3,-4 # 80001e48 <rvtest_code_begin+0x1a38>
+    80001e54:	40300033          	sub	x0,x0,x3
+    80001e58:	0000b823          	sd	x0,16(x1)
+    80001e5c:	00000013          	addi	x0,x0,0
+
+0000000080001e60 <rvtest_code_end>:
+    80001e60:	0ff0000f          	fence	iorw,iorw
+    80001e64:	00000073          	ecall
+    80001e68:	0000                	.2byte	0x0
+	...

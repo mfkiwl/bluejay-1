@@ -3,15 +3,30 @@
 //==============================================
 module physical_memory_attribute_checker
 (
-    input clk,
-    input rst,
-    input [2:0] addr, 
-    input [2:0] dtype,
-    input [7:0] pmar,
-    output logic [1:0] status 
+    clk,
+    rst,
+    addr, 
+    dtype,
+    pmar,
+    status 
 );
 
-alway_comb begin
+input clk;
+input rst;
+input [2:0] addr; 
+input [2:0] dtype;
+input [7:0] pmar;
+output [1:0] status;
+
+logic clk;
+logic rst;
+logic [2:0] addr; 
+logic [2:0] dtype;
+logic [7:0] pmar;
+logic [1:0] status;
+
+always_comb 
+begin
     case (dtype)
         DTYPE__BYTE:
         begin

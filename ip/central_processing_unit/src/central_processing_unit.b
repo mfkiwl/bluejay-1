@@ -91,12 +91,10 @@ logic cs;
 logic we;
 logic [63:0] addr;
 logic [1:0] size;
-logic [2:0] dtype;
 logic [63:0] wr_data;
 logic ready;
 logic resp;
 logic [63:0] rd_data;
-logic [63:0] rd_data__sign_or_zero_extended;
 
 // Interrupt Signals
 logic eip;
@@ -172,18 +170,6 @@ comparator comparator__0
 );
 
 //==============================
-// sign_or_zero_extender
-//==============================
-sign_or_zero_extender sign_or_zero_extender__0
-(
-    .clk(clk),
-    .rst(rst),
-    .dtype(dtype),
-    .din(rd_data),
-    .dout(rd_data__sign_or_zero_extended),
-);
-
-//==============================
 // control_and_status_registers__0
 //==============================
 control_and_status_registers control_and_status_registers__0
@@ -206,7 +192,6 @@ control_and_status_registers control_and_status_registers__0
     .mip__msip(mip__msip),
     .mip__mtip(mip__mtip)
 );
-
 
 //==============================================
 // Finite State Machine
@@ -443,10 +428,10 @@ always_comb begin
     cs = 1'b0;
     we = 1'b0;
     size = SIZE__WORD;
-    dtype = DTYPE__WORD;
     wr_data = rf__rd_data;
-    csr__addr = imm[11:0];
+    csr__cs = 1'b0;
     csr__we = 1'b0;
+    csr__addr = imm[11:0];
     csr__wr_data = c;
     instret = 1'b0;
 
@@ -476,7 +461,6 @@ always_comb begin
             cs = 1'b1;
             addr = pc;
             size = SIZE__WORD;
-            dtype = DTYPE__WORD;
             ir__n = rd_data[31:0];
             state__n = (ready & ~resp) ? STATE__DECODE : (ready & resp & (rd_data == ERRORCODE__ACCESS_FAULT)) ? STATE__EXCEPTION__INSTRUCTION_ACCESS_FAULT__0 : STATE__FETCH__1;
         end
@@ -1665,11 +1649,10 @@ always_comb begin
             cs = 1'b1;
             addr = c;
             size = SIZE__BYTE;
-            dtype = DTYPE__BYTE;
             rf__cs = 1'b1;
             rf__addr = rd;
             rf__we = ready & ~resp;
-            rf__wr_data = rd_data__sign_or_zero_extended;
+            rf__wr_data = {{56{rd_data[7]}}, rd_data[7:0]};
             state__n = (ready & ~resp) ? STATE__LB__2 : (ready & resp & (rd_data == ERRORCODE__ACCESS_FAULT)) ? STATE__EXCEPTION__LOAD_ACCESS_FAULT__0 : (ready & resp & (rd_data == ERRORCODE__MISALIGNED_ADDRESS)) ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0 : STATE__LB__1;
         end
 
@@ -1704,11 +1687,10 @@ always_comb begin
             cs = 1'b1;
             addr = c;
             size = SIZE__HALF_WORD;
-            dtype = DTYPE__HALF_WORD;
             rf__cs = 1'b1;
             rf__addr = rd;
             rf__we = ready & ~resp;
-            rf__wr_data = rd_data__sign_or_zero_extended;
+            rf__wr_data = {{48{rd_data[15]}}, rd_data[15:0]};
             state__n = (ready & ~resp) ? STATE__LH__2 : (ready & resp & (rd_data == ERRORCODE__ACCESS_FAULT)) ? STATE__EXCEPTION__LOAD_ACCESS_FAULT__0 : (ready & resp & (rd_data == ERRORCODE__MISALIGNED_ADDRESS)) ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0 : STATE__LH__1;
         end
 
@@ -1743,11 +1725,10 @@ always_comb begin
             cs = 1'b1;
             addr = c;
             size = SIZE__WORD;
-            dtype = DTYPE__WORD;
             rf__cs = 1'b1;
             rf__addr = rd;
             rf__we = ready & ~resp;
-            rf__wr_data = rd_data__sign_or_zero_extended;
+            rf__wr_data = {{32{rd_data[31]}}, rd_data[31:0]};
             state__n = (ready & ~resp) ? STATE__LW__2 : (ready & resp & (rd_data == ERRORCODE__ACCESS_FAULT)) ? STATE__EXCEPTION__LOAD_ACCESS_FAULT__0 : (ready & resp & (rd_data == ERRORCODE__MISALIGNED_ADDRESS)) ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0 : STATE__LW__1;
         end
 
@@ -1782,11 +1763,10 @@ always_comb begin
             cs = 1'b1;
             addr = c;
             size = SIZE__DOUBLE_WORD;
-            dtype = DTYPE__DOUBLE_WORD;
             rf__cs = 1'b1;
             rf__addr = rd;
             rf__we = ready & ~resp;
-            rf__wr_data = rd_data__sign_or_zero_extended;
+            rf__wr_data = rd_data;
             state__n = (ready & ~resp) ? STATE__LD__2 : (ready & resp & (rd_data == ERRORCODE__ACCESS_FAULT)) ? STATE__EXCEPTION__LOAD_ACCESS_FAULT__0 : (ready & resp & (rd_data == ERRORCODE__MISALIGNED_ADDRESS)) ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0 : STATE__LD__1;
         end
 
@@ -1821,11 +1801,10 @@ always_comb begin
             cs = 1'b1;
             addr = c;
             size = SIZE__BYTE;
-            dtype = DTYPE__BYTE_UNSIGNED;
             rf__cs = 1'b1;
             rf__addr = rd;
             rf__we = ready & ~resp;
-            rf__wr_data = rd_data__sign_or_zero_extended;
+            rf__wr_data = {56'h0, rd_data[7:0]};
             state__n = (ready & ~resp) ? STATE__LBU__2 : (ready & resp & (rd_data == ERRORCODE__ACCESS_FAULT)) ? STATE__EXCEPTION__LOAD_ACCESS_FAULT__0 : (ready & resp & (rd_data == ERRORCODE__MISALIGNED_ADDRESS)) ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0 : STATE__LBU__1;
         end
 
@@ -1860,11 +1839,10 @@ always_comb begin
             cs = 1'b1;
             addr = c;
             size = SIZE__HALF_WORD;
-            dtype = DTYPE__HALF_WORD_UNSIGNED;
             rf__cs = 1'b1;
             rf__addr = rd;
             rf__we = ready & ~resp;
-            rf__wr_data = rd_data__sign_or_zero_extended;
+            rf__wr_data = {48'h0, rd_data[15:0]};
             state__n = (ready & ~resp) ? STATE__LHU__2 : (ready & resp & (rd_data == ERRORCODE__ACCESS_FAULT)) ? STATE__EXCEPTION__LOAD_ACCESS_FAULT__0 : (ready & resp & (rd_data == ERRORCODE__MISALIGNED_ADDRESS)) ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0 : STATE__LHU__1;
         end
 
@@ -1899,11 +1877,10 @@ always_comb begin
             cs = 1'b1;
             addr = c;
             size = SIZE__WORD;
-            dtype = DTYPE__WORD_UNSIGNED;
             rf__cs = 1'b1;
             rf__addr = rd;
             rf__we = ready & ~resp;
-            rf__wr_data = rd_data__sign_or_zero_extended;
+            rf__wr_data = {32'h0, rd_data[31:0]};
             state__n = (ready & ~resp) ? STATE__LWU__2 : (ready & resp & (rd_data == ERRORCODE__ACCESS_FAULT)) ? STATE__EXCEPTION__LOAD_ACCESS_FAULT__0 : (ready & resp & (rd_data == ERRORCODE__MISALIGNED_ADDRESS)) ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0 : STATE__LWU__1;
         end
 
@@ -1941,7 +1918,6 @@ always_comb begin
             we = 1'b1;
             addr = c;
             size = SIZE__BYTE;
-            dtype = DTYPE__BYTE;
             wr_data = rf__rd_data;
             state__n = (ready & ~resp) ? STATE__SB__2 : (ready & resp & (rd_data == ERRORCODE__ACCESS_FAULT)) ? STATE__EXCEPTION__STORE_ACCESS_FAULT__0 : (ready & resp & (rd_data == ERRORCODE__MISALIGNED_ADDRESS)) ? STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__0 : STATE__SB__1;
         end
@@ -1981,7 +1957,6 @@ always_comb begin
             we = 1'b1;
             addr = c;
             size = SIZE__HALF_WORD;
-            dtype = DTYPE__HALF_WORD;
             wr_data = rf__rd_data;
             state__n = (ready & ~resp) ? STATE__SH__2 : (ready & resp & (rd_data == ERRORCODE__ACCESS_FAULT)) ? STATE__EXCEPTION__STORE_ACCESS_FAULT__0 : (ready & resp & (rd_data == ERRORCODE__MISALIGNED_ADDRESS)) ? STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__0 : STATE__SH__1;
         end
@@ -2020,7 +1995,6 @@ always_comb begin
             we = 1'b1;
             addr = c;
             size = SIZE__WORD;
-            dtype = DTYPE__WORD;
             wr_data = rf__rd_data;
             state__n = (ready & ~resp) ? STATE__SW__2 : (ready & resp & (rd_data == ERRORCODE__ACCESS_FAULT)) ? STATE__EXCEPTION__STORE_ACCESS_FAULT__0 : (ready & resp & (rd_data == ERRORCODE__MISALIGNED_ADDRESS)) ? STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__0 : STATE__SW__1;
         end
@@ -2059,7 +2033,6 @@ always_comb begin
             we = 1'b1;
             addr = c;
             size = SIZE__DOUBLE_WORD;
-            dtype = DTYPE__DOUBLE_WORD;
             wr_data = rf__rd_data;
             state__n = (ready & ~resp) ? STATE__SD__2 : (ready & resp & (rd_data == ERRORCODE__ACCESS_FAULT)) ? STATE__EXCEPTION__STORE_ACCESS_FAULT__0 : (ready & resp & (rd_data == ERRORCODE__MISALIGNED_ADDRESS)) ? STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__0 : STATE__SD__1;
         end
@@ -2523,6 +2496,7 @@ always_comb begin
         //==============================
         STATE__ECALL:
         begin
+            csr__cs = 1'b1;
             csr__addr = CSR__MCAUSE;
             csr__we = 1'b1;
             csr__wr_data = csr__rd_data;
@@ -2536,6 +2510,7 @@ always_comb begin
         //==============================
         STATE__EBREAK:
         begin
+            csr__cs = 1'b1;
             csr__addr = CSR__MCAUSE;
             csr__we = 1'b1;
             csr__wr_data = csr__rd_data;
@@ -2596,6 +2571,7 @@ always_comb begin
             rf__cs = 1'b1;
             rf__addr = rs1;
             a__n = rf__rd_data;
+            csr__cs = 1'b1;
             csr__addr = imm[11:0];
             b__n = csr__rd_data;
             state__n = (imm[11:10] == 2'h3) ? STATE__EXCEPTION__ILLEGAL_INSTRUCTION : (rd == 5'h0) ? STATE__CSRRW__2 : STATE__CSRRW__1; 
@@ -2620,6 +2596,7 @@ always_comb begin
         STATE__CSRRW__2:
         begin
             func = FUNC__NULL_A;
+            csr__cs = 1'b1;
             csr__addr = imm[11:0];
             csr__we = 1'b1;
             csr__wr_data = c;
@@ -2636,6 +2613,7 @@ always_comb begin
             rf__cs = 1'b1;
             rf__addr = rs1;
             a__n = rf__rd_data;
+            csr__cs = 1'b1;
             csr__addr = imm[11:0];
             b__n = csr__rd_data;
             state__n = (rs1 == 5'h0) ? STATE__CSRRS__2 : (imm[11:10] == 2'h3) ? STATE__EXCEPTION__ILLEGAL_INSTRUCTION : STATE__CSRRS__1; 
@@ -2647,6 +2625,7 @@ always_comb begin
         STATE__CSRRS__1:
         begin
             func = FUNC__OR;
+            csr__cs = 1'b1;
             csr__addr = imm[11:0];
             csr__we = 1'b1;
             csr__wr_data = c;
@@ -2676,6 +2655,7 @@ always_comb begin
             rf__cs = 1'b1;
             rf__addr = rs1;
             a__n = rf__rd_data;
+            csr__cs = 1'b1;
             csr__addr = imm[11:0];
             b__n = csr__rd_data;
             state__n = (rs1 == 5'h0) ? STATE__CSRRC__2 : (imm[11:10] == 2'h3) ? STATE__EXCEPTION__ILLEGAL_INSTRUCTION : STATE__CSRRC__1; 
@@ -2687,8 +2667,9 @@ always_comb begin
         STATE__CSRRC__1:
         begin
             func = FUNC__CLR;
-            csr__addr = imm[11:0];
+            csr__cs = 1'b1;
             csr__we = 1'b1;
+            csr__addr = imm[11:0];
             csr__wr_data = c;
             state__n = STATE__CSRRC__2;
         end
@@ -2714,6 +2695,7 @@ always_comb begin
         STATE__CSRRWI__0:
         begin
             a__n = uimm;
+            csr__cs = 1'b1;
             csr__addr = imm[11:0];
             b__n = csr__rd_data;
             state__n = (imm[11:10] == 2'h3) ? STATE__EXCEPTION__ILLEGAL_INSTRUCTION : (rd == 5'h0) ? STATE__CSRRWI__2 : STATE__CSRRWI__1; 
@@ -2738,8 +2720,9 @@ always_comb begin
         STATE__CSRRWI__2:
         begin
             func = FUNC__NULL_A;
-            csr__addr = imm[11:0];
+            csr__cs = 1'b1;
             csr__we = 1'b1;
+            csr__addr = imm[11:0];
             csr__wr_data = c;
             pc__n = pc + 4;
             instret = 1'b1;
@@ -2752,6 +2735,7 @@ always_comb begin
         STATE__CSRRSI__0:
         begin
             a__n = uimm;
+            csr__cs = 1'b1;
             csr__addr = imm[11:0];
             b__n = csr__rd_data;
             state__n = (uimm[4:0] == 5'h0) ? STATE__CSRRSI__2 : (imm[11:10] == 2'h3) ? STATE__EXCEPTION__ILLEGAL_INSTRUCTION : STATE__CSRRSI__1; 
@@ -2763,8 +2747,9 @@ always_comb begin
         STATE__CSRRSI__1:
         begin
             func = FUNC__OR;
-            csr__addr = imm[11:0];
+            csr__cs = 1'b1;
             csr__we = 1'b1;
+            csr__addr = imm[11:0];
             csr__wr_data = c;
             state__n = STATE__CSRRSI__2;
         end
@@ -2790,6 +2775,7 @@ always_comb begin
         STATE__CSRRCI__0:
         begin
             a__n = uimm;
+            csr__cs = 1'b1;
             csr__addr = imm[11:0];
             b__n = csr__rd_data;
             state__n = (uimm[4:0] == 5'h0) ? STATE__CSRRCI__2 : (imm[11:10] == 2'h3) ? STATE__EXCEPTION__ILLEGAL_INSTRUCTION : STATE__CSRRCI__1; 
@@ -2801,8 +2787,9 @@ always_comb begin
         STATE__CSRRCI__1:
         begin
             func = FUNC__CLR;
-            csr__addr = imm[11:0];
+            csr__cs = 1'b1;
             csr__we = 1'b1;
+            csr__addr = imm[11:0];
             csr__wr_data = c;
             state__n = STATE__CSRRCI__2;
         end
@@ -2827,8 +2814,9 @@ always_comb begin
         //==============================
         STATE__MRET__0:
         begin
-            csr__addr = CSR__MSTATUS;
+            csr__cs = 1'b1;
             csr__we = 1'b1;
+            csr__addr = CSR__MSTATUS;
             csr__wr_data = csr__rd_data;
             csr__wr_data[CSR__MSTATUS__MIE__FIELD] <= csr__rd_data[CSR__MSTATUS__MPIE__FIELD];
             csr__wr_data[CSR__MSTATUS__MPIE__FIELD] <= CSR__MSTATUS__MIE__ENABLED;
@@ -2840,6 +2828,7 @@ always_comb begin
         //==============================
         STATE__MRET__1:
         begin
+            csr__cs = 1'b1;
             csr__addr = CSR__MEPC;
             pc__n = csr__rd_data;
             instret = 1'b1;
@@ -2851,8 +2840,9 @@ always_comb begin
         //==============================
         STATE__EXCEPTION__ILLEGAL_INSTRUCTION:
         begin
-            csr__addr = CSR__MCAUSE;
+            csr__cs = 1'b1;
             csr__we = 1'b1;
+            csr__addr = CSR__MCAUSE;
             csr__wr_data = csr__rd_data;
             csr__wr_data[CSR__MCAUSE__EXCEPTION_CODE__FIELD] = CSR__MCAUSE__EXCEPTION_CODE__ILLEGAL_INSTRUCTION;
             csr__wr_data[CSR__MCAUSE__INTERRUPT__FIELD] = CSR__MCAUSE__INTERRUPT__NOT_INTERRUPT;
@@ -2865,8 +2855,9 @@ always_comb begin
         STATE__EXCEPTION__INSTRUCTION_ACCESS_FAULT__0:
         begin
             func = FUNC__ADD; 
-            csr__addr = CSR__MTVAL;
+            csr__cs = 1'b1;
             csr__we = 1'b1;
+            csr__addr = CSR__MTVAL;
             csr__wr_data = csr__rd_data;
             csr__wr_data[CSR__MTVAL__MTVAL__FIELD] = pc;
             state__n = STATE__EXCEPTION__INSTRUCTION_ACCESS_FAULT__1;
@@ -2877,8 +2868,9 @@ always_comb begin
         //==============================
         STATE__EXCEPTION__INSTRUCTION_ACCESS_FAULT__1:
         begin
-            csr__addr = CSR__MCAUSE;
+            csr__cs = 1'b1;
             csr__we = 1'b1;
+            csr__addr = CSR__MCAUSE;
             csr__wr_data = csr__rd_data;
             csr__wr_data[CSR__MCAUSE__EXCEPTION_CODE__FIELD] = CSR__MCAUSE__EXCEPTION_CODE__INSTRUCTION_ACCESS_FAULT;
             csr__wr_data[CSR__MCAUSE__INTERRUPT__FIELD] = CSR__MCAUSE__INTERRUPT__NOT_INTERRUPT;
@@ -2891,8 +2883,9 @@ always_comb begin
         STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__0:
         begin
             func = FUNC__ADD; 
-            csr__addr = CSR__MTVAL;
+            csr__cs = 1'b1;
             csr__we = 1'b1;
+            csr__addr = CSR__MTVAL;
             csr__wr_data = csr__rd_data;
             csr__wr_data[CSR__MTVAL__MTVAL__FIELD] = c;
             state__n = STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__1;
@@ -2904,8 +2897,9 @@ always_comb begin
         STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__0__JALR:
         begin
             func = FUNC__ADD; 
-            csr__addr = CSR__MTVAL;
+            csr__cs = 1'b1;
             csr__we = 1'b1;
+            csr__addr = CSR__MTVAL;
             csr__wr_data = csr__rd_data;
             csr__wr_data[CSR__MTVAL__MTVAL__FIELD] = {c[63:1], 1'b0};
             state__n = STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__1;
@@ -2916,8 +2910,9 @@ always_comb begin
         //==============================
         STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__1:
         begin
-            csr__addr = CSR__MCAUSE;
+            csr__cs = 1'b1;
             csr__we = 1'b1;
+            csr__addr = CSR__MCAUSE;
             csr__wr_data = csr__rd_data;
             csr__wr_data[CSR__MCAUSE__EXCEPTION_CODE__FIELD] = CSR__MCAUSE__EXCEPTION_CODE__INSTRUCTION_ADDRESS_MISALIGNED;
             csr__wr_data[CSR__MCAUSE__INTERRUPT__FIELD] = CSR__MCAUSE__INTERRUPT__NOT_INTERRUPT;
@@ -2930,8 +2925,9 @@ always_comb begin
         STATE__EXCEPTION__LOAD_ACCESS_FAULT__0:
         begin
             func = FUNC__ADD; 
-            csr__addr = CSR__MTVAL;
+            csr__cs = 1'b1;
             csr__we = 1'b1;
+            csr__addr = CSR__MTVAL;
             csr__wr_data = csr__rd_data;
             csr__wr_data[CSR__MTVAL__MTVAL__FIELD] = c;
             state__n = STATE__EXCEPTION__LOAD_ACCESS_FAULT__1;
@@ -2942,8 +2938,9 @@ always_comb begin
         //==============================
         STATE__EXCEPTION__LOAD_ACCESS_FAULT__1:
         begin
-            csr__addr = CSR__MCAUSE;
+            csr__cs = 1'b1;
             csr__we = 1'b1;
+            csr__addr = CSR__MCAUSE;
             csr__wr_data = csr__rd_data;
             csr__wr_data[CSR__MCAUSE__EXCEPTION_CODE__FIELD] = CSR__MCAUSE__EXCEPTION_CODE__LOAD_ACCESS_FAULT;
             csr__wr_data[CSR__MCAUSE__INTERRUPT__FIELD] = CSR__MCAUSE__INTERRUPT__NOT_INTERRUPT;
@@ -2956,8 +2953,9 @@ always_comb begin
         STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0:
         begin
             func = FUNC__ADD; 
-            csr__addr = CSR__MTVAL;
+            csr__cs = 1'b1;
             csr__we = 1'b1;
+            csr__addr = CSR__MTVAL;
             csr__wr_data = csr__rd_data;
             csr__wr_data[CSR__MTVAL__MTVAL__FIELD] = c;
             state__n = STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__1;
@@ -2968,8 +2966,9 @@ always_comb begin
         //==============================
         STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__1:
         begin
-            csr__addr = CSR__MCAUSE;
+            csr__cs = 1'b1;
             csr__we = 1'b1;
+            csr__addr = CSR__MCAUSE;
             csr__wr_data = csr__rd_data;
             csr__wr_data[CSR__MCAUSE__EXCEPTION_CODE__FIELD] = CSR__MCAUSE__EXCEPTION_CODE__LOAD_ADDRESS_MISALIGNED;
             csr__wr_data[CSR__MCAUSE__INTERRUPT__FIELD] = CSR__MCAUSE__INTERRUPT__NOT_INTERRUPT;
@@ -2982,8 +2981,9 @@ always_comb begin
         STATE__EXCEPTION__STORE_ACCESS_FAULT__0:
         begin
             func = FUNC__ADD; 
-            csr__addr = CSR__MTVAL;
+            csr__cs = 1'b1;
             csr__we = 1'b1;
+            csr__addr = CSR__MTVAL;
             csr__wr_data = csr__rd_data;
             csr__wr_data[CSR__MTVAL__MTVAL__FIELD] = c;
             state__n = STATE__EXCEPTION__STORE_ACCESS_FAULT__1;
@@ -2994,8 +2994,9 @@ always_comb begin
         //==============================
         STATE__EXCEPTION__STORE_ACCESS_FAULT__1:
         begin
-            csr__addr = CSR__MCAUSE;
+            csr__cs = 1'b1;
             csr__we = 1'b1;
+            csr__addr = CSR__MCAUSE;
             csr__wr_data = csr__rd_data;
             csr__wr_data[CSR__MCAUSE__EXCEPTION_CODE__FIELD] = CSR__MCAUSE__EXCEPTION_CODE__STORE_ACCESS_FAULT;
             csr__wr_data[CSR__MCAUSE__INTERRUPT__FIELD] = CSR__MCAUSE__INTERRUPT__NOT_INTERRUPT;
@@ -3008,8 +3009,9 @@ always_comb begin
         STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__0:
         begin
             func = FUNC__ADD; 
-            csr__addr = CSR__MTVAL;
+            csr__cs = 1'b1;
             csr__we = 1'b1;
+            csr__addr = CSR__MTVAL;
             csr__wr_data = csr__rd_data;
             csr__wr_data[CSR__MTVAL__MTVAL__FIELD] = c;
             state__n = STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__1;
@@ -3020,8 +3022,9 @@ always_comb begin
         //==============================
         STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__1:
         begin
-            csr__addr = CSR__MCAUSE;
+            csr__cs = 1'b1;
             csr__we = 1'b1;
+            csr__addr = CSR__MCAUSE;
             csr__wr_data = csr__rd_data;
             csr__wr_data[CSR__MCAUSE__EXCEPTION_CODE__FIELD] = CSR__MCAUSE__EXCEPTION_CODE__STORE_ADDRESS_MISALIGNED;
             csr__wr_data[CSR__MCAUSE__INTERRUPT__FIELD] = CSR__MCAUSE__INTERRUPT__NOT_INTERRUPT;
@@ -3033,8 +3036,9 @@ always_comb begin
         //==============================
         STATE__INTERRUPT__SOFTWARE:
         begin
-            csr__addr = CSR__MCAUSE;
+            csr__cs = 1'b1;
             csr__we = 1'b1;
+            csr__addr = CSR__MCAUSE;
             csr__wr_data[CSR__MCAUSE__EXCEPTION_CODE__FIELD] = CSR__MCAUSE__EXCEPTION_CODE__MACHINE_SOFTWARE_INTERRUPT;
             csr__wr_data[CSR__MCAUSE__INTERRUPT__FIELD] = CSR__MCAUSE__INTERRUPT__INTERRUPT;
             state__n = STATE__TRAP__0;
@@ -3045,8 +3049,9 @@ always_comb begin
         //==============================
         STATE__INTERRUPT__TIMER:
         begin
-            csr__addr = CSR__MCAUSE;
+            csr__cs = 1'b1;
             csr__we = 1'b1;
+            csr__addr = CSR__MCAUSE;
             csr__wr_data[CSR__MCAUSE__EXCEPTION_CODE__FIELD] = CSR__MCAUSE__EXCEPTION_CODE__MACHINE_TIMER_INTERRUPT;
             csr__wr_data[CSR__MCAUSE__INTERRUPT__FIELD] = CSR__MCAUSE__INTERRUPT__INTERRUPT;
             state__n = STATE__TRAP__0;
@@ -3057,8 +3062,9 @@ always_comb begin
         //==============================
         STATE__INTERRUPT__EXTERNAL:
         begin
-            csr__addr = CSR__MCAUSE;
+            csr__cs = 1'b1;
             csr__we = 1'b1;
+            csr__addr = CSR__MCAUSE;
             csr__wr_data[CSR__MCAUSE__EXCEPTION_CODE__FIELD] = CSR__MCAUSE__EXCEPTION_CODE__MACHINE_EXTERNAL_INTERRUPT;
             csr__wr_data[CSR__MCAUSE__INTERRUPT__FIELD] = CSR__MCAUSE__INTERRUPT__INTERRUPT;
             state__n = STATE__TRAP__0;
@@ -3070,8 +3076,9 @@ always_comb begin
         //==============================
         STATE__TRAP__0:
         begin
-            csr__addr = CSR__MSTATUS;
+            csr__cs = 1'b1;
             csr__we = 1'b1;
+            csr__addr = CSR__MSTATUS;
             csr__wr_data = csr__rd_data;
             csr__wr_data[CSR__MSTATUS__MIE__FIELD] <= CSR__MSTATUS__MIE__DISABLED;
             csr__wr_data[CSR__MSTATUS__MPIE__FIELD] <= csr__rd_data[CSR__MSTATUS__MIE__FIELD];
@@ -3083,8 +3090,9 @@ always_comb begin
         //==============================
         STATE__TRAP__1:
         begin
-            csr__addr = CSR__MEPC;
+            csr__cs = 1'b1;
             csr__we = 1'b1;
+            csr__addr = CSR__MEPC;
             csr__wr_data = csr__rd_data;
             csr__wr_data[CSR__MEPC__MEPC__FIELD] = pc;
             state__n = STATE__TRAP__2;
@@ -3095,6 +3103,7 @@ always_comb begin
         //==============================
         STATE__TRAP__2:
         begin
+            csr__cs = 1'b1;
             csr__addr = CSR__MTVEC;
             pc__n = csr__rd_data; 
             state__n = STATE__FETCH__0;

@@ -16,10 +16,12 @@ XELAB := xelab
 XSIM := xsim
 
 
+#XELAB__OPTS := -relax
 XELAB__OPTS := -relax
 XSIM__OPTS :=
 XSIM__CFG := $(TOP)/tcl/xsim_cfg.tcl
-XVLOG__OPTS := --sv --incr --relax
+#XVLOG__OPTS := --sv --incr --relax
+XVLOG__OPTS := --sv --incr
 
 
 
@@ -376,7 +378,7 @@ $(TOP)/ip/$(1)/sim/gen/$(2)/$(3)/ref.timestamp: $(TOP)/ip/$(1)/sim/gen/$(2)/$(3)
 	$(TOUCH) $$(@)
 
 $(TOP)/ip/$(1)/sim/gen/$(2)/$(3)/$(3).log:
-	$(call run-target,$(3),$(TOP)/ip/$(1)/sim/gen/$(2)/$(3)/)
+	$(call run-target,$(3),$(TOP)/ip/$(1)/sim/gen/$(2)/$(3))
 endef
 
 
@@ -443,7 +445,7 @@ MODULES += machine_timer_registers
 TB_MODULES :=
 TB_MODULES += tb
 
-SV += $(addsuffix .sv,$(addprefix $(TOP)/ip/$(IP)/src/gen/,$(MODULES)))
+#SV += $(addsuffix .sv,$(addprefix $(TOP)/ip/$(IP)/src/gen/,$(MODULES)))
 ifeq ($(SIM_IP),$(IP))
 SV += $(addsuffix .sv,$(addprefix $(TOP)/ip/$(IP)/tb/gen/,$(TB_MODULES)))
 endif
@@ -481,7 +483,7 @@ MODULES += physical_memory_attribute_checker
 TB_MODULES :=
 TB_MODULES += tb
 
-SV += $(addsuffix .sv,$(addprefix $(TOP)/ip/$(IP)/src/gen/,$(MODULES)))
+#SV += $(addsuffix .sv,$(addprefix $(TOP)/ip/$(IP)/src/gen/,$(MODULES)))
 ifeq ($(SIM_IP),$(IP))
 SV += $(addsuffix .sv,$(addprefix $(TOP)/ip/$(IP)/tb/gen/,$(TB_MODULES)))
 endif
@@ -530,8 +532,9 @@ $(eval $(call ip--sim--template,$(IP),$(SIM),$(SV),$(TESTS),default--sim-test--d
 IP := central_processing_unit
 
 SIM := sim__xyz
-#TESTS := ADD-01 ADDI-01 ADDW-01 ADDIW-01 AND-01 ANDI-01 AUIPC-01 BEQ-01 BGE-01 BGEU-01 BLT-01 BLTU-01 BNE-01 I-DELAY_SLOTS-01 I-EBREAK-01 I-ECALL-01 I-ENDIANESS-01 I-IO-01 I-MISALIGN_JMP-01 I-MISALIGN_LDST-01 I-NOP-01 I-RF_size-01 I-RF_width-01 I-RF_x0-01 JAL-01 JALR-01 LB-01 LBU-01 LD-01 LH-01 LHU-01 LUI-01 LW-01 LWU-01 OR-01 ORI-01 SB-01 SD-01 SH-01 SLL-01 SLLI-01 SLLIW-01 SLLW-01 SLT-01 SLTI-01 SLTIU-01 SLTU-01 SRA-01 SRAI-01 SRAIW-01 SRAW-01 SRL-01 SRLI-01 SRLIW-01 SRLW-01 SUB-01 SUBW-01 SW-01 XOR-01 XORI-01
-TESTS := ADD-01 ADDI-01
+TESTS := ADD-01 ADDI-01 ADDW-01 ADDIW-01 AND-01 ANDI-01 AUIPC-01 BEQ-01 BGE-01 BGEU-01 BLT-01 BLTU-01 BNE-01 I-DELAY_SLOTS-01 I-EBREAK-01 I-ECALL-01 I-ENDIANESS-01 I-IO-01 I-MISALIGN_JMP-01 I-MISALIGN_LDST-01 I-NOP-01 I-RF_size-01 I-RF_width-01 I-RF_x0-01 JAL-01 JALR-01 LB-01 LBU-01 LD-01 LH-01 LHU-01 LUI-01 LW-01 LWU-01 OR-01 ORI-01 SB-01 SD-01 SH-01 SLL-01 SLLI-01 SLLIW-01 SLLW-01 SLT-01 SLTI-01 SLTIU-01 SLTU-01 SRA-01 SRAI-01 SRAIW-01 SRAW-01 SRL-01 SRLI-01 SRLIW-01 SRLW-01 SUB-01 SUBW-01 SW-01 XOR-01 XORI-01
+#TESTS := ADD-01 ADDI-01
+#TESTS := BEQ-01
 
 $(eval $(call ip--src--template,$(IP)))
 $(eval $(call ip--tb--template,$(IP)))
@@ -550,6 +553,17 @@ $(eval $(call ip--src--template,$(IP)))
 $(eval $(call ip--tb--template,$(IP)))
 $(eval $(call ip--sim--template,$(IP),$(SIM),$(SV),$(TESTS),default--sim-test--diff--template,default--sim-test--sim--template,default--sim-test--ref--template,default--sim-test--setup--template))
 
+#######################################
+# physical_memory_attribute_registers #
+#######################################
+IP := physical_memory_attribute_registers
+
+SIM := sim__xyz
+TESTS := test__0 
+
+$(eval $(call ip--src--template,$(IP)))
+$(eval $(call ip--tb--template,$(IP)))
+$(eval $(call ip--sim--template,$(IP),$(SIM),$(SV),$(TESTS),default--sim-test--diff--template,default--sim-test--sim--template,default--sim-test--ref--template,default--sim-test--setup--template))
 
 
 #
