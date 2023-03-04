@@ -105,12 +105,13 @@ end
 //==============================================
 // Physical Memory Attributes Register 0
 //==============================================
-assign pmar__0[0:0] = 0;
+assign pmar__0[0:0] = 1;
 assign pmar__0[1:1] = 1'b1;
-assign pmar__0[2:2] = 1'b0;
-assign pmar__0[3:3] = 1'b0;
-assign pmar__0[4:4] = 1'b0;
+assign pmar__0[2:2] = 1'b1;
+assign pmar__0[3:3] = 1'b1;
+assign pmar__0[4:4] = 1'b1;
 assign pmar__0[5:5] = 1'b0;
+
 
 //==============================================
 // Physical Memory Attributes Register 1
@@ -129,17 +130,17 @@ assign pmar__2[0:0] = 0;
 assign pmar__2[1:1] = 1'b0;
 assign pmar__2[2:2] = 1'b0;
 assign pmar__2[3:3] = 1'b0;
-assign pmar__2[4:4] = 1'b0;
-assign pmar__2[5:5] = 1'b1;
+assign pmar__2[4:4] = 1'b1;
+assign pmar__2[5:5] = 1'b0;
 
 //==============================================
 // Physical Memory Attributes Register 3
 //==============================================
-assign pmar__3[0:0] = 1;
+assign pmar__3[0:0] = 0;
 assign pmar__3[1:1] = 1'b1;
-assign pmar__3[2:2] = 1'b1;
-assign pmar__3[3:3] = 1'b1;
-assign pmar__3[4:4] = 1'b1;
+assign pmar__3[2:2] = 1'b0;
+assign pmar__3[3:3] = 1'b0;
+assign pmar__3[4:4] = 1'b0;
 assign pmar__3[5:5] = 1'b0;
 
 //==============================================

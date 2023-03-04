@@ -90,6 +90,11 @@ logic re__context__x__claim_complete;
 logic claim__0;
 logic claim__1;
 
+logic [9:0] context__0__priority_mux__0__id;
+logic context__0__priority_mux__0__ie;
+logic context__0__priority_mux__0__ip;
+logic [31:0] context__0__priority_mux__0__priority;
+
 
 assign ip__0 = 1'b0;
 

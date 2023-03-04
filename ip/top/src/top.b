@@ -3,59 +3,98 @@
 //==============================================
 module top
 (
-    input clk_100mhz,
-    input [15:0] sw,
-    input btnc,
-    input btnu,
-    input btnl,
-    input btnr,
-    input btnd,
-    output logic [15:0] led,
-    output logic led16_b,
-    output logic led16_g,
-    output logic led16_r,
-    output logic led17_b,
-    output logic led17_g,
-    output logic led17_r,
-    output logic [7:0] an,
-    output logic ca, 
-    output logic cb, 
-    output logic cc, 
-    output logic cd, 
-    output logic ce, 
-    output logic cf, 
-    output logic cg
+    clk_100mhz,
+    sw,
+    btnc,
+    btnu,
+    btnl,
+    btnr,
+    btnd,
+    led,
+    led16_b,
+    led16_g,
+    led16_r,
+    led17_b,
+    led17_g,
+    led17_r,
+    an,
+    ca, 
+    cb, 
+    cc, 
+    cd, 
+    ce, 
+    cf, 
+    cg
 );
 
-logic btnc__clean;
-logic btnu__clean;
-logic btnd__clean;
-logic btnl__clean;
-logic btnr__clean;
-logic [15:0] sw__clean;
+input clk_100mhz;
+input [15:0] sw;
+input btnc;
+input btnu;
+input btnl;
+input btnr;
+input btnd;
+output [15:0] led;
+output led16_b;
+output led16_g;
+output led16_r;
+output led17_b;
+output led17_g;
+output led17_r;
+output [7:0] an;
+output ca; 
+output cb; 
+output cc; 
+output cd; 
+output ce; 
+output cf; 
+output cg;
 
+logic clk_100mhz;
+logic [15:0] sw;
+logic btnc;
+logic btnu;
+logic btnl;
+logic btnr;
+logic btnd;
+logic [15:0] led;
+logic led16_b;
+logic led16_g;
+logic led16_r;
+logic led17_b;
+logic led17_g;
+logic led17_r;
+logic [7:0] an;
+logic ca; 
+logic cb; 
+logic cc; 
+logic cd; 
+logic ce; 
+logic cf; 
+logic cg;
 
-logic [7:0] port__0;
+logic clk;
+logic rst;
+
+//logic [7:0] port__0;
+//logic [7:0] port__1;
+//logic [7:0] port__2;
+//logic [7:0] port__3;
+wire [7:0] port__0;
+wire [7:0] port__1;
+wire [7:0] port__2;
+wire [7:0] port__3;
+
+logic ena;
+logic [7:0] wea;
+logic [11:0] addra;
+logic [63:0] dina;
+logic [63:0] douta;
 
 
 assign clk = clk_100mhz;
-//assign rst = btnc__clean;
 assign rst = btnc;
-assign led16_b = port__0[0]; 
-assign led16_g = 1'b0; 
-assign led16_r = 1'b0; 
-assign led17_b = 1'b0; 
-assign led17_g = 1'b0; 
-assign led17_r = 1'b0; 
-assign led = 16'h0;
-assign an = 8'hff;
-assign ca = 1'b0;
-assign cb = 1'b0;
-assign cc = 1'b0;
-assign cc = 1'b0;
-assign ce = 1'b0;
-assign cf = 1'b0;
-assign cg = 1'b0;
+assign led16_b = port__0[0];
 
 
 //==============================
@@ -65,81 +104,30 @@ jay jay__0
 (
     .clk(clk),
     .rst(rst),
-    .port__0(port__0)
-);
-
-
-//==============================
-// debouncer__btnc
-//==============================
-debouncer debouncer__btnc
-(
-    .clk(clk),
-    .rst(rst),
-    .in(btnc),
-    .out(btnc__clean)
+    .port__0(port__0),
+    .port__1(port__1),
+    .port__2(port__2),
+    .port__3(port__3),
+    .ena(ena),
+    .wea(wea),
+    .addra(addra),
+    .dina(dina),
+    .douta(douta)
 );
 
 //==============================
-// debouncer__btnu
+// blk_mem_gen_0 
 //==============================
-debouncer debouncer__btnu
+blk_mem_gen_0 blk_mem_gen_0__0 
 (
-    .clk(clk),
-    .rst(rst),
-    .in(btnu),
-    .out(btnu__clean)
+    .clka(clk),
+    .addra(addra),
+    .dina(dina),
+    .douta(douta),
+    .ena(ena),
+    .wea(wea)
 );
 
-//==============================
-// debouncer__btnd
-//==============================
-debouncer debouncer__btnd
-(
-    .clk(clk),
-    .rst(rst),
-    .in(btnd),
-    .out(btnd__clean)
-);
 
-//==============================
-// debouncer__btnl
-//==============================
-debouncer debouncer__btnl
-(
-    .clk(clk),
-    .rst(rst),
-    .in(btnl),
-    .out(btnl__clean)
-);
-
-//==============================
-// debouncer__btnr
-//==============================
-debouncer debouncer__btnr
-(
-    .clk(clk),
-    .rst(rst),
-    .in(btnr),
-    .out(btnr__clean)
-);
-
-PYTHON
-(
-for i in range(16):
-    print(f"//==============================")
-    print(f"// debouncer__sw__{i}")
-    print(f"//==============================")
-    print(f"debouncer debouncer__sw__{i}")
-    print(f"(")
-    print(f"    .clk(clk),")
-    print(f"    .rst(rst),")
-    print(f"    .in(sw[{i}]),")
-    print(f"    .out(sw__clean[{i}])")
-    print(f");")
-
-    if i != 15:
-        print("")
-)
 
 endmodule

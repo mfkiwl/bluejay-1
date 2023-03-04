@@ -65,7 +65,8 @@ endef
 
 SIM_IP ?= central_processing_unit
 #SIM_IP := machine_timer_registers
-all: diff-$(SIM_IP)-sim__xyz 
+#all: diff-$(SIM_IP)-sim__xyz 
+all: top.sv 
 
 
 
@@ -412,7 +413,7 @@ SV += $(addsuffix .sv,$(addprefix $(TOP)/ip/$(IP)/tb/gen/,$(TB_MODULES)))
 endif
 
 ###########################
-# machine_timer_registers #
+# central_processing_unit #
 ###########################
 IP := central_processing_unit
 
@@ -486,6 +487,105 @@ SV += $(addsuffix .sv,$(addprefix $(TOP)/ip/$(IP)/src/gen/,$(MODULES)))
 ifeq ($(SIM_IP),$(IP))
 SV += $(addsuffix .sv,$(addprefix $(TOP)/ip/$(IP)/tb/gen/,$(TB_MODULES)))
 endif
+
+################################
+# general_purpose_input_output #
+################################
+IP := general_purpose_input_output
+
+MODULES :=
+MODULES += general_purpose_input_output
+
+TB_MODULES :=
+TB_MODULES += tb
+
+SV += $(addsuffix .sv,$(addprefix $(TOP)/ip/$(IP)/src/gen/,$(MODULES)))
+ifeq ($(SIM_IP),$(IP))
+SV += $(addsuffix .sv,$(addprefix $(TOP)/ip/$(IP)/tb/gen/,$(TB_MODULES)))
+endif
+
+#####################
+# memory_controller #
+#####################
+IP := memory_controller
+
+MODULES :=
+MODULES += memory_controller
+
+TB_MODULES :=
+TB_MODULES += tb
+
+SV += $(addsuffix .sv,$(addprefix $(TOP)/ip/$(IP)/src/gen/,$(MODULES)))
+ifeq ($(SIM_IP),$(IP))
+SV += $(addsuffix .sv,$(addprefix $(TOP)/ip/$(IP)/tb/gen/,$(TB_MODULES)))
+endif
+
+##########################
+# memory_management_unit #
+##########################
+IP := memory_management_unit
+
+MODULES :=
+MODULES += memory_management_unit
+
+TB_MODULES :=
+TB_MODULES += tb
+
+SV += $(addsuffix .sv,$(addprefix $(TOP)/ip/$(IP)/src/gen/,$(MODULES)))
+ifeq ($(SIM_IP),$(IP))
+SV += $(addsuffix .sv,$(addprefix $(TOP)/ip/$(IP)/tb/gen/,$(TB_MODULES)))
+endif
+
+#######
+# bus #
+#######
+IP := bus
+
+MODULES :=
+MODULES += bus
+MODULES += bus__decoder
+MODULES += bus__multiplexor
+
+TB_MODULES :=
+TB_MODULES += tb
+
+SV += $(addsuffix .sv,$(addprefix $(TOP)/ip/$(IP)/src/gen/,$(MODULES)))
+ifeq ($(SIM_IP),$(IP))
+SV += $(addsuffix .sv,$(addprefix $(TOP)/ip/$(IP)/tb/gen/,$(TB_MODULES)))
+endif
+
+#######
+# jay #
+#######
+IP := jay
+
+MODULES :=
+MODULES += jay
+
+TB_MODULES :=
+TB_MODULES += tb
+
+SV += $(addsuffix .sv,$(addprefix $(TOP)/ip/$(IP)/src/gen/,$(MODULES)))
+ifeq ($(SIM_IP),$(IP))
+SV += $(addsuffix .sv,$(addprefix $(TOP)/ip/$(IP)/tb/gen/,$(TB_MODULES)))
+endif
+
+#######
+# top #
+#######
+IP := top
+
+MODULES :=
+MODULES += top
+
+TB_MODULES :=
+TB_MODULES += tb
+
+SV += $(addsuffix .sv,$(addprefix $(TOP)/ip/$(IP)/src/gen/,$(MODULES)))
+ifeq ($(SIM_IP),$(IP))
+SV += $(addsuffix .sv,$(addprefix $(TOP)/ip/$(IP)/tb/gen/,$(TB_MODULES)))
+endif
+
 
 
 
@@ -564,10 +664,94 @@ $(eval $(call ip--src--template,$(IP)))
 $(eval $(call ip--tb--template,$(IP)))
 $(eval $(call ip--sim--template,$(IP),$(SIM),$(SV),$(TESTS),default--sim-test--diff--template,default--sim-test--sim--template,default--sim-test--ref--template,default--sim-test--setup--template))
 
+################################
+# general_purpose_input_output #
+################################
+IP := general_purpose_input_output
+
+SIM := sim__xyz
+TESTS := test__0 
+
+$(eval $(call ip--src--template,$(IP)))
+$(eval $(call ip--tb--template,$(IP)))
+$(eval $(call ip--sim--template,$(IP),$(SIM),$(SV),$(TESTS),default--sim-test--diff--template,default--sim-test--sim--template,default--sim-test--ref--template,default--sim-test--setup--template))
+
+#####################
+# memory_controller #
+#####################
+IP := memory_controller
+
+SIM := sim__xyz
+TESTS := test__0 
+
+$(eval $(call ip--src--template,$(IP)))
+$(eval $(call ip--tb--template,$(IP)))
+$(eval $(call ip--sim--template,$(IP),$(SIM),$(SV),$(TESTS),default--sim-test--diff--template,default--sim-test--sim--template,default--sim-test--ref--template,default--sim-test--setup--template))
+
+##########################
+# memory_management_unit #
+##########################
+IP := memory_management_unit
+
+SIM := sim__xyz
+TESTS := test__0 
+
+$(eval $(call ip--src--template,$(IP)))
+$(eval $(call ip--tb--template,$(IP)))
+$(eval $(call ip--sim--template,$(IP),$(SIM),$(SV),$(TESTS),default--sim-test--diff--template,default--sim-test--sim--template,default--sim-test--ref--template,default--sim-test--setup--template))
+
+
+#######
+# jay #
+#######
+IP := jay
+
+SIM := sim__xyz
+TESTS := test__0 
+
+$(eval $(call ip--src--template,$(IP)))
+$(eval $(call ip--tb--template,$(IP)))
+$(eval $(call ip--sim--template,$(IP),$(SIM),$(SV),$(TESTS),default--sim-test--diff--template,default--sim-test--sim--template,default--sim-test--ref--template,default--sim-test--setup--template))
+
+#######
+# bus #
+#######
+IP := bus
+
+SIM := sim__xyz
+TESTS := test__0 
+
+$(eval $(call ip--src--template,$(IP)))
+$(eval $(call ip--tb--template,$(IP)))
+$(eval $(call ip--sim--template,$(IP),$(SIM),$(SV),$(TESTS),default--sim-test--diff--template,default--sim-test--sim--template,default--sim-test--ref--template,default--sim-test--setup--template))
+
+#######
+# top #
+#######
+IP := top
+
+SIM := sim__xyz
+TESTS := test__0 
+
+$(eval $(call ip--src--template,$(IP)))
+$(eval $(call ip--tb--template,$(IP)))
+$(eval $(call ip--sim--template,$(IP),$(SIM),$(SV),$(TESTS),default--sim-test--diff--template,default--sim-test--sim--template,default--sim-test--ref--template,default--sim-test--setup--template))
 
 #
 # ...
 #
+
+##############
+# top.sv #
+##############
+vivado_source: $(TOP)/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv
+
+$(TOP)/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv: $(SV)
+	$(RM) $(@) 
+	cat $(^) >> $(@)
+
+
+
 
 .PHONY: clean
 clean:

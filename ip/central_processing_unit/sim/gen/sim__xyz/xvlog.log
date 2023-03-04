@@ -1,4 +1,0 @@
-INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/physical_memory_attribute_registers/src/gen/physical_memory_attribute_registers.sv" into library work
-INFO: [VRFC 10-311] analyzing module physical_memory_attribute_registers
-INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/physical_memory_attribute_registers/src/gen/physical_memory_attribute_checker.sv" into library work
-INFO: [VRFC 10-311] analyzing module physical_memory_attribute_checker

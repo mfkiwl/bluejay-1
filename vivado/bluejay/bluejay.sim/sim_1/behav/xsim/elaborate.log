@@ -1,13 +1,8 @@
-Vivado Simulator v2022.2
-Copyright 1986-1999, 2001-2022 Xilinx, Inc. All Rights Reserved.
-Running: /tools/Xilinx/Vivado/2022.2/bin/unwrapped/lnx64.o/xelab --incr --debug typical --relax --mt 8 -L xil_defaultlib -L blk_mem_gen_v8_4_5 -L uvm -L unisims_ver -L unimacro_ver -L secureip -L xpm --snapshot top__tb_behav xil_defaultlib.top__tb xil_defaultlib.glbl -log elaborate.log 
+Vivado Simulator 2019.2
+Copyright 1986-1999, 2001-2019 Xilinx, Inc. All Rights Reserved.
+Running: /tools/Xilinx/Vivado/2019.2/bin/unwrapped/lnx64.o/xelab -wto 68a6928b8e85482c87cfe178a0983b0f --incr --debug typical --relax --mt 8 -L blk_mem_gen_v8_4_4 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip -L xpm --snapshot tb_behav xil_defaultlib.tb xil_defaultlib.glbl -log elaborate.log 
 Using 8 slave threads.
 Starting static elaboration
 Pass Through NonSizing Optimizer
-WARNING: [VRFC 10-3091] actual bit length 3 differs from formal bit length 4 for port 'addr' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:5572]
-WARNING: [VRFC 10-3091] actual bit length 3 differs from formal bit length 1 for port 'dtype' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:5573]
-WARNING: [VRFC 10-3091] actual bit length 3 differs from formal bit length 1 for port 'dtype' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:5587]
-WARNING: [VRFC 10-3091] actual bit length 12 differs from formal bit length 6 for port 'addra' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:5599]
-WARNING: [VRFC 10-3823] variable 'cc' might have multiple concurrent drivers [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:55]
 Completed static elaboration
 INFO: [XSIM 43-4323] No Change in HDL. Linking previously generated obj files to create kernel

@@ -5,21 +5,22 @@ module memory_management_unit
 (
     clk,
     rst,
-    cpu_to_mem__valid,
-    cpu_to_mem__we,
-    cpu_to_mem__addr,
-    cpu_to_mem__dtype,
-    cpu_to_mem__data,
-    mem_to_cpu__valid,
-    mem_to_cpu__error,
-    mem_to_cpu__data,
-    cs,
-    we,
-    addr,
-    size,
-    wr_data,
-    ready,
-    rd_data,
+    cpu_to_mmu__cs,
+    cpu_to_mmu__we,
+    cpu_to_mmu__addr,
+    cpu_to_mmu__size,
+    cpu_to_mmu__wr_data,
+    cpu_to_mmu__ready,
+    cpu_to_mmu__resp,
+    cpu_to_mmu__rd_data,
+    mmu_to_bus__cs,
+    mmu_to_bus__we,
+    mmu_to_bus__addr,
+    mmu_to_bus__size,
+    mmu_to_bus__wr_data,
+    mmu_to_bus__ready,
+    mmu_to_bus__resp,
+    mmu_to_bus__rd_data,
     pmar__0,
     pmar__1,
     pmar__2,
@@ -33,72 +34,77 @@ module memory_management_unit
 input clk;
 input rst;
 
-input cpu_to_mem__valid;
-input cpu_to_mem__we;
-input [63:0] cpu_to_mem__addr;
-input [2:0] cpu_to_mem__dtype;
-input [63:0] cpu_to_mem__data;
+input cpu_to_mmu__cs;
+input cpu_to_mmu__we;
+input [63:0] cpu_to_mmu__addr;
+input [1:0] cpu_to_mmu__size;
+input [63:0] cpu_to_mmu__wr_data;
+output cpu_to_mmu__ready;
+output cpu_to_mmu__resp;
+output [63:0] cpu_to_mmu__rd_data;
 
-output mem_to_cpu__valid;
-output mem_to_cpu__error;
-output [63:0] mem_to_cpu__data;
+output mmu_to_bus__cs;
+output mmu_to_bus__we;
+output [39:0] mmu_to_bus__addr;
+output [1:0] mmu_to_bus__size;
+output [63:0] mmu_to_bus__wr_data;
+input mmu_to_bus__ready;
+input mmu_to_bus__resp;
+input [63:0] mmu_to_bus__rd_data;
 
-output cs;
-output we;
-output [39:0] addr;
-output [1:0] size;
-output [63:0] wr_data;
-input ready;
-input [63:0] rd_data;
-
-input pmar__0;
-input pmar__1;
-input pmar__2;
-input pmar__3;
-input pmar__4;
-input pmar__5;
-input pmar__6;
-input pmar__7
+input [7:0] pmar__0;
+input [7:0] pmar__1;
+input [7:0] pmar__2;
+input [7:0] pmar__3;
+input [7:0] pmar__4;
+input [7:0] pmar__5;
+input [7:0] pmar__6;
+input [7:0] pmar__7;
 
 logic clk;
 logic rst;
 
-logic cpu_to_mem__valid;
-logic cpu_to_mem__we;
-logic [63:0] cpu_to_mem__addr;
-logic [2:0] cpu_to_mem__dtype;
-logic [63:0] cpu_to_mem__data;
-
-logic mem_to_cpu__valid;
-logic mem_to_cpu__error;
-logic [63:0] mem_to_cpu__data;
-
-logic cs;
 logic we;
 logic [39:0] addr;
 logic [1:0] size;
 logic [63:0] wr_data;
-logic ready;
 logic [63:0] rd_data;
-logic [2:0] dtype;
 
-logic pmar__0;
-logic pmar__1;
-logic pmar__2;
-logic pmar__3;
-logic pmar__4;
-logic pmar__5;
-logic pmar__6;
-logic pmar__7
+logic cpu_to_mmu__cs;
+logic cpu_to_mmu__we;
+logic [63:0] cpu_to_mmu__addr;
+logic [1:0] cpu_to_mmu__size;
+logic [63:0] cpu_to_mmu__wr_data;
+logic cpu_to_mmu__ready;
+logic cpu_to_mmu__resp;
+logic [63:0] cpu_to_mmu__rd_data;
 
-logic [63:0] rd_data__pre_sign_or_zero_extender;
-logic [63:0] rd_data__post_sign_or_zero_extender;
+logic mmu_to_bus__cs;
+logic mmu_to_bus__we;
+logic [39:0] mmu_to_bus__addr;
+logic [1:0] mmu_to_bus__size;
+logic [63:0] mmu_to_bus__wr_data;
+logic mmu_to_bus__ready;
+logic mmu_to_bus__resp;
+logic [63:0] mmu_to_bus__rd_data;
+
+logic [7:0] pmar__0;
+logic [7:0] pmar__1;
+logic [7:0] pmar__2;
+logic [7:0] pmar__3;
+logic [7:0] pmar__4;
+logic [7:0] pmar__5;
+logic [7:0] pmar__6;
+logic [7:0] pmar__7;
 
 logic [7:0] pmar;
 logic [1:0] status;
 
 logic [3:0] state;
 logic [3:0] state__n;
+
+logic en__a;
+logic en__b;
 
 //==============================
 // physical_memory_attribute_checker__0
@@ -108,25 +114,10 @@ physical_memory_attribute_checker physical_memory_attribute_checker__0
     .clk(clk),
     .rst(rst),
     .addr(addr[2:0]), 
-    .dtype(dtype),
+    .size(size),
     .pmar(pmar),
     .status(status)
 );
-
-
-//==============================
-// memory_management_unit__sign_or_zero_extender__0
-//==============================
-memory_management_unit__sign_or_zero_extender memory_management_unit__sign_or_zero_extender__0
-(
-    .clk(clk),
-    .rst(rst),
-    .addr(addr[2:0]), 
-    .dtype(dtype),
-    .data__in(rd_data__pre_sign_or_zero_extender),
-    .data__out(rd_data__post_sign_or_zero_extender)
-);
-
 
 always_comb
 begin
@@ -175,40 +166,10 @@ begin
     endcase
 end
 
-always_comb
-begin
-    case (dtype)
-        DTYPE__BYTE:
-        begin
-            size = SIZE__BYTE; 
-        end
-        DTYPE__BYTE_UNSIGNED:
-        begin
-            size = SIZE__BYTE; 
-        end
-        DTYPE__HALF_WORD:
-        begin
-            size = SIZE__HALF_WORD; 
-        end
-        DTYPE__HALF_WORD_UNSIGNED:
-        begin
-            size = SIZE__HALF_WORD; 
-        end
-        DTYPE__WORD:
-        begin
-            size = SIZE__WORD; 
-        end
-        DTYPE__WORD_UNSIGNED:
-        begin
-            size = SIZE__WORD; 
-        end
-        DTYPE__DOUBLE_WORD:
-        begin
-            size = SIZE__DOUBLE_WORD; 
-        end
-    endcase
-end
-
+assign mmu_to_bus__we = we;
+assign mmu_to_bus__addr = addr;
+assign mmu_to_bus__size = size;
+assign mmu_to_bus__wr_data = wr_data;
 
 localparam STATE__RESET = 4'h0;
 localparam STATE__READY = 4'h1;
@@ -218,19 +179,21 @@ localparam STATE__RESP = 4'h4;
 localparam STATE__ACCESS_FAULT = 4'h5; 
 localparam STATE__MISALIGNED_ADDRESS = 4'h6; 
 
+
 always_comb
 begin
-    cs = 1'b0;
-    mem_to_cpu__valid = 1'b0;
-    mem_to_cpu__error = 1'b0; 
-    mem_to_cpu__data = rd_data__post_sign_or_zero_extender;
-        
     case (state)
         //==============================
         // STATE__RESET
         //==============================
         STATE__RESET:
         begin
+            cpu_to_mmu__ready = 1'b0;
+            cpu_to_mmu__resp = 1'b0;
+            cpu_to_mmu__rd_data = rd_data;
+            mmu_to_bus__cs = 1'b0;
+            en__a = 1'b0;
+            en__b = 1'b0;
             state__n = STATE__READY;
         end
 
@@ -239,7 +202,14 @@ begin
         //==============================
         STATE__READY:
         begin
-            state__n = cpu_to_mem__valid ? STATE__PMA_CHECK : STATE__READY;
+            cpu_to_mmu__ready = 1'b0;
+            cpu_to_mmu__resp = 1'b0;
+            cpu_to_mmu__rd_data = rd_data;
+            mmu_to_bus__cs = 1'b0;
+            //en__a = 1'b0;
+            en__b = 1'b0;
+            en__a = cpu_to_mmu__cs;
+            state__n = cpu_to_mmu__cs ? STATE__PMA_CHECK : STATE__READY;
         end
 
         //==============================
@@ -247,16 +217,29 @@ begin
         //==============================
         STATE__PMA_CHECK:
         begin
-            state__n = (status = PHYSICAL_MEMORY_ATTRIBUTE_CHECKER__STATUS__ACCESS_FAULT) ? STATE__ACCESS_FAULT : (status = PHYSICAL_MEMORY_ATTRIBUTE_CHECKER__STATUS__MISALIGNED_ADDRESS) ? STATE__MISALIGNED_ADDRESS : STATE__REQ;
+            cpu_to_mmu__ready = 1'b0;
+            cpu_to_mmu__resp = 1'b0;
+            cpu_to_mmu__rd_data = rd_data;
+            mmu_to_bus__cs = 1'b0;
+            en__a = 1'b0;
+            en__b = 1'b0;
+            state__n = (status == PHYSICAL_MEMORY_ATTRIBUTE_CHECKER__STATUS__ACCESS_FAULT) ? STATE__ACCESS_FAULT : (status == PHYSICAL_MEMORY_ATTRIBUTE_CHECKER__STATUS__MISALIGNED_ADDRESS) ? STATE__MISALIGNED_ADDRESS : STATE__REQ;
         end
 
         //==============================
         // STATE__REQ
         //==============================
-        STATE__REQ
+        STATE__REQ:
         begin
-            cs = 1'b1;
-            state__n = ready ? STATE__RESP : STATE__REQ;
+            cpu_to_mmu__ready = 1'b0;
+            cpu_to_mmu__resp = 1'b0;
+            cpu_to_mmu__rd_data = rd_data;
+            //mmu_to_bus__cs = 1'b0;
+            en__a = 1'b0;
+            //en__b = 1'b0;
+            mmu_to_bus__cs = 1'b1;
+            en__b = mmu_to_bus__ready;
+            state__n = mmu_to_bus__ready ? STATE__RESP : STATE__REQ;
         end
             
         //==============================
@@ -264,9 +247,15 @@ begin
         //==============================
         STATE__RESP:
         begin
-            mem_to_cpu__valid = 1'b1;
-            mem_to_cpu__error = 1'b0;
-            mem_to_cpu__data = rd_data__post_sign_or_zero_extender;
+            //cpu_to_mmu__ready = 1'b0;
+            //cpu_to_mmu__resp = 1'b0;
+            //cpu_to_mmu__rd_data = rd_data;
+            mmu_to_bus__cs = 1'b0;
+            en__a = 1'b0;
+            en__b = 1'b0;
+            cpu_to_mmu__ready = 1'b1;
+            cpu_to_mmu__resp = 1'b0;
+            cpu_to_mmu__rd_data = rd_data;
             state__n = STATE__READY; 
         end
 
@@ -275,10 +264,16 @@ begin
         //==============================
         STATE__ACCESS_FAULT:
         begin
-            mem_to_cpu__valid = 1'b1;
-            mem_to_cpu__error = 1'b1;
-            mem_to_cpu__data = ERRORCODE__ACCESS_FAULT;
-            state__n = mem_to_cpu__ready ? STATE__READY : STATE__ACCESS_FAULT;
+            //cpu_to_mmu__ready = 1'b0;
+            //cpu_to_mmu__resp = 1'b0;
+            //cpu_to_mmu__rd_data = rd_data;
+            mmu_to_bus__cs = 1'b0;
+            en__a = 1'b0;
+            en__b = 1'b0;
+            cpu_to_mmu__ready = 1'b1;
+            cpu_to_mmu__resp = 1'b1;
+            cpu_to_mmu__rd_data = ERRORCODE__ACCESS_FAULT;
+            state__n = STATE__READY;
         end
 
         //==============================
@@ -286,27 +281,100 @@ begin
         //==============================
         STATE__MISALIGNED_ADDRESS:
         begin
-            mem_to_cpu__valid = 1'b1;
-            mem_to_cpu__error = 1'b1;
-            mem_to_cpu__data = ERRORCODE__MISALIGNED_ADDRESS;
-            state__n = mem_to_cpu__ready ? STATE__READY : STATE__ACCESS_FAULT;
+            //cpu_to_mmu__ready = 1'b0;
+            //cpu_to_mmu__resp = 1'b0;
+            //cpu_to_mmu__rd_data = rd_data;
+            mmu_to_bus__cs = 1'b0;
+            en__a = 1'b0;
+            en__b = 1'b0;
+            cpu_to_mmu__ready = 1'b1;
+            cpu_to_mmu__resp = 1'b1;
+            cpu_to_mmu__rd_data = ERRORCODE__MISALIGNED_ADDRESS;
+            state__n = STATE__READY;
         end
     endcase
 end
 
 
-//==============================
-// d_flip_flop__rd_data__pre_sign_or_zero_extender
-//==============================
-d_flip_flop #(.WIDTH(64)) d_flip_flop__rd_data__pre_sign_or_zero_extender
-(
-    .clk(clk),
-    .rst(rst),
-    .en(1'b1),
-    .d(rd_data),
-    .q(rd_data__pre_sign_or_zero_extender)
-);
-
+//always_comb
+//begin
+//    cpu_to_mmu__ready = 1'b0;
+//    cpu_to_mmu__resp = 1'b0;
+//    cpu_to_mmu__rd_data = rd_data;
+//    mmu_to_bus__cs = 1'b0;
+//    en__a = 1'b0;
+//    en__b = 1'b0;
+//        
+//    case (state)
+//        //==============================
+//        // STATE__RESET
+//        //==============================
+//        STATE__RESET:
+//        begin
+//            state__n = STATE__READY;
+//        end
+//
+//        //==============================
+//        // STATE__READY
+//        //==============================
+//        STATE__READY:
+//        begin
+//            en__a = cpu_to_mmu__cs;
+//            state__n = cpu_to_mmu__cs ? STATE__PMA_CHECK : STATE__READY;
+//        end
+//
+//        //==============================
+//        // STATE__PMA_CHECK
+//        //==============================
+//        STATE__PMA_CHECK:
+//        begin
+//            state__n = (status == PHYSICAL_MEMORY_ATTRIBUTE_CHECKER__STATUS__ACCESS_FAULT) ? STATE__ACCESS_FAULT : (status == PHYSICAL_MEMORY_ATTRIBUTE_CHECKER__STATUS__MISALIGNED_ADDRESS) ? STATE__MISALIGNED_ADDRESS : STATE__REQ;
+//        end
+//
+//        //==============================
+//        // STATE__REQ
+//        //==============================
+//        STATE__REQ:
+//        begin
+//            mmu_to_bus__cs = 1'b1;
+//            en__b = mmu_to_bus__ready;
+//            state__n = mmu_to_bus__ready ? STATE__RESP : STATE__REQ;
+//        end
+//            
+//        //==============================
+//        // STATE__RESP
+//        //==============================
+//        STATE__RESP:
+//        begin
+//            cpu_to_mmu__ready = 1'b1;
+//            cpu_to_mmu__resp = 1'b0;
+//            cpu_to_mmu__rd_data = rd_data;
+//            state__n = STATE__READY; 
+//        end
+//
+//        //==============================
+//        // STATE__ACCESS_FAULT
+//        //==============================
+//        STATE__ACCESS_FAULT:
+//        begin
+//            cpu_to_mmu__ready = 1'b1;
+//            cpu_to_mmu__resp = 1'b1;
+//            cpu_to_mmu__rd_data = ERRORCODE__ACCESS_FAULT;
+//            state__n = STATE__READY;
+//        end
+//
+//        //==============================
+//        // STATE__MISALIGNED_ADDRESS
+//        //==============================
+//        STATE__MISALIGNED_ADDRESS:
+//        begin
+//            cpu_to_mmu__ready = 1'b1;
+//            cpu_to_mmu__resp = 1'b1;
+//            cpu_to_mmu__rd_data = ERRORCODE__MISALIGNED_ADDRESS;
+//            state__n = STATE__READY;
+//        end
+//    endcase
+//end
 
 //==============================
 // d_flip_flop__we
@@ -315,8 +383,8 @@ d_flip_flop #(.WIDTH(1)) d_flip_flop__we
 (
     .clk(clk),
     .rst(rst),
-    .en(cpu_to_mem__valid),
-    .d(cpu_to_mem__we),
+    .en(en__a),
+    .d(cpu_to_mmu__we),
     .q(we)
 );
 
@@ -327,33 +395,45 @@ d_flip_flop #(.WIDTH(40)) d_flip_flop__addr
 (
     .clk(clk),
     .rst(rst),
-    .en(cpu_to_mem__valid),
-    .d(cpu_to_mem__addr[39:0]),
+    .en(en__a),
+    .d(cpu_to_mmu__addr[39:0]),
     .q(addr)
 );
 
 //==============================
-// d_flip_flop__dtype
+// d_flip_flop__size
 //==============================
-d_flip_flop #(.WIDTH(3)) d_flip_flop__dtype
+d_flip_flop #(.WIDTH(2)) d_flip_flop__size
 (
     .clk(clk),
     .rst(rst),
-    .en(cpu_to_mem__valid),
-    .d(cpu_to_mem__dtype),
-    .q(dtype)
+    .en(en__a),
+    .d(cpu_to_mmu__size),
+    .q(size)
 );
 
 //==============================
 // d_flip_flop__wr_data
 //==============================
-d_flip_flop #(.WIDTH(3)) d_flip_flop__wr_data
+d_flip_flop #(.WIDTH(64)) d_flip_flop__wr_data
 (
     .clk(clk),
     .rst(rst),
-    .en(cpu_to_mem__valid),
-    .d(cpu_to_mem__data),
+    .en(en__a),
+    .d(cpu_to_mmu__wr_data),
     .q(wr_data)
+);
+
+//==============================
+// d_flip_flop__rd_data
+//==============================
+d_flip_flop #(.WIDTH(64)) d_flip_flop__rd_data
+(
+    .clk(clk),
+    .rst(rst),
+    .en(en__b),
+    .d(mmu_to_bus__rd_data),
+    .q(rd_data)
 );
 
 //==============================

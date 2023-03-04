@@ -1,373 +1,37 @@
 //==============================================
-// top
+// d_flip_flop 
 //==============================================
-module top
-(
-    input clk_100mhz,
-    input [15:0] sw,
-    input btnc,
-    input btnu,
-    input btnl,
-    input btnr,
-    input btnd,
-    output logic [15:0] led,
-    output logic led16_b,
-    output logic led16_g,
-    output logic led16_r,
-    output logic led17_b,
-    output logic led17_g,
-    output logic led17_r,
-    output logic [7:0] an,
-    output logic ca, 
-    output logic cb, 
-    output logic cc, 
-    output logic cd, 
-    output logic ce, 
-    output logic cf, 
-    output logic cg
-);
-
-logic btnc__clean;
-logic btnu__clean;
-logic btnd__clean;
-logic btnl__clean;
-logic btnr__clean;
-logic [15:0] sw__clean;
-
-
-logic [7:0] port__0;
-
-
-assign clk = clk_100mhz;
-//assign rst = btnc__clean;
-assign rst = btnc;
-assign led16_b = port__0[0]; 
-assign led16_g = 1'b0; 
-assign led16_r = 1'b0; 
-assign led17_b = 1'b0; 
-assign led17_g = 1'b0; 
-assign led17_r = 1'b0; 
-assign led = 16'h0;
-assign an = 8'hff;
-assign ca = 1'b0;
-assign cb = 1'b0;
-assign cc = 1'b0;
-assign cc = 1'b0;
-assign ce = 1'b0;
-assign cf = 1'b0;
-assign cg = 1'b0;
-
-
-//==============================
-// jay__0
-//==============================
-jay jay__0
-(
-    .clk(clk),
-    .rst(rst),
-    .port__0(port__0)
-);
-
-
-//==============================
-// debouncer__btnc
-//==============================
-debouncer debouncer__btnc
-(
-    .clk(clk),
-    .rst(rst),
-    .in(btnc),
-    .out(btnc__clean)
-);
-
-//==============================
-// debouncer__btnu
-//==============================
-debouncer debouncer__btnu
-(
-    .clk(clk),
-    .rst(rst),
-    .in(btnu),
-    .out(btnu__clean)
-);
-
-//==============================
-// debouncer__btnd
-//==============================
-debouncer debouncer__btnd
-(
-    .clk(clk),
-    .rst(rst),
-    .in(btnd),
-    .out(btnd__clean)
-);
-
-//==============================
-// debouncer__btnl
-//==============================
-debouncer debouncer__btnl
-(
-    .clk(clk),
-    .rst(rst),
-    .in(btnl),
-    .out(btnl__clean)
-);
-
-//==============================
-// debouncer__btnr
-//==============================
-debouncer debouncer__btnr
-(
-    .clk(clk),
-    .rst(rst),
-    .in(btnr),
-    .out(btnr__clean)
-);
-
-//==============================
-// debouncer__sw__0
-//==============================
-debouncer debouncer__sw__0
-(
-    .clk(clk),
-    .rst(rst),
-    .in(sw[0]),
-    .out(sw__clean[0])
-);
-
-//==============================
-// debouncer__sw__1
-//==============================
-debouncer debouncer__sw__1
-(
-    .clk(clk),
-    .rst(rst),
-    .in(sw[1]),
-    .out(sw__clean[1])
-);
-
-//==============================
-// debouncer__sw__2
-//==============================
-debouncer debouncer__sw__2
-(
-    .clk(clk),
-    .rst(rst),
-    .in(sw[2]),
-    .out(sw__clean[2])
-);
-
-//==============================
-// debouncer__sw__3
-//==============================
-debouncer debouncer__sw__3
-(
-    .clk(clk),
-    .rst(rst),
-    .in(sw[3]),
-    .out(sw__clean[3])
-);
-
-//==============================
-// debouncer__sw__4
-//==============================
-debouncer debouncer__sw__4
-(
-    .clk(clk),
-    .rst(rst),
-    .in(sw[4]),
-    .out(sw__clean[4])
-);
-
-//==============================
-// debouncer__sw__5
-//==============================
-debouncer debouncer__sw__5
-(
-    .clk(clk),
-    .rst(rst),
-    .in(sw[5]),
-    .out(sw__clean[5])
-);
-
-//==============================
-// debouncer__sw__6
-//==============================
-debouncer debouncer__sw__6
-(
-    .clk(clk),
-    .rst(rst),
-    .in(sw[6]),
-    .out(sw__clean[6])
-);
-
-//==============================
-// debouncer__sw__7
-//==============================
-debouncer debouncer__sw__7
-(
-    .clk(clk),
-    .rst(rst),
-    .in(sw[7]),
-    .out(sw__clean[7])
-);
-
-//==============================
-// debouncer__sw__8
-//==============================
-debouncer debouncer__sw__8
-(
-    .clk(clk),
-    .rst(rst),
-    .in(sw[8]),
-    .out(sw__clean[8])
-);
-
-//==============================
-// debouncer__sw__9
-//==============================
-debouncer debouncer__sw__9
-(
-    .clk(clk),
-    .rst(rst),
-    .in(sw[9]),
-    .out(sw__clean[9])
-);
-
-//==============================
-// debouncer__sw__10
-//==============================
-debouncer debouncer__sw__10
-(
-    .clk(clk),
-    .rst(rst),
-    .in(sw[10]),
-    .out(sw__clean[10])
-);
-
-//==============================
-// debouncer__sw__11
-//==============================
-debouncer debouncer__sw__11
-(
-    .clk(clk),
-    .rst(rst),
-    .in(sw[11]),
-    .out(sw__clean[11])
-);
-
-//==============================
-// debouncer__sw__12
-//==============================
-debouncer debouncer__sw__12
-(
-    .clk(clk),
-    .rst(rst),
-    .in(sw[12]),
-    .out(sw__clean[12])
-);
-
-//==============================
-// debouncer__sw__13
-//==============================
-debouncer debouncer__sw__13
-(
-    .clk(clk),
-    .rst(rst),
-    .in(sw[13]),
-    .out(sw__clean[13])
-);
-
-//==============================
-// debouncer__sw__14
-//==============================
-debouncer debouncer__sw__14
-(
-    .clk(clk),
-    .rst(rst),
-    .in(sw[14]),
-    .out(sw__clean[14])
-);
-
-//==============================
-// debouncer__sw__15
-//==============================
-debouncer debouncer__sw__15
-(
-    .clk(clk),
-    .rst(rst),
-    .in(sw[15]),
-    .out(sw__clean[15])
-);
-
-endmodule
-//==============================================
-// jay
-//==============================================
-module jay
+module d_flip_flop 
+#(parameter WIDTH = 1, parameter RESET_VALUE = 0)
 (
     input clk,
     input rst,
-    output logic [7:0] port__0
+    input en,
+    input [WIDTH-1:0] d,
+    output logic [WIDTH-1:0] q
 );
 
+always_ff @(posedge clk)
+begin
+    q <= rst ? RESET_VALUE : en ? d : q; 
+end
 
+endmodule
 //==============================================
-// Logic 
+// sr_flip_flop 
 //==============================================
-logic clk;
-logic rst;
-
-logic cpu_to_mem__valid;
-logic cpu_to_mem__ready;
-logic cpu_to_mem__we;
-logic [63:0] cpu_to_mem__addr;
-logic [2:0] cpu_to_mem__dtype;
-logic [63:0] cpu_to_mem__data;
-logic mem_to_cpu__valid;
-logic mem_to_cpu__ready;
-logic mem_to_cpu__error;
-logic [63:0] mem_to_cpu__data;
-
-
-//==============================
-// cpu 
-//==============================
-central_processing_unit cpu 
+module sr_flip_flop 
 (
-    .clk(clk),
-    .rst(rst),
-    .cpu_to_mem__valid(cpu_to_mem__valid),
-    .cpu_to_mem__ready(cpu_to_mem__ready),
-    .cpu_to_mem__we(cpu_to_mem__we),
-    .cpu_to_mem__addr(cpu_to_mem__addr),
-    .cpu_to_mem__dtype(cpu_to_mem__dtype),
-    .cpu_to_mem__data(cpu_to_mem__data),
-    .mem_to_cpu__valid(mem_to_cpu__valid),
-    .mem_to_cpu__ready(mem_to_cpu__ready),
-    .mem_to_cpu__error(mem_to_cpu__error),
-    .mem_to_cpu__data(mem_to_cpu__data)
+    input clk,
+    input s,
+    input r,
+    output logic q
 );
 
-//==============================
-// memory_management_unit 
-//==============================
-memory_management_unit mmu
-(
-    .clk(clk),
-    .rst(rst),
-    .cpu_to_mem__valid(cpu_to_mem__valid),
-    .cpu_to_mem__ready(cpu_to_mem__ready),
-    .cpu_to_mem__we(cpu_to_mem__we),
-    .cpu_to_mem__addr(cpu_to_mem__addr),
-    .cpu_to_mem__dtype(cpu_to_mem__dtype),
-    .cpu_to_mem__data(cpu_to_mem__data),
-    .mem_to_cpu__valid(mem_to_cpu__valid),
-    .mem_to_cpu__ready(mem_to_cpu__ready),
-    .mem_to_cpu__error(mem_to_cpu__error),
-    .mem_to_cpu__data(mem_to_cpu__data),
-    .port__0(port__0)
-);
+always_ff @(posedge clk)
+begin
+    q <= r ? 1'b0 : s ? 1'b1 : q;
+end
 
 endmodule
 //==============================================
@@ -375,36 +39,37 @@ endmodule
 //==============================================
 module central_processing_unit
 (
-    input clk,
-    input rst,
-    output cpu_to_mem__valid,
-    input cpu_to_mem__ready,
-    output cpu_to_mem__we,
-    output [63:0] cpu_to_mem__addr,
-    output [2:0] cpu_to_mem__dtype,
-    output [63:0] cpu_to_mem__data,
-    input mem_to_cpu__valid,
-    output mem_to_cpu__ready,
-    input mem_to_cpu__error,
-    input [63:0] mem_to_cpu__data
+    clk,
+    rst,
+    cs,
+    we,
+    addr,
+    size,
+    wr_data,
+    ready,
+    resp,
+    rd_data,
+    eip,
+    tip
 );
 
 
+input clk;
+input rst;
+output cs;
+output we;
+output [63:0] addr;
+output [1:0] size;
+output [63:0] wr_data;
+input ready;
+input resp;
+input [63:0] rd_data;
+input eip;
+input tip;
+
+// Clock, Reset
 logic clk;
 logic rst;
-
-logic cpu_to_mem__valid;
-logic cpu_to_mem__ready;
-logic cpu_to_mem__we;
-logic [63:0] cpu_to_mem__addr;
-logic [2:0] cpu_to_mem__dtype;
-logic [63:0] cpu_to_mem__data;
-
-logic mem_to_cpu__valid;
-logic mem_to_cpu__ready;
-logic mem_to_cpu__error;
-logic [63:0] mem_to_cpu__data;
-
 
 // Program Counter/Instruction Register
 logic [63:0] pc;
@@ -421,10 +86,11 @@ logic [63:0] imm;
 logic [63:0] uimm;
 
 // Register File
-logic we;
-logic [4:0] addr;
-logic [63:0] rd_data;
-logic [63:0] wr_data;
+logic rf__cs;
+logic rf__we;
+logic [4:0] rf__addr;
+logic [63:0] rf__rd_data;
+logic [63:0] rf__wr_data;
 
 // ALU
 logic [4:0] func;
@@ -443,25 +109,35 @@ logic ltu;
 logic geu;
 
 // Control and Status Registers
+logic csr__cs;
 logic csr__we;
 logic [11:0] csr__addr;
 logic [63:0] csr__wr_data;
 logic [63:0] csr__rd_data;
-logic [63:0] mstatus;
-logic [63:0] mie;
-logic [63:0] mip;
+logic mstatus__mie;
+logic mie__meie;
+logic mie__msie;
+logic mie__mtie;
+logic mip__meip;
+logic mip__msip;
+logic mip__mtip;
 
-// Memory Interface
-//logic cpu_to_mem__valid;
-//logic cpu_to_mem__ready;
-//logic cpu_to_mem__we;
-//logic [63:0] cpu_to_mem__addr;
-//logic [2:0] cpu_to_mem__dtype;
-//logic [63:0] cpu_to_mem__wr_data;
-//logic cpu_to_mem__done;
-//logic [63:0] cpu_to_mem__rd_data;
-//logic cpu_to_mem__access_fault;
-//logic cpu_to_mem__address_misaligned_fault;
+// CPU to Memory Interface
+logic cs;
+logic we;
+logic [63:0] addr;
+logic [1:0] size;
+logic [63:0] wr_data;
+logic ready;
+logic resp;
+logic [63:0] rd_data;
+
+// Interrupt Signals
+logic eip;
+logic tip;
+
+// CSR logic
+logic instret;
 
 // FSM
 logic [7:0] state;
@@ -492,10 +168,11 @@ register_file register_file__0
 (
     .clk(clk),
     .rst(rst),
-    .we(we),
-    .addr(addr),
-    .rd_data(rd_data),
-    .wr_data(wr_data)
+    .cs(rf__cs),
+    .we(rf__we),
+    .addr(rf__addr),
+    .rd_data(rf__rd_data),
+    .wr_data(rf__wr_data)
 );
 
 //==============================
@@ -535,16 +212,22 @@ control_and_status_registers control_and_status_registers__0
 (
     .clk(clk),
     .rst(rst),
+    .cs(csr__cs),
     .we(csr__we),
     .addr(csr__addr),
     .rd_data(csr__rd_data),
     .wr_data(csr__wr_data),
-    .mstatus(mstatus),
-    .mie(mie),
-    .mip(mip)
+    .eip(eip),
+    .tip(tip),
+    .instret(instret),
+    .mstatus__mie(mstatus__mie),
+    .mie__meie(mie__meie),
+    .mie__msie(mie__msie),
+    .mie__mtie(mie__mtie),
+    .mip__meip(mip__meip),
+    .mip__msip(mip__msip),
+    .mip__mtip(mip__mtip)
 );
-
-
 
 //==============================================
 // Finite State Machine
@@ -552,225 +235,211 @@ control_and_status_registers control_and_status_registers__0
 localparam STATE__RESET = 8'h0;
 localparam STATE__FETCH__0 = 8'h1;
 localparam STATE__FETCH__1 = 8'h2;
-localparam STATE__FETCH__2 = 8'h3;
-localparam STATE__FETCH__3 = 8'h4;
-localparam STATE__FETCH__4 = 8'h5;
-localparam STATE__DECODE = 8'h6;
-localparam STATE__LB__0 = 8'h7;
-localparam STATE__LB__1 = 8'h8;
-localparam STATE__LB__2 = 8'h9;
-localparam STATE__LB__3 = 8'ha;
-localparam STATE__LB__4 = 8'hb;
-localparam STATE__LH__0 = 8'hc;
-localparam STATE__LH__1 = 8'hd;
-localparam STATE__LH__2 = 8'he;
-localparam STATE__LH__3 = 8'hf;
-localparam STATE__LH__4 = 8'h10;
-localparam STATE__LW__0 = 8'h11;
-localparam STATE__LW__1 = 8'h12;
-localparam STATE__LW__2 = 8'h13;
-localparam STATE__LW__3 = 8'h14;
-localparam STATE__LW__4 = 8'h15;
-localparam STATE__LD__0 = 8'h16;
-localparam STATE__LD__1 = 8'h17;
-localparam STATE__LD__2 = 8'h18;
-localparam STATE__LD__3 = 8'h19;
-localparam STATE__LD__4 = 8'h1a;
-localparam STATE__LBU__0 = 8'h1b;
-localparam STATE__LBU__1 = 8'h1c;
-localparam STATE__LBU__2 = 8'h1d;
-localparam STATE__LBU__3 = 8'h1e;
-localparam STATE__LBU__4 = 8'h1f;
-localparam STATE__LHU__0 = 8'h20;
-localparam STATE__LHU__1 = 8'h21;
-localparam STATE__LHU__2 = 8'h22;
-localparam STATE__LHU__3 = 8'h23;
-localparam STATE__LHU__4 = 8'h24;
-localparam STATE__LWU__0 = 8'h25;
-localparam STATE__LWU__1 = 8'h26;
-localparam STATE__LWU__2 = 8'h27;
-localparam STATE__LWU__3 = 8'h28;
-localparam STATE__LWU__4 = 8'h29;
-localparam STATE__SB__0 = 8'h2a;
-localparam STATE__SB__1 = 8'h2b;
-localparam STATE__SB__2 = 8'h2c;
-localparam STATE__SB__3 = 8'h2d;
-localparam STATE__SB__4 = 8'h2e;
-localparam STATE__SH__0 = 8'h2f;
-localparam STATE__SH__1 = 8'h30;
-localparam STATE__SH__2 = 8'h31;
-localparam STATE__SH__3 = 8'h32;
-localparam STATE__SH__4 = 8'h33;
-localparam STATE__SW__0 = 8'h34;
-localparam STATE__SW__1 = 8'h35;
-localparam STATE__SW__2 = 8'h36;
-localparam STATE__SW__3 = 8'h37;
-localparam STATE__SW__4 = 8'h38;
-localparam STATE__SD__0 = 8'h39;
-localparam STATE__SD__1 = 8'h3a;
-localparam STATE__SD__2 = 8'h3b;
-localparam STATE__SD__3 = 8'h3c;
-localparam STATE__SD__4 = 8'h3d;
-localparam STATE__ADD__0 = 8'h3e;
-localparam STATE__ADD__1 = 8'h3f;
-localparam STATE__ADD__2 = 8'h40;
-localparam STATE__SUB__0 = 8'h41;
-localparam STATE__SUB__1 = 8'h42;
-localparam STATE__SUB__2 = 8'h43;
-localparam STATE__SLL__0 = 8'h44;
-localparam STATE__SLL__1 = 8'h45;
-localparam STATE__SLL__2 = 8'h46;
-localparam STATE__SLT__0 = 8'h47;
-localparam STATE__SLT__1 = 8'h48;
-localparam STATE__SLT__2 = 8'h49;
-localparam STATE__SLTU__0 = 8'h4a;
-localparam STATE__SLTU__1 = 8'h4b;
-localparam STATE__SLTU__2 = 8'h4c;
-localparam STATE__XOR__0 = 8'h4d;
-localparam STATE__XOR__1 = 8'h4e;
-localparam STATE__XOR__2 = 8'h4f;
-localparam STATE__SRL__0 = 8'h50;
-localparam STATE__SRL__1 = 8'h51;
-localparam STATE__SRL__2 = 8'h52;
-localparam STATE__SRA__0 = 8'h53;
-localparam STATE__SRA__1 = 8'h54;
-localparam STATE__SRA__2 = 8'h55;
-localparam STATE__OR__0 = 8'h56;
-localparam STATE__OR__1 = 8'h57;
-localparam STATE__OR__2 = 8'h58;
-localparam STATE__AND__0 = 8'h59;
-localparam STATE__AND__1 = 8'h5a;
-localparam STATE__AND__2 = 8'h5b;
-localparam STATE__LUI = 8'h5c;
-localparam STATE__ADDW__0 = 8'h5d;
-localparam STATE__ADDW__1 = 8'h5e;
-localparam STATE__ADDW__2 = 8'h5f;
-localparam STATE__SUBW__0 = 8'h60;
-localparam STATE__SUBW__1 = 8'h61;
-localparam STATE__SUBW__2 = 8'h62;
-localparam STATE__SLLW__0 = 8'h63;
-localparam STATE__SLLW__1 = 8'h64;
-localparam STATE__SLLW__2 = 8'h65;
-localparam STATE__SRLW__0 = 8'h66;
-localparam STATE__SRLW__1 = 8'h67;
-localparam STATE__SRLW__2 = 8'h68;
-localparam STATE__SRAW__0 = 8'h69;
-localparam STATE__SRAW__1 = 8'h6a;
-localparam STATE__SRAW__2 = 8'h6b;
-localparam STATE__ADDI__0 = 8'h6c;
-localparam STATE__ADDI__1 = 8'h6d;
-localparam STATE__SLLI__0 = 8'h6e;
-localparam STATE__SLLI__1 = 8'h6f;
-localparam STATE__SLTI__0 = 8'h70;
-localparam STATE__SLTI__1 = 8'h71;
-localparam STATE__SLTIU__0 = 8'h72;
-localparam STATE__SLTIU__1 = 8'h73;
-localparam STATE__XORI__0 = 8'h74;
-localparam STATE__XORI__1 = 8'h75;
-localparam STATE__SRLI__0 = 8'h76;
-localparam STATE__SRLI__1 = 8'h77;
-localparam STATE__SRAI__0 = 8'h78;
-localparam STATE__SRAI__1 = 8'h79;
-localparam STATE__ORI__0 = 8'h7a;
-localparam STATE__ORI__1 = 8'h7b;
-localparam STATE__ANDI__0 = 8'h7c;
-localparam STATE__ANDI__1 = 8'h7d;
-localparam STATE__ADDIW__0 = 8'h7e;
-localparam STATE__ADDIW__1 = 8'h7f;
-localparam STATE__SLLIW__0 = 8'h80;
-localparam STATE__SLLIW__1 = 8'h81;
-localparam STATE__SRLIW__0 = 8'h82;
-localparam STATE__SRLIW__1 = 8'h83;
-localparam STATE__SRAIW__0 = 8'h84;
-localparam STATE__SRAIW__1 = 8'h85;
-localparam STATE__AUIPC__0 = 8'h86;
-localparam STATE__AUIPC__1 = 8'h87;
-localparam STATE__JALR__0 = 8'h88;
-localparam STATE__JALR__1 = 8'h89;
-localparam STATE__JAL__0 = 8'h8a;
-localparam STATE__JAL__1 = 8'h8b;
-localparam STATE__BEQ__0 = 8'h8c;
-localparam STATE__BEQ__1 = 8'h8d;
-localparam STATE__BEQ__2 = 8'h8e;
-localparam STATE__BEQ__3 = 8'h8f;
-localparam STATE__BEQ__4 = 8'h90;
-localparam STATE__BEQ__5 = 8'h91;
-localparam STATE__BNE__0 = 8'h92;
-localparam STATE__BNE__1 = 8'h93;
-localparam STATE__BNE__2 = 8'h94;
-localparam STATE__BNE__3 = 8'h95;
-localparam STATE__BNE__4 = 8'h96;
-localparam STATE__BNE__5 = 8'h97;
-localparam STATE__BLT__0 = 8'h98;
-localparam STATE__BLT__1 = 8'h99;
-localparam STATE__BLT__2 = 8'h9a;
-localparam STATE__BLT__3 = 8'h9b;
-localparam STATE__BLT__4 = 8'h9c;
-localparam STATE__BLT__5 = 8'h9d;
-localparam STATE__BGE__0 = 8'h9e;
-localparam STATE__BGE__1 = 8'h9f;
-localparam STATE__BGE__2 = 8'ha0;
-localparam STATE__BGE__3 = 8'ha1;
-localparam STATE__BGE__4 = 8'ha2;
-localparam STATE__BGE__5 = 8'ha3;
-localparam STATE__BLTU__0 = 8'ha4;
-localparam STATE__BLTU__1 = 8'ha5;
-localparam STATE__BLTU__2 = 8'ha6;
-localparam STATE__BLTU__3 = 8'ha7;
-localparam STATE__BLTU__4 = 8'ha8;
-localparam STATE__BLTU__5 = 8'ha9;
-localparam STATE__BGEU__0 = 8'haa;
-localparam STATE__BGEU__1 = 8'hab;
-localparam STATE__BGEU__2 = 8'hac;
-localparam STATE__BGEU__3 = 8'had;
-localparam STATE__BGEU__4 = 8'hae;
-localparam STATE__BGEU__5 = 8'haf;
-localparam STATE__ECALL = 8'hb0;
-localparam STATE__EBREAK = 8'hb1;
-localparam STATE__WFI = 8'hb2;
-localparam STATE__FENCE = 8'hb3;
-localparam STATE__FENCE_I = 8'hb4;
-localparam STATE__CSRRW__0 = 8'hb5;
-localparam STATE__CSRRW__1 = 8'hb6;
-localparam STATE__CSRRW__2 = 8'hb7;
-localparam STATE__CSRRS__0 = 8'hb8;
-localparam STATE__CSRRS__1 = 8'hb9;
-localparam STATE__CSRRS__2 = 8'hba;
-localparam STATE__CSRRC__0 = 8'hbb;
-localparam STATE__CSRRC__1 = 8'hbc;
-localparam STATE__CSRRC__2 = 8'hbd;
-localparam STATE__CSRRWI__0 = 8'hbe;
-localparam STATE__CSRRWI__1 = 8'hbf;
-localparam STATE__CSRRWI__2 = 8'hc0;
-localparam STATE__CSRRSI__0 = 8'hc1;
-localparam STATE__CSRRSI__1 = 8'hc2;
-localparam STATE__CSRRSI__2 = 8'hc3;
-localparam STATE__CSRRCI__0 = 8'hc4;
-localparam STATE__CSRRCI__1 = 8'hc5;
-localparam STATE__CSRRCI__2 = 8'hc6;
-localparam STATE__MRET__0 = 8'hc7;
-localparam STATE__MRET__1 = 8'hc8;
-localparam STATE__TRAP__0 = 8'hc9;
-localparam STATE__TRAP__1 = 8'hca;
-localparam STATE__TRAP__2 = 8'hcb;
-localparam STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__0 = 8'hcc;
-localparam STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__0__JALR = 8'hcd;
-localparam STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__1 = 8'hce;
-localparam STATE__EXCEPTION__INSTRUCTION_ACCESS_FAULT__0 = 8'hcf;
-localparam STATE__EXCEPTION__INSTRUCTION_ACCESS_FAULT__1 = 8'hd0;
-localparam STATE__EXCEPTION__ILLEGAL_INSTRUCTION = 8'hd1;
-localparam STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0 = 8'hd2;
-localparam STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__1 = 8'hd3;
-localparam STATE__EXCEPTION__LOAD_ACCESS_FAULT__0 = 8'hd4;
-localparam STATE__EXCEPTION__LOAD_ACCESS_FAULT__1 = 8'hd5;
-localparam STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__0 = 8'hd6;
-localparam STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__1 = 8'hd7;
-localparam STATE__EXCEPTION__STORE_ACCESS_FAULT__0 = 8'hd8;
-localparam STATE__EXCEPTION__STORE_ACCESS_FAULT__1 = 8'hd9;
-localparam STATE__INTERRUPT__SOFTWARE = 8'hda;
-localparam STATE__INTERRUPT__TIMER = 8'hdb;
-localparam STATE__INTERRUPT__EXTERNAL = 8'hdc;
-localparam STATE__FATAL = 8'hdd;
+localparam STATE__DECODE = 8'h3;
+localparam STATE__LB__0 = 8'h4;
+localparam STATE__LB__1 = 8'h5;
+localparam STATE__LB__2 = 8'h6;
+localparam STATE__LB__3 = 8'h7;
+localparam STATE__LH__0 = 8'h8;
+localparam STATE__LH__1 = 8'h9;
+localparam STATE__LH__2 = 8'ha;
+localparam STATE__LH__3 = 8'hb;
+localparam STATE__LW__0 = 8'hc;
+localparam STATE__LW__1 = 8'hd;
+localparam STATE__LW__2 = 8'he;
+localparam STATE__LW__3 = 8'hf;
+localparam STATE__LD__0 = 8'h10;
+localparam STATE__LD__1 = 8'h11;
+localparam STATE__LD__2 = 8'h12;
+localparam STATE__LD__3 = 8'h13;
+localparam STATE__LBU__0 = 8'h14;
+localparam STATE__LBU__1 = 8'h15;
+localparam STATE__LBU__2 = 8'h16;
+localparam STATE__LBU__3 = 8'h17;
+localparam STATE__LHU__0 = 8'h18;
+localparam STATE__LHU__1 = 8'h19;
+localparam STATE__LHU__2 = 8'h1a;
+localparam STATE__LHU__3 = 8'h1b;
+localparam STATE__LWU__0 = 8'h1c;
+localparam STATE__LWU__1 = 8'h1d;
+localparam STATE__LWU__2 = 8'h1e;
+localparam STATE__LWU__3 = 8'h1f;
+localparam STATE__SB__0 = 8'h20;
+localparam STATE__SB__1 = 8'h21;
+localparam STATE__SB__2 = 8'h22;
+localparam STATE__SB__3 = 8'h23;
+localparam STATE__SH__0 = 8'h24;
+localparam STATE__SH__1 = 8'h25;
+localparam STATE__SH__2 = 8'h26;
+localparam STATE__SH__3 = 8'h27;
+localparam STATE__SW__0 = 8'h28;
+localparam STATE__SW__1 = 8'h29;
+localparam STATE__SW__2 = 8'h2a;
+localparam STATE__SW__3 = 8'h2b;
+localparam STATE__SD__0 = 8'h2c;
+localparam STATE__SD__1 = 8'h2d;
+localparam STATE__SD__2 = 8'h2e;
+localparam STATE__SD__3 = 8'h2f;
+localparam STATE__ADD__0 = 8'h30;
+localparam STATE__ADD__1 = 8'h31;
+localparam STATE__ADD__2 = 8'h32;
+localparam STATE__SUB__0 = 8'h33;
+localparam STATE__SUB__1 = 8'h34;
+localparam STATE__SUB__2 = 8'h35;
+localparam STATE__SLL__0 = 8'h36;
+localparam STATE__SLL__1 = 8'h37;
+localparam STATE__SLL__2 = 8'h38;
+localparam STATE__SLT__0 = 8'h39;
+localparam STATE__SLT__1 = 8'h3a;
+localparam STATE__SLT__2 = 8'h3b;
+localparam STATE__SLTU__0 = 8'h3c;
+localparam STATE__SLTU__1 = 8'h3d;
+localparam STATE__SLTU__2 = 8'h3e;
+localparam STATE__XOR__0 = 8'h3f;
+localparam STATE__XOR__1 = 8'h40;
+localparam STATE__XOR__2 = 8'h41;
+localparam STATE__SRL__0 = 8'h42;
+localparam STATE__SRL__1 = 8'h43;
+localparam STATE__SRL__2 = 8'h44;
+localparam STATE__SRA__0 = 8'h45;
+localparam STATE__SRA__1 = 8'h46;
+localparam STATE__SRA__2 = 8'h47;
+localparam STATE__OR__0 = 8'h48;
+localparam STATE__OR__1 = 8'h49;
+localparam STATE__OR__2 = 8'h4a;
+localparam STATE__AND__0 = 8'h4b;
+localparam STATE__AND__1 = 8'h4c;
+localparam STATE__AND__2 = 8'h4d;
+localparam STATE__LUI = 8'h4e;
+localparam STATE__ADDW__0 = 8'h4f;
+localparam STATE__ADDW__1 = 8'h50;
+localparam STATE__ADDW__2 = 8'h51;
+localparam STATE__SUBW__0 = 8'h52;
+localparam STATE__SUBW__1 = 8'h53;
+localparam STATE__SUBW__2 = 8'h54;
+localparam STATE__SLLW__0 = 8'h55;
+localparam STATE__SLLW__1 = 8'h56;
+localparam STATE__SLLW__2 = 8'h57;
+localparam STATE__SRLW__0 = 8'h58;
+localparam STATE__SRLW__1 = 8'h59;
+localparam STATE__SRLW__2 = 8'h5a;
+localparam STATE__SRAW__0 = 8'h5b;
+localparam STATE__SRAW__1 = 8'h5c;
+localparam STATE__SRAW__2 = 8'h5d;
+localparam STATE__ADDI__0 = 8'h5e;
+localparam STATE__ADDI__1 = 8'h5f;
+localparam STATE__SLLI__0 = 8'h60;
+localparam STATE__SLLI__1 = 8'h61;
+localparam STATE__SLTI__0 = 8'h62;
+localparam STATE__SLTI__1 = 8'h63;
+localparam STATE__SLTIU__0 = 8'h64;
+localparam STATE__SLTIU__1 = 8'h65;
+localparam STATE__XORI__0 = 8'h66;
+localparam STATE__XORI__1 = 8'h67;
+localparam STATE__SRLI__0 = 8'h68;
+localparam STATE__SRLI__1 = 8'h69;
+localparam STATE__SRAI__0 = 8'h6a;
+localparam STATE__SRAI__1 = 8'h6b;
+localparam STATE__ORI__0 = 8'h6c;
+localparam STATE__ORI__1 = 8'h6d;
+localparam STATE__ANDI__0 = 8'h6e;
+localparam STATE__ANDI__1 = 8'h6f;
+localparam STATE__ADDIW__0 = 8'h70;
+localparam STATE__ADDIW__1 = 8'h71;
+localparam STATE__SLLIW__0 = 8'h72;
+localparam STATE__SLLIW__1 = 8'h73;
+localparam STATE__SRLIW__0 = 8'h74;
+localparam STATE__SRLIW__1 = 8'h75;
+localparam STATE__SRAIW__0 = 8'h76;
+localparam STATE__SRAIW__1 = 8'h77;
+localparam STATE__AUIPC__0 = 8'h78;
+localparam STATE__AUIPC__1 = 8'h79;
+localparam STATE__JALR__0 = 8'h7a;
+localparam STATE__JALR__1 = 8'h7b;
+localparam STATE__JAL__0 = 8'h7c;
+localparam STATE__JAL__1 = 8'h7d;
+localparam STATE__BEQ__0 = 8'h7e;
+localparam STATE__BEQ__1 = 8'h7f;
+localparam STATE__BEQ__2 = 8'h80;
+localparam STATE__BEQ__3 = 8'h81;
+localparam STATE__BEQ__4 = 8'h82;
+localparam STATE__BEQ__5 = 8'h83;
+localparam STATE__BNE__0 = 8'h84;
+localparam STATE__BNE__1 = 8'h85;
+localparam STATE__BNE__2 = 8'h86;
+localparam STATE__BNE__3 = 8'h87;
+localparam STATE__BNE__4 = 8'h88;
+localparam STATE__BNE__5 = 8'h89;
+localparam STATE__BLT__0 = 8'h8a;
+localparam STATE__BLT__1 = 8'h8b;
+localparam STATE__BLT__2 = 8'h8c;
+localparam STATE__BLT__3 = 8'h8d;
+localparam STATE__BLT__4 = 8'h8e;
+localparam STATE__BLT__5 = 8'h8f;
+localparam STATE__BGE__0 = 8'h90;
+localparam STATE__BGE__1 = 8'h91;
+localparam STATE__BGE__2 = 8'h92;
+localparam STATE__BGE__3 = 8'h93;
+localparam STATE__BGE__4 = 8'h94;
+localparam STATE__BGE__5 = 8'h95;
+localparam STATE__BLTU__0 = 8'h96;
+localparam STATE__BLTU__1 = 8'h97;
+localparam STATE__BLTU__2 = 8'h98;
+localparam STATE__BLTU__3 = 8'h99;
+localparam STATE__BLTU__4 = 8'h9a;
+localparam STATE__BLTU__5 = 8'h9b;
+localparam STATE__BGEU__0 = 8'h9c;
+localparam STATE__BGEU__1 = 8'h9d;
+localparam STATE__BGEU__2 = 8'h9e;
+localparam STATE__BGEU__3 = 8'h9f;
+localparam STATE__BGEU__4 = 8'ha0;
+localparam STATE__BGEU__5 = 8'ha1;
+localparam STATE__ECALL = 8'ha2;
+localparam STATE__EBREAK = 8'ha3;
+localparam STATE__WFI = 8'ha4;
+localparam STATE__FENCE = 8'ha5;
+localparam STATE__FENCE_I = 8'ha6;
+localparam STATE__CSRRW__0 = 8'ha7;
+localparam STATE__CSRRW__1 = 8'ha8;
+localparam STATE__CSRRW__2 = 8'ha9;
+localparam STATE__CSRRS__0 = 8'haa;
+localparam STATE__CSRRS__1 = 8'hab;
+localparam STATE__CSRRS__2 = 8'hac;
+localparam STATE__CSRRC__0 = 8'had;
+localparam STATE__CSRRC__1 = 8'hae;
+localparam STATE__CSRRC__2 = 8'haf;
+localparam STATE__CSRRWI__0 = 8'hb0;
+localparam STATE__CSRRWI__1 = 8'hb1;
+localparam STATE__CSRRWI__2 = 8'hb2;
+localparam STATE__CSRRSI__0 = 8'hb3;
+localparam STATE__CSRRSI__1 = 8'hb4;
+localparam STATE__CSRRSI__2 = 8'hb5;
+localparam STATE__CSRRCI__0 = 8'hb6;
+localparam STATE__CSRRCI__1 = 8'hb7;
+localparam STATE__CSRRCI__2 = 8'hb8;
+localparam STATE__MRET__0 = 8'hb9;
+localparam STATE__MRET__1 = 8'hba;
+localparam STATE__TRAP__0 = 8'hbb;
+localparam STATE__TRAP__1 = 8'hbc;
+localparam STATE__TRAP__2 = 8'hbd;
+localparam STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__0 = 8'hbe;
+localparam STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__0__JALR = 8'hbf;
+localparam STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__1 = 8'hc0;
+localparam STATE__EXCEPTION__INSTRUCTION_ACCESS_FAULT__0 = 8'hc1;
+localparam STATE__EXCEPTION__INSTRUCTION_ACCESS_FAULT__1 = 8'hc2;
+localparam STATE__EXCEPTION__ILLEGAL_INSTRUCTION = 8'hc3;
+localparam STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0 = 8'hc4;
+localparam STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__1 = 8'hc5;
+localparam STATE__EXCEPTION__LOAD_ACCESS_FAULT__0 = 8'hc6;
+localparam STATE__EXCEPTION__LOAD_ACCESS_FAULT__1 = 8'hc7;
+localparam STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__0 = 8'hc8;
+localparam STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__1 = 8'hc9;
+localparam STATE__EXCEPTION__STORE_ACCESS_FAULT__0 = 8'hca;
+localparam STATE__EXCEPTION__STORE_ACCESS_FAULT__1 = 8'hcb;
+localparam STATE__INTERRUPT__SOFTWARE = 8'hcc;
+localparam STATE__INTERRUPT__TIMER = 8'hcd;
+localparam STATE__INTERRUPT__EXTERNAL = 8'hce;
+localparam STATE__FATAL = 8'hcf;
 
 
 always_comb begin
@@ -780,17 +449,19 @@ always_comb begin
     a__n = a;
     b__n = b;
     func = 5'h0;
-    addr = rd;
+    rf__cs = 1'b0;
+    rf__we = 1'b0;
+    rf__addr = rd;
+    rf__wr_data = c;
+    cs = 1'b0;
     we = 1'b0;
-    wr_data = c;
-    cpu_to_mem__valid = 1'b0;
-    cpu_to_mem__we = 1'b0;
-    cpu_to_mem__dtype = 3'h1;
-    cpu_to_mem__data = rd_data;
-    mem_to_cpu__ready = 1'b0;
-    csr__addr = imm[11:0];
+    size = 2'h1;
+    wr_data = rf__rd_data;
+    csr__cs = 1'b0;
     csr__we = 1'b0;
+    csr__addr = imm[11:0];
     csr__wr_data = c;
+    instret = 1'b0;
 
     case (state)
         //==============================
@@ -801,38 +472,12 @@ always_comb begin
             state__n = STATE__FETCH__0;
         end
         
-//        //==============================
-//        // STATE__FETCH
-//        //==============================
-//        STATE__FETCH:
-//        begin
-//            cpu_to_mem__valid = 1'b1;
-//            cpu_to_mem__addr = pc;
-//            cpu_to_mem__dtype = 3'h1;
-//            
-//            if (mstatus[3] && mip[11] && mie[11]) begin
-//                state__n = STATE__INTERRUPT__EXTERNAL;
-//            end
-//            else if (mstatus[3] && mip[3] && mie[3]) begin
-//                state__n = STATE__INTERRUPT__SOFTWARE;
-//            end
-//            else if (mstatus[3] && mip[7] && mie[7]) begin
-//                state__n = STATE__INTERRUPT__TIMER;
-//            end
-//            else begin
-//                if (cpu_to_mem__hit) begin
-//                    ir__n = cpu_to_mem__rd_data[31:0];
-//                    state__n = STATE__DECODE;
-//                end
-//            end
-//        end
-
         //==============================
         // STATE__FETCH__0
         //==============================
         STATE__FETCH__0:
         begin
-            state__n = (mstatus[3] && mip[11] && mie[11]) ? STATE__INTERRUPT__EXTERNAL : (mstatus[3] && mip[3] && mie[3]) ? STATE__INTERRUPT__SOFTWARE : (mstatus[3] && mip[7] && mie[7]) ? STATE__INTERRUPT__TIMER : STATE__FETCH__1;
+            state__n = (mstatus__mie & mie__meie & mip__meip) ? STATE__INTERRUPT__EXTERNAL : (mstatus__mie & mie__msie & mip__msip) ? STATE__INTERRUPT__SOFTWARE : (mstatus__mie & mie__mtie & mip__mtip) ? STATE__INTERRUPT__TIMER : STATE__FETCH__1;
             state__n = STATE__FETCH__1;
         end
 
@@ -841,37 +486,11 @@ always_comb begin
         //==============================
         STATE__FETCH__1:
         begin
-            cpu_to_mem__valid = 1'b1;
-            cpu_to_mem__addr = pc;
-            cpu_to_mem__dtype = 3'h1;
-            state__n = cpu_to_mem__ready ? STATE__FETCH__2 : STATE__FETCH__1;
-        end
-
-        //==============================
-        // STATE__FETCH__2
-        //==============================
-        STATE__FETCH__2:
-        begin
-            state__n = mem_to_cpu__valid ? (mem_to_cpu__error ? STATE__FETCH__4 : STATE__FETCH__3) : STATE__FETCH__2;
-        end
-
-        //==============================
-        // STATE__FETCH__3
-        //==============================
-        STATE__FETCH__3:
-        begin
-            ir__n = mem_to_cpu__data[31:0];
-            mem_to_cpu__ready = 1'b1;
-            state__n = STATE__DECODE;
-        end
-
-        //==============================
-        // STATE__FETCH__4
-        //==============================
-        STATE__FETCH__4:
-        begin
-            mem_to_cpu__ready = 1'b1;
-            state__n = (mem_to_cpu__data == 64'h0) ? STATE__EXCEPTION__INSTRUCTION_ACCESS_FAULT__0 : STATE__FATAL;
+            cs = 1'b1;
+            addr = pc;
+            size = 2'h1;
+            ir__n = rd_data[31:0];
+            state__n = (ready & ~resp) ? STATE__DECODE : (ready & resp & (rd_data == 64'h0)) ? STATE__EXCEPTION__INSTRUCTION_ACCESS_FAULT__0 : STATE__FETCH__1;
         end
 
         //==============================
@@ -1136,8 +755,9 @@ always_comb begin
         //==============================
         STATE__ADD__0:
         begin
-            addr = rs1;
-            a__n = rd_data;
+            rf__cs = 1'b1;
+            rf__addr = rs1;
+            a__n = rf__rd_data;
             state__n = STATE__ADD__1;
         end
 
@@ -1146,8 +766,9 @@ always_comb begin
         //==============================
         STATE__ADD__1:
         begin
-            addr = rs2;
-            b__n = rd_data;
+            rf__cs = 1'b1;
+            rf__addr = rs2;
+            b__n = rf__rd_data;
             state__n = STATE__ADD__2;
         end
 
@@ -1157,10 +778,12 @@ always_comb begin
         STATE__ADD__2:
         begin
             func = 5'h0;
-            addr = rd;
-            we = 1'b1;
-            wr_data = c;
+            rf__cs = 1'b1;
+            rf__addr = rd;
+            rf__we = 1'b1;
+            rf__wr_data = c;
             pc__n = pc + 4;
+            instret = 1'b1;
             state__n = STATE__FETCH__0;
         end
 
@@ -1169,8 +792,9 @@ always_comb begin
         //==============================
         STATE__SUB__0:
         begin
-            addr = rs1;
-            a__n = rd_data;
+            rf__cs = 1'b1;
+            rf__addr = rs1;
+            a__n = rf__rd_data;
             state__n = STATE__SUB__1;
         end
 
@@ -1179,8 +803,9 @@ always_comb begin
         //==============================
         STATE__SUB__1:
         begin
-            addr = rs2;
-            b__n = rd_data;
+            rf__cs = 1'b1;
+            rf__addr = rs2;
+            b__n = rf__rd_data;
             state__n = STATE__SUB__2;
         end
 
@@ -1190,10 +815,12 @@ always_comb begin
         STATE__SUB__2:
         begin
             func = 5'h2;
-            addr = rd;
-            we = 1'b1;
-            wr_data = c;
+            rf__cs = 1'b1;
+            rf__addr = rd;
+            rf__we = 1'b1;
+            rf__wr_data = c;
             pc__n = pc + 4;
+            instret = 1'b1;
             state__n = STATE__FETCH__0;
         end
 
@@ -1202,8 +829,9 @@ always_comb begin
         //==============================
         STATE__SLL__0:
         begin
-            addr = rs1;
-            a__n = rd_data;
+            rf__cs = 1'b1;
+            rf__addr = rs1;
+            a__n = rf__rd_data;
             state__n = STATE__SLL__1;
         end
 
@@ -1212,8 +840,9 @@ always_comb begin
         //==============================
         STATE__SLL__1:
         begin
-            addr = rs2;
-            b__n = rd_data;
+            rf__cs = 1'b1;
+            rf__addr = rs2;
+            b__n = rf__rd_data;
             state__n = STATE__SLL__2;
         end
 
@@ -1223,10 +852,12 @@ always_comb begin
         STATE__SLL__2:
         begin
             func = 5'h4;
-            addr = rd;
-            we = 1'b1;
-            wr_data = c;
+            rf__cs = 1'b1;
+            rf__addr = rd;
+            rf__we = 1'b1;
+            rf__wr_data = c;
             pc__n = pc + 4;
+            instret = 1'b1;
             state__n = STATE__FETCH__0;
         end
 
@@ -1235,8 +866,9 @@ always_comb begin
         //==============================
         STATE__SLT__0:
         begin
-            addr = rs1;
-            a__n = rd_data;
+            rf__cs = 1'b1;
+            rf__addr = rs1;
+            a__n = rf__rd_data;
             state__n = STATE__SLT__1;
         end
 
@@ -1245,8 +877,9 @@ always_comb begin
         //==============================
         STATE__SLT__1:
         begin
-            addr = rs2;
-            b__n = rd_data;
+            rf__cs = 1'b1;
+            rf__addr = rs2;
+            b__n = rf__rd_data;
             state__n = STATE__SLT__2;
         end
 
@@ -1256,10 +889,12 @@ always_comb begin
         STATE__SLT__2:
         begin
             func = 5'h6;
-            addr = rd;
-            we = 1'b1;
-            wr_data = c;
+            rf__cs = 1'b1;
+            rf__addr = rd;
+            rf__we = 1'b1;
+            rf__wr_data = c;
             pc__n = pc + 4;
+            instret = 1'b1;
             state__n = STATE__FETCH__0;
         end
 
@@ -1268,8 +903,9 @@ always_comb begin
         //==============================
         STATE__SLTU__0:
         begin
-            addr = rs1;
-            a__n = rd_data;
+            rf__cs = 1'b1;
+            rf__addr = rs1;
+            a__n = rf__rd_data;
             state__n = STATE__SLTU__1;
         end
 
@@ -1278,8 +914,9 @@ always_comb begin
         //==============================
         STATE__SLTU__1:
         begin
-            addr = rs2;
-            b__n = rd_data;
+            rf__cs = 1'b1;
+            rf__addr = rs2;
+            b__n = rf__rd_data;
             state__n = STATE__SLTU__2;
         end
 
@@ -1289,10 +926,12 @@ always_comb begin
         STATE__SLTU__2:
         begin
             func = 5'h7;
-            addr = rd;
-            we = 1'b1;
-            wr_data = c;
+            rf__cs = 1'b1;
+            rf__addr = rd;
+            rf__we = 1'b1;
+            rf__wr_data = c;
             pc__n = pc + 4;
+            instret = 1'b1;
             state__n = STATE__FETCH__0;
         end
 
@@ -1301,8 +940,9 @@ always_comb begin
         //==============================
         STATE__XOR__0:
         begin
-            addr = rs1;
-            a__n = rd_data;
+            rf__cs = 1'b1;
+            rf__addr = rs1;
+            a__n = rf__rd_data;
             state__n = STATE__XOR__1;
         end
 
@@ -1311,8 +951,9 @@ always_comb begin
         //==============================
         STATE__XOR__1:
         begin
-            addr = rs2;
-            b__n = rd_data;
+            rf__cs = 1'b1;
+            rf__addr = rs2;
+            b__n = rf__rd_data;
             state__n = STATE__XOR__2;
         end
 
@@ -1322,10 +963,12 @@ always_comb begin
         STATE__XOR__2:
         begin
             func = 5'h8;
-            addr = rd;
-            we = 1'b1;
-            wr_data = c;
+            rf__cs = 1'b1;
+            rf__addr = rd;
+            rf__we = 1'b1;
+            rf__wr_data = c;
             pc__n = pc + 4;
+            instret = 1'b1;
             state__n = STATE__FETCH__0;
         end
 
@@ -1334,8 +977,9 @@ always_comb begin
         //==============================
         STATE__SRL__0:
         begin
-            addr = rs1;
-            a__n = rd_data;
+            rf__cs = 1'b1;
+            rf__addr = rs1;
+            a__n = rf__rd_data;
             state__n = STATE__SRL__1;
         end
 
@@ -1344,8 +988,9 @@ always_comb begin
         //==============================
         STATE__SRL__1:
         begin
-            addr = rs2;
-            b__n = rd_data;
+            rf__cs = 1'b1;
+            rf__addr = rs2;
+            b__n = rf__rd_data;
             state__n = STATE__SRL__2;
         end
 
@@ -1355,10 +1000,12 @@ always_comb begin
         STATE__SRL__2:
         begin
             func = 5'h9;
-            addr = rd;
-            we = 1'b1;
-            wr_data = c;
+            rf__cs = 1'b1;
+            rf__addr = rd;
+            rf__we = 1'b1;
+            rf__wr_data = c;
             pc__n = pc + 4;
+            instret = 1'b1;
             state__n = STATE__FETCH__0;
         end
 
@@ -1367,8 +1014,9 @@ always_comb begin
         //==============================
         STATE__SRA__0:
         begin
-            addr = rs1;
-            a__n = rd_data;
+            rf__cs = 1'b1;
+            rf__addr = rs1;
+            a__n = rf__rd_data;
             state__n = STATE__SRA__1;
         end
 
@@ -1377,8 +1025,9 @@ always_comb begin
         //==============================
         STATE__SRA__1:
         begin
-            addr = rs2;
-            b__n = rd_data;
+            rf__cs = 1'b1;
+            rf__addr = rs2;
+            b__n = rf__rd_data;
             state__n = STATE__SRA__2;
         end
 
@@ -1388,10 +1037,12 @@ always_comb begin
         STATE__SRA__2:
         begin
             func = 5'hb;
-            addr = rd;
-            we = 1'b1;
-            wr_data = c;
+            rf__cs = 1'b1;
+            rf__addr = rd;
+            rf__we = 1'b1;
+            rf__wr_data = c;
             pc__n = pc + 4;
+            instret = 1'b1;
             state__n = STATE__FETCH__0;
         end
 
@@ -1400,8 +1051,9 @@ always_comb begin
         //==============================
         STATE__OR__0:
         begin
-            addr = rs1;
-            a__n = rd_data;
+            rf__cs = 1'b1;
+            rf__addr = rs1;
+            a__n = rf__rd_data;
             state__n = STATE__OR__1;
         end
 
@@ -1410,8 +1062,9 @@ always_comb begin
         //==============================
         STATE__OR__1:
         begin
-            addr = rs2;
-            b__n = rd_data;
+            rf__cs = 1'b1;
+            rf__addr = rs2;
+            b__n = rf__rd_data;
             state__n = STATE__OR__2;
         end
 
@@ -1421,10 +1074,12 @@ always_comb begin
         STATE__OR__2:
         begin
             func = 5'hd;
-            addr = rd;
-            we = 1'b1;
-            wr_data = c;
+            rf__cs = 1'b1;
+            rf__addr = rd;
+            rf__we = 1'b1;
+            rf__wr_data = c;
             pc__n = pc + 4;
+            instret = 1'b1;
             state__n = STATE__FETCH__0;
         end
 
@@ -1433,8 +1088,9 @@ always_comb begin
         //==============================
         STATE__AND__0:
         begin
-            addr = rs1;
-            a__n = rd_data;
+            rf__cs = 1'b1;
+            rf__addr = rs1;
+            a__n = rf__rd_data;
             state__n = STATE__AND__1;
         end
 
@@ -1443,8 +1099,9 @@ always_comb begin
         //==============================
         STATE__AND__1:
         begin
-            addr = rs2;
-            b__n = rd_data;
+            rf__cs = 1'b1;
+            rf__addr = rs2;
+            b__n = rf__rd_data;
             state__n = STATE__AND__2;
         end
 
@@ -1454,10 +1111,12 @@ always_comb begin
         STATE__AND__2:
         begin
             func = 5'he;
-            addr = rd;
-            we = 1'b1;
-            wr_data = c;
+            rf__cs = 1'b1;
+            rf__addr = rd;
+            rf__we = 1'b1;
+            rf__wr_data = c;
             pc__n = pc + 4;
+            instret = 1'b1;
             state__n = STATE__FETCH__0;
         end
 
@@ -1466,8 +1125,9 @@ always_comb begin
         //==============================
         STATE__ADDW__0:
         begin
-            addr = rs1;
-            a__n = rd_data;
+            rf__cs = 1'b1;
+            rf__addr = rs1;
+            a__n = rf__rd_data;
             state__n = STATE__ADDW__1;
         end
 
@@ -1476,8 +1136,9 @@ always_comb begin
         //==============================
         STATE__ADDW__1:
         begin
-            addr = rs2;
-            b__n = rd_data;
+            rf__cs = 1'b1;
+            rf__addr = rs2;
+            b__n = rf__rd_data;
             state__n = STATE__ADDW__2;
         end
 
@@ -1487,10 +1148,12 @@ always_comb begin
         STATE__ADDW__2:
         begin
             func = 5'h1;
-            addr = rd;
-            we = 1'b1;
-            wr_data = c;
+            rf__cs = 1'b1;
+            rf__addr = rd;
+            rf__we = 1'b1;
+            rf__wr_data = c;
             pc__n = pc + 4;
+            instret = 1'b1;
             state__n = STATE__FETCH__0;
         end
 
@@ -1499,8 +1162,9 @@ always_comb begin
         //==============================
         STATE__SUBW__0:
         begin
-            addr = rs1;
-            a__n = rd_data;
+            rf__cs = 1'b1;
+            rf__addr = rs1;
+            a__n = rf__rd_data;
             state__n = STATE__SUBW__1;
         end
 
@@ -1509,8 +1173,9 @@ always_comb begin
         //==============================
         STATE__SUBW__1:
         begin
-            addr = rs2;
-            b__n = rd_data;
+            rf__cs = 1'b1;
+            rf__addr = rs2;
+            b__n = rf__rd_data;
             state__n = STATE__SUBW__2;
         end
 
@@ -1520,10 +1185,12 @@ always_comb begin
         STATE__SUBW__2:
         begin
             func = 5'h3;
-            addr = rd;
-            we = 1'b1;
-            wr_data = c;
+            rf__cs = 1'b1;
+            rf__addr = rd;
+            rf__we = 1'b1;
+            rf__wr_data = c;
             pc__n = pc + 4;
+            instret = 1'b1;
             state__n = STATE__FETCH__0;
         end
 
@@ -1532,8 +1199,9 @@ always_comb begin
         //==============================
         STATE__SLLW__0:
         begin
-            addr = rs1;
-            a__n = rd_data;
+            rf__cs = 1'b1;
+            rf__addr = rs1;
+            a__n = rf__rd_data;
             state__n = STATE__SLLW__1;
         end
 
@@ -1542,8 +1210,9 @@ always_comb begin
         //==============================
         STATE__SLLW__1:
         begin
-            addr = rs2;
-            b__n = rd_data;
+            rf__cs = 1'b1;
+            rf__addr = rs2;
+            b__n = rf__rd_data;
             state__n = STATE__SLLW__2;
         end
 
@@ -1553,10 +1222,12 @@ always_comb begin
         STATE__SLLW__2:
         begin
             func = 5'h5;
-            addr = rd;
-            we = 1'b1;
-            wr_data = c;
+            rf__cs = 1'b1;
+            rf__addr = rd;
+            rf__we = 1'b1;
+            rf__wr_data = c;
             pc__n = pc + 4;
+            instret = 1'b1;
             state__n = STATE__FETCH__0;
         end
 
@@ -1565,8 +1236,9 @@ always_comb begin
         //==============================
         STATE__SRLW__0:
         begin
-            addr = rs1;
-            a__n = rd_data;
+            rf__cs = 1'b1;
+            rf__addr = rs1;
+            a__n = rf__rd_data;
             state__n = STATE__SRLW__1;
         end
 
@@ -1575,8 +1247,9 @@ always_comb begin
         //==============================
         STATE__SRLW__1:
         begin
-            addr = rs2;
-            b__n = rd_data;
+            rf__cs = 1'b1;
+            rf__addr = rs2;
+            b__n = rf__rd_data;
             state__n = STATE__SRLW__2;
         end
 
@@ -1586,10 +1259,12 @@ always_comb begin
         STATE__SRLW__2:
         begin
             func = 5'ha;
-            addr = rd;
-            we = 1'b1;
-            wr_data = c;
+            rf__cs = 1'b1;
+            rf__addr = rd;
+            rf__we = 1'b1;
+            rf__wr_data = c;
             pc__n = pc + 4;
+            instret = 1'b1;
             state__n = STATE__FETCH__0;
         end
 
@@ -1598,8 +1273,9 @@ always_comb begin
         //==============================
         STATE__SRAW__0:
         begin
-            addr = rs1;
-            a__n = rd_data;
+            rf__cs = 1'b1;
+            rf__addr = rs1;
+            a__n = rf__rd_data;
             state__n = STATE__SRAW__1;
         end
 
@@ -1608,8 +1284,9 @@ always_comb begin
         //==============================
         STATE__SRAW__1:
         begin
-            addr = rs2;
-            b__n = rd_data;
+            rf__cs = 1'b1;
+            rf__addr = rs2;
+            b__n = rf__rd_data;
             state__n = STATE__SRAW__2;
         end
 
@@ -1619,10 +1296,12 @@ always_comb begin
         STATE__SRAW__2:
         begin
             func = 5'hc;
-            addr = rd;
-            we = 1'b1;
-            wr_data = c;
+            rf__cs = 1'b1;
+            rf__addr = rd;
+            rf__we = 1'b1;
+            rf__wr_data = c;
             pc__n = pc + 4;
+            instret = 1'b1;
             state__n = STATE__FETCH__0;
         end
 
@@ -1631,8 +1310,9 @@ always_comb begin
         //==============================
         STATE__ADDI__0:
         begin
-            addr = rs1;
-            a__n = rd_data;
+            rf__cs = 1'b1;
+            rf__addr = rs1;
+            a__n = rf__rd_data;
             b__n = imm;
             state__n = STATE__ADDI__1;
         end
@@ -1643,10 +1323,12 @@ always_comb begin
         STATE__ADDI__1:
         begin
             func = 5'h0;
-            addr = rd;
-            we = 1'b1;
-            wr_data = c;
+            rf__cs = 1'b1;
+            rf__addr = rd;
+            rf__we = 1'b1;
+            rf__wr_data = c;
             pc__n = pc + 4;
+            instret = 1'b1;
             state__n = STATE__FETCH__0;
         end
 
@@ -1655,8 +1337,9 @@ always_comb begin
         //==============================
         STATE__SLLI__0:
         begin
-            addr = rs1;
-            a__n = rd_data;
+            rf__cs = 1'b1;
+            rf__addr = rs1;
+            a__n = rf__rd_data;
             b__n = imm;
             state__n = STATE__SLLI__1;
         end
@@ -1667,10 +1350,12 @@ always_comb begin
         STATE__SLLI__1:
         begin
             func = 5'h4;
-            addr = rd;
-            we = 1'b1;
-            wr_data = c;
+            rf__cs = 1'b1;
+            rf__addr = rd;
+            rf__we = 1'b1;
+            rf__wr_data = c;
             pc__n = pc + 4;
+            instret = 1'b1;
             state__n = STATE__FETCH__0;
         end
 
@@ -1679,8 +1364,9 @@ always_comb begin
         //==============================
         STATE__SLTI__0:
         begin
-            addr = rs1;
-            a__n = rd_data;
+            rf__cs = 1'b1;
+            rf__addr = rs1;
+            a__n = rf__rd_data;
             b__n = imm;
             state__n = STATE__SLTI__1;
         end
@@ -1691,10 +1377,12 @@ always_comb begin
         STATE__SLTI__1:
         begin
             func = 5'h6;
-            addr = rd;
-            we = 1'b1;
-            wr_data = c;
+            rf__cs = 1'b1;
+            rf__addr = rd;
+            rf__we = 1'b1;
+            rf__wr_data = c;
             pc__n = pc + 4;
+            instret = 1'b1;
             state__n = STATE__FETCH__0;
         end
 
@@ -1703,8 +1391,9 @@ always_comb begin
         //==============================
         STATE__SLTIU__0:
         begin
-            addr = rs1;
-            a__n = rd_data;
+            rf__cs = 1'b1;
+            rf__addr = rs1;
+            a__n = rf__rd_data;
             b__n = imm;
             state__n = STATE__SLTIU__1;
         end
@@ -1715,10 +1404,12 @@ always_comb begin
         STATE__SLTIU__1:
         begin
             func = 5'h7;
-            addr = rd;
-            we = 1'b1;
-            wr_data = c;
+            rf__cs = 1'b1;
+            rf__addr = rd;
+            rf__we = 1'b1;
+            rf__wr_data = c;
             pc__n = pc + 4;
+            instret = 1'b1;
             state__n = STATE__FETCH__0;
         end
 
@@ -1727,8 +1418,9 @@ always_comb begin
         //==============================
         STATE__XORI__0:
         begin
-            addr = rs1;
-            a__n = rd_data;
+            rf__cs = 1'b1;
+            rf__addr = rs1;
+            a__n = rf__rd_data;
             b__n = imm;
             state__n = STATE__XORI__1;
         end
@@ -1739,10 +1431,12 @@ always_comb begin
         STATE__XORI__1:
         begin
             func = 5'h8;
-            addr = rd;
-            we = 1'b1;
-            wr_data = c;
+            rf__cs = 1'b1;
+            rf__addr = rd;
+            rf__we = 1'b1;
+            rf__wr_data = c;
             pc__n = pc + 4;
+            instret = 1'b1;
             state__n = STATE__FETCH__0;
         end
 
@@ -1751,8 +1445,9 @@ always_comb begin
         //==============================
         STATE__SRLI__0:
         begin
-            addr = rs1;
-            a__n = rd_data;
+            rf__cs = 1'b1;
+            rf__addr = rs1;
+            a__n = rf__rd_data;
             b__n = imm;
             state__n = STATE__SRLI__1;
         end
@@ -1763,10 +1458,12 @@ always_comb begin
         STATE__SRLI__1:
         begin
             func = 5'h9;
-            addr = rd;
-            we = 1'b1;
-            wr_data = c;
+            rf__cs = 1'b1;
+            rf__addr = rd;
+            rf__we = 1'b1;
+            rf__wr_data = c;
             pc__n = pc + 4;
+            instret = 1'b1;
             state__n = STATE__FETCH__0;
         end
 
@@ -1775,8 +1472,9 @@ always_comb begin
         //==============================
         STATE__SRAI__0:
         begin
-            addr = rs1;
-            a__n = rd_data;
+            rf__cs = 1'b1;
+            rf__addr = rs1;
+            a__n = rf__rd_data;
             b__n = imm;
             state__n = STATE__SRAI__1;
         end
@@ -1787,10 +1485,12 @@ always_comb begin
         STATE__SRAI__1:
         begin
             func = 5'hb;
-            addr = rd;
-            we = 1'b1;
-            wr_data = c;
+            rf__cs = 1'b1;
+            rf__addr = rd;
+            rf__we = 1'b1;
+            rf__wr_data = c;
             pc__n = pc + 4;
+            instret = 1'b1;
             state__n = STATE__FETCH__0;
         end
 
@@ -1799,8 +1499,9 @@ always_comb begin
         //==============================
         STATE__ORI__0:
         begin
-            addr = rs1;
-            a__n = rd_data;
+            rf__cs = 1'b1;
+            rf__addr = rs1;
+            a__n = rf__rd_data;
             b__n = imm;
             state__n = STATE__ORI__1;
         end
@@ -1811,10 +1512,12 @@ always_comb begin
         STATE__ORI__1:
         begin
             func = 5'hd;
-            addr = rd;
-            we = 1'b1;
-            wr_data = c;
+            rf__cs = 1'b1;
+            rf__addr = rd;
+            rf__we = 1'b1;
+            rf__wr_data = c;
             pc__n = pc + 4;
+            instret = 1'b1;
             state__n = STATE__FETCH__0;
         end
 
@@ -1823,8 +1526,9 @@ always_comb begin
         //==============================
         STATE__ANDI__0:
         begin
-            addr = rs1;
-            a__n = rd_data;
+            rf__cs = 1'b1;
+            rf__addr = rs1;
+            a__n = rf__rd_data;
             b__n = imm;
             state__n = STATE__ANDI__1;
         end
@@ -1835,10 +1539,12 @@ always_comb begin
         STATE__ANDI__1:
         begin
             func = 5'he;
-            addr = rd;
-            we = 1'b1;
-            wr_data = c;
+            rf__cs = 1'b1;
+            rf__addr = rd;
+            rf__we = 1'b1;
+            rf__wr_data = c;
             pc__n = pc + 4;
+            instret = 1'b1;
             state__n = STATE__FETCH__0;
         end
 
@@ -1847,8 +1553,9 @@ always_comb begin
         //==============================
         STATE__ADDIW__0:
         begin
-            addr = rs1;
-            a__n = rd_data;
+            rf__cs = 1'b1;
+            rf__addr = rs1;
+            a__n = rf__rd_data;
             b__n = imm;
             state__n = STATE__ADDIW__1;
         end
@@ -1859,10 +1566,12 @@ always_comb begin
         STATE__ADDIW__1:
         begin
             func = 5'h1;
-            addr = rd;
-            we = 1'b1;
-            wr_data = c;
+            rf__cs = 1'b1;
+            rf__addr = rd;
+            rf__we = 1'b1;
+            rf__wr_data = c;
             pc__n = pc + 4;
+            instret = 1'b1;
             state__n = STATE__FETCH__0;
         end
 
@@ -1871,8 +1580,9 @@ always_comb begin
         //==============================
         STATE__SLLIW__0:
         begin
-            addr = rs1;
-            a__n = rd_data;
+            rf__cs = 1'b1;
+            rf__addr = rs1;
+            a__n = rf__rd_data;
             b__n = imm;
             state__n = STATE__SLLIW__1;
         end
@@ -1883,10 +1593,12 @@ always_comb begin
         STATE__SLLIW__1:
         begin
             func = 5'h5;
-            addr = rd;
-            we = 1'b1;
-            wr_data = c;
+            rf__cs = 1'b1;
+            rf__addr = rd;
+            rf__we = 1'b1;
+            rf__wr_data = c;
             pc__n = pc + 4;
+            instret = 1'b1;
             state__n = STATE__FETCH__0;
         end
 
@@ -1895,8 +1607,9 @@ always_comb begin
         //==============================
         STATE__SRLIW__0:
         begin
-            addr = rs1;
-            a__n = rd_data;
+            rf__cs = 1'b1;
+            rf__addr = rs1;
+            a__n = rf__rd_data;
             b__n = imm;
             state__n = STATE__SRLIW__1;
         end
@@ -1907,10 +1620,12 @@ always_comb begin
         STATE__SRLIW__1:
         begin
             func = 5'ha;
-            addr = rd;
-            we = 1'b1;
-            wr_data = c;
+            rf__cs = 1'b1;
+            rf__addr = rd;
+            rf__we = 1'b1;
+            rf__wr_data = c;
             pc__n = pc + 4;
+            instret = 1'b1;
             state__n = STATE__FETCH__0;
         end
 
@@ -1919,8 +1634,9 @@ always_comb begin
         //==============================
         STATE__SRAIW__0:
         begin
-            addr = rs1;
-            a__n = rd_data;
+            rf__cs = 1'b1;
+            rf__addr = rs1;
+            a__n = rf__rd_data;
             b__n = imm;
             state__n = STATE__SRAIW__1;
         end
@@ -1931,10 +1647,12 @@ always_comb begin
         STATE__SRAIW__1:
         begin
             func = 5'hc;
-            addr = rd;
-            we = 1'b1;
-            wr_data = c;
+            rf__cs = 1'b1;
+            rf__addr = rd;
+            rf__we = 1'b1;
+            rf__wr_data = c;
             pc__n = pc + 4;
+            instret = 1'b1;
             state__n = STATE__FETCH__0;
         end
 
@@ -1943,8 +1661,9 @@ always_comb begin
         //==============================
         STATE__LB__0:
         begin
-            addr = rs1;
-            a__n = rd_data;
+            rf__cs = 1'b1;
+            rf__addr = rs1;
+            a__n = rf__rd_data;
             b__n = imm;
             state__n = STATE__LB__1;
         end
@@ -1955,10 +1674,14 @@ always_comb begin
         STATE__LB__1:
         begin
             func = 5'h0;
-            cpu_to_mem__valid = 1'b1;
-            cpu_to_mem__addr = c;
-            cpu_to_mem__dtype = 3'h5;
-            state__n = cpu_to_mem__ready ? STATE__LB__2 : STATE__LB__1;
+            cs = 1'b1;
+            addr = c;
+            size = 2'h3;
+            rf__cs = 1'b1;
+            rf__addr = rd;
+            rf__we = ready & ~resp;
+            rf__wr_data = {{56{rd_data[7]}}, rd_data[7:0]};
+            state__n = (ready & ~resp) ? STATE__LB__2 : (ready & resp & (rd_data == 64'h0)) ? STATE__EXCEPTION__LOAD_ACCESS_FAULT__0 : (ready & resp & (rd_data == 64'h1)) ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0 : STATE__LB__1;
         end
 
         //==============================
@@ -1966,29 +1689,9 @@ always_comb begin
         //==============================
         STATE__LB__2:
         begin
-            state__n = mem_to_cpu__valid ? (mem_to_cpu__error ? STATE__LB__4 : STATE__LB__3) : STATE__LB__2;
-        end
-
-        //==============================
-        // STATE__LB__3
-        //==============================
-        STATE__LB__3:
-        begin
-            addr = rd;
-            we = 1'b1;
-            wr_data = mem_to_cpu__data;
-            mem_to_cpu__ready = 1'b1;
             pc__n = pc + 4;
+            instret = 1'b1;
             state__n = STATE__FETCH__0;
-        end
-
-        //==============================
-        // STATE__LB__4
-        //==============================
-        STATE__LB__4:
-        begin
-            mem_to_cpu__ready = 1'b1;
-            state__n = (mem_to_cpu__data == 64'h0) ? STATE__EXCEPTION__LOAD_ACCESS_FAULT__0 : (mem_to_cpu__data == 64'h1) ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0 : STATE__FATAL;
         end
 
         //==============================
@@ -1996,8 +1699,9 @@ always_comb begin
         //==============================
         STATE__LH__0:
         begin
-            addr = rs1;
-            a__n = rd_data;
+            rf__cs = 1'b1;
+            rf__addr = rs1;
+            a__n = rf__rd_data;
             b__n = imm;
             state__n = STATE__LH__1;
         end
@@ -2008,10 +1712,14 @@ always_comb begin
         STATE__LH__1:
         begin
             func = 5'h0;
-            cpu_to_mem__valid = 1'b1;
-            cpu_to_mem__addr = c;
-            cpu_to_mem__dtype = 3'h3;
-            state__n = cpu_to_mem__ready ? STATE__LH__2 : STATE__LH__1;
+            cs = 1'b1;
+            addr = c;
+            size = 2'h2;
+            rf__cs = 1'b1;
+            rf__addr = rd;
+            rf__we = ready & ~resp;
+            rf__wr_data = {{48{rd_data[15]}}, rd_data[15:0]};
+            state__n = (ready & ~resp) ? STATE__LH__2 : (ready & resp & (rd_data == 64'h0)) ? STATE__EXCEPTION__LOAD_ACCESS_FAULT__0 : (ready & resp & (rd_data == 64'h1)) ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0 : STATE__LH__1;
         end
 
         //==============================
@@ -2019,29 +1727,9 @@ always_comb begin
         //==============================
         STATE__LH__2:
         begin
-            state__n = mem_to_cpu__valid ? (mem_to_cpu__error ? STATE__LH__4 : STATE__LH__3) : STATE__LH__2;
-        end
-
-        //==============================
-        // STATE__LH__3
-        //==============================
-        STATE__LH__3:
-        begin
-            addr = rd;
-            we = 1'b1;
-            wr_data = mem_to_cpu__data;
-            mem_to_cpu__ready = 1'b1;
             pc__n = pc + 4;
+            instret = 1'b1;
             state__n = STATE__FETCH__0;
-        end
-
-        //==============================
-        // STATE__LH__4
-        //==============================
-        STATE__LH__4:
-        begin
-            mem_to_cpu__ready = 1'b1;
-            state__n = (mem_to_cpu__data == 64'h0) ? STATE__EXCEPTION__LOAD_ACCESS_FAULT__0 : (mem_to_cpu__data == 64'h1) ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0 : STATE__FATAL;
         end
 
         //==============================
@@ -2049,8 +1737,9 @@ always_comb begin
         //==============================
         STATE__LW__0:
         begin
-            addr = rs1;
-            a__n = rd_data;
+            rf__cs = 1'b1;
+            rf__addr = rs1;
+            a__n = rf__rd_data;
             b__n = imm;
             state__n = STATE__LW__1;
         end
@@ -2061,10 +1750,14 @@ always_comb begin
         STATE__LW__1:
         begin
             func = 5'h0;
-            cpu_to_mem__valid = 1'b1;
-            cpu_to_mem__addr = c;
-            cpu_to_mem__dtype = 3'h1;
-            state__n = cpu_to_mem__ready ? STATE__LW__2 : STATE__LW__1;
+            cs = 1'b1;
+            addr = c;
+            size = 2'h1;
+            rf__cs = 1'b1;
+            rf__addr = rd;
+            rf__we = ready & ~resp;
+            rf__wr_data = {{32{rd_data[31]}}, rd_data[31:0]};
+            state__n = (ready & ~resp) ? STATE__LW__2 : (ready & resp & (rd_data == 64'h0)) ? STATE__EXCEPTION__LOAD_ACCESS_FAULT__0 : (ready & resp & (rd_data == 64'h1)) ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0 : STATE__LW__1;
         end
 
         //==============================
@@ -2072,29 +1765,9 @@ always_comb begin
         //==============================
         STATE__LW__2:
         begin
-            state__n = mem_to_cpu__valid ? (mem_to_cpu__error ? STATE__LW__4 : STATE__LW__3) : STATE__LW__2;
-        end
-
-        //==============================
-        // STATE__LW__3
-        //==============================
-        STATE__LW__3:
-        begin
-            addr = rd;
-            we = 1'b1;
-            wr_data = mem_to_cpu__data;
-            mem_to_cpu__ready = 1'b1;
             pc__n = pc + 4;
+            instret = 1'b1;
             state__n = STATE__FETCH__0;
-        end
-
-        //==============================
-        // STATE__LW__4
-        //==============================
-        STATE__LW__4:
-        begin
-            mem_to_cpu__ready = 1'b1;
-            state__n = (mem_to_cpu__data == 64'h0) ? STATE__EXCEPTION__LOAD_ACCESS_FAULT__0 : (mem_to_cpu__data == 64'h1) ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0 : STATE__FATAL;
         end
 
         //==============================
@@ -2102,8 +1775,9 @@ always_comb begin
         //==============================
         STATE__LD__0:
         begin
-            addr = rs1;
-            a__n = rd_data;
+            rf__cs = 1'b1;
+            rf__addr = rs1;
+            a__n = rf__rd_data;
             b__n = imm;
             state__n = STATE__LD__1;
         end
@@ -2114,10 +1788,14 @@ always_comb begin
         STATE__LD__1:
         begin
             func = 5'h0;
-            cpu_to_mem__valid = 1'b1;
-            cpu_to_mem__addr = c;
-            cpu_to_mem__dtype = 3'h0;
-            state__n = cpu_to_mem__ready ? STATE__LD__2 : STATE__LD__1;
+            cs = 1'b1;
+            addr = c;
+            size = 2'h0;
+            rf__cs = 1'b1;
+            rf__addr = rd;
+            rf__we = ready & ~resp;
+            rf__wr_data = rd_data;
+            state__n = (ready & ~resp) ? STATE__LD__2 : (ready & resp & (rd_data == 64'h0)) ? STATE__EXCEPTION__LOAD_ACCESS_FAULT__0 : (ready & resp & (rd_data == 64'h1)) ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0 : STATE__LD__1;
         end
 
         //==============================
@@ -2125,29 +1803,9 @@ always_comb begin
         //==============================
         STATE__LD__2:
         begin
-            state__n = mem_to_cpu__valid ? (mem_to_cpu__error ? STATE__LD__4 : STATE__LD__3) : STATE__LD__2;
-        end
-
-        //==============================
-        // STATE__LD__3
-        //==============================
-        STATE__LD__3:
-        begin
-            addr = rd;
-            we = 1'b1;
-            wr_data = mem_to_cpu__data;
-            mem_to_cpu__ready = 1'b1;
             pc__n = pc + 4;
+            instret = 1'b1;
             state__n = STATE__FETCH__0;
-        end
-
-        //==============================
-        // STATE__LD__4
-        //==============================
-        STATE__LD__4:
-        begin
-            mem_to_cpu__ready = 1'b1;
-            state__n = (mem_to_cpu__data == 64'h0) ? STATE__EXCEPTION__LOAD_ACCESS_FAULT__0 : (mem_to_cpu__data == 64'h1) ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0 : STATE__FATAL;
         end
 
         //==============================
@@ -2155,8 +1813,9 @@ always_comb begin
         //==============================
         STATE__LBU__0:
         begin
-            addr = rs1;
-            a__n = rd_data;
+            rf__cs = 1'b1;
+            rf__addr = rs1;
+            a__n = rf__rd_data;
             b__n = imm;
             state__n = STATE__LBU__1;
         end
@@ -2167,10 +1826,14 @@ always_comb begin
         STATE__LBU__1:
         begin
             func = 5'h0;
-            cpu_to_mem__valid = 1'b1;
-            cpu_to_mem__addr = c;
-            cpu_to_mem__dtype = 3'h6;
-            state__n = cpu_to_mem__ready ? STATE__LBU__2 : STATE__LBU__1;
+            cs = 1'b1;
+            addr = c;
+            size = 2'h3;
+            rf__cs = 1'b1;
+            rf__addr = rd;
+            rf__we = ready & ~resp;
+            rf__wr_data = {56'h0, rd_data[7:0]};
+            state__n = (ready & ~resp) ? STATE__LBU__2 : (ready & resp & (rd_data == 64'h0)) ? STATE__EXCEPTION__LOAD_ACCESS_FAULT__0 : (ready & resp & (rd_data == 64'h1)) ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0 : STATE__LBU__1;
         end
 
         //==============================
@@ -2178,29 +1841,9 @@ always_comb begin
         //==============================
         STATE__LBU__2:
         begin
-            state__n = mem_to_cpu__valid ? (mem_to_cpu__error ? STATE__LBU__4 : STATE__LBU__3) : STATE__LBU__2;
-        end
-
-        //==============================
-        // STATE__LBU__3
-        //==============================
-        STATE__LBU__3:
-        begin
-            addr = rd;
-            we = 1'b1;
-            wr_data = mem_to_cpu__data;
-            mem_to_cpu__ready = 1'b1;
             pc__n = pc + 4;
+            instret = 1'b1;
             state__n = STATE__FETCH__0;
-        end
-
-        //==============================
-        // STATE__LBU__4
-        //==============================
-        STATE__LBU__4:
-        begin
-            mem_to_cpu__ready = 1'b1;
-            state__n = (mem_to_cpu__data == 64'h0) ? STATE__EXCEPTION__LOAD_ACCESS_FAULT__0 : (mem_to_cpu__data == 64'h1) ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0 : STATE__FATAL;
         end
 
         //==============================
@@ -2208,8 +1851,9 @@ always_comb begin
         //==============================
         STATE__LHU__0:
         begin
-            addr = rs1;
-            a__n = rd_data;
+            rf__cs = 1'b1;
+            rf__addr = rs1;
+            a__n = rf__rd_data;
             b__n = imm;
             state__n = STATE__LHU__1;
         end
@@ -2220,10 +1864,14 @@ always_comb begin
         STATE__LHU__1:
         begin
             func = 5'h0;
-            cpu_to_mem__valid = 1'b1;
-            cpu_to_mem__addr = c;
-            cpu_to_mem__dtype = 3'h4;
-            state__n = cpu_to_mem__ready ? STATE__LHU__2 : STATE__LHU__1;
+            cs = 1'b1;
+            addr = c;
+            size = 2'h2;
+            rf__cs = 1'b1;
+            rf__addr = rd;
+            rf__we = ready & ~resp;
+            rf__wr_data = {48'h0, rd_data[15:0]};
+            state__n = (ready & ~resp) ? STATE__LHU__2 : (ready & resp & (rd_data == 64'h0)) ? STATE__EXCEPTION__LOAD_ACCESS_FAULT__0 : (ready & resp & (rd_data == 64'h1)) ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0 : STATE__LHU__1;
         end
 
         //==============================
@@ -2231,39 +1879,19 @@ always_comb begin
         //==============================
         STATE__LHU__2:
         begin
-            state__n = mem_to_cpu__valid ? (mem_to_cpu__error ? STATE__LHU__4 : STATE__LHU__3) : STATE__LHU__2;
-        end
-
-        //==============================
-        // STATE__LHU__3
-        //==============================
-        STATE__LHU__3:
-        begin
-            addr = rd;
-            we = 1'b1;
-            wr_data = mem_to_cpu__data;
-            mem_to_cpu__ready = 1'b1;
             pc__n = pc + 4;
+            instret = 1'b1;
             state__n = STATE__FETCH__0;
         end
-
-        //==============================
-        // STATE__LHU__4
-        //==============================
-        STATE__LHU__4:
-        begin
-            mem_to_cpu__ready = 1'b1;
-            state__n = (mem_to_cpu__data == 64'h0) ? STATE__EXCEPTION__LOAD_ACCESS_FAULT__0 : (mem_to_cpu__data == 64'h1) ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0 : STATE__FATAL;
-        end
-
 
         //==============================
         // STATE__LWU__0
         //==============================
         STATE__LWU__0:
         begin
-            addr = rs1;
-            a__n = rd_data;
+            rf__cs = 1'b1;
+            rf__addr = rs1;
+            a__n = rf__rd_data;
             b__n = imm;
             state__n = STATE__LWU__1;
         end
@@ -2274,10 +1902,14 @@ always_comb begin
         STATE__LWU__1:
         begin
             func = 5'h0;
-            cpu_to_mem__valid = 1'b1;
-            cpu_to_mem__addr = c;
-            cpu_to_mem__dtype = 3'h2;
-            state__n = cpu_to_mem__ready ? STATE__LWU__2 : STATE__LWU__1;
+            cs = 1'b1;
+            addr = c;
+            size = 2'h1;
+            rf__cs = 1'b1;
+            rf__addr = rd;
+            rf__we = ready & ~resp;
+            rf__wr_data = {32'h0, rd_data[31:0]};
+            state__n = (ready & ~resp) ? STATE__LWU__2 : (ready & resp & (rd_data == 64'h0)) ? STATE__EXCEPTION__LOAD_ACCESS_FAULT__0 : (ready & resp & (rd_data == 64'h1)) ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0 : STATE__LWU__1;
         end
 
         //==============================
@@ -2285,29 +1917,9 @@ always_comb begin
         //==============================
         STATE__LWU__2:
         begin
-            state__n = mem_to_cpu__valid ? (mem_to_cpu__error ? STATE__LWU__4 : STATE__LWU__3) : STATE__LWU__2;
-        end
-
-        //==============================
-        // STATE__LWU__3
-        //==============================
-        STATE__LWU__3:
-        begin
-            addr = rd;
-            we = 1'b1;
-            wr_data = mem_to_cpu__data;
-            mem_to_cpu__ready = 1'b1;
             pc__n = pc + 4;
+            instret = 1'b1;
             state__n = STATE__FETCH__0;
-        end
-
-        //==============================
-        // STATE__LWU__4
-        //==============================
-        STATE__LWU__4:
-        begin
-            mem_to_cpu__ready = 1'b1;
-            state__n = (mem_to_cpu__data == 64'h0) ? STATE__EXCEPTION__LOAD_ACCESS_FAULT__0 : (mem_to_cpu__data == 64'h1) ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0 : STATE__FATAL;
         end
 
         //==============================
@@ -2315,8 +1927,9 @@ always_comb begin
         //==============================
         STATE__SB__0:
         begin
-            addr = rs1;
-            a__n = rd_data;
+            rf__cs = 1'b1;
+            rf__addr = rs1;
+            a__n = rf__rd_data;
             b__n = imm;
             state__n = STATE__SB__1;
         end
@@ -2327,51 +1940,35 @@ always_comb begin
         STATE__SB__1:
         begin
             func = 5'h0;
-            addr = rs2;
-            cpu_to_mem__valid = 1'b1;
-            cpu_to_mem__we = 1'b1;
-            cpu_to_mem__addr = c;
-            cpu_to_mem__dtype = 3'h5;
-            cpu_to_mem__data = rd_data;
-            state__n = cpu_to_mem__ready ? STATE__SB__2 : STATE__SB__1;
+            rf__cs = 1'b1;
+            rf__addr = rs2;
+            cs = 1'b1;
+            we = 1'b1;
+            addr = c;
+            size = 2'h3;
+            wr_data = rf__rd_data;
+            state__n = (ready & ~resp) ? STATE__SB__2 : (ready & resp & (rd_data == 64'h0)) ? STATE__EXCEPTION__STORE_ACCESS_FAULT__0 : (ready & resp & (rd_data == 64'h1)) ? STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__0 : STATE__SB__1;
         end
+
 
         //==============================
         // STATE__SB__2
         //==============================
         STATE__SB__2:
         begin
-            state__n = mem_to_cpu__valid ? (mem_to_cpu__error ? STATE__SB__4 : STATE__SB__3) : STATE__SB__2;
-        end
-
-
-        //==============================
-        // STATE__SB__3
-        //==============================
-        STATE__SB__3:
-        begin
-            mem_to_cpu__ready = 1'b1;
             pc__n = pc + 4;
+            instret = 1'b1;
             state__n = STATE__FETCH__0;
         end
-
-        //==============================
-        // STATE__SB__4
-        //==============================
-        STATE__SB__4:
-        begin
-            mem_to_cpu__ready = 1'b1;
-            state__n = (mem_to_cpu__data == 64'h0) ? STATE__EXCEPTION__STORE_ACCESS_FAULT__0 : (mem_to_cpu__data == 64'h1) ? STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__0 : STATE__FATAL;
-        end
-
 
         //==============================
         // STATE__SH__0
         //==============================
         STATE__SH__0:
         begin
-            addr = rs1;
-            a__n = rd_data;
+            rf__cs = 1'b1;
+            rf__addr = rs1;
+            a__n = rf__rd_data;
             b__n = imm;
             state__n = STATE__SH__1;
         end
@@ -2382,13 +1979,14 @@ always_comb begin
         STATE__SH__1:
         begin
             func = 5'h0;
-            addr = rs2;
-            cpu_to_mem__valid = 1'b1;
-            cpu_to_mem__we = 1'b1;
-            cpu_to_mem__addr = c;
-            cpu_to_mem__dtype = 3'h3;
-            cpu_to_mem__data = rd_data;
-            state__n = cpu_to_mem__ready ? STATE__SH__2 : STATE__SH__1;
+            rf__cs = 1'b1;
+            rf__addr = rs2;
+            cs = 1'b1;
+            we = 1'b1;
+            addr = c;
+            size = 2'h2;
+            wr_data = rf__rd_data;
+            state__n = (ready & ~resp) ? STATE__SH__2 : (ready & resp & (rd_data == 64'h0)) ? STATE__EXCEPTION__STORE_ACCESS_FAULT__0 : (ready & resp & (rd_data == 64'h1)) ? STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__0 : STATE__SH__1;
         end
 
         //==============================
@@ -2396,26 +1994,9 @@ always_comb begin
         //==============================
         STATE__SH__2:
         begin
-            state__n = mem_to_cpu__valid ? (mem_to_cpu__error ? STATE__SH__4 : STATE__SH__3) : STATE__SH__2;
-        end
-
-        //==============================
-        // STATE__SH__3
-        //==============================
-        STATE__SH__3:
-        begin
-            mem_to_cpu__ready = 1'b1;
             pc__n = pc + 4;
+            instret = 1'b1;
             state__n = STATE__FETCH__0;
-        end
-
-        //==============================
-        // STATE__SH__4
-        //==============================
-        STATE__SH__4:
-        begin
-            mem_to_cpu__ready = 1'b1;
-            state__n = (mem_to_cpu__data == 64'h0) ? STATE__EXCEPTION__STORE_ACCESS_FAULT__0 : (mem_to_cpu__data == 64'h1) ? STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__0 : STATE__FATAL;
         end
 
         //==============================
@@ -2423,8 +2004,9 @@ always_comb begin
         //==============================
         STATE__SW__0:
         begin
-            addr = rs1;
-            a__n = rd_data;
+            rf__cs = 1'b1;
+            rf__addr = rs1;
+            a__n = rf__rd_data;
             b__n = imm;
             state__n = STATE__SW__1;
         end
@@ -2435,13 +2017,14 @@ always_comb begin
         STATE__SW__1:
         begin
             func = 5'h0;
-            addr = rs2;
-            cpu_to_mem__valid = 1'b1;
-            cpu_to_mem__we = 1'b1;
-            cpu_to_mem__addr = c;
-            cpu_to_mem__dtype = 3'h1;
-            cpu_to_mem__data = rd_data;
-            state__n = cpu_to_mem__ready ? STATE__SW__2 : STATE__SW__1;
+            rf__cs = 1'b1;
+            rf__addr = rs2;
+            cs = 1'b1;
+            we = 1'b1;
+            addr = c;
+            size = 2'h1;
+            wr_data = rf__rd_data;
+            state__n = (ready & ~resp) ? STATE__SW__2 : (ready & resp & (rd_data == 64'h0)) ? STATE__EXCEPTION__STORE_ACCESS_FAULT__0 : (ready & resp & (rd_data == 64'h1)) ? STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__0 : STATE__SW__1;
         end
 
         //==============================
@@ -2449,26 +2032,9 @@ always_comb begin
         //==============================
         STATE__SW__2:
         begin
-            state__n = mem_to_cpu__valid ? (mem_to_cpu__error ? STATE__SW__4 : STATE__SW__3) : STATE__SW__2;
-        end
-
-        //==============================
-        // STATE__SW__3
-        //==============================
-        STATE__SW__3:
-        begin
-            mem_to_cpu__ready = 1'b1;
             pc__n = pc + 4;
+            instret = 1'b1;
             state__n = STATE__FETCH__0;
-        end
-
-        //==============================
-        // STATE__SW__4
-        //==============================
-        STATE__SW__4:
-        begin
-            mem_to_cpu__ready = 1'b1;
-            state__n = (mem_to_cpu__data == 64'h0) ? STATE__EXCEPTION__STORE_ACCESS_FAULT__0 : (mem_to_cpu__data == 64'h1) ? STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__0 : STATE__FATAL;
         end
 
         //==============================
@@ -2476,8 +2042,9 @@ always_comb begin
         //==============================
         STATE__SD__0:
         begin
-            addr = rs1;
-            a__n = rd_data;
+            rf__cs = 1'b1;
+            rf__addr = rs1;
+            a__n = rf__rd_data;
             b__n = imm;
             state__n = STATE__SD__1;
         end
@@ -2488,13 +2055,14 @@ always_comb begin
         STATE__SD__1:
         begin
             func = 5'h0;
-            addr = rs2;
-            cpu_to_mem__valid = 1'b1;
-            cpu_to_mem__we = 1'b1;
-            cpu_to_mem__addr = c;
-            cpu_to_mem__dtype = 3'h0;
-            cpu_to_mem__data = rd_data;
-            state__n = cpu_to_mem__ready ? STATE__SD__2 : STATE__SD__1;
+            rf__cs = 1'b1;
+            rf__addr = rs2;
+            cs = 1'b1;
+            we = 1'b1;
+            addr = c;
+            size = 2'h0;
+            wr_data = rf__rd_data;
+            state__n = (ready & ~resp) ? STATE__SD__2 : (ready & resp & (rd_data == 64'h0)) ? STATE__EXCEPTION__STORE_ACCESS_FAULT__0 : (ready & resp & (rd_data == 64'h1)) ? STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__0 : STATE__SD__1;
         end
 
         //==============================
@@ -2502,27 +2070,9 @@ always_comb begin
         //==============================
         STATE__SD__2:
         begin
-            state__n = mem_to_cpu__valid ? (mem_to_cpu__error ? STATE__SD__4 : STATE__SD__3) : STATE__SD__2;
-        end
-
-
-        //==============================
-        // STATE__SD__3
-        //==============================
-        STATE__SD__3:
-        begin
-            mem_to_cpu__ready = 1'b1;
             pc__n = pc + 4;
+            instret = 1'b1;
             state__n = STATE__FETCH__0;
-        end
-
-        //==============================
-        // STATE__SD__4
-        //==============================
-        STATE__SD__4:
-        begin
-            mem_to_cpu__ready = 1'b1;
-            state__n = (mem_to_cpu__data == 64'h0) ? STATE__EXCEPTION__STORE_ACCESS_FAULT__0 : (mem_to_cpu__data == 64'h1) ? STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__0 : STATE__FATAL;
         end
 
         //==============================
@@ -2541,10 +2091,12 @@ always_comb begin
         STATE__AUIPC__1:
         begin
             func = 5'h0;
-            addr = rd;
-            we = 1'b1;
-            wr_data = c;
+            rf__cs = 1'b1;
+            rf__addr = rd;
+            rf__we = 1'b1;
+            rf__wr_data = c;
             pc__n = pc + 4;
+            instret = 1'b1;
             state__n = STATE__FETCH__0;
         end
 
@@ -2553,11 +2105,12 @@ always_comb begin
         //==============================
         STATE__JALR__0:
         begin
-            addr = rs1;
-            a__n = rd_data;  
+            rf__cs = 1'b1;
+            rf__addr = rs1;
+            a__n = rf__rd_data;  
             b__n = imm;  
-            //state__n = ((rd_data[1:0] == 2'b00) && (imm[1:0] == 2'b10)) || ((rd_data[1:0] == 2'b00) && (imm[1:0] == 2'b11)) || ((rd_data[1:0] == 2'b01) && (imm[1:0] == 2'b01)) || ((rd_data[1:0] == 2'b01) && (imm[1:0] == 2'b10)) ||((rd_data[1:0] == 2'b10) && (imm[1:0] == 2'b00)) ||((rd_data[1:0] == 2'b10) && (imm[1:0] == 2'b01)) || ((rd_data[1:0] == 2'b11) && (imm[1:0] == 2'b00)) || ((rd_data[1:0] == 2'b11) && (imm[1:0] == 2'b11)) ? STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__0__JALR : STATE__JALR__1;
-            state__n = (rd_data[1:0] + imm[1:0] == 2'b10) || (rd_data[1:0] + imm[1:0] == 2'b11) ? STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__0__JALR : STATE__JALR__1;
+            //state__n = ((rf__rd_data[1:0] == 2'b00) && (imm[1:0] == 2'b10)) || ((rf__rd_data[1:0] == 2'b00) && (imm[1:0] == 2'b11)) || ((rf__rd_data[1:0] == 2'b01) && (imm[1:0] == 2'b01)) || ((rf__rd_data[1:0] == 2'b01) && (imm[1:0] == 2'b10)) ||((rf__rd_data[1:0] == 2'b10) && (imm[1:0] == 2'b00)) ||((rf__rd_data[1:0] == 2'b10) && (imm[1:0] == 2'b01)) || ((rf__rd_data[1:0] == 2'b11) && (imm[1:0] == 2'b00)) || ((rf__rd_data[1:0] == 2'b11) && (imm[1:0] == 2'b11)) ? STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__0__JALR : STATE__JALR__1;
+            state__n = (rf__rd_data[1:0] + imm[1:0] == 2'b10) || (rf__rd_data[1:0] + imm[1:0] == 2'b11) ? STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__0__JALR : STATE__JALR__1;
         end
 
         //==============================
@@ -2566,10 +2119,12 @@ always_comb begin
         STATE__JALR__1:
         begin
             func = 5'h0;
-            addr = rd;
-            we = 1'b1;     
-            wr_data = pc + 4;
+            rf__cs = 1'b1;
+            rf__addr = rd;
+            rf__we = 1'b1;     
+            rf__wr_data = pc + 4;
             pc__n = {c[63:1], 1'b0};
+            instret = 1'b1;
             state__n = STATE__FETCH__0;
         end
 
@@ -2589,10 +2144,12 @@ always_comb begin
         STATE__JAL__1:
         begin
             func = 5'h0;
-            addr = rd;
-            we = 1'b1;     
-            wr_data = pc + 4;
+            rf__cs = 1'b1;
+            rf__addr = rd;
+            rf__we = 1'b1;     
+            rf__wr_data = pc + 4;
             pc__n = c;
+            instret = 1'b1;
             state__n = STATE__FETCH__0;
         end
 
@@ -2601,8 +2158,9 @@ always_comb begin
         //==============================
         STATE__BEQ__0:
         begin
-            addr = rs1;
-            a__n = rd_data;
+            rf__cs = 1'b1;
+            rf__addr = rs1;
+            a__n = rf__rd_data;
             state__n = STATE__BEQ__1;
         end
 
@@ -2611,8 +2169,9 @@ always_comb begin
         //==============================
         STATE__BEQ__1:
         begin
-            addr = rs2;
-            b__n = rd_data;
+            rf__cs = 1'b1;
+            rf__addr = rs2;
+            b__n = rf__rd_data;
             state__n = STATE__BEQ__2;
         end
 
@@ -2630,6 +2189,7 @@ always_comb begin
         STATE__BEQ__3:
         begin
             pc__n = pc + 4;  
+            instret = 1'b1;
             state__n = STATE__FETCH__0;
         end
 
@@ -2650,6 +2210,7 @@ always_comb begin
         begin
             func = 5'h0;
             pc__n = c;
+            instret = 1'b1;
             state__n = STATE__FETCH__0;
         end
 
@@ -2658,8 +2219,9 @@ always_comb begin
         //==============================
         STATE__BNE__0:
         begin
-            addr = rs1;
-            a__n = rd_data;
+            rf__cs = 1'b1;
+            rf__addr = rs1;
+            a__n = rf__rd_data;
             state__n = STATE__BNE__1;
         end
 
@@ -2668,8 +2230,9 @@ always_comb begin
         //==============================
         STATE__BNE__1:
         begin
-            addr = rs2;
-            b__n = rd_data;
+            rf__cs = 1'b1;
+            rf__addr = rs2;
+            b__n = rf__rd_data;
             state__n = STATE__BNE__2;
         end
 
@@ -2687,6 +2250,7 @@ always_comb begin
         STATE__BNE__3:
         begin
             pc__n = pc + 4;  
+            instret = 1'b1;
             state__n = STATE__FETCH__0;
         end
 
@@ -2707,6 +2271,7 @@ always_comb begin
         begin
             func = 5'h0;
             pc__n = c;
+            instret = 1'b1;
             state__n = STATE__FETCH__0;
         end
 
@@ -2715,8 +2280,9 @@ always_comb begin
         //==============================
         STATE__BLT__0:
         begin
-            addr = rs1;
-            a__n = rd_data;
+            rf__cs = 1'b1;
+            rf__addr = rs1;
+            a__n = rf__rd_data;
             state__n = STATE__BLT__1;
         end
 
@@ -2725,8 +2291,9 @@ always_comb begin
         //==============================
         STATE__BLT__1:
         begin
-            addr = rs2;
-            b__n = rd_data;
+            rf__cs = 1'b1;
+            rf__addr = rs2;
+            b__n = rf__rd_data;
             state__n = STATE__BLT__2;
         end
 
@@ -2744,6 +2311,7 @@ always_comb begin
         STATE__BLT__3:
         begin
             pc__n = pc + 4;  
+            instret = 1'b1;
             state__n = STATE__FETCH__0;
         end
 
@@ -2764,6 +2332,7 @@ always_comb begin
         begin
             func = 5'h0;
             pc__n = c;
+            instret = 1'b1;
             state__n = STATE__FETCH__0;
         end
 
@@ -2772,8 +2341,9 @@ always_comb begin
         //==============================
         STATE__BGE__0:
         begin
-            addr = rs1;
-            a__n = rd_data;
+            rf__cs = 1'b1;
+            rf__addr = rs1;
+            a__n = rf__rd_data;
             state__n = STATE__BGE__1;
         end
 
@@ -2782,8 +2352,9 @@ always_comb begin
         //==============================
         STATE__BGE__1:
         begin
-            addr = rs2;
-            b__n = rd_data;
+            rf__cs = 1'b1;
+            rf__addr = rs2;
+            b__n = rf__rd_data;
             state__n = STATE__BGE__2;
         end
 
@@ -2801,6 +2372,7 @@ always_comb begin
         STATE__BGE__3:
         begin
             pc__n = pc + 4;  
+            instret = 1'b1;
             state__n = STATE__FETCH__0;
         end
 
@@ -2821,6 +2393,7 @@ always_comb begin
         begin
             func = 5'h0;
             pc__n = c;
+            instret = 1'b1;
             state__n = STATE__FETCH__0;
         end
 
@@ -2829,8 +2402,9 @@ always_comb begin
         //==============================
         STATE__BLTU__0:
         begin
-            addr = rs1;
-            a__n = rd_data;
+            rf__cs = 1'b1;
+            rf__addr = rs1;
+            a__n = rf__rd_data;
             state__n = STATE__BLTU__1;
         end
 
@@ -2839,8 +2413,9 @@ always_comb begin
         //==============================
         STATE__BLTU__1:
         begin
-            addr = rs2;
-            b__n = rd_data;
+            rf__cs = 1'b1;
+            rf__addr = rs2;
+            b__n = rf__rd_data;
             state__n = STATE__BLTU__2;
         end
 
@@ -2858,6 +2433,7 @@ always_comb begin
         STATE__BLTU__3:
         begin
             pc__n = pc + 4;  
+            instret = 1'b1;
             state__n = STATE__FETCH__0;
         end
 
@@ -2878,6 +2454,7 @@ always_comb begin
         begin
             func = 5'h0;
             pc__n = c;
+            instret = 1'b1;
             state__n = STATE__FETCH__0;
         end
 
@@ -2886,8 +2463,9 @@ always_comb begin
         //==============================
         STATE__BGEU__0:
         begin
-            addr = rs1;
-            a__n = rd_data;
+            rf__cs = 1'b1;
+            rf__addr = rs1;
+            a__n = rf__rd_data;
             state__n = STATE__BGEU__1;
         end
 
@@ -2896,8 +2474,9 @@ always_comb begin
         //==============================
         STATE__BGEU__1:
         begin
-            addr = rs2;
-            b__n = rd_data;
+            rf__cs = 1'b1;
+            rf__addr = rs2;
+            b__n = rf__rd_data;
             state__n = STATE__BGEU__2;
         end
 
@@ -2915,6 +2494,7 @@ always_comb begin
         STATE__BGEU__3:
         begin
             pc__n = pc + 4;  
+            instret = 1'b1;
             state__n = STATE__FETCH__0;
         end
 
@@ -2935,6 +2515,7 @@ always_comb begin
         begin
             func = 5'h0;
             pc__n = c;
+            instret = 1'b1;
             state__n = STATE__FETCH__0;
         end
 
@@ -2943,6 +2524,7 @@ always_comb begin
         //==============================
         STATE__ECALL:
         begin
+            csr__cs = 1'b1;
             csr__addr = 12'h342;
             csr__we = 1'b1;
             csr__wr_data = csr__rd_data;
@@ -2956,6 +2538,7 @@ always_comb begin
         //==============================
         STATE__EBREAK:
         begin
+            csr__cs = 1'b1;
             csr__addr = 12'h342;
             csr__we = 1'b1;
             csr__wr_data = csr__rd_data;
@@ -2970,6 +2553,7 @@ always_comb begin
         STATE__WFI:
         begin
             pc__n = pc + 4;
+            instret = 1'b1;
             state__n = STATE__FETCH__0;
         end
 
@@ -2979,6 +2563,7 @@ always_comb begin
         STATE__FENCE:
         begin
             pc__n = pc + 4;
+            instret = 1'b1;
             state__n = STATE__FETCH__0;
         end
 
@@ -2988,6 +2573,7 @@ always_comb begin
         STATE__FENCE_I:
         begin
             pc__n = pc + 4;
+            instret = 1'b1;
             state__n = STATE__FETCH__0;
         end
 
@@ -2996,10 +2582,12 @@ always_comb begin
         //==============================
         STATE__LUI:
         begin
-            addr = rd;
-            we = 1'b1;
-            wr_data = imm;
+            rf__cs = 1'b1;
+            rf__addr = rd;
+            rf__we = 1'b1;
+            rf__wr_data = imm;
             pc__n = pc + 4;
+            instret = 1'b1;
             state__n = STATE__FETCH__0;
         end
 
@@ -3008,8 +2596,10 @@ always_comb begin
         //==============================
         STATE__CSRRW__0:
         begin
-            addr = rs1;
-            a__n = rd_data;
+            rf__cs = 1'b1;
+            rf__addr = rs1;
+            a__n = rf__rd_data;
+            csr__cs = 1'b1;
             csr__addr = imm[11:0];
             b__n = csr__rd_data;
             state__n = (imm[11:10] == 2'h3) ? STATE__EXCEPTION__ILLEGAL_INSTRUCTION : (rd == 5'h0) ? STATE__CSRRW__2 : STATE__CSRRW__1; 
@@ -3021,9 +2611,10 @@ always_comb begin
         STATE__CSRRW__1:
         begin
             func = 5'h11;
-            addr = rd;
-            we = 1'b1;
-            wr_data = c;
+            rf__cs = 1'b1;
+            rf__addr = rd;
+            rf__we = 1'b1;
+            rf__wr_data = c;
             state__n = STATE__CSRRW__2;
         end
 
@@ -3033,10 +2624,12 @@ always_comb begin
         STATE__CSRRW__2:
         begin
             func = 5'h10;
+            csr__cs = 1'b1;
             csr__addr = imm[11:0];
             csr__we = 1'b1;
             csr__wr_data = c;
             pc__n = pc + 4;
+            instret = 1'b1;
             state__n = STATE__FETCH__0;
         end
 
@@ -3045,8 +2638,10 @@ always_comb begin
         //==============================
         STATE__CSRRS__0:
         begin
-            addr = rs1;
-            a__n = rd_data;
+            rf__cs = 1'b1;
+            rf__addr = rs1;
+            a__n = rf__rd_data;
+            csr__cs = 1'b1;
             csr__addr = imm[11:0];
             b__n = csr__rd_data;
             state__n = (rs1 == 5'h0) ? STATE__CSRRS__2 : (imm[11:10] == 2'h3) ? STATE__EXCEPTION__ILLEGAL_INSTRUCTION : STATE__CSRRS__1; 
@@ -3058,6 +2653,7 @@ always_comb begin
         STATE__CSRRS__1:
         begin
             func = 5'hd;
+            csr__cs = 1'b1;
             csr__addr = imm[11:0];
             csr__we = 1'b1;
             csr__wr_data = c;
@@ -3070,10 +2666,12 @@ always_comb begin
         STATE__CSRRS__2:
         begin
             func = 5'h11;
-            addr = rd;
-            we = 1'b1;
-            wr_data = c;
+            rf__cs = 1'b1;
+            rf__addr = rd;
+            rf__we = 1'b1;
+            rf__wr_data = c;
             pc__n = pc + 4;
+            instret = 1'b1;
             state__n = STATE__FETCH__0;
         end
 
@@ -3082,8 +2680,10 @@ always_comb begin
         //==============================
         STATE__CSRRC__0:
         begin
-            addr = rs1;
-            a__n = rd_data;
+            rf__cs = 1'b1;
+            rf__addr = rs1;
+            a__n = rf__rd_data;
+            csr__cs = 1'b1;
             csr__addr = imm[11:0];
             b__n = csr__rd_data;
             state__n = (rs1 == 5'h0) ? STATE__CSRRC__2 : (imm[11:10] == 2'h3) ? STATE__EXCEPTION__ILLEGAL_INSTRUCTION : STATE__CSRRC__1; 
@@ -3095,8 +2695,9 @@ always_comb begin
         STATE__CSRRC__1:
         begin
             func = 5'hf;
-            csr__addr = imm[11:0];
+            csr__cs = 1'b1;
             csr__we = 1'b1;
+            csr__addr = imm[11:0];
             csr__wr_data = c;
             state__n = STATE__CSRRC__2;
         end
@@ -3107,10 +2708,12 @@ always_comb begin
         STATE__CSRRC__2:
         begin
             func = 5'h11;
-            addr = rd;
-            we = 1'b1;
-            wr_data = c;
+            rf__cs = 1'b1;
+            rf__addr = rd;
+            rf__we = 1'b1;
+            rf__wr_data = c;
             pc__n = pc + 4;
+            instret = 1'b1;
             state__n = STATE__FETCH__0;
         end
 
@@ -3120,6 +2723,7 @@ always_comb begin
         STATE__CSRRWI__0:
         begin
             a__n = uimm;
+            csr__cs = 1'b1;
             csr__addr = imm[11:0];
             b__n = csr__rd_data;
             state__n = (imm[11:10] == 2'h3) ? STATE__EXCEPTION__ILLEGAL_INSTRUCTION : (rd == 5'h0) ? STATE__CSRRWI__2 : STATE__CSRRWI__1; 
@@ -3131,9 +2735,10 @@ always_comb begin
         STATE__CSRRWI__1:
         begin
             func = 5'h11;
-            addr = rd;
-            we = 1'b1;
-            wr_data = c;
+            rf__cs = 1'b1;
+            rf__addr = rd;
+            rf__we = 1'b1;
+            rf__wr_data = c;
             state__n = STATE__CSRRWI__2;
         end
 
@@ -3143,10 +2748,12 @@ always_comb begin
         STATE__CSRRWI__2:
         begin
             func = 5'h10;
-            csr__addr = imm[11:0];
+            csr__cs = 1'b1;
             csr__we = 1'b1;
+            csr__addr = imm[11:0];
             csr__wr_data = c;
             pc__n = pc + 4;
+            instret = 1'b1;
             state__n = STATE__FETCH__0;
         end
 
@@ -3156,6 +2763,7 @@ always_comb begin
         STATE__CSRRSI__0:
         begin
             a__n = uimm;
+            csr__cs = 1'b1;
             csr__addr = imm[11:0];
             b__n = csr__rd_data;
             state__n = (uimm[4:0] == 5'h0) ? STATE__CSRRSI__2 : (imm[11:10] == 2'h3) ? STATE__EXCEPTION__ILLEGAL_INSTRUCTION : STATE__CSRRSI__1; 
@@ -3167,8 +2775,9 @@ always_comb begin
         STATE__CSRRSI__1:
         begin
             func = 5'hd;
-            csr__addr = imm[11:0];
+            csr__cs = 1'b1;
             csr__we = 1'b1;
+            csr__addr = imm[11:0];
             csr__wr_data = c;
             state__n = STATE__CSRRSI__2;
         end
@@ -3179,10 +2788,12 @@ always_comb begin
         STATE__CSRRSI__2:
         begin
             func = 5'h11;
-            addr = rd;
-            we = 1'b1;
-            wr_data = c;
+            rf__cs = 1'b1;
+            rf__addr = rd;
+            rf__we = 1'b1;
+            rf__wr_data = c;
             pc__n = pc + 4;
+            instret = 1'b1;
             state__n = STATE__FETCH__0;
         end
 
@@ -3192,6 +2803,7 @@ always_comb begin
         STATE__CSRRCI__0:
         begin
             a__n = uimm;
+            csr__cs = 1'b1;
             csr__addr = imm[11:0];
             b__n = csr__rd_data;
             state__n = (uimm[4:0] == 5'h0) ? STATE__CSRRCI__2 : (imm[11:10] == 2'h3) ? STATE__EXCEPTION__ILLEGAL_INSTRUCTION : STATE__CSRRCI__1; 
@@ -3203,8 +2815,9 @@ always_comb begin
         STATE__CSRRCI__1:
         begin
             func = 5'hf;
-            csr__addr = imm[11:0];
+            csr__cs = 1'b1;
             csr__we = 1'b1;
+            csr__addr = imm[11:0];
             csr__wr_data = c;
             state__n = STATE__CSRRCI__2;
         end
@@ -3215,10 +2828,12 @@ always_comb begin
         STATE__CSRRCI__2:
         begin
             func = 5'h11;
-            addr = rd;
-            we = 1'b1;
-            wr_data = c;
+            rf__cs = 1'b1;
+            rf__addr = rd;
+            rf__we = 1'b1;
+            rf__wr_data = c;
             pc__n = pc + 4;
+            instret = 1'b1;
             state__n = STATE__FETCH__0;
         end
 
@@ -3227,8 +2842,9 @@ always_comb begin
         //==============================
         STATE__MRET__0:
         begin
-            csr__addr = 12'h300;
+            csr__cs = 1'b1;
             csr__we = 1'b1;
+            csr__addr = 12'h300;
             csr__wr_data = csr__rd_data;
             csr__wr_data[3] <= csr__rd_data[7];
             csr__wr_data[7] <= 1'b1;
@@ -3240,8 +2856,10 @@ always_comb begin
         //==============================
         STATE__MRET__1:
         begin
+            csr__cs = 1'b1;
             csr__addr = 12'h341;
             pc__n = csr__rd_data;
+            instret = 1'b1;
             state__n = STATE__FETCH__0;
         end
 
@@ -3250,8 +2868,9 @@ always_comb begin
         //==============================
         STATE__EXCEPTION__ILLEGAL_INSTRUCTION:
         begin
-            csr__addr = 12'h342;
+            csr__cs = 1'b1;
             csr__we = 1'b1;
+            csr__addr = 12'h342;
             csr__wr_data = csr__rd_data;
             csr__wr_data[62:0] = 63'h2;
             csr__wr_data[63] = 1'b0;
@@ -3264,8 +2883,9 @@ always_comb begin
         STATE__EXCEPTION__INSTRUCTION_ACCESS_FAULT__0:
         begin
             func = 5'h0; 
-            csr__addr = 12'h343;
+            csr__cs = 1'b1;
             csr__we = 1'b1;
+            csr__addr = 12'h343;
             csr__wr_data = csr__rd_data;
             csr__wr_data[63:0] = pc;
             state__n = STATE__EXCEPTION__INSTRUCTION_ACCESS_FAULT__1;
@@ -3276,8 +2896,9 @@ always_comb begin
         //==============================
         STATE__EXCEPTION__INSTRUCTION_ACCESS_FAULT__1:
         begin
-            csr__addr = 12'h342;
+            csr__cs = 1'b1;
             csr__we = 1'b1;
+            csr__addr = 12'h342;
             csr__wr_data = csr__rd_data;
             csr__wr_data[62:0] = 63'h1;
             csr__wr_data[63] = 1'b0;
@@ -3290,8 +2911,9 @@ always_comb begin
         STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__0:
         begin
             func = 5'h0; 
-            csr__addr = 12'h343;
+            csr__cs = 1'b1;
             csr__we = 1'b1;
+            csr__addr = 12'h343;
             csr__wr_data = csr__rd_data;
             csr__wr_data[63:0] = c;
             state__n = STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__1;
@@ -3303,8 +2925,9 @@ always_comb begin
         STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__0__JALR:
         begin
             func = 5'h0; 
-            csr__addr = 12'h343;
+            csr__cs = 1'b1;
             csr__we = 1'b1;
+            csr__addr = 12'h343;
             csr__wr_data = csr__rd_data;
             csr__wr_data[63:0] = {c[63:1], 1'b0};
             state__n = STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__1;
@@ -3315,8 +2938,9 @@ always_comb begin
         //==============================
         STATE__EXCEPTION__INSTRUCTION_ADDRESS_MISALIGNED__1:
         begin
-            csr__addr = 12'h342;
+            csr__cs = 1'b1;
             csr__we = 1'b1;
+            csr__addr = 12'h342;
             csr__wr_data = csr__rd_data;
             csr__wr_data[62:0] = 63'h0;
             csr__wr_data[63] = 1'b0;
@@ -3329,8 +2953,9 @@ always_comb begin
         STATE__EXCEPTION__LOAD_ACCESS_FAULT__0:
         begin
             func = 5'h0; 
-            csr__addr = 12'h343;
+            csr__cs = 1'b1;
             csr__we = 1'b1;
+            csr__addr = 12'h343;
             csr__wr_data = csr__rd_data;
             csr__wr_data[63:0] = c;
             state__n = STATE__EXCEPTION__LOAD_ACCESS_FAULT__1;
@@ -3341,8 +2966,9 @@ always_comb begin
         //==============================
         STATE__EXCEPTION__LOAD_ACCESS_FAULT__1:
         begin
-            csr__addr = 12'h342;
+            csr__cs = 1'b1;
             csr__we = 1'b1;
+            csr__addr = 12'h342;
             csr__wr_data = csr__rd_data;
             csr__wr_data[62:0] = 63'h5;
             csr__wr_data[63] = 1'b0;
@@ -3355,8 +2981,9 @@ always_comb begin
         STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0:
         begin
             func = 5'h0; 
-            csr__addr = 12'h343;
+            csr__cs = 1'b1;
             csr__we = 1'b1;
+            csr__addr = 12'h343;
             csr__wr_data = csr__rd_data;
             csr__wr_data[63:0] = c;
             state__n = STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__1;
@@ -3367,8 +2994,9 @@ always_comb begin
         //==============================
         STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__1:
         begin
-            csr__addr = 12'h342;
+            csr__cs = 1'b1;
             csr__we = 1'b1;
+            csr__addr = 12'h342;
             csr__wr_data = csr__rd_data;
             csr__wr_data[62:0] = 63'h4;
             csr__wr_data[63] = 1'b0;
@@ -3381,8 +3009,9 @@ always_comb begin
         STATE__EXCEPTION__STORE_ACCESS_FAULT__0:
         begin
             func = 5'h0; 
-            csr__addr = 12'h343;
+            csr__cs = 1'b1;
             csr__we = 1'b1;
+            csr__addr = 12'h343;
             csr__wr_data = csr__rd_data;
             csr__wr_data[63:0] = c;
             state__n = STATE__EXCEPTION__STORE_ACCESS_FAULT__1;
@@ -3393,8 +3022,9 @@ always_comb begin
         //==============================
         STATE__EXCEPTION__STORE_ACCESS_FAULT__1:
         begin
-            csr__addr = 12'h342;
+            csr__cs = 1'b1;
             csr__we = 1'b1;
+            csr__addr = 12'h342;
             csr__wr_data = csr__rd_data;
             csr__wr_data[62:0] = 63'h7;
             csr__wr_data[63] = 1'b0;
@@ -3407,8 +3037,9 @@ always_comb begin
         STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__0:
         begin
             func = 5'h0; 
-            csr__addr = 12'h343;
+            csr__cs = 1'b1;
             csr__we = 1'b1;
+            csr__addr = 12'h343;
             csr__wr_data = csr__rd_data;
             csr__wr_data[63:0] = c;
             state__n = STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__1;
@@ -3419,8 +3050,9 @@ always_comb begin
         //==============================
         STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__1:
         begin
-            csr__addr = 12'h342;
+            csr__cs = 1'b1;
             csr__we = 1'b1;
+            csr__addr = 12'h342;
             csr__wr_data = csr__rd_data;
             csr__wr_data[62:0] = 63'h6;
             csr__wr_data[63] = 1'b0;
@@ -3432,8 +3064,9 @@ always_comb begin
         //==============================
         STATE__INTERRUPT__SOFTWARE:
         begin
-            csr__addr = 12'h342;
+            csr__cs = 1'b1;
             csr__we = 1'b1;
+            csr__addr = 12'h342;
             csr__wr_data[62:0] = 63'h3;
             csr__wr_data[63] = 1'b1;
             state__n = STATE__TRAP__0;
@@ -3444,8 +3077,9 @@ always_comb begin
         //==============================
         STATE__INTERRUPT__TIMER:
         begin
-            csr__addr = 12'h342;
+            csr__cs = 1'b1;
             csr__we = 1'b1;
+            csr__addr = 12'h342;
             csr__wr_data[62:0] = 63'h7;
             csr__wr_data[63] = 1'b1;
             state__n = STATE__TRAP__0;
@@ -3456,8 +3090,9 @@ always_comb begin
         //==============================
         STATE__INTERRUPT__EXTERNAL:
         begin
-            csr__addr = 12'h342;
+            csr__cs = 1'b1;
             csr__we = 1'b1;
+            csr__addr = 12'h342;
             csr__wr_data[62:0] = 63'hb;
             csr__wr_data[63] = 1'b1;
             state__n = STATE__TRAP__0;
@@ -3469,8 +3104,9 @@ always_comb begin
         //==============================
         STATE__TRAP__0:
         begin
-            csr__addr = 12'h300;
+            csr__cs = 1'b1;
             csr__we = 1'b1;
+            csr__addr = 12'h300;
             csr__wr_data = csr__rd_data;
             csr__wr_data[3] <= 1'b0;
             csr__wr_data[7] <= csr__rd_data[3];
@@ -3482,8 +3118,9 @@ always_comb begin
         //==============================
         STATE__TRAP__1:
         begin
-            csr__addr = 12'h341;
+            csr__cs = 1'b1;
             csr__we = 1'b1;
+            csr__addr = 12'h341;
             csr__wr_data = csr__rd_data;
             csr__wr_data[63:0] = pc;
             state__n = STATE__TRAP__2;
@@ -3494,6 +3131,7 @@ always_comb begin
         //==============================
         STATE__TRAP__2:
         begin
+            csr__cs = 1'b1;
             csr__addr = 12'h305;
             pc__n = csr__rd_data; 
             state__n = STATE__FETCH__0;
@@ -3510,48 +3148,297 @@ always_comb begin
     endcase
 end
 
+//==============================
+// d_flip_flop__state
+//==============================
+d_flip_flop #(.WIDTH(8), .RESET_VALUE(STATE__RESET)) d_flip_flop__state
+(
+    .clk(clk),
+    .rst(rst),
+    .en(1'b1),
+    .d(state__n),
+    .q(state)
+);
 
-always_ff @(posedge clk)
-begin
-    if (rst) 
-    begin
-        state <= STATE__RESET;
-    end
-    else 
-    begin
-        state <= state__n;
-    end
-end
+//==============================
+// d_flip_flop__pc
+//==============================
+d_flip_flop #(.WIDTH(64), .RESET_VALUE(64'h80000000)) d_flip_flop__pc
+(
+    .clk(clk),
+    .rst(rst),
+    .en(1'b1),
+    .d(pc__n),
+    .q(pc)
+);
 
-always_ff @(posedge clk)
-begin
-    if (rst) 
-    begin
-        pc <= 64'h80000000;
-    end
-    else 
-    begin
-        pc <= pc__n;
-    end
-end
+//==============================
+// d_flip_flop__ir
+//==============================
+d_flip_flop #(.WIDTH(32)) d_flip_flop__ir
+(
+    .clk(clk),
+    .rst(1'b0),
+    .en(1'b1),
+    .d(ir__n),
+    .q(ir)
+);
 
-always_ff @(posedge clk)
-begin
-    ir <= ir__n;
-end
+//==============================
+// d_flip_flop__a
+//==============================
+d_flip_flop #(.WIDTH(64)) d_flip_flop__a
+(
+    .clk(clk),
+    .rst(1'b0),
+    .en(1'b1),
+    .d(a__n),
+    .q(a)
+);
 
-always_ff @(posedge clk)
-begin
-    a <= a__n;
-end
+//==============================
+// d_flip_flop__b
+//==============================
+d_flip_flop #(.WIDTH(64)) d_flip_flop__b
+(
+    .clk(clk),
+    .rst(1'b0),
+    .en(1'b1),
+    .d(b__n),
+    .q(b)
+);
 
-always_ff @(posedge clk)
-begin
-    b <= b__n;
-end
 
 endmodule
 
+//==============================================
+// arithmetic_logic_unit
+//==============================================
+module arithmetic_logic_unit
+(
+    input clk,
+    input rst,
+    input [4:0] func,
+    input [63:0] a,
+    input [63:0] b,
+    output logic [63:0] c
+);
+
+logic [63:0] x;
+
+// Mathmatical/logical operations.
+always_comb begin
+    case (func)
+        5'h0: 
+        begin 
+            c = a + b;
+        end
+        5'h1:
+        begin
+            x = a + b;
+            c = {{32{x[31]}}, x[31:0]};
+        end
+        5'h2:
+        begin
+            c = a - b;
+        end
+        5'h3:
+        begin
+            x = a - b;
+            c = {{32{x[31]}}, x[31:0]};
+        end
+        5'h4:
+        begin 
+            c = a << b[5:0];
+        end
+        5'h5:
+        begin
+            x = a << b[4:0];
+            c = {{32{x[31]}}, x[31:0]};
+        end
+        5'h6:
+        begin
+            c = {63'h0, ((a[63] == b[63]) ? a < b : a[63])};
+        end
+        5'h7:
+        begin
+            c = {63'h0, a < b};
+        end
+        5'h8:
+        begin
+            c = a ^ b;
+        end
+        5'h9:
+        begin
+            c = a >> b[5:0];
+        end
+        5'ha:
+        begin
+            case (b[4:0])
+                5'h0: c = {{32{a[31]}}, a[31:0]};
+                5'h1: c = {{33{1'b0}}, a[31:1]};
+                5'h2: c = {{34{1'b0}}, a[31:2]};
+                5'h3: c = {{35{1'b0}}, a[31:3]};
+                5'h4: c = {{36{1'b0}}, a[31:4]};
+                5'h5: c = {{37{1'b0}}, a[31:5]};
+                5'h6: c = {{38{1'b0}}, a[31:6]};
+                5'h7: c = {{39{1'b0}}, a[31:7]};
+                5'h8: c = {{40{1'b0}}, a[31:8]};
+                5'h9: c = {{41{1'b0}}, a[31:9]};
+                5'ha: c = {{42{1'b0}}, a[31:10]};
+                5'hb: c = {{43{1'b0}}, a[31:11]};
+                5'hc: c = {{44{1'b0}}, a[31:12]};
+                5'hd: c = {{45{1'b0}}, a[31:13]};
+                5'he: c = {{46{1'b0}}, a[31:14]};
+                5'hf: c = {{47{1'b0}}, a[31:15]};
+                5'h10: c = {{48{1'b0}}, a[31:16]};
+                5'h11: c = {{49{1'b0}}, a[31:17]};
+                5'h12: c = {{50{1'b0}}, a[31:18]};
+                5'h13: c = {{51{1'b0}}, a[31:19]};
+                5'h14: c = {{52{1'b0}}, a[31:20]};
+                5'h15: c = {{53{1'b0}}, a[31:21]};
+                5'h16: c = {{54{1'b0}}, a[31:22]};
+                5'h17: c = {{55{1'b0}}, a[31:23]};
+                5'h18: c = {{56{1'b0}}, a[31:24]};
+                5'h19: c = {{57{1'b0}}, a[31:25]};
+                5'h1a: c = {{58{1'b0}}, a[31:26]};
+                5'h1b: c = {{59{1'b0}}, a[31:27]};
+                5'h1c: c = {{60{1'b0}}, a[31:28]};
+                5'h1d: c = {{61{1'b0}}, a[31:29]};
+                5'h1e: c = {{62{1'b0}}, a[31:30]};
+                5'h1f: c = {{63{1'b0}}, a[31:31]};
+            endcase
+        end
+        5'hb:
+        begin
+            case (b[5:0])
+                6'h0: c = {{0{a[63]}}, a[63:0]};
+                6'h1: c = {{1{a[63]}}, a[63:1]};
+                6'h2: c = {{2{a[63]}}, a[63:2]};
+                6'h3: c = {{3{a[63]}}, a[63:3]};
+                6'h4: c = {{4{a[63]}}, a[63:4]};
+                6'h5: c = {{5{a[63]}}, a[63:5]};
+                6'h6: c = {{6{a[63]}}, a[63:6]};
+                6'h7: c = {{7{a[63]}}, a[63:7]};
+                6'h8: c = {{8{a[63]}}, a[63:8]};
+                6'h9: c = {{9{a[63]}}, a[63:9]};
+                6'ha: c = {{10{a[63]}}, a[63:10]};
+                6'hb: c = {{11{a[63]}}, a[63:11]};
+                6'hc: c = {{12{a[63]}}, a[63:12]};
+                6'hd: c = {{13{a[63]}}, a[63:13]};
+                6'he: c = {{14{a[63]}}, a[63:14]};
+                6'hf: c = {{15{a[63]}}, a[63:15]};
+                6'h10: c = {{16{a[63]}}, a[63:16]};
+                6'h11: c = {{17{a[63]}}, a[63:17]};
+                6'h12: c = {{18{a[63]}}, a[63:18]};
+                6'h13: c = {{19{a[63]}}, a[63:19]};
+                6'h14: c = {{20{a[63]}}, a[63:20]};
+                6'h15: c = {{21{a[63]}}, a[63:21]};
+                6'h16: c = {{22{a[63]}}, a[63:22]};
+                6'h17: c = {{23{a[63]}}, a[63:23]};
+                6'h18: c = {{24{a[63]}}, a[63:24]};
+                6'h19: c = {{25{a[63]}}, a[63:25]};
+                6'h1a: c = {{26{a[63]}}, a[63:26]};
+                6'h1b: c = {{27{a[63]}}, a[63:27]};
+                6'h1c: c = {{28{a[63]}}, a[63:28]};
+                6'h1d: c = {{29{a[63]}}, a[63:29]};
+                6'h1e: c = {{30{a[63]}}, a[63:30]};
+                6'h1f: c = {{31{a[63]}}, a[63:31]};
+                6'h20: c = {{32{a[63]}}, a[63:32]};
+                6'h21: c = {{33{a[63]}}, a[63:33]};
+                6'h22: c = {{34{a[63]}}, a[63:34]};
+                6'h23: c = {{35{a[63]}}, a[63:35]};
+                6'h24: c = {{36{a[63]}}, a[63:36]};
+                6'h25: c = {{37{a[63]}}, a[63:37]};
+                6'h26: c = {{38{a[63]}}, a[63:38]};
+                6'h27: c = {{39{a[63]}}, a[63:39]};
+                6'h28: c = {{40{a[63]}}, a[63:40]};
+                6'h29: c = {{41{a[63]}}, a[63:41]};
+                6'h2a: c = {{42{a[63]}}, a[63:42]};
+                6'h2b: c = {{43{a[63]}}, a[63:43]};
+                6'h2c: c = {{44{a[63]}}, a[63:44]};
+                6'h2d: c = {{45{a[63]}}, a[63:45]};
+                6'h2e: c = {{46{a[63]}}, a[63:46]};
+                6'h2f: c = {{47{a[63]}}, a[63:47]};
+                6'h30: c = {{48{a[63]}}, a[63:48]};
+                6'h31: c = {{49{a[63]}}, a[63:49]};
+                6'h32: c = {{50{a[63]}}, a[63:50]};
+                6'h33: c = {{51{a[63]}}, a[63:51]};
+                6'h34: c = {{52{a[63]}}, a[63:52]};
+                6'h35: c = {{53{a[63]}}, a[63:53]};
+                6'h36: c = {{54{a[63]}}, a[63:54]};
+                6'h37: c = {{55{a[63]}}, a[63:55]};
+                6'h38: c = {{56{a[63]}}, a[63:56]};
+                6'h39: c = {{57{a[63]}}, a[63:57]};
+                6'h3a: c = {{58{a[63]}}, a[63:58]};
+                6'h3b: c = {{59{a[63]}}, a[63:59]};
+                6'h3c: c = {{60{a[63]}}, a[63:60]};
+                6'h3d: c = {{61{a[63]}}, a[63:61]};
+                6'h3e: c = {{62{a[63]}}, a[63:62]};
+                6'h3f: c = {{63{a[63]}}, a[63:63]};
+            endcase
+        end
+        5'hc:
+        begin
+            case (b[4:0])
+                5'h0: c = {{32{a[31]}}, a[31:0]};
+                5'h1: c = {{33{a[31]}}, a[31:1]};
+                5'h2: c = {{34{a[31]}}, a[31:2]};
+                5'h3: c = {{35{a[31]}}, a[31:3]};
+                5'h4: c = {{36{a[31]}}, a[31:4]};
+                5'h5: c = {{37{a[31]}}, a[31:5]};
+                5'h6: c = {{38{a[31]}}, a[31:6]};
+                5'h7: c = {{39{a[31]}}, a[31:7]};
+                5'h8: c = {{40{a[31]}}, a[31:8]};
+                5'h9: c = {{41{a[31]}}, a[31:9]};
+                5'ha: c = {{42{a[31]}}, a[31:10]};
+                5'hb: c = {{43{a[31]}}, a[31:11]};
+                5'hc: c = {{44{a[31]}}, a[31:12]};
+                5'hd: c = {{45{a[31]}}, a[31:13]};
+                5'he: c = {{46{a[31]}}, a[31:14]};
+                5'hf: c = {{47{a[31]}}, a[31:15]};
+                5'h10: c = {{48{a[31]}}, a[31:16]};
+                5'h11: c = {{49{a[31]}}, a[31:17]};
+                5'h12: c = {{50{a[31]}}, a[31:18]};
+                5'h13: c = {{51{a[31]}}, a[31:19]};
+                5'h14: c = {{52{a[31]}}, a[31:20]};
+                5'h15: c = {{53{a[31]}}, a[31:21]};
+                5'h16: c = {{54{a[31]}}, a[31:22]};
+                5'h17: c = {{55{a[31]}}, a[31:23]};
+                5'h18: c = {{56{a[31]}}, a[31:24]};
+                5'h19: c = {{57{a[31]}}, a[31:25]};
+                5'h1a: c = {{58{a[31]}}, a[31:26]};
+                5'h1b: c = {{59{a[31]}}, a[31:27]};
+                5'h1c: c = {{60{a[31]}}, a[31:28]};
+                5'h1d: c = {{61{a[31]}}, a[31:29]};
+                5'h1e: c = {{62{a[31]}}, a[31:30]};
+                5'h1f: c = {{63{a[31]}}, a[31:31]};
+            endcase
+        end
+        5'hd:
+        begin
+            c = a | b;
+        end
+        5'he:
+        begin
+            c = a & b;
+        end
+        5'hf:
+        begin
+            c = ~a & b;
+        end
+        5'h10:
+        begin
+            c = a;
+        end
+        5'h11:
+        begin
+            c = b;
+        end
+    endcase
+end
+
+endmodule
 //==============================================
 // register_file
 //==============================================
@@ -3559,18 +3446,12 @@ module register_file
 (
     input clk,
     input rst,
+    input cs,
     input we,
     input [4:0] addr,
-    output [63:0] rd_data,
+    output logic [63:0] rd_data,
     input [63:0] wr_data
 );
-
-logic clk;
-logic rst;
-logic we;
-logic [4:0] addr;
-logic [63:0] rd_data;
-logic [63:0] wr_data;
 
 logic [63:0] x__0;
 logic [63:0] x__1;
@@ -3605,488 +3486,736 @@ logic [63:0] x__29;
 logic [63:0] x__30;
 logic [63:0] x__31;
 
-logic we__0;
-logic we__1;
-logic we__2;
-logic we__3;
-logic we__4;
-logic we__5;
-logic we__6;
-logic we__7;
-logic we__8;
-logic we__9;
-logic we__10;
-logic we__11;
-logic we__12;
-logic we__13;
-logic we__14;
-logic we__15;
-logic we__16;
-logic we__17;
-logic we__18;
-logic we__19;
-logic we__20;
-logic we__21;
-logic we__22;
-logic we__23;
-logic we__24;
-logic we__25;
-logic we__26;
-logic we__27;
-logic we__28;
-logic we__29;
-logic we__30;
-logic we__31;
+logic we__x__0;
+logic we__x__1;
+logic we__x__2;
+logic we__x__3;
+logic we__x__4;
+logic we__x__5;
+logic we__x__6;
+logic we__x__7;
+logic we__x__8;
+logic we__x__9;
+logic we__x__10;
+logic we__x__11;
+logic we__x__12;
+logic we__x__13;
+logic we__x__14;
+logic we__x__15;
+logic we__x__16;
+logic we__x__17;
+logic we__x__18;
+logic we__x__19;
+logic we__x__20;
+logic we__x__21;
+logic we__x__22;
+logic we__x__23;
+logic we__x__24;
+logic we__x__25;
+logic we__x__26;
+logic we__x__27;
+logic we__x__28;
+logic we__x__29;
+logic we__x__30;
+logic we__x__31;
+
+logic en__x__0;
+logic en__x__1;
+logic en__x__2;
+logic en__x__3;
+logic en__x__4;
+logic en__x__5;
+logic en__x__6;
+logic en__x__7;
+logic en__x__8;
+logic en__x__9;
+logic en__x__10;
+logic en__x__11;
+logic en__x__12;
+logic en__x__13;
+logic en__x__14;
+logic en__x__15;
+logic en__x__16;
+logic en__x__17;
+logic en__x__18;
+logic en__x__19;
+logic en__x__20;
+logic en__x__21;
+logic en__x__22;
+logic en__x__23;
+logic en__x__24;
+logic en__x__25;
+logic en__x__26;
+logic en__x__27;
+logic en__x__28;
+logic en__x__29;
+logic en__x__30;
+logic en__x__31;
 
 always_comb
 begin
-    we__0 = 1'b0;
-    we__1 = 1'b0;
-    we__2 = 1'b0;
-    we__3 = 1'b0;
-    we__4 = 1'b0;
-    we__5 = 1'b0;
-    we__6 = 1'b0;
-    we__7 = 1'b0;
-    we__8 = 1'b0;
-    we__9 = 1'b0;
-    we__10 = 1'b0;
-    we__11 = 1'b0;
-    we__12 = 1'b0;
-    we__13 = 1'b0;
-    we__14 = 1'b0;
-    we__15 = 1'b0;
-    we__16 = 1'b0;
-    we__17 = 1'b0;
-    we__18 = 1'b0;
-    we__19 = 1'b0;
-    we__20 = 1'b0;
-    we__21 = 1'b0;
-    we__22 = 1'b0;
-    we__23 = 1'b0;
-    we__24 = 1'b0;
-    we__25 = 1'b0;
-    we__26 = 1'b0;
-    we__27 = 1'b0;
-    we__28 = 1'b0;
-    we__29 = 1'b0;
-    we__30 = 1'b0;
-    we__31 = 1'b0;
+    we__x__0 = 1'b0;
+    we__x__1 = 1'b0;
+    we__x__2 = 1'b0;
+    we__x__3 = 1'b0;
+    we__x__4 = 1'b0;
+    we__x__5 = 1'b0;
+    we__x__6 = 1'b0;
+    we__x__7 = 1'b0;
+    we__x__8 = 1'b0;
+    we__x__9 = 1'b0;
+    we__x__10 = 1'b0;
+    we__x__11 = 1'b0;
+    we__x__12 = 1'b0;
+    we__x__13 = 1'b0;
+    we__x__14 = 1'b0;
+    we__x__15 = 1'b0;
+    we__x__16 = 1'b0;
+    we__x__17 = 1'b0;
+    we__x__18 = 1'b0;
+    we__x__19 = 1'b0;
+    we__x__20 = 1'b0;
+    we__x__21 = 1'b0;
+    we__x__22 = 1'b0;
+    we__x__23 = 1'b0;
+    we__x__24 = 1'b0;
+    we__x__25 = 1'b0;
+    we__x__26 = 1'b0;
+    we__x__27 = 1'b0;
+    we__x__28 = 1'b0;
+    we__x__29 = 1'b0;
+    we__x__30 = 1'b0;
+    we__x__31 = 1'b0;
 
     case (addr)
         5'h0:
         begin
             rd_data = x__0;
-            we__0 = we;
+            we__x__0 = we;
         end
         5'h1:
         begin
             rd_data = x__1;
-            we__1 = we;
+            we__x__1 = we;
         end
         5'h2:
         begin
             rd_data = x__2;
-            we__2 = we;
+            we__x__2 = we;
         end
         5'h3:
         begin
             rd_data = x__3;
-            we__3 = we;
+            we__x__3 = we;
         end
         5'h4:
         begin
             rd_data = x__4;
-            we__4 = we;
+            we__x__4 = we;
         end
         5'h5:
         begin
             rd_data = x__5;
-            we__5 = we;
+            we__x__5 = we;
         end
         5'h6:
         begin
             rd_data = x__6;
-            we__6 = we;
+            we__x__6 = we;
         end
         5'h7:
         begin
             rd_data = x__7;
-            we__7 = we;
+            we__x__7 = we;
         end
         5'h8:
         begin
             rd_data = x__8;
-            we__8 = we;
+            we__x__8 = we;
         end
         5'h9:
         begin
             rd_data = x__9;
-            we__9 = we;
+            we__x__9 = we;
         end
         5'ha:
         begin
             rd_data = x__10;
-            we__10 = we;
+            we__x__10 = we;
         end
         5'hb:
         begin
             rd_data = x__11;
-            we__11 = we;
+            we__x__11 = we;
         end
         5'hc:
         begin
             rd_data = x__12;
-            we__12 = we;
+            we__x__12 = we;
         end
         5'hd:
         begin
             rd_data = x__13;
-            we__13 = we;
+            we__x__13 = we;
         end
         5'he:
         begin
             rd_data = x__14;
-            we__14 = we;
+            we__x__14 = we;
         end
         5'hf:
         begin
             rd_data = x__15;
-            we__15 = we;
+            we__x__15 = we;
         end
         5'h10:
         begin
             rd_data = x__16;
-            we__16 = we;
+            we__x__16 = we;
         end
         5'h11:
         begin
             rd_data = x__17;
-            we__17 = we;
+            we__x__17 = we;
         end
         5'h12:
         begin
             rd_data = x__18;
-            we__18 = we;
+            we__x__18 = we;
         end
         5'h13:
         begin
             rd_data = x__19;
-            we__19 = we;
+            we__x__19 = we;
         end
         5'h14:
         begin
             rd_data = x__20;
-            we__20 = we;
+            we__x__20 = we;
         end
         5'h15:
         begin
             rd_data = x__21;
-            we__21 = we;
+            we__x__21 = we;
         end
         5'h16:
         begin
             rd_data = x__22;
-            we__22 = we;
+            we__x__22 = we;
         end
         5'h17:
         begin
             rd_data = x__23;
-            we__23 = we;
+            we__x__23 = we;
         end
         5'h18:
         begin
             rd_data = x__24;
-            we__24 = we;
+            we__x__24 = we;
         end
         5'h19:
         begin
             rd_data = x__25;
-            we__25 = we;
+            we__x__25 = we;
         end
         5'h1a:
         begin
             rd_data = x__26;
-            we__26 = we;
+            we__x__26 = we;
         end
         5'h1b:
         begin
             rd_data = x__27;
-            we__27 = we;
+            we__x__27 = we;
         end
         5'h1c:
         begin
             rd_data = x__28;
-            we__28 = we;
+            we__x__28 = we;
         end
         5'h1d:
         begin
             rd_data = x__29;
-            we__29 = we;
+            we__x__29 = we;
         end
         5'h1e:
         begin
             rd_data = x__30;
-            we__30 = we;
+            we__x__30 = we;
         end
         5'h1f:
         begin
             rd_data = x__31;
-            we__31 = we;
+            we__x__31 = we;
         end
     endcase
 end
 
+assign en__x__0 = cs & we__x__0;
+assign en__x__1 = cs & we__x__1;
+assign en__x__2 = cs & we__x__2;
+assign en__x__3 = cs & we__x__3;
+assign en__x__4 = cs & we__x__4;
+assign en__x__5 = cs & we__x__5;
+assign en__x__6 = cs & we__x__6;
+assign en__x__7 = cs & we__x__7;
+assign en__x__8 = cs & we__x__8;
+assign en__x__9 = cs & we__x__9;
+assign en__x__10 = cs & we__x__10;
+assign en__x__11 = cs & we__x__11;
+assign en__x__12 = cs & we__x__12;
+assign en__x__13 = cs & we__x__13;
+assign en__x__14 = cs & we__x__14;
+assign en__x__15 = cs & we__x__15;
+assign en__x__16 = cs & we__x__16;
+assign en__x__17 = cs & we__x__17;
+assign en__x__18 = cs & we__x__18;
+assign en__x__19 = cs & we__x__19;
+assign en__x__20 = cs & we__x__20;
+assign en__x__21 = cs & we__x__21;
+assign en__x__22 = cs & we__x__22;
+assign en__x__23 = cs & we__x__23;
+assign en__x__24 = cs & we__x__24;
+assign en__x__25 = cs & we__x__25;
+assign en__x__26 = cs & we__x__26;
+assign en__x__27 = cs & we__x__27;
+assign en__x__28 = cs & we__x__28;
+assign en__x__29 = cs & we__x__29;
+assign en__x__30 = cs & we__x__30;
+assign en__x__31 = cs & we__x__31;
+
 assign x__0 = 64'h0;
 
-always_ff @(posedge clk)
-begin
-    if (we__1)
-    begin
-        x__1 <= wr_data;
-    end
-end
+//==============================
+// d_flip_flop__x__1
+//==============================
+d_flip_flop #(.WIDTH(64)) d_flip_flop__x__1
+(
+    .clk(clk),
+    .rst(1'b0),
+    .en(en__x__1),
+    .d(wr_data),
+    .q(x__1)
+);
 
-always_ff @(posedge clk)
-begin
-    if (we__2)
-    begin
-        x__2 <= wr_data;
-    end
-end
 
-always_ff @(posedge clk)
-begin
-    if (we__3)
-    begin
-        x__3 <= wr_data;
-    end
-end
+//==============================
+// d_flip_flop__x__2
+//==============================
+d_flip_flop #(.WIDTH(64)) d_flip_flop__x__2
+(
+    .clk(clk),
+    .rst(1'b0),
+    .en(en__x__2),
+    .d(wr_data),
+    .q(x__2)
+);
 
-always_ff @(posedge clk)
-begin
-    if (we__4)
-    begin
-        x__4 <= wr_data;
-    end
-end
 
-always_ff @(posedge clk)
-begin
-    if (we__5)
-    begin
-        x__5 <= wr_data;
-    end
-end
+//==============================
+// d_flip_flop__x__3
+//==============================
+d_flip_flop #(.WIDTH(64)) d_flip_flop__x__3
+(
+    .clk(clk),
+    .rst(1'b0),
+    .en(en__x__3),
+    .d(wr_data),
+    .q(x__3)
+);
 
-always_ff @(posedge clk)
-begin
-    if (we__6)
-    begin
-        x__6 <= wr_data;
-    end
-end
 
-always_ff @(posedge clk)
-begin
-    if (we__7)
-    begin
-        x__7 <= wr_data;
-    end
-end
+//==============================
+// d_flip_flop__x__4
+//==============================
+d_flip_flop #(.WIDTH(64)) d_flip_flop__x__4
+(
+    .clk(clk),
+    .rst(1'b0),
+    .en(en__x__4),
+    .d(wr_data),
+    .q(x__4)
+);
 
-always_ff @(posedge clk)
-begin
-    if (we__8)
-    begin
-        x__8 <= wr_data;
-    end
-end
 
-always_ff @(posedge clk)
-begin
-    if (we__9)
-    begin
-        x__9 <= wr_data;
-    end
-end
+//==============================
+// d_flip_flop__x__5
+//==============================
+d_flip_flop #(.WIDTH(64)) d_flip_flop__x__5
+(
+    .clk(clk),
+    .rst(1'b0),
+    .en(en__x__5),
+    .d(wr_data),
+    .q(x__5)
+);
 
-always_ff @(posedge clk)
-begin
-    if (we__10)
-    begin
-        x__10 <= wr_data;
-    end
-end
 
-always_ff @(posedge clk)
-begin
-    if (we__11)
-    begin
-        x__11 <= wr_data;
-    end
-end
+//==============================
+// d_flip_flop__x__6
+//==============================
+d_flip_flop #(.WIDTH(64)) d_flip_flop__x__6
+(
+    .clk(clk),
+    .rst(1'b0),
+    .en(en__x__6),
+    .d(wr_data),
+    .q(x__6)
+);
 
-always_ff @(posedge clk)
-begin
-    if (we__12)
-    begin
-        x__12 <= wr_data;
-    end
-end
 
-always_ff @(posedge clk)
-begin
-    if (we__13)
-    begin
-        x__13 <= wr_data;
-    end
-end
+//==============================
+// d_flip_flop__x__7
+//==============================
+d_flip_flop #(.WIDTH(64)) d_flip_flop__x__7
+(
+    .clk(clk),
+    .rst(1'b0),
+    .en(en__x__7),
+    .d(wr_data),
+    .q(x__7)
+);
 
-always_ff @(posedge clk)
-begin
-    if (we__14)
-    begin
-        x__14 <= wr_data;
-    end
-end
 
-always_ff @(posedge clk)
-begin
-    if (we__15)
-    begin
-        x__15 <= wr_data;
-    end
-end
+//==============================
+// d_flip_flop__x__8
+//==============================
+d_flip_flop #(.WIDTH(64)) d_flip_flop__x__8
+(
+    .clk(clk),
+    .rst(1'b0),
+    .en(en__x__8),
+    .d(wr_data),
+    .q(x__8)
+);
 
-always_ff @(posedge clk)
-begin
-    if (we__16)
-    begin
-        x__16 <= wr_data;
-    end
-end
 
-always_ff @(posedge clk)
-begin
-    if (we__17)
-    begin
-        x__17 <= wr_data;
-    end
-end
+//==============================
+// d_flip_flop__x__9
+//==============================
+d_flip_flop #(.WIDTH(64)) d_flip_flop__x__9
+(
+    .clk(clk),
+    .rst(1'b0),
+    .en(en__x__9),
+    .d(wr_data),
+    .q(x__9)
+);
 
-always_ff @(posedge clk)
-begin
-    if (we__18)
-    begin
-        x__18 <= wr_data;
-    end
-end
 
-always_ff @(posedge clk)
-begin
-    if (we__19)
-    begin
-        x__19 <= wr_data;
-    end
-end
+//==============================
+// d_flip_flop__x__10
+//==============================
+d_flip_flop #(.WIDTH(64)) d_flip_flop__x__10
+(
+    .clk(clk),
+    .rst(1'b0),
+    .en(en__x__10),
+    .d(wr_data),
+    .q(x__10)
+);
 
-always_ff @(posedge clk)
-begin
-    if (we__20)
-    begin
-        x__20 <= wr_data;
-    end
-end
 
-always_ff @(posedge clk)
-begin
-    if (we__21)
-    begin
-        x__21 <= wr_data;
-    end
-end
+//==============================
+// d_flip_flop__x__11
+//==============================
+d_flip_flop #(.WIDTH(64)) d_flip_flop__x__11
+(
+    .clk(clk),
+    .rst(1'b0),
+    .en(en__x__11),
+    .d(wr_data),
+    .q(x__11)
+);
 
-always_ff @(posedge clk)
-begin
-    if (we__22)
-    begin
-        x__22 <= wr_data;
-    end
-end
 
-always_ff @(posedge clk)
-begin
-    if (we__23)
-    begin
-        x__23 <= wr_data;
-    end
-end
+//==============================
+// d_flip_flop__x__12
+//==============================
+d_flip_flop #(.WIDTH(64)) d_flip_flop__x__12
+(
+    .clk(clk),
+    .rst(1'b0),
+    .en(en__x__12),
+    .d(wr_data),
+    .q(x__12)
+);
 
-always_ff @(posedge clk)
-begin
-    if (we__24)
-    begin
-        x__24 <= wr_data;
-    end
-end
 
-always_ff @(posedge clk)
-begin
-    if (we__25)
-    begin
-        x__25 <= wr_data;
-    end
-end
+//==============================
+// d_flip_flop__x__13
+//==============================
+d_flip_flop #(.WIDTH(64)) d_flip_flop__x__13
+(
+    .clk(clk),
+    .rst(1'b0),
+    .en(en__x__13),
+    .d(wr_data),
+    .q(x__13)
+);
 
-always_ff @(posedge clk)
-begin
-    if (we__26)
-    begin
-        x__26 <= wr_data;
-    end
-end
 
-always_ff @(posedge clk)
-begin
-    if (we__27)
-    begin
-        x__27 <= wr_data;
-    end
-end
+//==============================
+// d_flip_flop__x__14
+//==============================
+d_flip_flop #(.WIDTH(64)) d_flip_flop__x__14
+(
+    .clk(clk),
+    .rst(1'b0),
+    .en(en__x__14),
+    .d(wr_data),
+    .q(x__14)
+);
 
-always_ff @(posedge clk)
-begin
-    if (we__28)
-    begin
-        x__28 <= wr_data;
-    end
-end
 
-always_ff @(posedge clk)
-begin
-    if (we__29)
-    begin
-        x__29 <= wr_data;
-    end
-end
+//==============================
+// d_flip_flop__x__15
+//==============================
+d_flip_flop #(.WIDTH(64)) d_flip_flop__x__15
+(
+    .clk(clk),
+    .rst(1'b0),
+    .en(en__x__15),
+    .d(wr_data),
+    .q(x__15)
+);
 
-always_ff @(posedge clk)
-begin
-    if (we__30)
-    begin
-        x__30 <= wr_data;
-    end
-end
 
-always_ff @(posedge clk)
-begin
-    if (we__31)
-    begin
-        x__31 <= wr_data;
-    end
-end
+//==============================
+// d_flip_flop__x__16
+//==============================
+d_flip_flop #(.WIDTH(64)) d_flip_flop__x__16
+(
+    .clk(clk),
+    .rst(1'b0),
+    .en(en__x__16),
+    .d(wr_data),
+    .q(x__16)
+);
 
+
+//==============================
+// d_flip_flop__x__17
+//==============================
+d_flip_flop #(.WIDTH(64)) d_flip_flop__x__17
+(
+    .clk(clk),
+    .rst(1'b0),
+    .en(en__x__17),
+    .d(wr_data),
+    .q(x__17)
+);
+
+
+//==============================
+// d_flip_flop__x__18
+//==============================
+d_flip_flop #(.WIDTH(64)) d_flip_flop__x__18
+(
+    .clk(clk),
+    .rst(1'b0),
+    .en(en__x__18),
+    .d(wr_data),
+    .q(x__18)
+);
+
+
+//==============================
+// d_flip_flop__x__19
+//==============================
+d_flip_flop #(.WIDTH(64)) d_flip_flop__x__19
+(
+    .clk(clk),
+    .rst(1'b0),
+    .en(en__x__19),
+    .d(wr_data),
+    .q(x__19)
+);
+
+
+//==============================
+// d_flip_flop__x__20
+//==============================
+d_flip_flop #(.WIDTH(64)) d_flip_flop__x__20
+(
+    .clk(clk),
+    .rst(1'b0),
+    .en(en__x__20),
+    .d(wr_data),
+    .q(x__20)
+);
+
+
+//==============================
+// d_flip_flop__x__21
+//==============================
+d_flip_flop #(.WIDTH(64)) d_flip_flop__x__21
+(
+    .clk(clk),
+    .rst(1'b0),
+    .en(en__x__21),
+    .d(wr_data),
+    .q(x__21)
+);
+
+
+//==============================
+// d_flip_flop__x__22
+//==============================
+d_flip_flop #(.WIDTH(64)) d_flip_flop__x__22
+(
+    .clk(clk),
+    .rst(1'b0),
+    .en(en__x__22),
+    .d(wr_data),
+    .q(x__22)
+);
+
+
+//==============================
+// d_flip_flop__x__23
+//==============================
+d_flip_flop #(.WIDTH(64)) d_flip_flop__x__23
+(
+    .clk(clk),
+    .rst(1'b0),
+    .en(en__x__23),
+    .d(wr_data),
+    .q(x__23)
+);
+
+
+//==============================
+// d_flip_flop__x__24
+//==============================
+d_flip_flop #(.WIDTH(64)) d_flip_flop__x__24
+(
+    .clk(clk),
+    .rst(1'b0),
+    .en(en__x__24),
+    .d(wr_data),
+    .q(x__24)
+);
+
+
+//==============================
+// d_flip_flop__x__25
+//==============================
+d_flip_flop #(.WIDTH(64)) d_flip_flop__x__25
+(
+    .clk(clk),
+    .rst(1'b0),
+    .en(en__x__25),
+    .d(wr_data),
+    .q(x__25)
+);
+
+
+//==============================
+// d_flip_flop__x__26
+//==============================
+d_flip_flop #(.WIDTH(64)) d_flip_flop__x__26
+(
+    .clk(clk),
+    .rst(1'b0),
+    .en(en__x__26),
+    .d(wr_data),
+    .q(x__26)
+);
+
+
+//==============================
+// d_flip_flop__x__27
+//==============================
+d_flip_flop #(.WIDTH(64)) d_flip_flop__x__27
+(
+    .clk(clk),
+    .rst(1'b0),
+    .en(en__x__27),
+    .d(wr_data),
+    .q(x__27)
+);
+
+
+//==============================
+// d_flip_flop__x__28
+//==============================
+d_flip_flop #(.WIDTH(64)) d_flip_flop__x__28
+(
+    .clk(clk),
+    .rst(1'b0),
+    .en(en__x__28),
+    .d(wr_data),
+    .q(x__28)
+);
+
+
+//==============================
+// d_flip_flop__x__29
+//==============================
+d_flip_flop #(.WIDTH(64)) d_flip_flop__x__29
+(
+    .clk(clk),
+    .rst(1'b0),
+    .en(en__x__29),
+    .d(wr_data),
+    .q(x__29)
+);
+
+
+//==============================
+// d_flip_flop__x__30
+//==============================
+d_flip_flop #(.WIDTH(64)) d_flip_flop__x__30
+(
+    .clk(clk),
+    .rst(1'b0),
+    .en(en__x__30),
+    .d(wr_data),
+    .q(x__30)
+);
+
+
+//==============================
+// d_flip_flop__x__31
+//==============================
+d_flip_flop #(.WIDTH(64)) d_flip_flop__x__31
+(
+    .clk(clk),
+    .rst(1'b0),
+    .en(en__x__31),
+    .d(wr_data),
+    .q(x__31)
+);
+
+
+
+
+endmodule
+//==============================================
+// comparator
+//==============================================
+module comparator
+(
+    input clk,
+    input rst,
+    input [63:0] a,
+    input [63:0] b,
+    output logic eq,
+    output logic ne,
+    output logic lt,
+    output logic ltu,
+    output logic ge,
+    output geu
+);
+
+// Comparison operations.
+assign eq = (a == b);
+assign ne = ~eq;
+assign lt = (a[63] == b[63]) ? a < b : a[63];
+assign ltu = a < b;
+assign ge = (a[63] == b[63]) ? a >= b : b[63];
+assign geu = a >= b;
 
 endmodule
 //==============================================
@@ -4097,23 +4226,13 @@ module decoder
     input clk,
     input rst,
     input [31:0] ir,
-    output [5:0] op,
-    output [4:0] rs1,
-    output [4:0] rs2,
-    output [4:0] rd,
-    output [63:0] imm,
-    output [63:0] uimm
+    output logic [5:0] op,
+    output logic [4:0] rs1,
+    output logic [4:0] rs2,
+    output logic [4:0] rd,
+    output logic [63:0] imm,
+    output logic [63:0] uimm
 );
-
-logic clk;
-logic rst;
-logic [31:0] ir;
-logic [5:0] op;
-logic [4:0] rs1;
-logic [4:0] rs2;
-logic [4:0] rd;
-logic [63:0] imm;
-logic [63:0] uimm;
 
 
 logic [6:0] opcode;
@@ -4780,820 +4899,3765 @@ end
 
 endmodule
 //==============================================
-// arithmetic_logic_unit
-//==============================================
-module arithmetic_logic_unit
-(
-    input clk,
-    input rst,
-    input [4:0] func,
-    input [63:0] a,
-    input [63:0] b,
-    output [63:0] c
-);
-
-logic clk;
-logic rst;
-logic [4:0] func;
-logic [63:0] a;
-logic [63:0] b;
-logic [63:0] c;
-
-logic [63:0] x;
-
-// Mathmatical/logical operations.
-always_comb begin
-    case (func)
-        5'h0: 
-        begin 
-            c = a + b;
-        end
-        5'h1:
-        begin
-            x = a + b;
-            c = {{32{x[31]}}, x[31:0]};
-        end
-        5'h2:
-        begin
-            c = a - b;
-        end
-        5'h3:
-        begin
-            x = a - b;
-            c = {{32{x[31]}}, x[31:0]};
-        end
-        5'h4:
-        begin 
-            c = a << b[5:0];
-        end
-        5'h5:
-        begin
-            x = a << b[4:0];
-            c = {{32{x[31]}}, x[31:0]};
-        end
-        5'h6:
-        begin
-            c = {63'h0, ((a[63] == b[63]) ? a < b : a[63])};
-        end
-        5'h7:
-        begin
-            c = {63'h0, a < b};
-        end
-        5'h8:
-        begin
-            c = a ^ b;
-        end
-        5'h9:
-        begin
-            c = a >> b[5:0];
-        end
-        5'ha:
-        begin
-            case (b[4:0])
-                5'h0: c = {{32{a[31]}}, a[31:0]};
-                5'h1: c = {{33{1'b0}}, a[31:1]};
-                5'h2: c = {{34{1'b0}}, a[31:2]};
-                5'h3: c = {{35{1'b0}}, a[31:3]};
-                5'h4: c = {{36{1'b0}}, a[31:4]};
-                5'h5: c = {{37{1'b0}}, a[31:5]};
-                5'h6: c = {{38{1'b0}}, a[31:6]};
-                5'h7: c = {{39{1'b0}}, a[31:7]};
-                5'h8: c = {{40{1'b0}}, a[31:8]};
-                5'h9: c = {{41{1'b0}}, a[31:9]};
-                5'ha: c = {{42{1'b0}}, a[31:10]};
-                5'hb: c = {{43{1'b0}}, a[31:11]};
-                5'hc: c = {{44{1'b0}}, a[31:12]};
-                5'hd: c = {{45{1'b0}}, a[31:13]};
-                5'he: c = {{46{1'b0}}, a[31:14]};
-                5'hf: c = {{47{1'b0}}, a[31:15]};
-                5'h10: c = {{48{1'b0}}, a[31:16]};
-                5'h11: c = {{49{1'b0}}, a[31:17]};
-                5'h12: c = {{50{1'b0}}, a[31:18]};
-                5'h13: c = {{51{1'b0}}, a[31:19]};
-                5'h14: c = {{52{1'b0}}, a[31:20]};
-                5'h15: c = {{53{1'b0}}, a[31:21]};
-                5'h16: c = {{54{1'b0}}, a[31:22]};
-                5'h17: c = {{55{1'b0}}, a[31:23]};
-                5'h18: c = {{56{1'b0}}, a[31:24]};
-                5'h19: c = {{57{1'b0}}, a[31:25]};
-                5'h1a: c = {{58{1'b0}}, a[31:26]};
-                5'h1b: c = {{59{1'b0}}, a[31:27]};
-                5'h1c: c = {{60{1'b0}}, a[31:28]};
-                5'h1d: c = {{61{1'b0}}, a[31:29]};
-                5'h1e: c = {{62{1'b0}}, a[31:30]};
-                5'h1f: c = {{63{1'b0}}, a[31:31]};
-            endcase
-        end
-        5'hb:
-        begin
-            case (b[5:0])
-                6'h0: c = {{0{a[63]}}, a[63:0]};
-                6'h1: c = {{1{a[63]}}, a[63:1]};
-                6'h2: c = {{2{a[63]}}, a[63:2]};
-                6'h3: c = {{3{a[63]}}, a[63:3]};
-                6'h4: c = {{4{a[63]}}, a[63:4]};
-                6'h5: c = {{5{a[63]}}, a[63:5]};
-                6'h6: c = {{6{a[63]}}, a[63:6]};
-                6'h7: c = {{7{a[63]}}, a[63:7]};
-                6'h8: c = {{8{a[63]}}, a[63:8]};
-                6'h9: c = {{9{a[63]}}, a[63:9]};
-                6'ha: c = {{10{a[63]}}, a[63:10]};
-                6'hb: c = {{11{a[63]}}, a[63:11]};
-                6'hc: c = {{12{a[63]}}, a[63:12]};
-                6'hd: c = {{13{a[63]}}, a[63:13]};
-                6'he: c = {{14{a[63]}}, a[63:14]};
-                6'hf: c = {{15{a[63]}}, a[63:15]};
-                6'h10: c = {{16{a[63]}}, a[63:16]};
-                6'h11: c = {{17{a[63]}}, a[63:17]};
-                6'h12: c = {{18{a[63]}}, a[63:18]};
-                6'h13: c = {{19{a[63]}}, a[63:19]};
-                6'h14: c = {{20{a[63]}}, a[63:20]};
-                6'h15: c = {{21{a[63]}}, a[63:21]};
-                6'h16: c = {{22{a[63]}}, a[63:22]};
-                6'h17: c = {{23{a[63]}}, a[63:23]};
-                6'h18: c = {{24{a[63]}}, a[63:24]};
-                6'h19: c = {{25{a[63]}}, a[63:25]};
-                6'h1a: c = {{26{a[63]}}, a[63:26]};
-                6'h1b: c = {{27{a[63]}}, a[63:27]};
-                6'h1c: c = {{28{a[63]}}, a[63:28]};
-                6'h1d: c = {{29{a[63]}}, a[63:29]};
-                6'h1e: c = {{30{a[63]}}, a[63:30]};
-                6'h1f: c = {{31{a[63]}}, a[63:31]};
-                6'h20: c = {{32{a[63]}}, a[63:32]};
-                6'h21: c = {{33{a[63]}}, a[63:33]};
-                6'h22: c = {{34{a[63]}}, a[63:34]};
-                6'h23: c = {{35{a[63]}}, a[63:35]};
-                6'h24: c = {{36{a[63]}}, a[63:36]};
-                6'h25: c = {{37{a[63]}}, a[63:37]};
-                6'h26: c = {{38{a[63]}}, a[63:38]};
-                6'h27: c = {{39{a[63]}}, a[63:39]};
-                6'h28: c = {{40{a[63]}}, a[63:40]};
-                6'h29: c = {{41{a[63]}}, a[63:41]};
-                6'h2a: c = {{42{a[63]}}, a[63:42]};
-                6'h2b: c = {{43{a[63]}}, a[63:43]};
-                6'h2c: c = {{44{a[63]}}, a[63:44]};
-                6'h2d: c = {{45{a[63]}}, a[63:45]};
-                6'h2e: c = {{46{a[63]}}, a[63:46]};
-                6'h2f: c = {{47{a[63]}}, a[63:47]};
-                6'h30: c = {{48{a[63]}}, a[63:48]};
-                6'h31: c = {{49{a[63]}}, a[63:49]};
-                6'h32: c = {{50{a[63]}}, a[63:50]};
-                6'h33: c = {{51{a[63]}}, a[63:51]};
-                6'h34: c = {{52{a[63]}}, a[63:52]};
-                6'h35: c = {{53{a[63]}}, a[63:53]};
-                6'h36: c = {{54{a[63]}}, a[63:54]};
-                6'h37: c = {{55{a[63]}}, a[63:55]};
-                6'h38: c = {{56{a[63]}}, a[63:56]};
-                6'h39: c = {{57{a[63]}}, a[63:57]};
-                6'h3a: c = {{58{a[63]}}, a[63:58]};
-                6'h3b: c = {{59{a[63]}}, a[63:59]};
-                6'h3c: c = {{60{a[63]}}, a[63:60]};
-                6'h3d: c = {{61{a[63]}}, a[63:61]};
-                6'h3e: c = {{62{a[63]}}, a[63:62]};
-                6'h3f: c = {{63{a[63]}}, a[63:63]};
-            endcase
-        end
-        5'hc:
-        begin
-            case (b[4:0])
-                5'h0: c = {{32{a[31]}}, a[31:0]};
-                5'h1: c = {{33{a[31]}}, a[31:1]};
-                5'h2: c = {{34{a[31]}}, a[31:2]};
-                5'h3: c = {{35{a[31]}}, a[31:3]};
-                5'h4: c = {{36{a[31]}}, a[31:4]};
-                5'h5: c = {{37{a[31]}}, a[31:5]};
-                5'h6: c = {{38{a[31]}}, a[31:6]};
-                5'h7: c = {{39{a[31]}}, a[31:7]};
-                5'h8: c = {{40{a[31]}}, a[31:8]};
-                5'h9: c = {{41{a[31]}}, a[31:9]};
-                5'ha: c = {{42{a[31]}}, a[31:10]};
-                5'hb: c = {{43{a[31]}}, a[31:11]};
-                5'hc: c = {{44{a[31]}}, a[31:12]};
-                5'hd: c = {{45{a[31]}}, a[31:13]};
-                5'he: c = {{46{a[31]}}, a[31:14]};
-                5'hf: c = {{47{a[31]}}, a[31:15]};
-                5'h10: c = {{48{a[31]}}, a[31:16]};
-                5'h11: c = {{49{a[31]}}, a[31:17]};
-                5'h12: c = {{50{a[31]}}, a[31:18]};
-                5'h13: c = {{51{a[31]}}, a[31:19]};
-                5'h14: c = {{52{a[31]}}, a[31:20]};
-                5'h15: c = {{53{a[31]}}, a[31:21]};
-                5'h16: c = {{54{a[31]}}, a[31:22]};
-                5'h17: c = {{55{a[31]}}, a[31:23]};
-                5'h18: c = {{56{a[31]}}, a[31:24]};
-                5'h19: c = {{57{a[31]}}, a[31:25]};
-                5'h1a: c = {{58{a[31]}}, a[31:26]};
-                5'h1b: c = {{59{a[31]}}, a[31:27]};
-                5'h1c: c = {{60{a[31]}}, a[31:28]};
-                5'h1d: c = {{61{a[31]}}, a[31:29]};
-                5'h1e: c = {{62{a[31]}}, a[31:30]};
-                5'h1f: c = {{63{a[31]}}, a[31:31]};
-            endcase
-        end
-        5'hd:
-        begin
-            c = a | b;
-        end
-        5'he:
-        begin
-            c = a & b;
-        end
-        5'hf:
-        begin
-            c = ~a & b;
-        end
-        5'h10:
-        begin
-            c = a;
-        end
-        5'h11:
-        begin
-            c = b;
-        end
-    endcase
-end
-
-endmodule
-//==============================================
-// comparator
-//==============================================
-module comparator
-(
-    input clk,
-    input rst,
-    input [63:0] a,
-    input [63:0] b,
-    output eq,
-    output ne,
-    output lt,
-    output ltu,
-    output ge,
-    output geu
-);
-
-logic clk;
-logic rst;
-logic [63:0] a;
-logic [63:0] b;
-logic eq;
-logic ne;
-logic lt;
-logic ltu;
-logic ge;
-logic geu;
-
-// Comparison operations.
-assign eq = (a == b);
-assign ne = ~eq;
-assign lt = (a[63] == b[63]) ? a < b : a[63];
-assign ltu = a < b;
-assign ge = (a[63] == b[63]) ? a >= b : b[63];
-assign geu = a >= b;
-
-endmodule
-//==============================================
 // control_and_status_registers 
 //==============================================
 module control_and_status_registers
 (
-    input clk,
-    input rst,
-    input we,
-    input [11:0] addr,
-    output [63:0] rd_data,
-    input [63:0] wr_data,
-    output [63:0] mstatus,
-    output [63:0] mie,
-    output [63:0] mip
+    clk,
+    rst,
+    cs,
+    we,
+    addr,
+    rd_data,
+    wr_data,
+    eip,
+    tip,
+    instret,
+    mstatus__mie,
+    mie__meie,
+    mie__msie,
+    mie__mtie,
+    mip__meip,
+    mip__msip,
+    mip__mtip
 );
 
+input clk;
+input rst;
+input cs;
+input we;
+input [11:0] addr;
+output [63:0] rd_data;
+input [63:0] wr_data;
+input eip;
+input tip;
+input instret;
+
+output mstatus__mie;
+output mie__meie;
+output mie__msie;
+output mie__mtie;
+output mip__meip;
+output mip__msip;
+output mip__mtip;
 
 logic clk;
 logic rst;
+
+logic cs;
 logic we;
 logic [11:0] addr;
 logic [63:0] rd_data;
 logic [63:0] wr_data;
 
-//logic we;
-//logic [11:0] addr;
-//logic [63:0] rd_data;
-//logic [63:0] wr_data;
+logic eip;
+logic tip;
+
+logic instret;
+
+// Machine ISA Register (misa)
+logic [63:0] misa;
+logic [25:0] misa__extensions;
+logic [35:0] misa__wiri__0;
+logic [1:0] misa__base;
+logic we__misa;
+logic en__misa;
+
+// Machine Vendor ID Register (mvendorid)
+logic [63:0] mvendorid;
+logic [63:0] mvendorid__vendor;
+logic we__mvendorid;
+logic en__mvendorid;
+
+// Machine Architecture ID Register (marchid)
+logic [63:0] marchid;
+logic [63:0] marchid__architecture_id;
+logic we__marchid;
+logic en__marchid;
+
+// Machine Implementation ID Register (mimpid)
+logic [63:0] mimpid;
+logic [63:0] mimpid__implementation;
+logic we__mimpid;
+logic en__mimpid;
+
+// Hart ID Register (mhartid) 
+logic [63:0] mhartid;
+logic [63:0] mhartid__hart_id;
+logic we__mhartid;
+logic en__mhartid;
+
+// Machine Status Register (mstatus) 
+logic [63:0] mstatus;
+logic [0:0] mstatus__uie;
+logic [0:0] mstatus__sie;
+logic [0:0] mstatus__hie;
+logic [0:0] mstatus__mie;
+logic [0:0] mstatus__upie;
+logic [0:0] mstatus__spie;
+logic [0:0] mstatus__hpie;
+logic [0:0] mstatus__mpie;
+logic [0:0] mstatus__spp;
+logic [1:0] mstatus__hpp;
+logic [1:0] mstatus__mpp;
+logic [1:0] mstatus__fs;
+logic [1:0] mstatus__xs;
+logic [0:0] mstatus__mprv;
+logic [0:0] mstatus__pum;
+logic [0:0] mstatus__mxr;
+logic [4:0] mstatus__vm;
+logic [0:0] mstatus__sd;
+logic we__mstatus;
+logic en__mstatus;
+
+// Machine Trap-Vector Base-Address Register (mtvec)
+logic [63:0] mtvec;
+logic [1:0] mtvec__offset;
+logic [61:0] mtvec__trap_vector_base_address;
+logic we__mtvec;
+logic en__mtvec;
+
+// Machine Exception Delegation Register (medeleg) 
+logic [63:0] medeleg;
+logic [63:0] medeleg__synchronous_exceptions;
+logic we__medeleg;
+logic en__medeleg;
+
+// Machine Interrupt Delegation Register (mideleg) 
+logic [63:0] mideleg;
+logic [63:0] mideleg__interrupts;
+logic we__mideleg;
+logic en__mideleg;
+
+// Machine Interrupt-Pending Register (mip) 
+logic [63:0] mip;
+logic [0:0] mip__usip;
+logic [0:0] mip__ssip;
+logic [0:0] mip__hsip;
+logic [0:0] mip__msip;
+logic [0:0] mip__utip;
+logic [0:0] mip__stip;
+logic [0:0] mip__htip;
+logic [0:0] mip__mtip;
+logic [0:0] mip__ueip;
+logic [0:0] mip__seip;
+logic [0:0] mip__heip;
+logic [0:0] mip__meip;
+logic [51:0] mip__wiri__0;
+logic we__mip;
+logic en__mip;
+
+// Machine Interrupt-Enable Register (mie) 
+logic [63:0] mie;
+logic [0:0] mie__usie;
+logic [0:0] mie__ssie;
+logic [0:0] mie__hsie;
+logic [0:0] mie__msie;
+logic [0:0] mie__utie;
+logic [0:0] mie__stie;
+logic [0:0] mie__htie;
+logic [0:0] mie__mtie;
+logic [0:0] mie__ueie;
+logic [0:0] mie__seie;
+logic [0:0] mie__heie;
+logic [0:0] mie__meie;
+logic [51:0] mie__wpri__0;
+logic we__mie;
+logic en__mie;
+
+// Machine Cycle Register (mcycle) 
+logic [63:0] mcycle;
+logic [63:0] mcycle__mcycle;
+logic [63:0] mcycle__mcycle__n;
+logic we__mcycle;
+logic en__mcycle;
+
+// Machine Instruction Retire Register (minstret) 
+logic [63:0] minstret;
+logic [63:0] minstret__minstret;
+logic [63:0] minstret__minstret__n;
+logic we__minstret;
+logic en__minstret;
+logic minstret__write_occurred;
+logic state__minstret;
+logic state__minstret__n;
+
+// Machine Hardware Performance Monitor Counter 3 (mhpmcounter3)
+logic [63:0] mhpmcounter3;
+logic [63:0] mhpmcounter3__mhpmcounter3;
+logic we__mhpmcounter3;
+logic en__mhpmcounter3;
+
+// Machine Hardware Performance Monitor Event 3 (mhpmevent3)
+logic [63:0] mhpmevent3;
+logic [63:0] mhpmevent3__mhpmevent3;
+logic we__mhpmevent3;
+logic en__mhpmevent3;
+
+// Machine Scratch Register (mscratch) 
+logic [63:0] mscratch;
+logic [63:0] mscratch__mscratch;
+logic we__mscratch;
+logic en__mscratch;
+
+// Machine Exception Program Counter (mepc) 
+logic [63:0] mepc;
+logic [63:0] mepc__mepc;
+logic we__mepc;
+logic en__mepc;
+
+// Machine Cause Register (mcause) 
+logic [63:0] mcause;
+logic [62:0] mcause__exception_code;
+logic [0:0] mcause__interrupt;
+logic we__mcause;
+logic en__mcause;
+
+// Machine Trap Value Register (mtval) 
+logic [63:0] mtval;
+logic [63:0] mtval__mtval;
+logic we__mtval;
+logic en__mtval;
 
 
 always_comb begin
-    rd_data = misa;
-    misa__we = 1'b0;
-    mvendorid__we = 1'b0;
-    marchid__we = 1'b0;
-    mimpid__we = 1'b0;
-    mhartid__we = 1'b0;
-    mstatus__we = 1'b0;
-    mtvec__we = 1'b0;
-    medeleg__we = 1'b0;
-    mideleg__we = 1'b0;
-    mip__we = 1'b0;
-    mie__we = 1'b0;
-    mcycle__we = 1'b0;
-    minstret__we = 1'b0;
-    mhpmcounter3__we = 1'b0;
-    mhpmevent3__we = 1'b0;
-    mscratch__we = 1'b0;
-    mepc__we = 1'b0;
-    mcause__we = 1'b0;
-    mtval__we = 1'b0;
+    we__misa = 1'b0;
+    we__mvendorid = 1'b0;
+    we__marchid = 1'b0;
+    we__mimpid = 1'b0;
+    we__mhartid = 1'b0;
+    we__mstatus = 1'b0;
+    we__mtvec = 1'b0;
+    we__medeleg = 1'b0;
+    we__mideleg = 1'b0;
+    we__mip = 1'b0;
+    we__mie = 1'b0;
+    we__mcycle = 1'b0;
+    we__minstret = 1'b0;
+    we__mhpmcounter3 = 1'b0;
+    we__mhpmevent3 = 1'b0;
+    we__mscratch = 1'b0;
+    we__mepc = 1'b0;
+    we__mcause = 1'b0;
+    we__mtval = 1'b0;
 
     case (addr)
         12'h301:
         begin
             rd_data = misa;
-            misa__we = we;
+            we__misa = we;
         end
         12'hf11:
         begin
             rd_data = mvendorid;
-            mvendorid__we = we;
+            we__mvendorid = we;
         end
         12'hf12:
         begin
             rd_data = marchid;
-            marchid__we = we;
+            we__marchid = we;
         end
         12'hf13:
         begin
             rd_data = mimpid;
-            mimpid__we = we;
+            we__mimpid = we;
         end
         12'hf14:
         begin
             rd_data = mhartid;
-            mhartid__we = we;
+            we__mhartid = we;
         end
         12'h300:
         begin
             rd_data = mstatus;
-            mstatus__we = we;
+            we__mstatus = we;
         end
         12'h305:
         begin
             rd_data = mtvec;
-            mtvec__we = we;
+            we__mtvec = we;
         end
         12'h302:
         begin
             rd_data = medeleg;
-            medeleg__we = we;
+            we__medeleg = we;
         end
         12'h303:
         begin
             rd_data = mideleg;
-            mideleg__we = we;
+            we__mideleg = we;
         end
         12'h344:
         begin
             rd_data = mip;
-            mip__we = we;
+            we__mip = we;
         end
         12'h304:
         begin
             rd_data = mie;
-            mie__we = we;
+            we__mie = we;
         end
         12'hb00:
         begin
             rd_data = mcycle;
-            mcycle__we = we;
+            we__mcycle = we;
         end
         12'hb02:
         begin
             rd_data = minstret;
-            minstret__we = we;
+            we__minstret = we;
         end
         12'hb03:
         begin
             rd_data = mhpmcounter3;
-            mhpmcounter3__we = we;
+            we__mhpmcounter3 = we;
         end
         12'h323:
         begin
             rd_data = mhpmevent3;
-            mhpmevent3__we = we;
+            we__mhpmevent3 = we;
         end
         12'h340:
         begin
             rd_data = mscratch; 
-            mscratch__we = we;
+            we__mscratch = we;
         end
         12'h341:
         begin
             rd_data = mepc;
-            mepc__we = we;
+            we__mepc = we;
         end
         12'h342:
         begin
             rd_data = mcause;
-            mcause__we = we;
+            we__mcause = we;
         end
         12'h343:
         begin
             rd_data = mtval;
-            mtval__we = we;
+            we__mtval = we;
+        end
+    endcase
+end
+
+//==============================================
+// Machine ISA Register (misa)
+//==============================================
+assign misa[25:0] = misa__extensions;
+assign misa[61:26] = misa__wiri__0;
+assign misa[63:62] = misa__base;
+
+assign misa__extensions = 26'h0_00_01_00;
+assign misa__wiri__0 = 36'h0;
+assign misa__base = 2'h2;
+
+
+//==============================================
+// Machine Vendor ID Register (mvendorid)
+//==============================================
+assign mvendorid[63:0] = mvendorid__vendor;
+
+assign mvendorid__vendor = 64'h0;
+
+
+//==============================================
+// Machine Architecture ID Register (marchid)
+//==============================================
+assign marchid[63:0] = marchid__architecture_id;
+
+assign marchid__architecture_id = 64'h0;
+
+
+//==============================================
+// Machine Implementation ID Register (mimpid)
+//==============================================
+assign mimpid[63:0] = mimpid__implementation;
+
+assign mimpid__implementation = 64'h0;
+
+
+//==============================================
+// Hart ID Register (mhartid) 
+//==============================================
+assign mhartid[63:0] = mhartid__hart_id;
+
+assign mhartid__hart_id = 64'h0;
+
+
+//============================================== 
+// Machine Status Register (mstatus) 
+//==============================================
+assign mstatus[0] = mstatus__uie;
+assign mstatus[1] = mstatus__sie;
+assign mstatus[2] = mstatus__hie;
+assign mstatus[3] = mstatus__mie;
+assign mstatus[4] = mstatus__upie;
+assign mstatus[5] = mstatus__spie;
+assign mstatus[6] = mstatus__hpie;
+assign mstatus[7] = mstatus__mpie;
+assign mstatus[8] = mstatus__spp;
+assign mstatus[10:9] = mstatus__hpp;
+assign mstatus[12:11] = mstatus__mpp;
+assign mstatus[14:13] = mstatus__fs;
+assign mstatus[16:15] = mstatus__xs;
+assign mstatus[17] = mstatus__mprv;
+assign mstatus[18] = mstatus__pum;
+assign mstatus[19] = mstatus__mxr;
+assign mstatus[28:24] = mstatus__vm;
+assign mstatus[63] = mstatus__sd;
+
+assign mstatus__uie = 1'b0;
+assign mstatus__sie = 1'b0;
+assign mstatus__hie = 1'b0;
+assign mstatus__upie = 1'b0;
+assign mstatus___spie = 1'b0;
+assign mstatus__hpie = 1'b0;
+assign mstatus__spp = 1'b0;
+assign mstatus__hpp = 2'h0;
+assign mstatus__mpp = 2'h3;
+assign mstatus__fs = 2'h0;
+assign mstatus__xs = 2'h0;
+assign mstatus__mprv = 1'b0;
+assign mstatus__pum = 1'b0;
+assign mstatus__mxr = 1'b0;
+assign mstatus__vm = 5'h0;
+assign mstatus__sd = 1'b0;
+
+assign en__mstatus = cs & we__mstatus;
+
+//==============================
+// d_flip_flop__mstatus__mie
+//==============================
+d_flip_flop #(.WIDTH(1), .RESET_VALUE(1'b0)) d_flip_flop__mstatus__mie
+(
+    .clk(clk),
+    .rst(rst),
+    .en(en__mstatus),
+    .d(wr_data[3]),
+    .q(mstatus__mie)
+);
+
+
+//============================================== 
+// Machine Trap-Vector Base-Address Register (mtvec)
+//==============================================
+assign mtvec[1:0] = mtvec__offset;
+assign mtvec[63:2] = mtvec__trap_vector_base_address;
+
+assign mtvec__offset = 2'h0;
+
+assign en__mtvec = cs & we__mtvec;
+
+//==============================
+// d_flip_flop__mtvec__trap_vector_base_address
+//==============================
+d_flip_flop #(.WIDTH(62), .RESET_VALUE(62'h0)) d_flip_flop__mtvec__trap_vector_base_address
+(
+    .clk(clk),
+    .rst(rst),
+    .en(en__mtvec),
+    .d(wr_data[63:2]),
+    .q(mtvec__trap_vector_base_address)
+);
+
+
+//============================================== 
+// Machine Exception Delegation Register (medeleg) 
+//==============================================
+assign medeleg[63:0] = medeleg__synchronous_exceptions;
+
+assign medeleg__synchronous_exceptions = 64'h0;
+
+
+//============================================== 
+// Machine Interrupt Delegation Register (mideleg) 
+//==============================================
+assign mideleg[63:0] = mideleg__interrupts;
+
+assign mideleg__interrupts = 64'h0;
+
+
+//============================================== 
+// Machine Interrupt-Pending Register (mip) 
+//==============================================
+assign mip[0] = mip__usip;
+assign mip[1] = mip__ssip;
+assign mip[2] = mip__hsip;
+assign mip[3] = mip__msip;
+assign mip[4] = mip__utip;
+assign mip[5] = mip__stip;
+assign mip[6] = mip__htip;
+assign mip[7] = mip__mtip;
+assign mip[8] = mip__ueip;
+assign mip[9] = mip__seip;
+assign mip[10] = mip__heip;
+assign mip[11] = mip__meip;
+assign mip[63:12] = mip__wiri__0;
+
+assign mip__usip = 1'b0;
+assign mip__ssip = 1'b0;
+assign mip__hsip = 1'b0;
+assign mip__utip = 1'b0;
+assign mip__stip = 1'b0;
+assign mip__htip = 1'b0;
+assign mip__ueip = 1'b0;
+assign mip__seip = 1'b0;
+assign mip__heip = 1'b0;
+assign mip__wiri__0 = 52'h0;
+
+assign en__mip = cs & we__mip;
+
+//==============================
+// d_flip_flop__mip__msip
+//==============================
+d_flip_flop #(.WIDTH(1), .RESET_VALUE(1'b0)) d_flip_flop__mip__msip
+(
+    .clk(clk),
+    .rst(rst),
+    .en(en__mip),
+    .d(wr_data[3]),
+    .q(mip__msip)
+);
+
+// FIXME: The tip/eip bit will (likely) be retimed from the PLIC. Make sure the is no issues with X propagation upon reset. 
+//==============================
+// d_flip_flop__mip__mtip
+//==============================
+d_flip_flop #(.WIDTH(1), .RESET_VALUE()) d_flip_flop__mip__mtip
+(
+    .clk(clk),
+    .rst(1'b0),
+    .en(en__mip),
+    .d(wr_data[7]),
+    .q(mip__mtip)
+);
+
+//==============================
+// d_flip_flop__mip__meip
+//==============================
+d_flip_flop #(.WIDTH(1), .RESET_VALUE()) d_flip_flop__mip__meip
+(
+    .clk(clk),
+    .rst(1'b0),
+    .en(en__mip),
+    .d(wr_data[11]),
+    .q(mip__meip)
+);
+
+
+//============================================== 
+// Machine Interrupt-Enable Register (mie) 
+//==============================================
+assign mie[0] = mie__usie;
+assign mie[1] = mie__ssie;
+assign mie[2] = mie__hsie;
+assign mie[3] = mie__msie;
+assign mie[4] = mie__utie;
+assign mie[5] = mie__stie;
+assign mie[6] = mie__htie;
+assign mie[7] = mie__mtie;
+assign mie[8] = mie__ueie;
+assign mie[9] = mie__seie;
+assign mie[10] = mie__heie;
+assign mie[11] = mie__meie;
+assign mie[63:12] = mie__wpri__0;
+
+assign mie__usie = 1'b0;
+assign mie__ssie = 1'b0;
+assign mie__hsie = 1'b0;
+assign mie__utie = 1'b0;
+assign mie__stie = 1'b0;
+assign mie__htie = 1'b0;
+assign mie__ueie = 1'b0;
+assign mie__seie = 1'b0;
+assign mie__heie = 1'b0;
+assign mie__wpri__0 = 52'h0;
+
+assign en__mie = cs & we__mie;
+
+//==============================
+// d_flip_flop__mie__msie
+//==============================
+d_flip_flop #(.WIDTH(1), .RESET_VALUE(1'b0)) d_flip_flop__mie__msie
+(
+    .clk(clk),
+    .rst(rst),
+    .en(en__mie),
+    .d(wr_data[3]),
+    .q(mie__msie)
+);
+
+//==============================
+// d_flip_flop__mie__mtie
+//==============================
+d_flip_flop #(.WIDTH(1), .RESET_VALUE(1'b0)) d_flip_flop__mie__mtie
+(
+    .clk(clk),
+    .rst(rst),
+    .en(en__mie),
+    .d(wr_data[7]),
+    .q(mie__mtie)
+);
+
+//==============================
+// d_flip_flop__mie__meie
+//==============================
+d_flip_flop #(.WIDTH(1), .RESET_VALUE(1'b0)) d_flip_flop__mie__meie
+(
+    .clk(clk),
+    .rst(rst),
+    .en(en__mie),
+    .d(wr_data[11]),
+    .q(mie__meie)
+);
+
+
+//============================================== 
+// Machine Cycle Register (mcycle) 
+//==============================================
+assign mcycle[63:0] = mcycle__mcycle;
+assign mcycle[63:0] = mcycle__mcycle__n;
+
+assign en__mcycle = 1'b1;
+
+always_comb
+begin
+    case (en__mcycle & we__mcycle)
+        1'b0:
+        begin
+            mcycle__mcycle__n = mcycle__mcycle + 1;
+        end
+        1'b1:
+        begin
+            mcycle__mcycle__n = wr_data[63:0];
+        end
+    endcase
+end
+
+//==============================
+// d_flip_flop__mcycle__mcycle
+//==============================
+d_flip_flop #(.WIDTH(64), .RESET_VALUE(64'h0)) d_flip_flop__mcycle__mcycle
+(
+    .clk(clk),
+    .rst(rst),
+    .en(en__mcycle),
+    .d(mcycle__mcycle__n),
+    .q(mcycle__mcycle)
+);
+
+
+//============================================== 
+// Machine Instruction Retire Register (minstret) 
+//==============================================
+assign minstret[63:0] = minstret__minstret;
+
+assign en__minstret = 1'b1;
+
+always_comb
+begin
+    case (en__minstret & we__minstret)
+        1'b0:
+        begin
+            case (instret & ~minstret__write_occurred)
+                1'b0:
+                begin
+                    minstret__minstret__n = minstret__minstret;
+                end
+                1'b1:
+                begin
+                    minstret__minstret__n = minstret__minstret + 1;
+                end
+            endcase
+        end
+        1'b1:
+        begin
+            minstret__minstret__n = wr_data[63:0];
+        end
+    endcase
+end
+
+//==============================
+// d_flip_flop__minstret__minstret
+//==============================
+d_flip_flop #(.WIDTH(64), .RESET_VALUE(64'h0)) d_flip_flop__minstret__minstret
+(
+    .clk(clk),
+    .rst(rst),
+    .en(en__minstret),
+    .d(minstret__minstret__n),
+    .q(minstret__minstret)
+);
+
+parameter STATE__MINSTRET__NORMAL = 1'b0;
+parameter STATE__MINSTRET__WRITE_OCCURED = 1'b1;
+
+always_comb
+begin
+    case (state__minstret)
+        //==============================
+        // STATE__MINSTRET__NORMAL
+        //==============================
+        STATE__MINSTRET__NORMAL:
+        begin
+            minstret__write_occurred = 1'b0; 
+            state__minstret__n = en__minstret & we__minstret & ~instret ? STATE__MINSTRET__WRITE_OCCURED : STATE__MINSTRET__NORMAL;
+        end
+
+        //==============================
+        // STATE__MINSTRET__WRITE_OCCURED
+        //==============================
+        STATE__MINSTRET__WRITE_OCCURED:
+        begin
+            minstret__write_occurred = 1'b1; 
+            state__minstret__n = instret ? STATE__MINSTRET__NORMAL : STATE__MINSTRET__WRITE_OCCURED;
+        end
+    endcase
+end
+
+//==============================
+// d_flip_flop__state__minstret
+//==============================
+d_flip_flop #(.WIDTH(1), .RESET_VALUE(STATE__MINSTRET__NORMAL)) d_flip_flop__state__minstret
+(
+    .clk(clk),
+    .rst(rst),
+    .en(1'b1),
+    .d(state__minstret__n),
+    .q(state__minstret)
+);
+
+
+//============================================== 
+// Machine Hardware Performance Monitor Counter 3 (mhpmcounter3)
+//==============================================
+assign mhpmcounter3[63:0] = mhpmcounter3__mhpmcounter3;
+
+assign mhpmcounter3__mhpmcounter3 = 64'h0;
+
+
+//============================================== 
+// Machine Hardware Performance Monitor Event 3 (mhpmevent3)
+//==============================================
+assign mhpmevent3[63:0] = mhpmevent3__mhpmevent3;
+
+assign mhpmevent3__mhpmevent3 = 64'h0;
+
+
+//============================================== 
+// Machine Scratch Register (mscratch) 
+//==============================================
+assign mscratch[63:0] = mscratch__mscratch;
+
+assign en__scratch = cs & we__mscratch;
+
+//==============================
+// d_flip_flop__mscratch__mscratch
+//==============================
+d_flip_flop #(.WIDTH(64), .RESET_VALUE(64'h0)) d_flip_flop__mscratch__mscratch
+(
+    .clk(clk),
+    .rst(rst),
+    .en(en__mscratch),
+    .d(wr_data[63:0]),
+    .q(mscratch__mscratch)
+);
+
+
+//============================================== 
+// Machine Exception Program Counter (mepc) 
+//==============================================
+assign mepc[63:0] = mepc__mepc;
+
+assign en__mepc = cs & we__mepc;
+
+//==============================
+// d_flip_flop__mepc__mepc
+//==============================
+d_flip_flop #(.WIDTH(64), .RESET_VALUE(64'h0)) d_flip_flop__mepc__mepc
+(
+    .clk(clk),
+    .rst(rst),
+    .en(en__mepc),
+    .d(wr_data[63:0]),
+    .q(mepc__mepc)
+);
+
+
+//============================================== 
+// Machine Cause Register (mcause) 
+//==============================================
+assign mcause[62:0] = mcause__exception_code;
+assign mcause[63] = mcause__interrupt;
+
+assign en__mcause = cs & we__mcause;
+
+//==============================
+// d_flip_flop__mcause__exception_code
+//==============================
+d_flip_flop #(.WIDTH(63), .RESET_VALUE(63'h0)) d_flip_flop__mcause__exception_code
+(
+    .clk(clk),
+    .rst(rst),
+    .en(en__mcause),
+    .d(wr_data[62:0]),
+    .q(mcause__exception_code)
+);
+
+//==============================
+// d_flip_flop__mcause__interrupt
+//==============================
+d_flip_flop #(.WIDTH(1), .RESET_VALUE(1'b0)) d_flip_flop__mcause__interrupt
+(
+    .clk(clk),
+    .rst(rst),
+    .en(en__mcause),
+    .d(wr_data[63]),
+    .q(mcause__interrupt)
+);
+
+
+//============================================== 
+// Machine Trap Value Register (mtval) 
+//==============================================
+assign mtval[63:0] = mtval__mtval;
+
+assign en__mtval = cs & we__mtval;
+
+//==============================
+// d_flip_flop__mtval__mtval
+//==============================
+d_flip_flop #(.WIDTH(64), .RESET_VALUE(64'h0)) d_flip_flop__mtval__mtval
+(
+    .clk(clk),
+    .rst(rst),
+    .en(en__mtval),
+    .d(wr_data[63:0]),
+    .q(mtval__mtval)
+);
+
+
+endmodule
+
+//==============================================
+// machine_timer_registers 
+//==============================================
+module machine_timer_registers
+(
+    clk,
+    rst,
+    cs,
+    we,
+    addr,
+    wr_data,
+    rd_data,
+    tip 
+);
+
+input clk;
+input rst;
+input cs;
+input we;
+input addr;
+input [63:0] wr_data;
+output [63:0] rd_data;
+output tip;
+
+logic clk;
+logic rst;
+
+logic cs;
+logic we;
+logic addr;
+logic [63:0] wr_data;
+logic [63:0] rd_data;
+
+logic tip;
+
+// Machine Time Register (mtime)
+logic [63:0] mtime;
+logic [63:0] mtime__mtime;
+logic [63:0] mtime__mtime__n;
+logic we__mtime;
+logic en__mtime;
+
+// Machine Time Compare Register (mtimecmp)
+logic [63:0] mtimecmp;
+logic [63:0] mtimecmp__mtimecmp;
+logic we__mtimecmp;
+logic en__mtimecmp;
+
+
+assign tip = mtime >= mtimecmp;
+
+
+always_comb
+begin
+    we__mtime = 1'b0;
+    we__mtimecmp = 1'b0;
+            
+    case (addr)
+        1'b0:
+        begin
+            rd_data = mtime;
+            we__mtime = we;
+        end
+        1'b1:
+        begin
+            rd_data = mtimecmp;
+            we__mtimecmp = we;
+        end
+    endcase
+end
+
+//============================================== 
+// Machine Time Register (mtime)
+//==============================================
+assign mtime[63:0] = mtime__mtime;
+
+assign en__mtime = 1'b1; 
+
+always_comb
+begin
+    case (en__mtime & we__mtime & cs)
+        1'b0:
+        begin
+            mtime__mtime__n = mtime__mtime + 1;
+        end
+        1'b1:
+        begin
+            mtime__mtime__n = wr_data[63:0];
+        end
+    endcase
+end
+
+//==============================
+// d_flip_flop__mtime__mtime
+//==============================
+d_flip_flop #(.WIDTH(64), .RESET_VALUE(64'h0)) d_flip_flop__mtime__mtime
+(
+    .clk(clk),
+    .rst(rst),
+    .en(en__mtime),
+    .d(mtime__mtime__n),
+    .q(mtime__mtime)
+);
+
+//============================================== 
+// Machine Time Compare Register (mtimecmp)
+//==============================================
+assign mtimecmp[63:0] = mtimecmp__mtimecmp;
+
+assign en__mtimecmp = cs & we__mtimecmp;
+
+//==============================
+// d_flip_flop__mtimecmp__mtimecmp
+//==============================
+d_flip_flop #(.WIDTH(64), .RESET_VALUE(64'h0)) d_flip_flop__mtimecmp__mtimecmp
+(
+    .clk(clk),
+    .rst(rst),
+    .en(en__mtimecmp),
+    .d(wr_data[63:0]),
+    .q(mtimecmp__mtimecmp)
+);
+
+
+endmodule
+//==============================================
+// platform_level_interrupt_controller 
+//==============================================
+module platform_level_interrupt_controller
+(
+    clk,
+    rst,
+    cs,
+    we,
+    addr,
+    wr_data,
+    rd_data,
+    irq__0,
+    irq__1,
+    context__0__eip
+);
+
+input clk;
+input rst;
+input cs;
+input we;
+input [25:0] addr;
+input [31:0] wr_data;
+output [31:0] rd_data;
+input irq__0;
+input irq__1;
+output context__0__eip;
+
+logic clk;
+logic rst;
+logic cs;
+logic we;
+logic [25:0] addr;
+logic [31:0] wr_data;
+logic [31:0] rd_data;
+logic irq__0;
+logic irq__1;
+logic context__0__eip;
+
+logic request__0;
+logic request__1;
+logic complete__0;
+logic complete__1;
+
+//==============================
+// core 
+//==============================
+platform_level_interrupt_controller__core core
+(
+    .clk(clk),
+    .rst(rst),
+    .cs(cs),
+    .we(we),
+    .addr(addr),
+    .wr_data(wr_data),
+    .rd_data(rd_data),
+    .request__0(request__0),
+    .request__1(request__1),
+    .complete__0(complete__0),
+    .complete__1(complete__1),
+    .context__0__eip(context__0__eip)
+);
+
+//==============================
+// gateway__1
+//==============================
+platform_level_interrupt_controller__gateway gateway__1
+(
+    .clk(clk),
+    .rst(rst),
+    .irq(irq__1),
+    .request(request__1),
+    .complete(complete__1)
+);
+
+endmodule
+
+
+
+//==============================================
+// platform_level_interrupt_controller__core
+//==============================================
+module platform_level_interrupt_controller__core
+(
+    clk,
+    rst,
+    cs,
+    we,
+    addr,
+    wr_data,
+    rd_data,
+    request__0,
+    request__1,
+    complete__0,
+    complete__1,
+    context__0__eip
+);
+
+input clk;
+input rst;
+input cs;
+input we;
+input [25:0] addr;
+input [31:0] wr_data;
+output [31:0] rd_data;
+input request__0;
+input request__1;
+output complete__0;
+output complete__1;
+output context__0__eip;
+
+logic clk;
+logic rst;
+logic cs;
+logic we;
+logic [25:0] addr;
+logic [31:0] wr_data;
+logic [31:0] rd_data;
+logic request__0;
+logic request__1;
+logic complete__0;
+logic complete__1;
+logic context__0__eip;
+
+logic ip__0;
+logic ip__1;
+
+// Interrupt Source Priority - Source 0
+logic [31:0] priority__0;
+logic we__priority__0;
+logic re__priority__0;
+logic en__priority__0;
+
+// Interrupt Source Priority - Source 1
+logic [31:0] priority__1;
+logic we__priority__1;
+logic re__priority__1;
+logic en__priority__1;
+
+// Interrupt Pending Bits - Source -31
+logic [31:0] ip__0_to_31;
+logic we__ip__0_to_31;
+logic re__ip__0_to_31;
+logic en__ip__0_to_31;
+
+// Interrupt Enable Bits - Context 0 - Source -31
+logic [31:0] context__0__ie__0_to_31;
+logic we__context__0__ie__0_to_31;
+logic re__context__0__ie__0_to_31;
+logic en__context__0__ie__0_to_31;
+logic context__0__ie__0;
+logic context__0__ie__1;
+
+// Priority Threshold - Context 0 
+logic [31:0] context__0__threshold;
+logic we__context__0__threshold;
+logic re__context__0__threshold;
+logic en__context__0__threshold;
+
+// Interrupt Claim/Complete - Context 0 
+logic [31:0] context__0__claim_complete;
+logic we__context__0__claim_complete;
+logic re__context__0__claim_complete;
+logic en__context__0__claim_complete;
+
+// Interrupt Claim/Complete - Combined
+logic we__context__x__claim_complete;
+logic re__context__x__claim_complete;
+logic claim__0;
+logic claim__1;
+
+logic [9:0] context__0__priority_mux__0__id;
+logic context__0__priority_mux__0__ie;
+logic context__0__priority_mux__0__ip;
+logic [31:0] context__0__priority_mux__0__priority;
+
+
+assign ip__0 = 1'b0;
+
+//==============================================
+// sr_flip_flop__ip__1
+//==============================================
+sr_flip_flop sr_flip_flop__ip__1 
+(
+    .clk(clk),
+    .s(request__1),
+    .r(claim__1 || rst),
+    .q(ip__1)
+);
+
+
+//==============================
+//  context__0__mux__0
+//==============================
+platform_level_interrupt_controller__priority_mux context__0__priority_mux__0
+(
+    .clk(clk),
+    .rst(rst),
+    .id__a(10'h0),
+    .ie__a(context__0__ie__0),
+    .ip__a(ip__0),
+    .priority__a(priority__0),
+    .id__b(10'h1),
+    .ie__b(context__0__ie__1),
+    .ip__b(ip__1),
+    .priority__b(priority__1),
+    .id__c(context__0__priority_mux__0__id),
+    .ie__c(context__0__priority_mux__0__ie),
+    .ip__c(context__0__priority_mux__0__ip),
+    .priority__c(context__0__priority_mux__0__priority)
+);
+
+assign context__0__id = context__0__priority_mux__0__id;
+assign context__0__priority = context__0__priority_mux__0__priority;
+assign context__0__eip = (context__0__priority > context__0__threshold);
+
+
+always_comb
+begin
+    rd_data = 32'h0;
+    we__priority__0 = 1'b0;
+    re__priority__0 = 1'b0;
+    we__priority__1 = 1'b0;
+    re__priority__1 = 1'b0;
+    we__ip__0_to_31 = 1'b0;
+    re__ip__0_to_31 = 1'b0;
+    we__context__0__ie__0_to_31 = 1'b0;
+    re__context__0__ie__0_to_31 = 1'b0;
+    we__context__0__threshold = 1'b0;
+    re__context__0__threshold = 1'b0;
+    we__context__0__claim_complete = 1'b0;
+    re__context__0__claim_complete = 1'b0;
+
+    case (addr)
+        26'h0_00_00_00:
+        begin
+            rd_data = priority__0; 
+            we__priority__0 = we;            
+            re__priority__0 = ~we;            
+        end
+        26'h0_00_00_04:
+        begin
+            rd_data = priority__1; 
+            we__priority__1 = we;            
+            re__priority__1 = ~we;            
+        end
+        26'h0_00_10_00:
+        begin
+            rd_data = ip__0_to_31;
+            we__ip__0_to_31 = we;
+            re__ip__0_to_31 = ~we;
+        end
+        26'h0_00_20_00:
+        begin
+            rd_data = context__0__ie__0_to_31;
+            we__context__0__ie__0_to_31 = we;
+            re__context__0__ie__0_to_31 = ~we;
+        end
+        26'h20_00_00:
+        begin
+            rd_data = context__0__threshold;
+            we__context__0__threshold = we;
+            re__context__0__threshold = ~we;
+        end
+        26'h20_00_04:
+        begin
+            rd_data = context__0__claim_complete;
+            we__context__0__claim_complete = we;
+            re__context__0__claim_complete = ~we;
         end
     endcase
 end
 
 
 //==============================================
-// Machine ISA Register (misa)
+// Interrupt Source Priority - Source 0
 //==============================================
-logic [63:0] misa;
-logic misa__we;
-
-assign misa[25:0] = 26'h0_00_01_00;
-assign misa[61:26] = 36'h0;
-assign misa[63:62] = 2'h2;
+assign priority__0 = 32'h0;
 
 
 //==============================================
-// Machine Vendor ID Register (mvendorid)
+// Interrupt Source Priority - Source 1
 //==============================================
-logic [63:0] mvendorid;
-logic mvendorid__we;
-
-assign mvendorid[63:0] = 64'h0;
+assign priority__1 = 32'h1;
 
 
 //==============================================
-// Machine Architecture ID Register (marchid)
+// Interrupt Pending Bits - Source -31
 //==============================================
-logic [63:0] marchid;
-logic marchid__we;
-
-assign marchid[63:0] = 64'h0;
-
+assign ip__0_to_31[0] = ip__0;
+assign ip__0_to_31[1] = ip__1;
+assign ip__0_to_31[31:2] = 0;
 
 
 //==============================================
-// Machine Implementation ID Register (mimpid)
+// Interrupt Enable Bits - Context 0 - Source -31
 //==============================================
-logic [63:0] mimpid;
-logic mimpid__we;
+assign context__0__ie__0_to_31[0] = context__0__ie__0;
+assign context__0__ie__0_to_31[1] = context__0__ie__1;
+assign context__0__ie__0_to_31[31:2] = 0;
 
-assign mimpid[63:0] = 64'h0;
+assign en__context__0__ie__0_to_31 = cs & we__context__0__ie__0_to_31;
+
+assign context__0__ie__0 = 1'b0;
+
+//==============================
+// d_flip_flop__context__0__ie__1
+//==============================
+d_flip_flop #(.WIDTH(1), .RESET_VALUE(1'b0)) d_flip_flop__context__0__ie__1
+(
+    .clk(clk),
+    .rst(rst),
+    .en(en__context__0__ie__0_to_31),
+    .d(wr_data[1]),
+    .q(context__0__ie__1)
+);
 
 
 //==============================================
-// Hart ID Register (mhartid) 
+// Priority Threshold - Context 0 
 //==============================================
-logic [63:0] mhartid;
-logic mhartid__we;
+assign en__context__0__threshold = cs & we__context__0__threshold;
 
-assign mhartid[63:0] = 64'h0;
+//==============================
+// d_flip_flop__context__0__threshold
+//==============================
+d_flip_flop #(.WIDTH(32), .RESET_VALUE(32'h0)) d_flip_flop__context__0__threshold
+(
+    .clk(clk),
+    .rst(rst),
+    .en(en__context__0__threshold),
+    .d(wr_data),
+    .q(context__0__threshold)
+);
 
 
-//============================================== 
-// Machine Status Register (mstatus) 
 //==============================================
-logic [63:0] mstatus;
-logic mstatus__we;
+// Interrupt Claim/Complete - Context 0 
+//==============================================
+assign context__0__claim_complete[9:0] = context__0__id;
+assign context__0__claim_complete[31:10] = 22'h0;
 
-assign mstatus[0] = 1'b0;
-assign mstatus[1] = 1'b0;
-assign mstatus[2] = 1'b0;
-assign mstatus[4] = 1'b0;
-assign mstatus[5] = 1'b0;
-assign mstatus[6] = 1'b0;
-assign mstatus[8] = 1'b0;
-assign mstatus[10:9] = 2'h0;
-assign mstatus[12:11] = 2'h3;
-assign mstatus[14:13] = 2'h0;
-assign mstatus[16:15] = 2'h0;
-assign mstatus[17] = 1'b0;
-assign mstatus[18] = 1'b0;
-assign mstatus[19] = 1'b0;
-assign mstatus[28:24] = 5'h0;
-assign mstatus[63] = 1'b0;
 
-always_ff @(posedge clk) begin
-    if (rst) begin
-        mstatus[3] <= 1'b0;
-        mstatus[7] <= 1'b1;
-        mstatus[23:20] <= 4'h0;
-        mstatus[62:29] <= 33'h0;
-    end
-    else begin
-        if (mstatus__we) begin
-            mstatus[3] <= wr_data[3];
-            mstatus[7] <= wr_data[7];
-            mstatus[23:20] <= wr_data[23:20];
-            mstatus[62:29] <= wr_data[62:29];
+
+
+assign re__context__x__claim_complete = re__context__0__claim_complete; 
+assign we__context__x__claim_complete = we__context__0__claim_complete;
+
+always_comb
+begin
+    claim__0 = 1'b0; 
+    claim__1 = 1'b0; 
+
+    case (rd_data[9:0]) 
+        10'h0:
+        begin
+            claim__0 = cs & re__context__x__claim_complete;
         end
-    end
+        10'h1:
+        begin
+            claim__1 = cs & re__context__x__claim_complete;
+        end
+    endcase
 end
 
+always_comb
+begin
+    complete__0 = 1'b0; 
+    complete__1 = 1'b0; 
 
-//============================================== 
-// Machine Trap-Vector Base-Address Register (mtvec)
-//==============================================
-logic [63:0] mtvec;
-logic mtvec__we;
-
-assign mtvec[1:0] = 2'h0;
-
-always_ff @(posedge clk) begin
-    if (rst) begin
-        mtvec[63:2] <= 62'h0;
-    end
-    else begin
-        if (mtvec__we) begin
-            mtvec[63:2] <= wr_data[63:2];
+    case (wr_data[9:0]) 
+        10'h0:
+        begin
+            complete__0 = cs & we__context__x__claim_complete;
         end
-    end
-end
-
-
-
-
-//============================================== 
-// Machine Exception Delegation Register (medeleg) 
-//==============================================
-logic [63:0] medeleg;
-logic medeleg__we;
-
-assign medeleg[63:0] = 64'h0;
-
-//============================================== 
-// Machine Interrupt Delegation Register (mideleg) 
-//==============================================
-logic [63:0] mideleg;
-logic mideleg__we;
-
-assign mideleg[63:0] = 64'h0;
-
-
-//============================================== 
-// Machine Interrupt-Pending Register (mip) 
-//==============================================
-logic [63:0] mip;
-logic mip__we;
-
-assign mip[0] = 1'b0;
-assign mip[1] = 1'b0;
-assign mip[2] = 1'b0;
-assign mip[4] = 1'b0;
-assign mip[5] = 1'b0;
-assign mip[6] = 1'b0;
-assign mip[8] = 1'b0;
-assign mip[9] = 1'b0;
-assign mip[10] = 1'b0;
-assign mip[63:12] = 52'h0;
-
-always_ff @(posedge clk) begin
-    if (rst) begin
-        mip[3] <= 1'b0;
-        mip[7] <= 1'b0;
-        mip[11] <= 1'b0;
-    end
-end
-
-//============================================== 
-// Machine Interrupt-Enable Register (mie) 
-//==============================================
-logic [63:0] mie;
-logic mie__we;
-
-assign mie[0] = 1'b0;
-assign mie[1] = 1'b0;
-assign mie[2] = 1'b0;
-assign mie[4] = 1'b0;
-assign mie[5] = 1'b0;
-assign mie[6] = 1'b0;
-assign mie[8] = 1'b0;
-assign mie[9] = 1'b0;
-assign mie[10] = 1'b0;
-assign mie[63:12] = 52'h0;
-
-always_ff @(posedge clk) begin
-    if (rst) begin
-        mie[3] <= 1'b0;
-        mie[7] <= 1'b0;
-        mie[11] <= 1'b0;
-    end
-    else begin
-        if (mie__we) begin
-            mie[3] <= wr_data[3];
-            mie[7] <= wr_data[7];
-            mie[11] <= wr_data[11];
+        10'h1:
+        begin
+            complete__1 = cs & we__context__x__claim_complete;
         end
-    end
-end
-
-//============================================== 
-// Machine Cycle Register (mcycle) 
-//==============================================
-logic [63:0] mcycle;
-logic mcycle__we;
-
-always_ff @(posedge clk) begin
-    if (rst) begin
-        mcycle[63:0] <= 64'h0;
-    end
-    else begin
-        if (mcycle__we) begin
-            mcycle[63:0] <= wr_data[63:0];
-        end
-        else begin
-            mcycle[63:0] <= mcycle[63:0] + 1;
-        end
-    end
-end
-
-//============================================== 
-// Machine Instruction Retire Register (minstret) 
-//==============================================
-logic [63:0] minstret;
-logic minstret__we;
-
-always_ff @(posedge clk) begin
-    if (rst) begin
-        minstret[63:0] <= 64'h0;
-    end
-    else begin
-        if (minstret__we) begin
-            minstret[63:0] <= wr_data[63:0];
-        end
-    end
-end
-
-
-//============================================== 
-// Machine Hardware Performance Monitor Counter 3 (mhpmcounter3)
-//==============================================
-logic [63:0] mhpmcounter3;
-logic mhpmcounter3__we;
-
-assign mhpmcounter3[63:0] = 64'h0;
-
-
-//============================================== 
-// Machine Hardware Performance Monitor Event 3 (mhpmevent3)
-//==============================================
-logic [63:0] mhpmevent3;
-logic mhpmevent3__we;
-
-assign mhpmevent3[63:0] = 64'h0;
-
-
-//============================================== 
-// Machine Scratch Register (mscratch) 
-//==============================================
-logic [63:0] mscratch;
-logic mscratch__we;
-
-always_ff @(posedge clk) begin
-    if (rst) begin
-        mscratch[63:0] <= 64'h0;
-    end
-    else begin
-        if (mscratch__we) begin
-            mscratch[63:0] <= wr_data[63:0];
-        end
-    end
-end
-
-
-//============================================== 
-// Machine Exception Program Counter (mepc) 
-//==============================================
-logic [63:0] mepc;
-logic mepc__we;
-
-always_ff @(posedge clk) begin
-    if (rst) begin
-        mepc[63:0] <= 64'h0;
-    end
-    else begin
-        if (mepc__we) begin
-            mepc[63:0] <= wr_data[63:0];
-        end
-    end
-end
-
-
-//============================================== 
-// Machine Cause Register (mcause) 
-//==============================================
-logic [63:0] mcause;
-logic mcause__we;
-
-always_ff @(posedge clk) begin
-    if (rst) begin
-        mcause[62:0] <= 63'h0;
-        mcause[63] <= 1'b0;
-    end
-    else begin
-        if (mcause__we) begin
-            mcause[62:0] <= wr_data[62:0];
-            mcause[63] <= wr_data[63];
-        end
-    end
-end
-
-
-//============================================== 
-// Machine Trap Value Register (mtval) 
-//==============================================
-logic [63:0] mtval;
-logic mtval__we;
-
-always_ff @(posedge clk) begin
-    if (rst) begin
-        mtval[63:0] <= 64'h0;
-    end
-    else begin
-        if (mtval__we) begin
-            mtval[63:0] <= wr_data[63:0];
-        end
-    end
+    endcase
 end
 
 
 endmodule
+//==============================================
+// platform_level_interrupt_controller__gateway 
+//==============================================
+module platform_level_interrupt_controller__gateway 
+(
+    clk,
+    rst,
+    irq,
+    request,
+    complete
+);
 
+input clk;
+input rst;
+input irq;
+output request;
+input complete;
+
+logic clk;
+logic rst;
+logic irq;
+logic request;
+logic complete;
+
+logic [1:0] state;
+logic [1:0] state__n;
+
+localparam STATE__READY = 2'h0;
+localparam STATE__REQUEST_INTERRUPT = 2'h1;
+localparam STATE__WAIT = 2'h2;
+
+always_comb
+begin
+    request = 1'b0;
+    state__n = state;
+
+    case (state)
+        //==============================
+        // STATE__READY
+        //==============================
+        STATE__READY:
+        begin
+            state__n = irq ? STATE__REQUEST_INTERRUPT : STATE__READY;
+        end
+
+        //==============================
+        // STATE__REQUEST_INTERRUPT
+        //==============================
+        STATE__REQUEST_INTERRUPT:
+        begin
+            request = 1'b1;
+            state__n = STATE__WAIT;
+        end
+        
+        //==============================
+        // STATE__WAIT
+        //==============================
+        STATE__WAIT:
+        begin
+            state__n = complete ? STATE__READY : STATE__WAIT;
+        end
+    endcase
+end
+
+//==============================
+// d_flip_flop__state
+//==============================
+d_flip_flop #(.WIDTH(2), .RESET_VALUE(STATE__READY)) d_flip_flop__state
+(
+    .clk(clk),
+    .rst(rst),
+    .en(1'b1),
+    .d(state__n),
+    .q(state)
+);
+
+
+endmodule
+//==============================================
+// platform_level_interrupt_controller__priority_mux
+//==============================================
+module platform_level_interrupt_controller__priority_mux
+(
+    clk,
+    rst,
+    id__a,
+    ie__a,
+    ip__a,
+    priority__a,
+    id__b,
+    ie__b,
+    ip__b,
+    priority__b,
+    id__c,
+    ie__c,
+    ip__c,
+    priority__c
+);
+
+input clk;
+input rst;
+input [9:0] id__a;
+input ie__a;
+input ip__a;
+input [31:0] priority__a;
+input [9:0] id__b;
+input ie__b;
+input ip__b;
+input [31:0] priority__b;
+output [9:0] id__c;
+output ie__c;
+output ip__c;
+output [31:0] priority__c;
+
+logic clk;
+logic rst;
+logic [9:0] id__a;
+logic ie__a;
+logic ip__a;
+logic [31:0] priority__a;
+logic [9:0] id__b;
+logic ie__b;
+logic ip__b;
+logic [31:0] priority__b;
+logic [9:0] id__c;
+logic ie__c;
+logic ip__c;
+logic [31:0] priority__c;
+
+
+always_comb
+begin
+    if (({32{ip__b}} & {32{ie__b}} & priority__b[31:0]) > ({32{ip__a}} & {32{ie__a}} & priority__a[31:0]))
+    begin
+        id__c = id__b;
+        ie__c = ie__b;
+        ip__c = ip__b;
+        priority__c = priority__b;
+    end
+    else
+    begin
+        id__c = id__a;
+        ie__c = ie__a;
+        ip__c = ip__a;
+        priority__c = priority__a;
+    end
+end
+
+endmodule
+//==============================================
+// physical_memory_attribute_registers
+//==============================================
+module physical_memory_attribute_registers
+(
+    clk,
+    rst,
+    cs,
+    we,
+    addr,
+    wr_data,
+    rd_data,
+    pmar__0,
+    pmar__1,
+    pmar__2,
+    pmar__3,
+    pmar__4,
+    pmar__5,
+    pmar__6,
+    pmar__7
+);
+
+
+input clk;
+input rst;
+input cs;
+input we;
+input [2:0] addr;
+input [7:0] wr_data;
+output [7:0] rd_data;
+output [7:0] pmar__0;
+output [7:0] pmar__1;
+output [7:0] pmar__2;
+output [7:0] pmar__3;
+output [7:0] pmar__4;
+output [7:0] pmar__5;
+output [7:0] pmar__6;
+output [7:0] pmar__7;
+
+logic clk;
+logic rst;
+logic cs;
+logic we;
+logic [2:0] addr;
+logic [7:0] wr_data;
+logic [7:0] rd_data;
+logic [7:0] pmar__0;
+logic [7:0] pmar__1;
+logic [7:0] pmar__2;
+logic [7:0] pmar__3;
+logic [7:0] pmar__4;
+logic [7:0] pmar__5;
+logic [7:0] pmar__6;
+logic [7:0] pmar__7;
+
+
+
+always_comb
+begin
+    case (addr)
+        3'h0:
+        begin
+            rd_data = pmar__0; 
+        end
+        3'h1:
+        begin
+            rd_data = pmar__1; 
+        end
+        3'h2:
+        begin
+            rd_data = pmar__2; 
+        end
+        3'h3:
+        begin
+            rd_data = pmar__3; 
+        end
+        3'h0:
+        begin
+            rd_data = pmar__4; 
+        end
+        3'h1:
+        begin
+            rd_data = pmar__5; 
+        end
+        3'h2:
+        begin
+            rd_data = pmar__6; 
+        end
+        3'h3:
+        begin
+            rd_data = pmar__7; 
+        end
+        default:
+        begin
+            rd_data[0:0] = 0;
+            rd_data[1:1] = 1'b0;
+            rd_data[2:2] = 1'b0;
+            rd_data[3:3] = 1'b0;
+            rd_data[4:4] = 1'b0;
+            rd_data[5:5] = 1'b0;
+        end
+    endcase
+end
+
+//==============================================
+// Physical Memory Attributes Register 0
+//==============================================
+assign pmar__0[0:0] = 1;
+assign pmar__0[1:1] = 1'b1;
+assign pmar__0[2:2] = 1'b1;
+assign pmar__0[3:3] = 1'b1;
+assign pmar__0[4:4] = 1'b1;
+assign pmar__0[5:5] = 1'b0;
+
+
+//==============================================
+// Physical Memory Attributes Register 1
+//==============================================
+assign pmar__1[0:0] = 0;
+assign pmar__1[1:1] = 1'b0;
+assign pmar__1[2:2] = 1'b0;
+assign pmar__1[3:3] = 1'b1;
+assign pmar__1[4:4] = 1'b0;
+assign pmar__1[5:5] = 1'b0;
+
+//==============================================
+// Physical Memory Attributes Register 2
+//==============================================
+assign pmar__2[0:0] = 0;
+assign pmar__2[1:1] = 1'b0;
+assign pmar__2[2:2] = 1'b0;
+assign pmar__2[3:3] = 1'b0;
+assign pmar__2[4:4] = 1'b1;
+assign pmar__2[5:5] = 1'b0;
+
+//==============================================
+// Physical Memory Attributes Register 3
+//==============================================
+assign pmar__3[0:0] = 0;
+assign pmar__3[1:1] = 1'b1;
+assign pmar__3[2:2] = 1'b0;
+assign pmar__3[3:3] = 1'b0;
+assign pmar__3[4:4] = 1'b0;
+assign pmar__3[5:5] = 1'b0;
+
+//==============================================
+// Physical Memory Attributes Register 4
+//==============================================
+assign pmar__4[0:0] = 0;
+assign pmar__4[1:1] = 1'b1;
+assign pmar__4[2:2] = 1'b0;
+assign pmar__4[3:3] = 1'b0;
+assign pmar__4[4:4] = 1'b0;
+assign pmar__4[5:5] = 1'b0;
+
+//==============================================
+// Physical Memory Attributes Register 5
+//==============================================
+assign pmar__5[0:0] = 0;
+assign pmar__5[1:1] = 1'b0;
+assign pmar__5[2:2] = 1'b0;
+assign pmar__5[3:3] = 1'b0;
+assign pmar__5[4:4] = 1'b0;
+assign pmar__5[5:5] = 1'b0;
+
+//==============================================
+// Physical Memory Attributes Register 6
+//==============================================
+assign pmar__6[0:0] = 0;
+assign pmar__6[1:1] = 1'b0;
+assign pmar__6[2:2] = 1'b0;
+assign pmar__6[3:3] = 1'b0;
+assign pmar__6[4:4] = 1'b0;
+assign pmar__6[5:5] = 1'b0;
+
+//==============================================
+// Physical Memory Attributes Register 7
+//==============================================
+assign pmar__7[0:0] = 0;
+assign pmar__7[1:1] = 1'b0;
+assign pmar__7[2:2] = 1'b0;
+assign pmar__7[3:3] = 1'b0;
+assign pmar__7[4:4] = 1'b0;
+assign pmar__7[5:5] = 1'b0;
+
+endmodule
+//==============================================
+// physical_memory_attribute_checker 
+//==============================================
+module physical_memory_attribute_checker
+(
+    clk,
+    rst,
+    addr, 
+    size,
+    pmar,
+    status 
+);
+
+input clk;
+input rst;
+input [2:0] addr; 
+input [1:0] size;
+input [7:0] pmar;
+output [1:0] status;
+
+logic clk;
+logic rst;
+logic [2:0] addr; 
+logic [1:0] size;
+logic [7:0] pmar;
+logic [1:0] status;
+
+always_comb 
+begin
+    case (size)
+        2'h3:
+        begin
+            status = (pmar[1:1] == 1'b0) ? 2'h1 : 2'h0;
+        end
+        2'h2:
+        begin
+            status = (pmar[2:2] == 1'b0) ? 2'h1 : (addr[0] != 1'b0) && (pmar[5:5] == 1'b0) ? 2'h2 : 2'h0;
+        end
+        2'h1:
+        begin
+            status = (pmar[3:3] == 1'b0) ? 2'h1 : (addr[1:0] != 2'h0) && (pmar[5:5] == 1'b0) ? 2'h2 : 2'h0;
+        end
+        2'h0:
+        begin
+            status = (pmar[4:4] == 1'b0) ? 2'h1 : (addr[2:0] != 3'h0) && (pmar[5:5] == 1'b0)? 2'h2 : 2'h0;
+        end
+    endcase
+end
+
+
+endmodule
+//==============================================
+// general_purpose_input_output
+//==============================================
+module general_purpose_input_output
+(
+    clk,
+    rst,
+    cs,
+    we,
+    addr,
+    wr_data,
+    rd_data,
+    port__0,
+    port__1,
+    port__2,
+    port__3
+);
+
+input clk;
+input rst;
+
+input cs;
+input we;
+input [3:0] addr;
+input [7:0] wr_data;
+output [7:0] rd_data;
+
+inout [7:0] port__0;
+inout [7:0] port__1;
+inout [7:0] port__2;
+inout [7:0] port__3;
+
+logic clk;
+logic rst;
+
+logic cs;
+logic we;
+logic [3:0] addr;
+logic [7:0] wr_data;
+logic [7:0] rd_data;
+
+//logic [7:0] port__0;
+logic [7:0] data__0;
+logic [7:0] oe__0;
+logic we__data__0;
+logic we__oe__0;
+logic en__data__0;
+logic en__oe__0;
+
+//logic [7:0] port__1;
+logic [7:0] data__1;
+logic [7:0] oe__1;
+logic we__data__1;
+logic we__oe__1;
+logic en__data__1;
+logic en__oe__1;
+
+//logic [7:0] port__2;
+logic [7:0] data__2;
+logic [7:0] oe__2;
+logic we__data__2;
+logic we__oe__2;
+logic en__data__2;
+logic en__oe__2;
+
+//logic [7:0] port__3;
+logic [7:0] data__3;
+logic [7:0] oe__3;
+logic we__data__3;
+logic we__oe__3;
+logic en__data__3;
+logic en__oe__3;
+
+assign port__0[0] = oe__0[0] ? data__0[0] : 1'bz;
+assign port__0[1] = oe__0[1] ? data__0[1] : 1'bz;
+assign port__0[2] = oe__0[2] ? data__0[2] : 1'bz;
+assign port__0[3] = oe__0[3] ? data__0[3] : 1'bz;
+assign port__0[4] = oe__0[4] ? data__0[4] : 1'bz;
+assign port__0[5] = oe__0[5] ? data__0[5] : 1'bz;
+assign port__0[6] = oe__0[6] ? data__0[6] : 1'bz;
+assign port__0[7] = oe__0[7] ? data__0[7] : 1'bz;
+
+assign port__1[0] = oe__1[0] ? data__1[0] : 1'bz;
+assign port__1[1] = oe__1[1] ? data__1[1] : 1'bz;
+assign port__1[2] = oe__1[2] ? data__1[2] : 1'bz;
+assign port__1[3] = oe__1[3] ? data__1[3] : 1'bz;
+assign port__1[4] = oe__1[4] ? data__1[4] : 1'bz;
+assign port__1[5] = oe__1[5] ? data__1[5] : 1'bz;
+assign port__1[6] = oe__1[6] ? data__1[6] : 1'bz;
+assign port__1[7] = oe__1[7] ? data__1[7] : 1'bz;
+
+assign port__2[0] = oe__2[0] ? data__2[0] : 1'bz;
+assign port__2[1] = oe__2[1] ? data__2[1] : 1'bz;
+assign port__2[2] = oe__2[2] ? data__2[2] : 1'bz;
+assign port__2[3] = oe__2[3] ? data__2[3] : 1'bz;
+assign port__2[4] = oe__2[4] ? data__2[4] : 1'bz;
+assign port__2[5] = oe__2[5] ? data__2[5] : 1'bz;
+assign port__2[6] = oe__2[6] ? data__2[6] : 1'bz;
+assign port__2[7] = oe__2[7] ? data__2[7] : 1'bz;
+
+assign port__3[0] = oe__3[0] ? data__3[0] : 1'bz;
+assign port__3[1] = oe__3[1] ? data__3[1] : 1'bz;
+assign port__3[2] = oe__3[2] ? data__3[2] : 1'bz;
+assign port__3[3] = oe__3[3] ? data__3[3] : 1'bz;
+assign port__3[4] = oe__3[4] ? data__3[4] : 1'bz;
+assign port__3[5] = oe__3[5] ? data__3[5] : 1'bz;
+assign port__3[6] = oe__3[6] ? data__3[6] : 1'bz;
+assign port__3[7] = oe__3[7] ? data__3[7] : 1'bz;
+
+
+always_comb
+begin
+    rd_data = port__0;
+    we__data__0 = 1'b0;
+    we__oe__0 = 1'b0;
+    we__data__1 = 1'b0;
+    we__oe__1 = 1'b0;
+    we__data__2 = 1'b0;
+    we__oe__2 = 1'b0;
+    we__data__3 = 1'b0;
+    we__oe__3 = 1'b0;
+
+    case (addr)
+        4'h0:
+        begin
+            rd_data = port__0; 
+            we__data__0 = we;
+        end
+        4'h1:
+        begin
+            rd_data = data__0; 
+            we__data__0 = we;
+        end
+        4'h2:
+        begin
+            rd_data = oe__0; 
+            we__oe__0 = we;
+        end
+        4'h3:
+        begin
+            rd_data = port__1; 
+            we__data__1 = we;
+        end
+        4'h4:
+        begin
+            rd_data = data__1; 
+            we__data__1 = we;
+        end
+        4'h5:
+        begin
+            rd_data = oe__1; 
+            we__oe__1 = we;
+        end
+        4'h6:
+        begin
+            rd_data = port__2; 
+            we__data__2 = we;
+        end
+        4'h7:
+        begin
+            rd_data = data__2; 
+            we__data__2 = we;
+        end
+        4'h8:
+        begin
+            rd_data = oe__2; 
+            we__oe__2 = we;
+        end
+        4'h9:
+        begin
+            rd_data = port__3; 
+            we__data__3 = we;
+        end
+        4'ha:
+        begin
+            rd_data = data__3; 
+            we__data__3 = we;
+        end
+        4'hb:
+        begin
+            rd_data = oe__3; 
+            we__oe__3 = we;
+        end
+    endcase
+end
+
+assign en__data__0 = cs & we__data__0;
+
+//==============================
+// d_flip_flop__data__0
+//==============================
+d_flip_flop #(.WIDTH(8)) d_flip_flop__data__0
+(
+    .clk(clk),
+    .rst(1'b0),
+    .en(en__data__0),
+    .d(wr_data),
+    .q(data__0)
+);
+
+
+assign en__oe__0 = cs & we__oe__0;
+
+//==============================
+// d_flip_flop__oe__0
+//==============================
+d_flip_flop #(.WIDTH(8), .RESET_VALUE(8'h0)) d_flip_flop__oe__0
+(
+    .clk(clk),
+    .rst(rst),
+    .en(en__oe__0),
+    .d(wr_data),
+    .q(oe__0)
+);
+
+assign en__data__1 = cs & we__data__1;
+
+//==============================
+// d_flip_flop__data__1
+//==============================
+d_flip_flop #(.WIDTH(8)) d_flip_flop__data__1
+(
+    .clk(clk),
+    .rst(1'b0),
+    .en(en__data__1),
+    .d(wr_data),
+    .q(data__1)
+);
+
+
+assign en__oe__1 = cs & we__oe__1;
+
+//==============================
+// d_flip_flop__oe__1
+//==============================
+d_flip_flop #(.WIDTH(8), .RESET_VALUE(8'h0)) d_flip_flop__oe__1
+(
+    .clk(clk),
+    .rst(rst),
+    .en(en__oe__1),
+    .d(wr_data),
+    .q(oe__1)
+);
+
+assign en__data__2 = cs & we__data__2;
+
+//==============================
+// d_flip_flop__data__2
+//==============================
+d_flip_flop #(.WIDTH(8)) d_flip_flop__data__2
+(
+    .clk(clk),
+    .rst(1'b0),
+    .en(en__data__2),
+    .d(wr_data),
+    .q(data__2)
+);
+
+
+assign en__oe__2 = cs & we__oe__2;
+
+//==============================
+// d_flip_flop__oe__2
+//==============================
+d_flip_flop #(.WIDTH(8), .RESET_VALUE(8'h0)) d_flip_flop__oe__2
+(
+    .clk(clk),
+    .rst(rst),
+    .en(en__oe__2),
+    .d(wr_data),
+    .q(oe__2)
+);
+
+assign en__data__3 = cs & we__data__3;
+
+//==============================
+// d_flip_flop__data__3
+//==============================
+d_flip_flop #(.WIDTH(8)) d_flip_flop__data__3
+(
+    .clk(clk),
+    .rst(1'b0),
+    .en(en__data__3),
+    .d(wr_data),
+    .q(data__3)
+);
+
+
+assign en__oe__3 = cs & we__oe__3;
+
+//==============================
+// d_flip_flop__oe__3
+//==============================
+d_flip_flop #(.WIDTH(8), .RESET_VALUE(8'h0)) d_flip_flop__oe__3
+(
+    .clk(clk),
+    .rst(rst),
+    .en(en__oe__3),
+    .d(wr_data),
+    .q(oe__3)
+);
+
+endmodule
+//==============================================
+// memory_controller 
+//==============================================
+module memory_controller
+(
+    clk,
+    rst,
+    cs,
+    we,
+    addr,
+    size,
+    wr_data,
+    ready,
+    rd_data,
+    ena,
+    wea,
+    addra, 
+    dina,
+    douta
+);
+
+input clk;
+input rst;
+
+input cs;
+input we;
+input [14:0] addr;
+input [1:0] size;
+input [63:0] wr_data;
+output ready;
+output [63:0] rd_data;
+
+output ena;
+output [7:0] wea;
+output [11:0] addra; 
+output [63:0] dina;
+input [63:0] douta;
+
+logic clk;
+logic rst;
+
+logic cs;
+logic we;
+logic [14:0] addr;
+logic [1:0] size;
+logic [63:0] wr_data;
+logic ready;
+logic [63:0] rd_data;
+
+logic ena;
+logic [7:0] wea;
+logic [11:0] addra; 
+logic [63:0] dina;
+logic [63:0] douta;
+
+logic [2:0] state;
+logic [2:0] state__n;
+
+localparam STATE__IDLE = 3'h0;
+localparam STATE__WRITE = 3'h1;
+localparam STATE__READ__0 = 3'h2;
+localparam STATE__READ__1 = 3'h3;
+localparam STATE__READ__2 = 3'h4;
+
+
+assign addra = addr[14:3];
+assign dina = wr_data;
+
+always_comb
+begin
+    ena = 1'b0;
+    wea = 8'b0000_0000; 
+    ready = 1'b0;
+    rd_data = douta;
+        
+    case (state)
+        //==============================
+        // STATE__IDLE
+        //==============================
+        STATE__IDLE:
+        begin
+            state__n = (cs & we) ? STATE__WRITE : (cs & ~we) ? STATE__READ__0 : STATE__IDLE; 
+        end
+
+        //==============================
+        // STATE__WRITE
+        //==============================
+        STATE__WRITE:
+        begin
+            ena = 1'b1;
+            wea = (size == 2'h3) ? (8'b0000_0001 << addr[2:0]) : (size == 2'h2) ? (8'b0000_0011 << addr[1:0]) : (size == 2'h1) ? (8'b0000_1111 << addr[0]) : 8'b1111_1111;
+            ready = 1'b1;
+            state__n = STATE__IDLE; 
+        end
+
+        //==============================
+        // STATE__READ__0
+        //==============================
+        STATE__READ__0:
+        begin
+            ena = 1'b1;
+            state__n = STATE__READ__1; 
+        end
+
+        //==============================
+        // STATE__READ__1
+        //==============================
+        STATE__READ__1:
+        begin
+            ena = 1'b1;
+            state__n = STATE__READ__2; 
+        end
+
+        //==============================
+        // STATE__READ__2
+        //==============================
+        STATE__READ__2:
+        begin
+            ena = 1'b1;
+            ready = 1'b1;
+            rd_data = (douta >> addr[2:0]); 
+            state__n = STATE__IDLE; 
+        end
+    endcase
+end
+
+//==============================
+// d_flip_flop__state
+//==============================
+d_flip_flop #(.WIDTH(3), .RESET_VALUE(STATE__IDLE)) d_flip_flop__state
+(
+    .clk(clk),
+    .rst(rst),
+    .en(1'b1),
+    .d(state__n),
+    .q(state)
+);
+
+endmodule
 //==============================================
 // memory_management_unit 
 //==============================================
 module memory_management_unit
 (
-    input clk,
-    input rst,
-    input cpu_to_mem__valid,
-    output logic cpu_to_mem__ready,
-    input cpu_to_mem__we,
-    input [63:0] cpu_to_mem__addr,
-    input [2:0] cpu_to_mem__dtype,
-    input [63:0] cpu_to_mem__data,
-    output logic mem_to_cpu__valid,
-    input mem_to_cpu__ready,
-    output logic mem_to_cpu__error,
-    output logic [63:0] mem_to_cpu__data,
-    output logic [7:0] port__0
+    clk,
+    rst,
+    cpu_to_mmu__cs,
+    cpu_to_mmu__we,
+    cpu_to_mmu__addr,
+    cpu_to_mmu__size,
+    cpu_to_mmu__wr_data,
+    cpu_to_mmu__ready,
+    cpu_to_mmu__resp,
+    cpu_to_mmu__rd_data,
+    mmu_to_bus__cs,
+    mmu_to_bus__we,
+    mmu_to_bus__addr,
+    mmu_to_bus__size,
+    mmu_to_bus__wr_data,
+    mmu_to_bus__ready,
+    mmu_to_bus__resp,
+    mmu_to_bus__rd_data,
+    pmar__0,
+    pmar__1,
+    pmar__2,
+    pmar__3,
+    pmar__4,
+    pmar__5,
+    pmar__6,
+    pmar__7
 );
 
+input clk;
+input rst;
+
+input cpu_to_mmu__cs;
+input cpu_to_mmu__we;
+input [63:0] cpu_to_mmu__addr;
+input [1:0] cpu_to_mmu__size;
+input [63:0] cpu_to_mmu__wr_data;
+output cpu_to_mmu__ready;
+output cpu_to_mmu__resp;
+output [63:0] cpu_to_mmu__rd_data;
+
+output mmu_to_bus__cs;
+output mmu_to_bus__we;
+output [39:0] mmu_to_bus__addr;
+output [1:0] mmu_to_bus__size;
+output [63:0] mmu_to_bus__wr_data;
+input mmu_to_bus__ready;
+input mmu_to_bus__resp;
+input [63:0] mmu_to_bus__rd_data;
+
+input [7:0] pmar__0;
+input [7:0] pmar__1;
+input [7:0] pmar__2;
+input [7:0] pmar__3;
+input [7:0] pmar__4;
+input [7:0] pmar__5;
+input [7:0] pmar__6;
+input [7:0] pmar__7;
+
+logic clk;
+logic rst;
 
 logic we;
-logic we__n;
-logic [63:0] addr;
-logic [63:0] addr__n;
-logic [2:0] dtype;
-logic [2:0] dtype__n;
+logic [39:0] addr;
+logic [1:0] size;
 logic [63:0] wr_data;
-logic [63:0] wr_data__n;
+logic [63:0] rd_data;
 
-logic ena;
-logic wea;
-logic [11:0] addra;
-logic [63:0] dina;
-logic [63:0] douta;
-logic [63:0] douta__aligned;
+logic cpu_to_mmu__cs;
+logic cpu_to_mmu__we;
+logic [63:0] cpu_to_mmu__addr;
+logic [1:0] cpu_to_mmu__size;
+logic [63:0] cpu_to_mmu__wr_data;
+logic cpu_to_mmu__ready;
+logic cpu_to_mmu__resp;
+logic [63:0] cpu_to_mmu__rd_data;
 
-logic [7:0] port__0__n;
+logic mmu_to_bus__cs;
+logic mmu_to_bus__we;
+logic [39:0] mmu_to_bus__addr;
+logic [1:0] mmu_to_bus__size;
+logic [63:0] mmu_to_bus__wr_data;
+logic mmu_to_bus__ready;
+logic mmu_to_bus__resp;
+logic [63:0] mmu_to_bus__rd_data;
+
+logic [7:0] pmar__0;
+logic [7:0] pmar__1;
+logic [7:0] pmar__2;
+logic [7:0] pmar__3;
+logic [7:0] pmar__4;
+logic [7:0] pmar__5;
+logic [7:0] pmar__6;
+logic [7:0] pmar__7;
+
+logic [7:0] pmar;
+logic [1:0] status;
 
 logic [3:0] state;
 logic [3:0] state__n;
 
+logic en__a;
+logic en__b;
+
 //==============================
-// store_dtype 
+// physical_memory_attribute_checker__0
 //==============================
-store_dtype store_dtype__0
+physical_memory_attribute_checker physical_memory_attribute_checker__0
 (
     .clk(clk),
     .rst(rst),
-    .addr(addr[2:0]),
-    .dtype(dtype),
-    .wr_data(wr_data),
-    .din(douta),
-    .dout(dina)
+    .addr(addr[2:0]), 
+    .size(size),
+    .pmar(pmar),
+    .status(status)
 );
 
+always_comb
+begin
+    casez (addr)
+        40'b0000_0000_1000__????_????_????_????_????_????_????:
+        begin
+            pmar = pmar__0;
+        end
+        40'b0000_0000_1001__????_????_????_????_????_????_????:
+        begin
+            pmar = pmar__1;
+        end
+        40'b0000_0000_1010__????_????_????_????_????_????_????:
+        begin
+            pmar = pmar__2;
+        end
+        40'b0000_0000_1011__????_????_????_????_????_????_????:
+        begin
+            pmar = pmar__3;
+        end
+        40'b0000_0000_1100__????_????_????_????_????_????_????:
+        begin
+            pmar = pmar__4;
+        end
+        40'b0000_0000_1101__????_????_????_????_????_????_????:
+        begin
+            pmar = pmar__5;
+        end
+        40'b0000_0000_1110__????_????_????_????_????_????_????:
+        begin
+            pmar = pmar__6;
+        end
+        40'b0000_0000_1111__????_????_????_????_????_????_????:
+        begin
+            pmar = pmar__7;
+        end
+        default:
+        begin
+            pmar[0:0] = 0;
+            pmar[1:1] = 1'b0;
+            pmar[2:2] = 1'b0;
+            pmar[3:3] = 1'b0;
+            pmar[4:4] = 1'b0;
+            pmar[5:5] = 1'b0;
+        end
+    endcase
+end
+
+assign mmu_to_bus__we = we;
+assign mmu_to_bus__addr = addr;
+assign mmu_to_bus__size = size;
+assign mmu_to_bus__wr_data = wr_data;
+
+localparam STATE__RESET = 4'h0;
+localparam STATE__READY = 4'h1;
+localparam STATE__PMA_CHECK = 4'h2;
+localparam STATE__REQ = 4'h3;
+localparam STATE__RESP = 4'h4;
+localparam STATE__ACCESS_FAULT = 4'h5; 
+localparam STATE__MISALIGNED_ADDRESS = 4'h6; 
+
+
+always_comb
+begin
+    case (state)
+        //==============================
+        // STATE__RESET
+        //==============================
+        STATE__RESET:
+        begin
+            cpu_to_mmu__ready = 1'b0;
+            cpu_to_mmu__resp = 1'b0;
+            cpu_to_mmu__rd_data = rd_data;
+            mmu_to_bus__cs = 1'b0;
+            en__a = 1'b0;
+            en__b = 1'b0;
+            state__n = STATE__READY;
+        end
+
+        //==============================
+        // STATE__READY
+        //==============================
+        STATE__READY:
+        begin
+            cpu_to_mmu__ready = 1'b0;
+            cpu_to_mmu__resp = 1'b0;
+            cpu_to_mmu__rd_data = rd_data;
+            mmu_to_bus__cs = 1'b0;
+            //en__a = 1'b0;
+            en__b = 1'b0;
+            en__a = cpu_to_mmu__cs;
+            state__n = cpu_to_mmu__cs ? STATE__PMA_CHECK : STATE__READY;
+        end
+
+        //==============================
+        // STATE__PMA_CHECK
+        //==============================
+        STATE__PMA_CHECK:
+        begin
+            cpu_to_mmu__ready = 1'b0;
+            cpu_to_mmu__resp = 1'b0;
+            cpu_to_mmu__rd_data = rd_data;
+            mmu_to_bus__cs = 1'b0;
+            en__a = 1'b0;
+            en__b = 1'b0;
+            state__n = (status == 2'h1) ? STATE__ACCESS_FAULT : (status == 2'h2) ? STATE__MISALIGNED_ADDRESS : STATE__REQ;
+        end
+
+        //==============================
+        // STATE__REQ
+        //==============================
+        STATE__REQ:
+        begin
+            cpu_to_mmu__ready = 1'b0;
+            cpu_to_mmu__resp = 1'b0;
+            cpu_to_mmu__rd_data = rd_data;
+            //mmu_to_bus__cs = 1'b0;
+            en__a = 1'b0;
+            //en__b = 1'b0;
+            mmu_to_bus__cs = 1'b1;
+            en__b = mmu_to_bus__ready;
+            state__n = mmu_to_bus__ready ? STATE__RESP : STATE__REQ;
+        end
+            
+        //==============================
+        // STATE__RESP
+        //==============================
+        STATE__RESP:
+        begin
+            //cpu_to_mmu__ready = 1'b0;
+            //cpu_to_mmu__resp = 1'b0;
+            //cpu_to_mmu__rd_data = rd_data;
+            mmu_to_bus__cs = 1'b0;
+            en__a = 1'b0;
+            en__b = 1'b0;
+            cpu_to_mmu__ready = 1'b1;
+            cpu_to_mmu__resp = 1'b0;
+            cpu_to_mmu__rd_data = rd_data;
+            state__n = STATE__READY; 
+        end
+
+        //==============================
+        // STATE__ACCESS_FAULT
+        //==============================
+        STATE__ACCESS_FAULT:
+        begin
+            //cpu_to_mmu__ready = 1'b0;
+            //cpu_to_mmu__resp = 1'b0;
+            //cpu_to_mmu__rd_data = rd_data;
+            mmu_to_bus__cs = 1'b0;
+            en__a = 1'b0;
+            en__b = 1'b0;
+            cpu_to_mmu__ready = 1'b1;
+            cpu_to_mmu__resp = 1'b1;
+            cpu_to_mmu__rd_data = 64'h0;
+            state__n = STATE__READY;
+        end
+
+        //==============================
+        // STATE__MISALIGNED_ADDRESS
+        //==============================
+        STATE__MISALIGNED_ADDRESS:
+        begin
+            //cpu_to_mmu__ready = 1'b0;
+            //cpu_to_mmu__resp = 1'b0;
+            //cpu_to_mmu__rd_data = rd_data;
+            mmu_to_bus__cs = 1'b0;
+            en__a = 1'b0;
+            en__b = 1'b0;
+            cpu_to_mmu__ready = 1'b1;
+            cpu_to_mmu__resp = 1'b1;
+            cpu_to_mmu__rd_data = 64'h1;
+            state__n = STATE__READY;
+        end
+    endcase
+end
+
+
+//always_comb
+//begin
+//    cpu_to_mmu__ready = 1'b0;
+//    cpu_to_mmu__resp = 1'b0;
+//    cpu_to_mmu__rd_data = rd_data;
+//    mmu_to_bus__cs = 1'b0;
+//    en__a = 1'b0;
+//    en__b = 1'b0;
+//        
+//    case (state)
+//        //==============================
+//        // STATE__RESET
+//        //==============================
+//        STATE__RESET:
+//        begin
+//            state__n = STATE__READY;
+//        end
+//
+//        //==============================
+//        // STATE__READY
+//        //==============================
+//        STATE__READY:
+//        begin
+//            en__a = cpu_to_mmu__cs;
+//            state__n = cpu_to_mmu__cs ? STATE__PMA_CHECK : STATE__READY;
+//        end
+//
+//        //==============================
+//        // STATE__PMA_CHECK
+//        //==============================
+//        STATE__PMA_CHECK:
+//        begin
+//            state__n = (status == 2'h1) ? STATE__ACCESS_FAULT : (status == 2'h2) ? STATE__MISALIGNED_ADDRESS : STATE__REQ;
+//        end
+//
+//        //==============================
+//        // STATE__REQ
+//        //==============================
+//        STATE__REQ:
+//        begin
+//            mmu_to_bus__cs = 1'b1;
+//            en__b = mmu_to_bus__ready;
+//            state__n = mmu_to_bus__ready ? STATE__RESP : STATE__REQ;
+//        end
+//            
+//        //==============================
+//        // STATE__RESP
+//        //==============================
+//        STATE__RESP:
+//        begin
+//            cpu_to_mmu__ready = 1'b1;
+//            cpu_to_mmu__resp = 1'b0;
+//            cpu_to_mmu__rd_data = rd_data;
+//            state__n = STATE__READY; 
+//        end
+//
+//        //==============================
+//        // STATE__ACCESS_FAULT
+//        //==============================
+//        STATE__ACCESS_FAULT:
+//        begin
+//            cpu_to_mmu__ready = 1'b1;
+//            cpu_to_mmu__resp = 1'b1;
+//            cpu_to_mmu__rd_data = 64'h0;
+//            state__n = STATE__READY;
+//        end
+//
+//        //==============================
+//        // STATE__MISALIGNED_ADDRESS
+//        //==============================
+//        STATE__MISALIGNED_ADDRESS:
+//        begin
+//            cpu_to_mmu__ready = 1'b1;
+//            cpu_to_mmu__resp = 1'b1;
+//            cpu_to_mmu__rd_data = 64'h1;
+//            state__n = STATE__READY;
+//        end
+//    endcase
+//end
+
 //==============================
-// read_dtype 
+// d_flip_flop__we
 //==============================
-read_dtype read_dtype__0
+d_flip_flop #(.WIDTH(1)) d_flip_flop__we
 (
     .clk(clk),
     .rst(rst),
-    .addr(addr[2:0]),
-    .dtype(dtype),
-    .din(douta),
-    .dout(douta__aligned)
+    .en(en__a),
+    .d(cpu_to_mmu__we),
+    .q(we)
+);
+
+//==============================
+// d_flip_flop__addr
+//==============================
+d_flip_flop #(.WIDTH(40)) d_flip_flop__addr
+(
+    .clk(clk),
+    .rst(rst),
+    .en(en__a),
+    .d(cpu_to_mmu__addr[39:0]),
+    .q(addr)
+);
+
+//==============================
+// d_flip_flop__size
+//==============================
+d_flip_flop #(.WIDTH(2)) d_flip_flop__size
+(
+    .clk(clk),
+    .rst(rst),
+    .en(en__a),
+    .d(cpu_to_mmu__size),
+    .q(size)
+);
+
+//==============================
+// d_flip_flop__wr_data
+//==============================
+d_flip_flop #(.WIDTH(64)) d_flip_flop__wr_data
+(
+    .clk(clk),
+    .rst(rst),
+    .en(en__a),
+    .d(cpu_to_mmu__wr_data),
+    .q(wr_data)
+);
+
+//==============================
+// d_flip_flop__rd_data
+//==============================
+d_flip_flop #(.WIDTH(64)) d_flip_flop__rd_data
+(
+    .clk(clk),
+    .rst(rst),
+    .en(en__b),
+    .d(mmu_to_bus__rd_data),
+    .q(rd_data)
+);
+
+//==============================
+// d_flip_flop__state
+//==============================
+d_flip_flop #(.WIDTH(4), .RESET_VALUE(STATE__RESET)) d_flip_flop__state
+(
+    .clk(clk),
+    .rst(rst),
+    .en(1'b1),
+    .d(state__n),
+    .q(state)
 );
 
 
+endmodule
+
+//==============================================
+// bus 
+//==============================================
+module bus 
+(
+    clk,
+    rst,
+    cs,
+    we,
+    addr,
+    size,
+    wr_data,
+    ready,
+    resp,
+    rd_data,
+    cs__0,
+    we__0,
+    addr__0,
+    size__0,
+    wr_data__0,
+    ready__0,
+    resp__0,
+    rd_data__0,
+    cs__1,
+    we__1,
+    addr__1,
+    size__1,
+    wr_data__1,
+    ready__1,
+    resp__1,
+    rd_data__1,
+    cs__2,
+    we__2,
+    addr__2,
+    size__2,
+    wr_data__2,
+    ready__2,
+    resp__2,
+    rd_data__2,
+    cs__3,
+    we__3,
+    addr__3,
+    size__3,
+    wr_data__3,
+    ready__3,
+    resp__3,
+    rd_data__3,
+    cs__4,
+    we__4,
+    addr__4,
+    size__4,
+    wr_data__4,
+    ready__4,
+    resp__4,
+    rd_data__4,
+    cs__5,
+    we__5,
+    addr__5,
+    size__5,
+    wr_data__5,
+    ready__5,
+    resp__5,
+    rd_data__5,
+    cs__6,
+    we__6,
+    addr__6,
+    size__6,
+    wr_data__6,
+    ready__6,
+    resp__6,
+    rd_data__6,
+    cs__7,
+    we__7,
+    addr__7,
+    size__7,
+    wr_data__7,
+    ready__7,
+    resp__7,
+    rd_data__7
+);
+
+
+input clk;
+input rst;
+
+input cs;
+input we;
+input [39:0] addr;
+input [1:0] size;
+input [63:0] wr_data;
+output ready;
+output resp;
+output [63:0] rd_data;
+
+output cs__0;
+output we__0;
+output [39:0] addr__0;
+output [1:0] size__0;
+output [63:0] wr_data__0;
+input ready__0;
+input resp__0;
+input [63:0] rd_data__0;
+
+output cs__1;
+output we__1;
+output [39:0] addr__1;
+output [1:0] size__1;
+output [63:0] wr_data__1;
+input ready__1;
+input resp__1;
+input [63:0] rd_data__1;
+
+output cs__2;
+output we__2;
+output [39:0] addr__2;
+output [1:0] size__2;
+output [63:0] wr_data__2;
+input ready__2;
+input resp__2;
+input [63:0] rd_data__2;
+
+output cs__3;
+output we__3;
+output [39:0] addr__3;
+output [1:0] size__3;
+output [63:0] wr_data__3;
+input ready__3;
+input resp__3;
+input [63:0] rd_data__3;
+
+output cs__4;
+output we__4;
+output [39:0] addr__4;
+output [1:0] size__4;
+output [63:0] wr_data__4;
+input ready__4;
+input resp__4;
+input [63:0] rd_data__4;
+
+output cs__5;
+output we__5;
+output [39:0] addr__5;
+output [1:0] size__5;
+output [63:0] wr_data__5;
+input ready__5;
+input resp__5;
+input [63:0] rd_data__5;
+
+output cs__6;
+output we__6;
+output [39:0] addr__6;
+output [1:0] size__6;
+output [63:0] wr_data__6;
+input ready__6;
+input resp__6;
+input [63:0] rd_data__6;
+
+output cs__7;
+output we__7;
+output [39:0] addr__7;
+output [1:0] size__7;
+output [63:0] wr_data__7;
+input ready__7;
+input resp__7;
+input [63:0] rd_data__7;
+
+
+logic clk;
+logic rst;
+
+logic [2:0] sel;
+
+logic cs;
+logic we;
+logic [39:0] addr;
+logic [1:0] size;
+logic [63:0] wr_data;
+logic ready;
+logic resp;
+logic [63:0] rd_data;
+
+logic cs__0;
+logic we__0;
+logic [39:0] addr__0;
+logic [1:0] size__0;
+logic [63:0] wr_data__0;
+logic ready__0;
+logic resp__0;
+logic [63:0] rd_data__0;
+
+logic cs__1;
+logic we__1;
+logic [39:0] addr__1;
+logic [1:0] size__1;
+logic [63:0] wr_data__1;
+logic ready__1;
+logic resp__1;
+logic [63:0] rd_data__1;
+
+logic cs__2;
+logic we__2;
+logic [39:0] addr__2;
+logic [1:0] size__2;
+logic [63:0] wr_data__2;
+logic ready__2;
+logic resp__2;
+logic [63:0] rd_data__2;
+
+logic cs__3;
+logic we__3;
+logic [39:0] addr__3;
+logic [1:0] size__3;
+logic [63:0] wr_data__3;
+logic ready__3;
+logic resp__3;
+logic [63:0] rd_data__3;
+
+logic cs__4;
+logic we__4;
+logic [39:0] addr__4;
+logic [1:0] size__4;
+logic [63:0] wr_data__4;
+logic ready__4;
+logic resp__4;
+logic [63:0] rd_data__4;
+
+logic cs__5;
+logic we__5;
+logic [39:0] addr__5;
+logic [1:0] size__5;
+logic [63:0] wr_data__5;
+logic ready__5;
+logic resp__5;
+logic [63:0] rd_data__5;
+
+logic cs__6;
+logic we__6;
+logic [39:0] addr__6;
+logic [1:0] size__6;
+logic [63:0] wr_data__6;
+logic ready__6;
+logic resp__6;
+logic [63:0] rd_data__6;
+
+logic cs__7;
+logic we__7;
+logic [39:0] addr__7;
+logic [1:0] size__7;
+logic [63:0] wr_data__7;
+logic ready__7;
+logic resp__7;
+logic [63:0] rd_data__7;
+
+
+assign we__0 = we; 
+assign we__1 = we; 
+assign we__2 = we; 
+assign we__3 = we; 
+assign we__4 = we; 
+assign we__5 = we; 
+assign we__6 = we; 
+assign we__7 = we; 
+
+assign addr__0 = addr;
+assign addr__1 = addr;
+assign addr__2 = addr;
+assign addr__3 = addr;
+assign addr__4 = addr;
+assign addr__5 = addr;
+assign addr__6 = addr;
+assign addr__7 = addr;
+
+assign size__0 = size;
+assign size__1 = size;
+assign size__2 = size;
+assign size__3 = size;
+assign size__4 = size;
+assign size__5 = size;
+assign size__6 = size;
+assign size__7 = size;
+
+assign wr_data__0 = wr_data;
+assign wr_data__1 = wr_data;
+assign wr_data__2 = wr_data;
+assign wr_data__3 = wr_data;
+assign wr_data__4 = wr_data;
+assign wr_data__5 = wr_data;
+assign wr_data__6 = wr_data;
+assign wr_data__7 = wr_data;
+
+//==============================================
+// decoder
+//==============================================
+bus__decoder decoder
+(
+    .clk(clk),
+    .rst(rst),
+    .addr(addr),
+    .sel(sel)
+);
+
 //==============================
-// mem 
+// multiplexor
 //==============================
-memory mem 
+bus__multiplexor multiplexor
+(
+    .clk(clk),
+    .rst(rst),
+    .sel(sel),
+    .cs(cs),
+    .ready(ready),
+    .resp(resp),
+    .rd_data(rd_data),
+    .cs__0(cs__0),
+    .ready__0(ready__0),
+    .resp__0(resp__0),
+    .rd_data__0(rd_data__0),
+    .cs__1(cs__1),
+    .ready__1(ready__1),
+    .resp__1(resp__1),
+    .rd_data__1(rd_data__1),
+    .cs__2(cs__2),
+    .ready__2(ready__2),
+    .resp__2(resp__2),
+    .rd_data__2(rd_data__2),
+    .cs__3(cs__3),
+    .ready__3(ready__3),
+    .resp__3(resp__3),
+    .rd_data__3(rd_data__3),
+    .cs__4(cs__4),
+    .ready__4(ready__4),
+    .resp__4(resp__4),
+    .rd_data__4(rd_data__4),
+    .cs__5(cs__5),
+    .ready__5(ready__5),
+    .resp__5(resp__5),
+    .rd_data__5(rd_data__5),
+    .cs__6(cs__6),
+    .ready__6(ready__6),
+    .resp__6(resp__6),
+    .rd_data__6(rd_data__6),
+    .cs__7(cs__7),
+    .ready__7(ready__7),
+    .resp__7(resp__7),
+    .rd_data__7(rd_data__7)
+);
+
+endmodule
+
+//==============================================
+// bus__decoder
+//==============================================
+module bus__decoder
+(
+    clk,
+    rst,
+    addr,
+    sel
+);
+
+input clk;
+input rst;
+input [39:0] addr;
+output [2:0] sel;
+
+logic clk;
+logic rst;
+logic [39:0] addr;
+logic [2:0] sel;
+
+
+always_comb
+begin
+    casez (addr)
+        40'b0000_0000_1000__????_????_????_????_????_????_????:
+        begin
+            sel = 2'h0; 
+        end
+        40'b0000_0000_1001__????_????_????_????_????_????_????:
+        begin
+            sel = 2'h1; 
+        end
+        40'b0000_0000_1010__????_????_????_????_????_????_????:
+        begin
+            sel = 2'h2; 
+        end
+        40'b0000_0000_1011__????_????_????_????_????_????_????:
+        begin
+            sel = 2'h3; 
+        end
+        40'b0000_0000_1100__????_????_????_????_????_????_????:
+        begin
+            sel = 2'h4; 
+        end
+        40'b0000_0000_1101__????_????_????_????_????_????_????:
+        begin
+            sel = 2'h5; 
+        end
+        40'b0000_0000_1110__????_????_????_????_????_????_????:
+        begin
+            sel = 2'h6; 
+        end
+        40'b0000_0000_1111__????_????_????_????_????_????_????:
+        begin
+            sel = 2'h7; 
+        end
+    endcase
+end
+
+endmodule
+//==============================================
+// bus__multiplexor
+//==============================================
+module bus__multiplexor
+(
+    clk,
+    rst,
+    sel,
+    cs,
+    ready,
+    resp,
+    rd_data,
+    cs__0,
+    ready__0,
+    resp__0,
+    rd_data__0,
+    cs__1,
+    ready__1,
+    resp__1,
+    rd_data__1,
+    cs__2,
+    ready__2,
+    resp__2,
+    rd_data__2,
+    cs__3,
+    ready__3,
+    resp__3,
+    rd_data__3,
+    cs__4,
+    ready__4,
+    resp__4,
+    rd_data__4,
+    cs__5,
+    ready__5,
+    resp__5,
+    rd_data__5,
+    cs__6,
+    ready__6,
+    resp__6,
+    rd_data__6,
+    cs__7,
+    ready__7,
+    resp__7,
+    rd_data__7
+);
+
+input clk;
+input rst;
+
+input [2:0] sel;
+
+input cs;
+output ready;
+output resp;
+output [63:0] rd_data;
+
+output cs__0;
+input ready__0;
+input resp__0;
+input [63:0] rd_data__0;
+
+output cs__1;
+input ready__1;
+input resp__1;
+input [63:0] rd_data__1;
+
+output cs__2;
+input ready__2;
+input resp__2;
+input [63:0] rd_data__2;
+
+output cs__3;
+input ready__3;
+input resp__3;
+input [63:0] rd_data__3;
+
+output cs__4;
+input ready__4;
+input resp__4;
+input [63:0] rd_data__4;
+
+output cs__5;
+input ready__5;
+input resp__5;
+input [63:0] rd_data__5;
+
+output cs__6;
+input ready__6;
+input resp__6;
+input [63:0] rd_data__6;
+
+output cs__7;
+input ready__7;
+input resp__7;
+input [63:0] rd_data__7;
+
+logic clk;
+logic rst;
+
+logic [2:0] sel;
+
+logic cs;
+logic ready;
+logic resp;
+logic [63:0] rd_data;
+
+logic cs__0;
+logic ready__0;
+logic resp__0;
+logic [63:0] rd_data__0;
+
+logic cs__1;
+logic ready__1;
+logic resp__1;
+logic [63:0] rd_data__1;
+
+logic cs__2;
+logic ready__2;
+logic resp__2;
+logic [63:0] rd_data__2;
+
+logic cs__3;
+logic ready__3;
+logic resp__3;
+logic [63:0] rd_data__3;
+
+logic cs__4;
+logic ready__4;
+logic resp__4;
+logic [63:0] rd_data__4;
+
+logic cs__5;
+logic ready__5;
+logic resp__5;
+logic [63:0] rd_data__5;
+
+logic cs__6;
+logic ready__6;
+logic resp__6;
+logic [63:0] rd_data__6;
+
+logic cs__7;
+logic ready__7;
+logic resp__7;
+logic [63:0] rd_data__7;
+
+always_comb
+begin
+    cs__0 = 1'b0; 
+    cs__1 = 1'b0; 
+    cs__2 = 1'b0; 
+    cs__3 = 1'b0; 
+    cs__4 = 1'b0; 
+    cs__5 = 1'b0; 
+    cs__6 = 1'b0; 
+    cs__7 = 1'b0; 
+
+    case (sel)
+        2'h0:
+        begin
+            cs__0 = cs;
+            ready = ready__0;
+            resp = resp__0;
+            rd_data = rd_data__0;
+        end
+        2'h1:
+        begin
+            cs__1 = cs;
+            ready = ready__1;
+            resp = resp__1;
+            rd_data = rd_data__1;
+        end
+        2'h2:
+        begin
+            cs__2 = cs;
+            ready = ready__2;
+            resp = resp__2;
+            rd_data = rd_data__2;
+        end
+        2'h3:
+        begin
+            cs__3 = cs;
+            ready = ready__3;
+            resp = resp__3;
+            rd_data = rd_data__3;
+        end
+        2'h4:
+        begin
+            cs__4 = cs;
+            ready = ready__4;
+            resp = resp__4;
+            rd_data = rd_data__4;
+        end
+        2'h5:
+        begin
+            cs__5 = cs;
+            ready = ready__5;
+            resp = resp__5;
+            rd_data = rd_data__5;
+        end
+        2'h6:
+        begin
+            cs__6 = cs;
+            ready = ready__6;
+            resp = resp__6;
+            rd_data = rd_data__6;
+        end
+        2'h7:
+        begin
+            cs__7 = cs;
+            ready = ready__7;
+            resp = resp__7;
+            rd_data = rd_data__7;
+        end
+    endcase
+end
+
+endmodule
+//==============================================
+// jay 
+//==============================================
+module jay 
+(
+    clk,
+    rst,
+    port__0,
+    port__1,
+    port__2,
+    port__3,
+    ena,
+    wea,
+    addra,
+    dina,
+    douta
+);
+
+input clk;
+input rst;
+
+inout [7:0] port__0;
+inout [7:0] port__1;
+inout [7:0] port__2;
+inout [7:0] port__3;
+
+output ena;
+output [7:0] wea;
+output [11:0] addra; 
+output [63:0] dina;
+input [63:0] douta;
+
+logic clk;
+logic rst;
+
+//logic [7:0] port__0;
+//logic [7:0] port__1;
+//logic [7:0] port__2;
+//logic [7:0] port__3;
+
+logic ena;
+logic [7:0] wea;
+logic [11:0] addra;
+logic [63:0] dina;
+logic [63:0] douta;
+
+
+logic cpu_to_mmu__cs;
+logic cpu_to_mmu__we;
+logic [63:0] cpu_to_mmu__addr;
+logic [1:0] cpu_to_mmu__size;
+logic [63:0] cpu_to_mmu__wr_data;
+logic cpu_to_mmu__ready;
+logic cpu_to_mmu__resp;
+logic [63:0] cpu_to_mmu__rd_data;
+
+logic irq__0;
+logic irq__1;
+logic context__0__eip;
+
+logic tip;
+
+logic [7:0] pmar__0;
+logic [7:0] pmar__1;
+logic [7:0] pmar__2;
+logic [7:0] pmar__3;
+logic [7:0] pmar__4;
+logic [7:0] pmar__5;
+logic [7:0] pmar__6;
+logic [7:0] pmar__7;
+
+logic mmu_to_bus__cs;
+logic mmu_to_bus__we;
+logic [39:0] mmu_to_bus__addr;
+logic [1:0] mmu_to_bus__size;
+logic [63:0] mmu_to_bus__wr_data;
+logic mmu_to_bus__ready;
+logic mmu_to_bus__resp;
+logic [63:0] mmu_to_bus__rd_data;
+
+logic cs__0;
+logic we__0;
+logic [39:0] addr__0;
+logic [1:0] size__0;
+logic [63:0] wr_data__0;
+logic ready__0;
+logic resp__0;
+logic [63:0] rd_data__0;
+
+logic cs__1;
+logic we__1;
+logic [39:0] addr__1;
+logic [1:0] size__1;
+logic [63:0] wr_data__1;
+logic ready__1;
+logic resp__1;
+logic [63:0] rd_data__1;
+
+logic cs__2;
+logic we__2;
+logic [39:0] addr__2;
+logic [1:0] size__2;
+logic [63:0] wr_data__2;
+logic ready__2;
+logic resp__2;
+logic [63:0] rd_data__2;
+
+logic cs__3;
+logic we__3;
+logic [39:0] addr__3;
+logic [1:0] size__3;
+logic [63:0] wr_data__3;
+logic ready__3;
+logic resp__3;
+logic [63:0] rd_data__3;
+
+logic cs__4;
+logic we__4;
+logic [39:0] addr__4;
+logic [1:0] size__4;
+logic [63:0] wr_data__4;
+logic ready__4;
+logic resp__4;
+logic [63:0] rd_data__4;
+
+logic cs__5;
+logic we__5;
+logic [39:0] addr__5;
+logic [1:0] size__5;
+logic [63:0] wr_data__5;
+logic ready__5;
+logic resp__5;
+logic [63:0] rd_data__5;
+
+logic cs__6;
+logic we__6;
+logic [39:0] addr__6;
+logic [1:0] size__6;
+logic [63:0] wr_data__6;
+logic ready__6;
+logic resp__6;
+logic [63:0] rd_data__6;
+
+logic cs__7;
+logic we__7;
+logic [39:0] addr__7;
+logic [1:0] size__7;
+logic [63:0] wr_data__7;
+logic ready__7;
+logic resp__7;
+logic [63:0] rd_data__7;
+
+//==============================
+// central_processing_unit__0
+//==============================
+central_processing_unit central_processing_unit__0 
+(
+    .clk(clk),
+    .rst(rst),
+    .cs(cpu_to_mmu__cs),
+    .we(cpu_to_mmu__we),
+    .addr(cpu_to_mmu__addr),
+    .size(cpu_to_mmu__size),
+    .wr_data(cpu_to_mmu__wr_data),
+    .ready(cpu_to_mmu__ready),
+    .resp(cpu_to_mmu__resp),
+    .rd_data(cpu_to_mmu__rd_data),
+    .eip(context__0__eip),
+    .tip(tip)
+);
+
+//==============================
+// memory_management_unit
+//==============================
+memory_management_unit memory_management_unit__0
+(
+    .clk(clk),
+    .rst(rst),
+    .cpu_to_mmu__cs(cpu_to_mmu__cs),
+    .cpu_to_mmu__we(cpu_to_mmu__we),
+    .cpu_to_mmu__addr(cpu_to_mmu__addr),
+    .cpu_to_mmu__size(cpu_to_mmu__size),
+    .cpu_to_mmu__wr_data(cpu_to_mmu__wr_data),
+    .cpu_to_mmu__ready(cpu_to_mmu__ready),
+    .cpu_to_mmu__resp(cpu_to_mmu__resp),
+    .cpu_to_mmu__rd_data(cpu_to_mmu__rd_data),
+    .mmu_to_bus__cs(mmu_to_bus__cs),
+    .mmu_to_bus__we(mmu_to_bus__we),
+    .mmu_to_bus__addr(mmu_to_bus__addr),
+    .mmu_to_bus__size(mmu_to_bus__size),
+    .mmu_to_bus__wr_data(mmu_to_bus__wr_data),
+    .mmu_to_bus__ready(mmu_to_bus__ready),
+    .mmu_to_bus__resp(mmu_to_bus__resp),
+    .mmu_to_bus__rd_data(mmu_to_bus__rd_data),
+    .pmar__0(pmar__0),
+    .pmar__1(pmar__1),
+    .pmar__2(pmar__2),
+    .pmar__3(pmar__3),
+    .pmar__4(pmar__4),
+    .pmar__5(pmar__5),
+    .pmar__6(pmar__6),
+    .pmar__7(pmar__7)
+);
+
+//==============================
+// memory_controller__0
+//==============================
+memory_controller memory_controller__0
+(
+    .clk(clk),
+    .rst(rst),
+    .cs(cs__0),
+    .we(we__0),
+    .addr(addr__0[14:0]),
+    .size(size__0),
+    .wr_data(wr_data__0),
+    .ready(ready__0),
+    .rd_data(rd_data__0),
+    .ena(ena),
+    .wea(wea),
+    .addra(addra),
+    .dina(dina),
+    .douta(douta)
+);
+
+//==============================================
+// platform_level_interrupt_controller 
+//==============================================
+platform_level_interrupt_controller platform_level_interrupt_controller__0
+(
+    .clk(clk),
+    .rst(rst),
+    .cs(cs__1),
+    .we(we__1),
+    .addr(addr__1[25:0]),
+    .wr_data(wr_data__1[31:0]),
+    .rd_data(rd_data__1[31:0]),
+    .irq__0(irq__0),
+    .irq__1(irq__1),
+    .context__0__eip(context__0__eip)
+);
+
+//==============================================
+// machine_timer_registers__0 
+//==============================================
+machine_timer_registers machine_timer_registers__0 
+(
+    .clk(clk),
+    .rst(rst),
+    .cs(cs__2),
+    .we(we__2),
+    .addr(addr__2[0]),
+    .wr_data(wr_data__2),
+    .rd_data(rd_data__2),
+    .tip(tip)
+);
+
+//==============================
+// physical_memory_attribute_registers__0
+//==============================
+physical_memory_attribute_registers physical_memory_attribute_registers__0
+(   
+    .clk(clk),
+    .rst(rst),
+    .cs(cs__3),
+    .we(we__3),
+    .addr(addr__3[2:0]),
+    .wr_data(wr_data__3[7:0]),
+    .rd_data(rd_data__3[7:0]),
+    .pmar__0(pmar__0),
+    .pmar__1(pmar__1),
+    .pmar__2(pmar__2),
+    .pmar__3(pmar__3),
+    .pmar__4(pmar__4),
+    .pmar__5(pmar__5),
+    .pmar__6(pmar__6),
+    .pmar__7(pmar__7)
+);
+
+//==============================
+// general_purpose_input_output__0
+//==============================
+general_purpose_input_output general_purpose_input_output__0
+(
+    .clk(clk),
+    .rst(rst),
+    .cs(cs__4),
+    .we(we__4),
+    .addr(addr__4[3:0]),
+    .wr_data(wr_data__4[7:0]),
+    .rd_data(rd_data__4[7:0]),
+    .port__0(port__0),
+    .port__1(port__1),
+    .port__2(port__2),
+    .port__3(port__3)
+);
+
+//==============================
+// bus__0
+//==============================
+bus bus__0 
+(
+    .clk(clk),
+    .rst(rst),
+    .cs(mmu_to_bus__cs),
+    .we(mmu_to_bus__we),
+    .addr(mmu_to_bus__addr),
+    .size(mmu_to_bus__size),
+    .wr_data(mmu_to_bus__wr_data),
+    .ready(mmu_to_bus__ready),
+    .resp(mmu_to_bus__resp),
+    .rd_data(mmu_to_bus__rd_data),
+    .cs__0(cs__0),
+    .we__0(we__0),
+    .addr__0(addr__0),
+    .size__0(size__0),
+    .wr_data__0(wr_data__0),
+    .ready__0(ready__0),
+    .resp__0(1'b0),
+    .rd_data__0(rd_data__0),
+    .cs__1(cs__1),
+    .we__1(we__1),
+    .addr__1(addr__1),
+    .size__1(size__1),
+    .wr_data__1(wr_data__1),
+    .ready__1(1'b1),
+    .resp__1(1'b0),
+    .rd_data__1(rd_data__1),
+    .cs__2(cs__2),
+    .we__2(we__2),
+    .addr__2(addr__2),
+    .size__2(size__2),
+    .wr_data__2(wr_data__2),
+    .ready__2(1'b1),
+    .resp__2(1'b0),
+    .rd_data__2(rd_data__2),
+    .cs__3(cs__3),
+    .we__3(we__3),
+    .addr__3(addr__3),
+    .size__3(size__3),
+    .wr_data__3(wr_data__3),
+    .ready__3(1'b1),
+    .resp__3(1'b0),
+    .rd_data__3(rd_data__3),
+    .cs__4(cs__4),
+    .we__4(we__4),
+    .addr__4(addr__4),
+    .size__4(size__4),
+    .wr_data__4(wr_data__4),
+    .ready__4(1'b1),
+    .resp__4(1'b0),
+    .rd_data__4(rd_data__4),
+    .cs__5(cs__5),
+    .we__5(we__5),
+    .addr__5(addr__5),
+    .size__5(size__5),
+    .wr_data__5(wr_data__5),
+    .ready__5(1'b1),
+    .resp__5(1'b0),
+    .rd_data__5(rd_data__5),
+    .cs__6(cs__6),
+    .we__6(we__6),
+    .addr__6(addr__6),
+    .size__6(size__6),
+    .wr_data__6(wr_data__6),
+    .ready__6(1'b1),
+    .resp__6(1'b0),
+    .rd_data__6(rd_data__6),
+    .cs__7(cs__7),
+    .we__7(we__7),
+    .addr__7(addr__7),
+    .size__7(size__7),
+    .wr_data__7(wr_data__7),
+    .ready__7(1'b1),
+    .resp__7(1'b0),
+    .rd_data__7(rd_data__7)
+);
+
+endmodule
+
+//==============================================
+// top
+//==============================================
+module top
+(
+    clk_100mhz,
+    sw,
+    btnc,
+    btnu,
+    btnl,
+    btnr,
+    btnd,
+    led,
+    led16_b,
+    led16_g,
+    led16_r,
+    led17_b,
+    led17_g,
+    led17_r,
+    an,
+    ca, 
+    cb, 
+    cc, 
+    cd, 
+    ce, 
+    cf, 
+    cg
+);
+
+input clk_100mhz;
+input [15:0] sw;
+input btnc;
+input btnu;
+input btnl;
+input btnr;
+input btnd;
+output [15:0] led;
+output led16_b;
+output led16_g;
+output led16_r;
+output led17_b;
+output led17_g;
+output led17_r;
+output [7:0] an;
+output ca; 
+output cb; 
+output cc; 
+output cd; 
+output ce; 
+output cf; 
+output cg;
+
+logic clk_100mhz;
+logic [15:0] sw;
+logic btnc;
+logic btnu;
+logic btnl;
+logic btnr;
+logic btnd;
+logic [15:0] led;
+logic led16_b;
+logic led16_g;
+logic led16_r;
+logic led17_b;
+logic led17_g;
+logic led17_r;
+logic [7:0] an;
+logic ca; 
+logic cb; 
+logic cc; 
+logic cd; 
+logic ce; 
+logic cf; 
+logic cg;
+
+logic clk;
+logic rst;
+
+//logic [7:0] port__0;
+//logic [7:0] port__1;
+//logic [7:0] port__2;
+//logic [7:0] port__3;
+wire [7:0] port__0;
+wire [7:0] port__1;
+wire [7:0] port__2;
+wire [7:0] port__3;
+
+logic ena;
+logic [7:0] wea;
+logic [11:0] addra;
+logic [63:0] dina;
+logic [63:0] douta;
+
+
+assign clk = clk_100mhz;
+assign rst = btnc;
+assign led16_b = port__0[0];
+
+
+//==============================
+// jay__0
+//==============================
+jay jay__0
+(
+    .clk(clk),
+    .rst(rst),
+    .port__0(port__0),
+    .port__1(port__1),
+    .port__2(port__2),
+    .port__3(port__3),
+    .ena(ena),
+    .wea(wea),
+    .addra(addra),
+    .dina(dina),
+    .douta(douta)
+);
+
+//==============================
+// blk_mem_gen_0 
+//==============================
+blk_mem_gen_0 blk_mem_gen_0__0 
 (
     .clka(clk),
     .addra(addra),
@@ -5604,526 +8668,88 @@ memory mem
 );
 
 
-assign addra = addr[8:3];
-
-localparam STATE__RESET = 4'h0;
-localparam STATE__READY = 4'h1;
-localparam STATE__ACCEPT_REQ = 4'h2;
-localparam STATE__PMA_CHECK = 4'h3;
-localparam STATE__R0__WRITE__0 = 4'h4;
-localparam STATE__R0__WRITE__1 = 4'h5;
-localparam STATE__R0__WRITE__2 = 4'h6;
-localparam STATE__R0__READ__0 = 4'h7;
-localparam STATE__R0__READ__1 = 4'h8;
-localparam STATE__R0__READ__2 = 4'h9;
-localparam STATE__R1__WRITE__0 = 4'ha;
-localparam STATE__R1__READ__0 = 4'hb;
-localparam STATE__ACCESS_FAULT = 4'hc;
-localparam STATE__MISALIGNED_ADDRESS = 4'hd;
-
-always_comb begin
-    state__n = state;
-    cpu_to_mem__ready = 1'b0;
-    mem_to_cpu__valid = 1'b0;
-    mem_to_cpu__error = 1'b0;
-    we__n = we;
-    addr__n = addr;
-    wr_data__n = wr_data;
-    ena = 1'b0;
-    wea = 1'b0;
-        
-    case (state)
-
-        //==============================
-        // STATE__RESET
-        //==============================
-        STATE__RESET:
-        begin
-            state__n = STATE__READY;
-        end
-
-        //==============================
-        // STATE__READY
-        //==============================
-        STATE__READY:
-        begin
-            state__n = cpu_to_mem__valid ? STATE__ACCEPT_REQ : STATE__READY;
-        end
-
-        //==============================
-        // STATE__ACCEPT_REQ
-        //==============================
-        STATE__ACCEPT_REQ:
-        begin
-            cpu_to_mem__ready = 1'b1;
-            we__n = cpu_to_mem__we;
-            addr__n = cpu_to_mem__addr; 
-            dtype__n = cpu_to_mem__dtype;
-            wr_data__n = cpu_to_mem__data;
-            state__n = STATE__PMA_CHECK;
-        end
-
-        //==============================
-        // STATE__PMA_CHECK
-        //==============================
-        STATE__PMA_CHECK:
-        begin
-            casez (addr)
-                64'b0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0???_????_????_????:
-                begin
-                    state__n = we ? STATE__R0__WRITE__0 : STATE__R0__READ__0;
-                end
-                64'b0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_1???_????_????_????:
-                begin
-                    state__n = we ? STATE__R1__WRITE__0 : STATE__R1__READ__0;
-                end
-            endcase
-        end
-
-        //==============================
-        // STATE__R0__WRITE__0
-        //==============================
-        STATE__R0__WRITE__0:
-        begin
-            ena = 1'b1;
-            wea = 1'b0;
-            state__n = STATE__R0__WRITE__1; 
-        end
-
-        //==============================
-        // STATE__R0__WRITE__1
-        //==============================
-        STATE__R0__WRITE__1:
-        begin
-            ena = 1'b1;
-            state__n = STATE__R0__WRITE__2; 
-        end
-
-        //==============================
-        // STATE__R0__WRITE__2
-        //==============================
-        STATE__R0__WRITE__2:
-        begin
-            mem_to_cpu__valid = 1'b1;
-            ena = 1'b1;
-            wea = 1'b1;
-            state__n = mem_to_cpu__ready ? STATE__READY : STATE__R0__WRITE__2; 
-        end
-
-        //==============================
-        // STATE__R0__READ__0
-        //==============================
-        STATE__R0__READ__0:
-        begin
-            ena = 1'b1;
-            wea = 1'b0;
-            state__n = STATE__R0__READ__1; 
-        end
-
-        //==============================
-        // STATE__R0__READ__1
-        //==============================
-        STATE__R0__READ__1:
-        begin
-            ena = 1'b1;
-            state__n = STATE__R0__READ__2; 
-        end
-
-        //==============================
-        // STATE__R0__READ__2
-        //==============================
-        STATE__R0__READ__2:
-        begin
-            mem_to_cpu__valid = 1'b1;
-            mem_to_cpu__data = douta__aligned;
-            ena = 1'b1;
-            state__n = mem_to_cpu__ready ? STATE__READY : STATE__R0__READ__2; 
-        end
-
-
-        //==============================
-        // STATE__R1__WRITE__0
-        //==============================
-        STATE__R1__WRITE__0:
-        begin
-            mem_to_cpu__valid = 1'b1;
-            port__0__n = wr_data[7:0];
-            state__n = mem_to_cpu__ready ? STATE__READY : STATE__R1__WRITE__0; 
-        end
-
-        //==============================
-        // STATE__R1__READ__0
-        //==============================
-        STATE__R1__READ__0:
-        begin
-            mem_to_cpu__valid = 1'b1;
-            mem_to_cpu__data = {56'b0, port__0};
-            state__n = mem_to_cpu__ready ? STATE__READY : STATE__R1__READ__0; 
-        end
-
-        //==============================
-        // STATE__ACCESS_FAULT
-        //==============================
-        STATE__ACCESS_FAULT:
-        begin
-            mem_to_cpu__valid = 1'b1;
-            mem_to_cpu__data = 64'h0;
-            state__n = mem_to_cpu__ready ? STATE__READY : STATE__ACCESS_FAULT;
-        end
-
-        //==============================
-        // STATE__MISALIGNED_ADDRESS
-        //==============================
-        STATE__MISALIGNED_ADDRESS:
-        begin
-            mem_to_cpu__valid = 1'b1;
-            mem_to_cpu__data = 64'h1;
-            state__n = mem_to_cpu__ready ? STATE__READY : STATE__ACCESS_FAULT;
-        end
-
-    endcase
-end
-
-always_ff @(posedge clk) begin
-    we <= we__n;
-end
-
-always_ff @(posedge clk) begin
-    addr <= addr__n;
-end
-
-always_ff @(posedge clk) begin
-    dtype <= dtype__n;
-end
-
-always_ff @(posedge clk) begin
-    wr_data <= wr_data__n;
-end
-
-always_ff @(posedge clk) begin
-    if (rst) begin
-        state <= STATE__RESET;
-    end
-    else begin
-        state <= state__n;
-    end
-end
-
-always_ff @(posedge clk) begin
-    if (rst) begin
-        port__0 <= 8'h0;
-    end
-    else begin
-        port__0 <= port__0__n;
-    end
-end
-
 
 endmodule
+//==============================================
+// timescale
+//==============================================
+//`timescale 1ns / 1ps
 
 //==============================================
-// read_dtype 
+// tb 
 //==============================================
-module read_dtype 
+module tb;
+
+logic clk_100mhz;
+logic [15:0] sw;
+logic btnc;
+logic btnu;
+logic btnl;
+logic btnr;
+logic btnd;
+logic [15:0] led;
+logic led16_b;
+logic led16_g;
+logic led16_r;
+logic led17_b;
+logic led17_g;
+logic led17_r;
+logic [7:0] an;
+logic ca; 
+logic cb; 
+logic cc; 
+logic cd; 
+logic ce; 
+logic cf; 
+logic cg;
+
+//==============================
+// top 
+//==============================
+top dut
 (
-    input clk,
-    input rst,
-    input [2:0] addr,
-    input dtype,
-    input [63:0] din,
-    output logic [63:0] dout
+    .clk_100mhz(clk_100mhz),
+    .sw(sw),
+    .btnc(btnc),
+    .btnu(btnu),
+    .btnl(btnl),
+    .btnr(btnr),
+    .btnd(btnd),
+    .led(led),
+    .led16_b(led16_b),
+    .led16_g(led16_g),
+    .led16_r(led16_r),
+    .led17_b(led17_b),
+    .led17_g(led17_g),
+    .led17_r(led17_r),
+    .an(an),
+    .ca(ca), 
+    .cb(cb), 
+    .cc(cc), 
+    .cd(cd), 
+    .ce(ce), 
+    .cf(cf), 
+    .cg(cg)
 );
 
-logic [63:0] x;
 
-always_comb begin
-    case (addr[2:0])
-        3'h0:
-        begin
-            x = din;
-        end
-        3'h1:
-        begin
-            x = din >> 8;
-        end
-        3'h2:
-        begin
-            x = din >> 16;
-        end
-        3'h3:
-        begin
-            x = din >> 24;
-        end
-        3'h4:
-        begin
-            x = din >> 32;
-        end
-        3'h5:
-        begin
-            x = din >> 40;
-        end
-        3'h6:
-        begin
-            x = din >> 48;
-        end
-        3'h7:
-        begin
-            x = din >> 56;
-        end
-    endcase
+
+//==============================================
+// Clock (10ns)
+//==============================================
+always begin
+    #5 clk_100mhz = !clk_100mhz;
 end
 
-always_comb begin
-    case (dtype)
-        3'h0:
-        begin
-            dout[63:0] = x[63:0];
-        end
-        3'h1:
-        begin
-            dout[31:0] = x[31:0];
-            dout[63:32] = {32{x[31]}};
-        end
-        3'h2:
-        begin
-            dout[31:0] = x[31:0];
-            dout[63:32] = {32{1'b0}};
-        end
-        3'h3:
-        begin
-            dout[15:0] = x[15:0];
-            dout[63:16] = {48{x[15]}};
-        end
-        3'h4:
-        begin
-            dout[15:0] = x[15:0];
-            dout[63:16] = {48{1'b0}};
-        end
-        3'h5:
-        begin
-            dout[7:0] = x[7:0];
-            dout[63:8] = {56{x[7]}};
-        end
-        3'h6:
-        begin
-            dout[7:0] = x[7:0];
-            dout[63:8] = {56{1'b0}};
-        end
-    endcase
+
+initial begin
+    // initialize clk
+    clk_100mhz = 1'b1;
+    btnc = 1'b1;
+    #11;
+    // de-assert rst
+    btnc = 1'b0;
+    #20000000;
 end
 
 endmodule
-//==============================================
-// store_dtype 
-//==============================================
-module store_dtype 
-(
-    input clk,
-    input rst,
-    input [3:0] addr,
-    input dtype,
-    input [63:0] wr_data,
-    input [63:0] din,
-    output logic [63:0] dout
-);
-
-always_comb begin
-    dout = din;
-
-    case (dtype)
-        3'h0:
-        begin
-            dout = wr_data;
-        end
-        3'h1:
-        begin
-            case (addr[2])
-                1'b0:
-                begin
-                    dout[31:0] = wr_data[31:0];
-                end
-                1'b1:
-                begin
-                    dout[63:32] = wr_data[31:0];
-                end
-            endcase
-        end
-        3'h2:
-        begin
-            case (addr[2])
-                1'b0:
-                begin
-                    dout[31:0] = wr_data[31:0];
-                end
-                1'b1:
-                begin
-                    dout[63:32] = wr_data[31:0];
-                end
-            endcase
-        end
-        3'h3:
-        begin
-            case (addr[2:1])
-                2'h0:
-                begin
-                    dout[15:0] = wr_data[15:0];
-                end
-                2'h1:
-                begin
-                    dout[31:16] = wr_data[15:0];
-                end
-                2'h2:
-                begin
-                    dout[47:32] = wr_data[15:0];
-                end
-                2'h3:
-                begin
-                    dout[63:48] = wr_data[15:0];
-                end
-            endcase
-        end
-        3'h4:
-        begin
-            case (addr[2:1])
-                2'h0:
-                begin
-                    dout[15:0] = wr_data[15:0];
-                end
-                2'h1:
-                begin
-                    dout[31:16] = wr_data[15:0];
-                end
-                2'h2:
-                begin
-                    dout[47:32] = wr_data[15:0];
-                end
-                2'h3:
-                begin
-                    dout[63:48] = wr_data[15:0];
-                end
-            endcase
-        end
-        3'h5:
-        begin
-            case (addr[2:0])
-                3'h0:
-                begin
-                    dout[7:0] = wr_data[7:0];
-                end
-                3'h1:
-                begin
-                    dout[15:8] = wr_data[7:0];
-                end
-                3'h2:
-                begin
-                    dout[23:16] = wr_data[7:0];
-                end
-                3'h3:
-                begin
-                    dout[31:24] = wr_data[7:0];
-                end
-                3'h4:
-                begin
-                    dout[39:32] = wr_data[7:0];
-                end
-                3'h5:
-                begin
-                    dout[47:40] = wr_data[7:0];
-                end
-                3'h6:
-                begin
-                    dout[55:48] = wr_data[7:0];
-                end
-                3'h7:
-                begin
-                    dout[63:56] = wr_data[7:0];
-                end
-            endcase
-        end
-        3'h6:
-        begin
-            case (addr[2:0])
-                3'h0:
-                begin
-                    dout[7:0] = wr_data[7:0];
-                end
-                3'h1:
-                begin
-                    dout[15:8] = wr_data[7:0];
-                end
-                3'h2:
-                begin
-                    dout[23:16] = wr_data[7:0];
-                end
-                3'h3:
-                begin
-                    dout[31:24] = wr_data[7:0];
-                end
-                3'h4:
-                begin
-                    dout[39:32] = wr_data[7:0];
-                end
-                3'h5:
-                begin
-                    dout[47:40] = wr_data[7:0];
-                end
-                3'h6:
-                begin
-                    dout[55:48] = wr_data[7:0];
-                end
-                3'h7:
-                begin
-                    dout[63:56] = wr_data[7:0];
-                end
-            endcase
-        end
-    endcase
-end
-
-endmodule
-//==============================================
-// counter
-//==============================================
-module debouncer
-(
-    input logic clk,
-    input logic rst,
-    input logic in,
-    output logic out
-);
-    
-
-parameter DEBOUNCE_COUNT = 20'd1_000_000;
-parameter DEBOUNCE_COUNT__LOG2 = 20;
-
-
-logic [DEBOUNCE_COUNT__LOG2:0] count;
-logic in__p;
-
-
-always_ff @(posedge clk) begin
-    in__p <= in;
-end
-    
-
-always_ff @(posedge clk) begin
-    out <= (count == DEBOUNCE_COUNT) ? in__p : out;
-end
-    
-
-always_ff @(posedge clk) begin
-    if (rst) begin
-        count <= 0;
-    end
-    else begin
-        if (in == in__p) begin
-            count <= (count == DEBOUNCE_COUNT) ?  DEBOUNCE_COUNT : count + 1;
-        end
-        else begin
-            count <= 0;
-        end
-    end
-end
-
-endmodule
-

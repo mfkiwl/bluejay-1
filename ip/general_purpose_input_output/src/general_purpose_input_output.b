@@ -21,7 +21,7 @@ input rst;
 
 input cs;
 input we;
-input addr;
+input [3:0] addr;
 input [7:0] wr_data;
 output [7:0] rd_data;
 
@@ -35,11 +35,11 @@ logic rst;
 
 logic cs;
 logic we;
-logic addr;
+logic [3:0] addr;
 logic [7:0] wr_data;
 logic [7:0] rd_data;
 
-logic [7:0] port__0;
+//logic [7:0] port__0;
 logic [7:0] data__0;
 logic [7:0] oe__0;
 logic we__data__0;
@@ -47,7 +47,7 @@ logic we__oe__0;
 logic en__data__0;
 logic en__oe__0;
 
-logic [7:0] port__1;
+//logic [7:0] port__1;
 logic [7:0] data__1;
 logic [7:0] oe__1;
 logic we__data__1;
@@ -55,7 +55,7 @@ logic we__oe__1;
 logic en__data__1;
 logic en__oe__1;
 
-logic [7:0] port__2;
+//logic [7:0] port__2;
 logic [7:0] data__2;
 logic [7:0] oe__2;
 logic we__data__2;
@@ -63,7 +63,7 @@ logic we__oe__2;
 logic en__data__2;
 logic en__oe__2;
 
-logic [7:0] port__3;
+//logic [7:0] port__3;
 logic [7:0] data__3;
 logic [7:0] oe__3;
 logic we__data__3;
@@ -71,41 +71,41 @@ logic we__oe__3;
 logic en__data__3;
 logic en__oe__3;
 
-assign port__0[0] = oe[0] ? data__0[0] : 1'bz;
-assign port__0[1] = oe[1] ? data__0[1] : 1'bz;
-assign port__0[2] = oe[2] ? data__0[2] : 1'bz;
-assign port__0[3] = oe[3] ? data__0[3] : 1'bz;
-assign port__0[4] = oe[4] ? data__0[4] : 1'bz;
-assign port__0[5] = oe[5] ? data__0[5] : 1'bz;
-assign port__0[6] = oe[6] ? data__0[6] : 1'bz;
-assign port__0[7] = oe[7] ? data__0[7] : 1'bz;
+assign port__0[0] = oe__0[0] ? data__0[0] : 1'bz;
+assign port__0[1] = oe__0[1] ? data__0[1] : 1'bz;
+assign port__0[2] = oe__0[2] ? data__0[2] : 1'bz;
+assign port__0[3] = oe__0[3] ? data__0[3] : 1'bz;
+assign port__0[4] = oe__0[4] ? data__0[4] : 1'bz;
+assign port__0[5] = oe__0[5] ? data__0[5] : 1'bz;
+assign port__0[6] = oe__0[6] ? data__0[6] : 1'bz;
+assign port__0[7] = oe__0[7] ? data__0[7] : 1'bz;
 
-assign port__1[0] = oe[0] ? data__1[0] : 1'bz;
-assign port__1[1] = oe[1] ? data__1[1] : 1'bz;
-assign port__1[2] = oe[2] ? data__1[2] : 1'bz;
-assign port__1[3] = oe[3] ? data__1[3] : 1'bz;
-assign port__1[4] = oe[4] ? data__1[4] : 1'bz;
-assign port__1[5] = oe[5] ? data__1[5] : 1'bz;
-assign port__1[6] = oe[6] ? data__1[6] : 1'bz;
-assign port__1[7] = oe[7] ? data__1[7] : 1'bz;
+assign port__1[0] = oe__1[0] ? data__1[0] : 1'bz;
+assign port__1[1] = oe__1[1] ? data__1[1] : 1'bz;
+assign port__1[2] = oe__1[2] ? data__1[2] : 1'bz;
+assign port__1[3] = oe__1[3] ? data__1[3] : 1'bz;
+assign port__1[4] = oe__1[4] ? data__1[4] : 1'bz;
+assign port__1[5] = oe__1[5] ? data__1[5] : 1'bz;
+assign port__1[6] = oe__1[6] ? data__1[6] : 1'bz;
+assign port__1[7] = oe__1[7] ? data__1[7] : 1'bz;
 
-assign port__2[0] = oe[0] ? data__2[0] : 1'bz;
-assign port__2[1] = oe[1] ? data__2[1] : 1'bz;
-assign port__2[2] = oe[2] ? data__2[2] : 1'bz;
-assign port__2[3] = oe[3] ? data__2[3] : 1'bz;
-assign port__2[4] = oe[4] ? data__2[4] : 1'bz;
-assign port__2[5] = oe[5] ? data__2[5] : 1'bz;
-assign port__2[6] = oe[6] ? data__2[6] : 1'bz;
-assign port__2[7] = oe[7] ? data__2[7] : 1'bz;
+assign port__2[0] = oe__2[0] ? data__2[0] : 1'bz;
+assign port__2[1] = oe__2[1] ? data__2[1] : 1'bz;
+assign port__2[2] = oe__2[2] ? data__2[2] : 1'bz;
+assign port__2[3] = oe__2[3] ? data__2[3] : 1'bz;
+assign port__2[4] = oe__2[4] ? data__2[4] : 1'bz;
+assign port__2[5] = oe__2[5] ? data__2[5] : 1'bz;
+assign port__2[6] = oe__2[6] ? data__2[6] : 1'bz;
+assign port__2[7] = oe__2[7] ? data__2[7] : 1'bz;
 
-assign port__3[0] = oe[0] ? data__3[0] : 1'bz;
-assign port__3[1] = oe[1] ? data__3[1] : 1'bz;
-assign port__3[2] = oe[2] ? data__3[2] : 1'bz;
-assign port__3[3] = oe[3] ? data__3[3] : 1'bz;
-assign port__3[4] = oe[4] ? data__3[4] : 1'bz;
-assign port__3[5] = oe[5] ? data__3[5] : 1'bz;
-assign port__3[6] = oe[6] ? data__3[6] : 1'bz;
-assign port__3[7] = oe[7] ? data__3[7] : 1'bz;
+assign port__3[0] = oe__3[0] ? data__3[0] : 1'bz;
+assign port__3[1] = oe__3[1] ? data__3[1] : 1'bz;
+assign port__3[2] = oe__3[2] ? data__3[2] : 1'bz;
+assign port__3[3] = oe__3[3] ? data__3[3] : 1'bz;
+assign port__3[4] = oe__3[4] ? data__3[4] : 1'bz;
+assign port__3[5] = oe__3[5] ? data__3[5] : 1'bz;
+assign port__3[6] = oe__3[6] ? data__3[6] : 1'bz;
+assign port__3[7] = oe__3[7] ? data__3[7] : 1'bz;
 
 
 always_comb
