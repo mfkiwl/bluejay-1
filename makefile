@@ -17,7 +17,7 @@ XSIM := xsim
 
 
 #XELAB__OPTS := -relax
-XELAB__OPTS := -relax
+XELAB__OPTS :=
 XSIM__OPTS :=
 XSIM__CFG := $(TOP)/tcl/xsim_cfg.tcl
 #XVLOG__OPTS := --sv --incr --relax
@@ -65,8 +65,9 @@ endef
 
 SIM_IP ?= central_processing_unit
 #SIM_IP := machine_timer_registers
-#all: diff-$(SIM_IP)-sim__xyz 
-all: top.sv 
+all: diff-$(SIM_IP)-sim__xyz 
+#all: sim-$(SIM_IP)-sim__xyz 
+#all: vivado_source 
 
 
 
@@ -279,7 +280,7 @@ $(TOP)/ip/$(1)/sim/gen/$(2)/$(3)/sim.timestamp: $(TOP)/ip/$(1)/sim/gen/$(2)/$(3)
 	$(TOUCH) $$(@)
 
 $(TOP)/ip/$(1)/sim/gen/$(2)/$(3)/$(SNAPSHOT).wdb: $(TOP)/ip/$(1)/sim/gen/$(2)/$(3)/setup.timestamp
-	$(CD) $(TOP)/ip/$(1)/sim/gen/$(2) ; $(XSIM) $(SNAPSHOT) --tclbatch $(XSIM__CFG) --wdb $$(@)
+	$(CD) $(TOP)/ip/$(1)/sim/gen/$(2) ; $(XSIM) $(SNAPSHOT) --tclbatch $(XSIM__CFG) --wdb $$(@) 
 endef
 
 ################################

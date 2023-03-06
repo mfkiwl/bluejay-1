@@ -1,0 +1,27 @@
+#-----------------------------------------------------------
+# xsim v2019.2 (64-bit)
+# SW Build 2708876 on Wed Nov  6 21:39:14 MST 2019
+# IP Build 2700528 on Thu Nov  7 00:09:20 MST 2019
+# Start of session at: Sun Mar  5 14:10:53 2023
+# Process ID: 17819
+# Current directory: /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz
+# Command line: xsim -mode tcl -source {xsim.dir/snapshot/xsim_script.tcl}
+# Log file: /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/xsim.log
+# Journal file: /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/xsim.jou
+#-----------------------------------------------------------
+source xsim.dir/snapshot/xsim_script.tcl
+# xsim {snapshot} -testplusarg filename__mem=/home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/BEQ-01/BEQ-01.mem -testplusarg filename__sig=/home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/BEQ-01/BEQ-01.signature -testplusarg begin_signature=0000000080005010 -testplusarg end_signature=0000000080005970 -testplusarg tohost=0000000080004000 -wdb {/home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/BEQ-01/snapshot.wdb} -autoloadwcfg -tclbatch {/home/seankent/bluejay/tcl/xsim_cfg.tcl}
+Vivado Simulator 2019.2
+Time resolution is 1 ps
+source /home/seankent/bluejay/tcl/xsim_cfg.tcl
+## log_wave -recursive *
+WARNING: [Simtcl 6-197] One or more HDL objects could not be logged because of object type or size limitations.  To see details please rerun the command with -verbose (-v).
+## run all
+tohost = 80004000
+INFO: [Common 17-41] Interrupt caught. Command should exit soon.
+run: Time (s): cpu = 00:00:54 ; elapsed = 00:00:55 . Memory (MB): peak = 1534.102 ; gain = 72.004 ; free physical = 22840 ; free virtual = 27647
+INFO: [Common 17-344] 'run' was cancelled
+xsim: Time (s): cpu = 00:00:55 ; elapsed = 00:00:56 . Memory (MB): peak = 1534.102 ; gain = 247.637 ; free physical = 22840 ; free virtual = 27647
+INFO: [Common 17-344] 'source' was cancelled
+exit
+INFO: [Common 17-206] Exiting xsim at Sun Mar  5 14:11:54 2023...

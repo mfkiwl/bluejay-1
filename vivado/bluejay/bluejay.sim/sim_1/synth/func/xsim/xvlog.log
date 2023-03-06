@@ -1,0 +1,153 @@
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/seankent/bluejay/vivado/bluejay/bluejay.sim/sim_1/synth/func/xsim/tb_func_synth.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module arithmetic_logic_unit
+INFO: [VRFC 10-311] analyzing module blk_mem_gen_0
+INFO: [VRFC 10-311] analyzing module bus
+INFO: [VRFC 10-311] analyzing module bus__decoder
+INFO: [VRFC 10-311] analyzing module bus__multiplexor
+INFO: [VRFC 10-311] analyzing module central_processing_unit
+INFO: [VRFC 10-311] analyzing module comparator
+INFO: [VRFC 10-311] analyzing module control_and_status_registers
+INFO: [VRFC 10-311] analyzing module d_flip_flop
+INFO: [VRFC 10-311] analyzing module d_flip_flop_0
+INFO: [VRFC 10-311] analyzing module d_flip_flop_11
+INFO: [VRFC 10-311] analyzing module d_flip_flop_12
+INFO: [VRFC 10-311] analyzing module d_flip_flop_13
+INFO: [VRFC 10-311] analyzing module d_flip_flop_14
+INFO: [VRFC 10-311] analyzing module d_flip_flop_15
+INFO: [VRFC 10-311] analyzing module d_flip_flop_16
+INFO: [VRFC 10-311] analyzing module d_flip_flop_17
+INFO: [VRFC 10-311] analyzing module d_flip_flop_18
+INFO: [VRFC 10-311] analyzing module d_flip_flop_19
+INFO: [VRFC 10-311] analyzing module d_flip_flop_20
+INFO: [VRFC 10-311] analyzing module d_flip_flop_21
+INFO: [VRFC 10-311] analyzing module d_flip_flop_22
+INFO: [VRFC 10-311] analyzing module d_flip_flop_23
+INFO: [VRFC 10-311] analyzing module d_flip_flop_24
+INFO: [VRFC 10-311] analyzing module d_flip_flop_25
+INFO: [VRFC 10-311] analyzing module d_flip_flop_26
+INFO: [VRFC 10-311] analyzing module d_flip_flop_27
+INFO: [VRFC 10-311] analyzing module d_flip_flop_28
+INFO: [VRFC 10-311] analyzing module d_flip_flop_29
+INFO: [VRFC 10-311] analyzing module d_flip_flop_30
+INFO: [VRFC 10-311] analyzing module d_flip_flop_31
+INFO: [VRFC 10-311] analyzing module d_flip_flop_32
+INFO: [VRFC 10-311] analyzing module d_flip_flop_33
+INFO: [VRFC 10-311] analyzing module d_flip_flop_34
+INFO: [VRFC 10-311] analyzing module d_flip_flop_35
+INFO: [VRFC 10-311] analyzing module d_flip_flop_36
+INFO: [VRFC 10-311] analyzing module d_flip_flop_37
+INFO: [VRFC 10-311] analyzing module d_flip_flop_38
+INFO: [VRFC 10-311] analyzing module d_flip_flop_39
+INFO: [VRFC 10-311] analyzing module d_flip_flop_40
+INFO: [VRFC 10-311] analyzing module d_flip_flop_41
+INFO: [VRFC 10-311] analyzing module d_flip_flop_8
+INFO: [VRFC 10-311] analyzing module d_flip_flop_9
+INFO: [VRFC 10-311] analyzing module d_flip_flop__parameterized0
+INFO: [VRFC 10-311] analyzing module d_flip_flop__parameterized0_42
+INFO: [VRFC 10-311] analyzing module d_flip_flop__parameterized0_44
+INFO: [VRFC 10-311] analyzing module d_flip_flop__parameterized0_45
+INFO: [VRFC 10-311] analyzing module d_flip_flop__parameterized0_46
+INFO: [VRFC 10-311] analyzing module d_flip_flop__parameterized0_49
+INFO: [VRFC 10-311] analyzing module d_flip_flop__parameterized0_51
+INFO: [VRFC 10-311] analyzing module d_flip_flop__parameterized0_53
+INFO: [VRFC 10-311] analyzing module d_flip_flop__parameterized1
+INFO: [VRFC 10-311] analyzing module d_flip_flop__parameterized10
+INFO: [VRFC 10-311] analyzing module d_flip_flop__parameterized11
+INFO: [VRFC 10-311] analyzing module d_flip_flop__parameterized13
+INFO: [VRFC 10-311] analyzing module d_flip_flop__parameterized13_2
+INFO: [VRFC 10-311] analyzing module d_flip_flop__parameterized13_3
+INFO: [VRFC 10-311] analyzing module d_flip_flop__parameterized13_4
+INFO: [VRFC 10-311] analyzing module d_flip_flop__parameterized2
+INFO: [VRFC 10-311] analyzing module d_flip_flop__parameterized2_48
+INFO: [VRFC 10-311] analyzing module d_flip_flop__parameterized2_50
+INFO: [VRFC 10-311] analyzing module d_flip_flop__parameterized3
+INFO: [VRFC 10-311] analyzing module d_flip_flop__parameterized3_1
+INFO: [VRFC 10-311] analyzing module d_flip_flop__parameterized3_43
+INFO: [VRFC 10-311] analyzing module d_flip_flop__parameterized3_47
+INFO: [VRFC 10-311] analyzing module d_flip_flop__parameterized3_52
+INFO: [VRFC 10-311] analyzing module d_flip_flop__parameterized4
+INFO: [VRFC 10-311] analyzing module d_flip_flop__parameterized5
+INFO: [VRFC 10-311] analyzing module d_flip_flop__parameterized5_10
+INFO: [VRFC 10-311] analyzing module d_flip_flop__parameterized5_5
+INFO: [VRFC 10-311] analyzing module d_flip_flop__parameterized5_6
+INFO: [VRFC 10-311] analyzing module d_flip_flop__parameterized5_7
+INFO: [VRFC 10-311] analyzing module d_flip_flop__parameterized6
+INFO: [VRFC 10-311] analyzing module d_flip_flop__parameterized7
+INFO: [VRFC 10-311] analyzing module d_flip_flop__parameterized8
+INFO: [VRFC 10-311] analyzing module d_flip_flop__parameterized9
+INFO: [VRFC 10-311] analyzing module decoder
+INFO: [VRFC 10-311] analyzing module general_purpose_input_output
+INFO: [VRFC 10-311] analyzing module jay
+INFO: [VRFC 10-311] analyzing module machine_timer_registers
+INFO: [VRFC 10-311] analyzing module memory_management_unit
+INFO: [VRFC 10-311] analyzing module platform_level_interrupt_controller
+INFO: [VRFC 10-311] analyzing module platform_level_interrupt_controller__core
+INFO: [VRFC 10-311] analyzing module register_file
+INFO: [VRFC 10-311] analyzing module top
+INFO: [VRFC 10-311] analyzing module blk_mem_gen_0_blk_mem_gen_generic_cstr
+INFO: [VRFC 10-311] analyzing module blk_mem_gen_0_blk_mem_gen_prim_width
+INFO: [VRFC 10-311] analyzing module blk_mem_gen_0_blk_mem_gen_prim_width__parameterized0
+INFO: [VRFC 10-311] analyzing module blk_mem_gen_0_blk_mem_gen_prim_width__parameterized1
+INFO: [VRFC 10-311] analyzing module blk_mem_gen_0_blk_mem_gen_prim_width__parameterized2
+INFO: [VRFC 10-311] analyzing module blk_mem_gen_0_blk_mem_gen_prim_width__parameterized3
+INFO: [VRFC 10-311] analyzing module blk_mem_gen_0_blk_mem_gen_prim_width__parameterized4
+INFO: [VRFC 10-311] analyzing module blk_mem_gen_0_blk_mem_gen_prim_width__parameterized5
+INFO: [VRFC 10-311] analyzing module blk_mem_gen_0_blk_mem_gen_prim_width__parameterized6
+INFO: [VRFC 10-311] analyzing module blk_mem_gen_0_blk_mem_gen_prim_wrapper_init
+INFO: [VRFC 10-311] analyzing module blk_mem_gen_0_blk_mem_gen_prim_wrapper_init__parameterized0
+INFO: [VRFC 10-311] analyzing module blk_mem_gen_0_blk_mem_gen_prim_wrapper_init__parameterized1
+INFO: [VRFC 10-311] analyzing module blk_mem_gen_0_blk_mem_gen_prim_wrapper_init__parameterized2
+INFO: [VRFC 10-311] analyzing module blk_mem_gen_0_blk_mem_gen_prim_wrapper_init__parameterized3
+INFO: [VRFC 10-311] analyzing module blk_mem_gen_0_blk_mem_gen_prim_wrapper_init__parameterized4
+INFO: [VRFC 10-311] analyzing module blk_mem_gen_0_blk_mem_gen_prim_wrapper_init__parameterized5
+INFO: [VRFC 10-311] analyzing module blk_mem_gen_0_blk_mem_gen_prim_wrapper_init__parameterized6
+INFO: [VRFC 10-311] analyzing module blk_mem_gen_0_blk_mem_gen_top
+INFO: [VRFC 10-311] analyzing module blk_mem_gen_0_blk_mem_gen_v8_4_4
+INFO: [VRFC 10-311] analyzing module blk_mem_gen_0_blk_mem_gen_v8_4_4_synth
+INFO: [VRFC 10-311] analyzing module glbl
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module d_flip_flop
+WARNING: [VRFC 10-3609] overwriting previous definition of module 'd_flip_flop' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4]
+INFO: [VRFC 10-311] analyzing module sr_flip_flop
+INFO: [VRFC 10-311] analyzing module central_processing_unit
+WARNING: [VRFC 10-3609] overwriting previous definition of module 'central_processing_unit' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:40]
+INFO: [VRFC 10-311] analyzing module arithmetic_logic_unit
+WARNING: [VRFC 10-3609] overwriting previous definition of module 'arithmetic_logic_unit' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:3217]
+INFO: [VRFC 10-311] analyzing module register_file
+WARNING: [VRFC 10-3609] overwriting previous definition of module 'register_file' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:3445]
+INFO: [VRFC 10-311] analyzing module comparator
+WARNING: [VRFC 10-3609] overwriting previous definition of module 'comparator' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4198]
+INFO: [VRFC 10-311] analyzing module decoder
+WARNING: [VRFC 10-3609] overwriting previous definition of module 'decoder' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4224]
+INFO: [VRFC 10-311] analyzing module control_and_status_registers
+INFO: [VRFC 10-2458] undeclared symbol mstatus___spie, assumed default net type wire [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:5313]
+INFO: [VRFC 10-2458] undeclared symbol en__scratch, assumed default net type wire [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:5652]
+WARNING: [VRFC 10-3609] overwriting previous definition of module 'control_and_status_registers' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4904]
+INFO: [VRFC 10-311] analyzing module machine_timer_registers
+WARNING: [VRFC 10-3609] overwriting previous definition of module 'machine_timer_registers' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:5745]
+INFO: [VRFC 10-311] analyzing module platform_level_interrupt_controller
+WARNING: [VRFC 10-3609] overwriting previous definition of module 'platform_level_interrupt_controller' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:5870]
+INFO: [VRFC 10-311] analyzing module platform_level_interrupt_controller__core
+INFO: [VRFC 10-2458] undeclared symbol context__0__id, assumed default net type wire [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:6079]
+INFO: [VRFC 10-2458] undeclared symbol context__0__priority, assumed default net type wire [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:6080]
+WARNING: [VRFC 10-3609] overwriting previous definition of module 'platform_level_interrupt_controller__core' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:5949]
+INFO: [VRFC 10-311] analyzing module platform_level_interrupt_controller__gateway
+INFO: [VRFC 10-311] analyzing module platform_level_interrupt_controller__priority_mux
+INFO: [VRFC 10-311] analyzing module physical_memory_attribute_registers
+INFO: [VRFC 10-311] analyzing module physical_memory_attribute_checker
+INFO: [VRFC 10-311] analyzing module general_purpose_input_output
+WARNING: [VRFC 10-3609] overwriting previous definition of module 'general_purpose_input_output' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:6640]
+INFO: [VRFC 10-311] analyzing module memory_controller
+INFO: [VRFC 10-311] analyzing module memory_management_unit
+WARNING: [VRFC 10-3609] overwriting previous definition of module 'memory_management_unit' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:7082]
+INFO: [VRFC 10-311] analyzing module bus
+WARNING: [VRFC 10-3609] overwriting previous definition of module 'bus' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:7535]
+INFO: [VRFC 10-311] analyzing module bus__decoder
+WARNING: [VRFC 10-3609] overwriting previous definition of module 'bus__decoder' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:7884]
+INFO: [VRFC 10-311] analyzing module bus__multiplexor
+WARNING: [VRFC 10-3609] overwriting previous definition of module 'bus__multiplexor' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:7945]
+INFO: [VRFC 10-311] analyzing module jay
+WARNING: [VRFC 10-3609] overwriting previous definition of module 'jay' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:8163]
+INFO: [VRFC 10-311] analyzing module top
+WARNING: [VRFC 10-3609] overwriting previous definition of module 'top' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:8543]
+INFO: [VRFC 10-311] analyzing module tb

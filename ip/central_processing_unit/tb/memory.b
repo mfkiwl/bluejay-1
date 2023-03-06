@@ -58,6 +58,8 @@ logic test;
 
 always_comb 
 begin
+    ready = 1'b0;
+                    
     case (state)
         //==============================
         // STATE__READY

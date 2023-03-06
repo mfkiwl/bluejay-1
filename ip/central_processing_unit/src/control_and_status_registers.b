@@ -616,7 +616,6 @@ d_flip_flop #(.WIDTH(CSR__MIE__MEIE__WIDTH), .RESET_VALUE(CSR__MIE__MEIE__DISABL
 // Machine Cycle Register (mcycle) 
 //==============================================
 assign mcycle[CSR__MCYCLE__MCYCLE__FIELD] = mcycle__mcycle;
-assign mcycle[CSR__MCYCLE__MCYCLE__FIELD] = mcycle__mcycle__n;
 
 assign en__mcycle = 1'b1;
 

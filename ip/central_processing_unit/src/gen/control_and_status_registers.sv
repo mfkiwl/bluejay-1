@@ -616,7 +616,6 @@ d_flip_flop #(.WIDTH(1), .RESET_VALUE(1'b0)) d_flip_flop__mie__meie
 // Machine Cycle Register (mcycle) 
 //==============================================
 assign mcycle[63:0] = mcycle__mcycle;
-assign mcycle[63:0] = mcycle__mcycle__n;
 
 assign en__mcycle = 1'b1;
 

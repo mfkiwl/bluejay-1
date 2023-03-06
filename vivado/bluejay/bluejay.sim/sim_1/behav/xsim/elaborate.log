@@ -1,8 +1,35 @@
 Vivado Simulator 2019.2
 Copyright 1986-1999, 2001-2019 Xilinx, Inc. All Rights Reserved.
-Running: /tools/Xilinx/Vivado/2019.2/bin/unwrapped/lnx64.o/xelab -wto 68a6928b8e85482c87cfe178a0983b0f --incr --debug typical --relax --mt 8 -L blk_mem_gen_v8_4_4 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip -L xpm --snapshot tb_behav xil_defaultlib.tb xil_defaultlib.glbl -log elaborate.log 
+Running: /tools/Xilinx/Vivado/2019.2/bin/unwrapped/lnx64.o/xelab -wto 68a6928b8e85482c87cfe178a0983b0f --incr --debug typical --relax --mt 8 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip -L xpm --snapshot tb_behav xil_defaultlib.tb xil_defaultlib.glbl -log elaborate.log 
 Using 8 slave threads.
 Starting static elaboration
 Pass Through NonSizing Optimizer
 Completed static elaboration
-INFO: [XSIM 43-4323] No Change in HDL. Linking previously generated obj files to create kernel
+Starting simulation data flow analysis
+WARNING: [XSIM 43-4100] "/home/seankent/bluejay/vivado/bluejay/bluejay.sim/sim_1/behav/xsim/glbl.v" Line 6. Module glbl has a timescale but at least one module in design doesn't have timescale.
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling module xil_defaultlib.decoder
+Compiling module xil_defaultlib.d_flip_flop(WIDTH=64)
+Compiling module xil_defaultlib.register_file
+Compiling module xil_defaultlib.arithmetic_logic_unit
+Compiling module xil_defaultlib.comparator
+Compiling module xil_defaultlib.d_flip_flop(RESET_VALUE=1'b0)
+Compiling module xil_defaultlib.d_flip_flop(WIDTH=62,RESET_VALUE...
+Compiling module xil_defaultlib.d_flip_flop
+Compiling module xil_defaultlib.d_flip_flop(WIDTH=64,RESET_VALUE...
+Compiling module xil_defaultlib.d_flip_flop(WIDTH=63,RESET_VALUE...
+Compiling module xil_defaultlib.control_and_status_registers
+Compiling module xil_defaultlib.d_flip_flop(WIDTH=8,RESET_VALUE=...
+Compiling module xil_defaultlib.d_flip_flop(WIDTH=64,RESET_VALUE...
+Compiling module xil_defaultlib.d_flip_flop(WIDTH=32)
+Compiling module xil_defaultlib.central_processing_unit
+Compiling module xil_defaultlib.tb_mem(DEPTH=64'b010000000000000...
+Compiling module xil_defaultlib.tb
+WARNING: [XSIM 43-3373] "/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv" Line 5858. System function $value$plusargs is used as system task. This system function should have a LHS e.g. x=$value$plusargs().
+WARNING: [XSIM 43-3373] "/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv" Line 5864. System function $value$plusargs is used as system task. This system function should have a LHS e.g. x=$value$plusargs().
+WARNING: [XSIM 43-3373] "/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv" Line 5866. System function $value$plusargs is used as system task. This system function should have a LHS e.g. x=$value$plusargs().
+WARNING: [XSIM 43-3373] "/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv" Line 5868. System function $value$plusargs is used as system task. This system function should have a LHS e.g. x=$value$plusargs().
+WARNING: [XSIM 43-3373] "/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv" Line 5892. System function $value$plusargs is used as system task. This system function should have a LHS e.g. x=$value$plusargs().
+Compiling module xil_defaultlib.glbl
+Built simulation snapshot tb_behav

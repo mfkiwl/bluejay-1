@@ -52,3 +52,7 @@ Resources:
     - Vivado simulation hangs when two FSMs communicate with eachother and one of the signals is assinged a default value in an always_comb block
         - Someone with a similar issue: https://support.xilinx.com/s/question/0D52E00006iHmQxSAK/simulation-freezing-with-systemverilog-interfaces-fsm-handshake?language=en_US
         - -delay_trigger swithc: https://community.cadence.com/cadence_technology_forums/f/logic-design/15558/problem-with-simvision-hanging-in-an-endless-loop
+        - zero delay glitches: https://groups.google.com/g/comp.lang.verilog/c/iDcmOjJ_XSw
+        - https://electronics.stackexchange.com/questions/99223/relation-between-delta-cycle-and-event-scheduling-in-verilog-simulation
+        - https://groups.google.com/g/comp.lang.verilog/c/FWEERWA4pF4?pli=1
+        - Great decription of the issue: https://chickenbit.net/simulation-stuck-no-progress-in-simulation-time/
