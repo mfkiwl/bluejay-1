@@ -1,26 +1,21 @@
 #-----------------------------------------------------------
-# xsim v2019.2 (64-bit)
-# SW Build 2708876 on Wed Nov  6 21:39:14 MST 2019
-# IP Build 2700528 on Thu Nov  7 00:09:20 MST 2019
-# Start of session at: Sun Mar  5 14:09:03 2023
-# Process ID: 17573
+# xsim v2022.2 (64-bit)
+# SW Build 3671981 on Fri Oct 14 04:59:54 MDT 2022
+# IP Build 3669848 on Fri Oct 14 08:30:02 MDT 2022
+# Start of session at: Mon Mar  6 15:52:20 2023
+# Process ID: 17392
 # Current directory: /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz
 # Command line: xsim -mode tcl -source {xsim.dir/snapshot/xsim_script.tcl}
 # Log file: /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/xsim.log
 # Journal file: /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/xsim.jou
+# Running On: seankent, OS: Linux, CPU Frequency: 4800.930 MHz, CPU Physical cores: 10, Host memory: 33523 MB
 #-----------------------------------------------------------
 source xsim.dir/snapshot/xsim_script.tcl
 # xsim {snapshot} -testplusarg filename__mem=/home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/BEQ-01/BEQ-01.mem -testplusarg filename__sig=/home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/BEQ-01/BEQ-01.signature -testplusarg begin_signature=0000000080005010 -testplusarg end_signature=0000000080005970 -testplusarg tohost=0000000080004000 -wdb {/home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/BEQ-01/snapshot.wdb} -autoloadwcfg -tclbatch {/home/seankent/bluejay/tcl/xsim_cfg.tcl}
-Vivado Simulator 2019.2
 Time resolution is 1 ps
 source /home/seankent/bluejay/tcl/xsim_cfg.tcl
 ## log_wave -recursive *
-WARNING: [Simtcl 6-197] One or more HDL objects could not be logged because of object type or size limitations.  To see details please rerun the command with -verbose (-v).
 ## run all
-tohost = 80004000
-INFO: [Common 17-41] Interrupt caught. Command should exit soon.
-INFO: [Common 17-344] 'run' was cancelled
-xsim: Time (s): cpu = 00:00:04 ; elapsed = 00:00:05 . Memory (MB): peak = 1534.102 ; gain = 247.637 ; free physical = 23770 ; free virtual = 28576
-INFO: [Common 17-344] 'source' was cancelled
-exit
-INFO: [Common 17-206] Exiting xsim at Sun Mar  5 14:09:15 2023...
+$finish called at time : 200 ns : File "/home/seankent/bluejay/ip/central_processing_unit/tb/gen/tb.sv" Line 162
+## exit
+INFO: [Common 17-206] Exiting xsim at Mon Mar  6 15:52:23 2023...

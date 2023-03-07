@@ -108,90 +108,90 @@ logic [7:0] state;
 logic [7:0] state__n;
 
 
-//==============================
-// decoder__0
-//==============================
-decoder decoder__0
-(
-    .clk(clk),
-    .rst(rst),
-    .ir(ir),
-    .op(op),
-    .rs1(rs1),
-    .rs2(rs2),
-    .rd(rd),
-    .imm(imm),
-    .uimm(uimm)
-);
-
-
-//==============================
-// register_file__0
-//==============================
-register_file register_file__0
-(
-    .clk(clk),
-    .rst(rst),
-    .cs(rf__cs),
-    .we(rf__we),
-    .addr(rf__addr),
-    .rd_data(rf__rd_data),
-    .wr_data(rf__wr_data)
-);
-
-//==============================
-// arithmetic_logic_unit__0
-//==============================
-arithmetic_logic_unit arithmetic_logic_unit__0
-(
-    .clk(clk),
-    .rst(rst),
-    .func(func),
-    .a(a),
-    .b(b),
-    .c(c)
-);
-
-//==============================
-// comparator__0
-//==============================
-comparator comparator__0
-(
-    .clk(clk),
-    .rst(rst),
-    .a(a),
-    .b(b),
-    .eq(eq),
-    .ne(ne),
-    .lt(lt),
-    .ltu(ltu),
-    .ge(ge),
-    .geu(geu)
-);
-
-//==============================
-// control_and_status_registers__0
-//==============================
-control_and_status_registers control_and_status_registers__0
-(
-    .clk(clk),
-    .rst(rst),
-    .cs(csr__cs),
-    .we(csr__we),
-    .addr(csr__addr),
-    .rd_data(csr__rd_data),
-    .wr_data(csr__wr_data),
-    .eip(eip),
-    .tip(tip),
-    .instret(instret),
-    .mstatus__mie(mstatus__mie),
-    .mie__meie(mie__meie),
-    .mie__msie(mie__msie),
-    .mie__mtie(mie__mtie),
-    .mip__meip(mip__meip),
-    .mip__msip(mip__msip),
-    .mip__mtip(mip__mtip)
-);
+////==============================
+//// decoder__0
+////==============================
+//decoder decoder__0
+//(
+//    .clk(clk),
+//    .rst(rst),
+//    .ir(ir),
+//    .op(op),
+//    .rs1(rs1),
+//    .rs2(rs2),
+//    .rd(rd),
+//    .imm(imm),
+//    .uimm(uimm)
+//);
+//
+//
+////==============================
+//// register_file__0
+////==============================
+//register_file register_file__0
+//(
+//    .clk(clk),
+//    .rst(rst),
+//    .cs(rf__cs),
+//    .we(rf__we),
+//    .addr(rf__addr),
+//    .rd_data(rf__rd_data),
+//    .wr_data(rf__wr_data)
+//);
+//
+////==============================
+//// arithmetic_logic_unit__0
+////==============================
+//arithmetic_logic_unit arithmetic_logic_unit__0
+//(
+//    .clk(clk),
+//    .rst(rst),
+//    .func(func),
+//    .a(a),
+//    .b(b),
+//    .c(c)
+//);
+//
+////==============================
+//// comparator__0
+////==============================
+//comparator comparator__0
+//(
+//    .clk(clk),
+//    .rst(rst),
+//    .a(a),
+//    .b(b),
+//    .eq(eq),
+//    .ne(ne),
+//    .lt(lt),
+//    .ltu(ltu),
+//    .ge(ge),
+//    .geu(geu)
+//);
+//
+////==============================
+//// control_and_status_registers__0
+////==============================
+//control_and_status_registers control_and_status_registers__0
+//(
+//    .clk(clk),
+//    .rst(rst),
+//    .cs(csr__cs),
+//    .we(csr__we),
+//    .addr(csr__addr),
+//    .rd_data(csr__rd_data),
+//    .wr_data(csr__wr_data),
+//    .eip(eip),
+//    .tip(tip),
+//    .instret(instret),
+//    .mstatus__mie(mstatus__mie),
+//    .mie__meie(mie__meie),
+//    .mie__msie(mie__msie),
+//    .mie__mtie(mie__mtie),
+//    .mip__meip(mip__meip),
+//    .mip__msip(mip__msip),
+//    .mip__mtip(mip__mtip)
+//);
 
 //==============================================
 // Finite State Machine

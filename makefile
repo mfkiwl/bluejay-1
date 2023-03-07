@@ -65,8 +65,8 @@ endef
 
 SIM_IP ?= central_processing_unit
 #SIM_IP := machine_timer_registers
-all: diff-$(SIM_IP)-sim__xyz 
-#all: sim-$(SIM_IP)-sim__xyz 
+#all: diff-$(SIM_IP)-sim__xyz 
+all: sim-$(SIM_IP)-sim__xyz 
 #all: vivado_source 
 
 

@@ -5739,6 +5739,326 @@ d_flip_flop #(.WIDTH(64), .RESET_VALUE(64'h0)) d_flip_flop__mtval__mtval
 endmodule
 
 //==============================================
+// timescale
+//==============================================
+//`timescale 1ns / 1ps
+
+//==============================================
+// tb 
+//==============================================
+module tb;
+
+//==============================================
+// Logic 
+//==============================================
+logic clk;
+logic rst;
+logic cs;
+logic we;
+logic [63:0] addr;
+logic [1:0] size;
+logic [63:0] wr_data;
+logic ready;
+logic resp;
+logic [63:0] rd_data;
+logic eip;
+logic tip;
+
+
+central_processing_unit dut
+(
+    .clk(clk),
+    .rst(rst),
+    .cs(cs),
+    .we(we),
+    .addr(addr),
+    .size(size),
+    .wr_data(wr_data),
+    .ready(ready),
+    .resp(resp),
+    .rd_data(rd_data),
+    .eip(eip),
+    .tip(tip)
+);
+
+
+//==============================
+// mem 
+//==============================
+tb_mem #(.DEPTH(64'h10000), .DEPTH__LOG2(16)) mem 
+(
+    .clk(clk),
+    .rst(rst),
+    .cs(cs),
+    .we(we),
+    .addr(addr[15:0]),
+    .size(size),
+    .wr_data(wr_data),
+    .ready(ready),
+    .resp(resp),
+    .rd_data(rd_data)
+);
+
+
+//==============================================
+// Clock (10ns)
+//==============================================
+always begin
+    #5 clk = !clk;
+end
+
+
+string filename__mem;
+string filename__sig;
+string filename__begin_signature;
+string filename__end_signature;
+string filename__tohost;
+logic [63:0] begin_signature;
+logic [63:0] end_signature;
+logic [63:0] tohost;
+logic [63:0] addr_long;
+logic [15:0] addr_short;
+
+// file descriptor handle
+integer fd;
+
+initial begin
+//    if ($value$plusargs("filename__mem=%s", filename__mem)) begin
+//        $readmemh(filename__mem, mem.memory);
+//    end
+    //if ($value$plusargs("filename__sig=%s", filename__sig)) begin
+    //    $display("filename__sig = %s", filename__sig);
+    //end
+    //if ($value$plusargs("begin_signature=%0h", begin_signature)) begin
+    //    $display("begin_signature = %0h", begin_signature);
+    //end
+    //if ($value$plusargs("end_signature=%0h", end_signature)) begin
+    //    $display("end_signature = %0h", end_signature);
+    //end
+end
+
+initial begin
+    // initialize clk
+    clk = 1'b1;
+    rst = 1'b1;
+    // initialize the ra register
+//    dut.register_file__0.x__1 = 64'hffffffffffffffff;
+//    // initialize the sp register (Set to top of mem) EDIT
+//    dut.register_file__0.x__2 = 64'h10000;
+//    // initialize the gp register
+//    dut.register_file__0.x__3 = 64'h11860;
+//    // initialize instruction memory
+    #11;
+    // de-assert rst
+    rst = 1'b0;
+end
+
+
+//initial begin
+//    $value$plusargs("tohost=%h", tohost);
+//    $display("tohost = %0h", tohost);
+//    forever begin
+//        @(posedge clk) begin
+//            //if ((dut.op == 6'h32) && (dut.rs1 == 5'h1) && (dut.register_file__0.x__1 = 64'hffffffffffffffff)) begin
+//            if (cs && (addr == tohost)) begin
+//                $value$plusargs("filename__sig=%s", filename__sig);
+//                $display("filename__sig = %s", filename__sig);
+//                $value$plusargs("begin_signature=%h", begin_signature);
+//                $display("begin_signature = %0h", begin_signature);
+//                $value$plusargs("end_signature=%h", end_signature);
+//                $display("end_signature = %0h", end_signature);
+//                fd = $fopen(filename__sig);
+//                for (addr_long = begin_signature; addr_long < end_signature; addr_long += 4) begin
+//                    addr_short = addr_long[15:0];
+//                    $fwrite(fd, "%02h", mem.memory[addr_short + 3]);
+//                    $fwrite(fd, "%02h", mem.memory[addr_short + 2]);
+//                    $fwrite(fd, "%02h", mem.memory[addr_short + 1]);
+//                    $fwrite(fd, "%02h\n", mem.memory[addr_short]);
+//                end
+//                ////$fdisplay(fd, "%016h", dut.central_processing_unit__0.register_file__0.x__10);
+//                $fclose(fd);
+//                $finish();
+//            end
+//        end
+//    end
+//end
+
+
+
+   
+
+//initial begin
+//    #2000000;
+//    $value$plusargs("filename__sig=%s", filename__sig);
+//    $display("filename__sig = %s", filename__sig);
+//    fd = $fopen(filename__sig);
+//    $fwrite(fd, "00000000");
+//    $fclose(fd);
+//    $finish();
+//end
+
+initial begin
+    #10;
+    $finish();
+end
+
+endmodule
+//==============================================================
+// tb_mem
+//==============================================================
+module tb_mem 
+(
+    clk,
+    rst,
+    cs,
+    we,
+    addr,
+    size,
+    wr_data,
+    ready,
+    resp,
+    rd_data
+);
+
+// parameters
+parameter DEPTH = 2;
+parameter DEPTH__LOG2 = 1;
+
+input clk;
+input rst;
+input cs;
+input we;
+input [15:0] addr;
+input [1:0] size;
+input [63:0] wr_data;
+output ready;
+output resp;
+output [63:0] rd_data; 
+
+logic clk;
+logic rst;
+logic cs;
+logic we;
+logic [15:0] addr;
+logic [1:0] size;
+logic [63:0] wr_data;
+logic ready;
+logic resp;
+logic [63:0] rd_data; 
+
+logic state;
+logic state__n;
+
+
+logic en;
+logic address_misaligned;
+
+logic [7:0] memory [DEPTH-1:0];
+
+localparam STATE__READY = 1'b0;
+localparam STATE__NOT_READY = 1'b1;
+
+
+logic test;
+
+always_comb 
+begin
+    ready = 1'b0;
+                    
+    case (state)
+        //==============================
+        // STATE__READY
+        //==============================
+        STATE__READY:
+        begin
+            if (cs)
+            begin
+                if (address_misaligned)
+                begin
+                    en = 1'b0;
+                    ready = 1'b1;
+                    resp = 1'b1;
+                    rd_data = 64'h1;
+                end
+                else
+                begin
+                    en = we;
+                    ready = 1'b1;
+                    resp = 1'b0;
+                    rd_data[7:0] = memory[addr];
+                    rd_data[15:8] = ((size == 2'h2) || (size == 2'h1) || (size == 2'h0)) ? memory[addr + 1] : {8{1'bx}};
+                    rd_data[23:16] = ((size == 2'h1) || (size == 2'h0)) ? memory[addr + 2] : {8{1'bx}};
+                    rd_data[31:24] = ((size == 2'h1) || (size == 2'h0)) ? memory[addr + 3] : {8{1'bx}};
+                    rd_data[39:32] = (size == 2'h0) ? memory[addr + 4] : {8{1'bx}};
+                    rd_data[47:40] = (size == 2'h0) ? memory[addr + 5] : {8{1'bx}};
+                    rd_data[55:48] = (size == 2'h0) ? memory[addr + 6] : {8{1'bx}};
+                    rd_data[63:56] = (size == 2'h0) ? memory[addr + 7] : {8{1'bx}};
+                end
+            end
+            state__n = STATE__NOT_READY;
+        end
+
+        //==============================
+        // STATE__NOT_READY
+        //==============================
+        STATE__NOT_READY:
+        begin
+            ready = 1'b0;
+            resp = 1'b0;
+            en = 1'b0;
+            state__n = STATE__READY;
+        end
+    endcase
+end
+
+
+always_comb begin
+    case (size)
+        2'h0:
+        begin
+            address_misaligned = (addr[2:0] != 3'b0);
+        end
+        2'h1:
+        begin
+            address_misaligned = (addr[1:0] != 2'b0);
+        end
+        2'h2:
+        begin
+            address_misaligned = (addr[0] != 1'b0);
+        end
+        2'h3:
+        begin
+            address_misaligned = 1'b0;
+        end
+    endcase
+end
+
+always_ff @(posedge clk)
+begin
+    memory[addr] <= en ? wr_data[7:0] : memory[addr];
+    memory[addr + 1] <= en & ((size == 2'h2) || (size == 2'h1) || (size == 2'h0)) ? wr_data[15:8] : memory[addr + 1];
+    memory[addr + 2] <= en & ((size == 2'h1) || (size == 2'h0)) ? wr_data[23:16] : memory[addr + 2];
+    memory[addr + 3] <= en & ((size == 2'h1) || (size == 2'h0)) ? wr_data[31:24] : memory[addr + 3];
+    memory[addr + 4] <= en & (size == 2'h0) ? wr_data[39:32] : memory[addr + 4];
+    memory[addr + 5] <= en & (size == 2'h0) ? wr_data[47:40] : memory[addr + 5];
+    memory[addr + 6] <= en & (size == 2'h0) ? wr_data[55:48] : memory[addr + 6];
+    memory[addr + 7] <= en & (size == 2'h0) ? wr_data[63:56] : memory[addr + 7];
+end
+
+
+
+always_ff @(posedge clk)
+begin
+    if (rst) begin
+        state <= STATE__READY;
+    end
+    else begin
+        state <= state__n;
+    end
+end
+
+endmodule
+//==============================================
 // machine_timer_registers 
 //==============================================
 module machine_timer_registers
