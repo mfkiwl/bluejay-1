@@ -105,44 +105,44 @@ logic resp;
 logic [63:0] rd_data;
 
 logic cs__0;
-logic ready__0;
-logic resp__0;
-logic [63:0] rd_data__0;
+//logic ready__0;
+//logic resp__0;
+//logic [63:0] rd_data__0;
 
 logic cs__1;
-logic ready__1;
-logic resp__1;
-logic [63:0] rd_data__1;
+//logic ready__1;
+//logic resp__1;
+//logic [63:0] rd_data__1;
 
 logic cs__2;
-logic ready__2;
-logic resp__2;
-logic [63:0] rd_data__2;
+//logic ready__2;
+//logic resp__2;
+//logic [63:0] rd_data__2;
 
 logic cs__3;
-logic ready__3;
-logic resp__3;
-logic [63:0] rd_data__3;
+//logic ready__3;
+//logic resp__3;
+//logic [63:0] rd_data__3;
 
 logic cs__4;
-logic ready__4;
-logic resp__4;
-logic [63:0] rd_data__4;
+//logic ready__4;
+//logic resp__4;
+//logic [63:0] rd_data__4;
 
 logic cs__5;
-logic ready__5;
-logic resp__5;
-logic [63:0] rd_data__5;
+//logic ready__5;
+//logic resp__5;
+//logic [63:0] rd_data__5;
 
 logic cs__6;
-logic ready__6;
-logic resp__6;
-logic [63:0] rd_data__6;
+//logic ready__6;
+//logic resp__6;
+//logic [63:0] rd_data__6;
 
 logic cs__7;
-logic ready__7;
-logic resp__7;
-logic [63:0] rd_data__7;
+//logic ready__7;
+//logic resp__7;
+//logic [63:0] rd_data__7;
 
 always_comb
 begin

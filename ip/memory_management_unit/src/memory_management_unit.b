@@ -84,9 +84,9 @@ logic mmu_to_bus__we;
 logic [39:0] mmu_to_bus__addr;
 logic [1:0] mmu_to_bus__size;
 logic [63:0] mmu_to_bus__wr_data;
-logic mmu_to_bus__ready;
-logic mmu_to_bus__resp;
-logic [63:0] mmu_to_bus__rd_data;
+//logic mmu_to_bus__ready;
+//logic mmu_to_bus__resp;
+//logic [63:0] mmu_to_bus__rd_data;
 
 logic [7:0] pmar__0;
 logic [7:0] pmar__1;

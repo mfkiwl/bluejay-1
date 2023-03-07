@@ -1,0 +1,129 @@
+Info Session started: Tue Mar  7 00:09:21 2023
+
+Info PROGRAM /home/seankent/bluejay/imperas/imperas-riscv-tests/riscv-ovpsim-plus/bin/Linux64/riscvOVPsimPlus.exe
+Info ------------- ENVIRONMENT -------------
+Info --------------------------------------
+Info -------- FLAGS (from command line)
+Info --variant  RV64I
+Info --override  riscvOVPsim/cpu/tval_ii_code=F
+Info --program  /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/I-MISALIGN_LDST-01/I-MISALIGN_LDST-01.elf
+Info --signaturedump
+Info --customcontrol
+Info --override  riscvOVPsim/cpu/sigdump/SignatureFile=/home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/I-MISALIGN_LDST-01/I-MISALIGN_LDST-01.signature.output
+Info --override  riscvOVPsim/cpu/sigdump/SignatureGranularity=4
+Info --override  riscvOVPsim/cpu/simulateexceptions=T
+Info --override  riscvOVPsim/cpu/defaultsemihost=F
+Info --logfile  /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/I-MISALIGN_LDST-01/I-MISALIGN_LDST-01.log
+Info --override  riscvOVPsim/cpu/user_version=2.3
+Info --------------------------------------
+Imperas riscvOVPsimPlus
+
+
+riscvOVPsimPlus (64-Bit) v20230201.0 Open Virtual Platform simulator from www.IMPERAS.com.
+Copyright (c) 2005-2023 Imperas Software Ltd.  Contains Imperas Proprietary Information.
+Licensed Software, All Rights Reserved.
+Visit www.IMPERAS.com for multicore debug, verification and analysis solutions.
+
+riscvOVPsimPlus started: Tue Mar  7 00:09:21 2023
+
+
+Info (OR_OF) Target 'riscvOVPsim/cpu' has object file read from '/home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/I-MISALIGN_LDST-01/I-MISALIGN_LDST-01.elf'
+Info (OR_PH) Program Headers:
+Info (OR_PH) Type           Offset             VirtAddr           PhysAddr
+Info (OR_PH)                FileSiz            MemSiz             Flags  Align
+Info (OR_PD) PROC           0x0000000000003208 0x0000000000000000 0x0000000000000000
+Info (OR_PD)                0x000000000000001e 0x0000000000000000 R--    1
+Info (OR_PD) LOAD           0x0000000000001000 0x0000000080000000 0x0000000080000000
+Info (OR_PD)                0x00000000000005c8 0x00000000000005c8 R-E    1000
+Info (OR_PD) LOAD           0x0000000000002000 0x0000000080001000 0x0000000080001000
+Info (OR_PD)                0x0000000000001208 0x0000000000001208 RW-    1000
+Info (SIGNATURE_DUMP_FSB) Found Symbol 'begin_signature' in application at 0x80002010
+Info (SIGNATURE_DUMP_FSE) Found Symbol 'end_signature' in application at 0x800020c0
+Info (SIGNATURE_DUMP_EN) Signature File enabled, file '/home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/I-MISALIGN_LDST-01/I-MISALIGN_LDST-01.signature.output'.
+Info (SIGNATURE_DUMP_ES) Extracting signature from 0x80002010 size 176 bytes
+Info (SIGNATURE_DUMP_SB) Symbol 'begin_signature' at 0x80002010
+Info (SIGNATURE_DUMP_SE) Symbol 'end_signature' at 0x800020c0
+Info (SIGNATURE_DUMP_SFW) Signature Write 1 0x80002010 bytes 4 0x91a1b1c1
+Warning (RISCV_IMA) CPU 'riscvOVPsim/cpu' 0x80000444 0011a203 lw      tp,1(gp): Load from unaligned address (0x80002001)
+Warning (RISCV_IMA) CPU 'riscvOVPsim/cpu' 0x8000044c 0021a203 lw      tp,2(gp): Load from unaligned address (0x80002002)
+Warning (RISCV_IMA) CPU 'riscvOVPsim/cpu' 0x80000454 0031a203 lw      tp,3(gp): Load from unaligned address (0x80002003)
+Warning (RISCV_IMA) CPU 'riscvOVPsim/cpu' 0x80000484 00119203 lh      tp,1(gp): Load from unaligned address (0x80002005)
+Warning (RISCV_IMA) CPU 'riscvOVPsim/cpu' 0x80000494 00319203 lh      tp,3(gp): Load from unaligned address (0x80002007)
+Warning (RISCV_IMA) CPU 'riscvOVPsim/cpu' 0x800004a4 0011d203 lhu     tp,1(gp): Load from unaligned address (0x80002005)
+Warning (RISCV_IMA) CPU 'riscvOVPsim/cpu' 0x800004b4 0031d203 lhu     tp,3(gp): Load from unaligned address (0x80002007)
+Warning (RISCV_IMA) CPU 'riscvOVPsim/cpu' 0x800004f8 006120a3 sw      t1,1(sp): Store/atomic memory operation at unaligned address (0x8000207d)
+Warning (RISCV_IMA) CPU 'riscvOVPsim/cpu' 0x80000500 00612123 sw      t1,2(sp): Store/atomic memory operation at unaligned address (0x80002082)
+Warning (RISCV_IMA) CPU 'riscvOVPsim/cpu' 0x80000508 006121a3 sw      t1,3(sp): Store/atomic memory operation at unaligned address (0x80002087)
+Warning (RISCV_IMA) CPU 'riscvOVPsim/cpu' 0x80000548 006110a3 sh      t1,1(sp): Store/atomic memory operation at unaligned address (0x800020a5)
+Warning (RISCV_IMA) CPU 'riscvOVPsim/cpu' 0x80000558 006111a3 sh      t1,3(sp): Store/atomic memory operation at unaligned address (0x800020af)
+Info (SIGNATURE_DUMP_WTH) Intercept 'write_tohost'. Generate Signature file
+91a1b1c1
+91a1b1c1
+91a1b1c1
+91a1b1c1
+00000001
+00000004
+00000002
+00000004
+00000003
+00000004
+fffff202
+fffff202
+ffffd2e2
+ffffd2e2
+0000f202
+0000f202
+0000d2e2
+0000d2e2
+00000001
+00000004
+00000003
+00000004
+00000001
+00000004
+00000003
+00000004
+00000000
+99999999
+99999999
+99999999
+00000001
+00000006
+00000002
+00000006
+00000003
+00000006
+99990000
+99999999
+00009999
+99999999
+00000001
+00000006
+00000003
+00000006
+Info 
+Info ---------------------------------------------------
+Info CPU 'riscvOVPsim/cpu' STATISTICS
+Info   Type                  : riscv (RV64I)
+Info   Nominal MIPS          : 100
+Info   Final program counter : 0x8000003c
+Info   Simulated instructions: 455
+Info   Simulated MIPS        : run too short for meaningful result
+Info ---------------------------------------------------
+Info 
+Info ---------------------------------------------------
+Info SIMULATION TIME STATISTICS
+Info   Simulated time        : 0.00 seconds
+Info   User time             : 0.00 seconds
+Info   System time           : 0.00 seconds
+Info   Elapsed time          : 0.00 seconds
+Info ---------------------------------------------------
+
+riscvOVPsimPlus finished: Tue Mar  7 00:09:21 2023
+
+
+riscvOVPsimPlus (64-Bit) v20230201.0 Open Virtual Platform simulator from www.IMPERAS.com.
+Visit www.IMPERAS.com for multicore debug, verification and analysis solutions.
+
+Info Session ended: Tue Mar  7 00:09:21 2023
+

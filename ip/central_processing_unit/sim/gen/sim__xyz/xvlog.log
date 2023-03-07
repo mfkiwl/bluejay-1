@@ -14,6 +14,8 @@ INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/cen
 INFO: [VRFC 10-311] analyzing module decoder
 INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/central_processing_unit/src/gen/control_and_status_registers.sv" into library work
 INFO: [VRFC 10-311] analyzing module control_and_status_registers
+INFO: [VRFC 10-2458] undeclared symbol mstatus___spie, assumed default net type wire [/home/seankent/bluejay/ip/central_processing_unit/src/gen/control_and_status_registers.sv:413]
+INFO: [VRFC 10-2458] undeclared symbol en__scratch, assumed default net type wire [/home/seankent/bluejay/ip/central_processing_unit/src/gen/control_and_status_registers.sv:751]
 INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/central_processing_unit/tb/gen/tb.sv" into library work
 INFO: [VRFC 10-311] analyzing module tb
 INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/central_processing_unit/tb/gen/memory.sv" into library work
@@ -24,6 +26,8 @@ INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/pla
 INFO: [VRFC 10-311] analyzing module platform_level_interrupt_controller
 INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/platform_level_interrupt_controller/src/gen/platform_level_interrupt_controller__core.sv" into library work
 INFO: [VRFC 10-311] analyzing module platform_level_interrupt_controller__core
+INFO: [VRFC 10-2458] undeclared symbol context__0__id, assumed default net type wire [/home/seankent/bluejay/ip/platform_level_interrupt_controller/src/gen/platform_level_interrupt_controller__core.sv:134]
+INFO: [VRFC 10-2458] undeclared symbol context__0__priority, assumed default net type wire [/home/seankent/bluejay/ip/platform_level_interrupt_controller/src/gen/platform_level_interrupt_controller__core.sv:135]
 INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/platform_level_interrupt_controller/src/gen/platform_level_interrupt_controller__gateway.sv" into library work
 INFO: [VRFC 10-311] analyzing module platform_level_interrupt_controller__gateway
 INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/platform_level_interrupt_controller/src/gen/platform_level_interrupt_controller__priority_mux.sv" into library work
@@ -42,16 +46,8 @@ INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/bus
 INFO: [VRFC 10-311] analyzing module bus
 INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/bus/src/gen/bus__decoder.sv" into library work
 INFO: [VRFC 10-311] analyzing module bus__decoder
-WARNING: [VRFC 10-8497] literal value 'h4 truncated to fit in 2 bits [/home/seankent/bluejay/ip/bus/src/gen/bus__decoder.sv:44]
-WARNING: [VRFC 10-8497] literal value 'h5 truncated to fit in 2 bits [/home/seankent/bluejay/ip/bus/src/gen/bus__decoder.sv:48]
-WARNING: [VRFC 10-8497] literal value 'h6 truncated to fit in 2 bits [/home/seankent/bluejay/ip/bus/src/gen/bus__decoder.sv:52]
-WARNING: [VRFC 10-8497] literal value 'h7 truncated to fit in 2 bits [/home/seankent/bluejay/ip/bus/src/gen/bus__decoder.sv:56]
 INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/bus/src/gen/bus__multiplexor.sv" into library work
 INFO: [VRFC 10-311] analyzing module bus__multiplexor
-WARNING: [VRFC 10-8497] literal value 'h4 truncated to fit in 2 bits [/home/seankent/bluejay/ip/bus/src/gen/bus__multiplexor.sv:187]
-WARNING: [VRFC 10-8497] literal value 'h5 truncated to fit in 2 bits [/home/seankent/bluejay/ip/bus/src/gen/bus__multiplexor.sv:194]
-WARNING: [VRFC 10-8497] literal value 'h6 truncated to fit in 2 bits [/home/seankent/bluejay/ip/bus/src/gen/bus__multiplexor.sv:201]
-WARNING: [VRFC 10-8497] literal value 'h7 truncated to fit in 2 bits [/home/seankent/bluejay/ip/bus/src/gen/bus__multiplexor.sv:208]
 INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/jay/src/gen/jay.sv" into library work
 INFO: [VRFC 10-311] analyzing module jay
 INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/top/src/gen/top.sv" into library work

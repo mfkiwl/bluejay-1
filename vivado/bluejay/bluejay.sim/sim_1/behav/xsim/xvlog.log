@@ -7,15 +7,13 @@ INFO: [VRFC 10-311] analyzing module register_file
 INFO: [VRFC 10-311] analyzing module comparator
 INFO: [VRFC 10-311] analyzing module decoder
 INFO: [VRFC 10-311] analyzing module control_and_status_registers
-INFO: [VRFC 10-2458] undeclared symbol mstatus___spie, assumed default net type wire [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:5313]
-INFO: [VRFC 10-2458] undeclared symbol en__scratch, assumed default net type wire [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:5651]
-INFO: [VRFC 10-311] analyzing module tb
-INFO: [VRFC 10-311] analyzing module tb_mem
+INFO: [VRFC 10-2458] undeclared symbol mstatus___spie, assumed default net type wire [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:5312]
+INFO: [VRFC 10-2458] undeclared symbol en__scratch, assumed default net type wire [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:5650]
 INFO: [VRFC 10-311] analyzing module machine_timer_registers
 INFO: [VRFC 10-311] analyzing module platform_level_interrupt_controller
 INFO: [VRFC 10-311] analyzing module platform_level_interrupt_controller__core
-INFO: [VRFC 10-2458] undeclared symbol context__0__id, assumed default net type wire [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:6398]
-INFO: [VRFC 10-2458] undeclared symbol context__0__priority, assumed default net type wire [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:6399]
+INFO: [VRFC 10-2458] undeclared symbol context__0__id, assumed default net type wire [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:6077]
+INFO: [VRFC 10-2458] undeclared symbol context__0__priority, assumed default net type wire [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:6078]
 INFO: [VRFC 10-311] analyzing module platform_level_interrupt_controller__gateway
 INFO: [VRFC 10-311] analyzing module platform_level_interrupt_controller__priority_mux
 INFO: [VRFC 10-311] analyzing module physical_memory_attribute_registers
@@ -28,3 +26,4 @@ INFO: [VRFC 10-311] analyzing module bus__decoder
 INFO: [VRFC 10-311] analyzing module bus__multiplexor
 INFO: [VRFC 10-311] analyzing module jay
 INFO: [VRFC 10-311] analyzing module top
+INFO: [VRFC 10-311] analyzing module tb
