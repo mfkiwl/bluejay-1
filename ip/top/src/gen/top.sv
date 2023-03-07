@@ -35,7 +35,7 @@ input btnl;
 input btnr;
 input btnd;
 output [15:0] led;
-output led16_b;
+inout led16_b;
 output led16_g;
 output led16_r;
 output led17_b;
@@ -58,7 +58,7 @@ logic btnl;
 logic btnr;
 logic btnd;
 logic [15:0] led;
-logic led16_b;
+//logic led16_b;
 logic led16_g;
 logic led16_r;
 logic led17_b;
@@ -95,6 +95,23 @@ logic [63:0] douta;
 assign clk = clk_100mhz;
 assign rst = btnc;
 assign led16_b = port__0[0];
+
+assign led = 0;
+//assign led16_b = 0;
+assign led16_g = 0;
+assign led16_r = 0;
+assign led17_b = 0;
+assign led17_g = 0;
+assign led17_r = 0;
+assign an = 8'hff;
+assign ca = 0; 
+assign cb = 0; 
+assign cc = 0; 
+assign cd = 0; 
+assign ce = 0; 
+assign cf = 0; 
+assign cg = 0;
+
 
 
 //==============================

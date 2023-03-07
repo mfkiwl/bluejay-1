@@ -118,7 +118,7 @@ begin
         begin
             ena = 1'b1;
             ready = 1'b1;
-            rd_data = (douta >> addr[2:0]); 
+            rd_data = (douta >> {addr[2:0],3'b000}); 
             state__n = STATE__IDLE; 
         end
     endcase

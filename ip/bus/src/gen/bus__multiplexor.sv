@@ -156,56 +156,56 @@ begin
     cs__7 = 1'b0; 
 
     case (sel)
-        2'h0:
+        3'h0:
         begin
             cs__0 = cs;
             ready = ready__0;
             resp = resp__0;
             rd_data = rd_data__0;
         end
-        2'h1:
+        3'h1:
         begin
             cs__1 = cs;
             ready = ready__1;
             resp = resp__1;
             rd_data = rd_data__1;
         end
-        2'h2:
+        3'h2:
         begin
             cs__2 = cs;
             ready = ready__2;
             resp = resp__2;
             rd_data = rd_data__2;
         end
-        2'h3:
+        3'h3:
         begin
             cs__3 = cs;
             ready = ready__3;
             resp = resp__3;
             rd_data = rd_data__3;
         end
-        2'h4:
+        3'h4:
         begin
             cs__4 = cs;
             ready = ready__4;
             resp = resp__4;
             rd_data = rd_data__4;
         end
-        2'h5:
+        3'h5:
         begin
             cs__5 = cs;
             ready = ready__5;
             resp = resp__5;
             rd_data = rd_data__5;
         end
-        2'h6:
+        3'h6:
         begin
             cs__6 = cs;
             ready = ready__6;
             resp = resp__6;
             rd_data = rd_data__6;
         end
-        2'h7:
+        3'h7:
         begin
             cs__7 = cs;
             ready = ready__7;

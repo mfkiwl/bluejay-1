@@ -1,0 +1,135 @@
+Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2019.2 (lin64) Build 2708876 Wed Nov  6 21:39:14 MST 2019
+| Date         : Tue Mar  7 02:57:36 2023
+| Host         : seankent running 64-bit Ubuntu 22.04.1 LTS
+| Command      : report_control_sets -verbose -file top_control_sets_placed.rpt
+| Design       : top
+| Device       : xc7a100t
+------------------------------------------------------------------------------------
+
+Control Set Information
+
+Table of Contents
+-----------------
+1. Summary
+2. Histogram
+3. Flip-Flop Distribution
+4. Detailed Control Set Information
+
+1. Summary
+----------
+
++----------------------------------------------------------+-------+
+|                          Status                          | Count |
++----------------------------------------------------------+-------+
+| Total control sets                                       |    57 |
+|    Minimum number of control sets                        |    57 |
+|    Addition due to synthesis replication                 |     0 |
+|    Addition due to physical synthesis replication        |     0 |
+| Unused register locations in slices containing registers |    31 |
++----------------------------------------------------------+-------+
+* Control sets can be merged at opt_design using control_set_merge or merge_equivalent_drivers
+** Run report_qor_suggestions for automated merging and remapping suggestions
+
+
+2. Histogram
+------------
+
++--------------------+-------+
+|       Fanout       | Count |
++--------------------+-------+
+| Total control sets |    57 |
+| >= 0 to < 4        |     2 |
+| >= 4 to < 6        |     0 |
+| >= 6 to < 8        |     1 |
+| >= 8 to < 10       |     8 |
+| >= 10 to < 12      |     0 |
+| >= 12 to < 14      |     0 |
+| >= 14 to < 16      |     0 |
+| >= 16              |    46 |
++--------------------+-------+
+* Control sets can be remapped at either synth_design or opt_design
+
+
+3. Flip-Flop Distribution
+-------------------------
+
++--------------+-----------------------+------------------------+-----------------+--------------+
+| Clock Enable | Synchronous Set/Reset | Asynchronous Set/Reset | Total Registers | Total Slices |
++--------------+-----------------------+------------------------+-----------------+--------------+
+| No           | No                    | No                     |             393 |          160 |
+| No           | No                    | Yes                    |               0 |            0 |
+| No           | Yes                   | No                     |             289 |          107 |
+| Yes          | No                    | No                     |            2048 |          913 |
+| Yes          | No                    | Yes                    |               0 |            0 |
+| Yes          | Yes                   | No                     |             551 |          185 |
++--------------+-----------------------+------------------------+-----------------+--------------+
+
+
+4. Detailed Control Set Information
+-----------------------------------
+
++--------------------------------------------------------------------+---------------------------------------------------------------------+------------------+------------------+----------------+
+|                            Clock Signal                            |                            Enable Signal                            | Set/Reset Signal | Slice Load Count | Bel Load Count |
++--------------------------------------------------------------------+---------------------------------------------------------------------+------------------+------------------+----------------+
+|  jay__0/memory_management_unit__0/d_flip_flop__addr/q_reg[31]_1[0] |                                                                     |                  |                1 |              3 |
+|  jay__0/memory_controller__0/d_flip_flop__state/E[0]               |                                                                     |                  |                1 |              3 |
+|  jay__0/central_processing_unit__0/d_flip_flop__ir/E[0]            |                                                                     |                  |                2 |              6 |
+|  clk_100mhz_IBUF_BUFG                                              | jay__0/memory_management_unit__0/d_flip_flop__addr/en__data__0      |                  |                7 |              8 |
+|  clk_100mhz_IBUF_BUFG                                              | jay__0/memory_management_unit__0/d_flip_flop__addr/en__data__3      |                  |                5 |              8 |
+|  clk_100mhz_IBUF_BUFG                                              | jay__0/memory_management_unit__0/d_flip_flop__addr/en__data__1      |                  |                3 |              8 |
+|  clk_100mhz_IBUF_BUFG                                              | jay__0/memory_management_unit__0/d_flip_flop__addr/en__data__2      |                  |                4 |              8 |
+|  clk_100mhz_IBUF_BUFG                                              | jay__0/memory_management_unit__0/d_flip_flop__addr/en__oe__0        | btnc_IBUF        |                3 |              8 |
+|  clk_100mhz_IBUF_BUFG                                              | jay__0/memory_management_unit__0/d_flip_flop__addr/q_reg[0]_1[0]    | btnc_IBUF        |                4 |              8 |
+|  clk_100mhz_IBUF_BUFG                                              | jay__0/memory_management_unit__0/d_flip_flop__addr/q_reg[0]_2[0]    | btnc_IBUF        |                1 |              8 |
+|  clk_100mhz_IBUF_BUFG                                              | jay__0/memory_management_unit__0/d_flip_flop__addr/q_reg[0]_3[0]    | btnc_IBUF        |                2 |              8 |
+|  clk_100mhz_IBUF_BUFG                                              | jay__0/bus__0/decoder/E[0]                                          | btnc_IBUF        |               16 |             32 |
+|  clk_100mhz_IBUF_BUFG                                              | jay__0/central_processing_unit__0/d_flip_flop__state/q_reg[1]_rep_1 |                  |               15 |             32 |
+|  cpu_to_mmu__cs                                                    |                                                                     |                  |               15 |             38 |
+|  clk_100mhz_IBUF_BUFG                                              | jay__0/central_processing_unit__0/d_flip_flop__state/q_reg[6]_3[0]  | btnc_IBUF        |               27 |             62 |
+|  clk_100mhz_IBUF_BUFG                                              | jay__0/central_processing_unit__0/d_flip_flop__ir/en__x__7          |                  |               38 |             64 |
+|  clk_100mhz_IBUF_BUFG                                              | jay__0/central_processing_unit__0/d_flip_flop__ir/en__x__28         |                  |               25 |             64 |
+|  clk_100mhz_IBUF_BUFG                                              | jay__0/central_processing_unit__0/d_flip_flop__ir/en__x__6          |                  |               33 |             64 |
+|  clk_100mhz_IBUF_BUFG                                              | jay__0/central_processing_unit__0/d_flip_flop__ir/en__x__5          |                  |               32 |             64 |
+|  clk_100mhz_IBUF_BUFG                                              | jay__0/central_processing_unit__0/d_flip_flop__ir/en__x__8          |                  |               29 |             64 |
+|  clk_100mhz_IBUF_BUFG                                              | jay__0/central_processing_unit__0/d_flip_flop__ir/en__x__4          |                  |               26 |             64 |
+|  clk_100mhz_IBUF_BUFG                                              | jay__0/central_processing_unit__0/d_flip_flop__ir/en__x__30         |                  |               30 |             64 |
+|  clk_100mhz_IBUF_BUFG                                              | jay__0/central_processing_unit__0/d_flip_flop__ir/en__x__3          |                  |               19 |             64 |
+|  clk_100mhz_IBUF_BUFG                                              | jay__0/central_processing_unit__0/d_flip_flop__ir/en__x__29         |                  |               26 |             64 |
+|  clk_100mhz_IBUF_BUFG                                              | jay__0/memory_management_unit__0/d_flip_flop__we/q_reg[0]_0[0]      | btnc_IBUF        |               16 |             64 |
+|  clk_100mhz_IBUF_BUFG                                              | jay__0/central_processing_unit__0/d_flip_flop__ir/en__x__9          |                  |               38 |             64 |
+|  clk_100mhz_IBUF_BUFG                                              | jay__0/central_processing_unit__0/d_flip_flop__ir/q_reg[20]_3       |                  |               28 |             64 |
+|  clk_100mhz_IBUF_BUFG                                              | jay__0/central_processing_unit__0/d_flip_flop__ir/q_reg[20]_4       |                  |               27 |             64 |
+|  clk_100mhz_IBUF_BUFG                                              | jay__0/central_processing_unit__0/d_flip_flop__ir/q_reg[21]_3       |                  |               28 |             64 |
+|  clk_100mhz_IBUF_BUFG                                              | jay__0/central_processing_unit__0/d_flip_flop__ir/q_reg[21]_4       |                  |               24 |             64 |
+|  clk_100mhz_IBUF_BUFG                                              | jay__0/central_processing_unit__0/d_flip_flop__ir/q_reg[6]_0        |                  |               35 |             64 |
+|  clk_100mhz_IBUF_BUFG                                              | jay__0/central_processing_unit__0/d_flip_flop__ir/q_reg[6]_1        |                  |               29 |             64 |
+|  clk_100mhz_IBUF_BUFG                                              | jay__0/central_processing_unit__0/d_flip_flop__ir/q_reg[6]_2        |                  |               24 |             64 |
+|  n_1_1094_BUFG                                                     |                                                                     |                  |               33 |             64 |
+|  n_2_3014_BUFG                                                     |                                                                     |                  |               38 |             64 |
+|  clk_100mhz_IBUF_BUFG                                              | jay__0/central_processing_unit__0/d_flip_flop__ir/en__x__26         |                  |               30 |             64 |
+|  clk_100mhz_IBUF_BUFG                                              | jay__0/memory_management_unit__0/en__b                              | btnc_IBUF        |               29 |             64 |
+|  clk_100mhz_IBUF_BUFG                                              | jay__0/central_processing_unit__0/d_flip_flop__state/E[0]           | btnc_IBUF        |               20 |             64 |
+|  clk_100mhz_IBUF_BUFG                                              | jay__0/central_processing_unit__0/d_flip_flop__state/q_reg[26]_0[0] | btnc_IBUF        |               14 |             64 |
+|  clk_100mhz_IBUF_BUFG                                              | jay__0/central_processing_unit__0/d_flip_flop__state/q_reg[6]_7[0]  | btnc_IBUF        |               19 |             64 |
+|  clk_100mhz_IBUF_BUFG                                              | jay__0/central_processing_unit__0/d_flip_flop__ir/en__x__1          |                  |               29 |             64 |
+|  clk_100mhz_IBUF_BUFG                                              | jay__0/central_processing_unit__0/d_flip_flop__ir/en__x__10         |                  |               25 |             64 |
+|  clk_100mhz_IBUF_BUFG                                              | jay__0/central_processing_unit__0/d_flip_flop__ir/en__x__11         |                  |               25 |             64 |
+|  clk_100mhz_IBUF_BUFG                                              | jay__0/central_processing_unit__0/d_flip_flop__ir/en__x__12         |                  |               26 |             64 |
+|  clk_100mhz_IBUF_BUFG                                              | jay__0/central_processing_unit__0/d_flip_flop__ir/en__x__13         |                  |               25 |             64 |
+|  clk_100mhz_IBUF_BUFG                                              | jay__0/central_processing_unit__0/d_flip_flop__ir/en__x__18         |                  |               28 |             64 |
+|  clk_100mhz_IBUF_BUFG                                              | jay__0/central_processing_unit__0/d_flip_flop__ir/en__x__15         |                  |               29 |             64 |
+|  clk_100mhz_IBUF_BUFG                                              | jay__0/central_processing_unit__0/d_flip_flop__ir/en__x__16         |                  |               28 |             64 |
+|  clk_100mhz_IBUF_BUFG                                              | jay__0/central_processing_unit__0/d_flip_flop__ir/en__x__20         |                  |               24 |             64 |
+|  clk_100mhz_IBUF_BUFG                                              | jay__0/central_processing_unit__0/d_flip_flop__ir/en__x__22         |                  |               28 |             64 |
+|  clk_100mhz_IBUF_BUFG                                              | jay__0/central_processing_unit__0/d_flip_flop__ir/en__x__23         |                  |               36 |             64 |
+|  clk_100mhz_IBUF_BUFG                                              | jay__0/central_processing_unit__0/d_flip_flop__ir/en__x__24         |                  |               27 |             64 |
+|  clk_100mhz_IBUF_BUFG                                              | jay__0/central_processing_unit__0/d_flip_flop__ir/en__x__27         |                  |               28 |             64 |
+|  n_0_3771_BUFG                                                     |                                                                     |                  |               22 |             72 |
+|  clk_100mhz_IBUF_BUFG                                              | jay__0/memory_management_unit__0/en__a                              | btnc_IBUF        |               34 |            105 |
+|  clk_100mhz_IBUF_BUFG                                              |                                                                     |                  |               48 |            143 |
+|  clk_100mhz_IBUF_BUFG                                              |                                                                     | btnc_IBUF        |              107 |            289 |
++--------------------------------------------------------------------+---------------------------------------------------------------------+------------------+------------------+----------------+
+
+

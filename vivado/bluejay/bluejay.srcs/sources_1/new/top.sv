@@ -7055,7 +7055,7 @@ begin
         begin
             ena = 1'b1;
             ready = 1'b1;
-            rd_data = (douta >> addr[2:0]); 
+            rd_data = (douta >> {addr[2:0],3'b000}); 
             state__n = STATE__IDLE; 
         end
     endcase
@@ -7903,35 +7903,35 @@ begin
     casez (addr)
         40'b0000_0000_1000__????_????_????_????_????_????_????:
         begin
-            sel = 2'h0; 
+            sel = 3'h0; 
         end
         40'b0000_0000_1001__????_????_????_????_????_????_????:
         begin
-            sel = 2'h1; 
+            sel = 3'h1; 
         end
         40'b0000_0000_1010__????_????_????_????_????_????_????:
         begin
-            sel = 2'h2; 
+            sel = 3'h2; 
         end
         40'b0000_0000_1011__????_????_????_????_????_????_????:
         begin
-            sel = 2'h3; 
+            sel = 3'h3; 
         end
         40'b0000_0000_1100__????_????_????_????_????_????_????:
         begin
-            sel = 2'h4; 
+            sel = 3'h4; 
         end
         40'b0000_0000_1101__????_????_????_????_????_????_????:
         begin
-            sel = 2'h5; 
+            sel = 3'h5; 
         end
         40'b0000_0000_1110__????_????_????_????_????_????_????:
         begin
-            sel = 2'h6; 
+            sel = 3'h6; 
         end
         40'b0000_0000_1111__????_????_????_????_????_????_????:
         begin
-            sel = 2'h7; 
+            sel = 3'h7; 
         end
     endcase
 end
@@ -8095,56 +8095,56 @@ begin
     cs__7 = 1'b0; 
 
     case (sel)
-        2'h0:
+        3'h0:
         begin
             cs__0 = cs;
             ready = ready__0;
             resp = resp__0;
             rd_data = rd_data__0;
         end
-        2'h1:
+        3'h1:
         begin
             cs__1 = cs;
             ready = ready__1;
             resp = resp__1;
             rd_data = rd_data__1;
         end
-        2'h2:
+        3'h2:
         begin
             cs__2 = cs;
             ready = ready__2;
             resp = resp__2;
             rd_data = rd_data__2;
         end
-        2'h3:
+        3'h3:
         begin
             cs__3 = cs;
             ready = ready__3;
             resp = resp__3;
             rd_data = rd_data__3;
         end
-        2'h4:
+        3'h4:
         begin
             cs__4 = cs;
             ready = ready__4;
             resp = resp__4;
             rd_data = rd_data__4;
         end
-        2'h5:
+        3'h5:
         begin
             cs__5 = cs;
             ready = ready__5;
             resp = resp__5;
             rd_data = rd_data__5;
         end
-        2'h6:
+        3'h6:
         begin
             cs__6 = cs;
             ready = ready__6;
             resp = resp__6;
             rd_data = rd_data__6;
         end
-        2'h7:
+        3'h7:
         begin
             cs__7 = cs;
             ready = ready__7;
@@ -8572,7 +8572,7 @@ input btnl;
 input btnr;
 input btnd;
 output [15:0] led;
-output led16_b;
+inout led16_b;
 output led16_g;
 output led16_r;
 output led17_b;
@@ -8595,7 +8595,7 @@ logic btnl;
 logic btnr;
 logic btnd;
 logic [15:0] led;
-logic led16_b;
+//logic led16_b;
 logic led16_g;
 logic led16_r;
 logic led17_b;
@@ -8632,6 +8632,23 @@ logic [63:0] douta;
 assign clk = clk_100mhz;
 assign rst = btnc;
 assign led16_b = port__0[0];
+
+assign led = 0;
+//assign led16_b = 0;
+assign led16_g = 0;
+assign led16_r = 0;
+assign led17_b = 0;
+assign led17_g = 0;
+assign led17_r = 0;
+assign an = 8'hff;
+assign ca = 0; 
+assign cb = 0; 
+assign cc = 0; 
+assign cd = 0; 
+assign ce = 0; 
+assign cf = 0; 
+assign cg = 0;
+
 
 
 //==============================
@@ -8686,7 +8703,8 @@ logic btnl;
 logic btnr;
 logic btnd;
 logic [15:0] led;
-logic led16_b;
+//logic led16_b;
+wire led16_b;
 logic led16_g;
 logic led16_r;
 logic led17_b;

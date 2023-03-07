@@ -751,7 +751,10 @@ $(TOP)/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv: $(SV)
 	$(RM) $(@) 
 	cat $(^) >> $(@)
 
+#$(TOP)/vivado/coe/main.mem: $(TOP)/vivado/coe/main.elf
 
+
+#$(eval $(call compile-target,$(TOP)/vivado/coe/main.s,$(TOP)/vivado/coe/main.elf))
 
 
 .PHONY: clean
