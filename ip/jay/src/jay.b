@@ -44,39 +44,29 @@ logic [11:0] addra;
 logic [63:0] dina;
 logic [63:0] douta;
 
-
-logic cpu_to_mmu__cs;
-logic cpu_to_mmu__we;
-logic [63:0] cpu_to_mmu__addr;
-logic [1:0] cpu_to_mmu__size;
-logic [63:0] cpu_to_mmu__wr_data;
-logic cpu_to_mmu__ready;
-logic cpu_to_mmu__resp;
-logic [63:0] cpu_to_mmu__rd_data;
-
 logic irq__0;
 logic irq__1;
 logic context__0__eip;
 
 logic tip;
 
-logic [7:0] pmar__0;
-logic [7:0] pmar__1;
-logic [7:0] pmar__2;
-logic [7:0] pmar__3;
-logic [7:0] pmar__4;
-logic [7:0] pmar__5;
-logic [7:0] pmar__6;
-logic [7:0] pmar__7;
+logic [7:0] pma__0;
+logic [7:0] pma__1;
+logic [7:0] pma__2;
+logic [7:0] pma__3;
+logic [7:0] pma__4;
+logic [7:0] pma__5;
+logic [7:0] pma__6;
+logic [7:0] pma__7;
 
-logic mmu_to_bus__cs;
-logic mmu_to_bus__we;
-logic [39:0] mmu_to_bus__addr;
-logic [1:0] mmu_to_bus__size;
-logic [63:0] mmu_to_bus__wr_data;
-logic mmu_to_bus__ready;
-logic mmu_to_bus__resp;
-logic [63:0] mmu_to_bus__rd_data;
+logic cs;
+logic we;
+logic [39:0] addr;
+logic [1:0] size;
+logic [63:0] wr_data;
+logic ready;
+logic resp;
+logic [63:0] rd_data;
 
 logic cs__0;
 logic we__0;
@@ -157,50 +147,18 @@ central_processing_unit central_processing_unit__0
 (
     .clk(clk),
     .rst(rst),
-    .cs(cpu_to_mmu__cs),
-    .we(cpu_to_mmu__we),
-    .addr(cpu_to_mmu__addr),
-    .size(cpu_to_mmu__size),
-    .wr_data(cpu_to_mmu__wr_data),
-    .ready(cpu_to_mmu__ready),
-    .resp(cpu_to_mmu__resp),
-    .rd_data(cpu_to_mmu__rd_data),
+    .cs(cs),
+    .we(we),
+    .addr(addr),
+    .size(size),
+    .wr_data(wr_data),
+    .ready(ready),
+    .resp(resp),
+    .rd_data(rd_data),
     .eip(context__0__eip),
     .tip(tip)
 );
 
-//==============================
-// memory_management_unit
-//==============================
-memory_management_unit memory_management_unit__0
-(
-    .clk(clk),
-    .rst(rst),
-    .cpu_to_mmu__cs(cpu_to_mmu__cs),
-    .cpu_to_mmu__we(cpu_to_mmu__we),
-    .cpu_to_mmu__addr(cpu_to_mmu__addr),
-    .cpu_to_mmu__size(cpu_to_mmu__size),
-    .cpu_to_mmu__wr_data(cpu_to_mmu__wr_data),
-    .cpu_to_mmu__ready(cpu_to_mmu__ready),
-    .cpu_to_mmu__resp(cpu_to_mmu__resp),
-    .cpu_to_mmu__rd_data(cpu_to_mmu__rd_data),
-    .mmu_to_bus__cs(mmu_to_bus__cs),
-    .mmu_to_bus__we(mmu_to_bus__we),
-    .mmu_to_bus__addr(mmu_to_bus__addr),
-    .mmu_to_bus__size(mmu_to_bus__size),
-    .mmu_to_bus__wr_data(mmu_to_bus__wr_data),
-    .mmu_to_bus__ready(mmu_to_bus__ready),
-    .mmu_to_bus__resp(mmu_to_bus__resp),
-    .mmu_to_bus__rd_data(mmu_to_bus__rd_data),
-    .pmar__0(pmar__0),
-    .pmar__1(pmar__1),
-    .pmar__2(pmar__2),
-    .pmar__3(pmar__3),
-    .pmar__4(pmar__4),
-    .pmar__5(pmar__5),
-    .pmar__6(pmar__6),
-    .pmar__7(pmar__7)
-);
 
 //==============================
 // memory_controller__0
@@ -267,14 +225,14 @@ physical_memory_attribute_registers physical_memory_attribute_registers__0
     .addr(addr__3[2:0]),
     .wr_data(wr_data__3[7:0]),
     .rd_data(rd_data__3[7:0]),
-    .pmar__0(pmar__0),
-    .pmar__1(pmar__1),
-    .pmar__2(pmar__2),
-    .pmar__3(pmar__3),
-    .pmar__4(pmar__4),
-    .pmar__5(pmar__5),
-    .pmar__6(pmar__6),
-    .pmar__7(pmar__7)
+    .pma__0(pma__0),
+    .pma__1(pma__1),
+    .pma__2(pma__2),
+    .pma__3(pma__3),
+    .pma__4(pma__4),
+    .pma__5(pma__5),
+    .pma__6(pma__6),
+    .pma__7(pma__7)
 );
 
 //==============================
@@ -302,21 +260,28 @@ bus bus__0
 (
     .clk(clk),
     .rst(rst),
-    .cs(mmu_to_bus__cs),
-    .we(mmu_to_bus__we),
-    .addr(mmu_to_bus__addr),
-    .size(mmu_to_bus__size),
-    .wr_data(mmu_to_bus__wr_data),
-    .ready(mmu_to_bus__ready),
-    .resp(mmu_to_bus__resp),
-    .rd_data(mmu_to_bus__rd_data),
+    .pma__0(pma__0),
+    .pma__1(pma__1),
+    .pma__2(pma__2),
+    .pma__3(pma__3),
+    .pma__4(pma__4),
+    .pma__5(pma__5),
+    .pma__6(pma__6),
+    .pma__7(pma__7),
+    .cs(cs),
+    .we(we),
+    .addr(addr),
+    .size(size),
+    .wr_data(wr_data),
+    .ready(ready),
+    .resp(resp),
+    .rd_data(rd_data),
     .cs__0(cs__0),
     .we__0(we__0),
     .addr__0(addr__0),
     .size__0(size__0),
     .wr_data__0(wr_data__0),
     .ready__0(ready__0),
-    .resp__0(1'b0),
     .rd_data__0(rd_data__0),
     .cs__1(cs__1),
     .we__1(we__1),
@@ -324,15 +289,6 @@ bus bus__0
     .size__1(size__1),
     .wr_data__1(wr_data__1),
     .ready__1(1'b1),
-    .resp__1(1'b0),
-    .rd_data__1(rd_data__1),
-    .cs__2(cs__2),
-    .we__2(we__2),
-    .addr__2(addr__2),
-    .size__2(size__2),
-    .wr_data__2(wr_data__2),
-    .ready__2(1'b1),
-    .resp__2(1'b0),
     .rd_data__2(rd_data__2),
     .cs__3(cs__3),
     .we__3(we__3),
@@ -340,7 +296,6 @@ bus bus__0
     .size__3(size__3),
     .wr_data__3(wr_data__3),
     .ready__3(1'b1),
-    .resp__3(1'b0),
     .rd_data__3(rd_data__3),
     .cs__4(cs__4),
     .we__4(we__4),
@@ -348,7 +303,6 @@ bus bus__0
     .size__4(size__4),
     .wr_data__4(wr_data__4),
     .ready__4(1'b1),
-    .resp__4(1'b0),
     .rd_data__4(rd_data__4),
     .cs__5(cs__5),
     .we__5(we__5),
@@ -356,7 +310,6 @@ bus bus__0
     .size__5(size__5),
     .wr_data__5(wr_data__5),
     .ready__5(1'b1),
-    .resp__5(1'b0),
     .rd_data__5(rd_data__5),
     .cs__6(cs__6),
     .we__6(we__6),
@@ -364,7 +317,6 @@ bus bus__0
     .size__6(size__6),
     .wr_data__6(wr_data__6),
     .ready__6(1'b1),
-    .resp__6(1'b0),
     .rd_data__6(rd_data__6),
     .cs__7(cs__7),
     .we__7(we__7),
@@ -372,7 +324,6 @@ bus bus__0
     .size__7(size__7),
     .wr_data__7(wr_data__7),
     .ready__7(1'b1),
-    .resp__7(1'b0),
     .rd_data__7(rd_data__7)
 );
 

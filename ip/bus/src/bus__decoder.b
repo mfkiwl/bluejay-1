@@ -11,49 +11,48 @@ module bus__decoder
 
 input clk;
 input rst;
-input [39:0] addr;
+input [63:0] addr;
 output [2:0] sel;
 
 logic clk;
 logic rst;
-logic [39:0] addr;
+logic [63:0] addr;
 logic [2:0] sel;
-
 
 always_comb
 begin
     casez (addr)
         MEMORY_MAPPED_REGION__0:
         begin
-            sel = 2'h0; 
+            sel = 3'h0; 
         end
         MEMORY_MAPPED_REGION__1:
         begin
-            sel = 2'h1; 
+            sel = 3'h1; 
         end
         MEMORY_MAPPED_REGION__2:
         begin
-            sel = 2'h2; 
+            sel = 3'h2; 
         end
         MEMORY_MAPPED_REGION__3:
         begin
-            sel = 2'h3; 
+            sel = 3'h3; 
         end
         MEMORY_MAPPED_REGION__4:
         begin
-            sel = 2'h4; 
+            sel = 3'h4; 
         end
         MEMORY_MAPPED_REGION__5:
         begin
-            sel = 2'h5; 
+            sel = 3'h5; 
         end
         MEMORY_MAPPED_REGION__6:
         begin
-            sel = 2'h6; 
+            sel = 3'h6; 
         end
-        MEMORY_MAPPED_REGION__7:
+        default:
         begin
-            sel = 2'h7; 
+            sel = 3'h7; 
         end
     endcase
 end

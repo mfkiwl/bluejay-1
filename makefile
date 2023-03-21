@@ -88,7 +88,7 @@ endef
 #     $(1): ip name 
 ################################
 define ip--src--system-verilog--template
-$(TOP)/ip/$(1)/src/gen/%.sv: $$(TOP)/ip/$(1)/src/%.b | $(TOP)/ip/$(1)/src/gen
+$(TOP)/ip/$(1)/src/gen/%.sv: $$(TOP)/ip/$(1)/src/%.b $$(TOP)/include/include.txt | $(TOP)/ip/$(1)/src/gen
 	$(PYTHON) $(TOP)/tools/bluejay.py $$(<) $$(@)
 endef
 
@@ -521,21 +521,21 @@ ifeq ($(SIM_IP),$(IP))
 SV += $(addsuffix .sv,$(addprefix $(TOP)/ip/$(IP)/tb/gen/,$(TB_MODULES)))
 endif
 
-##########################
-# memory_management_unit #
-##########################
-IP := memory_management_unit
-
-MODULES :=
-MODULES += memory_management_unit
-
-TB_MODULES :=
-TB_MODULES += tb
-
-SV += $(addsuffix .sv,$(addprefix $(TOP)/ip/$(IP)/src/gen/,$(MODULES)))
-ifeq ($(SIM_IP),$(IP))
-SV += $(addsuffix .sv,$(addprefix $(TOP)/ip/$(IP)/tb/gen/,$(TB_MODULES)))
-endif
+###########################
+## memory_management_unit #
+###########################
+#IP := memory_management_unit
+#
+#MODULES :=
+#MODULES += memory_management_unit
+#
+#TB_MODULES :=
+#TB_MODULES += tb
+#
+#SV += $(addsuffix .sv,$(addprefix $(TOP)/ip/$(IP)/src/gen/,$(MODULES)))
+#ifeq ($(SIM_IP),$(IP))
+#SV += $(addsuffix .sv,$(addprefix $(TOP)/ip/$(IP)/tb/gen/,$(TB_MODULES)))
+#endif
 
 #######
 # bus #
@@ -545,7 +545,10 @@ IP := bus
 MODULES :=
 MODULES += bus
 MODULES += bus__decoder
-MODULES += bus__multiplexor
+MODULES += bus__multiplexer
+MODULES += bus__physical_memory_attribute_multiplexer
+MODULES += bus__physical_memory_attribute_checker
+MODULES += bus__trap
 
 TB_MODULES :=
 TB_MODULES += tb
@@ -689,17 +692,17 @@ $(eval $(call ip--src--template,$(IP)))
 $(eval $(call ip--tb--template,$(IP)))
 $(eval $(call ip--sim--template,$(IP),$(SIM),$(SV),$(TESTS),default--sim-test--diff--template,default--sim-test--sim--template,default--sim-test--ref--template,default--sim-test--setup--template))
 
-##########################
-# memory_management_unit #
-##########################
-IP := memory_management_unit
-
-SIM := sim__xyz
-TESTS := test__0 
-
-$(eval $(call ip--src--template,$(IP)))
-$(eval $(call ip--tb--template,$(IP)))
-$(eval $(call ip--sim--template,$(IP),$(SIM),$(SV),$(TESTS),default--sim-test--diff--template,default--sim-test--sim--template,default--sim-test--ref--template,default--sim-test--setup--template))
+###########################
+## memory_management_unit #
+###########################
+#IP := memory_management_unit
+#
+#SIM := sim__xyz
+#TESTS := test__0 
+#
+#$(eval $(call ip--src--template,$(IP)))
+#$(eval $(call ip--tb--template,$(IP)))
+#$(eval $(call ip--sim--template,$(IP),$(SIM),$(SV),$(TESTS),default--sim-test--diff--template,default--sim-test--sim--template,default--sim-test--ref--template,default--sim-test--setup--template))
 
 
 #######

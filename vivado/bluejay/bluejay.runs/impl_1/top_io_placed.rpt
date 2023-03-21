@@ -1,8 +1,8 @@
 Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 -------------------------------------------------------------------------------------------------
 | Tool Version              : Vivado v.2019.2 (lin64) Build 2708876 Wed Nov  6 21:39:14 MST 2019
-| Date                      : Tue Mar  7 02:57:36 2023
-| Host                      : seankent running 64-bit Ubuntu 22.04.1 LTS
+| Date                      : Tue Mar 21 00:13:00 2023
+| Host                      : seankent running 64-bit Ubuntu 22.04.2 LTS
 | Command                   : report_io -file top_io_placed.rpt
 | Design                    : top
 | Device                    : xc7a100t

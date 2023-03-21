@@ -1,8 +1,8 @@
 Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 -------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2019.2 (lin64) Build 2708876 Wed Nov  6 21:39:14 MST 2019
-| Date             : Tue Mar  7 02:58:04 2023
-| Host             : seankent running 64-bit Ubuntu 22.04.1 LTS
+| Date             : Tue Mar 21 00:13:41 2023
+| Host             : seankent running 64-bit Ubuntu 22.04.2 LTS
 | Command          : report_power -file top_power_routed.rpt -pb top_power_summary_routed.pb -rpx top_power_routed.rpx
 | Design           : top
 | Device           : xc7a100tcsg324-1
@@ -30,14 +30,14 @@ Table of Contents
 ----------
 
 +--------------------------+--------------+
-| Total On-Chip Power (W)  | 0.128        |
+| Total On-Chip Power (W)  | 0.152        |
 | Design Power Budget (W)  | Unspecified* |
 | Power Budget Margin (W)  | NA           |
-| Dynamic (W)              | 0.031        |
+| Dynamic (W)              | 0.055        |
 | Device Static (W)        | 0.098        |
 | Effective TJA (C/W)      | 4.6          |
-| Max Ambient (C)          | 84.4         |
-| Junction Temperature (C) | 25.6         |
+| Max Ambient (C)          | 84.3         |
+| Junction Temperature (C) | 25.7         |
 | Confidence Level         | Medium       |
 | Setting File             | ---          |
 | Simulation Activity File | ---          |
@@ -53,18 +53,18 @@ Table of Contents
 | On-Chip        | Power (W) | Used     | Available | Utilization (%) |
 +----------------+-----------+----------+-----------+-----------------+
 | Clocks         |     0.009 |        3 |       --- |             --- |
-| Slice Logic    |     0.010 |     8159 |       --- |             --- |
-|   LUT as Logic |     0.010 |     3939 |     63400 |            6.21 |
+| Slice Logic    |     0.018 |     7811 |       --- |             --- |
+|   LUT as Logic |     0.017 |     3824 |     63400 |            6.03 |
 |   CARRY4       |    <0.001 |      130 |     15850 |            0.82 |
-|   Register     |    <0.001 |     3281 |    126800 |            2.59 |
-|   F7/F8 Muxes  |    <0.001 |      304 |     63400 |            0.48 |
-|   BUFG         |    <0.001 |        4 |        32 |           12.50 |
-|   Others       |     0.000 |      105 |       --- |             --- |
-| Signals        |     0.012 |     6856 |       --- |             --- |
+|   Register     |    <0.001 |     2992 |    126800 |            2.36 |
+|   F7/F8 Muxes  |    <0.001 |      412 |     63400 |            0.65 |
+|   BUFG         |    <0.001 |        2 |        32 |            6.25 |
+|   Others       |     0.000 |       99 |       --- |             --- |
+| Signals        |     0.027 |     6420 |       --- |             --- |
 | Block RAM      |     0.000 |        8 |       135 |            5.93 |
 | I/O            |    <0.001 |       39 |       210 |           18.57 |
 | Static Power   |     0.098 |          |           |                 |
-| Total          |     0.128 |          |           |                 |
+| Total          |     0.152 |          |           |                 |
 +----------------+-----------+----------+-----------+-----------------+
 
 
@@ -74,7 +74,7 @@ Table of Contents
 +-----------+-------------+-----------+-------------+------------+
 | Source    | Voltage (V) | Total (A) | Dynamic (A) | Static (A) |
 +-----------+-------------+-----------+-------------+------------+
-| Vccint    |       1.000 |     0.045 |       0.030 |      0.015 |
+| Vccint    |       1.000 |     0.069 |       0.054 |      0.015 |
 | Vccaux    |       1.800 |     0.018 |       0.000 |      0.018 |
 | Vcco33    |       3.300 |     0.004 |       0.000 |      0.004 |
 | Vcco25    |       2.500 |     0.000 |       0.000 |      0.000 |
@@ -143,14 +143,16 @@ Table of Contents
 +---------------------------------------+-----------+
 | Name                                  | Power (W) |
 +---------------------------------------+-----------+
-| top                                   |     0.031 |
-|   jay__0                              |     0.030 |
-|     central_processing_unit__0        |     0.028 |
-|       control_and_status_registers__0 |     0.001 |
-|       d_flip_flop__a                  |     0.002 |
-|       d_flip_flop__b                  |     0.001 |
-|       d_flip_flop__state              |     0.017 |
-|       register_file__0                |     0.006 |
+| top                                   |     0.055 |
+|   jay__0                              |     0.054 |
+|     central_processing_unit__0        |     0.053 |
+|       arithmetic_logic_unit__0        |     0.001 |
+|       control_and_status_registers__0 |     0.002 |
+|       d_flip_flop__a                  |     0.003 |
+|       d_flip_flop__b                  |     0.003 |
+|       d_flip_flop__ir                 |     0.005 |
+|       d_flip_flop__state              |     0.028 |
+|       register_file__0                |     0.009 |
 +---------------------------------------+-----------+
 
 

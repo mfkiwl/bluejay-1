@@ -4,5 +4,81 @@ Running: /tools/Xilinx/Vivado/2019.2/bin/unwrapped/lnx64.o/xelab -wto 68a6928b8e
 Using 8 slave threads.
 Starting static elaboration
 Pass Through NonSizing Optimizer
+WARNING: [VRFC 10-3091] actual bit length 40 differs from formal bit length 64 for port 'addr' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:8117]
+WARNING: [VRFC 10-3091] actual bit length 40 differs from formal bit length 64 for port 'addr' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:8238]
+WARNING: [VRFC 10-3091] actual bit length 40 differs from formal bit length 64 for port 'addr__0' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:8246]
+WARNING: [VRFC 10-3091] actual bit length 40 differs from formal bit length 64 for port 'addr__1' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:8253]
+WARNING: [VRFC 10-3091] actual bit length 40 differs from formal bit length 64 for port 'addr__3' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:8260]
+WARNING: [VRFC 10-3091] actual bit length 40 differs from formal bit length 64 for port 'addr__4' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:8267]
+WARNING: [VRFC 10-3091] actual bit length 40 differs from formal bit length 64 for port 'addr__5' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:8274]
+WARNING: [VRFC 10-3091] actual bit length 40 differs from formal bit length 64 for port 'addr__6' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:8281]
+WARNING: [VRFC 10-3091] actual bit length 40 differs from formal bit length 64 for port 'addr__7' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:8288]
+WARNING: [VRFC 10-5021] port 'resp__0' is not connected on this instance [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:8224]
 Completed static elaboration
-INFO: [XSIM 43-4323] No Change in HDL. Linking previously generated obj files to create kernel
+Starting simulation data flow analysis
+WARNING: [XSIM 43-4100] "/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/ip/blk_mem_gen_0/sim/blk_mem_gen_0.v" Line 55. Module blk_mem_gen_0 has a timescale but at least one module in design doesn't have timescale.
+WARNING: [XSIM 43-4100] "/wrk/2019.2/continuous/2019_11_06_2708876/packages/customer/vivado/data/ip/xilinx/blk_mem_gen_v8_4/simulation/blk_mem_gen_v8_4.v" Line 3412. Module blk_mem_gen_v8_4_4(C_FAMILY="artix7",C_XDEVICEFAMILY="artix7",C_ELABORATION_DIR="./",C_AXI_TYPE=1,C_MEM_TYPE=0,C_BYTE_SIZE=8,C_PRIM_TYPE=1,C_LOAD_INIT_FILE=1,C_INIT_FILE_NAME="blk_mem_gen_0.mif",C_INIT_FILE="blk_mem_gen_0.mem",C_USE_BYTE_WEA=1,C_WEA_WIDTH=8,C_WRITE_WIDTH_A=64,C_READ_WIDTH_A=64,C_WRITE_DEPTH_A=4096,C_READ_DEPTH_A=4096,C_ADDRA_WIDTH=12,C_INITB_VAL="0",C_HAS_ENB=0,C_USE_BYTE_WEB=1,C_WEB_WIDTH=8,C_WRITE_WIDTH_B=64,C_READ_WIDTH_B=64,C_WRITE_DEPTH_B=4096,C_READ_DEPTH_B=4096,C_ADDRB_WIDTH=12,C_HAS_MEM_OUTPUT_REGS_A=1,C_SIM_COLLISION_CHECK="ALL",C_COMMON_CLK=0,C_COUNT_36K_BRAM="8",C_COUNT_18K_BRAM="0",C_EST_POWER_SUMMARY="Estimated_Power_for_IP_____:_____20.388_mW") has a timescale but at least one module in design doesn't have timescale.
+WARNING: [XSIM 43-4100] "/wrk/2019.2/continuous/2019_11_06_2708876/packages/customer/vivado/data/ip/xilinx/blk_mem_gen_v8_4/simulation/blk_mem_gen_v8_4.v" Line 1951. Module blk_mem_gen_v8_4_4_mem_module(C_FAMILY="artix7",C_XDEVICEFAMILY="artix7",C_MEM_TYPE=0,C_BYTE_SIZE=8,C_PRIM_TYPE=1,C_LOAD_INIT_FILE=1,C_INIT_FILE_NAME="blk_mem_gen_0.mif",C_INIT_FILE="blk_mem_gen_0.mem",C_WEA_WIDTH=8,C_WRITE_WIDTH_A=64,C_READ_WIDTH_A=64,C_WRITE_DEPTH_A=4096,C_READ_DEPTH_A=4096,C_ADDRA_WIDTH=12,C_INITB_VAL="0",C_HAS_ENB=0,C_WEB_WIDTH=8,C_WRITE_WIDTH_B=64,C_READ_WIDTH_B=64,C_WRITE_DEPTH_B=4096,C_READ_DEPTH_B=4096,C_ADDRB_WIDTH=12,C_HAS_MEM_OUTPUT_REGS_A=1,C_SIM_COLLISION_CHECK="ALL",C_COMMON_CLK=0) has a timescale but at least one module in design doesn't have timescale.
+WARNING: [XSIM 43-4100] "/wrk/2019.2/continuous/2019_11_06_2708876/packages/customer/vivado/data/ip/xilinx/blk_mem_gen_v8_4/simulation/blk_mem_gen_v8_4.v" Line 3412. Module blk_mem_gen_v8_4_4 has a timescale but at least one module in design doesn't have timescale.
+WARNING: [XSIM 43-4100] "/wrk/2019.2/continuous/2019_11_06_2708876/packages/customer/vivado/data/ip/xilinx/blk_mem_gen_v8_4/simulation/blk_mem_gen_v8_4.v" Line 3412. Module blk_mem_gen_v8_4_4(C_FAMILY="artix7",C_XDEVICEFAMILY="artix7",C_ELABORATION_DIR="./",C_AXI_TYPE=1,C_MEM_TYPE=0,C_BYTE_SIZE=8,C_PRIM_TYPE=1,C_LOAD_INIT_FILE=1,C_INIT_FILE_NAME="blk_mem_gen_0.mif",C_INIT_FILE="blk_mem_gen_0.mem",C_USE_BYTE_WEA=1,C_WEA_WIDTH=8,C_WRITE_WIDTH_A=64,C_READ_WIDTH_A=64,C_WRITE_DEPTH_A=4096,C_READ_DEPTH_A=4096,C_ADDRA_WIDTH=12,C_INITB_VAL="0",C_HAS_ENB=0,C_USE_BYTE_WEB=1,C_WEB_WIDTH=8,C_WRITE_WIDTH_B=64,C_READ_WIDTH_B=64,C_WRITE_DEPTH_B=4096,C_READ_DEPTH_B=4096,C_ADDRB_WIDTH=12,C_HAS_MEM_OUTPUT_REGS_A=1,C_SIM_COLLISION_CHECK="ALL",C_COMMON_CLK=0,C_COUNT_36K_BRAM="8",C_COUNT_18K_BRAM="0",C_EST_POWER_SUMMARY="Estimated_Power_for_IP_____:_____20.388_mW") has a timescale but at least one module in design doesn't have timescale.
+WARNING: [XSIM 43-4100] "/wrk/2019.2/continuous/2019_11_06_2708876/packages/customer/vivado/data/ip/xilinx/blk_mem_gen_v8_4/simulation/blk_mem_gen_v8_4.v" Line 3412. Module blk_mem_gen_v8_4_4 has a timescale but at least one module in design doesn't have timescale.
+WARNING: [XSIM 43-4100] "/wrk/2019.2/continuous/2019_11_06_2708876/packages/customer/vivado/data/ip/xilinx/blk_mem_gen_v8_4/simulation/blk_mem_gen_v8_4.v" Line 3412. Module blk_mem_gen_v8_4_4(C_FAMILY="artix7",C_XDEVICEFAMILY="artix7",C_ELABORATION_DIR="./",C_AXI_TYPE=1,C_MEM_TYPE=0,C_BYTE_SIZE=8,C_PRIM_TYPE=1,C_LOAD_INIT_FILE=1,C_INIT_FILE_NAME="blk_mem_gen_0.mif",C_INIT_FILE="blk_mem_gen_0.mem",C_USE_BYTE_WEA=1,C_WEA_WIDTH=8,C_WRITE_WIDTH_A=64,C_READ_WIDTH_A=64,C_WRITE_DEPTH_A=4096,C_READ_DEPTH_A=4096,C_ADDRA_WIDTH=12,C_INITB_VAL="0",C_HAS_ENB=0,C_USE_BYTE_WEB=1,C_WEB_WIDTH=8,C_WRITE_WIDTH_B=64,C_READ_WIDTH_B=64,C_WRITE_DEPTH_B=4096,C_READ_DEPTH_B=4096,C_ADDRB_WIDTH=12,C_HAS_MEM_OUTPUT_REGS_A=1,C_SIM_COLLISION_CHECK="ALL",C_COMMON_CLK=0,C_COUNT_36K_BRAM="8",C_COUNT_18K_BRAM="0",C_EST_POWER_SUMMARY="Estimated_Power_for_IP_____:_____20.388_mW") has a timescale but at least one module in design doesn't have timescale.
+WARNING: [XSIM 43-4100] "/wrk/2019.2/continuous/2019_11_06_2708876/packages/customer/vivado/data/ip/xilinx/blk_mem_gen_v8_4/simulation/blk_mem_gen_v8_4.v" Line 3412. Module blk_mem_gen_v8_4_4 has a timescale but at least one module in design doesn't have timescale.
+WARNING: [XSIM 43-4100] "/wrk/2019.2/continuous/2019_11_06_2708876/packages/customer/vivado/data/ip/xilinx/blk_mem_gen_v8_4/simulation/blk_mem_gen_v8_4.v" Line 3412. Module blk_mem_gen_v8_4_4(C_FAMILY="artix7",C_XDEVICEFAMILY="artix7",C_ELABORATION_DIR="./",C_AXI_TYPE=1,C_MEM_TYPE=0,C_BYTE_SIZE=8,C_PRIM_TYPE=1,C_LOAD_INIT_FILE=1,C_INIT_FILE_NAME="blk_mem_gen_0.mif",C_INIT_FILE="blk_mem_gen_0.mem",C_USE_BYTE_WEA=1,C_WEA_WIDTH=8,C_WRITE_WIDTH_A=64,C_READ_WIDTH_A=64,C_WRITE_DEPTH_A=4096,C_READ_DEPTH_A=4096,C_ADDRA_WIDTH=12,C_INITB_VAL="0",C_HAS_ENB=0,C_USE_BYTE_WEB=1,C_WEB_WIDTH=8,C_WRITE_WIDTH_B=64,C_READ_WIDTH_B=64,C_WRITE_DEPTH_B=4096,C_READ_DEPTH_B=4096,C_ADDRB_WIDTH=12,C_HAS_MEM_OUTPUT_REGS_A=1,C_SIM_COLLISION_CHECK="ALL",C_COMMON_CLK=0,C_COUNT_36K_BRAM="8",C_COUNT_18K_BRAM="0",C_EST_POWER_SUMMARY="Estimated_Power_for_IP_____:_____20.388_mW") has a timescale but at least one module in design doesn't have timescale.
+WARNING: [XSIM 43-4100] "/wrk/2019.2/continuous/2019_11_06_2708876/packages/customer/vivado/data/ip/xilinx/blk_mem_gen_v8_4/simulation/blk_mem_gen_v8_4.v" Line 3412. Module blk_mem_gen_v8_4_4 has a timescale but at least one module in design doesn't have timescale.
+WARNING: [XSIM 43-4100] "/wrk/2019.2/continuous/2019_11_06_2708876/packages/customer/vivado/data/ip/xilinx/blk_mem_gen_v8_4/simulation/blk_mem_gen_v8_4.v" Line 3412. Module blk_mem_gen_v8_4_4(C_FAMILY="artix7",C_XDEVICEFAMILY="artix7",C_ELABORATION_DIR="./",C_AXI_TYPE=1,C_MEM_TYPE=0,C_BYTE_SIZE=8,C_PRIM_TYPE=1,C_LOAD_INIT_FILE=1,C_INIT_FILE_NAME="blk_mem_gen_0.mif",C_INIT_FILE="blk_mem_gen_0.mem",C_USE_BYTE_WEA=1,C_WEA_WIDTH=8,C_WRITE_WIDTH_A=64,C_READ_WIDTH_A=64,C_WRITE_DEPTH_A=4096,C_READ_DEPTH_A=4096,C_ADDRA_WIDTH=12,C_INITB_VAL="0",C_HAS_ENB=0,C_USE_BYTE_WEB=1,C_WEB_WIDTH=8,C_WRITE_WIDTH_B=64,C_READ_WIDTH_B=64,C_WRITE_DEPTH_B=4096,C_READ_DEPTH_B=4096,C_ADDRB_WIDTH=12,C_HAS_MEM_OUTPUT_REGS_A=1,C_SIM_COLLISION_CHECK="ALL",C_COMMON_CLK=0,C_COUNT_36K_BRAM="8",C_COUNT_18K_BRAM="0",C_EST_POWER_SUMMARY="Estimated_Power_for_IP_____:_____20.388_mW") has a timescale but at least one module in design doesn't have timescale.
+WARNING: [XSIM 43-4100] "/wrk/2019.2/continuous/2019_11_06_2708876/packages/customer/vivado/data/ip/xilinx/blk_mem_gen_v8_4/simulation/blk_mem_gen_v8_4.v" Line 3412. Module blk_mem_gen_v8_4_4 has a timescale but at least one module in design doesn't have timescale.
+WARNING: [XSIM 43-4100] "/wrk/2019.2/continuous/2019_11_06_2708876/packages/customer/vivado/data/ip/xilinx/blk_mem_gen_v8_4/simulation/blk_mem_gen_v8_4.v" Line 3412. Module blk_mem_gen_v8_4_4(C_FAMILY="artix7",C_XDEVICEFAMILY="artix7",C_ELABORATION_DIR="./",C_AXI_TYPE=1,C_MEM_TYPE=0,C_BYTE_SIZE=8,C_PRIM_TYPE=1,C_LOAD_INIT_FILE=1,C_INIT_FILE_NAME="blk_mem_gen_0.mif",C_INIT_FILE="blk_mem_gen_0.mem",C_USE_BYTE_WEA=1,C_WEA_WIDTH=8,C_WRITE_WIDTH_A=64,C_READ_WIDTH_A=64,C_WRITE_DEPTH_A=4096,C_READ_DEPTH_A=4096,C_ADDRA_WIDTH=12,C_INITB_VAL="0",C_HAS_ENB=0,C_USE_BYTE_WEB=1,C_WEB_WIDTH=8,C_WRITE_WIDTH_B=64,C_READ_WIDTH_B=64,C_WRITE_DEPTH_B=4096,C_READ_DEPTH_B=4096,C_ADDRB_WIDTH=12,C_HAS_MEM_OUTPUT_REGS_A=1,C_SIM_COLLISION_CHECK="ALL",C_COMMON_CLK=0,C_COUNT_36K_BRAM="8",C_COUNT_18K_BRAM="0",C_EST_POWER_SUMMARY="Estimated_Power_for_IP_____:_____20.388_mW") has a timescale but at least one module in design doesn't have timescale.
+WARNING: [XSIM 43-4100] "/wrk/2019.2/continuous/2019_11_06_2708876/packages/customer/vivado/data/ip/xilinx/blk_mem_gen_v8_4/simulation/blk_mem_gen_v8_4.v" Line 3412. Module blk_mem_gen_v8_4_4 has a timescale but at least one module in design doesn't have timescale.
+WARNING: [XSIM 43-4100] "/wrk/2019.2/continuous/2019_11_06_2708876/packages/customer/vivado/data/ip/xilinx/blk_mem_gen_v8_4/simulation/blk_mem_gen_v8_4.v" Line 3412. Module blk_mem_gen_v8_4_4(C_FAMILY="artix7",C_XDEVICEFAMILY="artix7",C_ELABORATION_DIR="./",C_AXI_TYPE=1,C_MEM_TYPE=0,C_BYTE_SIZE=8,C_PRIM_TYPE=1,C_LOAD_INIT_FILE=1,C_INIT_FILE_NAME="blk_mem_gen_0.mif",C_INIT_FILE="blk_mem_gen_0.mem",C_USE_BYTE_WEA=1,C_WEA_WIDTH=8,C_WRITE_WIDTH_A=64,C_READ_WIDTH_A=64,C_WRITE_DEPTH_A=4096,C_READ_DEPTH_A=4096,C_ADDRA_WIDTH=12,C_INITB_VAL="0",C_HAS_ENB=0,C_USE_BYTE_WEB=1,C_WEB_WIDTH=8,C_WRITE_WIDTH_B=64,C_READ_WIDTH_B=64,C_WRITE_DEPTH_B=4096,C_READ_DEPTH_B=4096,C_ADDRB_WIDTH=12,C_HAS_MEM_OUTPUT_REGS_A=1,C_SIM_COLLISION_CHECK="ALL",C_COMMON_CLK=0,C_COUNT_36K_BRAM="8",C_COUNT_18K_BRAM="0",C_EST_POWER_SUMMARY="Estimated_Power_for_IP_____:_____20.388_mW") has a timescale but at least one module in design doesn't have timescale.
+WARNING: [XSIM 43-4100] "/wrk/2019.2/continuous/2019_11_06_2708876/packages/customer/vivado/data/ip/xilinx/blk_mem_gen_v8_4/simulation/blk_mem_gen_v8_4.v" Line 1563. Module blk_mem_gen_v8_4_4_output_stage(C_FAMILY="artix7",C_XDEVICEFAMILY="artix7",C_DATA_WIDTH=64,C_ADDRB_WIDTH=12,C_HAS_MEM_OUTPUT_REGS=1) has a timescale but at least one module in design doesn't have timescale.
+WARNING: [XSIM 43-4100] "/wrk/2019.2/continuous/2019_11_06_2708876/packages/customer/vivado/data/ip/xilinx/blk_mem_gen_v8_4/simulation/blk_mem_gen_v8_4.v" Line 1563. Module blk_mem_gen_v8_4_4_output_stage(C_FAMILY="artix7",C_XDEVICEFAMILY="artix7",C_DATA_WIDTH=64,C_ADDRB_WIDTH=12,NUM_STAGES=0) has a timescale but at least one module in design doesn't have timescale.
+WARNING: [XSIM 43-4100] "/wrk/2019.2/continuous/2019_11_06_2708876/packages/customer/vivado/data/ip/xilinx/blk_mem_gen_v8_4/simulation/blk_mem_gen_v8_4.v" Line 1859. Module blk_mem_gen_v8_4_4_softecc_output_reg_stage(C_DATA_WIDTH=64,C_ADDRB_WIDTH=12) has a timescale but at least one module in design doesn't have timescale.
+WARNING: [XSIM 43-4100] "/home/seankent/bluejay/vivado/bluejay/bluejay.sim/sim_1/behav/xsim/glbl.v" Line 6. Module glbl has a timescale but at least one module in design doesn't have timescale.
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling module xil_defaultlib.decoder
+Compiling module xil_defaultlib.d_flip_flop(WIDTH=64)
+Compiling module xil_defaultlib.register_file
+Compiling module xil_defaultlib.arithmetic_logic_unit
+Compiling module xil_defaultlib.comparator
+Compiling module xil_defaultlib.d_flip_flop(RESET_VALUE=1'b0)
+Compiling module xil_defaultlib.d_flip_flop(WIDTH=62,RESET_VALUE...
+Compiling module xil_defaultlib.d_flip_flop
+Compiling module xil_defaultlib.d_flip_flop(WIDTH=64,RESET_VALUE...
+Compiling module xil_defaultlib.d_flip_flop(WIDTH=63,RESET_VALUE...
+Compiling module xil_defaultlib.control_and_status_registers
+Compiling module xil_defaultlib.d_flip_flop(WIDTH=8,RESET_VALUE=...
+Compiling module xil_defaultlib.d_flip_flop(WIDTH=64,RESET_VALUE...
+Compiling module xil_defaultlib.d_flip_flop(WIDTH=32)
+Compiling module xil_defaultlib.central_processing_unit
+Compiling module xil_defaultlib.d_flip_flop(WIDTH=3,RESET_VALUE=...
+Compiling module xil_defaultlib.memory_controller
+Compiling module xil_defaultlib.sr_flip_flop
+Compiling module xil_defaultlib.platform_level_interrupt_control...
+Compiling module xil_defaultlib.d_flip_flop(WIDTH=32,RESET_VALUE...
+Compiling module xil_defaultlib.platform_level_interrupt_control...
+Compiling module xil_defaultlib.d_flip_flop(WIDTH=2,RESET_VALUE=...
+Compiling module xil_defaultlib.platform_level_interrupt_control...
+Compiling module xil_defaultlib.platform_level_interrupt_control...
+Compiling module xil_defaultlib.machine_timer_registers
+Compiling module xil_defaultlib.physical_memory_attribute_regist...
+Compiling module xil_defaultlib.d_flip_flop(WIDTH=8)
+Compiling module xil_defaultlib.general_purpose_input_output
+Compiling module xil_defaultlib.bus__decoder
+Compiling module xil_defaultlib.bus__physical_memory_attribute_m...
+Compiling module xil_defaultlib.bus__physical_memory_attribute_c...
+Compiling module xil_defaultlib.bus__trap
+Compiling module xil_defaultlib.bus__multiplexer
+Compiling module xil_defaultlib.bus
+Compiling module xil_defaultlib.jay
+Compiling module blk_mem_gen_v8_4_4.blk_mem_gen_v8_4_4_output_stage(...
+Compiling module blk_mem_gen_v8_4_4.blk_mem_gen_v8_4_4_output_stage(...
+Compiling module blk_mem_gen_v8_4_4.blk_mem_gen_v8_4_4_softecc_outpu...
+Compiling module blk_mem_gen_v8_4_4.blk_mem_gen_v8_4_4_mem_module(C_...
+Compiling module blk_mem_gen_v8_4_4.blk_mem_gen_v8_4_4(C_FAMILY="art...
+Compiling module xil_defaultlib.blk_mem_gen_0
+Compiling module xil_defaultlib.top
+Compiling module xil_defaultlib.tb
+Compiling module xil_defaultlib.glbl
+Built simulation snapshot tb_behav

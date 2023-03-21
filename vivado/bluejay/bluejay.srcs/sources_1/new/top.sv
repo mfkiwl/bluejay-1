@@ -6407,14 +6407,14 @@ module physical_memory_attribute_registers
     addr,
     wr_data,
     rd_data,
-    pmar__0,
-    pmar__1,
-    pmar__2,
-    pmar__3,
-    pmar__4,
-    pmar__5,
-    pmar__6,
-    pmar__7
+    pma__0,
+    pma__1,
+    pma__2,
+    pma__3,
+    pma__4,
+    pma__5,
+    pma__6,
+    pma__7
 );
 
 
@@ -6425,14 +6425,14 @@ input we;
 input [2:0] addr;
 input [7:0] wr_data;
 output [7:0] rd_data;
-output [7:0] pmar__0;
-output [7:0] pmar__1;
-output [7:0] pmar__2;
-output [7:0] pmar__3;
-output [7:0] pmar__4;
-output [7:0] pmar__5;
-output [7:0] pmar__6;
-output [7:0] pmar__7;
+output [7:0] pma__0;
+output [7:0] pma__1;
+output [7:0] pma__2;
+output [7:0] pma__3;
+output [7:0] pma__4;
+output [7:0] pma__5;
+output [7:0] pma__6;
+output [7:0] pma__7;
 
 logic clk;
 logic rst;
@@ -6441,14 +6441,14 @@ logic we;
 logic [2:0] addr;
 logic [7:0] wr_data;
 logic [7:0] rd_data;
-logic [7:0] pmar__0;
-logic [7:0] pmar__1;
-logic [7:0] pmar__2;
-logic [7:0] pmar__3;
-logic [7:0] pmar__4;
-logic [7:0] pmar__5;
-logic [7:0] pmar__6;
-logic [7:0] pmar__7;
+logic [7:0] pma__0;
+logic [7:0] pma__1;
+logic [7:0] pma__2;
+logic [7:0] pma__3;
+logic [7:0] pma__4;
+logic [7:0] pma__5;
+logic [7:0] pma__6;
+logic [7:0] pma__7;
 
 
 
@@ -6457,35 +6457,35 @@ begin
     case (addr)
         3'h0:
         begin
-            rd_data = pmar__0; 
+            rd_data = pma__0; 
         end
         3'h1:
         begin
-            rd_data = pmar__1; 
+            rd_data = pma__1; 
         end
         3'h2:
         begin
-            rd_data = pmar__2; 
+            rd_data = pma__2; 
         end
         3'h3:
         begin
-            rd_data = pmar__3; 
+            rd_data = pma__3; 
         end
         3'h0:
         begin
-            rd_data = pmar__4; 
+            rd_data = pma__4; 
         end
         3'h1:
         begin
-            rd_data = pmar__5; 
+            rd_data = pma__5; 
         end
         3'h2:
         begin
-            rd_data = pmar__6; 
+            rd_data = pma__6; 
         end
         3'h3:
         begin
-            rd_data = pmar__7; 
+            rd_data = pma__7; 
         end
         default:
         begin
@@ -6502,83 +6502,83 @@ end
 //==============================================
 // Physical Memory Attributes Register 0
 //==============================================
-assign pmar__0[0:0] = 1;
-assign pmar__0[1:1] = 1'b1;
-assign pmar__0[2:2] = 1'b1;
-assign pmar__0[3:3] = 1'b1;
-assign pmar__0[4:4] = 1'b1;
-assign pmar__0[5:5] = 1'b0;
+assign pma__0[0:0] = 1;
+assign pma__0[1:1] = 1'b1;
+assign pma__0[2:2] = 1'b1;
+assign pma__0[3:3] = 1'b1;
+assign pma__0[4:4] = 1'b1;
+assign pma__0[5:5] = 1'b0;
 
 
 //==============================================
 // Physical Memory Attributes Register 1
 //==============================================
-assign pmar__1[0:0] = 0;
-assign pmar__1[1:1] = 1'b0;
-assign pmar__1[2:2] = 1'b0;
-assign pmar__1[3:3] = 1'b1;
-assign pmar__1[4:4] = 1'b0;
-assign pmar__1[5:5] = 1'b0;
+assign pma__1[0:0] = 0;
+assign pma__1[1:1] = 1'b0;
+assign pma__1[2:2] = 1'b0;
+assign pma__1[3:3] = 1'b1;
+assign pma__1[4:4] = 1'b0;
+assign pma__1[5:5] = 1'b0;
 
 //==============================================
 // Physical Memory Attributes Register 2
 //==============================================
-assign pmar__2[0:0] = 0;
-assign pmar__2[1:1] = 1'b0;
-assign pmar__2[2:2] = 1'b0;
-assign pmar__2[3:3] = 1'b0;
-assign pmar__2[4:4] = 1'b1;
-assign pmar__2[5:5] = 1'b0;
+assign pma__2[0:0] = 0;
+assign pma__2[1:1] = 1'b0;
+assign pma__2[2:2] = 1'b0;
+assign pma__2[3:3] = 1'b0;
+assign pma__2[4:4] = 1'b1;
+assign pma__2[5:5] = 1'b0;
 
 //==============================================
 // Physical Memory Attributes Register 3
 //==============================================
-assign pmar__3[0:0] = 0;
-assign pmar__3[1:1] = 1'b1;
-assign pmar__3[2:2] = 1'b0;
-assign pmar__3[3:3] = 1'b0;
-assign pmar__3[4:4] = 1'b0;
-assign pmar__3[5:5] = 1'b0;
+assign pma__3[0:0] = 0;
+assign pma__3[1:1] = 1'b1;
+assign pma__3[2:2] = 1'b0;
+assign pma__3[3:3] = 1'b0;
+assign pma__3[4:4] = 1'b0;
+assign pma__3[5:5] = 1'b0;
 
 //==============================================
 // Physical Memory Attributes Register 4
 //==============================================
-assign pmar__4[0:0] = 0;
-assign pmar__4[1:1] = 1'b1;
-assign pmar__4[2:2] = 1'b0;
-assign pmar__4[3:3] = 1'b0;
-assign pmar__4[4:4] = 1'b0;
-assign pmar__4[5:5] = 1'b0;
+assign pma__4[0:0] = 0;
+assign pma__4[1:1] = 1'b1;
+assign pma__4[2:2] = 1'b0;
+assign pma__4[3:3] = 1'b0;
+assign pma__4[4:4] = 1'b0;
+assign pma__4[5:5] = 1'b0;
 
 //==============================================
 // Physical Memory Attributes Register 5
 //==============================================
-assign pmar__5[0:0] = 0;
-assign pmar__5[1:1] = 1'b0;
-assign pmar__5[2:2] = 1'b0;
-assign pmar__5[3:3] = 1'b0;
-assign pmar__5[4:4] = 1'b0;
-assign pmar__5[5:5] = 1'b0;
+assign pma__5[0:0] = 0;
+assign pma__5[1:1] = 1'b0;
+assign pma__5[2:2] = 1'b0;
+assign pma__5[3:3] = 1'b0;
+assign pma__5[4:4] = 1'b0;
+assign pma__5[5:5] = 1'b0;
 
 //==============================================
 // Physical Memory Attributes Register 6
 //==============================================
-assign pmar__6[0:0] = 0;
-assign pmar__6[1:1] = 1'b0;
-assign pmar__6[2:2] = 1'b0;
-assign pmar__6[3:3] = 1'b0;
-assign pmar__6[4:4] = 1'b0;
-assign pmar__6[5:5] = 1'b0;
+assign pma__6[0:0] = 0;
+assign pma__6[1:1] = 1'b0;
+assign pma__6[2:2] = 1'b0;
+assign pma__6[3:3] = 1'b0;
+assign pma__6[4:4] = 1'b0;
+assign pma__6[5:5] = 1'b0;
 
 //==============================================
 // Physical Memory Attributes Register 7
 //==============================================
-assign pmar__7[0:0] = 0;
-assign pmar__7[1:1] = 1'b0;
-assign pmar__7[2:2] = 1'b0;
-assign pmar__7[3:3] = 1'b0;
-assign pmar__7[4:4] = 1'b0;
-assign pmar__7[5:5] = 1'b0;
+assign pma__7[0:0] = 0;
+assign pma__7[1:1] = 1'b0;
+assign pma__7[2:2] = 1'b0;
+assign pma__7[3:3] = 1'b0;
+assign pma__7[4:4] = 1'b0;
+assign pma__7[5:5] = 1'b0;
 
 endmodule
 //==============================================
@@ -7075,465 +7075,20 @@ d_flip_flop #(.WIDTH(3), .RESET_VALUE(STATE__IDLE)) d_flip_flop__state
 
 endmodule
 //==============================================
-// memory_management_unit 
-//==============================================
-module memory_management_unit
-(
-    clk,
-    rst,
-    cpu_to_mmu__cs,
-    cpu_to_mmu__we,
-    cpu_to_mmu__addr,
-    cpu_to_mmu__size,
-    cpu_to_mmu__wr_data,
-    cpu_to_mmu__ready,
-    cpu_to_mmu__resp,
-    cpu_to_mmu__rd_data,
-    mmu_to_bus__cs,
-    mmu_to_bus__we,
-    mmu_to_bus__addr,
-    mmu_to_bus__size,
-    mmu_to_bus__wr_data,
-    mmu_to_bus__ready,
-    mmu_to_bus__resp,
-    mmu_to_bus__rd_data,
-    pmar__0,
-    pmar__1,
-    pmar__2,
-    pmar__3,
-    pmar__4,
-    pmar__5,
-    pmar__6,
-    pmar__7
-);
-
-input clk;
-input rst;
-
-input cpu_to_mmu__cs;
-input cpu_to_mmu__we;
-input [63:0] cpu_to_mmu__addr;
-input [1:0] cpu_to_mmu__size;
-input [63:0] cpu_to_mmu__wr_data;
-output cpu_to_mmu__ready;
-output cpu_to_mmu__resp;
-output [63:0] cpu_to_mmu__rd_data;
-
-output mmu_to_bus__cs;
-output mmu_to_bus__we;
-output [39:0] mmu_to_bus__addr;
-output [1:0] mmu_to_bus__size;
-output [63:0] mmu_to_bus__wr_data;
-input mmu_to_bus__ready;
-input mmu_to_bus__resp;
-input [63:0] mmu_to_bus__rd_data;
-
-input [7:0] pmar__0;
-input [7:0] pmar__1;
-input [7:0] pmar__2;
-input [7:0] pmar__3;
-input [7:0] pmar__4;
-input [7:0] pmar__5;
-input [7:0] pmar__6;
-input [7:0] pmar__7;
-
-logic clk;
-logic rst;
-
-logic we;
-logic [39:0] addr;
-logic [1:0] size;
-logic [63:0] wr_data;
-logic [63:0] rd_data;
-
-logic cpu_to_mmu__cs;
-logic cpu_to_mmu__we;
-logic [63:0] cpu_to_mmu__addr;
-logic [1:0] cpu_to_mmu__size;
-logic [63:0] cpu_to_mmu__wr_data;
-logic cpu_to_mmu__ready;
-logic cpu_to_mmu__resp;
-logic [63:0] cpu_to_mmu__rd_data;
-
-logic mmu_to_bus__cs;
-logic mmu_to_bus__we;
-logic [39:0] mmu_to_bus__addr;
-logic [1:0] mmu_to_bus__size;
-logic [63:0] mmu_to_bus__wr_data;
-//logic mmu_to_bus__ready;
-//logic mmu_to_bus__resp;
-//logic [63:0] mmu_to_bus__rd_data;
-
-logic [7:0] pmar__0;
-logic [7:0] pmar__1;
-logic [7:0] pmar__2;
-logic [7:0] pmar__3;
-logic [7:0] pmar__4;
-logic [7:0] pmar__5;
-logic [7:0] pmar__6;
-logic [7:0] pmar__7;
-
-logic [7:0] pmar;
-logic [1:0] status;
-
-logic [3:0] state;
-logic [3:0] state__n;
-
-logic en__a;
-logic en__b;
-
-//==============================
-// physical_memory_attribute_checker__0
-//==============================
-physical_memory_attribute_checker physical_memory_attribute_checker__0
-(
-    .clk(clk),
-    .rst(rst),
-    .addr(addr[2:0]), 
-    .size(size),
-    .pmar(pmar),
-    .status(status)
-);
-
-always_comb
-begin
-    casez (addr)
-        40'b0000_0000_1000__????_????_????_????_????_????_????:
-        begin
-            pmar = pmar__0;
-        end
-        40'b0000_0000_1001__????_????_????_????_????_????_????:
-        begin
-            pmar = pmar__1;
-        end
-        40'b0000_0000_1010__????_????_????_????_????_????_????:
-        begin
-            pmar = pmar__2;
-        end
-        40'b0000_0000_1011__????_????_????_????_????_????_????:
-        begin
-            pmar = pmar__3;
-        end
-        40'b0000_0000_1100__????_????_????_????_????_????_????:
-        begin
-            pmar = pmar__4;
-        end
-        40'b0000_0000_1101__????_????_????_????_????_????_????:
-        begin
-            pmar = pmar__5;
-        end
-        40'b0000_0000_1110__????_????_????_????_????_????_????:
-        begin
-            pmar = pmar__6;
-        end
-        40'b0000_0000_1111__????_????_????_????_????_????_????:
-        begin
-            pmar = pmar__7;
-        end
-        default:
-        begin
-            pmar[0:0] = 0;
-            pmar[1:1] = 1'b0;
-            pmar[2:2] = 1'b0;
-            pmar[3:3] = 1'b0;
-            pmar[4:4] = 1'b0;
-            pmar[5:5] = 1'b0;
-        end
-    endcase
-end
-
-assign mmu_to_bus__we = we;
-assign mmu_to_bus__addr = addr;
-assign mmu_to_bus__size = size;
-assign mmu_to_bus__wr_data = wr_data;
-
-localparam STATE__RESET = 4'h0;
-localparam STATE__READY = 4'h1;
-localparam STATE__PMA_CHECK = 4'h2;
-localparam STATE__REQ = 4'h3;
-localparam STATE__RESP = 4'h4;
-localparam STATE__ACCESS_FAULT = 4'h5; 
-localparam STATE__MISALIGNED_ADDRESS = 4'h6; 
-
-
-always_comb
-begin
-    case (state)
-        //==============================
-        // STATE__RESET
-        //==============================
-        STATE__RESET:
-        begin
-            cpu_to_mmu__ready = 1'b0;
-            cpu_to_mmu__resp = 1'b0;
-            cpu_to_mmu__rd_data = rd_data;
-            mmu_to_bus__cs = 1'b0;
-            en__a = 1'b0;
-            en__b = 1'b0;
-            state__n = STATE__READY;
-        end
-
-        //==============================
-        // STATE__READY
-        //==============================
-        STATE__READY:
-        begin
-            cpu_to_mmu__ready = 1'b0;
-            cpu_to_mmu__resp = 1'b0;
-            cpu_to_mmu__rd_data = rd_data;
-            mmu_to_bus__cs = 1'b0;
-            //en__a = 1'b0;
-            en__b = 1'b0;
-            en__a = cpu_to_mmu__cs;
-            state__n = cpu_to_mmu__cs ? STATE__PMA_CHECK : STATE__READY;
-        end
-
-        //==============================
-        // STATE__PMA_CHECK
-        //==============================
-        STATE__PMA_CHECK:
-        begin
-            cpu_to_mmu__ready = 1'b0;
-            cpu_to_mmu__resp = 1'b0;
-            cpu_to_mmu__rd_data = rd_data;
-            mmu_to_bus__cs = 1'b0;
-            en__a = 1'b0;
-            en__b = 1'b0;
-            state__n = (status == 2'h1) ? STATE__ACCESS_FAULT : (status == 2'h2) ? STATE__MISALIGNED_ADDRESS : STATE__REQ;
-        end
-
-        //==============================
-        // STATE__REQ
-        //==============================
-        STATE__REQ:
-        begin
-            cpu_to_mmu__ready = 1'b0;
-            cpu_to_mmu__resp = 1'b0;
-            cpu_to_mmu__rd_data = rd_data;
-            //mmu_to_bus__cs = 1'b0;
-            en__a = 1'b0;
-            //en__b = 1'b0;
-            mmu_to_bus__cs = 1'b1;
-            en__b = mmu_to_bus__ready;
-            state__n = mmu_to_bus__ready ? STATE__RESP : STATE__REQ;
-        end
-            
-        //==============================
-        // STATE__RESP
-        //==============================
-        STATE__RESP:
-        begin
-            //cpu_to_mmu__ready = 1'b0;
-            //cpu_to_mmu__resp = 1'b0;
-            //cpu_to_mmu__rd_data = rd_data;
-            mmu_to_bus__cs = 1'b0;
-            en__a = 1'b0;
-            en__b = 1'b0;
-            cpu_to_mmu__ready = 1'b1;
-            cpu_to_mmu__resp = 1'b0;
-            cpu_to_mmu__rd_data = rd_data;
-            state__n = STATE__READY; 
-        end
-
-        //==============================
-        // STATE__ACCESS_FAULT
-        //==============================
-        STATE__ACCESS_FAULT:
-        begin
-            //cpu_to_mmu__ready = 1'b0;
-            //cpu_to_mmu__resp = 1'b0;
-            //cpu_to_mmu__rd_data = rd_data;
-            mmu_to_bus__cs = 1'b0;
-            en__a = 1'b0;
-            en__b = 1'b0;
-            cpu_to_mmu__ready = 1'b1;
-            cpu_to_mmu__resp = 1'b1;
-            cpu_to_mmu__rd_data = 64'h0;
-            state__n = STATE__READY;
-        end
-
-        //==============================
-        // STATE__MISALIGNED_ADDRESS
-        //==============================
-        STATE__MISALIGNED_ADDRESS:
-        begin
-            //cpu_to_mmu__ready = 1'b0;
-            //cpu_to_mmu__resp = 1'b0;
-            //cpu_to_mmu__rd_data = rd_data;
-            mmu_to_bus__cs = 1'b0;
-            en__a = 1'b0;
-            en__b = 1'b0;
-            cpu_to_mmu__ready = 1'b1;
-            cpu_to_mmu__resp = 1'b1;
-            cpu_to_mmu__rd_data = 64'h1;
-            state__n = STATE__READY;
-        end
-    endcase
-end
-
-
-//always_comb
-//begin
-//    cpu_to_mmu__ready = 1'b0;
-//    cpu_to_mmu__resp = 1'b0;
-//    cpu_to_mmu__rd_data = rd_data;
-//    mmu_to_bus__cs = 1'b0;
-//    en__a = 1'b0;
-//    en__b = 1'b0;
-//        
-//    case (state)
-//        //==============================
-//        // STATE__RESET
-//        //==============================
-//        STATE__RESET:
-//        begin
-//            state__n = STATE__READY;
-//        end
-//
-//        //==============================
-//        // STATE__READY
-//        //==============================
-//        STATE__READY:
-//        begin
-//            en__a = cpu_to_mmu__cs;
-//            state__n = cpu_to_mmu__cs ? STATE__PMA_CHECK : STATE__READY;
-//        end
-//
-//        //==============================
-//        // STATE__PMA_CHECK
-//        //==============================
-//        STATE__PMA_CHECK:
-//        begin
-//            state__n = (status == 2'h1) ? STATE__ACCESS_FAULT : (status == 2'h2) ? STATE__MISALIGNED_ADDRESS : STATE__REQ;
-//        end
-//
-//        //==============================
-//        // STATE__REQ
-//        //==============================
-//        STATE__REQ:
-//        begin
-//            mmu_to_bus__cs = 1'b1;
-//            en__b = mmu_to_bus__ready;
-//            state__n = mmu_to_bus__ready ? STATE__RESP : STATE__REQ;
-//        end
-//            
-//        //==============================
-//        // STATE__RESP
-//        //==============================
-//        STATE__RESP:
-//        begin
-//            cpu_to_mmu__ready = 1'b1;
-//            cpu_to_mmu__resp = 1'b0;
-//            cpu_to_mmu__rd_data = rd_data;
-//            state__n = STATE__READY; 
-//        end
-//
-//        //==============================
-//        // STATE__ACCESS_FAULT
-//        //==============================
-//        STATE__ACCESS_FAULT:
-//        begin
-//            cpu_to_mmu__ready = 1'b1;
-//            cpu_to_mmu__resp = 1'b1;
-//            cpu_to_mmu__rd_data = 64'h0;
-//            state__n = STATE__READY;
-//        end
-//
-//        //==============================
-//        // STATE__MISALIGNED_ADDRESS
-//        //==============================
-//        STATE__MISALIGNED_ADDRESS:
-//        begin
-//            cpu_to_mmu__ready = 1'b1;
-//            cpu_to_mmu__resp = 1'b1;
-//            cpu_to_mmu__rd_data = 64'h1;
-//            state__n = STATE__READY;
-//        end
-//    endcase
-//end
-
-//==============================
-// d_flip_flop__we
-//==============================
-d_flip_flop #(.WIDTH(1)) d_flip_flop__we
-(
-    .clk(clk),
-    .rst(rst),
-    .en(en__a),
-    .d(cpu_to_mmu__we),
-    .q(we)
-);
-
-//==============================
-// d_flip_flop__addr
-//==============================
-d_flip_flop #(.WIDTH(40)) d_flip_flop__addr
-(
-    .clk(clk),
-    .rst(rst),
-    .en(en__a),
-    .d(cpu_to_mmu__addr[39:0]),
-    .q(addr)
-);
-
-//==============================
-// d_flip_flop__size
-//==============================
-d_flip_flop #(.WIDTH(2)) d_flip_flop__size
-(
-    .clk(clk),
-    .rst(rst),
-    .en(en__a),
-    .d(cpu_to_mmu__size),
-    .q(size)
-);
-
-//==============================
-// d_flip_flop__wr_data
-//==============================
-d_flip_flop #(.WIDTH(64)) d_flip_flop__wr_data
-(
-    .clk(clk),
-    .rst(rst),
-    .en(en__a),
-    .d(cpu_to_mmu__wr_data),
-    .q(wr_data)
-);
-
-//==============================
-// d_flip_flop__rd_data
-//==============================
-d_flip_flop #(.WIDTH(64)) d_flip_flop__rd_data
-(
-    .clk(clk),
-    .rst(rst),
-    .en(en__b),
-    .d(mmu_to_bus__rd_data),
-    .q(rd_data)
-);
-
-//==============================
-// d_flip_flop__state
-//==============================
-d_flip_flop #(.WIDTH(4), .RESET_VALUE(STATE__RESET)) d_flip_flop__state
-(
-    .clk(clk),
-    .rst(rst),
-    .en(1'b1),
-    .d(state__n),
-    .q(state)
-);
-
-
-endmodule
-
-//==============================================
 // bus 
 //==============================================
 module bus 
 (
     clk,
     rst,
+    pma__0,
+    pma__1,
+    pma__2,
+    pma__3,
+    pma__4,
+    pma__5,
+    pma__6,
+    pma__7,
     cs,
     we,
     addr,
@@ -7612,9 +7167,18 @@ module bus
 input clk;
 input rst;
 
+input [7:0] pma__0;
+input [7:0] pma__1;
+input [7:0] pma__2;
+input [7:0] pma__3;
+input [7:0] pma__4;
+input [7:0] pma__5;
+input [7:0] pma__6;
+input [7:0] pma__7;
+
 input cs;
 input we;
-input [39:0] addr;
+input [63:0] addr;
 input [1:0] size;
 input [63:0] wr_data;
 output ready;
@@ -7623,7 +7187,7 @@ output [63:0] rd_data;
 
 output cs__0;
 output we__0;
-output [39:0] addr__0;
+output [63:0] addr__0;
 output [1:0] size__0;
 output [63:0] wr_data__0;
 input ready__0;
@@ -7632,7 +7196,7 @@ input [63:0] rd_data__0;
 
 output cs__1;
 output we__1;
-output [39:0] addr__1;
+output [63:0] addr__1;
 output [1:0] size__1;
 output [63:0] wr_data__1;
 input ready__1;
@@ -7641,7 +7205,7 @@ input [63:0] rd_data__1;
 
 output cs__2;
 output we__2;
-output [39:0] addr__2;
+output [63:0] addr__2;
 output [1:0] size__2;
 output [63:0] wr_data__2;
 input ready__2;
@@ -7650,7 +7214,7 @@ input [63:0] rd_data__2;
 
 output cs__3;
 output we__3;
-output [39:0] addr__3;
+output [63:0] addr__3;
 output [1:0] size__3;
 output [63:0] wr_data__3;
 input ready__3;
@@ -7659,7 +7223,7 @@ input [63:0] rd_data__3;
 
 output cs__4;
 output we__4;
-output [39:0] addr__4;
+output [63:0] addr__4;
 output [1:0] size__4;
 output [63:0] wr_data__4;
 input ready__4;
@@ -7668,7 +7232,7 @@ input [63:0] rd_data__4;
 
 output cs__5;
 output we__5;
-output [39:0] addr__5;
+output [63:0] addr__5;
 output [1:0] size__5;
 output [63:0] wr_data__5;
 input ready__5;
@@ -7677,7 +7241,7 @@ input [63:0] rd_data__5;
 
 output cs__6;
 output we__6;
-output [39:0] addr__6;
+output [63:0] addr__6;
 output [1:0] size__6;
 output [63:0] wr_data__6;
 input ready__6;
@@ -7686,7 +7250,7 @@ input [63:0] rd_data__6;
 
 output cs__7;
 output we__7;
-output [39:0] addr__7;
+output [63:0] addr__7;
 output [1:0] size__7;
 output [63:0] wr_data__7;
 input ready__7;
@@ -7701,7 +7265,7 @@ logic [2:0] sel;
 
 logic cs;
 logic we;
-logic [39:0] addr;
+logic [63:0] addr;
 logic [1:0] size;
 logic [63:0] wr_data;
 logic ready;
@@ -7710,7 +7274,7 @@ logic [63:0] rd_data;
 
 logic cs__0;
 logic we__0;
-logic [39:0] addr__0;
+logic [63:0] addr__0;
 logic [1:0] size__0;
 logic [63:0] wr_data__0;
 logic ready__0;
@@ -7719,7 +7283,7 @@ logic [63:0] rd_data__0;
 
 logic cs__1;
 logic we__1;
-logic [39:0] addr__1;
+logic [63:0] addr__1;
 logic [1:0] size__1;
 logic [63:0] wr_data__1;
 logic ready__1;
@@ -7728,7 +7292,7 @@ logic [63:0] rd_data__1;
 
 logic cs__2;
 logic we__2;
-logic [39:0] addr__2;
+logic [63:0] addr__2;
 logic [1:0] size__2;
 logic [63:0] wr_data__2;
 logic ready__2;
@@ -7737,7 +7301,7 @@ logic [63:0] rd_data__2;
 
 logic cs__3;
 logic we__3;
-logic [39:0] addr__3;
+logic [63:0] addr__3;
 logic [1:0] size__3;
 logic [63:0] wr_data__3;
 logic ready__3;
@@ -7746,7 +7310,7 @@ logic [63:0] rd_data__3;
 
 logic cs__4;
 logic we__4;
-logic [39:0] addr__4;
+logic [63:0] addr__4;
 logic [1:0] size__4;
 logic [63:0] wr_data__4;
 logic ready__4;
@@ -7755,7 +7319,7 @@ logic [63:0] rd_data__4;
 
 logic cs__5;
 logic we__5;
-logic [39:0] addr__5;
+logic [63:0] addr__5;
 logic [1:0] size__5;
 logic [63:0] wr_data__5;
 logic ready__5;
@@ -7764,7 +7328,7 @@ logic [63:0] rd_data__5;
 
 logic cs__6;
 logic we__6;
-logic [39:0] addr__6;
+logic [63:0] addr__6;
 logic [1:0] size__6;
 logic [63:0] wr_data__6;
 logic ready__6;
@@ -7773,13 +7337,38 @@ logic [63:0] rd_data__6;
 
 logic cs__7;
 logic we__7;
-logic [39:0] addr__7;
+logic [63:0] addr__7;
 logic [1:0] size__7;
 logic [63:0] wr_data__7;
 logic ready__7;
 logic resp__7;
 logic [63:0] rd_data__7;
 
+logic cs__x;
+logic ready__x;
+logic resp__x;
+logic [63:0] rd_data__x;
+
+logic cs__y;
+logic ready__y;
+logic [63:0] rd_data__y;
+
+logic [7:0] pma__0;
+logic [7:0] pma__1;
+logic [7:0] pma__2;
+logic [7:0] pma__3;
+logic [7:0] pma__4;
+logic [7:0] pma__5;
+logic [7:0] pma__6;
+logic [7:0] pma__7;
+logic [7:0] pma;
+logic [1:0] status;
+
+
+assign cs__x = cs;
+assign ready = ready__x;
+assign resp = resp__x;
+assign rd_data = rd_data__x;
 
 assign we__0 = we; 
 assign we__1 = we; 
@@ -7828,49 +7417,90 @@ bus__decoder decoder
     .sel(sel)
 );
 
-//==============================
-// multiplexor
-//==============================
-bus__multiplexor multiplexor
+
+//==============================================
+// physical_memory_attribute_multiplexer
+//==============================================
+bus__physical_memory_attribute_multiplexer physical_memory_attribute_multiplexer
 (
     .clk(clk),
     .rst(rst),
     .sel(sel),
-    .cs(cs),
-    .ready(ready),
-    .resp(resp),
-    .rd_data(rd_data),
+    .pma__0(pma__0),
+    .pma__1(pma__1),
+    .pma__2(pma__2),
+    .pma__3(pma__3),
+    .pma__4(pma__4),
+    .pma__5(pma__5),
+    .pma__6(pma__6),
+    .pma__7(pma__7),
+    .pma(pma)
+);
+
+//==============================================
+// physical_memory_attribute_checker
+//==============================================
+bus__physical_memory_attribute_checker physical_memory_attribute_checker
+(
+    .clk(clk),
+    .rst(rst),
+    .addr(addr[2:0]),
+    .size(size),
+    .pma(pma),
+    .status(status)
+);
+
+//==============================================
+// bus__trap
+//==============================================
+bus__trap trap
+(
+    .clk(clk),
+    .rst(rst),
+    .status(status),
+    .cs__x(cs__x),
+    .ready__x(ready__x),
+    .resp__x(resp__x),
+    .rd_data__x(rd_data__x),
+    .cs__y(cs__y),
+    .ready__y(ready__y),
+    .rd_data__y(rd_data__y)
+);
+
+//==============================
+// multiplexer
+//==============================
+bus__multiplexer multiplexer
+(
+    .clk(clk),
+    .rst(rst),
+    .sel(sel),
+    .cs(cs__y),
+    .ready(ready__y),
+    .rd_data(rd_data__y),
     .cs__0(cs__0),
     .ready__0(ready__0),
-    .resp__0(resp__0),
     .rd_data__0(rd_data__0),
     .cs__1(cs__1),
     .ready__1(ready__1),
-    .resp__1(resp__1),
     .rd_data__1(rd_data__1),
     .cs__2(cs__2),
     .ready__2(ready__2),
-    .resp__2(resp__2),
     .rd_data__2(rd_data__2),
     .cs__3(cs__3),
     .ready__3(ready__3),
-    .resp__3(resp__3),
     .rd_data__3(rd_data__3),
     .cs__4(cs__4),
     .ready__4(ready__4),
-    .resp__4(resp__4),
     .rd_data__4(rd_data__4),
     .cs__5(cs__5),
     .ready__5(ready__5),
-    .resp__5(resp__5),
     .rd_data__5(rd_data__5),
     .cs__6(cs__6),
     .ready__6(ready__6),
-    .resp__6(resp__6),
     .rd_data__6(rd_data__6),
     .cs__7(cs__7),
     .ready__7(ready__7),
-    .resp__7(resp__7),
     .rd_data__7(rd_data__7)
 );
 
@@ -7889,47 +7519,46 @@ module bus__decoder
 
 input clk;
 input rst;
-input [39:0] addr;
+input [63:0] addr;
 output [2:0] sel;
 
 logic clk;
 logic rst;
-logic [39:0] addr;
+logic [63:0] addr;
 logic [2:0] sel;
-
 
 always_comb
 begin
     casez (addr)
-        40'b0000_0000_1000__????_????_????_????_????_????_????:
+        64'b0000_0000__0000_0000__0000_0000__0000_0000__1000_????__????_????__????_????__????_????:
         begin
             sel = 3'h0; 
         end
-        40'b0000_0000_1001__????_????_????_????_????_????_????:
+        64'b0000_0000__0000_0000__0000_0000__0000_0000__1001_????__????_????__????_????__????_????:
         begin
             sel = 3'h1; 
         end
-        40'b0000_0000_1010__????_????_????_????_????_????_????:
+        64'b0000_0000__0000_0000__0000_0000__0000_0000__1010_????__????_????__????_????__????_????:
         begin
             sel = 3'h2; 
         end
-        40'b0000_0000_1011__????_????_????_????_????_????_????:
+        64'b0000_0000__0000_0000__0000_0000__0000_0000__1011_????__????_????__????_????__????_????:
         begin
             sel = 3'h3; 
         end
-        40'b0000_0000_1100__????_????_????_????_????_????_????:
+        64'b0000_0000__0000_0000__0000_0000__0000_0000__1100_????__????_????__????_????__????_????:
         begin
             sel = 3'h4; 
         end
-        40'b0000_0000_1101__????_????_????_????_????_????_????:
+        64'b0000_0000__0000_0000__0000_0000__0000_0000__1101_????__????_????__????_????__????_????:
         begin
             sel = 3'h5; 
         end
-        40'b0000_0000_1110__????_????_????_????_????_????_????:
+        64'b0000_0000__0000_0000__0000_0000__0000_0000__1110_????__????_????__????_????__????_????:
         begin
             sel = 3'h6; 
         end
-        40'b0000_0000_1111__????_????_????_????_????_????_????:
+        default:
         begin
             sel = 3'h7; 
         end
@@ -7938,48 +7567,39 @@ end
 
 endmodule
 //==============================================
-// bus__multiplexor
+// bus__multiplexer
 //==============================================
-module bus__multiplexor
+module bus__multiplexer
 (
     clk,
     rst,
     sel,
     cs,
     ready,
-    resp,
     rd_data,
     cs__0,
     ready__0,
-    resp__0,
     rd_data__0,
     cs__1,
     ready__1,
-    resp__1,
     rd_data__1,
     cs__2,
     ready__2,
-    resp__2,
     rd_data__2,
     cs__3,
     ready__3,
-    resp__3,
     rd_data__3,
     cs__4,
     ready__4,
-    resp__4,
     rd_data__4,
     cs__5,
     ready__5,
-    resp__5,
     rd_data__5,
     cs__6,
     ready__6,
-    resp__6,
     rd_data__6,
     cs__7,
     ready__7,
-    resp__7,
     rd_data__7
 );
 
@@ -7990,48 +7610,40 @@ input [2:0] sel;
 
 input cs;
 output ready;
-output resp;
 output [63:0] rd_data;
 
 output cs__0;
 input ready__0;
-input resp__0;
 input [63:0] rd_data__0;
 
 output cs__1;
 input ready__1;
-input resp__1;
 input [63:0] rd_data__1;
 
 output cs__2;
 input ready__2;
-input resp__2;
 input [63:0] rd_data__2;
 
 output cs__3;
 input ready__3;
-input resp__3;
 input [63:0] rd_data__3;
 
 output cs__4;
 input ready__4;
-input resp__4;
 input [63:0] rd_data__4;
 
 output cs__5;
 input ready__5;
-input resp__5;
 input [63:0] rd_data__5;
 
 output cs__6;
 input ready__6;
-input resp__6;
 input [63:0] rd_data__6;
 
 output cs__7;
 input ready__7;
-input resp__7;
 input [63:0] rd_data__7;
+
 
 logic clk;
 logic rst;
@@ -8040,48 +7652,40 @@ logic [2:0] sel;
 
 logic cs;
 logic ready;
-logic resp;
 logic [63:0] rd_data;
 
 logic cs__0;
 //logic ready__0;
-//logic resp__0;
 //logic [63:0] rd_data__0;
 
 logic cs__1;
 //logic ready__1;
-//logic resp__1;
 //logic [63:0] rd_data__1;
 
 logic cs__2;
 //logic ready__2;
-//logic resp__2;
 //logic [63:0] rd_data__2;
 
 logic cs__3;
 //logic ready__3;
-//logic resp__3;
 //logic [63:0] rd_data__3;
 
 logic cs__4;
 //logic ready__4;
-//logic resp__4;
 //logic [63:0] rd_data__4;
 
 logic cs__5;
 //logic ready__5;
-//logic resp__5;
 //logic [63:0] rd_data__5;
 
 logic cs__6;
 //logic ready__6;
-//logic resp__6;
 //logic [63:0] rd_data__6;
 
 logic cs__7;
 //logic ready__7;
-//logic resp__7;
 //logic [63:0] rd_data__7;
+
 
 always_comb
 begin
@@ -8099,57 +7703,261 @@ begin
         begin
             cs__0 = cs;
             ready = ready__0;
-            resp = resp__0;
             rd_data = rd_data__0;
         end
         3'h1:
         begin
             cs__1 = cs;
             ready = ready__1;
-            resp = resp__1;
             rd_data = rd_data__1;
         end
         3'h2:
         begin
             cs__2 = cs;
             ready = ready__2;
-            resp = resp__2;
             rd_data = rd_data__2;
         end
         3'h3:
         begin
             cs__3 = cs;
             ready = ready__3;
-            resp = resp__3;
             rd_data = rd_data__3;
         end
         3'h4:
         begin
             cs__4 = cs;
             ready = ready__4;
-            resp = resp__4;
             rd_data = rd_data__4;
         end
         3'h5:
         begin
             cs__5 = cs;
             ready = ready__5;
-            resp = resp__5;
             rd_data = rd_data__5;
         end
         3'h6:
         begin
             cs__6 = cs;
             ready = ready__6;
-            resp = resp__6;
             rd_data = rd_data__6;
         end
         3'h7:
         begin
             cs__7 = cs;
             ready = ready__7;
-            resp = resp__7;
             rd_data = rd_data__7;
+        end
+    endcase
+end
+
+endmodule
+//==============================================
+// bus__physical_memory_attribute_multiplexer
+//==============================================
+module bus__physical_memory_attribute_multiplexer
+(
+    clk,
+    rst,
+    sel,
+    pma__0,
+    pma__1,
+    pma__2,
+    pma__3,
+    pma__4,
+    pma__5,
+    pma__6,
+    pma__7,
+    pma
+);
+
+input clk;
+input rst;
+input [2:0] sel;
+input [7:0] pma__0;
+input [7:0] pma__1;
+input [7:0] pma__2;
+input [7:0] pma__3;
+input [7:0] pma__4;
+input [7:0] pma__5;
+input [7:0] pma__6;
+input [7:0] pma__7;
+output [7:0] pma;
+
+logic clk;
+logic rst;
+logic [2:0] sel;
+logic [7:0] pma__0;
+logic [7:0] pma__1;
+logic [7:0] pma__2;
+logic [7:0] pma__3;
+logic [7:0] pma__4;
+logic [7:0] pma__5;
+logic [7:0] pma__6;
+logic [7:0] pma__7;
+logic [7:0] pma;
+
+
+always_comb
+begin
+    case (sel)
+        3'h0:
+        begin
+            pma = pma__0;
+        end
+        3'h1:
+        begin
+            pma = pma__1;
+        end
+        3'h2:
+        begin
+            pma = pma__2;
+        end
+        3'h2:
+        begin
+            pma = pma__3;
+        end
+        3'h4:
+        begin
+            pma = pma__4;
+        end
+        3'h5:
+        begin
+            pma = pma__5;
+        end
+        3'h6:
+        begin
+            pma = pma__6;
+        end
+        3'h7:
+        begin
+            pma = pma__7;
+        end
+    endcase
+end
+
+
+endmodule
+//==============================================
+// bus__physical_memory_attribute_checker 
+//==============================================
+module bus__physical_memory_attribute_checker
+(
+    clk,
+    rst,
+    addr, 
+    size,
+    pma,
+    status 
+);
+
+input clk;
+input rst;
+input [2:0] addr; 
+input [1:0] size;
+input [7:0] pma;
+output [1:0] status;
+
+logic clk;
+logic rst;
+logic [2:0] addr; 
+logic [1:0] size;
+logic [7:0] pma;
+logic [1:0] status;
+
+always_comb 
+begin
+    case (size)
+        2'h3:
+        begin
+            status = (pma[1:1] == 1'b0) ? 2'h1 : 2'h0;
+        end
+        2'h2:
+        begin
+            status = (pma[2:2] == 1'b0) ? 2'h1 : (addr[0] != 1'b0) && (pma[5:5] == 1'b0) ? 2'h2 : 2'h0;
+        end
+        2'h1:
+        begin
+            status = (pma[3:3] == 1'b0) ? 2'h1 : (addr[1:0] != 2'h0) && (pma[5:5] == 1'b0) ? 2'h2 : 2'h0;
+        end
+        2'h0:
+        begin
+            status = (pma[4:4] == 1'b0) ? 2'h1 : (addr[2:0] != 3'h0) && (pma[5:5] == 1'b0)? 2'h2 : 2'h0;
+        end
+    endcase
+end
+
+
+endmodule
+//==============================================
+// bus__trap
+//==============================================
+module bus__trap
+(
+    clk,
+    rst,
+    status,
+    cs__x,
+    ready__x,
+    resp__x,
+    rd_data__x,
+    cs__y,
+    ready__y,
+    rd_data__y
+);
+
+input clk;
+input rst;
+
+input [1:0] status;
+
+input cs__x;
+output ready__x;
+output resp__x;
+output [63:0] rd_data__x;
+
+output cs__y;
+input ready__y;
+input [63:0] rd_data__y;
+
+logic cs__x;
+logic ready__x;
+logic resp__x;
+logic [63:0] rd_data__x;
+
+logic cs__y;
+//logic ready__y;
+//logic [63:0] rd_data__y;
+
+always_comb
+begin
+    case (status)
+        2'h0:
+        begin
+            cs__y = cs__x;
+            resp__x = 1'b0;
+            ready__x = ready__y;
+            rd_data__x = rd_data__y;
+        end
+        2'h1:
+        begin
+            cs__y = 1'b0;
+            resp__x = 1'b1;
+            ready__x = 1'b1;
+            rd_data__x = 64'h0;
+        end
+        2'h2:
+        begin
+            cs__y = 1'b0;
+            resp__x = 1'b1;
+            ready__x = 1'b1;
+            rd_data__x = 64'h1;
+        end
+        default:
+        begin
+            cs__y = 1'b0;
+            resp__x = 1'b1;
+            ready__x = 1'b1;
+            rd_data__x = 64'h0;
         end
     endcase
 end
@@ -8201,39 +8009,29 @@ logic [11:0] addra;
 logic [63:0] dina;
 logic [63:0] douta;
 
-
-logic cpu_to_mmu__cs;
-logic cpu_to_mmu__we;
-logic [63:0] cpu_to_mmu__addr;
-logic [1:0] cpu_to_mmu__size;
-logic [63:0] cpu_to_mmu__wr_data;
-logic cpu_to_mmu__ready;
-logic cpu_to_mmu__resp;
-logic [63:0] cpu_to_mmu__rd_data;
-
 logic irq__0;
 logic irq__1;
 logic context__0__eip;
 
 logic tip;
 
-logic [7:0] pmar__0;
-logic [7:0] pmar__1;
-logic [7:0] pmar__2;
-logic [7:0] pmar__3;
-logic [7:0] pmar__4;
-logic [7:0] pmar__5;
-logic [7:0] pmar__6;
-logic [7:0] pmar__7;
+logic [7:0] pma__0;
+logic [7:0] pma__1;
+logic [7:0] pma__2;
+logic [7:0] pma__3;
+logic [7:0] pma__4;
+logic [7:0] pma__5;
+logic [7:0] pma__6;
+logic [7:0] pma__7;
 
-logic mmu_to_bus__cs;
-logic mmu_to_bus__we;
-logic [39:0] mmu_to_bus__addr;
-logic [1:0] mmu_to_bus__size;
-logic [63:0] mmu_to_bus__wr_data;
-logic mmu_to_bus__ready;
-logic mmu_to_bus__resp;
-logic [63:0] mmu_to_bus__rd_data;
+logic cs;
+logic we;
+logic [39:0] addr;
+logic [1:0] size;
+logic [63:0] wr_data;
+logic ready;
+logic resp;
+logic [63:0] rd_data;
 
 logic cs__0;
 logic we__0;
@@ -8314,50 +8112,18 @@ central_processing_unit central_processing_unit__0
 (
     .clk(clk),
     .rst(rst),
-    .cs(cpu_to_mmu__cs),
-    .we(cpu_to_mmu__we),
-    .addr(cpu_to_mmu__addr),
-    .size(cpu_to_mmu__size),
-    .wr_data(cpu_to_mmu__wr_data),
-    .ready(cpu_to_mmu__ready),
-    .resp(cpu_to_mmu__resp),
-    .rd_data(cpu_to_mmu__rd_data),
+    .cs(cs),
+    .we(we),
+    .addr(addr),
+    .size(size),
+    .wr_data(wr_data),
+    .ready(ready),
+    .resp(resp),
+    .rd_data(rd_data),
     .eip(context__0__eip),
     .tip(tip)
 );
 
-//==============================
-// memory_management_unit
-//==============================
-memory_management_unit memory_management_unit__0
-(
-    .clk(clk),
-    .rst(rst),
-    .cpu_to_mmu__cs(cpu_to_mmu__cs),
-    .cpu_to_mmu__we(cpu_to_mmu__we),
-    .cpu_to_mmu__addr(cpu_to_mmu__addr),
-    .cpu_to_mmu__size(cpu_to_mmu__size),
-    .cpu_to_mmu__wr_data(cpu_to_mmu__wr_data),
-    .cpu_to_mmu__ready(cpu_to_mmu__ready),
-    .cpu_to_mmu__resp(cpu_to_mmu__resp),
-    .cpu_to_mmu__rd_data(cpu_to_mmu__rd_data),
-    .mmu_to_bus__cs(mmu_to_bus__cs),
-    .mmu_to_bus__we(mmu_to_bus__we),
-    .mmu_to_bus__addr(mmu_to_bus__addr),
-    .mmu_to_bus__size(mmu_to_bus__size),
-    .mmu_to_bus__wr_data(mmu_to_bus__wr_data),
-    .mmu_to_bus__ready(mmu_to_bus__ready),
-    .mmu_to_bus__resp(mmu_to_bus__resp),
-    .mmu_to_bus__rd_data(mmu_to_bus__rd_data),
-    .pmar__0(pmar__0),
-    .pmar__1(pmar__1),
-    .pmar__2(pmar__2),
-    .pmar__3(pmar__3),
-    .pmar__4(pmar__4),
-    .pmar__5(pmar__5),
-    .pmar__6(pmar__6),
-    .pmar__7(pmar__7)
-);
 
 //==============================
 // memory_controller__0
@@ -8424,14 +8190,14 @@ physical_memory_attribute_registers physical_memory_attribute_registers__0
     .addr(addr__3[2:0]),
     .wr_data(wr_data__3[7:0]),
     .rd_data(rd_data__3[7:0]),
-    .pmar__0(pmar__0),
-    .pmar__1(pmar__1),
-    .pmar__2(pmar__2),
-    .pmar__3(pmar__3),
-    .pmar__4(pmar__4),
-    .pmar__5(pmar__5),
-    .pmar__6(pmar__6),
-    .pmar__7(pmar__7)
+    .pma__0(pma__0),
+    .pma__1(pma__1),
+    .pma__2(pma__2),
+    .pma__3(pma__3),
+    .pma__4(pma__4),
+    .pma__5(pma__5),
+    .pma__6(pma__6),
+    .pma__7(pma__7)
 );
 
 //==============================
@@ -8459,21 +8225,28 @@ bus bus__0
 (
     .clk(clk),
     .rst(rst),
-    .cs(mmu_to_bus__cs),
-    .we(mmu_to_bus__we),
-    .addr(mmu_to_bus__addr),
-    .size(mmu_to_bus__size),
-    .wr_data(mmu_to_bus__wr_data),
-    .ready(mmu_to_bus__ready),
-    .resp(mmu_to_bus__resp),
-    .rd_data(mmu_to_bus__rd_data),
+    .pma__0(pma__0),
+    .pma__1(pma__1),
+    .pma__2(pma__2),
+    .pma__3(pma__3),
+    .pma__4(pma__4),
+    .pma__5(pma__5),
+    .pma__6(pma__6),
+    .pma__7(pma__7),
+    .cs(cs),
+    .we(we),
+    .addr(addr),
+    .size(size),
+    .wr_data(wr_data),
+    .ready(ready),
+    .resp(resp),
+    .rd_data(rd_data),
     .cs__0(cs__0),
     .we__0(we__0),
     .addr__0(addr__0),
     .size__0(size__0),
     .wr_data__0(wr_data__0),
     .ready__0(ready__0),
-    .resp__0(1'b0),
     .rd_data__0(rd_data__0),
     .cs__1(cs__1),
     .we__1(we__1),
@@ -8481,15 +8254,6 @@ bus bus__0
     .size__1(size__1),
     .wr_data__1(wr_data__1),
     .ready__1(1'b1),
-    .resp__1(1'b0),
-    .rd_data__1(rd_data__1),
-    .cs__2(cs__2),
-    .we__2(we__2),
-    .addr__2(addr__2),
-    .size__2(size__2),
-    .wr_data__2(wr_data__2),
-    .ready__2(1'b1),
-    .resp__2(1'b0),
     .rd_data__2(rd_data__2),
     .cs__3(cs__3),
     .we__3(we__3),
@@ -8497,7 +8261,6 @@ bus bus__0
     .size__3(size__3),
     .wr_data__3(wr_data__3),
     .ready__3(1'b1),
-    .resp__3(1'b0),
     .rd_data__3(rd_data__3),
     .cs__4(cs__4),
     .we__4(we__4),
@@ -8505,7 +8268,6 @@ bus bus__0
     .size__4(size__4),
     .wr_data__4(wr_data__4),
     .ready__4(1'b1),
-    .resp__4(1'b0),
     .rd_data__4(rd_data__4),
     .cs__5(cs__5),
     .we__5(we__5),
@@ -8513,7 +8275,6 @@ bus bus__0
     .size__5(size__5),
     .wr_data__5(wr_data__5),
     .ready__5(1'b1),
-    .resp__5(1'b0),
     .rd_data__5(rd_data__5),
     .cs__6(cs__6),
     .we__6(we__6),
@@ -8521,7 +8282,6 @@ bus bus__0
     .size__6(size__6),
     .wr_data__6(wr_data__6),
     .ready__6(1'b1),
-    .resp__6(1'b0),
     .rd_data__6(rd_data__6),
     .cs__7(cs__7),
     .we__7(we__7),
@@ -8529,7 +8289,6 @@ bus bus__0
     .size__7(size__7),
     .wr_data__7(wr_data__7),
     .ready__7(1'b1),
-    .resp__7(1'b0),
     .rd_data__7(rd_data__7)
 );
 
