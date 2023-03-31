@@ -1,0 +1,9 @@
+# 0 "a.c"
+# 0 "<built-in>"
+# 0 "<command-line>"
+# 1 "a.c"
+# 1 "a.h" 1
+# 2 "a.c" 2
+
+hello_world
+4 + 5
