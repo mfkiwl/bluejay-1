@@ -7,21 +7,21 @@ module top
 always_comb
 begin
     case ((a))
-    6'h0:
+    2'h1:
     begin
         a = b;
     end
     6'h1:
     begin
         a == c;
+        a == c + d;
     end
     endcase
 end
 
-PYTHON
-(
-    for i in range(len(10)):
-        print("    hi")
-)
+    hi
+    hi
+    hi
+
 
 endmodule

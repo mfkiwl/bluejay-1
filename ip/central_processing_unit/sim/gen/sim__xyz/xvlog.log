@@ -34,20 +34,22 @@ INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/pla
 INFO: [VRFC 10-311] analyzing module platform_level_interrupt_controller__priority_mux
 INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/physical_memory_attribute_registers/src/gen/physical_memory_attribute_registers.sv" into library work
 INFO: [VRFC 10-311] analyzing module physical_memory_attribute_registers
-INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/physical_memory_attribute_registers/src/gen/physical_memory_attribute_checker.sv" into library work
-INFO: [VRFC 10-311] analyzing module physical_memory_attribute_checker
 INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/general_purpose_input_output/src/gen/general_purpose_input_output.sv" into library work
 INFO: [VRFC 10-311] analyzing module general_purpose_input_output
 INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/memory_controller/src/gen/memory_controller.sv" into library work
 INFO: [VRFC 10-311] analyzing module memory_controller
-INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/memory_management_unit/src/gen/memory_management_unit.sv" into library work
-INFO: [VRFC 10-311] analyzing module memory_management_unit
 INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/bus/src/gen/bus.sv" into library work
 INFO: [VRFC 10-311] analyzing module bus
 INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/bus/src/gen/bus__decoder.sv" into library work
 INFO: [VRFC 10-311] analyzing module bus__decoder
-INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/bus/src/gen/bus__multiplexor.sv" into library work
-INFO: [VRFC 10-311] analyzing module bus__multiplexor
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/bus/src/gen/bus__multiplexer.sv" into library work
+INFO: [VRFC 10-311] analyzing module bus__multiplexer
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/bus/src/gen/bus__physical_memory_attribute_multiplexer.sv" into library work
+INFO: [VRFC 10-311] analyzing module bus__physical_memory_attribute_multiplexer
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/bus/src/gen/bus__physical_memory_attribute_checker.sv" into library work
+INFO: [VRFC 10-311] analyzing module bus__physical_memory_attribute_checker
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/bus/src/gen/bus__trap.sv" into library work
+INFO: [VRFC 10-311] analyzing module bus__trap
 INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/jay/src/gen/jay.sv" into library work
 INFO: [VRFC 10-311] analyzing module jay
 INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/top/src/gen/top.sv" into library work

@@ -62,20 +62,34 @@ always_comb begin
         FUNC__SRLW:
         begin
             case (b[4:0])
-                PYTHON(for i in range(1): print(f"5'h{i:x}: c = {{{{{32 + i}{{a[31]}}}}, a[31:{i}]}};"))
-                PYTHON(for i in range(1, 32): print(f"5'h{i:x}: c = {{{{{32 + i}{{1'b0}}}}, a[31:{i}]}};"))
+PYTHON
+(
+    for i in range(32):
+        if i == 0:
+            print(f"                5'h{i:x}: c = {{{{{32 + i}{{a[31]}}}}, a[31:{i}]}};")
+        else:
+            print(f"                5'h{i:x}: c = {{{{{32 + i}{{1'b0}}}}, a[31:{i}]}};")
+)
             endcase
         end
         FUNC__SRA:
         begin
             case (b[5:0])
-                PYTHON(for i in range(64): print(f"6'h{i:x}: c = {{{{{i}{{a[63]}}}}, a[63:{i}]}};"))
+PYTHON
+(
+    for i in range(64):
+        print(f"                6'h{i:x}: c = {{{{{i}{{a[63]}}}}, a[63:{i}]}};")
+)
             endcase
         end
         FUNC__SRAW:
         begin
             case (b[4:0])
-                PYTHON(for i in range(32): print(f"5'h{i:x}: c = {{{{{32 + i}{{a[31]}}}}, a[31:{i}]}};"))
+PYTHON
+(
+    for i in range(32):
+        print(f"                5'h{i:x}: c = {{{{{32 + i}{{a[31]}}}}, a[31:{i}]}};")
+)
             endcase
         end
         FUNC__OR:

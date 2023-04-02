@@ -65,9 +65,9 @@ endef
 
 SIM_IP ?= central_processing_unit
 #SIM_IP := machine_timer_registers
-#all: diff-$(SIM_IP)-sim__xyz 
+all: diff-$(SIM_IP)-sim__xyz 
 #all: sim-$(SIM_IP)-sim__xyz 
-all: vivado_source 
+#all: vivado_source 
 
 
 
@@ -88,7 +88,7 @@ endef
 #     $(1): ip name 
 ################################
 define ip--src--system-verilog--template
-$(TOP)/ip/$(1)/src/gen/%.sv: $$(TOP)/ip/$(1)/src/%.b $$(TOP)/include/include.txt | $(TOP)/ip/$(1)/src/gen
+$(TOP)/ip/$(1)/src/gen/%.sv: $$(TOP)/ip/$(1)/src/%.b $$(TOP)/defs/defs.py | $(TOP)/ip/$(1)/src/gen
 	$(PYTHON) $(TOP)/tools/bluejay.py $$(<) $$(@)
 endef
 
@@ -478,7 +478,6 @@ IP := physical_memory_attribute_registers
 
 MODULES :=
 MODULES += physical_memory_attribute_registers
-MODULES += physical_memory_attribute_checker
 
 
 TB_MODULES :=

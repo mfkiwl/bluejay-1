@@ -1,6 +1,8 @@
 ##########
 # import #
 ##########
+import sys
+sys.path.append("/home/seankent/bluejay/defs")
 import math
 import re
 import ast
@@ -9,6 +11,13 @@ import sys
 import platform
 import csv
 from io import StringIO
+from defs import defs
+
+#defs = {
+#"OP__NOP": "6'h0",
+#"OP__LB": "6'h1",
+#}
+
 
 ###########
 # Bluejay #
@@ -17,230 +26,201 @@ class Bluejay:
     ############
     # __init__ #
     ############
-    def __init__(self, txt, defines = {}):
-        # the src rtl
-        self.txt = txt 
-        # initialize the system verilog (sv) file to an empty string
-        self.sv = ''
-        # dictionary with defines
-        self.defines = defines
+    def __init__(self, txt):
+        self.tokens = self.tokenize(txt)
 
-    #########
-    # build #
-    #########
-    def build(self):
-        txt = self.txt
-        txt = self.find_and_replace(txt)
-        # txt = self.eval_func(txt, 'LOG2', self.log2)
-        txt = self.eval_func(txt, 'PYTHON', self.python)
-        txt = self.fold_constants(txt)
-        self.sv = txt
+    ############
+    # tokenize #
+    ############
+    def tokenize(self, txt):
+        # split txt into tokens
+        #tokens = re.split(r'([:/ .,;\(\)\{\}\[\]\n+-=*])', txt)
+        tokens = re.split(r'([:/ .,;\(\)\{\}\[\]\n+-])', txt)
+        # remove empyt sting ('') from tokens
+        tokens = list(filter(''.__ne__, tokens))
+        return tokens
 
-    #########
-    # clean #
-    #########
-    def clean(self, string):
-        # convert tabs to spaces
-        string = re.sub('\t+', ' ', string)
-        # replace multiple spaces with a single space
-        string = re.sub(' +', ' ', string)
-        # remove any spaces before the begining of the string
-        string = re.sub('^ *', '', string)
-        # remove any spaces before the end of the string
-        string = re.sub(' $', '', string)
-        return string
+    ########
+    # join #
+    ########
+    def join(self):
+        return ''.join(self.tokens)
 
-    #################
-    # string_to_int #
-    #################
-    def string_to_int(self, string):
-        # remove '_'
-        string = re.sub('_', '', string)
+    ##############
+    # substitute #
+    ##############
+    def substitute(self, token__0, token__1, idx__0, idx__1):
+        """
+        Parameters:
+            token__0 (str): 
+            token__1 (str): 
+            idx__0 (int):
+            idx__1 (int):
+        """
+        while idx__0 < idx__1:
+            if self.tokens[idx__0] == token__0:
+                self.tokens[idx__0] = token__1 
+            idx__0 += 1
 
-        # check if string is a decimal number
-        if bool(re.match('^-?[0-9]+$', string)):
-            return int(string)
-        # check if string is a hex number
-        elif bool(re.match('^0x[0-9a-f]+$', string)):
-            return int(string, base = 16)
-        # check if string is a binary number
-        elif bool(re.match('^0b[0-1]+$', string)):
-            return int(string, base = 2)
-        
-        return None
+    ######################
+    # macro_substitution #
+    ######################
+    def macro_substitution(self, defs):
+        for token__0, token__1 in defs.items():
+            self.substitute(token__0, token__1, 0, len(self.tokens))
 
-    ####################
-    # find_and_replace #
-    ####################
-    def find_and_replace(self, txt):
-        # find and replace of key, value pairs
-        for key, value in self.defines.items():
-            txt = re.sub(r'\b' + key + r'\b', value, txt)
-        return txt
+    ##########
+    # search #
+    ##########
+    def search(self, token__0, idx__0, idx__1):
+        while idx__0 < idx__1:
+            if self.tokens[idx__0] == token__0:
+                return idx__0
+            idx__0 += 1
 
-    ####################
-    # find_and_replace #
-    ####################
-    def fold_constants(self, txt):
-        while True:
-            # save a copy of txt at the start of each iteration
-            temp = txt
-            # search for an mathematical expression (constants only)
-            match = re.search('[ \[\(]-?[0-9]+ *[-+\/*] *-?[0-9]+', txt)
-            # return if there are no matches
-            if match is None:
-                return txt
-
-            # get matched string
-            string = match.group(0)[1:]
-
-            # replace the expression with the simplified version
-            txt = txt.replace(string, str(int(eval(string))))
-
-            # if txt has not changed, return
-            if txt == temp:
-                return txt
 
     ##########
     # python #
     ##########
-    def python(self, arg, indent):
-        # create temporary .py file
-        filename = 'build_abcdefg.py'
-        with open(filename, 'w') as file:
-            file.write(self.remove_indent(arg, indent))
+    def python(self):
 
-        # run temporary .py file and capture the output
-        stdout = os.popen('python3 ' + filename).read()
-
-        # remove '\n' character from the end of the string (if there is one)
-        if stdout[-1] == '\n':
-            stdout = stdout[:-1]
-        stdout = self.add_indent(stdout, indent)
-
-        os.system('rm build_abcdefg.py')
-
-        return stdout
-
-    ########
-    # log2 #
-    ########
-    def log2(self, arg, indent):
-        arg = self.clean(arg)
-        N = self.string_to_int(arg)
-        return str(math.ceil(math.log2(N)))
-
-    #############
-    # eval_func #
-    #############
-    def eval_func(self, txt, name, func):
         while True:
-            # search for name in txt
-            match = re.search(name, txt)
-            # exit loop if there are no matches
-            if match is None:
+            # get index of 'PYTHON' tag
+            idx__0 = self.search('PYTHON', 0, len(self.tokens))
+    
+            # if idx__0 is None exit the loop
+            if idx__0 == None:
                 break
+            
+            # get the index of the opening parenthesis, '('
+            idx__1 = self.search('(', idx__0, len(self.tokens))
+            # get the index of the closing parenthesis, ')'
+            idx__2 = self.find_matching('(', ')', idx__1)
 
-            # get the start index
-            index = match.start()
-            # get the function's parentheses
-            parentheses = self.find_parentheses(txt, index)
-            # get argument string
-            arg = txt[parentheses[0] + 1:parentheses[1]]
-            # get the indentation level
-            indent = self.get_indent(txt, index)
+            # idx__3 will be the index of the first non-empty (not ' ' or '\n') token
+            idx__3 = idx__1 + 1
+            # idx__4 will be the index of the last '\n' before idx__3
+            idx__4 = idx__1 + 1
 
-            # get the string to replace the function
-            string = func(arg, indent)
+            # iterate over the tokens between '(' and ')'
+            while idx__3 < idx__2:
+                if self.tokens[idx__3] == ' ':
+                    idx__3 += 1
+                elif self.tokens[idx__3] == '\n':
+                    idx__4 = idx__3
+                    idx__3 += 1
+                else:
+                    break
 
-            # replace original string in txt
-            txt = txt[:index] + string + txt[parentheses[1] + 1:]
+            # assemble the python code as a list of tokens
+            tokens = []
 
-        return txt
+            # iterate from the first non-empty token to the closing parenthesis and add each token to tokens
+            # the initial indentation of the first non-empty token will be removed from each line 
+            idx__5 = idx__3
+            while idx__5 < idx__2:
+                # add token to tokens
+                tokens.append(self.tokens[idx__5])
 
-    ####################
-    # find_parentheses #
-    ####################
-    def find_parentheses(self, txt, index):
-        parentheses = [None, None]
-        # search for the left parenthesis
-        while index < len(txt):
-            if txt[index] == '(':
-                parentheses[0] = index
-                break
-            index += 1
+                # remove indentation from each newline by incrementing idx__5
+                if self.tokens[idx__5] == '\n': 
+                    idx__6 = idx__5 + (idx__3 - idx__4) 
+                    while idx__5 < idx__6:
+                        idx__5 += 1
+                        if self.tokens[idx__5] == '\n':
+                            break
+                else:
+                    idx__5 += 1
 
-        if parentheses[0] is None:
-            return parentheses
+
+
+            # write python code to a temporary file 
+            filename = 'abcd.py'
+            with open(filename, 'w') as file:
+                file.write(''.join(tokens))
+
+            # run the python code
+            stdout = os.popen(f'python3 {filename}').read()
+
+            os.system(f'rm {filename}')
+
+
+            # run the python code
+            #stdout = os.popen('python3 -c \"' + ''.join(tokens) + '\"').read()
+
+            # tokentize the output of the code
+            tokens = self.tokenize(stdout)
+
+            # remove trailing '\n'
+            if tokens[-1] == '\n': 
+                tokens = tokens[:-1] 
+            
+            # replace the PYTHON call with the output of the code
+            self.delete(idx__0, idx__2)
+            self.splice(tokens, idx__0)
+
+
+    ##########
+    # splice #
+    ##########
+    def splice(self, tokens, idx__0):
+        self.tokens = self.tokens[:idx__0] + tokens + self.tokens[idx__0:] 
+        
+    ##########
+    # delete #
+    ##########
+    def delete(self, idx__0, idx__1):
+        self.tokens = self.tokens[:idx__0] + self.tokens[idx__1 + 1:] 
+
+
+    #################
+    # find_matching #
+    #################
+    def find_matching(self, left, right, i):
+        
+        if self.tokens[i] != left: 
+            print(f'[ERROR]: self.tokens[{i}] != {left}')
+            return None
 
         count = 0
-        # search for matching right parenthesis
-        while index < len(txt):
-            if txt[index] == '(':
+        for i in range(i, len(self.tokens)):
+            if self.tokens[i] == left:
                 count += 1
-            if txt[index] == ')':
+            if self.tokens[i] == right:
                 count -= 1
             if count == 0:
-                parentheses[1] = index
-                break
-            index += 1
-        return parentheses
+               return i 
 
-    ##############
-    # get_indent #
-    ##############
-    def get_indent(self, txt, index):
-        count = 0
-        while index >= 0:
-            if txt[index] == '\n':
-                return count - 1
-            count += 1
-            index -= 1
-        return count - 1
-
-    #################
-    # remove_indent #
-    #################
-    def remove_indent(self, string, indent):
-        return re.sub('\n' + ' '*indent, '\n', string)
-
-    ##############
-    # add_indent #
-    ##############
-    def add_indent(self, string, indent):
-        return re.sub('\n', '\n' + ' '*indent, string)
+        print(f'[ERROR]: Match not found')
+        return None
 
 
-##################
-# define_to_dict #
-###################
-def define_to_dict(txt):
-    define = {}
-    for line in re.split('\n', txt):
-        line = clean(line)
-        if line == '':
-            continue
-        tokens = re.split(' ', line)
-        key, value = tokens[1], tokens[2]
-        define[key] = value
-
-    return define
+    #########
+    # build #
+    #########
+    def build(self, defs = {}):
+        self.macro_substitution(defs)
+        self.python()
 
 
-#########
-# clean #
-#########
-def clean(string):
-    # convert tabs to spaces
-    string = re.sub('\t+', ' ', string)
-    # replace multiple spaces with a single space
-    string = re.sub(' +', ' ', string)
-    # remove any spaces before the begining of the string
-    string = re.sub('^ *', '', string)
-    # remove any spaces before the end of the string
-    string = re.sub(' $', '', string)
-    return string
+        
 
+##    #########
+##    # write #
+##    #########
+##    @staticmethod
+##    def write(filename, txt):
+##        with open(filename, 'w') as file:
+##            file.write(txt)
+##
+##    ########
+##    # read #
+##    ########
+##    @staticmethod
+##    def read(filename):
+##        with open(filename, 'r') as file:
+##            return file.read()
+##
 if __name__ == '__main__':
  
     if len(sys.argv) == 3:
@@ -257,14 +237,14 @@ if __name__ == '__main__':
         with open(file__b, 'r') as file:
             txt = file.read()
 
-        with open(path + 'include/include.txt', 'r') as file:
-            defines = define_to_dict(file.read())
-
-        bluejay = Bluejay(txt, defines)
-        bluejay.build()
+        bluejay = Bluejay(txt)
+        bluejay.build(defs)
+        #bluejay.write(file__sv)
+        #print(bluejay.tokens)
+        #print(defs['CSR__MISA__WIRI__0__WIDTH'])
 
         with open(file__sv, 'w') as file:
-            file.write(bluejay.sv)
+            file.write(bluejay.join())
 
 
     else:

@@ -406,6 +406,7 @@ localparam STATE__INTERRUPT__EXTERNAL = 8'hce;
 localparam STATE__FATAL = 8'hcf;
 
 
+
 always_comb begin
     state__n = state;
     ir__n = ir;

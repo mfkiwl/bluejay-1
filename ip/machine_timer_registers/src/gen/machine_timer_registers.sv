@@ -35,14 +35,14 @@ logic tip;
 
 // Machine Time Register (mtime)
 logic [63:0] mtime;
-logic [63:0] mtime__mtime;
-logic [63:0] mtime__mtime__n;
+logic [64-1:0] mtime__mtime;
+logic [64-1:0] mtime__mtime__n;
 logic we__mtime;
 logic en__mtime;
 
 // Machine Time Compare Register (mtimecmp)
 logic [63:0] mtimecmp;
-logic [63:0] mtimecmp__mtimecmp;
+logic [64-1:0] mtimecmp__mtimecmp;
 logic we__mtimecmp;
 logic en__mtimecmp;
 

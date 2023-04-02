@@ -7,21 +7,22 @@ module top
 always_comb
 begin
     case ((a))
-    OP__NOP:
+    SIZE__WORD:
     begin
         a = b;
     end
     OP__LB:
     begin
         a == c;
+        PYTHON(print('a == c + d',end=''));
     end
     endcase
 end
 
 PYTHON
 (
-    for i in range(len(10)):
-        print("    hi")
+    for i in range(3):
+        print('    hi')
 )
 
 endmodule

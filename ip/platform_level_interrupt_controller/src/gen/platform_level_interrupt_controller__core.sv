@@ -58,13 +58,13 @@ logic we__priority__1;
 logic re__priority__1;
 logic en__priority__1;
 
-// Interrupt Pending Bits - Source -31
+// Interrupt Pending Bits - Source 0-31
 logic [31:0] ip__0_to_31;
 logic we__ip__0_to_31;
 logic re__ip__0_to_31;
 logic en__ip__0_to_31;
 
-// Interrupt Enable Bits - Context 0 - Source -31
+// Interrupt Enable Bits - Context 0 - Source 0-31
 logic [31:0] context__0__ie__0_to_31;
 logic we__context__0__ie__0_to_31;
 logic re__context__0__ie__0_to_31;
@@ -206,7 +206,7 @@ assign priority__1 = 32'h1;
 
 
 //==============================================
-// Interrupt Pending Bits - Source -31
+// Interrupt Pending Bits - Source 0-31
 //==============================================
 assign ip__0_to_31[0] = ip__0;
 assign ip__0_to_31[1] = ip__1;
@@ -214,7 +214,7 @@ assign ip__0_to_31[31:2] = 0;
 
 
 //==============================================
-// Interrupt Enable Bits - Context 0 - Source -31
+// Interrupt Enable Bits - Context 0 - Source 0-31
 //==============================================
 assign context__0__ie__0_to_31[0] = context__0__ie__0;
 assign context__0__ie__0_to_31[1] = context__0__ie__1;
