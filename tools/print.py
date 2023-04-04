@@ -16,3 +16,5 @@ y = [1, 2, 4]
 
 print(x == y)
 print(y[:0] + y[1 + 1:])
+
+print(y[5])

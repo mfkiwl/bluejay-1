@@ -15,6 +15,7 @@ begin
     begin
         a == c;
         a == c + d;
+        y == c + d;
     end
     endcase
 end
@@ -22,6 +23,5 @@ end
     hi
     hi
     hi
-
 
 endmodule

@@ -14,7 +14,11 @@ begin
     OP__LB:
     begin
         a == c;
-        PYTHON(print('a == c + d',end=''));
+PYTHON
+(
+        print('        a == c + d;')
+        print('        y == c + d;')
+)
     end
     endcase
 end
