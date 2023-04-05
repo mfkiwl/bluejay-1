@@ -2,7 +2,8 @@
 # import #
 ##########
 import sys
-sys.path.append("/home/seankent/bluejay/defs")
+#sys.path.append("/home/seankent/bluejay/defs")
+sys.path.append("/Users/seankent/Documents/bluejay/defs")
 import copy
 import math
 import re
@@ -44,6 +45,12 @@ class Bluejay:
     ############
     @staticmethod
     def tokenize(txt):
+        """
+        Splits txt into a list of tokens.
+        
+        Arguments:
+            txt (str): Input string.
+        """
         # split txt into tokens
         tokens = re.split(r'([:/ .,;\(\)\{\}\[\]\n+-])', txt)
         # remove empyt sting ('') from tokens
@@ -54,6 +61,13 @@ class Bluejay:
     # join #
     ########
     def join(self, idx__0 = None, idx__1 = None):
+        """
+        Concatenates the tokens between idx__0 and idx__1 together to form a single string.
+        
+        Arguments:
+            idx__0 (int): Start index.
+            idx__1 (int): End index (exclusive).
+        """
         idx__0, idx__1 = self.bound(idx__0, idx__1)
         return ''.join(self.tokens[idx__0:idx__1])
 
@@ -61,6 +75,13 @@ class Bluejay:
     # bound #
     #########
     def bound(self, idx__0, idx__1):
+        """
+        Ensures that idx__0 and idx__1 have values between 0 and len(self.tokens) and that idx__0 is less than or equal to idx__1. If idx__0 is None, its value will be set to 0. If idx__1 is None, its value will be set to len(self.tokens).
+        
+        Arguments:
+            idx__0 (int): Start index.
+            idx__1 (int): End index (exclusive).
+        """
         if idx__0 is None:
             idx__0 = 0
         if idx__1 is None:
@@ -85,6 +106,8 @@ class Bluejay:
     ##############
     def substitute(self, token__old, token__new, idx__0 = None, idx__1 = None):
         """
+        Replaces all occurrences of token__old with token__new between idx__0 and idx__1.
+        
         Arguments:
             token__old (str): The token to search for.
             token__new (str): The token to replace the old value with.
@@ -101,14 +124,28 @@ class Bluejay:
     ######################
     # macro_substitution #
     ######################
-    def macro_substitution(self, defs):
+    def macro_substitution(self, defs, idx__0 = None, idx__1 = None):
+        """
+        For each key/value pair in defs, replaces all occurrences of the token key with the token value between idx__0 and ind__1.
+        
+        Arguments:
+            defs (dict): .
+        """
         for key, value in defs.items():
-            self.substitute(key, value, 0, len(self.tokens))
+            self.substitute(key, value, idx__0, idx__1)
 
     ##########
     # search #
     ##########
     def search(self, token, idx__0 = None, idx__1 = None):
+        """
+        Returns the index of the first occurence of token between idx__0 and idx__1.
+        
+        Arguments:
+            token: The token to search for.
+            idx__0 (int): Start index.
+            idx__1 (int): End index (exclusive).
+        """
         idx__0, idx__1 = self.bound(idx__0, idx__1)
 
         while idx__0 < idx__1:
@@ -122,20 +159,27 @@ class Bluejay:
     ###############
     # get_indent #
     ###############
-    def get_indent(self, idx__0 = None, idx__1 = None):
-        idx__0, idx__1 = self.bound(idx__0, idx__1)
+    def get_indent(self, idx__0 = None):
+        """
+        Returns the indentation level of the first non-empty token (i.e. not ' ' or '\n'). If there are no newline tokens prior to the first non-empty token, the indentation level is given as the the number of spaces from idx__0 to the first non-empty token.
+        
+        Arguments:
+            idx__0 (int): Start index.
+        """
+        idx__0, idx__1 = self.bound(idx__0, len(self.tokens))
 
-        # find the indentation level of the first non-empty token
-        idx__2 = idx__0
+        idx__newline = idx__0 - 1
+
         while idx__0 < idx__1:
-            if self.tokens[idx__0] == ' ':
-                idx__0 += 1
-            elif self.tokens[idx__0] == '\n':
-                idx__0 += 1
-                idx__2 = idx__0
-            else:
+            if self.tokens[idx__0] != ' ' and self.tokens[idx__0] != '\n':
                 break
-        return idx__0 - idx__2
+
+            if self.tokens[idx__0] == '\n':
+                idx__newline = idx__0
+
+            idx__0 += 1
+
+        return idx__0 - idx__newline - 1
 
 
     #################
@@ -223,7 +267,6 @@ class Bluejay:
 
             # remove any unnecessary indentation as this will result in an IndentationError when the code is executed
             bluejay.remove_indent(bluejay.get_indent())
-
     
             stdout = self.exec(bluejay.join())
             
