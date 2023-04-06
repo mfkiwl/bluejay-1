@@ -12,15 +12,9 @@ import os
 import sys
 import platform
 import csv
-from io import StringIO
-from contextlib import redirect_stdout
+import io
+import contextlib
 from defs import defs
-
-
-#defs = {
-#"OP__NOP": "6'h0",
-#"OP__LB": "6'h1",
-#}
 
 
 ###########
@@ -33,11 +27,11 @@ class Bluejay:
     def __init__(self, tokens):
         self.tokens = copy.deepcopy(tokens)
 
-    ###############
-    # from_string #
-    ###############
+    ####################
+    # init_from_string #
+    ####################
     @classmethod
-    def from_string(cls, txt):
+    def init_from_string(cls, txt):
         return cls(Bluejay.tokenize(txt))
 
     ############
@@ -88,15 +82,15 @@ class Bluejay:
             idx__1 = len(self.tokens) 
 
         if idx__0 < 0:
-            raise Execption(f'[ERROR] idx__0 ({idx__0}) < 0. idx__0 is out of range.')
+            raise Exception(f'[ERROR] idx__0 ({idx__0}) < 0. idx__0 is out of range.')
         if idx__0 > len(self.tokens):
-            raise Execption(f'[ERROR] idx__0 ({idx__0}) > len(self.tokens) ({len(self.tokens)}). idx__0 is out of range.')
+            raise Exception(f'[ERROR] idx__0 ({idx__0}) > len(self.tokens) ({len(self.tokens)}). idx__0 is out of range.')
         if idx__1 < 0:
-            raise Execption(f'[ERROR] idx__1 ({idx__1}) < 0. idx__1 is out of range.')
+            raise Exception(f'[ERROR] idx__1 ({idx__1}) < 0. idx__1 is out of range.')
         if idx__1 > len(self.tokens):
-            raise Execption(f'[ERROR] idx__1 ({idx__1}) > len(self.tokens) ({len(self.tokens)}). idx__1 is out of range.')
+            raise Exception(f'[ERROR] idx__1 ({idx__1}) > len(self.tokens) ({len(self.tokens)}). idx__1 is out of range.')
         if idx__0 > idx__1:
-            raise Execption(f'[ERROR] idx__0 ({idx__0}) > idx__1 ({idx__1}). idx__0 must be less than or equal to idx__1.')
+            raise Exception(f'[ERROR] idx__0 ({idx__0}) > idx__1 ({idx__1}). idx__0 must be less than or equal to idx__1.')
 
         return idx__0, idx__1
 
@@ -126,10 +120,10 @@ class Bluejay:
     ######################
     def macro_substitution(self, defs, idx__0 = None, idx__1 = None):
         """
-        For each key/value pair in defs, replaces all occurrences of the token key with the token value between idx__0 and ind__1.
+        For each key/value pair in defs, replaces all occurrences of the 'key' token with 'value' token between idx__0 and ind__1.
         
         Arguments:
-            defs (dict): .
+            defs (dict): A hash mapping each 'key' token to a corresponding 'value' token.
         """
         for key, value in defs.items():
             self.substitute(key, value, idx__0, idx__1)
@@ -154,7 +148,6 @@ class Bluejay:
             idx__0 += 1
 
         return idx__0
-
 
     ###############
     # get_indent #
@@ -186,53 +179,93 @@ class Bluejay:
     # remove_indent #
     #################
     def remove_indent(self, N, idx__0 = None, idx__1 = None):
+        """
+        Removes N spaces from the beginning of each newline between idx__0 and idx__1.
+        
+        Arguments:
+            N (int): Number of spaces to remove from each newline.
+            idx__0 (int): Start index.
+            idx__1 (int): End index (exclusive).
+        """
         idx__0, idx__1 = self.bound(idx__0, idx__1)
 
+        # save the initial value of idx__0, it will be needed later
+        idx__0__init = idx__0
+
         tokens = []
-        idx__2 = min(idx__0 + N, self.search('\n', idx__0, idx__1))
-        while idx__2 < idx__1:
-            tokens.append(self.tokens[idx__2])
 
-            if self.tokens[idx__2] == '\n': 
-                idx__2 = min(idx__2 + N + 1, self.search('\n', idx__2 + 1, idx__1)) 
+        n = 0
+        while idx__0 < idx__1:
+            if n < N:
+                if self.tokens[idx__0] != ' ' and self.tokens[idx__0] != '\n': 
+                    raise Exception(f'[ERROR] A non-empty token cannot be removed as indentation')
             else:
-                idx__2 += 1
+                tokens.append(self.tokens[idx__0])
 
-        self.replace(tokens, idx__0, idx__1)
+            if self.tokens[idx__0] == '\n': 
+                n = 0
+            else:
+                n += 1
+
+            idx__0 += 1
+
+        self.replace(tokens, idx__0__init, idx__1)
 
     ##############
     # add_indent #
     ##############
     def add_indent(self, N, idx__0 = None, idx__1 = None):
+        """
+        Adds N spaces to the beginning of each newline between idx__0 and idx__1.
+        
+        Arguments:
+            N (int): Number of spaces to add to each newline.
+            idx__0 (int): Start index.
+            idx__1 (int): End index (exclusive).
+        """
         idx__0, idx__1 = self.bound(idx__0, idx__1)
 
-        tokens = [' '] * N
-        idx__2 = idx__0
-        while idx__2 < idx__1:
-            tokens.append(self.tokens[idx__2])
+        # save the initial value of idx__0, it will be needed later
+        idx__0__init = idx__0
 
-            if self.tokens[idx__2] == '\n': 
+        tokens = [' ']*N
+
+        while idx__0 < idx__1:
+            tokens.append(self.tokens[idx__0])
+
+            if self.tokens[idx__0] == '\n': 
                 tokens.extend([' ']*N)
 
-            idx__2 += 1
+            idx__0 += 1
 
-        self.replace(tokens, idx__0, idx__1)
+        self.replace(tokens, idx__0__init, idx__1)
             
     ########
     # exec #
     ########
     def exec(self, txt):
-        f = StringIO()
-        with redirect_stdout(f):
+        """
+        This function dynamically executes Python code, passed in as a string, and returns the stdout produced by the code's execution.
+        
+        Arguments:
+            txt (str): A string containing Python code.
+        """
+        f = io.StringIO()
+        with contextlib.redirect_stdout(f):
             exec(txt)
 
         return f.getvalue() 
-
 
     ########
     # read #
     ########
     def read(self, filename):
+        """
+        Reads from the specified file. 
+        
+        Arguments:
+            filename (str): Name of file.
+        """
         with open(filename, 'r') as file:
             return file.read()
 
@@ -240,8 +273,60 @@ class Bluejay:
     # write #
     #########
     def write(self, filename, txt):
+        """
+        Writes txt to the specified file. 
+        
+        Arguments:
+            filename (str): Name of file.
+            txt (str): String of text to be written.
+        """
         with open(filename, 'w') as file:
             file.write(txt)
+        
+    ########
+    # copy #
+    ########
+    def copy(self, idx__0 = None, idx__1 = None):
+        """
+        Returns a new Bluejay instance with the tokens between idx__0 and idx__1.
+        
+        Arguments:
+            idx__0 (int): Start index.
+            idx__1 (int): End index (exclusive).
+        """
+        idx__0, idx__1 = self.bound(idx__0, idx__1)
+        return Bluejay(self.tokens[idx__0:idx__1])
+
+    ###################
+    # get_parentheses #
+    ###################
+    def get_parentheses(self, idx__func):
+        """
+        Returns the indices of the opening and closing parentheses of a function call. 
+        
+        Arguments:
+            idx__func (int): Index of the function call token.
+        """
+        # search for the opening parenthesis
+        idx__open = idx__func + 1
+        while idx__open < len(self.tokens):
+            if self.tokens[idx__open] == '(':
+                break
+            
+            # make sure there are no non-empty tokens between the function call token and the opening parenthesis
+            if self.tokens[idx__open] != '\n' and self.tokens[idx__open] != ' ':
+                raise Exception(f'[ERROR] The first non-empty token after the function name must be an opening parenthesis.')
+
+            idx__open += 1
+
+        # if idx__open equals len(self.tokens) then no opening parenthesis was found 
+        if idx__open == len(self.tokens):
+            raise Exception(f'[ERROR] No opening parenthesis found.')
+
+        # search for the closing parenthesis
+        idx__close = self.match('(', ')', idx__open)
+
+        return idx__open, idx__close
         
 
     ##########
@@ -252,23 +337,20 @@ class Bluejay:
         while True:
             # get index of 'PYTHON' tag
             idx__PYTHON = self.search('PYTHON')
-            # if idx__PYTHON == len(self.tokens) (no match was found), exit the loop
+            # if idx__PYTHON equals len(self.tokens) then no match was found, exit the loop
             if idx__PYTHON == len(self.tokens):
                 break
 
-            # get the index of the opening parenthesis, '('
-            idx__open = self.search('(', idx__PYTHON + 1)
-            # get the index of the closing parenthesis, ')'
-            idx__close = self.match('(', ')', idx__open)
+            idx__open, idx__close = self.get_parentheses(idx__PYTHON) 
 
 
-            # create Bluejay object with the PYTHON(*)'s argument
-            bluejay = Bluejay(self.tokens[idx__open + 1:idx__close])
-
+            # create a new Bluejay instance containing the PYTHON call's argument
+            jay = self.copy(idx__open + 1, idx__close)
             # remove any unnecessary indentation as this will result in an IndentationError when the code is executed
-            bluejay.remove_indent(bluejay.get_indent())
+            jay.remove_indent(jay.get_indent())
     
-            stdout = self.exec(bluejay.join())
+
+            stdout = self.exec(jay.join())
             
             # tokentize the output of the code
             tokens = self.tokenize(stdout)
@@ -283,15 +365,30 @@ class Bluejay:
 
 
     ##########
-    # splice #
+    # insert #
     ##########
-    def splice(self, tokens, idx__0):
+    def insert(self, tokens, idx__0):
+        """
+        Inserts tokens into self.tokens at idx__0.
+        
+        Arguments:
+            tokens (list): List of tokens.
+            idx__0 (int): Start index.
+            idx__1 (int): End index (exclusive).
+        """
         self.tokens = self.tokens[:idx__0] + copy.deepcopy(tokens) + self.tokens[idx__0:] 
         
     ##########
     # delete #
     ##########
     def delete(self, idx__0 = None, idx__1 = None):
+        """
+        Deletes all tokens between idx__0 and idx__1. 
+        
+        Arguments:
+            idx__0 (int): Start index.
+            idx__1 (int): End index (exclusive).
+        """
         idx__0, idx__1 = self.bound(idx__0, idx__1)
         self.tokens = self.tokens[:idx__0] + self.tokens[idx__1:] 
 
@@ -299,18 +396,34 @@ class Bluejay:
     # replace #
     ###########
     def replace(self, tokens, idx__0 = None, idx__1 = None):
+        """
+        Replaces the tokens between idx__0 and idx__1 with the provided tokens.
+        
+        Arguments:
+            tokens (list): List of tokens.
+            idx__0 (int): Start index.
+            idx__1 (int): End index (exclusive).
+        """
         idx__0, idx__1 = self.bound(idx__0, idx__1)
         self.delete(idx__0, idx__1)
-        self.splice(tokens, idx__0)
+        self.insert(tokens, idx__0)
 
 
     #########
     # match #
     #########
     def match(self, token__open, token__close, idx__0):
+        """
+        Returns the index of the matching token. idx__0 is the index of the opending token to be matched. 
+        
+        Arguments:
+            token__open (str): Opening token (e.g. '(', '[', '{').
+            token__close (str): Opening token (e.g. '(', '[', '{').
+            idx__0 (int): Index of the opening token to be matched.
+        """
         
         if self.tokens[idx__0] != token__open: 
-            raise Execption(f'[ERROR] self.tokens[{idx__0}] ({self.tokens[{idx__0}]}) != token__open {token__open}. self.token[idx__0] must be equal to token__open.')
+            raise Exception(f'[ERROR] self.tokens[{idx__0}] ({self.tokens[{idx__0}]}) != token__open {token__open}. self.token[idx__0] must be equal to token__open.')
 
         count = 0
         while idx__0 < len(self.tokens):
@@ -325,7 +438,7 @@ class Bluejay:
             idx__0 += 1
 
         if count != 0:
-            raise Execption(f'[ERROR] count ({count}) != 0. No matching token__close was found.')
+            raise Exception(f'[ERROR] count ({count}) != 0. No matching token__close was found.')
 
         return idx__0 
 
@@ -334,6 +447,14 @@ class Bluejay:
     # build #
     #########
     def build(self, defs = {}):
+        """
+        Runs a number of methods to modify self.tokens. These include methods to perform:
+            - Macro Substitution
+            - Evaluating embedded Python code
+        
+        Arguments:
+            defs (dict): A hash mapping each 'key' token to a corresponding 'value' token.
+        """
         self.macro_substitution(defs)
         self.python()
 
@@ -354,14 +475,14 @@ if __name__ == '__main__':
         with open(file__b, 'r') as file:
             txt = file.read()
 
-        bluejay = Bluejay.from_string(txt)
-        bluejay.build(defs)
-        #bluejay.write(file__sv)
-        print(bluejay.tokens)
+        jay = Bluejay.init_from_string(txt)
+        jay.build(defs)
+        #jay.write(file__sv)
+        print(jay.tokens)
         #print(defs['CSR__MISA__WIRI__0__WIDTH'])
 
         with open(file__sv, 'w') as file:
-            file.write(bluejay.join())
+            file.write(jay.join())
 
 
     else:
