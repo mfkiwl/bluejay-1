@@ -25,20 +25,33 @@ class Bluejay:
     # __init__ #
     ############
     def __init__(self, tokens):
+        """
+        Bluejay constructor. 
+        
+        Arguments:
+            tokens (list): a list of tokens.
+        """
         self.tokens = copy.deepcopy(tokens)
 
     ####################
     # init_from_string #
     ####################
-    @classmethod
-    def init_from_string(cls, txt):
-        return cls(Bluejay.tokenize(txt))
+    @staticmethod
+    def init_from_string(txt):
+        """
+        Alternate constructor which takes an input string instead of a list of tokens.
+        
+        Arguments:
+            txt (str): Input string.
+        """
+        jay = Bluejay([])
+        jay.tokens = jay.tokenize(txt)
+        return jay 
 
     ############
     # tokenize #
     ############
-    @staticmethod
-    def tokenize(txt):
+    def tokenize(self, txt):
         """
         Splits txt into a list of tokens.
         
@@ -478,7 +491,7 @@ if __name__ == '__main__':
         jay = Bluejay.init_from_string(txt)
         jay.build(defs)
         #jay.write(file__sv)
-        print(jay.tokens)
+        #print(jay.tokens)
         #print(defs['CSR__MISA__WIRI__0__WIDTH'])
 
         with open(file__sv, 'w') as file:

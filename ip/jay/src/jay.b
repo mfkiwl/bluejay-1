@@ -207,7 +207,7 @@ machine_timer_registers machine_timer_registers__0
     .rst(rst),
     .cs(cs__2),
     .we(we__2),
-    .addr(addr__2[0]),
+    .addr(addr__2[3:0]),
     .wr_data(wr_data__2),
     .rd_data(rd_data__2),
     .tip(tip)

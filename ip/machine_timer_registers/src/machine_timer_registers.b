@@ -17,7 +17,7 @@ input clk;
 input rst;
 input cs;
 input we;
-input addr;
+input [3:0] addr;
 input [63:0] wr_data;
 output [63:0] rd_data;
 output tip;
@@ -27,7 +27,7 @@ logic rst;
 
 logic cs;
 logic we;
-logic addr;
+logic [3:0] addr;
 logic [63:0] wr_data;
 logic [63:0] rd_data;
 

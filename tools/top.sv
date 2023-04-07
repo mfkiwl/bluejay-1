@@ -23,5 +23,7 @@ end
     hi
     hi
     hi
+    hi
+    hi
 
 endmodule
