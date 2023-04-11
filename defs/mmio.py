@@ -11,7 +11,7 @@ mtimecmp = {
 
 
 machine_timer_registers = {
-    'group': 'machine_timer_registers',
+    'region': 'machine_timer_registers',
     'base': 0x10000,
     'registers': {
         'mtime': mtime,
@@ -19,7 +19,7 @@ machine_timer_registers = {
     },
 }
 
-print(machine_timer_registers)
+#print(machine_timer_registers)
 
 
 misa = {
@@ -50,13 +50,85 @@ misa = {
     },
 }
 
+mvendorid = {
+    'addr': 0xf11,
+    'width': 64,
+    'fields': {
+        'vendor': {
+            'lsb': 0,
+            'msb': 63,
+            'values': {
+                'value': 0x0, 
+            },
+        },
+    },
+}
+
+
 
 csr = {
-    'group': 'csr',
+    'region': 'csr',
     'base': 0x0,
     'registers': {
         'misa': misa,
+        'mvendorid': mvendorid,
     }
 }
 
-print(csr)
+#print(csr)
+
+
+class Register:
+    ############
+    # __init__ #
+    ############
+    def __init__(self, addr, width, fields):
+        self.addr = addr
+        self.fields = {'extensions': {'lsb', }}
+
+
+class Field:
+
+    ############
+    # __init__ #
+    ############
+    def __init__(self, lsb, msb, values):
+        self.lsb = lsb
+        self.msb = msb
+        self.values = values
+
+    #########
+    # width #
+    #########
+    def width(self):
+        return self.msb - self.lsb + 1
+
+
+class Region:
+
+    ############
+    # __init__ #
+    ############
+    def __init__(self, region):
+        self.region = region 
+
+
+
+
+
+
+
+def mmio(x):
+    defs = {}
+    #print(x['region'].upper() + '__BASE_ADDR' + ' ' + str(x['base']))
+    defs[x['region'].upper() + '__BASE_ADDR'] = x['base']
+    for reg in x['registers']:
+        print(reg)
+
+    print(defs)
+
+mmio(csr)
+
+#field = Field('extensions', 0, 25, {'I': 0x100})
+#print(field.width())
+

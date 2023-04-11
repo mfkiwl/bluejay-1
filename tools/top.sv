@@ -7,11 +7,11 @@ module top
 always_comb
 begin
     case ((a))
-    2'h1:
+    SIZE__WORD:
     begin
         a = b;
     end
-    6'h1:
+    OP__LB:
     begin
         a == c;
         a == c + d;

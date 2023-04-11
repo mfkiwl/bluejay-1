@@ -1,3 +1,4 @@
+
 ##########
 # import #
 ##########
@@ -24,7 +25,7 @@ class Bluejay:
     ############
     # __init__ #
     ############
-    def __init__(self, tokens):
+    def __init__(self, tokens = []):
         """
         Bluejay constructor. 
         
@@ -36,17 +37,38 @@ class Bluejay:
     ####################
     # init_from_string #
     ####################
-    @staticmethod
     def init_from_string(txt):
         """
-        Alternate constructor which takes an input string instead of a list of tokens.
+        Initializes self.tokens from an input string.
         
         Arguments:
             txt (str): Input string.
         """
-        jay = Bluejay([])
-        jay.tokens = jay.tokenize(txt)
-        return jay 
+        self.tokens = self.tokenize(txt)
+
+    ########
+    # load #
+    ########
+    def load(self, filename):
+        """
+        Loads the specified text file into self.tokens.
+        
+        Arguments:
+            filename (str): Name of file.
+        """
+        self.tokens = self.tokenize(self.read(filename))
+
+    #########
+    # store #
+    #########
+    def store(self, filename):
+        """
+        Stores self.tokens into the specified file (as a string). 
+        
+        Arguments:
+            filename (str): Name of file.
+        """
+        self.write(filename, self.join())
 
     ############
     # tokenize #
@@ -473,30 +495,19 @@ class Bluejay:
 
 
 if __name__ == '__main__':
- 
-    if len(sys.argv) == 3:
-        file__b = sys.argv[1]
-        file__sv = sys.argv[2]
 
-        if platform.system() == 'Darwin':
-            path = '/Users/seankent/Documents/bluejay/'
-        elif platform.system() == 'Linux':
-            path = '/home/seankent/bluejay/'
-        else:
-            path = '/mnt/c/Users/seanj/Documents/bluejay/'
+    if len(sys.argv) == 4:
+        filename__b = sys.argv[1]
+        filename__sv = sys.argv[2]
+        filename__defs = sys.argv[3]
 
-        with open(file__b, 'r') as file:
-            txt = file.read()
+        defs = {}
+        exec(open(filename__defs).read(), None, {"defs": defs})
 
-        jay = Bluejay.init_from_string(txt)
+        jay = Bluejay()
+        jay.load(filename__b)
         jay.build(defs)
-        #jay.write(file__sv)
-        #print(jay.tokens)
-        #print(defs['CSR__MISA__WIRI__0__WIDTH'])
-
-        with open(file__sv, 'w') as file:
-            file.write(jay.join())
-
+        jay.store(filename__sv)
 
     else:
-        print('[ERROR] Bluejay failed.')
+        raise Exception(f'[ERROR] Invalid number of arguments provided.')
