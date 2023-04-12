@@ -88,7 +88,7 @@ begin
         STATE__WRITE:
         begin
             ena = 1'b1;
-            wea = (size == 2'h3) ? (8'b0000_0001 << addr[2:0]) : (size == 2'h2) ? (8'b0000_0011 << addr[1:0]) : (size == 2'h1) ? (8'b0000_1111 << addr[0]) : 8'b1111_1111;
+            wea = (size == 2'h0) ? (8'b0000_0001 << addr[2:0]) : (size == 2'h1) ? (8'b0000_0011 << addr[1:0]) : (size == 2'h2) ? (8'b0000_1111 << addr[0]) : 8'b1111_1111;
             ready = 1'b1;
             state__n = STATE__IDLE; 
         end

@@ -406,7 +406,6 @@ localparam STATE__INTERRUPT__EXTERNAL = 8'hce;
 localparam STATE__FATAL = 8'hcf;
 
 
-
 always_comb begin
     state__n = state;
     ir__n = ir;
@@ -420,7 +419,7 @@ always_comb begin
     rf__wr_data = c;
     cs = 1'b0;
     we = 1'b0;
-    size = 2'h1;
+    size = 2'h2;
     wr_data = rf__rd_data;
     csr__cs = 1'b0;
     csr__we = 1'b0;
@@ -452,7 +451,7 @@ always_comb begin
         begin
             cs = 1'b1;
             addr = pc;
-            size = 2'h1;
+            size = 2'h2;
             ir__n = rd_data[31:0];
             state__n = (ready & ~resp) ? STATE__DECODE : (ready & resp & (rd_data == 64'h0)) ? STATE__EXCEPTION__INSTRUCTION_ACCESS_FAULT__0 : STATE__FETCH__1;
         end
@@ -1640,7 +1639,7 @@ always_comb begin
             func = 5'h0;
             cs = 1'b1;
             addr = c;
-            size = 2'h3;
+            size = 2'h0;
             rf__cs = 1'b1;
             rf__addr = rd;
             rf__we = ready & ~resp;
@@ -1678,7 +1677,7 @@ always_comb begin
             func = 5'h0;
             cs = 1'b1;
             addr = c;
-            size = 2'h2;
+            size = 2'h1;
             rf__cs = 1'b1;
             rf__addr = rd;
             rf__we = ready & ~resp;
@@ -1716,7 +1715,7 @@ always_comb begin
             func = 5'h0;
             cs = 1'b1;
             addr = c;
-            size = 2'h1;
+            size = 2'h2;
             rf__cs = 1'b1;
             rf__addr = rd;
             rf__we = ready & ~resp;
@@ -1754,7 +1753,7 @@ always_comb begin
             func = 5'h0;
             cs = 1'b1;
             addr = c;
-            size = 2'h0;
+            size = 2'h3;
             rf__cs = 1'b1;
             rf__addr = rd;
             rf__we = ready & ~resp;
@@ -1792,7 +1791,7 @@ always_comb begin
             func = 5'h0;
             cs = 1'b1;
             addr = c;
-            size = 2'h3;
+            size = 2'h0;
             rf__cs = 1'b1;
             rf__addr = rd;
             rf__we = ready & ~resp;
@@ -1830,7 +1829,7 @@ always_comb begin
             func = 5'h0;
             cs = 1'b1;
             addr = c;
-            size = 2'h2;
+            size = 2'h1;
             rf__cs = 1'b1;
             rf__addr = rd;
             rf__we = ready & ~resp;
@@ -1868,7 +1867,7 @@ always_comb begin
             func = 5'h0;
             cs = 1'b1;
             addr = c;
-            size = 2'h1;
+            size = 2'h2;
             rf__cs = 1'b1;
             rf__addr = rd;
             rf__we = ready & ~resp;
@@ -1909,7 +1908,7 @@ always_comb begin
             cs = 1'b1;
             we = 1'b1;
             addr = c;
-            size = 2'h3;
+            size = 2'h0;
             wr_data = rf__rd_data;
             state__n = (ready & ~resp) ? STATE__SB__2 : (ready & resp & (rd_data == 64'h0)) ? STATE__EXCEPTION__STORE_ACCESS_FAULT__0 : (ready & resp & (rd_data == 64'h1)) ? STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__0 : STATE__SB__1;
         end
@@ -1948,7 +1947,7 @@ always_comb begin
             cs = 1'b1;
             we = 1'b1;
             addr = c;
-            size = 2'h2;
+            size = 2'h1;
             wr_data = rf__rd_data;
             state__n = (ready & ~resp) ? STATE__SH__2 : (ready & resp & (rd_data == 64'h0)) ? STATE__EXCEPTION__STORE_ACCESS_FAULT__0 : (ready & resp & (rd_data == 64'h1)) ? STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__0 : STATE__SH__1;
         end
@@ -1986,7 +1985,7 @@ always_comb begin
             cs = 1'b1;
             we = 1'b1;
             addr = c;
-            size = 2'h1;
+            size = 2'h2;
             wr_data = rf__rd_data;
             state__n = (ready & ~resp) ? STATE__SW__2 : (ready & resp & (rd_data == 64'h0)) ? STATE__EXCEPTION__STORE_ACCESS_FAULT__0 : (ready & resp & (rd_data == 64'h1)) ? STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__0 : STATE__SW__1;
         end
@@ -2024,7 +2023,7 @@ always_comb begin
             cs = 1'b1;
             we = 1'b1;
             addr = c;
-            size = 2'h0;
+            size = 2'h3;
             wr_data = rf__rd_data;
             state__n = (ready & ~resp) ? STATE__SD__2 : (ready & resp & (rd_data == 64'h0)) ? STATE__EXCEPTION__STORE_ACCESS_FAULT__0 : (ready & resp & (rd_data == 64'h1)) ? STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__0 : STATE__SD__1;
         end

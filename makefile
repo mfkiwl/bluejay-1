@@ -71,6 +71,25 @@ all: diff-$(SIM_IP)-sim__xyz
 
 
 
+################################
+# defines
+################################
+.PHONY: defs-sv
+defs-sv: $(TOP)/defs/gen/defs.py
+
+.PHONY: defs-c
+defs-c: $(TOP)/defs/gen/defs.h
+
+
+$(TOP)/defs/gen:
+	$(MKDIR) $(@)
+
+$(TOP)/defs/gen/defs.py: $(TOP)/defs/defs.py | $(TOP)/defs/gen
+	$(PYTHON) $(TOP)/tools/builder.py $(<) $(@) sv
+
+$(TOP)/defs/gen/defs.h: $(TOP)/defs/defs.py | $(TOP)/defs/gen
+	$(PYTHON) $(TOP)/tools/builder.py $(<) $(@) c 
+
 
 ################################
 # ip--src--dir--template                                                
@@ -88,8 +107,8 @@ endef
 #     $(1): ip name 
 ################################
 define ip--src--system-verilog--template
-$(TOP)/ip/$(1)/src/gen/%.sv: $$(TOP)/ip/$(1)/src/%.b $$(TOP)/defs/defs.py | $(TOP)/ip/$(1)/src/gen
-	$(PYTHON) $(TOP)/tools/bluejay.py $$(<) $$(@)
+$(TOP)/ip/$(1)/src/gen/%.sv: $$(TOP)/ip/$(1)/src/%.b $$(TOP)/defs/gen/defs.py | $(TOP)/ip/$(1)/src/gen
+	$(PYTHON) $(TOP)/tools/bluejay.py $$(<) $$(@) $$(TOP)/defs/gen/defs.py
 endef
 
 ################################
@@ -122,8 +141,8 @@ endef
 #     $(1): ip name 
 ################################
 define ip--tb--system-verilog--template
-$(TOP)/ip/$(1)/tb/gen/%.sv: $(TOP)/ip/$(1)/tb/%.b | $(TOP)/ip/$(1)/tb/gen
-	$(PYTHON) $(TOP)/tools/bluejay.py $$(<) $$(@)
+$(TOP)/ip/$(1)/tb/gen/%.sv: $(TOP)/ip/$(1)/tb/%.b $$(TOP)/defs/gen/defs.py | $(TOP)/ip/$(1)/tb/gen
+	$(PYTHON) $(TOP)/tools/bluejay.py $$(<) $$(@) $$(TOP)/defs/gen/defs.py
 endef
 
 ################################
@@ -637,6 +656,7 @@ SIM := sim__xyz
 TESTS := ADD-01 ADDI-01 ADDW-01 ADDIW-01 AND-01 ANDI-01 AUIPC-01 BEQ-01 BGE-01 BGEU-01 BLT-01 BLTU-01 BNE-01 I-DELAY_SLOTS-01 I-EBREAK-01 I-ECALL-01 I-ENDIANESS-01 I-IO-01 I-MISALIGN_JMP-01 I-MISALIGN_LDST-01 I-NOP-01 I-RF_size-01 I-RF_width-01 I-RF_x0-01 JAL-01 JALR-01 LB-01 LBU-01 LD-01 LH-01 LHU-01 LUI-01 LW-01 LWU-01 OR-01 ORI-01 SB-01 SD-01 SH-01 SLL-01 SLLI-01 SLLIW-01 SLLW-01 SLT-01 SLTI-01 SLTIU-01 SLTU-01 SRA-01 SRAI-01 SRAIW-01 SRAW-01 SRL-01 SRLI-01 SRLIW-01 SRLW-01 SUB-01 SUBW-01 SW-01 XOR-01 XORI-01
 #TESTS := ADD-01 ADDI-01
 #TESTS := BEQ-01
+#TESTS := ADD-01
 
 $(eval $(call ip--src--template,$(IP)))
 $(eval $(call ip--tb--template,$(IP)))

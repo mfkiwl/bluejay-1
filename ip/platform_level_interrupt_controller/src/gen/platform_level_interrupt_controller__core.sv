@@ -153,37 +153,37 @@ begin
     re__context__0__claim_complete = 1'b0;
 
     case (addr)
-        26'h0_00_00_00:
+        26'h0000000:
         begin
             rd_data = priority__0; 
             we__priority__0 = we;            
             re__priority__0 = ~we;            
         end
-        26'h0_00_00_04:
+        26'h0000004:
         begin
             rd_data = priority__1; 
             we__priority__1 = we;            
             re__priority__1 = ~we;            
         end
-        26'h0_00_10_00:
+        26'h0001000:
         begin
             rd_data = ip__0_to_31;
             we__ip__0_to_31 = we;
             re__ip__0_to_31 = ~we;
         end
-        26'h0_00_20_00:
+        26'h0002000:
         begin
             rd_data = context__0__ie__0_to_31;
             we__context__0__ie__0_to_31 = we;
             re__context__0__ie__0_to_31 = ~we;
         end
-        26'h20_00_00:
+        26'h0200000:
         begin
             rd_data = context__0__threshold;
             we__context__0__threshold = we;
             re__context__0__threshold = ~we;
         end
-        26'h20_00_04:
+        26'h0200004:
         begin
             rd_data = context__0__claim_complete;
             we__context__0__claim_complete = we;

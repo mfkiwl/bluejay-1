@@ -347,7 +347,7 @@ assign misa[25:0] = misa__extensions;
 assign misa[61:26] = misa__wiri__0;
 assign misa[63:62] = misa__base;
 
-assign misa__extensions = 26'h0_00_01_00;
+assign misa__extensions = 26'h100;
 assign misa__wiri__0 = 36'h0;
 assign misa__base = 2'h2;
 

@@ -1,4 +1,4 @@
-Info Session started: Sat Apr  1 15:33:13 2023
+Info Session started: Tue Apr 11 20:05:12 2023
 
 Info PROGRAM /home/seankent/bluejay/imperas/imperas-riscv-tests/riscv-ovpsim-plus/bin/Linux64/riscvOVPsimPlus.exe
 Info ------------- ENVIRONMENT -------------
@@ -24,7 +24,7 @@ Copyright (c) 2005-2023 Imperas Software Ltd.  Contains Imperas Proprietary Info
 Licensed Software, All Rights Reserved.
 Visit www.IMPERAS.com for multicore debug, verification and analysis solutions.
 
-riscvOVPsimPlus started: Sat Apr  1 15:33:13 2023
+riscvOVPsimPlus started: Tue Apr 11 20:05:12 2023
 
 
 Info (OR_OF) Target 'riscvOVPsim/cpu' has object file read from '/home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/I-MISALIGN_LDST-01/I-MISALIGN_LDST-01.elf'
@@ -119,11 +119,11 @@ Info   System time           : 0.00 seconds
 Info   Elapsed time          : 0.00 seconds
 Info ---------------------------------------------------
 
-riscvOVPsimPlus finished: Sat Apr  1 15:33:13 2023
+riscvOVPsimPlus finished: Tue Apr 11 20:05:12 2023
 
 
 riscvOVPsimPlus (64-Bit) v20230201.0 Open Virtual Platform simulator from www.IMPERAS.com.
 Visit www.IMPERAS.com for multicore debug, verification and analysis solutions.
 
-Info Session ended: Sat Apr  1 15:33:13 2023
+Info Session ended: Tue Apr 11 20:05:12 2023
 

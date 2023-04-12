@@ -74,25 +74,25 @@ begin
         begin
             rd_data = pma__3; 
         end
-        3'h0:
+        3'h4:
         begin
             rd_data = pma__4; 
         end
-        3'h1:
+        3'h5:
         begin
             rd_data = pma__5; 
         end
-        3'h2:
+        3'h6:
         begin
             rd_data = pma__6; 
         end
-        3'h3:
+        3'h7:
         begin
             rd_data = pma__7; 
         end
         default:
         begin
-            rd_data[0:0] = 0;
+            rd_data[0:0] = 1'b0;
             rd_data[1:1] = 1'b0;
             rd_data[2:2] = 1'b0;
             rd_data[3:3] = 1'b0;
@@ -105,7 +105,7 @@ end
 //==============================================
 // Physical Memory Attributes Register 0
 //==============================================
-assign pma__0[0:0] = 1;
+assign pma__0[0:0] = 1'b0;
 assign pma__0[1:1] = 1'b1;
 assign pma__0[2:2] = 1'b1;
 assign pma__0[3:3] = 1'b1;
@@ -116,7 +116,7 @@ assign pma__0[5:5] = 1'b0;
 //==============================================
 // Physical Memory Attributes Register 1
 //==============================================
-assign pma__1[0:0] = 0;
+assign pma__1[0:0] = 1'b0;
 assign pma__1[1:1] = 1'b0;
 assign pma__1[2:2] = 1'b0;
 assign pma__1[3:3] = 1'b1;
@@ -126,7 +126,7 @@ assign pma__1[5:5] = 1'b0;
 //==============================================
 // Physical Memory Attributes Register 2
 //==============================================
-assign pma__2[0:0] = 0;
+assign pma__2[0:0] = 1'b0;
 assign pma__2[1:1] = 1'b0;
 assign pma__2[2:2] = 1'b0;
 assign pma__2[3:3] = 1'b0;
@@ -136,7 +136,7 @@ assign pma__2[5:5] = 1'b0;
 //==============================================
 // Physical Memory Attributes Register 3
 //==============================================
-assign pma__3[0:0] = 0;
+assign pma__3[0:0] = 1'b0;
 assign pma__3[1:1] = 1'b1;
 assign pma__3[2:2] = 1'b0;
 assign pma__3[3:3] = 1'b0;
@@ -146,7 +146,7 @@ assign pma__3[5:5] = 1'b0;
 //==============================================
 // Physical Memory Attributes Register 4
 //==============================================
-assign pma__4[0:0] = 0;
+assign pma__4[0:0] = 1'b0;
 assign pma__4[1:1] = 1'b1;
 assign pma__4[2:2] = 1'b0;
 assign pma__4[3:3] = 1'b0;
@@ -156,7 +156,7 @@ assign pma__4[5:5] = 1'b0;
 //==============================================
 // Physical Memory Attributes Register 5
 //==============================================
-assign pma__5[0:0] = 0;
+assign pma__5[0:0] = 1'b0;
 assign pma__5[1:1] = 1'b0;
 assign pma__5[2:2] = 1'b0;
 assign pma__5[3:3] = 1'b0;
@@ -166,7 +166,7 @@ assign pma__5[5:5] = 1'b0;
 //==============================================
 // Physical Memory Attributes Register 6
 //==============================================
-assign pma__6[0:0] = 0;
+assign pma__6[0:0] = 1'b0;
 assign pma__6[1:1] = 1'b0;
 assign pma__6[2:2] = 1'b0;
 assign pma__6[3:3] = 1'b0;
@@ -176,7 +176,7 @@ assign pma__6[5:5] = 1'b0;
 //==============================================
 // Physical Memory Attributes Register 7
 //==============================================
-assign pma__7[0:0] = 0;
+assign pma__7[0:0] = 1'b0;
 assign pma__7[1:1] = 1'b0;
 assign pma__7[2:2] = 1'b0;
 assign pma__7[3:3] = 1'b0;

@@ -79,13 +79,13 @@ begin
                     ready = 1'b1;
                     resp = 1'b0;
                     rd_data[7:0] = memory[addr];
-                    rd_data[15:8] = ((size == 2'h2) || (size == 2'h1) || (size == 2'h0)) ? memory[addr + 1] : {8{1'bx}};
-                    rd_data[23:16] = ((size == 2'h1) || (size == 2'h0)) ? memory[addr + 2] : {8{1'bx}};
-                    rd_data[31:24] = ((size == 2'h1) || (size == 2'h0)) ? memory[addr + 3] : {8{1'bx}};
-                    rd_data[39:32] = (size == 2'h0) ? memory[addr + 4] : {8{1'bx}};
-                    rd_data[47:40] = (size == 2'h0) ? memory[addr + 5] : {8{1'bx}};
-                    rd_data[55:48] = (size == 2'h0) ? memory[addr + 6] : {8{1'bx}};
-                    rd_data[63:56] = (size == 2'h0) ? memory[addr + 7] : {8{1'bx}};
+                    rd_data[15:8] = ((size == 2'h1) || (size == 2'h2) || (size == 2'h3)) ? memory[addr + 1] : {8{1'bx}};
+                    rd_data[23:16] = ((size == 2'h2) || (size == 2'h3)) ? memory[addr + 2] : {8{1'bx}};
+                    rd_data[31:24] = ((size == 2'h2) || (size == 2'h3)) ? memory[addr + 3] : {8{1'bx}};
+                    rd_data[39:32] = (size == 2'h3) ? memory[addr + 4] : {8{1'bx}};
+                    rd_data[47:40] = (size == 2'h3) ? memory[addr + 5] : {8{1'bx}};
+                    rd_data[55:48] = (size == 2'h3) ? memory[addr + 6] : {8{1'bx}};
+                    rd_data[63:56] = (size == 2'h3) ? memory[addr + 7] : {8{1'bx}};
                 end
             end
             state__n = STATE__NOT_READY;
@@ -107,19 +107,19 @@ end
 
 always_comb begin
     case (size)
-        2'h0:
+        2'h3:
         begin
             address_misaligned = (addr[2:0] != 3'b0);
         end
-        2'h1:
+        2'h2:
         begin
             address_misaligned = (addr[1:0] != 2'b0);
         end
-        2'h2:
+        2'h1:
         begin
             address_misaligned = (addr[0] != 1'b0);
         end
-        2'h3:
+        2'h0:
         begin
             address_misaligned = 1'b0;
         end
@@ -129,13 +129,13 @@ end
 always_ff @(posedge clk)
 begin
     memory[addr] <= en ? wr_data[7:0] : memory[addr];
-    memory[addr + 1] <= en & ((size == 2'h2) || (size == 2'h1) || (size == 2'h0)) ? wr_data[15:8] : memory[addr + 1];
-    memory[addr + 2] <= en & ((size == 2'h1) || (size == 2'h0)) ? wr_data[23:16] : memory[addr + 2];
-    memory[addr + 3] <= en & ((size == 2'h1) || (size == 2'h0)) ? wr_data[31:24] : memory[addr + 3];
-    memory[addr + 4] <= en & (size == 2'h0) ? wr_data[39:32] : memory[addr + 4];
-    memory[addr + 5] <= en & (size == 2'h0) ? wr_data[47:40] : memory[addr + 5];
-    memory[addr + 6] <= en & (size == 2'h0) ? wr_data[55:48] : memory[addr + 6];
-    memory[addr + 7] <= en & (size == 2'h0) ? wr_data[63:56] : memory[addr + 7];
+    memory[addr + 1] <= en & ((size == 2'h1) || (size == 2'h2) || (size == 2'h3)) ? wr_data[15:8] : memory[addr + 1];
+    memory[addr + 2] <= en & ((size == 2'h2) || (size == 2'h3)) ? wr_data[23:16] : memory[addr + 2];
+    memory[addr + 3] <= en & ((size == 2'h2) || (size == 2'h3)) ? wr_data[31:24] : memory[addr + 3];
+    memory[addr + 4] <= en & (size == 2'h3) ? wr_data[39:32] : memory[addr + 4];
+    memory[addr + 5] <= en & (size == 2'h3) ? wr_data[47:40] : memory[addr + 5];
+    memory[addr + 6] <= en & (size == 2'h3) ? wr_data[55:48] : memory[addr + 6];
+    memory[addr + 7] <= en & (size == 2'h3) ? wr_data[63:56] : memory[addr + 7];
 end
 
 

@@ -17,7 +17,7 @@ input clk;
 input rst;
 input cs;
 input we;
-input addr;
+input [3:0] addr;
 input [63:0] wr_data;
 output [63:0] rd_data;
 output tip;
@@ -27,7 +27,7 @@ logic rst;
 
 logic cs;
 logic we;
-logic addr;
+logic [3:0] addr;
 logic [63:0] wr_data;
 logic [63:0] rd_data;
 
@@ -56,12 +56,12 @@ begin
     we__mtimecmp = 1'b0;
             
     case (addr)
-        1'b0:
+        4'h0:
         begin
             rd_data = mtime;
             we__mtime = we;
         end
-        1'b1:
+        4'h8:
         begin
             rd_data = mtimecmp;
             we__mtimecmp = we;
