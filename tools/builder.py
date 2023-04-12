@@ -1,5 +1,7 @@
+##########
+# import #
+##########
 import sys
-sys.path.append("/Users/seankent/Documents/bluejay/defs")
 import math
 import copy
 
@@ -110,13 +112,7 @@ class Builder:
 
 if __name__ == '__main__':
  
-    #defs = {}
-    #defs["XLEN"] = {"value": "64"}
-    #defs["PC_RESET_VALUE"] = {"value": "0x80000000", "prefix": "64"}
-    #defs["TEST__FIELD"] = {"value": "21:0"}
-
     if len(sys.argv) == 4:
-        
         filename__in = sys.argv[1]
         filename__out = sys.argv[2]
         flavor = sys.argv[3]
@@ -124,26 +120,6 @@ if __name__ == '__main__':
         builder = Builder()
         builder.load(filename__in)
         builder.store(filename__out, flavor)
-
-        #exec(open(filename__in).read())
-        #for key in defs:
-        #    if "prefix" in defs[key] and defs[key]["prefix"] != "none":
-        #        if len(defs[key]["value"]) >= 2 and defs[key]["value"][:2] == "0x":
-        #           txt += f'defs["{key}"] = "{defs[key]["prefix"]}\'h{defs[key]["value"][2:]}"\n'
-        #        elif len(defs[key]["value"]) >= 2 and defs[key]["value"][:2] == "0b":
-        #           txt += f'defs["{key}"] = "{defs[key]["prefix"]}\'b{defs[key]["value"][2:]}"\n'
-        #        else:
-        #           txt += f'defs["{key}"] = "{defs[key]["prefix"]}\'d{defs[key]["value"]}"\n'
-        #    else: 
-        #        txt += f'defs["{key}"] = "{defs[key]["value"]}"\n'
-        #        
-        #    #txt += f"#define {key} {defs['c'][key]}\n"
-        #print("======================")
-        #print(txt)
-
-        #with open(filename, 'w') as file:
-        #    file.write(txt)
-
 
     else:
         raise Exception(f'[ERROR] Invalid number of arguments provided.')

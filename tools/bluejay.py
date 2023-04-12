@@ -1,21 +1,12 @@
-
 ##########
 # import #
 ##########
 import sys
-#sys.path.append("/home/seankent/bluejay/defs")
-sys.path.append("/Users/seankent/Documents/bluejay/defs")
 import copy
 import math
 import re
-import ast
-import os
-import sys
-import platform
-import csv
 import io
 import contextlib
-from defs import defs
 
 
 ###########
@@ -500,7 +491,8 @@ if __name__ == '__main__':
         filename__b = sys.argv[1]
         filename__sv = sys.argv[2]
         filename__defs = sys.argv[3]
-
+    
+        # load defines
         defs = {}
         exec(open(filename__defs).read(), None, {"defs": defs})
 
