@@ -57,6 +57,7 @@ Resources:
         - https://groups.google.com/g/comp.lang.verilog/c/FWEERWA4pF4?pli=1
         - Great decription of the issue: https://chickenbit.net/simulation-stuck-no-progress-in-simulation-time/
         - https://support.xilinx.com/s/question/0D54U00006VGb0GSAT/simulation-stuck-ie-no-progress-in-simulation-time-due-to-zero-delay-glitch-in-combinatorial-logic-is-their-a-switch-that-will-tell-the-simulator-to-wait-until-the-entire-alwayscomb-block-is-evaluated-before-deciding-whether-an-event-has-occurred
+    - riscv-asm-manual: https://github.com/riscv-non-isa/riscv-asm-manual/blob/master/riscv-asm.md
 
 Hello,
 

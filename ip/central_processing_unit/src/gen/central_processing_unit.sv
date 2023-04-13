@@ -3096,7 +3096,7 @@ always_comb begin
         begin
             csr__cs = 1'b1;
             csr__addr = 12'h305;
-            pc__n = csr__rd_data; 
+            pc__n = {csr__rd_data[63:2], 2'h0}; 
             state__n = STATE__FETCH__0;
         end
 

@@ -112,8 +112,8 @@ logic en__mstatus;
 
 // Machine Trap-Vector Base-Address Register (mtvec)
 logic [63:0] mtvec;
-logic [2-1:0] mtvec__offset;
-logic [62-1:0] mtvec__trap_vector_base_address;
+logic [2-1:0] mtvec__mode;
+logic [62-1:0] mtvec__base;
 logic we__mtvec;
 logic en__mtvec;
 
@@ -437,14 +437,27 @@ d_flip_flop #(.WIDTH(1), .RESET_VALUE(1'b0)) d_flip_flop__mstatus__mie
     .q(mstatus__mie)
 );
 
+//==============================
+// d_flip_flop__mstatus__mpie
+//==============================
+d_flip_flop #(.WIDTH(1), .RESET_VALUE(1'b1)) d_flip_flop__mstatus__mpie
+(
+    .clk(clk),
+    .rst(rst),
+    .en(en__mstatus),
+    .d(wr_data[7]),
+    .q(mstatus__mpie)
+);
+
+
 
 //============================================== 
 // Machine Trap-Vector Base-Address Register (mtvec)
 //==============================================
-assign mtvec[1:0] = mtvec__offset;
-assign mtvec[63:2] = mtvec__trap_vector_base_address;
+assign mtvec[1:0] = mtvec__mode;
+assign mtvec[63:2] = mtvec__base;
 
-assign mtvec__offset = 2'h0;
+assign mtvec__mode = 2'h0;
 
 assign en__mtvec = cs & we__mtvec;
 
@@ -457,7 +470,7 @@ d_flip_flop #(.WIDTH(62), .RESET_VALUE(62'h0)) d_flip_flop__mtvec__trap_vector_b
     .rst(rst),
     .en(en__mtvec),
     .d(wr_data[63:2]),
-    .q(mtvec__trap_vector_base_address)
+    .q(mtvec__base)
 );
 
 
@@ -527,8 +540,8 @@ d_flip_flop #(.WIDTH(1), .RESET_VALUE()) d_flip_flop__mip__mtip
 (
     .clk(clk),
     .rst(1'b0),
-    .en(en__mip),
-    .d(wr_data[7]),
+    .en(1'b1),
+    .d(tip),
     .q(mip__mtip)
 );
 
@@ -539,8 +552,8 @@ d_flip_flop #(.WIDTH(1), .RESET_VALUE()) d_flip_flop__mip__meip
 (
     .clk(clk),
     .rst(1'b0),
-    .en(en__mip),
-    .d(wr_data[11]),
+    .en(1'b1),
+    .d(eip),
     .q(mip__meip)
 );
 

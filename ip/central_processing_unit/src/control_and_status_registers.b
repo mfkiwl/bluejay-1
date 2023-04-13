@@ -112,8 +112,8 @@ logic en__mstatus;
 
 // Machine Trap-Vector Base-Address Register (mtvec)
 logic [63:0] mtvec;
-logic [CSR__MTVEC__OFFSET__WIDTH-1:0] mtvec__offset;
-logic [CSR__MTVEC__TRAP_VECTOR_BASE_ADDRESS__WIDTH-1:0] mtvec__trap_vector_base_address;
+logic [CSR__MTVEC__MODE__WIDTH-1:0] mtvec__mode;
+logic [CSR__MTVEC__BASE__WIDTH-1:0] mtvec__base;
 logic we__mtvec;
 logic en__mtvec;
 
@@ -437,27 +437,40 @@ d_flip_flop #(.WIDTH(CSR__MSTATUS__MIE__WIDTH), .RESET_VALUE(CSR__MSTATUS__MIE__
     .q(mstatus__mie)
 );
 
+//==============================
+// d_flip_flop__mstatus__mpie
+//==============================
+d_flip_flop #(.WIDTH(CSR__MSTATUS__MPIE__WIDTH), .RESET_VALUE(CSR__MSTATUS__MPIE__ENABLED)) d_flip_flop__mstatus__mpie
+(
+    .clk(clk),
+    .rst(rst),
+    .en(en__mstatus),
+    .d(wr_data[CSR__MSTATUS__MPIE__FIELD]),
+    .q(mstatus__mpie)
+);
+
+
 
 //============================================== 
 // Machine Trap-Vector Base-Address Register (mtvec)
 //==============================================
-assign mtvec[CSR__MTVEC__OFFSET__FIELD] = mtvec__offset;
-assign mtvec[CSR__MTVEC__TRAP_VECTOR_BASE_ADDRESS__FIELD] = mtvec__trap_vector_base_address;
+assign mtvec[CSR__MTVEC__MODE__FIELD] = mtvec__mode;
+assign mtvec[CSR__MTVEC__BASE__FIELD] = mtvec__base;
 
-assign mtvec__offset = CSR__MTVEC__OFFSET__VALUE;
+assign mtvec__mode = CSR__MTVEC__MODE__DIRECT;
 
 assign en__mtvec = cs & we__mtvec;
 
 //==============================
 // d_flip_flop__mtvec__trap_vector_base_address
 //==============================
-d_flip_flop #(.WIDTH(CSR__MTVEC__TRAP_VECTOR_BASE_ADDRESS__WIDTH), .RESET_VALUE(CSR__MTVEC__TRAP_VECTOR_BASE_ADDRESS__VALUE)) d_flip_flop__mtvec__trap_vector_base_address
+d_flip_flop #(.WIDTH(CSR__MTVEC__BASE__WIDTH), .RESET_VALUE(CSR__MTVEC__BASE__VALUE)) d_flip_flop__mtvec__trap_vector_base_address
 (
     .clk(clk),
     .rst(rst),
     .en(en__mtvec),
-    .d(wr_data[CSR__MTVEC__TRAP_VECTOR_BASE_ADDRESS__FIELD]),
-    .q(mtvec__trap_vector_base_address)
+    .d(wr_data[CSR__MTVEC__BASE__FIELD]),
+    .q(mtvec__base)
 );
 
 
@@ -527,8 +540,8 @@ d_flip_flop #(.WIDTH(CSR__MIP__MTIP__WIDTH), .RESET_VALUE()) d_flip_flop__mip__m
 (
     .clk(clk),
     .rst(1'b0),
-    .en(en__mip),
-    .d(wr_data[CSR__MIP__MTIP__FIELD]),
+    .en(1'b1),
+    .d(tip),
     .q(mip__mtip)
 );
 
@@ -539,8 +552,8 @@ d_flip_flop #(.WIDTH(CSR__MIP__MEIP__WIDTH), .RESET_VALUE()) d_flip_flop__mip__m
 (
     .clk(clk),
     .rst(1'b0),
-    .en(en__mip),
-    .d(wr_data[CSR__MIP__MEIP__FIELD]),
+    .en(1'b1),
+    .d(eip),
     .q(mip__meip)
 );
 

@@ -455,7 +455,7 @@ always_comb begin
     rf__wr_data = c;
     cs = 1'b0;
     we = 1'b0;
-    size = 2'h1;
+    size = 2'h2;
     wr_data = rf__rd_data;
     csr__cs = 1'b0;
     csr__we = 1'b0;
@@ -487,7 +487,7 @@ always_comb begin
         begin
             cs = 1'b1;
             addr = pc;
-            size = 2'h1;
+            size = 2'h2;
             ir__n = rd_data[31:0];
             state__n = (ready & ~resp) ? STATE__DECODE : (ready & resp & (rd_data == 64'h0)) ? STATE__EXCEPTION__INSTRUCTION_ACCESS_FAULT__0 : STATE__FETCH__1;
         end
@@ -1675,7 +1675,7 @@ always_comb begin
             func = 5'h0;
             cs = 1'b1;
             addr = c;
-            size = 2'h3;
+            size = 2'h0;
             rf__cs = 1'b1;
             rf__addr = rd;
             rf__we = ready & ~resp;
@@ -1713,7 +1713,7 @@ always_comb begin
             func = 5'h0;
             cs = 1'b1;
             addr = c;
-            size = 2'h2;
+            size = 2'h1;
             rf__cs = 1'b1;
             rf__addr = rd;
             rf__we = ready & ~resp;
@@ -1751,7 +1751,7 @@ always_comb begin
             func = 5'h0;
             cs = 1'b1;
             addr = c;
-            size = 2'h1;
+            size = 2'h2;
             rf__cs = 1'b1;
             rf__addr = rd;
             rf__we = ready & ~resp;
@@ -1789,7 +1789,7 @@ always_comb begin
             func = 5'h0;
             cs = 1'b1;
             addr = c;
-            size = 2'h0;
+            size = 2'h3;
             rf__cs = 1'b1;
             rf__addr = rd;
             rf__we = ready & ~resp;
@@ -1827,7 +1827,7 @@ always_comb begin
             func = 5'h0;
             cs = 1'b1;
             addr = c;
-            size = 2'h3;
+            size = 2'h0;
             rf__cs = 1'b1;
             rf__addr = rd;
             rf__we = ready & ~resp;
@@ -1865,7 +1865,7 @@ always_comb begin
             func = 5'h0;
             cs = 1'b1;
             addr = c;
-            size = 2'h2;
+            size = 2'h1;
             rf__cs = 1'b1;
             rf__addr = rd;
             rf__we = ready & ~resp;
@@ -1903,7 +1903,7 @@ always_comb begin
             func = 5'h0;
             cs = 1'b1;
             addr = c;
-            size = 2'h1;
+            size = 2'h2;
             rf__cs = 1'b1;
             rf__addr = rd;
             rf__we = ready & ~resp;
@@ -1944,7 +1944,7 @@ always_comb begin
             cs = 1'b1;
             we = 1'b1;
             addr = c;
-            size = 2'h3;
+            size = 2'h0;
             wr_data = rf__rd_data;
             state__n = (ready & ~resp) ? STATE__SB__2 : (ready & resp & (rd_data == 64'h0)) ? STATE__EXCEPTION__STORE_ACCESS_FAULT__0 : (ready & resp & (rd_data == 64'h1)) ? STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__0 : STATE__SB__1;
         end
@@ -1983,7 +1983,7 @@ always_comb begin
             cs = 1'b1;
             we = 1'b1;
             addr = c;
-            size = 2'h2;
+            size = 2'h1;
             wr_data = rf__rd_data;
             state__n = (ready & ~resp) ? STATE__SH__2 : (ready & resp & (rd_data == 64'h0)) ? STATE__EXCEPTION__STORE_ACCESS_FAULT__0 : (ready & resp & (rd_data == 64'h1)) ? STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__0 : STATE__SH__1;
         end
@@ -2021,7 +2021,7 @@ always_comb begin
             cs = 1'b1;
             we = 1'b1;
             addr = c;
-            size = 2'h1;
+            size = 2'h2;
             wr_data = rf__rd_data;
             state__n = (ready & ~resp) ? STATE__SW__2 : (ready & resp & (rd_data == 64'h0)) ? STATE__EXCEPTION__STORE_ACCESS_FAULT__0 : (ready & resp & (rd_data == 64'h1)) ? STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__0 : STATE__SW__1;
         end
@@ -2059,7 +2059,7 @@ always_comb begin
             cs = 1'b1;
             we = 1'b1;
             addr = c;
-            size = 2'h0;
+            size = 2'h3;
             wr_data = rf__rd_data;
             state__n = (ready & ~resp) ? STATE__SD__2 : (ready & resp & (rd_data == 64'h0)) ? STATE__EXCEPTION__STORE_ACCESS_FAULT__0 : (ready & resp & (rd_data == 64'h1)) ? STATE__EXCEPTION__STORE_ADDRESS_MISALIGNED__0 : STATE__SD__1;
         end
@@ -3132,7 +3132,7 @@ always_comb begin
         begin
             csr__cs = 1'b1;
             csr__addr = 12'h305;
-            pc__n = csr__rd_data; 
+            pc__n = {csr__rd_data[63:2], 2'h0}; 
             state__n = STATE__FETCH__0;
         end
 
@@ -4956,125 +4956,125 @@ logic instret;
 
 // Machine ISA Register (misa)
 logic [63:0] misa;
-logic [25:0] misa__extensions;
-logic [35:0] misa__wiri__0;
-logic [1:0] misa__base;
+logic [26-1:0] misa__extensions;
+logic [36-1:0] misa__wiri__0;
+logic [2-1:0] misa__base;
 logic we__misa;
 logic en__misa;
 
 // Machine Vendor ID Register (mvendorid)
 logic [63:0] mvendorid;
-logic [63:0] mvendorid__vendor;
+logic [64-1:0] mvendorid__vendor;
 logic we__mvendorid;
 logic en__mvendorid;
 
 // Machine Architecture ID Register (marchid)
 logic [63:0] marchid;
-logic [63:0] marchid__architecture_id;
+logic [64-1:0] marchid__architecture_id;
 logic we__marchid;
 logic en__marchid;
 
 // Machine Implementation ID Register (mimpid)
 logic [63:0] mimpid;
-logic [63:0] mimpid__implementation;
+logic [64-1:0] mimpid__implementation;
 logic we__mimpid;
 logic en__mimpid;
 
 // Hart ID Register (mhartid) 
 logic [63:0] mhartid;
-logic [63:0] mhartid__hart_id;
+logic [64-1:0] mhartid__hart_id;
 logic we__mhartid;
 logic en__mhartid;
 
 // Machine Status Register (mstatus) 
 logic [63:0] mstatus;
-logic [0:0] mstatus__uie;
-logic [0:0] mstatus__sie;
-logic [0:0] mstatus__hie;
-logic [0:0] mstatus__mie;
-logic [0:0] mstatus__upie;
-logic [0:0] mstatus__spie;
-logic [0:0] mstatus__hpie;
-logic [0:0] mstatus__mpie;
-logic [0:0] mstatus__spp;
-logic [1:0] mstatus__hpp;
-logic [1:0] mstatus__mpp;
-logic [1:0] mstatus__fs;
-logic [1:0] mstatus__xs;
-logic [0:0] mstatus__mprv;
-logic [0:0] mstatus__pum;
-logic [0:0] mstatus__mxr;
-logic [4:0] mstatus__vm;
-logic [0:0] mstatus__sd;
+logic [1-1:0] mstatus__uie;
+logic [1-1:0] mstatus__sie;
+logic [1-1:0] mstatus__hie;
+logic [1-1:0] mstatus__mie;
+logic [1-1:0] mstatus__upie;
+logic [1-1:0] mstatus__spie;
+logic [1-1:0] mstatus__hpie;
+logic [1-1:0] mstatus__mpie;
+logic [1-1:0] mstatus__spp;
+logic [2-1:0] mstatus__hpp;
+logic [2-1:0] mstatus__mpp;
+logic [2-1:0] mstatus__fs;
+logic [2-1:0] mstatus__xs;
+logic [1-1:0] mstatus__mprv;
+logic [1-1:0] mstatus__pum;
+logic [1-1:0] mstatus__mxr;
+logic [5-1:0] mstatus__vm;
+logic [1-1:0] mstatus__sd;
 logic we__mstatus;
 logic en__mstatus;
 
 // Machine Trap-Vector Base-Address Register (mtvec)
 logic [63:0] mtvec;
-logic [1:0] mtvec__offset;
-logic [61:0] mtvec__trap_vector_base_address;
+logic [2-1:0] mtvec__mode;
+logic [62-1:0] mtvec__base;
 logic we__mtvec;
 logic en__mtvec;
 
 // Machine Exception Delegation Register (medeleg) 
 logic [63:0] medeleg;
-logic [63:0] medeleg__synchronous_exceptions;
+logic [64-1:0] medeleg__synchronous_exceptions;
 logic we__medeleg;
 logic en__medeleg;
 
 // Machine Interrupt Delegation Register (mideleg) 
 logic [63:0] mideleg;
-logic [63:0] mideleg__interrupts;
+logic [64-1:0] mideleg__interrupts;
 logic we__mideleg;
 logic en__mideleg;
 
 // Machine Interrupt-Pending Register (mip) 
 logic [63:0] mip;
-logic [0:0] mip__usip;
-logic [0:0] mip__ssip;
-logic [0:0] mip__hsip;
-logic [0:0] mip__msip;
-logic [0:0] mip__utip;
-logic [0:0] mip__stip;
-logic [0:0] mip__htip;
-logic [0:0] mip__mtip;
-logic [0:0] mip__ueip;
-logic [0:0] mip__seip;
-logic [0:0] mip__heip;
-logic [0:0] mip__meip;
-logic [51:0] mip__wiri__0;
+logic [1-1:0] mip__usip;
+logic [1-1:0] mip__ssip;
+logic [1-1:0] mip__hsip;
+logic [1-1:0] mip__msip;
+logic [1-1:0] mip__utip;
+logic [1-1:0] mip__stip;
+logic [1-1:0] mip__htip;
+logic [1-1:0] mip__mtip;
+logic [1-1:0] mip__ueip;
+logic [1-1:0] mip__seip;
+logic [1-1:0] mip__heip;
+logic [1-1:0] mip__meip;
+logic [52-1:0] mip__wiri__0;
 logic we__mip;
 logic en__mip;
 
 // Machine Interrupt-Enable Register (mie) 
 logic [63:0] mie;
-logic [0:0] mie__usie;
-logic [0:0] mie__ssie;
-logic [0:0] mie__hsie;
-logic [0:0] mie__msie;
-logic [0:0] mie__utie;
-logic [0:0] mie__stie;
-logic [0:0] mie__htie;
-logic [0:0] mie__mtie;
-logic [0:0] mie__ueie;
-logic [0:0] mie__seie;
-logic [0:0] mie__heie;
-logic [0:0] mie__meie;
-logic [51:0] mie__wpri__0;
+logic [1-1:0] mie__usie;
+logic [1-1:0] mie__ssie;
+logic [1-1:0] mie__hsie;
+logic [1-1:0] mie__msie;
+logic [1-1:0] mie__utie;
+logic [1-1:0] mie__stie;
+logic [1-1:0] mie__htie;
+logic [1-1:0] mie__mtie;
+logic [1-1:0] mie__ueie;
+logic [1-1:0] mie__seie;
+logic [1-1:0] mie__heie;
+logic [1-1:0] mie__meie;
+logic [52-1:0] mie__wpri__0;
 logic we__mie;
 logic en__mie;
 
 // Machine Cycle Register (mcycle) 
 logic [63:0] mcycle;
-logic [63:0] mcycle__mcycle;
-logic [63:0] mcycle__mcycle__n;
+logic [64-1:0] mcycle__mcycle;
+logic [64-1:0] mcycle__mcycle__n;
 logic we__mcycle;
 logic en__mcycle;
 
 // Machine Instruction Retire Register (minstret) 
 logic [63:0] minstret;
-logic [63:0] minstret__minstret;
-logic [63:0] minstret__minstret__n;
+logic [64-1:0] minstret__minstret;
+logic [64-1:0] minstret__minstret__n;
 logic we__minstret;
 logic en__minstret;
 logic minstret__write_occurred;
@@ -5083,38 +5083,38 @@ logic state__minstret__n;
 
 // Machine Hardware Performance Monitor Counter 3 (mhpmcounter3)
 logic [63:0] mhpmcounter3;
-logic [63:0] mhpmcounter3__mhpmcounter3;
+logic [64-1:0] mhpmcounter3__mhpmcounter3;
 logic we__mhpmcounter3;
 logic en__mhpmcounter3;
 
 // Machine Hardware Performance Monitor Event 3 (mhpmevent3)
 logic [63:0] mhpmevent3;
-logic [63:0] mhpmevent3__mhpmevent3;
+logic [64-1:0] mhpmevent3__mhpmevent3;
 logic we__mhpmevent3;
 logic en__mhpmevent3;
 
 // Machine Scratch Register (mscratch) 
 logic [63:0] mscratch;
-logic [63:0] mscratch__mscratch;
+logic [64-1:0] mscratch__mscratch;
 logic we__mscratch;
 logic en__mscratch;
 
 // Machine Exception Program Counter (mepc) 
 logic [63:0] mepc;
-logic [63:0] mepc__mepc;
+logic [64-1:0] mepc__mepc;
 logic we__mepc;
 logic en__mepc;
 
 // Machine Cause Register (mcause) 
 logic [63:0] mcause;
-logic [62:0] mcause__exception_code;
-logic [0:0] mcause__interrupt;
+logic [63-1:0] mcause__exception_code;
+logic [1-1:0] mcause__interrupt;
 logic we__mcause;
 logic en__mcause;
 
 // Machine Trap Value Register (mtval) 
 logic [63:0] mtval;
-logic [63:0] mtval__mtval;
+logic [64-1:0] mtval__mtval;
 logic we__mtval;
 logic en__mtval;
 
@@ -5246,7 +5246,7 @@ assign misa[25:0] = misa__extensions;
 assign misa[61:26] = misa__wiri__0;
 assign misa[63:62] = misa__base;
 
-assign misa__extensions = 26'h0_00_01_00;
+assign misa__extensions = 26'h100;
 assign misa__wiri__0 = 36'h0;
 assign misa__base = 2'h2;
 
@@ -5336,14 +5336,27 @@ d_flip_flop #(.WIDTH(1), .RESET_VALUE(1'b0)) d_flip_flop__mstatus__mie
     .q(mstatus__mie)
 );
 
+//==============================
+// d_flip_flop__mstatus__mpie
+//==============================
+d_flip_flop #(.WIDTH(1), .RESET_VALUE(1'b1)) d_flip_flop__mstatus__mpie
+(
+    .clk(clk),
+    .rst(rst),
+    .en(en__mstatus),
+    .d(wr_data[7]),
+    .q(mstatus__mpie)
+);
+
+
 
 //============================================== 
 // Machine Trap-Vector Base-Address Register (mtvec)
 //==============================================
-assign mtvec[1:0] = mtvec__offset;
-assign mtvec[63:2] = mtvec__trap_vector_base_address;
+assign mtvec[1:0] = mtvec__mode;
+assign mtvec[63:2] = mtvec__base;
 
-assign mtvec__offset = 2'h0;
+assign mtvec__mode = 2'h0;
 
 assign en__mtvec = cs & we__mtvec;
 
@@ -5356,7 +5369,7 @@ d_flip_flop #(.WIDTH(62), .RESET_VALUE(62'h0)) d_flip_flop__mtvec__trap_vector_b
     .rst(rst),
     .en(en__mtvec),
     .d(wr_data[63:2]),
-    .q(mtvec__trap_vector_base_address)
+    .q(mtvec__base)
 );
 
 
@@ -5426,8 +5439,8 @@ d_flip_flop #(.WIDTH(1), .RESET_VALUE()) d_flip_flop__mip__mtip
 (
     .clk(clk),
     .rst(1'b0),
-    .en(en__mip),
-    .d(wr_data[7]),
+    .en(1'b1),
+    .d(tip),
     .q(mip__mtip)
 );
 
@@ -5438,8 +5451,8 @@ d_flip_flop #(.WIDTH(1), .RESET_VALUE()) d_flip_flop__mip__meip
 (
     .clk(clk),
     .rst(1'b0),
-    .en(en__mip),
-    .d(wr_data[11]),
+    .en(1'b1),
+    .d(eip),
     .q(mip__meip)
 );
 
@@ -5756,7 +5769,7 @@ input clk;
 input rst;
 input cs;
 input we;
-input addr;
+input [3:0] addr;
 input [63:0] wr_data;
 output [63:0] rd_data;
 output tip;
@@ -5766,7 +5779,7 @@ logic rst;
 
 logic cs;
 logic we;
-logic addr;
+logic [3:0] addr;
 logic [63:0] wr_data;
 logic [63:0] rd_data;
 
@@ -5774,14 +5787,14 @@ logic tip;
 
 // Machine Time Register (mtime)
 logic [63:0] mtime;
-logic [63:0] mtime__mtime;
-logic [63:0] mtime__mtime__n;
+logic [64-1:0] mtime__mtime;
+logic [64-1:0] mtime__mtime__n;
 logic we__mtime;
 logic en__mtime;
 
 // Machine Time Compare Register (mtimecmp)
 logic [63:0] mtimecmp;
-logic [63:0] mtimecmp__mtimecmp;
+logic [64-1:0] mtimecmp__mtimecmp;
 logic we__mtimecmp;
 logic en__mtimecmp;
 
@@ -5795,12 +5808,12 @@ begin
     we__mtimecmp = 1'b0;
             
     case (addr)
-        1'b0:
+        4'h0:
         begin
             rd_data = mtime;
             we__mtime = we;
         end
-        1'b1:
+        4'h8:
         begin
             rd_data = mtimecmp;
             we__mtimecmp = we;
@@ -6001,13 +6014,13 @@ logic we__priority__1;
 logic re__priority__1;
 logic en__priority__1;
 
-// Interrupt Pending Bits - Source -31
+// Interrupt Pending Bits - Source 0-31
 logic [31:0] ip__0_to_31;
 logic we__ip__0_to_31;
 logic re__ip__0_to_31;
 logic en__ip__0_to_31;
 
-// Interrupt Enable Bits - Context 0 - Source -31
+// Interrupt Enable Bits - Context 0 - Source 0-31
 logic [31:0] context__0__ie__0_to_31;
 logic we__context__0__ie__0_to_31;
 logic re__context__0__ie__0_to_31;
@@ -6096,37 +6109,37 @@ begin
     re__context__0__claim_complete = 1'b0;
 
     case (addr)
-        26'h0_00_00_00:
+        26'h0000000:
         begin
             rd_data = priority__0; 
             we__priority__0 = we;            
             re__priority__0 = ~we;            
         end
-        26'h0_00_00_04:
+        26'h0000004:
         begin
             rd_data = priority__1; 
             we__priority__1 = we;            
             re__priority__1 = ~we;            
         end
-        26'h0_00_10_00:
+        26'h0001000:
         begin
             rd_data = ip__0_to_31;
             we__ip__0_to_31 = we;
             re__ip__0_to_31 = ~we;
         end
-        26'h0_00_20_00:
+        26'h0002000:
         begin
             rd_data = context__0__ie__0_to_31;
             we__context__0__ie__0_to_31 = we;
             re__context__0__ie__0_to_31 = ~we;
         end
-        26'h20_00_00:
+        26'h0200000:
         begin
             rd_data = context__0__threshold;
             we__context__0__threshold = we;
             re__context__0__threshold = ~we;
         end
-        26'h20_00_04:
+        26'h0200004:
         begin
             rd_data = context__0__claim_complete;
             we__context__0__claim_complete = we;
@@ -6149,7 +6162,7 @@ assign priority__1 = 32'h1;
 
 
 //==============================================
-// Interrupt Pending Bits - Source -31
+// Interrupt Pending Bits - Source 0-31
 //==============================================
 assign ip__0_to_31[0] = ip__0;
 assign ip__0_to_31[1] = ip__1;
@@ -6157,7 +6170,7 @@ assign ip__0_to_31[31:2] = 0;
 
 
 //==============================================
-// Interrupt Enable Bits - Context 0 - Source -31
+// Interrupt Enable Bits - Context 0 - Source 0-31
 //==============================================
 assign context__0__ie__0_to_31[0] = context__0__ie__0;
 assign context__0__ie__0_to_31[1] = context__0__ie__1;
@@ -6471,25 +6484,25 @@ begin
         begin
             rd_data = pma__3; 
         end
-        3'h0:
+        3'h4:
         begin
             rd_data = pma__4; 
         end
-        3'h1:
+        3'h5:
         begin
             rd_data = pma__5; 
         end
-        3'h2:
+        3'h6:
         begin
             rd_data = pma__6; 
         end
-        3'h3:
+        3'h7:
         begin
             rd_data = pma__7; 
         end
         default:
         begin
-            rd_data[0:0] = 0;
+            rd_data[0:0] = 1'b0;
             rd_data[1:1] = 1'b0;
             rd_data[2:2] = 1'b0;
             rd_data[3:3] = 1'b0;
@@ -6502,7 +6515,7 @@ end
 //==============================================
 // Physical Memory Attributes Register 0
 //==============================================
-assign pma__0[0:0] = 1;
+assign pma__0[0:0] = 1'b0;
 assign pma__0[1:1] = 1'b1;
 assign pma__0[2:2] = 1'b1;
 assign pma__0[3:3] = 1'b1;
@@ -6513,7 +6526,7 @@ assign pma__0[5:5] = 1'b0;
 //==============================================
 // Physical Memory Attributes Register 1
 //==============================================
-assign pma__1[0:0] = 0;
+assign pma__1[0:0] = 1'b0;
 assign pma__1[1:1] = 1'b0;
 assign pma__1[2:2] = 1'b0;
 assign pma__1[3:3] = 1'b1;
@@ -6523,7 +6536,7 @@ assign pma__1[5:5] = 1'b0;
 //==============================================
 // Physical Memory Attributes Register 2
 //==============================================
-assign pma__2[0:0] = 0;
+assign pma__2[0:0] = 1'b0;
 assign pma__2[1:1] = 1'b0;
 assign pma__2[2:2] = 1'b0;
 assign pma__2[3:3] = 1'b0;
@@ -6533,7 +6546,7 @@ assign pma__2[5:5] = 1'b0;
 //==============================================
 // Physical Memory Attributes Register 3
 //==============================================
-assign pma__3[0:0] = 0;
+assign pma__3[0:0] = 1'b0;
 assign pma__3[1:1] = 1'b1;
 assign pma__3[2:2] = 1'b0;
 assign pma__3[3:3] = 1'b0;
@@ -6543,7 +6556,7 @@ assign pma__3[5:5] = 1'b0;
 //==============================================
 // Physical Memory Attributes Register 4
 //==============================================
-assign pma__4[0:0] = 0;
+assign pma__4[0:0] = 1'b0;
 assign pma__4[1:1] = 1'b1;
 assign pma__4[2:2] = 1'b0;
 assign pma__4[3:3] = 1'b0;
@@ -6553,7 +6566,7 @@ assign pma__4[5:5] = 1'b0;
 //==============================================
 // Physical Memory Attributes Register 5
 //==============================================
-assign pma__5[0:0] = 0;
+assign pma__5[0:0] = 1'b0;
 assign pma__5[1:1] = 1'b0;
 assign pma__5[2:2] = 1'b0;
 assign pma__5[3:3] = 1'b0;
@@ -6563,7 +6576,7 @@ assign pma__5[5:5] = 1'b0;
 //==============================================
 // Physical Memory Attributes Register 6
 //==============================================
-assign pma__6[0:0] = 0;
+assign pma__6[0:0] = 1'b0;
 assign pma__6[1:1] = 1'b0;
 assign pma__6[2:2] = 1'b0;
 assign pma__6[3:3] = 1'b0;
@@ -6573,63 +6586,12 @@ assign pma__6[5:5] = 1'b0;
 //==============================================
 // Physical Memory Attributes Register 7
 //==============================================
-assign pma__7[0:0] = 0;
+assign pma__7[0:0] = 1'b0;
 assign pma__7[1:1] = 1'b0;
 assign pma__7[2:2] = 1'b0;
 assign pma__7[3:3] = 1'b0;
 assign pma__7[4:4] = 1'b0;
 assign pma__7[5:5] = 1'b0;
-
-endmodule
-//==============================================
-// physical_memory_attribute_checker 
-//==============================================
-module physical_memory_attribute_checker
-(
-    clk,
-    rst,
-    addr, 
-    size,
-    pmar,
-    status 
-);
-
-input clk;
-input rst;
-input [2:0] addr; 
-input [1:0] size;
-input [7:0] pmar;
-output [1:0] status;
-
-logic clk;
-logic rst;
-logic [2:0] addr; 
-logic [1:0] size;
-logic [7:0] pmar;
-logic [1:0] status;
-
-always_comb 
-begin
-    case (size)
-        2'h3:
-        begin
-            status = (pmar[1:1] == 1'b0) ? 2'h1 : 2'h0;
-        end
-        2'h2:
-        begin
-            status = (pmar[2:2] == 1'b0) ? 2'h1 : (addr[0] != 1'b0) && (pmar[5:5] == 1'b0) ? 2'h2 : 2'h0;
-        end
-        2'h1:
-        begin
-            status = (pmar[3:3] == 1'b0) ? 2'h1 : (addr[1:0] != 2'h0) && (pmar[5:5] == 1'b0) ? 2'h2 : 2'h0;
-        end
-        2'h0:
-        begin
-            status = (pmar[4:4] == 1'b0) ? 2'h1 : (addr[2:0] != 3'h0) && (pmar[5:5] == 1'b0)? 2'h2 : 2'h0;
-        end
-    endcase
-end
-
 
 endmodule
 //==============================================
@@ -7025,7 +6987,7 @@ begin
         STATE__WRITE:
         begin
             ena = 1'b1;
-            wea = (size == 2'h3) ? (8'b0000_0001 << addr[2:0]) : (size == 2'h2) ? (8'b0000_0011 << addr[1:0]) : (size == 2'h1) ? (8'b0000_1111 << addr[0]) : 8'b1111_1111;
+            wea = (size == 2'h0) ? (8'b0000_0001 << addr[2:0]) : (size == 2'h1) ? (8'b0000_0011 << addr[1:0]) : (size == 2'h2) ? (8'b0000_1111 << addr[0]) : 8'b1111_1111;
             ready = 1'b1;
             state__n = STATE__IDLE; 
         end
@@ -7867,19 +7829,19 @@ logic [1:0] status;
 always_comb 
 begin
     case (size)
-        2'h3:
+        2'h0:
         begin
             status = (pma[1:1] == 1'b0) ? 2'h1 : 2'h0;
         end
-        2'h2:
+        2'h1:
         begin
             status = (pma[2:2] == 1'b0) ? 2'h1 : (addr[0] != 1'b0) && (pma[5:5] == 1'b0) ? 2'h2 : 2'h0;
         end
-        2'h1:
+        2'h2:
         begin
             status = (pma[3:3] == 1'b0) ? 2'h1 : (addr[1:0] != 2'h0) && (pma[5:5] == 1'b0) ? 2'h2 : 2'h0;
         end
-        2'h0:
+        2'h3:
         begin
             status = (pma[4:4] == 1'b0) ? 2'h1 : (addr[2:0] != 3'h0) && (pma[5:5] == 1'b0)? 2'h2 : 2'h0;
         end
@@ -8172,7 +8134,7 @@ machine_timer_registers machine_timer_registers__0
     .rst(rst),
     .cs(cs__2),
     .we(we__2),
-    .addr(addr__2[0]),
+    .addr(addr__2[3:0]),
     .wr_data(wr_data__2),
     .rd_data(rd_data__2),
     .tip(tip)
@@ -8254,6 +8216,13 @@ bus bus__0
     .size__1(size__1),
     .wr_data__1(wr_data__1),
     .ready__1(1'b1),
+    .rd_data__1(rd_data__1),
+    .cs__2(cs__2),
+    .we__2(we__2),
+    .addr__2(addr__2),
+    .size__2(size__2),
+    .wr_data__2(wr_data__2),
+    .ready__2(1'b1),
     .rd_data__2(rd_data__2),
     .cs__3(cs__3),
     .we__3(we__3),

@@ -3104,7 +3104,7 @@ always_comb begin
         begin
             csr__cs = 1'b1;
             csr__addr = CSR__MTVEC;
-            pc__n = csr__rd_data; 
+            pc__n = {csr__rd_data[CSR__MTVEC__BASE__FIELD], 2'h0}; 
             state__n = STATE__FETCH__0;
         end
 

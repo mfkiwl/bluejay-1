@@ -1,14 +1,14 @@
 TOP := /home/seankent/bluejay
-FILES := $(wildcard *.s)
-BIN := $(FILES:.s=.bin)
-LST := $(FILES:.s=.lst)
-MEM := $(FILES:.s=.mem)
-COE := $(FILES:.s=.coe)
+FILES := $(wildcard *.S)
+BIN := $(FILES:.S=.bin)
+LST := $(FILES:.S=.lst)
+MEM := $(FILES:.S=.mem)
+COE := $(FILES:.S=.coe)
 
 all: $(MEM) $(BIN) $(LST) $(COE)
 
-$(FILES:.s=): %: %.s 
-	riscv64-unknown-elf-gcc -march=rv64i -mabi=lp64 -ffreestanding -fno-pic -nostdlib -Ttext=0x80000000 -mno-relax $@.s -o $@ 
+$(FILES:.S=): %: %.S 
+	riscv64-unknown-elf-gcc -march=rv64i -mabi=lp64 -ffreestanding -fno-pic -nostdlib -Ttext=0x80000000 -mno-relax $@.S -o $@ 
 
 $(BIN): %.bin: % 
 	riscv64-unknown-elf-objcopy $< -O binary $@
@@ -26,5 +26,5 @@ $(COE): %.coe: %.mem
 .PHONY: clean
 
 clean:
-	rm -f $(FILES:.s=) $(BIN) $(LST) $(MEM) $(COE)
+	rm -f $(FILES:.S=) $(BIN) $(LST) $(MEM) $(COE)
 

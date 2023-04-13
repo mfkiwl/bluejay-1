@@ -1,8 +1,0 @@
-+--------------------------+--------------------------+----------------------------------------------------------------------------------------------------------+
-|       Launch Clock       |      Capture Clock       |                                                 Pin                                                      |
-+--------------------------+--------------------------+----------------------------------------------------------------------------------------------------------+
-|              sys_clk_pin |              sys_clk_pin |                                           jay__0/central_processing_unit__0/d_flip_flop__state/q_reg[2]/D|
-|              sys_clk_pin |              sys_clk_pin |                                       jay__0/central_processing_unit__0/d_flip_flop__state/q_reg[2]_rep/D|
-|              sys_clk_pin |              sys_clk_pin |                                    jay__0/central_processing_unit__0/d_flip_flop__state/q_reg[2]_rep__1/D|
-|              sys_clk_pin |              sys_clk_pin |                                    jay__0/central_processing_unit__0/d_flip_flop__state/q_reg[2]_rep__0/D|
-+--------------------------+--------------------------+----------------------------------------------------------------------------------------------------------+
