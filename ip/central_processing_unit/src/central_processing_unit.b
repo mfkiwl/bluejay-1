@@ -3,37 +3,19 @@
 //==============================================
 module central_processing_unit
 (
-    clk,
-    rst,
-    cs,
-    we,
-    addr,
-    size,
-    wr_data,
-    ready,
-    resp,
-    rd_data,
-    eip,
-    tip
+    input clk,
+    input rst,
+    output logic cs,
+    output logic we,
+    output logic [63:0] addr,
+    output logic [1:0] size,
+    output logic [63:0] wr_data,
+    input ready,
+    input resp,
+    input [63:0] rd_data,
+    input eip,
+    input tip
 );
-
-
-input clk;
-input rst;
-output cs;
-output we;
-output [63:0] addr;
-output [1:0] size;
-output [63:0] wr_data;
-input ready;
-input resp;
-input [63:0] rd_data;
-input eip;
-input tip;
-
-// Clock, Reset
-logic clk;
-logic rst;
 
 // Program Counter/Instruction Register
 logic [63:0] pc;
@@ -86,19 +68,6 @@ logic mip__meip;
 logic mip__msip;
 logic mip__mtip;
 
-// CPU to Memory Interface
-logic cs;
-logic we;
-logic [63:0] addr;
-logic [1:0] size;
-logic [63:0] wr_data;
-//logic ready;
-//logic resp;
-logic [63:0] rd_data;
-
-// Interrupt Signals
-logic eip;
-logic tip;
 
 // CSR logic
 logic instret;

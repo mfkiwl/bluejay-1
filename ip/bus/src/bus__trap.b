@@ -3,40 +3,18 @@
 //==============================================
 module bus__trap
 (
-    clk,
-    rst,
-    status,
-    cs__x,
-    ready__x,
-    resp__x,
-    rd_data__x,
-    cs__y,
-    ready__y,
-    rd_data__y
+    input clk,
+    input rst,
+    input [1:0] status,
+    input cs__x,
+    output logic ready__x,
+    output logic resp__x,
+    output logic [63:0] rd_data__x,
+    output logic cs__y,
+    input ready__y,
+    input [63:0] rd_data__y
 );
 
-input clk;
-input rst;
-
-input [1:0] status;
-
-input cs__x;
-output ready__x;
-output resp__x;
-output [63:0] rd_data__x;
-
-output cs__y;
-input ready__y;
-input [63:0] rd_data__y;
-
-logic cs__x;
-logic ready__x;
-logic resp__x;
-logic [63:0] rd_data__x;
-
-logic cs__y;
-//logic ready__y;
-//logic [63:0] rd_data__y;
 
 always_comb
 begin

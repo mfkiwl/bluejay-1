@@ -3,57 +3,25 @@
 //==============================================
 module control_and_status_registers
 (
-    clk,
-    rst,
-    cs,
-    we,
-    addr,
-    rd_data,
-    wr_data,
-    eip,
-    tip,
-    instret,
-    mstatus__mie,
-    mie__meie,
-    mie__msie,
-    mie__mtie,
-    mip__meip,
-    mip__msip,
-    mip__mtip
+    input clk,
+    input rst,
+    input cs,
+    input we,
+    input [11:0] addr,
+    output logic [63:0] rd_data,
+    input [63:0] wr_data,
+    input eip,
+    input tip,
+    input instret,
+    output logic [CSR__MSTATUS__MIE__WIDTH-1:0] mstatus__mie,
+    output logic [CSR__MIE__MEIE__WIDTH-1:0] mie__meie,
+    output logic [CSR__MIE__MSIE__WIDTH-1:0] mie__msie,
+    output logic [CSR__MIE__MTIE__WIDTH-1:0] mie__mtie,
+    output logic [CSR__MIP__MEIP__WIDTH-1:0] mip__meip,
+    output logic [CSR__MIP__MSIP__WIDTH-1:0] mip__msip,
+    output logic [CSR__MIP__MTIP__WIDTH-1:0] mip__mtip
 );
 
-input clk;
-input rst;
-input cs;
-input we;
-input [11:0] addr;
-output [63:0] rd_data;
-input [63:0] wr_data;
-input eip;
-input tip;
-input instret;
-
-output mstatus__mie;
-output mie__meie;
-output mie__msie;
-output mie__mtie;
-output mip__meip;
-output mip__msip;
-output mip__mtip;
-
-logic clk;
-logic rst;
-
-logic cs;
-logic we;
-logic [11:0] addr;
-logic [63:0] rd_data;
-logic [63:0] wr_data;
-
-logic eip;
-logic tip;
-
-logic instret;
 
 // Machine ISA Register (misa)
 logic [63:0] misa;
@@ -92,7 +60,6 @@ logic [63:0] mstatus;
 logic [CSR__MSTATUS__UIE__WIDTH-1:0] mstatus__uie;
 logic [CSR__MSTATUS__SIE__WIDTH-1:0] mstatus__sie;
 logic [CSR__MSTATUS__HIE__WIDTH-1:0] mstatus__hie;
-logic [CSR__MSTATUS__MIE__WIDTH-1:0] mstatus__mie;
 logic [CSR__MSTATUS__UPIE__WIDTH-1:0] mstatus__upie;
 logic [CSR__MSTATUS__SPIE__WIDTH-1:0] mstatus__spie;
 logic [CSR__MSTATUS__HPIE__WIDTH-1:0] mstatus__hpie;
@@ -134,15 +101,12 @@ logic [63:0] mip;
 logic [CSR__MIP__USIP__WIDTH-1:0] mip__usip;
 logic [CSR__MIP__SSIP__WIDTH-1:0] mip__ssip;
 logic [CSR__MIP__HSIP__WIDTH-1:0] mip__hsip;
-logic [CSR__MIP__MSIP__WIDTH-1:0] mip__msip;
 logic [CSR__MIP__UTIP__WIDTH-1:0] mip__utip;
 logic [CSR__MIP__STIP__WIDTH-1:0] mip__stip;
 logic [CSR__MIP__HTIP__WIDTH-1:0] mip__htip;
-logic [CSR__MIP__MTIP__WIDTH-1:0] mip__mtip;
 logic [CSR__MIP__UEIP__WIDTH-1:0] mip__ueip;
 logic [CSR__MIP__SEIP__WIDTH-1:0] mip__seip;
 logic [CSR__MIP__HEIP__WIDTH-1:0] mip__heip;
-logic [CSR__MIP__MEIP__WIDTH-1:0] mip__meip;
 logic [CSR__MIP__WIRI__0__WIDTH-1:0] mip__wiri__0;
 logic we__mip;
 logic en__mip;
@@ -152,15 +116,12 @@ logic [63:0] mie;
 logic [CSR__MIE__USIE__WIDTH-1:0] mie__usie;
 logic [CSR__MIE__SSIE__WIDTH-1:0] mie__ssie;
 logic [CSR__MIE__HSIE__WIDTH-1:0] mie__hsie;
-logic [CSR__MIE__MSIE__WIDTH-1:0] mie__msie;
 logic [CSR__MIE__UTIE__WIDTH-1:0] mie__utie;
 logic [CSR__MIE__STIE__WIDTH-1:0] mie__stie;
 logic [CSR__MIE__HTIE__WIDTH-1:0] mie__htie;
-logic [CSR__MIE__MTIE__WIDTH-1:0] mie__mtie;
 logic [CSR__MIE__UEIE__WIDTH-1:0] mie__ueie;
 logic [CSR__MIE__SEIE__WIDTH-1:0] mie__seie;
 logic [CSR__MIE__HEIE__WIDTH-1:0] mie__heie;
-logic [CSR__MIE__MEIE__WIDTH-1:0] mie__meie;
 logic [CSR__MIE__WPRI__0__WIDTH-1:0] mie__wpri__0;
 logic we__mie;
 logic en__mie;

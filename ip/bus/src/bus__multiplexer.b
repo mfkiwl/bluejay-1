@@ -3,78 +3,22 @@
 //==============================================
 module bus__multiplexer
 (
-    clk,
-    rst,
-    sel,
-    cs,
-    ready,
-    rd_data,
-    cs__0,
-    ready__0,
-    rd_data__0,
-    cs__1,
-    ready__1,
-    rd_data__1,
-    cs__2,
-    ready__2,
-    rd_data__2,
-    cs__3,
-    ready__3,
-    rd_data__3,
-    cs__4,
-    ready__4,
-    rd_data__4,
-    cs__5,
-    ready__5,
-    rd_data__5,
-    cs__6,
-    ready__6,
-    rd_data__6,
-    cs__7,
-    ready__7,
-    rd_data__7
+    input clk,
+    input rst,
+PYTHON
+(
+    for i in range(8):
+        print(f"    output logic cs__{i},")
+        print(f"    input ready__{i},")
+        print(f"    input [63:0] rd_data__{i},")
+        
+)
+    input cs,
+    output logic ready,
+    output logic [63:0] rd_data,
+    input [2:0] sel
 );
 
-input clk;
-input rst;
-
-input [2:0] sel;
-
-input cs;
-output ready;
-output [63:0] rd_data;
-
-output cs__0;
-input ready__0;
-input [63:0] rd_data__0;
-
-output cs__1;
-input ready__1;
-input [63:0] rd_data__1;
-
-output cs__2;
-input ready__2;
-input [63:0] rd_data__2;
-
-output cs__3;
-input ready__3;
-input [63:0] rd_data__3;
-
-output cs__4;
-input ready__4;
-input [63:0] rd_data__4;
-
-output cs__5;
-input ready__5;
-input [63:0] rd_data__5;
-
-output cs__6;
-input ready__6;
-input [63:0] rd_data__6;
-
-output cs__7;
-input ready__7;
-input [63:0] rd_data__7;
 
 
 logic clk;

@@ -29,4 +29,21 @@ PYTHON
         print('    hi')
 )
 
+PYTHON
+(
+    for i in range(1, 32):
+        print(f"//==============================")
+        print(f"// d_flip_flop__x__{i}")
+        print(f"//==============================")
+        print(f"d_flip_flop #(.WIDTH(64)) d_flip_flop__x__{i}")
+        print(f"(")
+        print(f"    .clk(clk),")
+        print(f"    .rst(1'b0),")
+        print(f"    .en(en__x__{i}),")
+        print(f"    .d(wr_data),")
+        print(f"    .q(x__{i})")
+        print(f");")
+)
+
+
 endmodule

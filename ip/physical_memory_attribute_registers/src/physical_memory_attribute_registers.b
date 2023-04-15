@@ -3,56 +3,22 @@
 //==============================================
 module physical_memory_attribute_registers
 (
-    clk,
-    rst,
-    cs,
-    we,
-    addr,
-    wr_data,
-    rd_data,
-    pma__0,
-    pma__1,
-    pma__2,
-    pma__3,
-    pma__4,
-    pma__5,
-    pma__6,
-    pma__7
+    input clk,
+    input rst,
+    input cs,
+    input we,
+    input [2:0] addr,
+    input [7:0] wr_data,
+    output logic [7:0] rd_data,
+    output logic [7:0] pma__0,
+    output logic [7:0] pma__1,
+    output logic [7:0] pma__2,
+    output logic [7:0] pma__3,
+    output logic [7:0] pma__4,
+    output logic [7:0] pma__5,
+    output logic [7:0] pma__6,
+    output logic [7:0] pma__7
 );
-
-
-input clk;
-input rst;
-input cs;
-input we;
-input [2:0] addr;
-input [7:0] wr_data;
-output [7:0] rd_data;
-output [7:0] pma__0;
-output [7:0] pma__1;
-output [7:0] pma__2;
-output [7:0] pma__3;
-output [7:0] pma__4;
-output [7:0] pma__5;
-output [7:0] pma__6;
-output [7:0] pma__7;
-
-logic clk;
-logic rst;
-logic cs;
-logic we;
-logic [2:0] addr;
-logic [7:0] wr_data;
-logic [7:0] rd_data;
-logic [7:0] pma__0;
-logic [7:0] pma__1;
-logic [7:0] pma__2;
-logic [7:0] pma__3;
-logic [7:0] pma__4;
-logic [7:0] pma__5;
-logic [7:0] pma__6;
-logic [7:0] pma__7;
-
 
 
 always_comb

@@ -3,35 +3,16 @@
 //==============================================
 module machine_timer_registers
 (
-    clk,
-    rst,
-    cs,
-    we,
-    addr,
-    wr_data,
-    rd_data,
-    tip 
+    input clk,
+    input rst,
+    input cs,
+    input we,
+    input [3:0] addr,
+    input [63:0] wr_data,
+    output logic [63:0] rd_data,
+    output logic tip
 );
 
-input clk;
-input rst;
-input cs;
-input we;
-input [3:0] addr;
-input [63:0] wr_data;
-output [63:0] rd_data;
-output tip;
-
-logic clk;
-logic rst;
-
-logic cs;
-logic we;
-logic [3:0] addr;
-logic [63:0] wr_data;
-logic [63:0] rd_data;
-
-logic tip;
 
 // Machine Time Register (mtime)
 logic [63:0] mtime;

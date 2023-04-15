@@ -3,83 +3,35 @@
 //==============================================
 module top
 (
-    clk_100mhz,
-    sw,
-    btnc,
-    btnu,
-    btnl,
-    btnr,
-    btnd,
-    led,
-    led16_b,
-    led16_g,
-    led16_r,
-    led17_b,
-    led17_g,
-    led17_r,
-    an,
-    ca, 
-    cb, 
-    cc, 
-    cd, 
-    ce, 
-    cf, 
-    cg
+    input clk_100mhz,
+    input [15:0] sw,
+    input btnc,
+    input btnu,
+    input btnl,
+    input btnr,
+    input btnd,
+    output logic [15:0] led,
+    inout led16_b,
+    output logic led16_g,
+    output logic led16_r,
+    output logic led17_b,
+    output logic led17_g,
+    output logic led17_r,
+    output logic [7:0] an,
+    output logic ca, 
+    output logic cb, 
+    output logic cc, 
+    output logic cd, 
+    output logic ce, 
+    output logic cf, 
+    output logic cg
 );
 
-input clk_100mhz;
-input [15:0] sw;
-input btnc;
-input btnu;
-input btnl;
-input btnr;
-input btnd;
-output [15:0] led;
-inout led16_b;
-output led16_g;
-output led16_r;
-output led17_b;
-output led17_g;
-output led17_r;
-output [7:0] an;
-output ca; 
-output cb; 
-output cc; 
-output cd; 
-output ce; 
-output cf; 
-output cg;
 
-logic clk_100mhz;
-logic [15:0] sw;
-logic btnc;
-logic btnu;
-logic btnl;
-logic btnr;
-logic btnd;
-logic [15:0] led;
-//logic led16_b;
-logic led16_g;
-logic led16_r;
-logic led17_b;
-logic led17_g;
-logic led17_r;
-logic [7:0] an;
-logic ca; 
-logic cb; 
-logic cc; 
-logic cd; 
-logic ce; 
-logic cf; 
-logic cg;
 
 logic clk;
 logic rst;
 
-//logic [7:0] port__0;
-//logic [7:0] port__1;
-//logic [7:0] port__2;
-//logic [7:0] port__3;
 wire [7:0] port__0;
 wire [7:0] port__1;
 wire [7:0] port__2;
@@ -125,7 +77,7 @@ jay jay__0
     .port__1(port__1),
     .port__2(port__2),
     .port__3(port__3),
-    .irq__1(btnd),
+    .int__1(btnd),
     .ena(ena),
     .wea(wea),
     .addra(addra),
