@@ -125,6 +125,7 @@ jay jay__0
     .port__1(port__1),
     .port__2(port__2),
     .port__3(port__3),
+    .irq__1(btnd),
     .ena(ena),
     .wea(wea),
     .addra(addra),

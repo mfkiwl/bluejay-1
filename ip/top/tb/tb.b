@@ -75,9 +75,17 @@ initial begin
     // initialize clk
     clk_100mhz = 1'b1;
     btnc = 1'b1;
+    btnd = 1'b0;
     #11;
     // de-assert rst
     btnc = 1'b0;
+    #10000
+    btnd = 1'b1;
+    #10000
+    btnd = 1'b0;
+    #10000
+    btnd = 1'b1;
+    //
     #20000000;
 end
 

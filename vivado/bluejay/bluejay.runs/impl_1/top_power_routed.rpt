@@ -1,7 +1,7 @@
 Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 -------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2019.2 (lin64) Build 2708876 Wed Nov  6 21:39:14 MST 2019
-| Date             : Wed Apr 12 19:03:29 2023
+| Date             : Sat Apr 15 00:06:23 2023
 | Host             : seankent running 64-bit Ubuntu 22.04.2 LTS
 | Command          : report_power -file top_power_routed.rpt -pb top_power_summary_routed.pb -rpx top_power_routed.rpx
 | Design           : top
@@ -30,14 +30,14 @@ Table of Contents
 ----------
 
 +--------------------------+--------------+
-| Total On-Chip Power (W)  | 0.149        |
+| Total On-Chip Power (W)  | 0.138        |
 | Design Power Budget (W)  | Unspecified* |
 | Power Budget Margin (W)  | NA           |
-| Dynamic (W)              | 0.052        |
+| Dynamic (W)              | 0.040        |
 | Device Static (W)        | 0.098        |
 | Effective TJA (C/W)      | 4.6          |
-| Max Ambient (C)          | 84.3         |
-| Junction Temperature (C) | 25.7         |
+| Max Ambient (C)          | 84.4         |
+| Junction Temperature (C) | 25.6         |
 | Confidence Level         | Medium       |
 | Setting File             | ---          |
 | Simulation Activity File | ---          |
@@ -52,19 +52,19 @@ Table of Contents
 +----------------+-----------+----------+-----------+-----------------+
 | On-Chip        | Power (W) | Used     | Available | Utilization (%) |
 +----------------+-----------+----------+-----------+-----------------+
-| Clocks         |     0.008 |        3 |       --- |             --- |
-| Slice Logic    |     0.018 |     8213 |       --- |             --- |
-|   LUT as Logic |     0.018 |     4025 |     63400 |            6.35 |
-|   CARRY4       |    <0.001 |      138 |     15850 |            0.87 |
-|   Register     |    <0.001 |     3165 |    126800 |            2.50 |
-|   F7/F8 Muxes  |    <0.001 |      415 |     63400 |            0.65 |
+| Clocks         |     0.009 |        3 |       --- |             --- |
+| Slice Logic    |     0.014 |     8088 |       --- |             --- |
+|   LUT as Logic |     0.013 |     3975 |     63400 |            6.27 |
+|   CARRY4       |    <0.001 |      142 |     15850 |            0.90 |
+|   Register     |    <0.001 |     3167 |    126800 |            2.50 |
+|   F7/F8 Muxes  |    <0.001 |      304 |     63400 |            0.48 |
 |   BUFG         |    <0.001 |        4 |        32 |           12.50 |
-|   Others       |     0.000 |      101 |       --- |             --- |
-| Signals        |     0.025 |     6654 |       --- |             --- |
+|   Others       |     0.000 |      107 |       --- |             --- |
+| Signals        |     0.017 |     6794 |       --- |             --- |
 | Block RAM      |     0.000 |        8 |       135 |            5.93 |
-| I/O            |    <0.001 |       39 |       210 |           18.57 |
+| I/O            |    <0.001 |       40 |       210 |           19.05 |
 | Static Power   |     0.098 |          |           |                 |
-| Total          |     0.149 |          |           |                 |
+| Total          |     0.138 |          |           |                 |
 +----------------+-----------+----------+-----------+-----------------+
 
 
@@ -74,7 +74,7 @@ Table of Contents
 +-----------+-------------+-----------+-------------+------------+
 | Source    | Voltage (V) | Total (A) | Dynamic (A) | Static (A) |
 +-----------+-------------+-----------+-------------+------------+
-| Vccint    |       1.000 |     0.066 |       0.051 |      0.015 |
+| Vccint    |       1.000 |     0.055 |       0.039 |      0.015 |
 | Vccaux    |       1.800 |     0.018 |       0.000 |      0.018 |
 | Vcco33    |       3.300 |     0.004 |       0.000 |      0.004 |
 | Vcco25    |       2.500 |     0.000 |       0.000 |      0.000 |
@@ -143,15 +143,14 @@ Table of Contents
 +---------------------------------------+-----------+
 | Name                                  | Power (W) |
 +---------------------------------------+-----------+
-| top                                   |     0.052 |
-|   jay__0                              |     0.051 |
-|     central_processing_unit__0        |     0.049 |
+| top                                   |     0.040 |
+|   jay__0                              |     0.039 |
+|     central_processing_unit__0        |     0.038 |
 |       control_and_status_registers__0 |     0.002 |
-|       d_flip_flop__a                  |     0.004 |
-|       d_flip_flop__b                  |     0.003 |
-|       d_flip_flop__ir                 |     0.003 |
-|       d_flip_flop__state              |     0.028 |
-|       register_file__0                |     0.007 |
+|       d_flip_flop__a                  |     0.003 |
+|       d_flip_flop__b                  |     0.002 |
+|       d_flip_flop__state              |     0.023 |
+|       register_file__0                |     0.006 |
 |     machine_timer_registers__0        |     0.001 |
 +---------------------------------------+-----------+
 

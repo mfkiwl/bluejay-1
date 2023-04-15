@@ -4,17 +4,17 @@ Running: /tools/Xilinx/Vivado/2019.2/bin/unwrapped/lnx64.o/xelab -wto 68a6928b8e
 Using 8 slave threads.
 Starting static elaboration
 Pass Through NonSizing Optimizer
-WARNING: [VRFC 10-3091] actual bit length 40 differs from formal bit length 64 for port 'addr' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:8079]
-WARNING: [VRFC 10-3091] actual bit length 40 differs from formal bit length 64 for port 'addr' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:8200]
-WARNING: [VRFC 10-3091] actual bit length 40 differs from formal bit length 64 for port 'addr__0' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:8208]
-WARNING: [VRFC 10-3091] actual bit length 40 differs from formal bit length 64 for port 'addr__1' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:8215]
-WARNING: [VRFC 10-3091] actual bit length 40 differs from formal bit length 64 for port 'addr__2' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:8222]
-WARNING: [VRFC 10-3091] actual bit length 40 differs from formal bit length 64 for port 'addr__3' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:8229]
-WARNING: [VRFC 10-3091] actual bit length 40 differs from formal bit length 64 for port 'addr__4' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:8236]
-WARNING: [VRFC 10-3091] actual bit length 40 differs from formal bit length 64 for port 'addr__5' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:8243]
-WARNING: [VRFC 10-3091] actual bit length 40 differs from formal bit length 64 for port 'addr__6' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:8250]
-WARNING: [VRFC 10-3091] actual bit length 40 differs from formal bit length 64 for port 'addr__7' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:8257]
-WARNING: [VRFC 10-5021] port 'resp__0' is not connected on this instance [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:8186]
+WARNING: [VRFC 10-3091] actual bit length 40 differs from formal bit length 64 for port 'addr' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:8082]
+WARNING: [VRFC 10-3091] actual bit length 40 differs from formal bit length 64 for port 'addr' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:8203]
+WARNING: [VRFC 10-3091] actual bit length 40 differs from formal bit length 64 for port 'addr__0' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:8211]
+WARNING: [VRFC 10-3091] actual bit length 40 differs from formal bit length 64 for port 'addr__1' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:8218]
+WARNING: [VRFC 10-3091] actual bit length 40 differs from formal bit length 64 for port 'addr__2' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:8225]
+WARNING: [VRFC 10-3091] actual bit length 40 differs from formal bit length 64 for port 'addr__3' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:8232]
+WARNING: [VRFC 10-3091] actual bit length 40 differs from formal bit length 64 for port 'addr__4' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:8239]
+WARNING: [VRFC 10-3091] actual bit length 40 differs from formal bit length 64 for port 'addr__5' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:8246]
+WARNING: [VRFC 10-3091] actual bit length 40 differs from formal bit length 64 for port 'addr__6' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:8253]
+WARNING: [VRFC 10-3091] actual bit length 40 differs from formal bit length 64 for port 'addr__7' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:8260]
+WARNING: [VRFC 10-5021] port 'resp__0' is not connected on this instance [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:8189]
 Completed static elaboration
 Starting simulation data flow analysis
 WARNING: [XSIM 43-4100] "/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/ip/blk_mem_gen_0/sim/blk_mem_gen_0.v" Line 55. Module blk_mem_gen_0 has a timescale but at least one module in design doesn't have timescale.

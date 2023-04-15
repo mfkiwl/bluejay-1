@@ -15,7 +15,7 @@ INFO: [VRFC 10-311] analyzing module decoder
 INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/central_processing_unit/src/gen/control_and_status_registers.sv" into library work
 INFO: [VRFC 10-311] analyzing module control_and_status_registers
 INFO: [VRFC 10-2458] undeclared symbol mstatus___spie, assumed default net type wire [/home/seankent/bluejay/ip/central_processing_unit/src/gen/control_and_status_registers.sv:413]
-INFO: [VRFC 10-2458] undeclared symbol en__scratch, assumed default net type wire [/home/seankent/bluejay/ip/central_processing_unit/src/gen/control_and_status_registers.sv:751]
+INFO: [VRFC 10-2458] undeclared symbol en__scratch, assumed default net type wire [/home/seankent/bluejay/ip/central_processing_unit/src/gen/control_and_status_registers.sv:764]
 INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/central_processing_unit/tb/gen/tb.sv" into library work
 INFO: [VRFC 10-311] analyzing module tb
 INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/central_processing_unit/tb/gen/memory.sv" into library work

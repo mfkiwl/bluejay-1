@@ -171,19 +171,19 @@ begin
             we__ip__0_to_31 = we;
             re__ip__0_to_31 = ~we;
         end
-        PLATFORM_LEVEL_INTERRUPT_CONTROLLER__INTERRUPT_ENABLE_BITS__0_TO_31__CONTEXT__0:
+        PLATFORM_LEVEL_INTERRUPT_CONTROLLER__CONTEXT__0__INTERRUPT_ENABLE_BITS__0_TO_31:
         begin
             rd_data = context__0__ie__0_to_31;
             we__context__0__ie__0_to_31 = we;
             re__context__0__ie__0_to_31 = ~we;
         end
-        PLATFORM_LEVEL_INTERRUPT_CONTROLLER__PRIORITY_THRESHOLD__CONTEXT__0:
+        PLATFORM_LEVEL_INTERRUPT_CONTROLLER__CONTEXT__0__PRIORITY_THRESHOLD:
         begin
             rd_data = context__0__threshold;
             we__context__0__threshold = we;
             re__context__0__threshold = ~we;
         end
-        PLATFORM_LEVEL_INTERRUPT_CONTROLLER__INTERRUPT_CLAIM_COMPLETE__CONTEXT__0:
+        PLATFORM_LEVEL_INTERRUPT_CONTROLLER__CONTEXT__0__INTERRUPT_CLAIM_COMPLETE:
         begin
             rd_data = context__0__claim_complete;
             we__context__0__claim_complete = we;

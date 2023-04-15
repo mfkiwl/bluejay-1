@@ -9,6 +9,7 @@ module jay
     port__1,
     port__2,
     port__3,
+    irq__1,
     ena,
     wea,
     addra,
@@ -29,6 +30,8 @@ output [7:0] wea;
 output [11:0] addra; 
 output [63:0] dina;
 input [63:0] douta;
+
+input irq__1;
 
 logic clk;
 logic rst;

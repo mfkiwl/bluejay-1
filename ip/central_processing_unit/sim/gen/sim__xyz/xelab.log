@@ -14,6 +14,7 @@ Compiling module work.register_file
 Compiling module work.arithmetic_logic_unit
 Compiling module work.comparator
 Compiling module work.d_flip_flop(RESET_VALUE=1'b0)
+Compiling module work.d_flip_flop(RESET_VALUE=1'b1)
 Compiling module work.d_flip_flop(WIDTH=62,RESET_VALUE...
 Compiling module work.d_flip_flop
 Compiling module work.d_flip_flop(WIDTH=64,RESET_VALUE...

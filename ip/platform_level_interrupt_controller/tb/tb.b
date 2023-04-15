@@ -53,7 +53,7 @@ initial begin
     // enable interrupt
     cs = 1'b1;
     we = 1'b1;
-    addr = PLATFORM_LEVEL_INTERRUPT_CONTROLLER__INTERRUPT_ENABLE_BITS__0_TO_31__CONTEXT__0;
+    addr = PLATFORM_LEVEL_INTERRUPT_CONTROLLER__CONTEXT__0__INTERRUPT_ENABLE_BITS__0_TO_31;
     wr_data = 32'h2;
     #10;
     cs = 1'b0;
@@ -65,14 +65,14 @@ initial begin
     #10;
     cs = 1'b1;
     we = 1'b0;
-    addr = PLATFORM_LEVEL_INTERRUPT_CONTROLLER__INTERRUPT_CLAIM_COMPLETE__CONTEXT__0;
+    addr = PLATFORM_LEVEL_INTERRUPT_CONTROLLER__CONTEXT__0__INTERRUPT_CLAIM_COMPLETE;
     #10;
     #10;
     #10;
     #10;
     cs = 1'b1;
     we = 1'b1;
-    addr = PLATFORM_LEVEL_INTERRUPT_CONTROLLER__INTERRUPT_CLAIM_COMPLETE__CONTEXT__0;
+    addr = PLATFORM_LEVEL_INTERRUPT_CONTROLLER__CONTEXT__0__INTERRUPT_CLAIM_COMPLETE;
     wr_data = 10'h1;
     #50;
     $finish();
