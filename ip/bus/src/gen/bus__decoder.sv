@@ -3,21 +3,12 @@
 //==============================================
 module bus__decoder
 (
-    clk,
-    rst,
-    addr,
-    sel
+    input clk,
+    input rst,
+    input [63:0] addr,
+    output logic [2:0] sel
 );
 
-input clk;
-input rst;
-input [63:0] addr;
-output [2:0] sel;
-
-logic clk;
-logic rst;
-logic [63:0] addr;
-logic [2:0] sel;
 
 always_comb
 begin

@@ -3,52 +3,21 @@
 //==============================================
 module jay 
 (
-    clk,
-    rst,
-    port__0,
-    port__1,
-    port__2,
-    port__3,
-    irq__1,
-    ena,
-    wea,
-    addra,
-    dina,
-    douta
+    input clk,
+    input rst,
+    inout [7:0] port__0,
+    inout [7:0] port__1,
+    inout [7:0] port__2,
+    inout [7:0] port__3,
+    output logic ena,
+    output logic [7:0] wea,
+    output logic [11:0] addra, 
+    output logic [63:0] dina,
+    input [63:0] douta,
+    input int__1
 );
 
-input clk;
-input rst;
 
-inout [7:0] port__0;
-inout [7:0] port__1;
-inout [7:0] port__2;
-inout [7:0] port__3;
-
-output ena;
-output [7:0] wea;
-output [11:0] addra; 
-output [63:0] dina;
-input [63:0] douta;
-
-input irq__1;
-
-logic clk;
-logic rst;
-
-//logic [7:0] port__0;
-//logic [7:0] port__1;
-//logic [7:0] port__2;
-//logic [7:0] port__3;
-
-logic ena;
-logic [7:0] wea;
-logic [11:0] addra;
-logic [63:0] dina;
-logic [63:0] douta;
-
-logic irq__0;
-logic irq__1;
 logic context__0__eip;
 
 logic tip;
@@ -196,8 +165,7 @@ platform_level_interrupt_controller platform_level_interrupt_controller__0
     .addr(addr__1[25:0]),
     .wr_data(wr_data__1[31:0]),
     .rd_data(rd_data__1[31:0]),
-    .irq__0(irq__0),
-    .irq__1(irq__1),
+    .int__1(int__1),
     .context__0__eip(context__0__eip)
 );
 

@@ -20,49 +20,6 @@ PYTHON
 );
 
 
-
-logic clk;
-logic rst;
-
-logic [2:0] sel;
-
-logic cs;
-logic ready;
-logic [63:0] rd_data;
-
-logic cs__0;
-//logic ready__0;
-//logic [63:0] rd_data__0;
-
-logic cs__1;
-//logic ready__1;
-//logic [63:0] rd_data__1;
-
-logic cs__2;
-//logic ready__2;
-//logic [63:0] rd_data__2;
-
-logic cs__3;
-//logic ready__3;
-//logic [63:0] rd_data__3;
-
-logic cs__4;
-//logic ready__4;
-//logic [63:0] rd_data__4;
-
-logic cs__5;
-//logic ready__5;
-//logic [63:0] rd_data__5;
-
-logic cs__6;
-//logic ready__6;
-//logic [63:0] rd_data__6;
-
-logic cs__7;
-//logic ready__7;
-//logic [63:0] rd_data__7;
-
-
 always_comb
 begin
     cs__0 = 1'b0; 

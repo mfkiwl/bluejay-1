@@ -3,120 +3,37 @@
 //==============================================
 module bus__multiplexer
 (
-    clk,
-    rst,
-    sel,
-    cs,
-    ready,
-    rd_data,
-    cs__0,
-    ready__0,
-    rd_data__0,
-    cs__1,
-    ready__1,
-    rd_data__1,
-    cs__2,
-    ready__2,
-    rd_data__2,
-    cs__3,
-    ready__3,
-    rd_data__3,
-    cs__4,
-    ready__4,
-    rd_data__4,
-    cs__5,
-    ready__5,
-    rd_data__5,
-    cs__6,
-    ready__6,
-    rd_data__6,
-    cs__7,
-    ready__7,
-    rd_data__7
+    input clk,
+    input rst,
+    output logic cs__0,
+    input ready__0,
+    input [63:0] rd_data__0,
+    output logic cs__1,
+    input ready__1,
+    input [63:0] rd_data__1,
+    output logic cs__2,
+    input ready__2,
+    input [63:0] rd_data__2,
+    output logic cs__3,
+    input ready__3,
+    input [63:0] rd_data__3,
+    output logic cs__4,
+    input ready__4,
+    input [63:0] rd_data__4,
+    output logic cs__5,
+    input ready__5,
+    input [63:0] rd_data__5,
+    output logic cs__6,
+    input ready__6,
+    input [63:0] rd_data__6,
+    output logic cs__7,
+    input ready__7,
+    input [63:0] rd_data__7,
+    input cs,
+    output logic ready,
+    output logic [63:0] rd_data,
+    input [2:0] sel
 );
-
-input clk;
-input rst;
-
-input [2:0] sel;
-
-input cs;
-output ready;
-output [63:0] rd_data;
-
-output cs__0;
-input ready__0;
-input [63:0] rd_data__0;
-
-output cs__1;
-input ready__1;
-input [63:0] rd_data__1;
-
-output cs__2;
-input ready__2;
-input [63:0] rd_data__2;
-
-output cs__3;
-input ready__3;
-input [63:0] rd_data__3;
-
-output cs__4;
-input ready__4;
-input [63:0] rd_data__4;
-
-output cs__5;
-input ready__5;
-input [63:0] rd_data__5;
-
-output cs__6;
-input ready__6;
-input [63:0] rd_data__6;
-
-output cs__7;
-input ready__7;
-input [63:0] rd_data__7;
-
-
-logic clk;
-logic rst;
-
-logic [2:0] sel;
-
-logic cs;
-logic ready;
-logic [63:0] rd_data;
-
-logic cs__0;
-//logic ready__0;
-//logic [63:0] rd_data__0;
-
-logic cs__1;
-//logic ready__1;
-//logic [63:0] rd_data__1;
-
-logic cs__2;
-//logic ready__2;
-//logic [63:0] rd_data__2;
-
-logic cs__3;
-//logic ready__3;
-//logic [63:0] rd_data__3;
-
-logic cs__4;
-//logic ready__4;
-//logic [63:0] rd_data__4;
-
-logic cs__5;
-//logic ready__5;
-//logic [63:0] rd_data__5;
-
-logic cs__6;
-//logic ready__6;
-//logic [63:0] rd_data__6;
-
-logic cs__7;
-//logic ready__7;
-//logic [63:0] rd_data__7;
 
 
 always_comb

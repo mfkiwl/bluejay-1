@@ -3,24 +3,13 @@
 //==============================================
 module platform_level_interrupt_controller__gateway 
 (
-    clk,
-    rst,
-    irq,
-    request,
-    complete
+    input clk,
+    input rst,
+    input int__x,
+    output logic request__x,
+    input complete__x
 );
 
-input clk;
-input rst;
-input irq;
-output request;
-input complete;
-
-logic clk;
-logic rst;
-logic irq;
-logic request;
-logic complete;
 
 logic [1:0] state;
 logic [1:0] state__n;
@@ -31,7 +20,7 @@ localparam STATE__WAIT = 2'h2;
 
 always_comb
 begin
-    request = 1'b0;
+    request__x = 1'b0;
     state__n = state;
 
     case (state)
@@ -40,7 +29,7 @@ begin
         //==============================
         STATE__READY:
         begin
-            state__n = irq ? STATE__REQUEST_INTERRUPT : STATE__READY;
+            state__n = int__x ? STATE__REQUEST_INTERRUPT : STATE__READY;
         end
 
         //==============================
@@ -48,7 +37,7 @@ begin
         //==============================
         STATE__REQUEST_INTERRUPT:
         begin
-            request = 1'b1;
+            request__x = 1'b1;
             state__n = STATE__WAIT;
         end
         
@@ -57,7 +46,7 @@ begin
         //==============================
         STATE__WAIT:
         begin
-            state__n = complete ? STATE__READY : STATE__WAIT;
+            state__n = complete__x ? STATE__READY : STATE__WAIT;
         end
     endcase
 end

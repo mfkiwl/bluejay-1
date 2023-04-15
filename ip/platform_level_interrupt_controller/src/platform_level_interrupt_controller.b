@@ -46,9 +46,9 @@ platform_level_interrupt_controller__gateway gateway__1
 (
     .clk(clk),
     .rst(rst),
-    .int(int__1),
-    .request(request__1),
-    .complete(complete__1)
+    .int__x(int__1),
+    .request__x(request__1),
+    .complete__x(complete__1)
 );
 
 endmodule

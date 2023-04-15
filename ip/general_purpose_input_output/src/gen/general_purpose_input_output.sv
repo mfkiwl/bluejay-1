@@ -3,43 +3,20 @@
 //==============================================
 module general_purpose_input_output
 (
-    clk,
-    rst,
-    cs,
-    we,
-    addr,
-    wr_data,
-    rd_data,
-    port__0,
-    port__1,
-    port__2,
-    port__3
+    input clk,
+    input rst,
+    input cs,
+    input we,
+    input [3:0] addr,
+    input [7:0] wr_data,
+    output logic [7:0] rd_data,
+    inout [7:0] port__0,
+    inout [7:0] port__1,
+    inout [7:0] port__2,
+    inout [7:0] port__3
 );
 
-input clk;
-input rst;
 
-input cs;
-input we;
-input [3:0] addr;
-input [7:0] wr_data;
-output [7:0] rd_data;
-
-inout [7:0] port__0;
-inout [7:0] port__1;
-inout [7:0] port__2;
-inout [7:0] port__3;
-
-logic clk;
-logic rst;
-
-logic cs;
-logic we;
-logic [3:0] addr;
-logic [7:0] wr_data;
-logic [7:0] rd_data;
-
-//logic [7:0] port__0;
 logic [7:0] data__0;
 logic [7:0] oe__0;
 logic we__data__0;
@@ -47,7 +24,6 @@ logic we__oe__0;
 logic en__data__0;
 logic en__oe__0;
 
-//logic [7:0] port__1;
 logic [7:0] data__1;
 logic [7:0] oe__1;
 logic we__data__1;
@@ -55,7 +31,6 @@ logic we__oe__1;
 logic en__data__1;
 logic en__oe__1;
 
-//logic [7:0] port__2;
 logic [7:0] data__2;
 logic [7:0] oe__2;
 logic we__data__2;
@@ -63,7 +38,6 @@ logic we__oe__2;
 logic en__data__2;
 logic en__oe__2;
 
-//logic [7:0] port__3;
 logic [7:0] data__3;
 logic [7:0] oe__3;
 logic we__data__3;

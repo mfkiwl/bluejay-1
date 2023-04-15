@@ -3,51 +3,21 @@
 //==============================================
 module platform_level_interrupt_controller__priority_mux
 (
-    clk,
-    rst,
-    id__a,
-    ie__a,
-    ip__a,
-    priority__a,
-    id__b,
-    ie__b,
-    ip__b,
-    priority__b,
-    id__c,
-    ie__c,
-    ip__c,
-    priority__c
+    input clk,
+    input rst,
+    input [9:0] id__a,
+    input ie__a,
+    input ip__a,
+    input [31:0] priority__a,
+    input [9:0] id__b,
+    input ie__b,
+    input ip__b,
+    input [31:0] priority__b,
+    output logic [9:0] id__c,
+    output logic ie__c,
+    output logic ip__c,
+    output logic [31:0] priority__c
 );
-
-input clk;
-input rst;
-input [9:0] id__a;
-input ie__a;
-input ip__a;
-input [31:0] priority__a;
-input [9:0] id__b;
-input ie__b;
-input ip__b;
-input [31:0] priority__b;
-output [9:0] id__c;
-output ie__c;
-output ip__c;
-output [31:0] priority__c;
-
-logic clk;
-logic rst;
-logic [9:0] id__a;
-logic ie__a;
-logic ip__a;
-logic [31:0] priority__a;
-logic [9:0] id__b;
-logic ie__b;
-logic ip__b;
-logic [31:0] priority__b;
-logic [9:0] id__c;
-logic ie__c;
-logic ip__c;
-logic [31:0] priority__c;
 
 
 always_comb

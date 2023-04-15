@@ -3,55 +3,22 @@
 //==============================================
 module memory_controller
 (
-    clk,
-    rst,
-    cs,
-    we,
-    addr,
-    size,
-    wr_data,
-    ready,
-    rd_data,
-    ena,
-    wea,
-    addra, 
-    dina,
-    douta
+    input clk,
+    input rst,
+    input cs,
+    input we,
+    input [14:0] addr,
+    input [1:0] size,
+    input [63:0] wr_data,
+    output logic ready,
+    output logic [63:0] rd_data,
+    output logic ena,
+    output logic [7:0] wea,
+    output logic [11:0] addra, 
+    output logic [63:0] dina,
+    input [63:0] douta
 );
 
-input clk;
-input rst;
-
-input cs;
-input we;
-input [14:0] addr;
-input [1:0] size;
-input [63:0] wr_data;
-output ready;
-output [63:0] rd_data;
-
-output ena;
-output [7:0] wea;
-output [11:0] addra; 
-output [63:0] dina;
-input [63:0] douta;
-
-logic clk;
-logic rst;
-
-logic cs;
-logic we;
-logic [14:0] addr;
-logic [1:0] size;
-logic [63:0] wr_data;
-logic ready;
-logic [63:0] rd_data;
-
-logic ena;
-logic [7:0] wea;
-logic [11:0] addra; 
-logic [63:0] dina;
-logic [63:0] douta;
 
 logic [2:0] state;
 logic [2:0] state__n;

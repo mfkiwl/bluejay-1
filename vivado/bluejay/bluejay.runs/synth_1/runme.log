@@ -15,12 +15,12 @@ Attempting to get a license for feature 'Synthesis' and/or device 'xc7a100t'
 INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7a100t'
 INFO: [Device 21-403] Loading part xc7a100tcsg324-1
 INFO: Launching helper process for spawning children vivado processes
-INFO: Helper process launched with PID 46174 
+INFO: Helper process launched with PID 8265 
 ---------------------------------------------------------------------------------
-Starting RTL Elaboration : Time (s): cpu = 00:00:02 ; elapsed = 00:00:03 . Memory (MB): peak = 2140.871 ; gain = 202.688 ; free physical = 24850 ; free virtual = 29496
+Starting RTL Elaboration : Time (s): cpu = 00:00:02 ; elapsed = 00:00:03 . Memory (MB): peak = 2140.875 ; gain = 202.688 ; free physical = 23597 ; free virtual = 29628
 ---------------------------------------------------------------------------------
-INFO: [Synth 8-6157] synthesizing module 'top' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:8272]
-INFO: [Synth 8-6157] synthesizing module 'jay' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:7931]
+INFO: [Synth 8-6157] synthesizing module 'top' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:7634]
+INFO: [Synth 8-6157] synthesizing module 'jay' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:7325]
 INFO: [Synth 8-6157] synthesizing module 'central_processing_unit' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:40]
 	Parameter STATE__RESET bound to: 8'b00000000 
 	Parameter STATE__FETCH__0 bound to: 8'b00000001 
@@ -230,54 +230,54 @@ INFO: [Synth 8-6157] synthesizing module 'central_processing_unit' [/home/seanke
 	Parameter STATE__INTERRUPT__TIMER bound to: 8'b11001101 
 	Parameter STATE__INTERRUPT__EXTERNAL bound to: 8'b11001110 
 	Parameter STATE__FATAL bound to: 8'b11001111 
-INFO: [Synth 8-6157] synthesizing module 'decoder' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4223]
-INFO: [Synth 8-155] case statement is not full and has no default [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4255]
-INFO: [Synth 8-155] case statement is not full and has no default [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4270]
-INFO: [Synth 8-155] case statement is not full and has no default [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4303]
-INFO: [Synth 8-155] case statement is not full and has no default [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4323]
-INFO: [Synth 8-155] case statement is not full and has no default [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4348]
-INFO: [Synth 8-155] case statement is not full and has no default [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4390]
-INFO: [Synth 8-155] case statement is not full and has no default [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4399]
-INFO: [Synth 8-155] case statement is not full and has no default [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4383]
-INFO: [Synth 8-155] case statement is not full and has no default [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4414]
-INFO: [Synth 8-155] case statement is not full and has no default [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4438]
+INFO: [Synth 8-6157] synthesizing module 'decoder' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4196]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4228]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4243]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4276]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4296]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4321]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4363]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4372]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4356]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4387]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4411]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4424]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4433]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4442]
 INFO: [Synth 8-155] case statement is not full and has no default [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4451]
 INFO: [Synth 8-155] case statement is not full and has no default [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4460]
-INFO: [Synth 8-155] case statement is not full and has no default [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4469]
-INFO: [Synth 8-155] case statement is not full and has no default [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4478]
-INFO: [Synth 8-155] case statement is not full and has no default [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4487]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4473]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4482]
 INFO: [Synth 8-155] case statement is not full and has no default [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4500]
-INFO: [Synth 8-155] case statement is not full and has no default [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4509]
-INFO: [Synth 8-155] case statement is not full and has no default [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4527]
-INFO: [Synth 8-155] case statement is not full and has no default [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4540]
-INFO: [Synth 8-155] case statement is not full and has no default [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4549]
-INFO: [Synth 8-155] case statement is not full and has no default [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4524]
-INFO: [Synth 8-155] case statement is not full and has no default [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4564]
-INFO: [Synth 8-155] case statement is not full and has no default [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4593]
-INFO: [Synth 8-155] case statement is not full and has no default [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4609]
-INFO: [Synth 8-155] case statement is not full and has no default [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4606]
-INFO: [Synth 8-155] case statement is not full and has no default [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4267]
-INFO: [Synth 8-155] case statement is not full and has no default [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4661]
-WARNING: [Synth 8-87] always_comb on 'imm_reg' did not result in combinational logic [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4256]
-WARNING: [Synth 8-87] always_comb on 'op_reg' did not result in combinational logic [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4273]
-INFO: [Synth 8-6155] done synthesizing module 'decoder' (1#1) [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4223]
-INFO: [Synth 8-6157] synthesizing module 'register_file' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:3444]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4513]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4522]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4497]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4537]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4566]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4582]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4579]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4240]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4634]
+WARNING: [Synth 8-87] always_comb on 'imm_reg' did not result in combinational logic [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4229]
+WARNING: [Synth 8-87] always_comb on 'op_reg' did not result in combinational logic [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4246]
+INFO: [Synth 8-6155] done synthesizing module 'decoder' (1#1) [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4196]
+INFO: [Synth 8-6157] synthesizing module 'register_file' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:3413]
 INFO: [Synth 8-6157] synthesizing module 'd_flip_flop' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4]
 	Parameter WIDTH bound to: 64 - type: integer 
 	Parameter RESET_VALUE bound to: 0 - type: integer 
 INFO: [Synth 8-6155] done synthesizing module 'd_flip_flop' (2#1) [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4]
-INFO: [Synth 8-6155] done synthesizing module 'register_file' (3#1) [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:3444]
-INFO: [Synth 8-6157] synthesizing module 'arithmetic_logic_unit' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:3216]
-WARNING: [Synth 8-693] zero replication count - replication ignored [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:3314]
-INFO: [Synth 8-155] case statement is not full and has no default [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:3230]
-WARNING: [Synth 8-87] always_comb on 'c_reg' did not result in combinational logic [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:3233]
-INFO: [Synth 8-6155] done synthesizing module 'arithmetic_logic_unit' (4#1) [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:3216]
-INFO: [Synth 8-6157] synthesizing module 'comparator' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4197]
-INFO: [Synth 8-6155] done synthesizing module 'comparator' (5#1) [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4197]
-INFO: [Synth 8-6157] synthesizing module 'control_and_status_registers' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4903]
+INFO: [Synth 8-6155] done synthesizing module 'register_file' (3#1) [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:3413]
+INFO: [Synth 8-6157] synthesizing module 'arithmetic_logic_unit' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:3185]
+WARNING: [Synth 8-693] zero replication count - replication ignored [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:3283]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:3199]
+WARNING: [Synth 8-87] always_comb on 'c_reg' did not result in combinational logic [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:3202]
+INFO: [Synth 8-6155] done synthesizing module 'arithmetic_logic_unit' (4#1) [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:3185]
+INFO: [Synth 8-6157] synthesizing module 'comparator' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4170]
+INFO: [Synth 8-6155] done synthesizing module 'comparator' (5#1) [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4170]
+INFO: [Synth 8-6157] synthesizing module 'control_and_status_registers' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4876]
 	Parameter STATE__MINSTRET__NORMAL bound to: 1'b0 
 	Parameter STATE__MINSTRET__WRITE_OCCURED bound to: 1'b1 
-INFO: [Synth 8-155] case statement is not full and has no default [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:5143]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:5077]
 INFO: [Synth 8-6157] synthesizing module 'd_flip_flop__parameterized0' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4]
 	Parameter WIDTH bound to: 1 - type: integer 
 	Parameter RESET_VALUE bound to: 1'b0 
@@ -302,15 +302,15 @@ INFO: [Synth 8-6157] synthesizing module 'd_flip_flop__parameterized5' [/home/se
 	Parameter WIDTH bound to: 63 - type: integer 
 	Parameter RESET_VALUE bound to: 63'b000000000000000000000000000000000000000000000000000000000000000 
 INFO: [Synth 8-6155] done synthesizing module 'd_flip_flop__parameterized5' (5#1) [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4]
-WARNING: [Synth 8-87] always_comb on 'rd_data_reg' did not result in combinational logic [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:5146]
-WARNING: [Synth 8-3848] Net mstatus__spie in module/entity control_and_status_registers does not have driver. [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4996]
-WARNING: [Synth 8-3848] Net en__mscratch in module/entity control_and_status_registers does not have driver. [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:5100]
-INFO: [Synth 8-6155] done synthesizing module 'control_and_status_registers' (6#1) [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4903]
-WARNING: [Synth 8-6090] variable 'csr__wr_data' is written by both blocking and non-blocking assignments, entire logic could be removed [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:2848]
-WARNING: [Synth 8-6090] variable 'csr__wr_data' is written by both blocking and non-blocking assignments, entire logic could be removed [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:2849]
-WARNING: [Synth 8-6090] variable 'csr__wr_data' is written by both blocking and non-blocking assignments, entire logic could be removed [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:3110]
-WARNING: [Synth 8-6090] variable 'csr__wr_data' is written by both blocking and non-blocking assignments, entire logic could be removed [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:3111]
-INFO: [Synth 8-155] case statement is not full and has no default [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:466]
+WARNING: [Synth 8-87] always_comb on 'rd_data_reg' did not result in combinational logic [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:5080]
+WARNING: [Synth 8-3848] Net mstatus__spie in module/entity control_and_status_registers does not have driver. [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4936]
+WARNING: [Synth 8-3848] Net en__mscratch in module/entity control_and_status_registers does not have driver. [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:5034]
+INFO: [Synth 8-6155] done synthesizing module 'control_and_status_registers' (6#1) [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4876]
+WARNING: [Synth 8-6090] variable 'csr__wr_data' is written by both blocking and non-blocking assignments, entire logic could be removed [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:2817]
+WARNING: [Synth 8-6090] variable 'csr__wr_data' is written by both blocking and non-blocking assignments, entire logic could be removed [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:2818]
+WARNING: [Synth 8-6090] variable 'csr__wr_data' is written by both blocking and non-blocking assignments, entire logic could be removed [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:3079]
+WARNING: [Synth 8-6090] variable 'csr__wr_data' is written by both blocking and non-blocking assignments, entire logic could be removed [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:3080]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:435]
 INFO: [Synth 8-6157] synthesizing module 'd_flip_flop__parameterized6' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4]
 	Parameter WIDTH bound to: 8 - type: integer 
 	Parameter RESET_VALUE bound to: 8'b00000000 
@@ -323,94 +323,93 @@ INFO: [Synth 8-6157] synthesizing module 'd_flip_flop__parameterized8' [/home/se
 	Parameter WIDTH bound to: 32 - type: integer 
 	Parameter RESET_VALUE bound to: 0 - type: integer 
 INFO: [Synth 8-6155] done synthesizing module 'd_flip_flop__parameterized8' (6#1) [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4]
-WARNING: [Synth 8-87] always_comb on 'addr_reg' did not result in combinational logic [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:489]
+WARNING: [Synth 8-87] always_comb on 'addr_reg' did not result in combinational logic [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:458]
 INFO: [Synth 8-6155] done synthesizing module 'central_processing_unit' (7#1) [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:40]
-WARNING: [Synth 8-689] width (40) of port connection 'addr' does not match port width (64) of module 'central_processing_unit' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:8082]
-INFO: [Synth 8-6157] synthesizing module 'memory_controller' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:6903]
+WARNING: [Synth 8-689] width (40) of port connection 'addr' does not match port width (64) of module 'central_processing_unit' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:7445]
+INFO: [Synth 8-6157] synthesizing module 'memory_controller' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:6670]
 	Parameter STATE__IDLE bound to: 3'b000 
 	Parameter STATE__WRITE bound to: 3'b001 
 	Parameter STATE__READ__0 bound to: 3'b010 
 	Parameter STATE__READ__1 bound to: 3'b011 
 	Parameter STATE__READ__2 bound to: 3'b100 
-INFO: [Synth 8-155] case statement is not full and has no default [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:6975]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:6709]
 INFO: [Synth 8-6157] synthesizing module 'd_flip_flop__parameterized9' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4]
 	Parameter WIDTH bound to: 3 - type: integer 
 	Parameter RESET_VALUE bound to: 3'b000 
 INFO: [Synth 8-6155] done synthesizing module 'd_flip_flop__parameterized9' (7#1) [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4]
-WARNING: [Synth 8-87] always_comb on 'state__n_reg' did not result in combinational logic [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:6981]
-INFO: [Synth 8-6155] done synthesizing module 'memory_controller' (8#1) [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:6903]
-INFO: [Synth 8-6157] synthesizing module 'platform_level_interrupt_controller' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:5881]
-INFO: [Synth 8-6157] synthesizing module 'platform_level_interrupt_controller__core' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:5960]
+WARNING: [Synth 8-87] always_comb on 'state__n_reg' did not result in combinational logic [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:6715]
+INFO: [Synth 8-6155] done synthesizing module 'memory_controller' (8#1) [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:6670]
+INFO: [Synth 8-6157] synthesizing module 'platform_level_interrupt_controller' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:5796]
+INFO: [Synth 8-6157] synthesizing module 'platform_level_interrupt_controller__core' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:5853]
 INFO: [Synth 8-6157] synthesizing module 'sr_flip_flop' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:23]
 INFO: [Synth 8-6155] done synthesizing module 'sr_flip_flop' (9#1) [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:23]
-INFO: [Synth 8-6157] synthesizing module 'platform_level_interrupt_controller__priority_mux' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:6343]
-INFO: [Synth 8-6155] done synthesizing module 'platform_level_interrupt_controller__priority_mux' (10#1) [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:6343]
-INFO: [Synth 8-155] case statement is not full and has no default [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:6111]
+INFO: [Synth 8-6157] synthesizing module 'platform_level_interrupt_controller__priority_mux' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:6200]
+INFO: [Synth 8-6155] done synthesizing module 'platform_level_interrupt_controller__priority_mux' (10#1) [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:6200]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:5979]
 INFO: [Synth 8-6157] synthesizing module 'd_flip_flop__parameterized10' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4]
 	Parameter WIDTH bound to: 32 - type: integer 
 	Parameter RESET_VALUE bound to: 0 - type: integer 
 INFO: [Synth 8-6155] done synthesizing module 'd_flip_flop__parameterized10' (10#1) [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4]
-INFO: [Synth 8-155] case statement is not full and has no default [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:6231]
-INFO: [Synth 8-155] case statement is not full and has no default [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:6248]
-INFO: [Synth 8-6155] done synthesizing module 'platform_level_interrupt_controller__core' (11#1) [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:5960]
-INFO: [Synth 8-6157] synthesizing module 'platform_level_interrupt_controller__gateway' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:6265]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:6099]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:6116]
+INFO: [Synth 8-6155] done synthesizing module 'platform_level_interrupt_controller__core' (11#1) [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:5853]
+INFO: [Synth 8-6157] synthesizing module 'platform_level_interrupt_controller__gateway' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:6133]
 	Parameter STATE__READY bound to: 2'b00 
 	Parameter STATE__REQUEST_INTERRUPT bound to: 2'b01 
 	Parameter STATE__WAIT bound to: 2'b10 
-INFO: [Synth 8-155] case statement is not full and has no default [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:6298]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:6155]
 INFO: [Synth 8-6157] synthesizing module 'd_flip_flop__parameterized11' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4]
 	Parameter WIDTH bound to: 2 - type: integer 
 	Parameter RESET_VALUE bound to: 2'b00 
 INFO: [Synth 8-6155] done synthesizing module 'd_flip_flop__parameterized11' (11#1) [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4]
-INFO: [Synth 8-6155] done synthesizing module 'platform_level_interrupt_controller__gateway' (12#1) [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:6265]
-WARNING: [Synth 8-3848] Net request__0 in module/entity platform_level_interrupt_controller does not have driver. [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:5917]
-INFO: [Synth 8-6155] done synthesizing module 'platform_level_interrupt_controller' (13#1) [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:5881]
-INFO: [Synth 8-6157] synthesizing module 'machine_timer_registers' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:5756]
-INFO: [Synth 8-155] case statement is not full and has no default [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:5810]
-WARNING: [Synth 8-87] always_comb on 'rd_data_reg' did not result in combinational logic [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:5813]
-INFO: [Synth 8-6155] done synthesizing module 'machine_timer_registers' (14#1) [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:5756]
-INFO: [Synth 8-6157] synthesizing module 'physical_memory_attribute_registers' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:6414]
-INFO: [Synth 8-226] default block is never used [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:6470]
-INFO: [Synth 8-6155] done synthesizing module 'physical_memory_attribute_registers' (15#1) [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:6414]
-INFO: [Synth 8-6157] synthesizing module 'general_purpose_input_output' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:6600]
-INFO: [Synth 8-155] case statement is not full and has no default [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:6719]
+INFO: [Synth 8-6155] done synthesizing module 'platform_level_interrupt_controller__gateway' (12#1) [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:6133]
+WARNING: [Synth 8-3848] Net request__0 in module/entity platform_level_interrupt_controller does not have driver. [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:5810]
+INFO: [Synth 8-6155] done synthesizing module 'platform_level_interrupt_controller' (13#1) [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:5796]
+INFO: [Synth 8-6157] synthesizing module 'machine_timer_registers' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:5690]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:5725]
+WARNING: [Synth 8-87] always_comb on 'rd_data_reg' did not result in combinational logic [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:5728]
+INFO: [Synth 8-6155] done synthesizing module 'machine_timer_registers' (14#1) [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:5690]
+INFO: [Synth 8-6157] synthesizing module 'physical_memory_attribute_registers' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:6241]
+INFO: [Synth 8-226] default block is never used [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:6263]
+INFO: [Synth 8-6155] done synthesizing module 'physical_memory_attribute_registers' (15#1) [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:6241]
+INFO: [Synth 8-6157] synthesizing module 'general_purpose_input_output' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:6393]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:6486]
 INFO: [Synth 8-6157] synthesizing module 'd_flip_flop__parameterized12' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4]
 	Parameter WIDTH bound to: 8 - type: integer 
 	Parameter RESET_VALUE bound to: 0 - type: integer 
 INFO: [Synth 8-6155] done synthesizing module 'd_flip_flop__parameterized12' (15#1) [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4]
-INFO: [Synth 8-6155] done synthesizing module 'general_purpose_input_output' (16#1) [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:6600]
-INFO: [Synth 8-6157] synthesizing module 'bus' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:7042]
-INFO: [Synth 8-6157] synthesizing module 'bus__decoder' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:7474]
-INFO: [Synth 8-6155] done synthesizing module 'bus__decoder' (17#1) [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:7474]
-INFO: [Synth 8-6157] synthesizing module 'bus__physical_memory_attribute_multiplexer' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:7719]
-WARNING: [Synth 8-151] case item 3'b010 is unreachable [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:7764]
-INFO: [Synth 8-155] case statement is not full and has no default [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:7764]
-WARNING: [Synth 8-87] always_comb on 'pma_reg' did not result in combinational logic [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:7767]
-INFO: [Synth 8-6155] done synthesizing module 'bus__physical_memory_attribute_multiplexer' (18#1) [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:7719]
-INFO: [Synth 8-6157] synthesizing module 'bus__physical_memory_attribute_checker' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:7805]
-INFO: [Synth 8-6155] done synthesizing module 'bus__physical_memory_attribute_checker' (19#1) [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:7805]
-INFO: [Synth 8-6157] synthesizing module 'bus__trap' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:7856]
-INFO: [Synth 8-6155] done synthesizing module 'bus__trap' (20#1) [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:7856]
-INFO: [Synth 8-6157] synthesizing module 'bus__multiplexer' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:7534]
-INFO: [Synth 8-6155] done synthesizing module 'bus__multiplexer' (21#1) [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:7534]
-INFO: [Synth 8-6155] done synthesizing module 'bus' (22#1) [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:7042]
-WARNING: [Synth 8-689] width (40) of port connection 'addr__0' does not match port width (64) of module 'bus' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:8211]
-WARNING: [Synth 8-689] width (40) of port connection 'addr__1' does not match port width (64) of module 'bus' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:8218]
-WARNING: [Synth 8-689] width (40) of port connection 'addr__2' does not match port width (64) of module 'bus' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:8225]
-WARNING: [Synth 8-689] width (40) of port connection 'addr__3' does not match port width (64) of module 'bus' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:8232]
-WARNING: [Synth 8-689] width (40) of port connection 'addr__4' does not match port width (64) of module 'bus' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:8239]
-WARNING: [Synth 8-689] width (40) of port connection 'addr__5' does not match port width (64) of module 'bus' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:8246]
-WARNING: [Synth 8-689] width (40) of port connection 'addr__6' does not match port width (64) of module 'bus' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:8253]
-WARNING: [Synth 8-689] width (40) of port connection 'addr__7' does not match port width (64) of module 'bus' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:8260]
-WARNING: [Synth 8-7023] instance 'bus__0' of module 'bus' has 82 connections declared, but only 74 given [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:8189]
-WARNING: [Synth 8-3848] Net rd_data__5 in module/entity jay does not have driver. [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:8053]
-WARNING: [Synth 8-3848] Net rd_data__6 in module/entity jay does not have driver. [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:8062]
-WARNING: [Synth 8-3848] Net rd_data__7 in module/entity jay does not have driver. [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:8071]
-WARNING: [Synth 8-3848] Net irq__0 in module/entity jay does not have driver. [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:7977]
-INFO: [Synth 8-6155] done synthesizing module 'jay' (23#1) [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:7931]
-INFO: [Synth 8-6157] synthesizing module 'blk_mem_gen_0' [/home/seankent/bluejay/vivado/bluejay/bluejay.runs/synth_1/.Xil/Vivado-46140-seankent/realtime/blk_mem_gen_0_stub.v:6]
-INFO: [Synth 8-6155] done synthesizing module 'blk_mem_gen_0' (24#1) [/home/seankent/bluejay/vivado/bluejay/bluejay.runs/synth_1/.Xil/Vivado-46140-seankent/realtime/blk_mem_gen_0_stub.v:6]
-INFO: [Synth 8-6155] done synthesizing module 'top' (25#1) [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:8272]
+INFO: [Synth 8-6155] done synthesizing module 'general_purpose_input_output' (16#1) [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:6393]
+INFO: [Synth 8-6157] synthesizing module 'bus' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:6776]
+INFO: [Synth 8-6157] synthesizing module 'bus__decoder' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:7023]
+INFO: [Synth 8-6155] done synthesizing module 'bus__decoder' (17#1) [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:7023]
+INFO: [Synth 8-6157] synthesizing module 'bus__physical_memory_attribute_multiplexer' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:7176]
+WARNING: [Synth 8-151] case item 3'b010 is unreachable [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:7194]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:7194]
+WARNING: [Synth 8-87] always_comb on 'pma_reg' did not result in combinational logic [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:7197]
+INFO: [Synth 8-6155] done synthesizing module 'bus__physical_memory_attribute_multiplexer' (18#1) [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:7176]
+INFO: [Synth 8-6157] synthesizing module 'bus__physical_memory_attribute_checker' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:7235]
+INFO: [Synth 8-6155] done synthesizing module 'bus__physical_memory_attribute_checker' (19#1) [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:7235]
+INFO: [Synth 8-6157] synthesizing module 'bus__trap' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:7272]
+INFO: [Synth 8-6155] done synthesizing module 'bus__trap' (20#1) [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:7272]
+INFO: [Synth 8-6157] synthesizing module 'bus__multiplexer' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:7074]
+INFO: [Synth 8-6155] done synthesizing module 'bus__multiplexer' (21#1) [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:7074]
+INFO: [Synth 8-6155] done synthesizing module 'bus' (22#1) [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:6776]
+WARNING: [Synth 8-689] width (40) of port connection 'addr__0' does not match port width (64) of module 'bus' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:7573]
+WARNING: [Synth 8-689] width (40) of port connection 'addr__1' does not match port width (64) of module 'bus' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:7580]
+WARNING: [Synth 8-689] width (40) of port connection 'addr__2' does not match port width (64) of module 'bus' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:7587]
+WARNING: [Synth 8-689] width (40) of port connection 'addr__3' does not match port width (64) of module 'bus' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:7594]
+WARNING: [Synth 8-689] width (40) of port connection 'addr__4' does not match port width (64) of module 'bus' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:7601]
+WARNING: [Synth 8-689] width (40) of port connection 'addr__5' does not match port width (64) of module 'bus' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:7608]
+WARNING: [Synth 8-689] width (40) of port connection 'addr__6' does not match port width (64) of module 'bus' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:7615]
+WARNING: [Synth 8-689] width (40) of port connection 'addr__7' does not match port width (64) of module 'bus' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:7622]
+WARNING: [Synth 8-7023] instance 'bus__0' of module 'bus' has 82 connections declared, but only 74 given [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:7551]
+WARNING: [Synth 8-3848] Net rd_data__5 in module/entity jay does not have driver. [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:7416]
+WARNING: [Synth 8-3848] Net rd_data__6 in module/entity jay does not have driver. [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:7425]
+WARNING: [Synth 8-3848] Net rd_data__7 in module/entity jay does not have driver. [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:7434]
+INFO: [Synth 8-6155] done synthesizing module 'jay' (23#1) [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:7325]
+INFO: [Synth 8-6157] synthesizing module 'blk_mem_gen_0' [/home/seankent/bluejay/vivado/bluejay/bluejay.runs/synth_1/.Xil/Vivado-8233-seankent/realtime/blk_mem_gen_0_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'blk_mem_gen_0' (24#1) [/home/seankent/bluejay/vivado/bluejay/bluejay.runs/synth_1/.Xil/Vivado-8233-seankent/realtime/blk_mem_gen_0_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'top' (25#1) [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:7634]
 WARNING: [Synth 8-3917] design top has port led[15] driven by constant 0
 WARNING: [Synth 8-3917] design top has port led[14] driven by constant 0
 WARNING: [Synth 8-3917] design top has port led[13] driven by constant 0
@@ -491,7 +490,6 @@ WARNING: [Synth 8-3331] design physical_memory_attribute_registers has unconnect
 WARNING: [Synth 8-3331] design platform_level_interrupt_controller__priority_mux has unconnected port clk
 WARNING: [Synth 8-3331] design platform_level_interrupt_controller__priority_mux has unconnected port rst
 WARNING: [Synth 8-3331] design platform_level_interrupt_controller__core has unconnected port request__0
-WARNING: [Synth 8-3331] design platform_level_interrupt_controller has unconnected port irq__0
 WARNING: [Synth 8-3331] design comparator has unconnected port clk
 WARNING: [Synth 8-3331] design comparator has unconnected port rst
 WARNING: [Synth 8-3331] design arithmetic_logic_unit has unconnected port clk
@@ -519,7 +517,7 @@ WARNING: [Synth 8-3331] design top has unconnected port btnu
 WARNING: [Synth 8-3331] design top has unconnected port btnl
 WARNING: [Synth 8-3331] design top has unconnected port btnr
 ---------------------------------------------------------------------------------
-Finished RTL Elaboration : Time (s): cpu = 00:00:03 ; elapsed = 00:00:04 . Memory (MB): peak = 2220.590 ; gain = 282.406 ; free physical = 24855 ; free virtual = 29503
+Finished RTL Elaboration : Time (s): cpu = 00:00:03 ; elapsed = 00:00:04 . Memory (MB): peak = 2220.594 ; gain = 282.406 ; free physical = 23603 ; free virtual = 29638
 ---------------------------------------------------------------------------------
 
 Report Check Netlist: 
@@ -532,12 +530,12 @@ Report Check Netlist:
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:03 ; elapsed = 00:00:05 . Memory (MB): peak = 2232.465 ; gain = 294.281 ; free physical = 24855 ; free virtual = 29503
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:03 ; elapsed = 00:00:05 . Memory (MB): peak = 2232.469 ; gain = 294.281 ; free physical = 23605 ; free virtual = 29640
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:03 ; elapsed = 00:00:05 . Memory (MB): peak = 2232.465 ; gain = 294.281 ; free physical = 24855 ; free virtual = 29503
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:03 ; elapsed = 00:00:05 . Memory (MB): peak = 2232.469 ; gain = 294.281 ; free physical = 23605 ; free virtual = 29640
 ---------------------------------------------------------------------------------
-Netlist sorting complete. Time (s): cpu = 00:00:00.12 ; elapsed = 00:00:00.11 . Memory (MB): peak = 2232.465 ; gain = 0.000 ; free physical = 24844 ; free virtual = 29492
+Netlist sorting complete. Time (s): cpu = 00:00:00.12 ; elapsed = 00:00:00.11 . Memory (MB): peak = 2232.469 ; gain = 0.000 ; free physical = 23591 ; free virtual = 29626
 INFO: [Project 1-570] Preparing netlist for logic optimization
 
 Processing XDC Constraints
@@ -550,41 +548,41 @@ INFO: [Project 1-236] Implementation specific constraints were found while readi
 Resolution: To avoid this warning, move constraints listed in [.Xil/top_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
 Completed Processing XDC Constraints
 
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2433.996 ; gain = 0.000 ; free physical = 24696 ; free virtual = 29344
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2434.031 ; gain = 0.000 ; free physical = 23428 ; free virtual = 29479
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Constraint Validation Runtime : Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:00.01 . Memory (MB): peak = 2433.996 ; gain = 0.000 ; free physical = 24696 ; free virtual = 29344
+Constraint Validation Runtime : Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:00.01 . Memory (MB): peak = 2434.031 ; gain = 0.000 ; free physical = 23428 ; free virtual = 29479
 WARNING: [Timing 38-316] Clock period '20.000' specified during out-of-context synthesis of instance 'blk_mem_gen_0__0' at clock pin 'clka' is different from the actual clock period '10.000', this can lead to different synthesis results.
 ---------------------------------------------------------------------------------
-Finished Constraint Validation : Time (s): cpu = 00:00:08 ; elapsed = 00:00:10 . Memory (MB): peak = 2440.934 ; gain = 502.750 ; free physical = 24833 ; free virtual = 29481
+Finished Constraint Validation : Time (s): cpu = 00:00:08 ; elapsed = 00:00:10 . Memory (MB): peak = 2439.969 ; gain = 501.781 ; free physical = 23567 ; free virtual = 29619
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Loading Part and Timing Information
 ---------------------------------------------------------------------------------
 Loading part: xc7a100tcsg324-1
 ---------------------------------------------------------------------------------
-Finished Loading Part and Timing Information : Time (s): cpu = 00:00:08 ; elapsed = 00:00:10 . Memory (MB): peak = 2440.934 ; gain = 502.750 ; free physical = 24833 ; free virtual = 29481
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:08 ; elapsed = 00:00:10 . Memory (MB): peak = 2439.969 ; gain = 501.781 ; free physical = 23567 ; free virtual = 29619
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying 'set_property' XDC Constraints
 ---------------------------------------------------------------------------------
 Applied set_property DONT_TOUCH = true for blk_mem_gen_0__0. (constraint file  auto generated constraint, line ).
 ---------------------------------------------------------------------------------
-Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:08 ; elapsed = 00:00:10 . Memory (MB): peak = 2440.934 ; gain = 502.750 ; free physical = 24833 ; free virtual = 29481
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:08 ; elapsed = 00:00:10 . Memory (MB): peak = 2439.969 ; gain = 501.781 ; free physical = 23567 ; free virtual = 29619
 ---------------------------------------------------------------------------------
-INFO: [Synth 8-5818] HDL ADVISOR - The operator resource <adder> is shared. To prevent sharing consider applying a KEEP on the output of the operator [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:3230]
+INFO: [Synth 8-5818] HDL ADVISOR - The operator resource <adder> is shared. To prevent sharing consider applying a KEEP on the output of the operator [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:3199]
 INFO: [Synth 8-5546] ROM "rd_data" won't be mapped to RAM because it is too sparse
-WARNING: [Synth 8-327] inferring latch for variable 'op_reg' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4273]
-WARNING: [Synth 8-327] inferring latch for variable 'imm_reg' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4256]
-WARNING: [Synth 8-327] inferring latch for variable 'c_reg' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:3233]
-WARNING: [Synth 8-327] inferring latch for variable 'rd_data_reg' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:5146]
-WARNING: [Synth 8-327] inferring latch for variable 'addr_reg' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:489]
-WARNING: [Synth 8-327] inferring latch for variable 'state__n_reg' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:6981]
-WARNING: [Synth 8-327] inferring latch for variable 'rd_data_reg' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:5813]
-WARNING: [Synth 8-327] inferring latch for variable 'pma_reg' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:7767]
+WARNING: [Synth 8-327] inferring latch for variable 'op_reg' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4246]
+WARNING: [Synth 8-327] inferring latch for variable 'imm_reg' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:4229]
+WARNING: [Synth 8-327] inferring latch for variable 'c_reg' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:3202]
+WARNING: [Synth 8-327] inferring latch for variable 'rd_data_reg' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:5080]
+WARNING: [Synth 8-327] inferring latch for variable 'addr_reg' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:458]
+WARNING: [Synth 8-327] inferring latch for variable 'state__n_reg' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:6715]
+WARNING: [Synth 8-327] inferring latch for variable 'rd_data_reg' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:5728]
+WARNING: [Synth 8-327] inferring latch for variable 'pma_reg' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:7197]
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:12 ; elapsed = 00:00:14 . Memory (MB): peak = 2488.926 ; gain = 550.742 ; free physical = 24802 ; free virtual = 29452
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:12 ; elapsed = 00:00:15 . Memory (MB): peak = 2495.969 ; gain = 557.781 ; free physical = 23532 ; free virtual = 29585
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -933,6 +931,7 @@ WARNING: [Synth 8-3331] design physical_memory_attribute_registers has unconnect
 WARNING: [Synth 8-3331] design physical_memory_attribute_registers has unconnected port wr_data[3]
 WARNING: [Synth 8-3331] design physical_memory_attribute_registers has unconnected port wr_data[2]
 WARNING: [Synth 8-3331] design physical_memory_attribute_registers has unconnected port wr_data[1]
+WARNING: [Synth 8-3331] design physical_memory_attribute_registers has unconnected port wr_data[0]
 INFO: [Common 17-14] Message 'Synth 8-3331' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
 INFO: [Synth 8-3333] propagating constant 0 across sequential element (jay__0/central_processing_unit__0/\control_and_status_registers__0/d_flip_flop__mscratch__mscratch/q_reg[0] )
 INFO: [Synth 8-3333] propagating constant 0 across sequential element (jay__0/central_processing_unit__0/\control_and_status_registers__0/d_flip_flop__mscratch__mscratch/q_reg[1] )
@@ -1094,7 +1093,7 @@ WARNING: [Synth 8-3332] Sequential element (decoder__0/imm_reg[2]) is unused and
 WARNING: [Synth 8-3332] Sequential element (decoder__0/imm_reg[1]) is unused and will be removed from module central_processing_unit.
 WARNING: [Synth 8-3332] Sequential element (decoder__0/imm_reg[0]) is unused and will be removed from module central_processing_unit.
 ---------------------------------------------------------------------------------
-Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:38 ; elapsed = 00:00:41 . Memory (MB): peak = 2520.957 ; gain = 582.773 ; free physical = 24758 ; free virtual = 29417
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:38 ; elapsed = 00:00:41 . Memory (MB): peak = 2528.000 ; gain = 589.812 ; free physical = 23484 ; free virtual = 29549
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start ROM, RAM, DSP and Shift Register Reporting
@@ -1124,13 +1123,13 @@ Report RTL Partitions:
 Start Applying XDC Timing Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:42 ; elapsed = 00:00:45 . Memory (MB): peak = 2520.957 ; gain = 582.773 ; free physical = 24651 ; free virtual = 29310
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:41 ; elapsed = 00:00:45 . Memory (MB): peak = 2528.000 ; gain = 589.812 ; free physical = 23371 ; free virtual = 29442
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Timing Optimization
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Timing Optimization : Time (s): cpu = 00:00:49 ; elapsed = 00:00:53 . Memory (MB): peak = 2527.957 ; gain = 589.773 ; free physical = 24578 ; free virtual = 29237
+Finished Timing Optimization : Time (s): cpu = 00:00:49 ; elapsed = 00:00:53 . Memory (MB): peak = 2528.000 ; gain = 589.812 ; free physical = 23299 ; free virtual = 29370
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -1142,7 +1141,7 @@ Report RTL Partitions:
 Start Technology Mapping
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Technology Mapping : Time (s): cpu = 00:00:52 ; elapsed = 00:00:56 . Memory (MB): peak = 2527.957 ; gain = 589.773 ; free physical = 24581 ; free virtual = 29240
+Finished Technology Mapping : Time (s): cpu = 00:00:51 ; elapsed = 00:00:56 . Memory (MB): peak = 2528.000 ; gain = 589.812 ; free physical = 23275 ; free virtual = 29347
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -1166,13 +1165,13 @@ Start Final Netlist Cleanup
 Finished Final Netlist Cleanup
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished IO Insertion : Time (s): cpu = 00:00:54 ; elapsed = 00:00:58 . Memory (MB): peak = 2527.957 ; gain = 589.773 ; free physical = 24581 ; free virtual = 29240
+Finished IO Insertion : Time (s): cpu = 00:00:54 ; elapsed = 00:00:58 . Memory (MB): peak = 2528.000 ; gain = 589.812 ; free physical = 23276 ; free virtual = 29347
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Instances
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Instances : Time (s): cpu = 00:00:54 ; elapsed = 00:00:58 . Memory (MB): peak = 2527.957 ; gain = 589.773 ; free physical = 24581 ; free virtual = 29240
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:54 ; elapsed = 00:00:58 . Memory (MB): peak = 2528.000 ; gain = 589.812 ; free physical = 23276 ; free virtual = 29347
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -1191,25 +1190,25 @@ Report Check Netlist:
 Start Rebuilding User Hierarchy
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:55 ; elapsed = 00:00:59 . Memory (MB): peak = 2527.957 ; gain = 589.773 ; free physical = 24580 ; free virtual = 29239
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:54 ; elapsed = 00:00:58 . Memory (MB): peak = 2528.000 ; gain = 589.812 ; free physical = 23276 ; free virtual = 29347
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Ports
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Ports : Time (s): cpu = 00:00:55 ; elapsed = 00:00:59 . Memory (MB): peak = 2527.957 ; gain = 589.773 ; free physical = 24580 ; free virtual = 29239
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:54 ; elapsed = 00:00:58 . Memory (MB): peak = 2528.000 ; gain = 589.812 ; free physical = 23276 ; free virtual = 29347
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:55 ; elapsed = 00:00:59 . Memory (MB): peak = 2527.957 ; gain = 589.773 ; free physical = 24580 ; free virtual = 29239
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:54 ; elapsed = 00:00:59 . Memory (MB): peak = 2528.000 ; gain = 589.812 ; free physical = 23276 ; free virtual = 29347
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Nets
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Nets : Time (s): cpu = 00:00:55 ; elapsed = 00:00:59 . Memory (MB): peak = 2527.957 ; gain = 589.773 ; free physical = 24580 ; free virtual = 29239
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:54 ; elapsed = 00:00:59 . Memory (MB): peak = 2528.000 ; gain = 589.812 ; free physical = 23276 ; free virtual = 29347
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Writing Synthesis Report
@@ -1334,30 +1333,30 @@ Report Instance Areas:
 |83    |        d_flip_flop__state                           |d_flip_flop__parameterized11                 |     5|
 +------+-----------------------------------------------------+---------------------------------------------+------+
 ---------------------------------------------------------------------------------
-Finished Writing Synthesis Report : Time (s): cpu = 00:00:55 ; elapsed = 00:00:59 . Memory (MB): peak = 2527.957 ; gain = 589.773 ; free physical = 24580 ; free virtual = 29239
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:54 ; elapsed = 00:00:59 . Memory (MB): peak = 2528.000 ; gain = 589.812 ; free physical = 23276 ; free virtual = 29347
 ---------------------------------------------------------------------------------
-Synthesis finished with 0 errors, 0 critical warnings and 163 warnings.
-Synthesis Optimization Runtime : Time (s): cpu = 00:00:53 ; elapsed = 00:00:57 . Memory (MB): peak = 2527.957 ; gain = 381.305 ; free physical = 24629 ; free virtual = 29288
-Synthesis Optimization Complete : Time (s): cpu = 00:00:55 ; elapsed = 00:00:59 . Memory (MB): peak = 2527.965 ; gain = 589.773 ; free physical = 24629 ; free virtual = 29288
+Synthesis finished with 0 errors, 0 critical warnings and 162 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:52 ; elapsed = 00:00:56 . Memory (MB): peak = 2528.000 ; gain = 382.312 ; free physical = 23328 ; free virtual = 29400
+Synthesis Optimization Complete : Time (s): cpu = 00:00:54 ; elapsed = 00:00:59 . Memory (MB): peak = 2528.008 ; gain = 589.812 ; free physical = 23328 ; free virtual = 29400
 INFO: [Project 1-571] Translating synthesized netlist
-Netlist sorting complete. Time (s): cpu = 00:00:00.06 ; elapsed = 00:00:00.05 . Memory (MB): peak = 2527.965 ; gain = 0.000 ; free physical = 24698 ; free virtual = 29357
+Netlist sorting complete. Time (s): cpu = 00:00:00.06 ; elapsed = 00:00:00.05 . Memory (MB): peak = 2528.008 ; gain = 0.000 ; free physical = 23398 ; free virtual = 29472
 INFO: [Netlist 29-17] Analyzing 690 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
 INFO: [Project 1-570] Preparing netlist for logic optimization
 INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2559.973 ; gain = 0.000 ; free physical = 24654 ; free virtual = 29313
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2560.016 ; gain = 0.000 ; free physical = 23348 ; free virtual = 29422
 INFO: [Project 1-111] Unisim Transformation Summary:
   A total of 244 instances were transformed.
   IOBUF => IOBUF (IBUF, OBUFT): 1 instance 
   LD => LDCE: 243 instances
 
 INFO: [Common 17-83] Releasing license: Synthesis
-228 Infos, 274 Warnings, 0 Critical Warnings and 0 Errors encountered.
+228 Infos, 273 Warnings, 0 Critical Warnings and 0 Errors encountered.
 synth_design completed successfully
-synth_design: Time (s): cpu = 00:01:00 ; elapsed = 00:01:13 . Memory (MB): peak = 2559.973 ; gain = 862.828 ; free physical = 24826 ; free virtual = 29485
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2559.973 ; gain = 0.000 ; free physical = 24826 ; free virtual = 29485
+synth_design: Time (s): cpu = 00:00:59 ; elapsed = 00:01:06 . Memory (MB): peak = 2560.016 ; gain = 862.867 ; free physical = 23524 ; free virtual = 29598
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2560.016 ; gain = 0.000 ; free physical = 23524 ; free virtual = 29598
 WARNING: [Constraints 18-5210] No constraints selected for write.
 Resolution: This message can indicate that there are no constraints for the design, or it can indicate that the used_in flags are set such that the constraints are ignored. This later case is used when running synth_design to not write synthesis constraints to the resulting checkpoint. Instead, project constraints are read when the synthesized design is opened.
 INFO: [Common 17-1381] The checkpoint '/home/seankent/bluejay/vivado/bluejay/bluejay.runs/synth_1/top.dcp' has been generated.
 INFO: [runtcl-4] Executing : report_utilization -file top_utilization_synth.rpt -pb top_utilization_synth.pb
-INFO: [Common 17-206] Exiting Vivado at Sat Apr 15 00:04:45 2023...
+INFO: [Common 17-206] Exiting Vivado at Sat Apr 15 12:29:39 2023...

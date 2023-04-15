@@ -111,6 +111,7 @@ logic en__x__29;
 logic en__x__30;
 logic en__x__31;
 
+
 always_comb
 begin
     we__x__0 = 1'b0;
@@ -147,166 +148,230 @@ begin
     we__x__31 = 1'b0;
 
     case (addr)
+        
         5'h0:
         begin
             rd_data = x__0;
             we__x__0 = we;
         end
+    
+        
         5'h1:
         begin
             rd_data = x__1;
             we__x__1 = we;
         end
+    
+        
         5'h2:
         begin
             rd_data = x__2;
             we__x__2 = we;
         end
+    
+        
         5'h3:
         begin
             rd_data = x__3;
             we__x__3 = we;
         end
+    
+        
         5'h4:
         begin
             rd_data = x__4;
             we__x__4 = we;
         end
+    
+        
         5'h5:
         begin
             rd_data = x__5;
             we__x__5 = we;
         end
+    
+        
         5'h6:
         begin
             rd_data = x__6;
             we__x__6 = we;
         end
+    
+        
         5'h7:
         begin
             rd_data = x__7;
             we__x__7 = we;
         end
+    
+        
         5'h8:
         begin
             rd_data = x__8;
             we__x__8 = we;
         end
+    
+        
         5'h9:
         begin
             rd_data = x__9;
             we__x__9 = we;
         end
+    
+        
         5'ha:
         begin
             rd_data = x__10;
             we__x__10 = we;
         end
+    
+        
         5'hb:
         begin
             rd_data = x__11;
             we__x__11 = we;
         end
+    
+        
         5'hc:
         begin
             rd_data = x__12;
             we__x__12 = we;
         end
+    
+        
         5'hd:
         begin
             rd_data = x__13;
             we__x__13 = we;
         end
+    
+        
         5'he:
         begin
             rd_data = x__14;
             we__x__14 = we;
         end
+    
+        
         5'hf:
         begin
             rd_data = x__15;
             we__x__15 = we;
         end
+    
+        
         5'h10:
         begin
             rd_data = x__16;
             we__x__16 = we;
         end
+    
+        
         5'h11:
         begin
             rd_data = x__17;
             we__x__17 = we;
         end
+    
+        
         5'h12:
         begin
             rd_data = x__18;
             we__x__18 = we;
         end
+    
+        
         5'h13:
         begin
             rd_data = x__19;
             we__x__19 = we;
         end
+    
+        
         5'h14:
         begin
             rd_data = x__20;
             we__x__20 = we;
         end
+    
+        
         5'h15:
         begin
             rd_data = x__21;
             we__x__21 = we;
         end
+    
+        
         5'h16:
         begin
             rd_data = x__22;
             we__x__22 = we;
         end
+    
+        
         5'h17:
         begin
             rd_data = x__23;
             we__x__23 = we;
         end
+    
+        
         5'h18:
         begin
             rd_data = x__24;
             we__x__24 = we;
         end
+    
+        
         5'h19:
         begin
             rd_data = x__25;
             we__x__25 = we;
         end
+    
+        
         5'h1a:
         begin
             rd_data = x__26;
             we__x__26 = we;
         end
+    
+        
         5'h1b:
         begin
             rd_data = x__27;
             we__x__27 = we;
         end
+    
+        
         5'h1c:
         begin
             rd_data = x__28;
             we__x__28 = we;
         end
+    
+        
         5'h1d:
         begin
             rd_data = x__29;
             we__x__29 = we;
         end
+    
+        
         5'h1e:
         begin
             rd_data = x__30;
             we__x__30 = we;
         end
+    
+        
         5'h1f:
         begin
             rd_data = x__31;
             we__x__31 = we;
         end
+    
     endcase
 end
 
@@ -343,7 +408,9 @@ assign en__x__29 = cs & we__x__29;
 assign en__x__30 = cs & we__x__30;
 assign en__x__31 = cs & we__x__31;
 
+
 assign x__0 = 64'h0;
+
 
 //==============================
 // d_flip_flop__x__1
@@ -356,8 +423,6 @@ d_flip_flop #(.WIDTH(64)) d_flip_flop__x__1
     .d(wr_data),
     .q(x__1)
 );
-
-
 //==============================
 // d_flip_flop__x__2
 //==============================
@@ -369,8 +434,6 @@ d_flip_flop #(.WIDTH(64)) d_flip_flop__x__2
     .d(wr_data),
     .q(x__2)
 );
-
-
 //==============================
 // d_flip_flop__x__3
 //==============================
@@ -382,8 +445,6 @@ d_flip_flop #(.WIDTH(64)) d_flip_flop__x__3
     .d(wr_data),
     .q(x__3)
 );
-
-
 //==============================
 // d_flip_flop__x__4
 //==============================
@@ -395,8 +456,6 @@ d_flip_flop #(.WIDTH(64)) d_flip_flop__x__4
     .d(wr_data),
     .q(x__4)
 );
-
-
 //==============================
 // d_flip_flop__x__5
 //==============================
@@ -408,8 +467,6 @@ d_flip_flop #(.WIDTH(64)) d_flip_flop__x__5
     .d(wr_data),
     .q(x__5)
 );
-
-
 //==============================
 // d_flip_flop__x__6
 //==============================
@@ -421,8 +478,6 @@ d_flip_flop #(.WIDTH(64)) d_flip_flop__x__6
     .d(wr_data),
     .q(x__6)
 );
-
-
 //==============================
 // d_flip_flop__x__7
 //==============================
@@ -434,8 +489,6 @@ d_flip_flop #(.WIDTH(64)) d_flip_flop__x__7
     .d(wr_data),
     .q(x__7)
 );
-
-
 //==============================
 // d_flip_flop__x__8
 //==============================
@@ -447,8 +500,6 @@ d_flip_flop #(.WIDTH(64)) d_flip_flop__x__8
     .d(wr_data),
     .q(x__8)
 );
-
-
 //==============================
 // d_flip_flop__x__9
 //==============================
@@ -460,8 +511,6 @@ d_flip_flop #(.WIDTH(64)) d_flip_flop__x__9
     .d(wr_data),
     .q(x__9)
 );
-
-
 //==============================
 // d_flip_flop__x__10
 //==============================
@@ -473,8 +522,6 @@ d_flip_flop #(.WIDTH(64)) d_flip_flop__x__10
     .d(wr_data),
     .q(x__10)
 );
-
-
 //==============================
 // d_flip_flop__x__11
 //==============================
@@ -486,8 +533,6 @@ d_flip_flop #(.WIDTH(64)) d_flip_flop__x__11
     .d(wr_data),
     .q(x__11)
 );
-
-
 //==============================
 // d_flip_flop__x__12
 //==============================
@@ -499,8 +544,6 @@ d_flip_flop #(.WIDTH(64)) d_flip_flop__x__12
     .d(wr_data),
     .q(x__12)
 );
-
-
 //==============================
 // d_flip_flop__x__13
 //==============================
@@ -512,8 +555,6 @@ d_flip_flop #(.WIDTH(64)) d_flip_flop__x__13
     .d(wr_data),
     .q(x__13)
 );
-
-
 //==============================
 // d_flip_flop__x__14
 //==============================
@@ -525,8 +566,6 @@ d_flip_flop #(.WIDTH(64)) d_flip_flop__x__14
     .d(wr_data),
     .q(x__14)
 );
-
-
 //==============================
 // d_flip_flop__x__15
 //==============================
@@ -538,8 +577,6 @@ d_flip_flop #(.WIDTH(64)) d_flip_flop__x__15
     .d(wr_data),
     .q(x__15)
 );
-
-
 //==============================
 // d_flip_flop__x__16
 //==============================
@@ -551,8 +588,6 @@ d_flip_flop #(.WIDTH(64)) d_flip_flop__x__16
     .d(wr_data),
     .q(x__16)
 );
-
-
 //==============================
 // d_flip_flop__x__17
 //==============================
@@ -564,8 +599,6 @@ d_flip_flop #(.WIDTH(64)) d_flip_flop__x__17
     .d(wr_data),
     .q(x__17)
 );
-
-
 //==============================
 // d_flip_flop__x__18
 //==============================
@@ -577,8 +610,6 @@ d_flip_flop #(.WIDTH(64)) d_flip_flop__x__18
     .d(wr_data),
     .q(x__18)
 );
-
-
 //==============================
 // d_flip_flop__x__19
 //==============================
@@ -590,8 +621,6 @@ d_flip_flop #(.WIDTH(64)) d_flip_flop__x__19
     .d(wr_data),
     .q(x__19)
 );
-
-
 //==============================
 // d_flip_flop__x__20
 //==============================
@@ -603,8 +632,6 @@ d_flip_flop #(.WIDTH(64)) d_flip_flop__x__20
     .d(wr_data),
     .q(x__20)
 );
-
-
 //==============================
 // d_flip_flop__x__21
 //==============================
@@ -616,8 +643,6 @@ d_flip_flop #(.WIDTH(64)) d_flip_flop__x__21
     .d(wr_data),
     .q(x__21)
 );
-
-
 //==============================
 // d_flip_flop__x__22
 //==============================
@@ -629,8 +654,6 @@ d_flip_flop #(.WIDTH(64)) d_flip_flop__x__22
     .d(wr_data),
     .q(x__22)
 );
-
-
 //==============================
 // d_flip_flop__x__23
 //==============================
@@ -642,8 +665,6 @@ d_flip_flop #(.WIDTH(64)) d_flip_flop__x__23
     .d(wr_data),
     .q(x__23)
 );
-
-
 //==============================
 // d_flip_flop__x__24
 //==============================
@@ -655,8 +676,6 @@ d_flip_flop #(.WIDTH(64)) d_flip_flop__x__24
     .d(wr_data),
     .q(x__24)
 );
-
-
 //==============================
 // d_flip_flop__x__25
 //==============================
@@ -668,8 +687,6 @@ d_flip_flop #(.WIDTH(64)) d_flip_flop__x__25
     .d(wr_data),
     .q(x__25)
 );
-
-
 //==============================
 // d_flip_flop__x__26
 //==============================
@@ -681,8 +698,6 @@ d_flip_flop #(.WIDTH(64)) d_flip_flop__x__26
     .d(wr_data),
     .q(x__26)
 );
-
-
 //==============================
 // d_flip_flop__x__27
 //==============================
@@ -694,8 +709,6 @@ d_flip_flop #(.WIDTH(64)) d_flip_flop__x__27
     .d(wr_data),
     .q(x__27)
 );
-
-
 //==============================
 // d_flip_flop__x__28
 //==============================
@@ -707,8 +720,6 @@ d_flip_flop #(.WIDTH(64)) d_flip_flop__x__28
     .d(wr_data),
     .q(x__28)
 );
-
-
 //==============================
 // d_flip_flop__x__29
 //==============================
@@ -720,8 +731,6 @@ d_flip_flop #(.WIDTH(64)) d_flip_flop__x__29
     .d(wr_data),
     .q(x__29)
 );
-
-
 //==============================
 // d_flip_flop__x__30
 //==============================
@@ -733,8 +742,6 @@ d_flip_flop #(.WIDTH(64)) d_flip_flop__x__30
     .d(wr_data),
     .q(x__30)
 );
-
-
 //==============================
 // d_flip_flop__x__31
 //==============================
@@ -746,8 +753,5 @@ d_flip_flop #(.WIDTH(64)) d_flip_flop__x__31
     .d(wr_data),
     .q(x__31)
 );
-
-
-
 
 endmodule

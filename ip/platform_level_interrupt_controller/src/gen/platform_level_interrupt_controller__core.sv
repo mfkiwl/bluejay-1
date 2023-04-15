@@ -3,45 +3,20 @@
 //==============================================
 module platform_level_interrupt_controller__core
 (
-    clk,
-    rst,
-    cs,
-    we,
-    addr,
-    wr_data,
-    rd_data,
-    request__0,
-    request__1,
-    complete__0,
-    complete__1,
-    context__0__eip
+    input clk,
+    input rst,
+    input cs,
+    input we,
+    input [25:0] addr,
+    input [31:0] wr_data,
+    output logic [31:0] rd_data,
+    input request__0,
+    input request__1,
+    output logic complete__0,
+    output logic complete__1,
+    output logic context__0__eip
 );
 
-input clk;
-input rst;
-input cs;
-input we;
-input [25:0] addr;
-input [31:0] wr_data;
-output [31:0] rd_data;
-input request__0;
-input request__1;
-output complete__0;
-output complete__1;
-output context__0__eip;
-
-logic clk;
-logic rst;
-logic cs;
-logic we;
-logic [25:0] addr;
-logic [31:0] wr_data;
-logic [31:0] rd_data;
-logic request__0;
-logic request__1;
-logic complete__0;
-logic complete__1;
-logic context__0__eip;
 
 logic ip__0;
 logic ip__1;

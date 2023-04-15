@@ -39,37 +39,19 @@ endmodule
 //==============================================
 module central_processing_unit
 (
-    clk,
-    rst,
-    cs,
-    we,
-    addr,
-    size,
-    wr_data,
-    ready,
-    resp,
-    rd_data,
-    eip,
-    tip
+    input clk,
+    input rst,
+    output logic cs,
+    output logic we,
+    output logic [63:0] addr,
+    output logic [1:0] size,
+    output logic [63:0] wr_data,
+    input ready,
+    input resp,
+    input [63:0] rd_data,
+    input eip,
+    input tip
 );
-
-
-input clk;
-input rst;
-output cs;
-output we;
-output [63:0] addr;
-output [1:0] size;
-output [63:0] wr_data;
-input ready;
-input resp;
-input [63:0] rd_data;
-input eip;
-input tip;
-
-// Clock, Reset
-logic clk;
-logic rst;
 
 // Program Counter/Instruction Register
 logic [63:0] pc;
@@ -122,19 +104,6 @@ logic mip__meip;
 logic mip__msip;
 logic mip__mtip;
 
-// CPU to Memory Interface
-logic cs;
-logic we;
-logic [63:0] addr;
-logic [1:0] size;
-logic [63:0] wr_data;
-//logic ready;
-//logic resp;
-logic [63:0] rd_data;
-
-// Interrupt Signals
-logic eip;
-logic tip;
 
 // CSR logic
 logic instret;
@@ -3551,6 +3520,7 @@ logic en__x__29;
 logic en__x__30;
 logic en__x__31;
 
+
 always_comb
 begin
     we__x__0 = 1'b0;
@@ -3587,166 +3557,230 @@ begin
     we__x__31 = 1'b0;
 
     case (addr)
+        
         5'h0:
         begin
             rd_data = x__0;
             we__x__0 = we;
         end
+    
+        
         5'h1:
         begin
             rd_data = x__1;
             we__x__1 = we;
         end
+    
+        
         5'h2:
         begin
             rd_data = x__2;
             we__x__2 = we;
         end
+    
+        
         5'h3:
         begin
             rd_data = x__3;
             we__x__3 = we;
         end
+    
+        
         5'h4:
         begin
             rd_data = x__4;
             we__x__4 = we;
         end
+    
+        
         5'h5:
         begin
             rd_data = x__5;
             we__x__5 = we;
         end
+    
+        
         5'h6:
         begin
             rd_data = x__6;
             we__x__6 = we;
         end
+    
+        
         5'h7:
         begin
             rd_data = x__7;
             we__x__7 = we;
         end
+    
+        
         5'h8:
         begin
             rd_data = x__8;
             we__x__8 = we;
         end
+    
+        
         5'h9:
         begin
             rd_data = x__9;
             we__x__9 = we;
         end
+    
+        
         5'ha:
         begin
             rd_data = x__10;
             we__x__10 = we;
         end
+    
+        
         5'hb:
         begin
             rd_data = x__11;
             we__x__11 = we;
         end
+    
+        
         5'hc:
         begin
             rd_data = x__12;
             we__x__12 = we;
         end
+    
+        
         5'hd:
         begin
             rd_data = x__13;
             we__x__13 = we;
         end
+    
+        
         5'he:
         begin
             rd_data = x__14;
             we__x__14 = we;
         end
+    
+        
         5'hf:
         begin
             rd_data = x__15;
             we__x__15 = we;
         end
+    
+        
         5'h10:
         begin
             rd_data = x__16;
             we__x__16 = we;
         end
+    
+        
         5'h11:
         begin
             rd_data = x__17;
             we__x__17 = we;
         end
+    
+        
         5'h12:
         begin
             rd_data = x__18;
             we__x__18 = we;
         end
+    
+        
         5'h13:
         begin
             rd_data = x__19;
             we__x__19 = we;
         end
+    
+        
         5'h14:
         begin
             rd_data = x__20;
             we__x__20 = we;
         end
+    
+        
         5'h15:
         begin
             rd_data = x__21;
             we__x__21 = we;
         end
+    
+        
         5'h16:
         begin
             rd_data = x__22;
             we__x__22 = we;
         end
+    
+        
         5'h17:
         begin
             rd_data = x__23;
             we__x__23 = we;
         end
+    
+        
         5'h18:
         begin
             rd_data = x__24;
             we__x__24 = we;
         end
+    
+        
         5'h19:
         begin
             rd_data = x__25;
             we__x__25 = we;
         end
+    
+        
         5'h1a:
         begin
             rd_data = x__26;
             we__x__26 = we;
         end
+    
+        
         5'h1b:
         begin
             rd_data = x__27;
             we__x__27 = we;
         end
+    
+        
         5'h1c:
         begin
             rd_data = x__28;
             we__x__28 = we;
         end
+    
+        
         5'h1d:
         begin
             rd_data = x__29;
             we__x__29 = we;
         end
+    
+        
         5'h1e:
         begin
             rd_data = x__30;
             we__x__30 = we;
         end
+    
+        
         5'h1f:
         begin
             rd_data = x__31;
             we__x__31 = we;
         end
+    
     endcase
 end
 
@@ -3783,7 +3817,9 @@ assign en__x__29 = cs & we__x__29;
 assign en__x__30 = cs & we__x__30;
 assign en__x__31 = cs & we__x__31;
 
+
 assign x__0 = 64'h0;
+
 
 //==============================
 // d_flip_flop__x__1
@@ -3796,8 +3832,6 @@ d_flip_flop #(.WIDTH(64)) d_flip_flop__x__1
     .d(wr_data),
     .q(x__1)
 );
-
-
 //==============================
 // d_flip_flop__x__2
 //==============================
@@ -3809,8 +3843,6 @@ d_flip_flop #(.WIDTH(64)) d_flip_flop__x__2
     .d(wr_data),
     .q(x__2)
 );
-
-
 //==============================
 // d_flip_flop__x__3
 //==============================
@@ -3822,8 +3854,6 @@ d_flip_flop #(.WIDTH(64)) d_flip_flop__x__3
     .d(wr_data),
     .q(x__3)
 );
-
-
 //==============================
 // d_flip_flop__x__4
 //==============================
@@ -3835,8 +3865,6 @@ d_flip_flop #(.WIDTH(64)) d_flip_flop__x__4
     .d(wr_data),
     .q(x__4)
 );
-
-
 //==============================
 // d_flip_flop__x__5
 //==============================
@@ -3848,8 +3876,6 @@ d_flip_flop #(.WIDTH(64)) d_flip_flop__x__5
     .d(wr_data),
     .q(x__5)
 );
-
-
 //==============================
 // d_flip_flop__x__6
 //==============================
@@ -3861,8 +3887,6 @@ d_flip_flop #(.WIDTH(64)) d_flip_flop__x__6
     .d(wr_data),
     .q(x__6)
 );
-
-
 //==============================
 // d_flip_flop__x__7
 //==============================
@@ -3874,8 +3898,6 @@ d_flip_flop #(.WIDTH(64)) d_flip_flop__x__7
     .d(wr_data),
     .q(x__7)
 );
-
-
 //==============================
 // d_flip_flop__x__8
 //==============================
@@ -3887,8 +3909,6 @@ d_flip_flop #(.WIDTH(64)) d_flip_flop__x__8
     .d(wr_data),
     .q(x__8)
 );
-
-
 //==============================
 // d_flip_flop__x__9
 //==============================
@@ -3900,8 +3920,6 @@ d_flip_flop #(.WIDTH(64)) d_flip_flop__x__9
     .d(wr_data),
     .q(x__9)
 );
-
-
 //==============================
 // d_flip_flop__x__10
 //==============================
@@ -3913,8 +3931,6 @@ d_flip_flop #(.WIDTH(64)) d_flip_flop__x__10
     .d(wr_data),
     .q(x__10)
 );
-
-
 //==============================
 // d_flip_flop__x__11
 //==============================
@@ -3926,8 +3942,6 @@ d_flip_flop #(.WIDTH(64)) d_flip_flop__x__11
     .d(wr_data),
     .q(x__11)
 );
-
-
 //==============================
 // d_flip_flop__x__12
 //==============================
@@ -3939,8 +3953,6 @@ d_flip_flop #(.WIDTH(64)) d_flip_flop__x__12
     .d(wr_data),
     .q(x__12)
 );
-
-
 //==============================
 // d_flip_flop__x__13
 //==============================
@@ -3952,8 +3964,6 @@ d_flip_flop #(.WIDTH(64)) d_flip_flop__x__13
     .d(wr_data),
     .q(x__13)
 );
-
-
 //==============================
 // d_flip_flop__x__14
 //==============================
@@ -3965,8 +3975,6 @@ d_flip_flop #(.WIDTH(64)) d_flip_flop__x__14
     .d(wr_data),
     .q(x__14)
 );
-
-
 //==============================
 // d_flip_flop__x__15
 //==============================
@@ -3978,8 +3986,6 @@ d_flip_flop #(.WIDTH(64)) d_flip_flop__x__15
     .d(wr_data),
     .q(x__15)
 );
-
-
 //==============================
 // d_flip_flop__x__16
 //==============================
@@ -3991,8 +3997,6 @@ d_flip_flop #(.WIDTH(64)) d_flip_flop__x__16
     .d(wr_data),
     .q(x__16)
 );
-
-
 //==============================
 // d_flip_flop__x__17
 //==============================
@@ -4004,8 +4008,6 @@ d_flip_flop #(.WIDTH(64)) d_flip_flop__x__17
     .d(wr_data),
     .q(x__17)
 );
-
-
 //==============================
 // d_flip_flop__x__18
 //==============================
@@ -4017,8 +4019,6 @@ d_flip_flop #(.WIDTH(64)) d_flip_flop__x__18
     .d(wr_data),
     .q(x__18)
 );
-
-
 //==============================
 // d_flip_flop__x__19
 //==============================
@@ -4030,8 +4030,6 @@ d_flip_flop #(.WIDTH(64)) d_flip_flop__x__19
     .d(wr_data),
     .q(x__19)
 );
-
-
 //==============================
 // d_flip_flop__x__20
 //==============================
@@ -4043,8 +4041,6 @@ d_flip_flop #(.WIDTH(64)) d_flip_flop__x__20
     .d(wr_data),
     .q(x__20)
 );
-
-
 //==============================
 // d_flip_flop__x__21
 //==============================
@@ -4056,8 +4052,6 @@ d_flip_flop #(.WIDTH(64)) d_flip_flop__x__21
     .d(wr_data),
     .q(x__21)
 );
-
-
 //==============================
 // d_flip_flop__x__22
 //==============================
@@ -4069,8 +4063,6 @@ d_flip_flop #(.WIDTH(64)) d_flip_flop__x__22
     .d(wr_data),
     .q(x__22)
 );
-
-
 //==============================
 // d_flip_flop__x__23
 //==============================
@@ -4082,8 +4074,6 @@ d_flip_flop #(.WIDTH(64)) d_flip_flop__x__23
     .d(wr_data),
     .q(x__23)
 );
-
-
 //==============================
 // d_flip_flop__x__24
 //==============================
@@ -4095,8 +4085,6 @@ d_flip_flop #(.WIDTH(64)) d_flip_flop__x__24
     .d(wr_data),
     .q(x__24)
 );
-
-
 //==============================
 // d_flip_flop__x__25
 //==============================
@@ -4108,8 +4096,6 @@ d_flip_flop #(.WIDTH(64)) d_flip_flop__x__25
     .d(wr_data),
     .q(x__25)
 );
-
-
 //==============================
 // d_flip_flop__x__26
 //==============================
@@ -4121,8 +4107,6 @@ d_flip_flop #(.WIDTH(64)) d_flip_flop__x__26
     .d(wr_data),
     .q(x__26)
 );
-
-
 //==============================
 // d_flip_flop__x__27
 //==============================
@@ -4134,8 +4118,6 @@ d_flip_flop #(.WIDTH(64)) d_flip_flop__x__27
     .d(wr_data),
     .q(x__27)
 );
-
-
 //==============================
 // d_flip_flop__x__28
 //==============================
@@ -4147,8 +4129,6 @@ d_flip_flop #(.WIDTH(64)) d_flip_flop__x__28
     .d(wr_data),
     .q(x__28)
 );
-
-
 //==============================
 // d_flip_flop__x__29
 //==============================
@@ -4160,8 +4140,6 @@ d_flip_flop #(.WIDTH(64)) d_flip_flop__x__29
     .d(wr_data),
     .q(x__29)
 );
-
-
 //==============================
 // d_flip_flop__x__30
 //==============================
@@ -4173,8 +4151,6 @@ d_flip_flop #(.WIDTH(64)) d_flip_flop__x__30
     .d(wr_data),
     .q(x__30)
 );
-
-
 //==============================
 // d_flip_flop__x__31
 //==============================
@@ -4186,9 +4162,6 @@ d_flip_flop #(.WIDTH(64)) d_flip_flop__x__31
     .d(wr_data),
     .q(x__31)
 );
-
-
-
 
 endmodule
 //==============================================
@@ -4902,57 +4875,25 @@ endmodule
 //==============================================
 module control_and_status_registers
 (
-    clk,
-    rst,
-    cs,
-    we,
-    addr,
-    rd_data,
-    wr_data,
-    eip,
-    tip,
-    instret,
-    mstatus__mie,
-    mie__meie,
-    mie__msie,
-    mie__mtie,
-    mip__meip,
-    mip__msip,
-    mip__mtip
+    input clk,
+    input rst,
+    input cs,
+    input we,
+    input [11:0] addr,
+    output logic [63:0] rd_data,
+    input [63:0] wr_data,
+    input eip,
+    input tip,
+    input instret,
+    output logic [1-1:0] mstatus__mie,
+    output logic [1-1:0] mie__meie,
+    output logic [1-1:0] mie__msie,
+    output logic [1-1:0] mie__mtie,
+    output logic [1-1:0] mip__meip,
+    output logic [1-1:0] mip__msip,
+    output logic [1-1:0] mip__mtip
 );
 
-input clk;
-input rst;
-input cs;
-input we;
-input [11:0] addr;
-output [63:0] rd_data;
-input [63:0] wr_data;
-input eip;
-input tip;
-input instret;
-
-output mstatus__mie;
-output mie__meie;
-output mie__msie;
-output mie__mtie;
-output mip__meip;
-output mip__msip;
-output mip__mtip;
-
-logic clk;
-logic rst;
-
-logic cs;
-logic we;
-logic [11:0] addr;
-logic [63:0] rd_data;
-logic [63:0] wr_data;
-
-logic eip;
-logic tip;
-
-logic instret;
 
 // Machine ISA Register (misa)
 logic [63:0] misa;
@@ -4991,7 +4932,6 @@ logic [63:0] mstatus;
 logic [1-1:0] mstatus__uie;
 logic [1-1:0] mstatus__sie;
 logic [1-1:0] mstatus__hie;
-logic [1-1:0] mstatus__mie;
 logic [1-1:0] mstatus__upie;
 logic [1-1:0] mstatus__spie;
 logic [1-1:0] mstatus__hpie;
@@ -5033,15 +4973,12 @@ logic [63:0] mip;
 logic [1-1:0] mip__usip;
 logic [1-1:0] mip__ssip;
 logic [1-1:0] mip__hsip;
-logic [1-1:0] mip__msip;
 logic [1-1:0] mip__utip;
 logic [1-1:0] mip__stip;
 logic [1-1:0] mip__htip;
-logic [1-1:0] mip__mtip;
 logic [1-1:0] mip__ueip;
 logic [1-1:0] mip__seip;
 logic [1-1:0] mip__heip;
-logic [1-1:0] mip__meip;
 logic [52-1:0] mip__wiri__0;
 logic we__mip;
 logic en__mip;
@@ -5051,15 +4988,12 @@ logic [63:0] mie;
 logic [1-1:0] mie__usie;
 logic [1-1:0] mie__ssie;
 logic [1-1:0] mie__hsie;
-logic [1-1:0] mie__msie;
 logic [1-1:0] mie__utie;
 logic [1-1:0] mie__stie;
 logic [1-1:0] mie__htie;
-logic [1-1:0] mie__mtie;
 logic [1-1:0] mie__ueie;
 logic [1-1:0] mie__seie;
 logic [1-1:0] mie__heie;
-logic [1-1:0] mie__meie;
 logic [52-1:0] mie__wpri__0;
 logic we__mie;
 logic en__mie;
@@ -5755,35 +5689,16 @@ endmodule
 //==============================================
 module machine_timer_registers
 (
-    clk,
-    rst,
-    cs,
-    we,
-    addr,
-    wr_data,
-    rd_data,
-    tip 
+    input clk,
+    input rst,
+    input cs,
+    input we,
+    input [3:0] addr,
+    input [63:0] wr_data,
+    output logic [63:0] rd_data,
+    output logic tip
 );
 
-input clk;
-input rst;
-input cs;
-input we;
-input [3:0] addr;
-input [63:0] wr_data;
-output [63:0] rd_data;
-output tip;
-
-logic clk;
-logic rst;
-
-logic cs;
-logic we;
-logic [3:0] addr;
-logic [63:0] wr_data;
-logic [63:0] rd_data;
-
-logic tip;
 
 // Machine Time Register (mtime)
 logic [63:0] mtime;
@@ -5880,39 +5795,17 @@ endmodule
 //==============================================
 module platform_level_interrupt_controller
 (
-    clk,
-    rst,
-    cs,
-    we,
-    addr,
-    wr_data,
-    rd_data,
-    irq__0,
-    irq__1,
-    context__0__eip
+    input clk,
+    input rst,
+    input cs,
+    input we,
+    input [25:0] addr,
+    input [31:0] wr_data,
+    output logic [31:0] rd_data,
+    input int__1,
+    output logic context__0__eip
 );
 
-input clk;
-input rst;
-input cs;
-input we;
-input [25:0] addr;
-input [31:0] wr_data;
-output [31:0] rd_data;
-input irq__0;
-input irq__1;
-output context__0__eip;
-
-logic clk;
-logic rst;
-logic cs;
-logic we;
-logic [25:0] addr;
-logic [31:0] wr_data;
-logic [31:0] rd_data;
-logic irq__0;
-logic irq__1;
-logic context__0__eip;
 
 logic request__0;
 logic request__1;
@@ -5945,9 +5838,9 @@ platform_level_interrupt_controller__gateway gateway__1
 (
     .clk(clk),
     .rst(rst),
-    .irq(irq__1),
-    .request(request__1),
-    .complete(complete__1)
+    .int__x(int__1),
+    .request__x(request__1),
+    .complete__x(complete__1)
 );
 
 endmodule
@@ -5959,45 +5852,20 @@ endmodule
 //==============================================
 module platform_level_interrupt_controller__core
 (
-    clk,
-    rst,
-    cs,
-    we,
-    addr,
-    wr_data,
-    rd_data,
-    request__0,
-    request__1,
-    complete__0,
-    complete__1,
-    context__0__eip
+    input clk,
+    input rst,
+    input cs,
+    input we,
+    input [25:0] addr,
+    input [31:0] wr_data,
+    output logic [31:0] rd_data,
+    input request__0,
+    input request__1,
+    output logic complete__0,
+    output logic complete__1,
+    output logic context__0__eip
 );
 
-input clk;
-input rst;
-input cs;
-input we;
-input [25:0] addr;
-input [31:0] wr_data;
-output [31:0] rd_data;
-input request__0;
-input request__1;
-output complete__0;
-output complete__1;
-output context__0__eip;
-
-logic clk;
-logic rst;
-logic cs;
-logic we;
-logic [25:0] addr;
-logic [31:0] wr_data;
-logic [31:0] rd_data;
-logic request__0;
-logic request__1;
-logic complete__0;
-logic complete__1;
-logic context__0__eip;
 
 logic ip__0;
 logic ip__1;
@@ -6264,24 +6132,13 @@ endmodule
 //==============================================
 module platform_level_interrupt_controller__gateway 
 (
-    clk,
-    rst,
-    irq,
-    request,
-    complete
+    input clk,
+    input rst,
+    input int__x,
+    output logic request__x,
+    input complete__x
 );
 
-input clk;
-input rst;
-input irq;
-output request;
-input complete;
-
-logic clk;
-logic rst;
-logic irq;
-logic request;
-logic complete;
 
 logic [1:0] state;
 logic [1:0] state__n;
@@ -6292,7 +6149,7 @@ localparam STATE__WAIT = 2'h2;
 
 always_comb
 begin
-    request = 1'b0;
+    request__x = 1'b0;
     state__n = state;
 
     case (state)
@@ -6301,7 +6158,7 @@ begin
         //==============================
         STATE__READY:
         begin
-            state__n = irq ? STATE__REQUEST_INTERRUPT : STATE__READY;
+            state__n = int__x ? STATE__REQUEST_INTERRUPT : STATE__READY;
         end
 
         //==============================
@@ -6309,7 +6166,7 @@ begin
         //==============================
         STATE__REQUEST_INTERRUPT:
         begin
-            request = 1'b1;
+            request__x = 1'b1;
             state__n = STATE__WAIT;
         end
         
@@ -6318,7 +6175,7 @@ begin
         //==============================
         STATE__WAIT:
         begin
-            state__n = complete ? STATE__READY : STATE__WAIT;
+            state__n = complete__x ? STATE__READY : STATE__WAIT;
         end
     endcase
 end
@@ -6342,51 +6199,21 @@ endmodule
 //==============================================
 module platform_level_interrupt_controller__priority_mux
 (
-    clk,
-    rst,
-    id__a,
-    ie__a,
-    ip__a,
-    priority__a,
-    id__b,
-    ie__b,
-    ip__b,
-    priority__b,
-    id__c,
-    ie__c,
-    ip__c,
-    priority__c
+    input clk,
+    input rst,
+    input [9:0] id__a,
+    input ie__a,
+    input ip__a,
+    input [31:0] priority__a,
+    input [9:0] id__b,
+    input ie__b,
+    input ip__b,
+    input [31:0] priority__b,
+    output logic [9:0] id__c,
+    output logic ie__c,
+    output logic ip__c,
+    output logic [31:0] priority__c
 );
-
-input clk;
-input rst;
-input [9:0] id__a;
-input ie__a;
-input ip__a;
-input [31:0] priority__a;
-input [9:0] id__b;
-input ie__b;
-input ip__b;
-input [31:0] priority__b;
-output [9:0] id__c;
-output ie__c;
-output ip__c;
-output [31:0] priority__c;
-
-logic clk;
-logic rst;
-logic [9:0] id__a;
-logic ie__a;
-logic ip__a;
-logic [31:0] priority__a;
-logic [9:0] id__b;
-logic ie__b;
-logic ip__b;
-logic [31:0] priority__b;
-logic [9:0] id__c;
-logic ie__c;
-logic ip__c;
-logic [31:0] priority__c;
 
 
 always_comb
@@ -6413,56 +6240,22 @@ endmodule
 //==============================================
 module physical_memory_attribute_registers
 (
-    clk,
-    rst,
-    cs,
-    we,
-    addr,
-    wr_data,
-    rd_data,
-    pma__0,
-    pma__1,
-    pma__2,
-    pma__3,
-    pma__4,
-    pma__5,
-    pma__6,
-    pma__7
+    input clk,
+    input rst,
+    input cs,
+    input we,
+    input [2:0] addr,
+    input [7:0] wr_data,
+    output logic [7:0] rd_data,
+    output logic [7:0] pma__0,
+    output logic [7:0] pma__1,
+    output logic [7:0] pma__2,
+    output logic [7:0] pma__3,
+    output logic [7:0] pma__4,
+    output logic [7:0] pma__5,
+    output logic [7:0] pma__6,
+    output logic [7:0] pma__7
 );
-
-
-input clk;
-input rst;
-input cs;
-input we;
-input [2:0] addr;
-input [7:0] wr_data;
-output [7:0] rd_data;
-output [7:0] pma__0;
-output [7:0] pma__1;
-output [7:0] pma__2;
-output [7:0] pma__3;
-output [7:0] pma__4;
-output [7:0] pma__5;
-output [7:0] pma__6;
-output [7:0] pma__7;
-
-logic clk;
-logic rst;
-logic cs;
-logic we;
-logic [2:0] addr;
-logic [7:0] wr_data;
-logic [7:0] rd_data;
-logic [7:0] pma__0;
-logic [7:0] pma__1;
-logic [7:0] pma__2;
-logic [7:0] pma__3;
-logic [7:0] pma__4;
-logic [7:0] pma__5;
-logic [7:0] pma__6;
-logic [7:0] pma__7;
-
 
 
 always_comb
@@ -6599,43 +6392,20 @@ endmodule
 //==============================================
 module general_purpose_input_output
 (
-    clk,
-    rst,
-    cs,
-    we,
-    addr,
-    wr_data,
-    rd_data,
-    port__0,
-    port__1,
-    port__2,
-    port__3
+    input clk,
+    input rst,
+    input cs,
+    input we,
+    input [3:0] addr,
+    input [7:0] wr_data,
+    output logic [7:0] rd_data,
+    inout [7:0] port__0,
+    inout [7:0] port__1,
+    inout [7:0] port__2,
+    inout [7:0] port__3
 );
 
-input clk;
-input rst;
 
-input cs;
-input we;
-input [3:0] addr;
-input [7:0] wr_data;
-output [7:0] rd_data;
-
-inout [7:0] port__0;
-inout [7:0] port__1;
-inout [7:0] port__2;
-inout [7:0] port__3;
-
-logic clk;
-logic rst;
-
-logic cs;
-logic we;
-logic [3:0] addr;
-logic [7:0] wr_data;
-logic [7:0] rd_data;
-
-//logic [7:0] port__0;
 logic [7:0] data__0;
 logic [7:0] oe__0;
 logic we__data__0;
@@ -6643,7 +6413,6 @@ logic we__oe__0;
 logic en__data__0;
 logic en__oe__0;
 
-//logic [7:0] port__1;
 logic [7:0] data__1;
 logic [7:0] oe__1;
 logic we__data__1;
@@ -6651,7 +6420,6 @@ logic we__oe__1;
 logic en__data__1;
 logic en__oe__1;
 
-//logic [7:0] port__2;
 logic [7:0] data__2;
 logic [7:0] oe__2;
 logic we__data__2;
@@ -6659,7 +6427,6 @@ logic we__oe__2;
 logic en__data__2;
 logic en__oe__2;
 
-//logic [7:0] port__3;
 logic [7:0] data__3;
 logic [7:0] oe__3;
 logic we__data__3;
@@ -6902,55 +6669,22 @@ endmodule
 //==============================================
 module memory_controller
 (
-    clk,
-    rst,
-    cs,
-    we,
-    addr,
-    size,
-    wr_data,
-    ready,
-    rd_data,
-    ena,
-    wea,
-    addra, 
-    dina,
-    douta
+    input clk,
+    input rst,
+    input cs,
+    input we,
+    input [14:0] addr,
+    input [1:0] size,
+    input [63:0] wr_data,
+    output logic ready,
+    output logic [63:0] rd_data,
+    output logic ena,
+    output logic [7:0] wea,
+    output logic [11:0] addra, 
+    output logic [63:0] dina,
+    input [63:0] douta
 );
 
-input clk;
-input rst;
-
-input cs;
-input we;
-input [14:0] addr;
-input [1:0] size;
-input [63:0] wr_data;
-output ready;
-output [63:0] rd_data;
-
-output ena;
-output [7:0] wea;
-output [11:0] addra; 
-output [63:0] dina;
-input [63:0] douta;
-
-logic clk;
-logic rst;
-
-logic cs;
-logic we;
-logic [14:0] addr;
-logic [1:0] size;
-logic [63:0] wr_data;
-logic ready;
-logic [63:0] rd_data;
-
-logic ena;
-logic [7:0] wea;
-logic [11:0] addra; 
-logic [63:0] dina;
-logic [63:0] douta;
 
 logic [2:0] state;
 logic [2:0] state__n;
@@ -7041,270 +6775,93 @@ endmodule
 //==============================================
 module bus 
 (
-    clk,
-    rst,
-    pma__0,
-    pma__1,
-    pma__2,
-    pma__3,
-    pma__4,
-    pma__5,
-    pma__6,
-    pma__7,
-    cs,
-    we,
-    addr,
-    size,
-    wr_data,
-    ready,
-    resp,
-    rd_data,
-    cs__0,
-    we__0,
-    addr__0,
-    size__0,
-    wr_data__0,
-    ready__0,
-    resp__0,
-    rd_data__0,
-    cs__1,
-    we__1,
-    addr__1,
-    size__1,
-    wr_data__1,
-    ready__1,
-    resp__1,
-    rd_data__1,
-    cs__2,
-    we__2,
-    addr__2,
-    size__2,
-    wr_data__2,
-    ready__2,
-    resp__2,
-    rd_data__2,
-    cs__3,
-    we__3,
-    addr__3,
-    size__3,
-    wr_data__3,
-    ready__3,
-    resp__3,
-    rd_data__3,
-    cs__4,
-    we__4,
-    addr__4,
-    size__4,
-    wr_data__4,
-    ready__4,
-    resp__4,
-    rd_data__4,
-    cs__5,
-    we__5,
-    addr__5,
-    size__5,
-    wr_data__5,
-    ready__5,
-    resp__5,
-    rd_data__5,
-    cs__6,
-    we__6,
-    addr__6,
-    size__6,
-    wr_data__6,
-    ready__6,
-    resp__6,
-    rd_data__6,
-    cs__7,
-    we__7,
-    addr__7,
-    size__7,
-    wr_data__7,
-    ready__7,
-    resp__7,
-    rd_data__7
+    input clk,
+    input rst,
+    input [7:0] pma__0,
+    input [7:0] pma__1,
+    input [7:0] pma__2,
+    input [7:0] pma__3,
+    input [7:0] pma__4,
+    input [7:0] pma__5,
+    input [7:0] pma__6,
+    input [7:0] pma__7,
+    output logic cs__0,
+    output logic we__0,
+    output logic [63:0] addr__0,
+    output logic [1:0] size__0,
+    output logic [63:0] wr_data__0,
+    input ready__0,
+    input resp__0,
+    input [63:0] rd_data__0,
+    output logic cs__1,
+    output logic we__1,
+    output logic [63:0] addr__1,
+    output logic [1:0] size__1,
+    output logic [63:0] wr_data__1,
+    input ready__1,
+    input resp__1,
+    input [63:0] rd_data__1,
+    output logic cs__2,
+    output logic we__2,
+    output logic [63:0] addr__2,
+    output logic [1:0] size__2,
+    output logic [63:0] wr_data__2,
+    input ready__2,
+    input resp__2,
+    input [63:0] rd_data__2,
+    output logic cs__3,
+    output logic we__3,
+    output logic [63:0] addr__3,
+    output logic [1:0] size__3,
+    output logic [63:0] wr_data__3,
+    input ready__3,
+    input resp__3,
+    input [63:0] rd_data__3,
+    output logic cs__4,
+    output logic we__4,
+    output logic [63:0] addr__4,
+    output logic [1:0] size__4,
+    output logic [63:0] wr_data__4,
+    input ready__4,
+    input resp__4,
+    input [63:0] rd_data__4,
+    output logic cs__5,
+    output logic we__5,
+    output logic [63:0] addr__5,
+    output logic [1:0] size__5,
+    output logic [63:0] wr_data__5,
+    input ready__5,
+    input resp__5,
+    input [63:0] rd_data__5,
+    output logic cs__6,
+    output logic we__6,
+    output logic [63:0] addr__6,
+    output logic [1:0] size__6,
+    output logic [63:0] wr_data__6,
+    input ready__6,
+    input resp__6,
+    input [63:0] rd_data__6,
+    output logic cs__7,
+    output logic we__7,
+    output logic [63:0] addr__7,
+    output logic [1:0] size__7,
+    output logic [63:0] wr_data__7,
+    input ready__7,
+    input resp__7,
+    input [63:0] rd_data__7,
+    input cs,
+    input we,
+    input [63:0] addr,
+    input [1:0] size,
+    input [63:0] wr_data,
+    output logic ready,
+    output logic resp,
+    output logic [63:0] rd_data
 );
 
 
-input clk;
-input rst;
-
-input [7:0] pma__0;
-input [7:0] pma__1;
-input [7:0] pma__2;
-input [7:0] pma__3;
-input [7:0] pma__4;
-input [7:0] pma__5;
-input [7:0] pma__6;
-input [7:0] pma__7;
-
-input cs;
-input we;
-input [63:0] addr;
-input [1:0] size;
-input [63:0] wr_data;
-output ready;
-output resp;
-output [63:0] rd_data;
-
-output cs__0;
-output we__0;
-output [63:0] addr__0;
-output [1:0] size__0;
-output [63:0] wr_data__0;
-input ready__0;
-input resp__0;
-input [63:0] rd_data__0;
-
-output cs__1;
-output we__1;
-output [63:0] addr__1;
-output [1:0] size__1;
-output [63:0] wr_data__1;
-input ready__1;
-input resp__1;
-input [63:0] rd_data__1;
-
-output cs__2;
-output we__2;
-output [63:0] addr__2;
-output [1:0] size__2;
-output [63:0] wr_data__2;
-input ready__2;
-input resp__2;
-input [63:0] rd_data__2;
-
-output cs__3;
-output we__3;
-output [63:0] addr__3;
-output [1:0] size__3;
-output [63:0] wr_data__3;
-input ready__3;
-input resp__3;
-input [63:0] rd_data__3;
-
-output cs__4;
-output we__4;
-output [63:0] addr__4;
-output [1:0] size__4;
-output [63:0] wr_data__4;
-input ready__4;
-input resp__4;
-input [63:0] rd_data__4;
-
-output cs__5;
-output we__5;
-output [63:0] addr__5;
-output [1:0] size__5;
-output [63:0] wr_data__5;
-input ready__5;
-input resp__5;
-input [63:0] rd_data__5;
-
-output cs__6;
-output we__6;
-output [63:0] addr__6;
-output [1:0] size__6;
-output [63:0] wr_data__6;
-input ready__6;
-input resp__6;
-input [63:0] rd_data__6;
-
-output cs__7;
-output we__7;
-output [63:0] addr__7;
-output [1:0] size__7;
-output [63:0] wr_data__7;
-input ready__7;
-input resp__7;
-input [63:0] rd_data__7;
-
-
-logic clk;
-logic rst;
-
 logic [2:0] sel;
 
-logic cs;
-logic we;
-logic [63:0] addr;
-logic [1:0] size;
-logic [63:0] wr_data;
-logic ready;
-logic resp;
-logic [63:0] rd_data;
-
-logic cs__0;
-logic we__0;
-logic [63:0] addr__0;
-logic [1:0] size__0;
-logic [63:0] wr_data__0;
-logic ready__0;
-logic resp__0;
-logic [63:0] rd_data__0;
-
-logic cs__1;
-logic we__1;
-logic [63:0] addr__1;
-logic [1:0] size__1;
-logic [63:0] wr_data__1;
-logic ready__1;
-logic resp__1;
-logic [63:0] rd_data__1;
-
-logic cs__2;
-logic we__2;
-logic [63:0] addr__2;
-logic [1:0] size__2;
-logic [63:0] wr_data__2;
-logic ready__2;
-logic resp__2;
-logic [63:0] rd_data__2;
-
-logic cs__3;
-logic we__3;
-logic [63:0] addr__3;
-logic [1:0] size__3;
-logic [63:0] wr_data__3;
-logic ready__3;
-logic resp__3;
-logic [63:0] rd_data__3;
-
-logic cs__4;
-logic we__4;
-logic [63:0] addr__4;
-logic [1:0] size__4;
-logic [63:0] wr_data__4;
-logic ready__4;
-logic resp__4;
-logic [63:0] rd_data__4;
-
-logic cs__5;
-logic we__5;
-logic [63:0] addr__5;
-logic [1:0] size__5;
-logic [63:0] wr_data__5;
-logic ready__5;
-logic resp__5;
-logic [63:0] rd_data__5;
-
-logic cs__6;
-logic we__6;
-logic [63:0] addr__6;
-logic [1:0] size__6;
-logic [63:0] wr_data__6;
-logic ready__6;
-logic resp__6;
-logic [63:0] rd_data__6;
-
-logic cs__7;
-logic we__7;
-logic [63:0] addr__7;
-logic [1:0] size__7;
-logic [63:0] wr_data__7;
-logic ready__7;
-logic resp__7;
-logic [63:0] rd_data__7;
 
 logic cs__x;
 logic ready__x;
@@ -7315,14 +6872,6 @@ logic cs__y;
 logic ready__y;
 logic [63:0] rd_data__y;
 
-logic [7:0] pma__0;
-logic [7:0] pma__1;
-logic [7:0] pma__2;
-logic [7:0] pma__3;
-logic [7:0] pma__4;
-logic [7:0] pma__5;
-logic [7:0] pma__6;
-logic [7:0] pma__7;
 logic [7:0] pma;
 logic [1:0] status;
 
@@ -7473,21 +7022,12 @@ endmodule
 //==============================================
 module bus__decoder
 (
-    clk,
-    rst,
-    addr,
-    sel
+    input clk,
+    input rst,
+    input [63:0] addr,
+    output logic [2:0] sel
 );
 
-input clk;
-input rst;
-input [63:0] addr;
-output [2:0] sel;
-
-logic clk;
-logic rst;
-logic [63:0] addr;
-logic [2:0] sel;
 
 always_comb
 begin
@@ -7533,120 +7073,37 @@ endmodule
 //==============================================
 module bus__multiplexer
 (
-    clk,
-    rst,
-    sel,
-    cs,
-    ready,
-    rd_data,
-    cs__0,
-    ready__0,
-    rd_data__0,
-    cs__1,
-    ready__1,
-    rd_data__1,
-    cs__2,
-    ready__2,
-    rd_data__2,
-    cs__3,
-    ready__3,
-    rd_data__3,
-    cs__4,
-    ready__4,
-    rd_data__4,
-    cs__5,
-    ready__5,
-    rd_data__5,
-    cs__6,
-    ready__6,
-    rd_data__6,
-    cs__7,
-    ready__7,
-    rd_data__7
+    input clk,
+    input rst,
+    output logic cs__0,
+    input ready__0,
+    input [63:0] rd_data__0,
+    output logic cs__1,
+    input ready__1,
+    input [63:0] rd_data__1,
+    output logic cs__2,
+    input ready__2,
+    input [63:0] rd_data__2,
+    output logic cs__3,
+    input ready__3,
+    input [63:0] rd_data__3,
+    output logic cs__4,
+    input ready__4,
+    input [63:0] rd_data__4,
+    output logic cs__5,
+    input ready__5,
+    input [63:0] rd_data__5,
+    output logic cs__6,
+    input ready__6,
+    input [63:0] rd_data__6,
+    output logic cs__7,
+    input ready__7,
+    input [63:0] rd_data__7,
+    input cs,
+    output logic ready,
+    output logic [63:0] rd_data,
+    input [2:0] sel
 );
-
-input clk;
-input rst;
-
-input [2:0] sel;
-
-input cs;
-output ready;
-output [63:0] rd_data;
-
-output cs__0;
-input ready__0;
-input [63:0] rd_data__0;
-
-output cs__1;
-input ready__1;
-input [63:0] rd_data__1;
-
-output cs__2;
-input ready__2;
-input [63:0] rd_data__2;
-
-output cs__3;
-input ready__3;
-input [63:0] rd_data__3;
-
-output cs__4;
-input ready__4;
-input [63:0] rd_data__4;
-
-output cs__5;
-input ready__5;
-input [63:0] rd_data__5;
-
-output cs__6;
-input ready__6;
-input [63:0] rd_data__6;
-
-output cs__7;
-input ready__7;
-input [63:0] rd_data__7;
-
-
-logic clk;
-logic rst;
-
-logic [2:0] sel;
-
-logic cs;
-logic ready;
-logic [63:0] rd_data;
-
-logic cs__0;
-//logic ready__0;
-//logic [63:0] rd_data__0;
-
-logic cs__1;
-//logic ready__1;
-//logic [63:0] rd_data__1;
-
-logic cs__2;
-//logic ready__2;
-//logic [63:0] rd_data__2;
-
-logic cs__3;
-//logic ready__3;
-//logic [63:0] rd_data__3;
-
-logic cs__4;
-//logic ready__4;
-//logic [63:0] rd_data__4;
-
-logic cs__5;
-//logic ready__5;
-//logic [63:0] rd_data__5;
-
-logic cs__6;
-//logic ready__6;
-//logic [63:0] rd_data__6;
-
-logic cs__7;
-//logic ready__7;
-//logic [63:0] rd_data__7;
 
 
 always_comb
@@ -7718,46 +7175,19 @@ endmodule
 //==============================================
 module bus__physical_memory_attribute_multiplexer
 (
-    clk,
-    rst,
-    sel,
-    pma__0,
-    pma__1,
-    pma__2,
-    pma__3,
-    pma__4,
-    pma__5,
-    pma__6,
-    pma__7,
-    pma
+    input clk,
+    input rst,
+    input [2:0] sel,
+    input [7:0] pma__0,
+    input [7:0] pma__1,
+    input [7:0] pma__2,
+    input [7:0] pma__3,
+    input [7:0] pma__4,
+    input [7:0] pma__5,
+    input [7:0] pma__6,
+    input [7:0] pma__7,
+    output logic [7:0] pma
 );
-
-input clk;
-input rst;
-input [2:0] sel;
-input [7:0] pma__0;
-input [7:0] pma__1;
-input [7:0] pma__2;
-input [7:0] pma__3;
-input [7:0] pma__4;
-input [7:0] pma__5;
-input [7:0] pma__6;
-input [7:0] pma__7;
-output [7:0] pma;
-
-logic clk;
-logic rst;
-logic [2:0] sel;
-logic [7:0] pma__0;
-logic [7:0] pma__1;
-logic [7:0] pma__2;
-logic [7:0] pma__3;
-logic [7:0] pma__4;
-logic [7:0] pma__5;
-logic [7:0] pma__6;
-logic [7:0] pma__7;
-logic [7:0] pma;
-
 
 always_comb
 begin
@@ -7804,27 +7234,13 @@ endmodule
 //==============================================
 module bus__physical_memory_attribute_checker
 (
-    clk,
-    rst,
-    addr, 
-    size,
-    pma,
-    status 
+    input clk,
+    input rst,
+    input [2:0] addr, 
+    input [1:0] size,
+    input [7:0] pma,
+    output logic [1:0] status
 );
-
-input clk;
-input rst;
-input [2:0] addr; 
-input [1:0] size;
-input [7:0] pma;
-output [1:0] status;
-
-logic clk;
-logic rst;
-logic [2:0] addr; 
-logic [1:0] size;
-logic [7:0] pma;
-logic [1:0] status;
 
 always_comb 
 begin
@@ -7855,40 +7271,18 @@ endmodule
 //==============================================
 module bus__trap
 (
-    clk,
-    rst,
-    status,
-    cs__x,
-    ready__x,
-    resp__x,
-    rd_data__x,
-    cs__y,
-    ready__y,
-    rd_data__y
+    input clk,
+    input rst,
+    input [1:0] status,
+    input cs__x,
+    output logic ready__x,
+    output logic resp__x,
+    output logic [63:0] rd_data__x,
+    output logic cs__y,
+    input ready__y,
+    input [63:0] rd_data__y
 );
 
-input clk;
-input rst;
-
-input [1:0] status;
-
-input cs__x;
-output ready__x;
-output resp__x;
-output [63:0] rd_data__x;
-
-output cs__y;
-input ready__y;
-input [63:0] rd_data__y;
-
-logic cs__x;
-logic ready__x;
-logic resp__x;
-logic [63:0] rd_data__x;
-
-logic cs__y;
-//logic ready__y;
-//logic [63:0] rd_data__y;
 
 always_comb
 begin
@@ -7930,52 +7324,21 @@ endmodule
 //==============================================
 module jay 
 (
-    clk,
-    rst,
-    port__0,
-    port__1,
-    port__2,
-    port__3,
-    irq__1,
-    ena,
-    wea,
-    addra,
-    dina,
-    douta
+    input clk,
+    input rst,
+    inout [7:0] port__0,
+    inout [7:0] port__1,
+    inout [7:0] port__2,
+    inout [7:0] port__3,
+    output logic ena,
+    output logic [7:0] wea,
+    output logic [11:0] addra, 
+    output logic [63:0] dina,
+    input [63:0] douta,
+    input int__1
 );
 
-input clk;
-input rst;
 
-inout [7:0] port__0;
-inout [7:0] port__1;
-inout [7:0] port__2;
-inout [7:0] port__3;
-
-output ena;
-output [7:0] wea;
-output [11:0] addra; 
-output [63:0] dina;
-input [63:0] douta;
-
-input irq__1;
-
-logic clk;
-logic rst;
-
-//logic [7:0] port__0;
-//logic [7:0] port__1;
-//logic [7:0] port__2;
-//logic [7:0] port__3;
-
-logic ena;
-logic [7:0] wea;
-logic [11:0] addra;
-logic [63:0] dina;
-logic [63:0] douta;
-
-logic irq__0;
-logic irq__1;
 logic context__0__eip;
 
 logic tip;
@@ -8123,8 +7486,7 @@ platform_level_interrupt_controller platform_level_interrupt_controller__0
     .addr(addr__1[25:0]),
     .wr_data(wr_data__1[31:0]),
     .rd_data(rd_data__1[31:0]),
-    .irq__0(irq__0),
-    .irq__1(irq__1),
+    .int__1(int__1),
     .context__0__eip(context__0__eip)
 );
 
@@ -8271,83 +7633,35 @@ endmodule
 //==============================================
 module top
 (
-    clk_100mhz,
-    sw,
-    btnc,
-    btnu,
-    btnl,
-    btnr,
-    btnd,
-    led,
-    led16_b,
-    led16_g,
-    led16_r,
-    led17_b,
-    led17_g,
-    led17_r,
-    an,
-    ca, 
-    cb, 
-    cc, 
-    cd, 
-    ce, 
-    cf, 
-    cg
+    input clk_100mhz,
+    input [15:0] sw,
+    input btnc,
+    input btnu,
+    input btnl,
+    input btnr,
+    input btnd,
+    output logic [15:0] led,
+    inout led16_b,
+    output logic led16_g,
+    output logic led16_r,
+    output logic led17_b,
+    output logic led17_g,
+    output logic led17_r,
+    output logic [7:0] an,
+    output logic ca, 
+    output logic cb, 
+    output logic cc, 
+    output logic cd, 
+    output logic ce, 
+    output logic cf, 
+    output logic cg
 );
 
-input clk_100mhz;
-input [15:0] sw;
-input btnc;
-input btnu;
-input btnl;
-input btnr;
-input btnd;
-output [15:0] led;
-inout led16_b;
-output led16_g;
-output led16_r;
-output led17_b;
-output led17_g;
-output led17_r;
-output [7:0] an;
-output ca; 
-output cb; 
-output cc; 
-output cd; 
-output ce; 
-output cf; 
-output cg;
 
-logic clk_100mhz;
-logic [15:0] sw;
-logic btnc;
-logic btnu;
-logic btnl;
-logic btnr;
-logic btnd;
-logic [15:0] led;
-//logic led16_b;
-logic led16_g;
-logic led16_r;
-logic led17_b;
-logic led17_g;
-logic led17_r;
-logic [7:0] an;
-logic ca; 
-logic cb; 
-logic cc; 
-logic cd; 
-logic ce; 
-logic cf; 
-logic cg;
 
 logic clk;
 logic rst;
 
-//logic [7:0] port__0;
-//logic [7:0] port__1;
-//logic [7:0] port__2;
-//logic [7:0] port__3;
 wire [7:0] port__0;
 wire [7:0] port__1;
 wire [7:0] port__2;
@@ -8393,7 +7707,7 @@ jay jay__0
     .port__1(port__1),
     .port__2(port__2),
     .port__3(port__3),
-    .irq__1(btnd),
+    .int__1(btnd),
     .ena(ena),
     .wea(wea),
     .addra(addra),

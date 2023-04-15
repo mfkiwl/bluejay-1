@@ -3,57 +3,25 @@
 //==============================================
 module control_and_status_registers
 (
-    clk,
-    rst,
-    cs,
-    we,
-    addr,
-    rd_data,
-    wr_data,
-    eip,
-    tip,
-    instret,
-    mstatus__mie,
-    mie__meie,
-    mie__msie,
-    mie__mtie,
-    mip__meip,
-    mip__msip,
-    mip__mtip
+    input clk,
+    input rst,
+    input cs,
+    input we,
+    input [11:0] addr,
+    output logic [63:0] rd_data,
+    input [63:0] wr_data,
+    input eip,
+    input tip,
+    input instret,
+    output logic [1-1:0] mstatus__mie,
+    output logic [1-1:0] mie__meie,
+    output logic [1-1:0] mie__msie,
+    output logic [1-1:0] mie__mtie,
+    output logic [1-1:0] mip__meip,
+    output logic [1-1:0] mip__msip,
+    output logic [1-1:0] mip__mtip
 );
 
-input clk;
-input rst;
-input cs;
-input we;
-input [11:0] addr;
-output [63:0] rd_data;
-input [63:0] wr_data;
-input eip;
-input tip;
-input instret;
-
-output mstatus__mie;
-output mie__meie;
-output mie__msie;
-output mie__mtie;
-output mip__meip;
-output mip__msip;
-output mip__mtip;
-
-logic clk;
-logic rst;
-
-logic cs;
-logic we;
-logic [11:0] addr;
-logic [63:0] rd_data;
-logic [63:0] wr_data;
-
-logic eip;
-logic tip;
-
-logic instret;
 
 // Machine ISA Register (misa)
 logic [63:0] misa;
@@ -92,7 +60,6 @@ logic [63:0] mstatus;
 logic [1-1:0] mstatus__uie;
 logic [1-1:0] mstatus__sie;
 logic [1-1:0] mstatus__hie;
-logic [1-1:0] mstatus__mie;
 logic [1-1:0] mstatus__upie;
 logic [1-1:0] mstatus__spie;
 logic [1-1:0] mstatus__hpie;
@@ -134,15 +101,12 @@ logic [63:0] mip;
 logic [1-1:0] mip__usip;
 logic [1-1:0] mip__ssip;
 logic [1-1:0] mip__hsip;
-logic [1-1:0] mip__msip;
 logic [1-1:0] mip__utip;
 logic [1-1:0] mip__stip;
 logic [1-1:0] mip__htip;
-logic [1-1:0] mip__mtip;
 logic [1-1:0] mip__ueip;
 logic [1-1:0] mip__seip;
 logic [1-1:0] mip__heip;
-logic [1-1:0] mip__meip;
 logic [52-1:0] mip__wiri__0;
 logic we__mip;
 logic en__mip;
@@ -152,15 +116,12 @@ logic [63:0] mie;
 logic [1-1:0] mie__usie;
 logic [1-1:0] mie__ssie;
 logic [1-1:0] mie__hsie;
-logic [1-1:0] mie__msie;
 logic [1-1:0] mie__utie;
 logic [1-1:0] mie__stie;
 logic [1-1:0] mie__htie;
-logic [1-1:0] mie__mtie;
 logic [1-1:0] mie__ueie;
 logic [1-1:0] mie__seie;
 logic [1-1:0] mie__heie;
-logic [1-1:0] mie__meie;
 logic [52-1:0] mie__wpri__0;
 logic we__mie;
 logic en__mie;

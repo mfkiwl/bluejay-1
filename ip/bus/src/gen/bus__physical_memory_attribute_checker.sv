@@ -3,27 +3,13 @@
 //==============================================
 module bus__physical_memory_attribute_checker
 (
-    clk,
-    rst,
-    addr, 
-    size,
-    pma,
-    status 
+    input clk,
+    input rst,
+    input [2:0] addr, 
+    input [1:0] size,
+    input [7:0] pma,
+    output logic [1:0] status
 );
-
-input clk;
-input rst;
-input [2:0] addr; 
-input [1:0] size;
-input [7:0] pma;
-output [1:0] status;
-
-logic clk;
-logic rst;
-logic [2:0] addr; 
-logic [1:0] size;
-logic [7:0] pma;
-logic [1:0] status;
 
 always_comb 
 begin
