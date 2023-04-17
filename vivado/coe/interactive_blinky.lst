@@ -4,121 +4,121 @@ interactive_blinky:     file format elf64-littleriscv
 
 Disassembly of section .text:
 
-0000000080000000 <_start>:
-    80000000:	0f4000ef          	jal	x1,800000f4 <init__port__0__0>
-    80000004:	00000517          	auipc	x10,0x0
-    80000008:	05850513          	addi	x10,x10,88 # 8000005c <mtvec>
-    8000000c:	ffc00593          	addi	x11,x0,-4
-    80000010:	00b57533          	and	x10,x10,x11
-    80000014:	30551073          	csrrw	x0,mtvec,x10
-    80000018:	138000ef          	jal	x1,80000150 <clear__mtime>
-    8000001c:	02faf537          	lui	x10,0x2faf
-    80000020:	0805051b          	addiw	x10,x10,128 # 2faf080 <_start-0x7d050f80>
-    80000024:	118000ef          	jal	x1,8000013c <set__mtimecmp>
-    80000028:	00800513          	addi	x10,x0,8
-    8000002c:	30052073          	csrrs	x0,mstatus,x10
-    80000030:	08000513          	addi	x10,x0,128
-    80000034:	30452073          	csrrs	x0,mie,x10
-    80000038:	00001537          	lui	x10,0x1
-    8000003c:	8005051b          	addiw	x10,x10,-2048 # 800 <_start-0x7ffff800>
-    80000040:	30452073          	csrrs	x0,mie,x10
-    80000044:	00048537          	lui	x10,0x48
-    80000048:	0015051b          	addiw	x10,x10,1 # 48001 <_start-0x7ffb7fff>
-    8000004c:	00d51513          	slli	x10,x10,0xd
-    80000050:	00200593          	addi	x11,x0,2
-    80000054:	00b52023          	sw	x11,0(x10)
+0000000000000000 <_start>:
+   0:	0f4000ef          	jal	x1,f4 <init__port__0__0>
+   4:	00000517          	auipc	x10,0x0
+   8:	05850513          	addi	x10,x10,88 # 5c <mtvec>
+   c:	ffc00593          	addi	x11,x0,-4
+  10:	00b57533          	and	x10,x10,x11
+  14:	30551073          	csrrw	x0,mtvec,x10
+  18:	138000ef          	jal	x1,150 <clear__mtime>
+  1c:	02faf537          	lui	x10,0x2faf
+  20:	0805051b          	addiw	x10,x10,128 # 2faf080 <__global_pointer$+0x2fad71c>
+  24:	118000ef          	jal	x1,13c <set__mtimecmp>
+  28:	00800513          	addi	x10,x0,8
+  2c:	30052073          	csrrs	x0,mstatus,x10
+  30:	08000513          	addi	x10,x0,128
+  34:	30452073          	csrrs	x0,mie,x10
+  38:	00001537          	lui	x10,0x1
+  3c:	8005051b          	addiw	x10,x10,-2048 # 800 <clear__mtime+0x6b0>
+  40:	30452073          	csrrs	x0,mie,x10
+  44:	00048537          	lui	x10,0x48
+  48:	0015051b          	addiw	x10,x10,1 # 48001 <__global_pointer$+0x4669d>
+  4c:	00d51513          	slli	x10,x10,0xd
+  50:	00200593          	addi	x11,x0,2
+  54:	00b52023          	sw	x11,0(x10)
 
-0000000080000058 <loop>:
-    80000058:	0000006f          	jal	x0,80000058 <loop>
+0000000000000058 <loop>:
+  58:	0000006f          	jal	x0,58 <loop>
 
-000000008000005c <mtvec>:
-    8000005c:	34202573          	csrrs	x10,mcause,x0
-    80000060:	00054463          	blt	x10,x0,80000068 <interrupt>
-    80000064:	30200073          	mret
+000000000000005c <mtvec>:
+  5c:	34202573          	csrrs	x10,mcause,x0
+  60:	00054463          	blt	x10,x0,68 <interrupt>
+  64:	30200073          	mret
 
-0000000080000068 <interrupt>:
-    80000068:	00151513          	slli	x10,x10,0x1
-    8000006c:	00155513          	srli	x10,x10,0x1
-    80000070:	00700593          	addi	x11,x0,7
-    80000074:	00b51463          	bne	x10,x11,8000007c <l0>
-    80000078:	014000ef          	jal	x1,8000008c <machine_timer_interrupt_isr>
+0000000000000068 <interrupt>:
+  68:	00151513          	slli	x10,x10,0x1
+  6c:	00155513          	srli	x10,x10,0x1
+  70:	00700593          	addi	x11,x0,7
+  74:	00b51463          	bne	x10,x11,7c <l0>
+  78:	014000ef          	jal	x1,8c <machine_timer_interrupt_isr>
 
-000000008000007c <l0>:
-    8000007c:	00b00593          	addi	x11,x0,11
-    80000080:	00b51463          	bne	x10,x11,80000088 <l1>
-    80000084:	014000ef          	jal	x1,80000098 <machine_external_interrupt_isr>
+000000000000007c <l0>:
+  7c:	00b00593          	addi	x11,x0,11
+  80:	00b51463          	bne	x10,x11,88 <l1>
+  84:	014000ef          	jal	x1,98 <machine_external_interrupt_isr>
 
-0000000080000088 <l1>:
-    80000088:	30200073          	mret
+0000000000000088 <l1>:
+  88:	30200073          	mret
 
-000000008000008c <machine_timer_interrupt_isr>:
-    8000008c:	094000ef          	jal	x1,80000120 <toggle__data__0__0>
-    80000090:	0c0000ef          	jal	x1,80000150 <clear__mtime>
-    80000094:	30200073          	mret
+000000000000008c <machine_timer_interrupt_isr>:
+  8c:	094000ef          	jal	x1,120 <toggle__data__0__0>
+  90:	0c0000ef          	jal	x1,150 <clear__mtime>
+  94:	30200073          	mret
 
-0000000080000098 <machine_external_interrupt_isr>:
-    80000098:	4810051b          	addiw	x10,x0,1153
-    8000009c:	01551513          	slli	x10,x10,0x15
-    800000a0:	00450513          	addi	x10,x10,4
-    800000a4:	00052283          	lw	x5,0(x10)
-    800000a8:	0050059b          	addiw	x11,x0,5
-    800000ac:	01d59593          	slli	x11,x11,0x1d
-    800000b0:	00858593          	addi	x11,x11,8
-    800000b4:	0005b503          	ld	x10,0(x11)
-    800000b8:	02faf637          	lui	x12,0x2faf
-    800000bc:	0806061b          	addiw	x12,x12,128 # 2faf080 <_start-0x7d050f80>
-    800000c0:	00c50a63          	beq	x10,x12,800000d4 <set__delay__1>
+0000000000000098 <machine_external_interrupt_isr>:
+  98:	4810051b          	addiw	x10,x0,1153
+  9c:	01551513          	slli	x10,x10,0x15
+  a0:	00450513          	addi	x10,x10,4
+  a4:	00052283          	lw	x5,0(x10)
+  a8:	0050059b          	addiw	x11,x0,5
+  ac:	01d59593          	slli	x11,x11,0x1d
+  b0:	00858593          	addi	x11,x11,8
+  b4:	0005b503          	ld	x10,0(x11)
+  b8:	02faf637          	lui	x12,0x2faf
+  bc:	0806061b          	addiw	x12,x12,128 # 2faf080 <__global_pointer$+0x2fad71c>
+  c0:	00c50a63          	beq	x10,x12,d4 <set__delay__1>
 
-00000000800000c4 <set__delay__0>:
-    800000c4:	02faf537          	lui	x10,0x2faf
-    800000c8:	0805051b          	addiw	x10,x10,128 # 2faf080 <_start-0x7d050f80>
-    800000cc:	070000ef          	jal	x1,8000013c <set__mtimecmp>
-    800000d0:	0100006f          	jal	x0,800000e0 <exit>
+00000000000000c4 <set__delay__0>:
+  c4:	02faf537          	lui	x10,0x2faf
+  c8:	0805051b          	addiw	x10,x10,128 # 2faf080 <__global_pointer$+0x2fad71c>
+  cc:	070000ef          	jal	x1,13c <set__mtimecmp>
+  d0:	0100006f          	jal	x0,e0 <exit>
 
-00000000800000d4 <set__delay__1>:
-    800000d4:	017d8537          	lui	x10,0x17d8
-    800000d8:	8405051b          	addiw	x10,x10,-1984 # 17d7840 <_start-0x7e8287c0>
-    800000dc:	060000ef          	jal	x1,8000013c <set__mtimecmp>
+00000000000000d4 <set__delay__1>:
+  d4:	017d8537          	lui	x10,0x17d8
+  d8:	8405051b          	addiw	x10,x10,-1984 # 17d7840 <__global_pointer$+0x17d5edc>
+  dc:	060000ef          	jal	x1,13c <set__mtimecmp>
 
-00000000800000e0 <exit>:
-    800000e0:	4810051b          	addiw	x10,x0,1153
-    800000e4:	01551513          	slli	x10,x10,0x15
-    800000e8:	00450513          	addi	x10,x10,4
-    800000ec:	00552023          	sw	x5,0(x10)
-    800000f0:	30200073          	mret
+00000000000000e0 <exit>:
+  e0:	4810051b          	addiw	x10,x0,1153
+  e4:	01551513          	slli	x10,x10,0x15
+  e8:	00450513          	addi	x10,x10,4
+  ec:	00552023          	sw	x5,0(x10)
+  f0:	30200073          	mret
 
-00000000800000f4 <init__port__0__0>:
-    800000f4:	0030051b          	addiw	x10,x0,3
-    800000f8:	01e51513          	slli	x10,x10,0x1e
-    800000fc:	00150513          	addi	x10,x10,1
-    80000100:	00000593          	addi	x11,x0,0
-    80000104:	00b50023          	sb	x11,0(x10)
-    80000108:	0030051b          	addiw	x10,x0,3
-    8000010c:	01e51513          	slli	x10,x10,0x1e
-    80000110:	00250513          	addi	x10,x10,2
-    80000114:	00100593          	addi	x11,x0,1
-    80000118:	00b50023          	sb	x11,0(x10)
-    8000011c:	00008067          	jalr	x0,0(x1)
+00000000000000f4 <init__port__0__0>:
+  f4:	0030051b          	addiw	x10,x0,3
+  f8:	01e51513          	slli	x10,x10,0x1e
+  fc:	00150513          	addi	x10,x10,1
+ 100:	00000593          	addi	x11,x0,0
+ 104:	00b50023          	sb	x11,0(x10)
+ 108:	0030051b          	addiw	x10,x0,3
+ 10c:	01e51513          	slli	x10,x10,0x1e
+ 110:	00250513          	addi	x10,x10,2
+ 114:	00100593          	addi	x11,x0,1
+ 118:	00b50023          	sb	x11,0(x10)
+ 11c:	00008067          	jalr	x0,0(x1)
 
-0000000080000120 <toggle__data__0__0>:
-    80000120:	0030051b          	addiw	x10,x0,3
-    80000124:	01e51513          	slli	x10,x10,0x1e
-    80000128:	00150513          	addi	x10,x10,1
-    8000012c:	00050583          	lb	x11,0(x10)
-    80000130:	0015c593          	xori	x11,x11,1
-    80000134:	00b50023          	sb	x11,0(x10)
-    80000138:	00008067          	jalr	x0,0(x1)
+0000000000000120 <toggle__data__0__0>:
+ 120:	0030051b          	addiw	x10,x0,3
+ 124:	01e51513          	slli	x10,x10,0x1e
+ 128:	00150513          	addi	x10,x10,1
+ 12c:	00050583          	lb	x11,0(x10)
+ 130:	0015c593          	xori	x11,x11,1
+ 134:	00b50023          	sb	x11,0(x10)
+ 138:	00008067          	jalr	x0,0(x1)
 
-000000008000013c <set__mtimecmp>:
-    8000013c:	0050059b          	addiw	x11,x0,5
-    80000140:	01d59593          	slli	x11,x11,0x1d
-    80000144:	00858593          	addi	x11,x11,8
-    80000148:	00a5b023          	sd	x10,0(x11)
-    8000014c:	00008067          	jalr	x0,0(x1)
+000000000000013c <set__mtimecmp>:
+ 13c:	0050059b          	addiw	x11,x0,5
+ 140:	01d59593          	slli	x11,x11,0x1d
+ 144:	00858593          	addi	x11,x11,8
+ 148:	00a5b023          	sd	x10,0(x11)
+ 14c:	00008067          	jalr	x0,0(x1)
 
-0000000080000150 <clear__mtime>:
-    80000150:	0050051b          	addiw	x10,x0,5
-    80000154:	01d51513          	slli	x10,x10,0x1d
-    80000158:	00000593          	addi	x11,x0,0
-    8000015c:	00b53023          	sd	x11,0(x10)
-    80000160:	00008067          	jalr	x0,0(x1)
+0000000000000150 <clear__mtime>:
+ 150:	0050051b          	addiw	x10,x0,5
+ 154:	01d51513          	slli	x10,x10,0x1d
+ 158:	00000593          	addi	x11,x0,0
+ 15c:	00b53023          	sd	x11,0(x10)
+ 160:	00008067          	jalr	x0,0(x1)

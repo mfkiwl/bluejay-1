@@ -18,6 +18,8 @@ Resources:
         - https://www.youtube.com/watch?v=iWQRV-KJ7tQ&list=PL3by7evD3F53Dz2RiB47Ztp9l_piGVuus&index=9
     - Compiling Freestanding RISC-V Programs
         - https://www.youtube.com/watch?v=ODn7vnWOptM
+    - Freestanding RISC-V Programs
+        - https://www.youtube.com/watch?v=iml0DBo5yqo
     - Start PC dicussion in Spike
         - https://github.com/riscv-software-src/riscv-isa-sim/issues/192
     - Spike Documentation

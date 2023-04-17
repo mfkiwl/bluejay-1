@@ -3095,7 +3095,7 @@ d_flip_flop #(.WIDTH(8), .RESET_VALUE(STATE__RESET)) d_flip_flop__state
 //==============================
 // d_flip_flop__pc
 //==============================
-d_flip_flop #(.WIDTH(64), .RESET_VALUE(64'h80000000)) d_flip_flop__pc
+d_flip_flop #(.WIDTH(64), .RESET_VALUE(64'h0)) d_flip_flop__pc
 (
     .clk(clk),
     .rst(rst),

@@ -8,7 +8,7 @@ COE := $(FILES:.S=.coe)
 all: $(MEM) $(BIN) $(LST) $(COE)
 
 $(FILES:.S=): %: %.S 
-	riscv64-unknown-elf-gcc -march=rv64i -mabi=lp64 -ffreestanding -fno-pic -nostdlib -Ttext=0x80000000 -mno-relax $@.S -o $@ 
+	riscv64-unknown-elf-gcc -march=rv64i -mabi=lp64 -ffreestanding -fno-pic -nostdlib -Ttext=0x0 -mno-relax $@.S -o $@ 
 
 $(BIN): %.bin: % 
 	riscv64-unknown-elf-objcopy $< -O binary $@

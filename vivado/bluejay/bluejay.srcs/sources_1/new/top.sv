@@ -3131,7 +3131,7 @@ d_flip_flop #(.WIDTH(8), .RESET_VALUE(STATE__RESET)) d_flip_flop__state
 //==============================
 // d_flip_flop__pc
 //==============================
-d_flip_flop #(.WIDTH(64), .RESET_VALUE(64'h80000000)) d_flip_flop__pc
+d_flip_flop #(.WIDTH(64), .RESET_VALUE(64'h0)) d_flip_flop__pc
 (
     .clk(clk),
     .rst(rst),
@@ -7032,7 +7032,7 @@ module bus__decoder
 always_comb
 begin
     casez (addr)
-        64'b0000_0000__0000_0000__0000_0000__0000_0000__1000_????__????_????__????_????__????_????:
+        64'b0000_0000__0000_0000__0000_0000__0000_0000__0000_????__????_????__????_????__????_????:
         begin
             sel = 3'h0; 
         end

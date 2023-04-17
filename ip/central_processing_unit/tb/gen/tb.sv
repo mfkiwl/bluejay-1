@@ -107,10 +107,13 @@ initial begin
     dut.register_file__0.x__2 = 64'h10000;
     // initialize the gp register
     dut.register_file__0.x__3 = 64'h11860;
-    // initialize instruction memory
+    // force pc reset value to 0x80000000
+    force dut.pc = 64'h80000000;
     #11;
     // de-assert rst
     rst = 1'b0;
+    #10
+    release dut.pc;
 end
 
 
