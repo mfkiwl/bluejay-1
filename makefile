@@ -91,6 +91,8 @@ $(TOP)/defs/gen/defs.h: $(TOP)/defs/defs.py | $(TOP)/defs/gen
 	$(PYTHON) $(TOP)/tools/builder.py $(<) $(@) c 
 
 
+
+
 ################################
 # ip--src--dir--template                                                
 #
@@ -777,6 +779,134 @@ $(TOP)/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv: $(SV)
 
 
 #$(eval $(call compile-target,$(TOP)/vivado/coe/main.s,$(TOP)/vivado/coe/main.elf))
+
+
+
+################################
+# freestanding code
+################################
+CFLAGS :=
+CFLAGS += -ffreestanding
+CFLAGS += -fno-pic
+CFLAGS += -march=$(MARCH)
+CFLAGS += -mabi=$(MABI)
+
+LDFLAGS :=
+LDFLAGS += -nostdlib
+LDFLAGS += -Wl,-Ttext=0x0
+LDFLAGS += -Wl,--no-relax
+
+
+################################
+# code--S-to-o--template                                                
+#
+#     $(1): object file (.o)
+#     $(2): assembly file (.S)
+################################
+define code--S-to-o--template
+$(1): $(2)
+	riscv64-unknown-elf-gcc $(CFLAGS) -O -c -o $$(@) $$(<)
+endef
+
+################################
+# code--c-to-o--template                                                
+#
+#     $(1): object file (.o)
+#     $(2): c file (.c)
+################################
+define code--c-to-o--template
+$(1): $(2)
+	riscv64-unknown-elf-gcc $(CFLAGS) -O0 -c -o $$(@) $$(<)
+endef
+
+################################
+# code--o-to-elf--template                                                
+#
+#     $(1): executable file (.elf)
+#     $(2): object files (.o)
+################################
+define code--o-to-elf--template
+$(1): $(2)
+	riscv64-unknown-elf-gcc $(CFLAGS) $(LDFLAGS) -o $$(@) $$(^)
+endef
+
+################################
+# code--elf-to-bin--template                                                
+#
+#     $(1): binary file (.bin)
+#     $(2): executable file (.elf)
+################################
+define code--elf-to-bin--template
+$(1): $(2)
+	riscv64-unknown-elf-objcopy $$(<) -O binary $$(@)
+endef
+
+################################
+# code--elf-to-lst--template                                                
+#
+#     $(1): lst file (.lst)
+#     $(2): executable file (.elf)
+################################
+define code--elf-to-lst--template
+$(1): $(2)
+	riscv64-unknown-elf-objdump -Mnumeric,no-aliases -dr $$(<) > $$(@)
+endef
+
+################################
+# code--bin-to-mem--template                                                
+#
+#     $(1): mem file (.mem)
+#     $(2): binary file (.bin)
+################################
+define code--bin-to-mem--template
+$(1): $(2)
+	od -t x1 -An -w1 -v $$(<) > $$(@)
+endef
+
+################################
+# code--mem-to-coe--template                                                
+#
+#     $(1): coe file (.coe)
+#     $(2): mem file (.mem)
+################################
+define code--mem-to-coe--template
+$(1): $(2)
+	python3 $(TOP)/tools/mem_to_coe.py $$(<) > $$(@)
+endef
+
+
+
+$(eval $(call code--S-to-o--template,code/crt0.o,code/crt0.S))
+$(eval $(call code--c-to-o--template,code/main.o,code/main.c))
+$(eval $(call code--o-to-elf--template,code/prog.elf,code/crt0.o code/main.o))
+$(eval $(call code--elf-to-bin--template,code/prog.bin,code/prog.elf))
+$(eval $(call code--elf-to-lst--template,code/prog.lst,code/prog.elf))
+$(eval $(call code--bin-to-mem--template,code/prog.mem,code/prog.bin))
+$(eval $(call code--mem-to-coe--template,code/prog.coe,code/prog.mem))
+
+#code/crt0.o: code/crt0.S
+#	riscv64-unknown-elf-gcc $(CFLAGS) -O -c -o $(@) $(<)
+#
+#code/main.o: code/main.c
+#	riscv64-unknown-elf-gcc $(CFLAGS) -O -c -o $(@) $(<)
+#
+#code/prog: code/crt0.o code/main.o
+#	riscv64-unknown-elf-gcc $(CFLAGS) $(LDFLAGS) -o $(@) $(^)
+#
+#code/prog.bin: %.bin: %
+#	riscv64-unknown-elf-objcopy $(<) -O binary $(@)
+#
+#code/prog.lst: %.lst: %
+#	riscv64-unknown-elf-objdump -Mnumeric,no-aliases -dr $(<) > $(@)
+#
+#code/prog.mem: %.mem: %.bin
+#	od -t x1 -An -w1 -v $(<) > $(@)
+#
+#code/prog.coe: %.coe: %.mem
+#	python3 $(TOP)/tools/mem_to_coe.py $(<) > $(@)
+#
+
+
 
 
 .PHONY: clean

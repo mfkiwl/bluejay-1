@@ -1,35 +1,30 @@
-#include "../../defs/gen/defs.h"
-
-.text
-.global _start
-.type   _start, @function
+.text   # emit .text section and make current
 
 ##########
 # _start #
 ##########
+.global _start
 _start:
-.option push
-    # turn off norelax so this code does not get optimized away
-.option norelax
-    # initialize the stack pointer
-    la sp, 0x10000 
-    # initialize the global pointer
-    la gp, __global_pointer$
-.option pop
-    # clear the bss segment
-	la a0, __bss_start
-	la a1, __BSS_END__
+.option push                    # push the current options to the options stack
+.option norelax                 # disable linker relaxation so the following code region does not get optimized away
+    la sp, 0x8000               # sp = 0x8000
+    la gp, __global_pointer$    # gp = __global_pointer$
+.option pop                     # pop the previous options from the options stack
 
-clear_bss:
-	bgeu a0, a1, finish_bss
-	sb x0,0(a0)
-	addi a0, a0, 1
-	beq	x0,x0,clear_bss
-finish_bss:
-	call __libc_init_array       # Run global initialization functions
+    # clear the bss segment (starting at __bss_start and ending at __BSS_END__ - 1 
+	la a0, __bss_start      # a0 = __bss_start 
+	la a1, __BSS_END__      # a1 = __BSS_END__
+label__0:
+	bgeu a0, a1, label__1   # while (a0 < a1) {
+	sb zero, 0(a0)          #     *a0 = 0x0;
+	addi a0, a0, 0x1        #     a0++;
+	j label__0              # }
+label__1:
+
+	#call __libc_init_array  # Run global initialization functions
 	call main
 
-	# abort execution here
-	ebreak			
+    # spin
+label__2:
+    j label__2  # while (1) {}
 
-.size  _start, .-_start

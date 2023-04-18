@@ -8,6 +8,10 @@
 Resources:
     - Riscv-gnu-toolchain:
         - https://github.com/riscv-collab/riscv-gnu-toolchain
+    - RISC-V Assembly Programmer's Manual
+        - https://github.com/riscv-non-isa/riscv-asm-manual/blob/master/riscv-asm.md
+    - RISC-V Assembler Reference
+        - https://michaeljclark.github.io/asm.html
     - RISC-V Tutorial: Spike & Proxy Kernel from Source to Hello World
         - https://www.youtube.com/watch?v=zZUtTplVHwE
     - riscv-isa-sim
@@ -20,6 +24,7 @@ Resources:
         - https://www.youtube.com/watch?v=ODn7vnWOptM
     - Freestanding RISC-V Programs
         - https://www.youtube.com/watch?v=iml0DBo5yqo
+        - https://github.com/johnwinans/rvddt
     - Start PC dicussion in Spike
         - https://github.com/riscv-software-src/riscv-isa-sim/issues/192
     - Spike Documentation
