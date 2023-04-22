@@ -483,6 +483,7 @@ class Bluejay:
         """
         self.macro_substitution(defs)
         self.python()
+        self.macro_substitution(defs)
 
 
 if __name__ == '__main__':

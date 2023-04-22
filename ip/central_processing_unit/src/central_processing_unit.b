@@ -378,9 +378,8 @@ PYTHON
         'STATE__FATAL',
     ]
 
-
-    for i, state in enumerate(states):
-        print(f"localparam {state} = 8'h{i:x};") 
+    for i in range(len(states)):
+        print(f"localparam {states[i]} = 8'h{i:x};") 
 )
 
 

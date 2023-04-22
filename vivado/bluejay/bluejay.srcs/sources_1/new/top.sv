@@ -6772,84 +6772,76 @@ d_flip_flop #(.WIDTH(3), .RESET_VALUE(STATE__IDLE)) d_flip_flop__state
 
 endmodule
 //==============================================
-// bus 
+// memory_management_unit 
 //==============================================
-module bus 
+module memory_management_unit
 (
     input clk,
     input rst,
-    input [7:0] pma__0,
-    input [7:0] pma__1,
-    input [7:0] pma__2,
-    input [7:0] pma__3,
-    input [7:0] pma__4,
-    input [7:0] pma__5,
-    input [7:0] pma__6,
-    input [7:0] pma__7,
     output logic cs__0,
     output logic we__0,
-    output logic [63:0] addr__0,
+    output logic [39:0] addr__0,
     output logic [1:0] size__0,
     output logic [63:0] wr_data__0,
     input ready__0,
-    input resp__0,
     input [63:0] rd_data__0,
+    input [7:0] pma__0,
     output logic cs__1,
     output logic we__1,
-    output logic [63:0] addr__1,
+    output logic [39:0] addr__1,
     output logic [1:0] size__1,
     output logic [63:0] wr_data__1,
     input ready__1,
-    input resp__1,
     input [63:0] rd_data__1,
+    input [7:0] pma__1,
     output logic cs__2,
     output logic we__2,
-    output logic [63:0] addr__2,
+    output logic [39:0] addr__2,
     output logic [1:0] size__2,
     output logic [63:0] wr_data__2,
     input ready__2,
-    input resp__2,
     input [63:0] rd_data__2,
+    input [7:0] pma__2,
     output logic cs__3,
     output logic we__3,
-    output logic [63:0] addr__3,
+    output logic [39:0] addr__3,
     output logic [1:0] size__3,
     output logic [63:0] wr_data__3,
     input ready__3,
-    input resp__3,
     input [63:0] rd_data__3,
+    input [7:0] pma__3,
     output logic cs__4,
     output logic we__4,
-    output logic [63:0] addr__4,
+    output logic [39:0] addr__4,
     output logic [1:0] size__4,
     output logic [63:0] wr_data__4,
     input ready__4,
-    input resp__4,
     input [63:0] rd_data__4,
+    input [7:0] pma__4,
     output logic cs__5,
     output logic we__5,
-    output logic [63:0] addr__5,
+    output logic [39:0] addr__5,
     output logic [1:0] size__5,
     output logic [63:0] wr_data__5,
     input ready__5,
-    input resp__5,
     input [63:0] rd_data__5,
+    input [7:0] pma__5,
     output logic cs__6,
     output logic we__6,
-    output logic [63:0] addr__6,
+    output logic [39:0] addr__6,
     output logic [1:0] size__6,
     output logic [63:0] wr_data__6,
     input ready__6,
-    input resp__6,
     input [63:0] rd_data__6,
+    input [7:0] pma__6,
     output logic cs__7,
     output logic we__7,
-    output logic [63:0] addr__7,
+    output logic [39:0] addr__7,
     output logic [1:0] size__7,
     output logic [63:0] wr_data__7,
     input ready__7,
-    input resp__7,
     input [63:0] rd_data__7,
+    input [7:0] pma__7,
     input cs,
     input we,
     input [63:0] addr,
@@ -6860,466 +6852,567 @@ module bus
     output logic [63:0] rd_data
 );
 
+logic [5:0] state;
+logic [5:0] state__n;
 
-logic [2:0] sel;
-
-
-logic cs__x;
+logic we__x;
+logic [39:0] addr__x;
+logic [1:0] size__x;
+logic [63:0] wr_data__x;
 logic ready__x;
 logic resp__x;
+logic [63:0] rd_data__x__n;
 logic [63:0] rd_data__x;
 
-logic cs__y;
-logic ready__y;
-logic [63:0] rd_data__y;
+logic en__we__x;
+logic en__addr__x;
+logic en__size__x;
+logic en__wr_data__x;
+logic en__rd_data__x;
 
-logic [7:0] pma;
-logic [1:0] status;
+localparam STATE__RESET = 8'h0;
+localparam STATE__READY = 8'h1;
+localparam STATE__DECODE = 8'h2;
+localparam STATE__RESP = 8'h3;
+localparam STATE__ACCESS_FAULT = 8'h4;
+localparam STATE__MISALIGNED_ADDRESS = 8'h5;
+localparam STATE__REGION__0__PMA_CHECK = 8'h6;
+localparam STATE__REGION__0__REQ = 8'h7;
+localparam STATE__REGION__1__PMA_CHECK = 8'h8;
+localparam STATE__REGION__1__REQ = 8'h9;
+localparam STATE__REGION__2__PMA_CHECK = 8'ha;
+localparam STATE__REGION__2__REQ = 8'hb;
+localparam STATE__REGION__3__PMA_CHECK = 8'hc;
+localparam STATE__REGION__3__REQ = 8'hd;
+localparam STATE__REGION__4__PMA_CHECK = 8'he;
+localparam STATE__REGION__4__REQ = 8'hf;
+localparam STATE__REGION__5__PMA_CHECK = 8'h10;
+localparam STATE__REGION__5__REQ = 8'h11;
+localparam STATE__REGION__6__PMA_CHECK = 8'h12;
+localparam STATE__REGION__6__REQ = 8'h13;
+localparam STATE__REGION__7__PMA_CHECK = 8'h14;
+localparam STATE__REGION__7__REQ = 8'h15;
 
 
-assign cs__x = cs;
-assign ready = ready__x;
-assign resp = resp__x;
-assign rd_data = rd_data__x;
+always_comb
+begin
+    cs__0 = 1'b0;
+    cs__1 = 1'b0;
+    cs__2 = 1'b0;
+    cs__3 = 1'b0;
+    cs__4 = 1'b0;
+    cs__5 = 1'b0;
+    cs__6 = 1'b0;
+    cs__7 = 1'b0;
+    en__we__x = 1'b0;
+    en__addr__x = 1'b0; 
+    en__size__x = 1'b0; 
+    en__wr_data__x = 1'b0; 
+    en__rd_data__x = 1'b0; 
+    ready = 1'b0;
+    rd_data = rd_data__x;
+    rd_data__x__n = rd_data__x;
 
-assign we__0 = we; 
-assign we__1 = we; 
-assign we__2 = we; 
-assign we__3 = we; 
-assign we__4 = we; 
-assign we__5 = we; 
-assign we__6 = we; 
-assign we__7 = we; 
+    case (state)
+        //==============================
+        // STATE__RESET
+        //==============================
+        STATE__RESET:
+        begin
+            state__n = STATE__READY;
+        end
 
-assign addr__0 = addr;
-assign addr__1 = addr;
-assign addr__2 = addr;
-assign addr__3 = addr;
-assign addr__4 = addr;
-assign addr__5 = addr;
-assign addr__6 = addr;
-assign addr__7 = addr;
+        //==============================
+        // STATE__READY
+        //==============================
+        STATE__READY:
+        begin
+            en__we__x = 1'b1;
+            en__addr__x = 1'b1; 
+            en__size__x = 1'b1; 
+            en__wr_data__x = 1'b1; 
+            state__n = cs ? STATE__DECODE : STATE__READY;
+        end
 
-assign size__0 = size;
-assign size__1 = size;
-assign size__2 = size;
-assign size__3 = size;
-assign size__4 = size;
-assign size__5 = size;
-assign size__6 = size;
-assign size__7 = size;
+        //==============================
+        // STATE__DECODE
+        //==============================
+        STATE__DECODE:
+        begin
+            casez (addr__x)
+            64'b0000_0000__0000_0000__0000_0000__0000_0000__0000_????__????_????__????_????__????_????:
+            begin
+                state__n = STATE__REGION__0__PMA_CHECK;
+            end
+            64'b0000_0000__0000_0000__0000_0000__0000_0000__1001_????__????_????__????_????__????_????:
+            begin
+                state__n = STATE__REGION__1__PMA_CHECK;
+            end
+            64'b0000_0000__0000_0000__0000_0000__0000_0000__1010_????__????_????__????_????__????_????:
+            begin
+                state__n = STATE__REGION__2__PMA_CHECK;
+            end
+            64'b0000_0000__0000_0000__0000_0000__0000_0000__1011_????__????_????__????_????__????_????:
+            begin
+                state__n = STATE__REGION__3__PMA_CHECK;
+            end
+            64'b0000_0000__0000_0000__0000_0000__0000_0000__1100_????__????_????__????_????__????_????:
+            begin
+                state__n = STATE__REGION__4__PMA_CHECK;
+            end
+            64'b0000_0000__0000_0000__0000_0000__0000_0000__1101_????__????_????__????_????__????_????:
+            begin
+                state__n = STATE__REGION__5__PMA_CHECK;
+            end
+            64'b0000_0000__0000_0000__0000_0000__0000_0000__1110_????__????_????__????_????__????_????:
+            begin
+                state__n = STATE__REGION__6__PMA_CHECK;
+            end
+            64'b0000_0000__0000_0000__0000_0000__0000_0000__1111_????__????_????__????_????__????_????:
+            begin
+                state__n = STATE__REGION__7__PMA_CHECK;
+            end
+            default:
+            begin
+                state__n = STATE__ACCESS_FAULT;
+            end
+            endcase
+        end
 
-assign wr_data__0 = wr_data;
-assign wr_data__1 = wr_data;
-assign wr_data__2 = wr_data;
-assign wr_data__3 = wr_data;
-assign wr_data__4 = wr_data;
-assign wr_data__5 = wr_data;
-assign wr_data__6 = wr_data;
-assign wr_data__7 = wr_data;
+        //==============================
+        // STATE__REGION__0__PMA_CHECK
+        //==============================
+        STATE__REGION__0__PMA_CHECK:
+        begin
+            case (size__x)
+                2'h0:
+                begin
+                    state__n = (pma__0[1:1] == 1'b0) ? STATE__ACCESS_FAULT : STATE__REGION__0__REQ;
+                end
+                2'h1:
+                begin
+                    state__n = (pma__0[2:2] == 1'b0) ? STATE__ACCESS_FAULT : (addr[0] != 1'b0) && (pma__0[5:5] == 1'b0) ? STATE__MISALIGNED_ADDRESS : STATE__REGION__0__REQ;
+                end
+                2'h2:
+                begin
+                    state__n = (pma__0[3:3] == 1'b0) ? STATE__ACCESS_FAULT : (addr[1:0] != 2'h0) && (pma__0[5:5] == 1'b0) ? STATE__MISALIGNED_ADDRESS : STATE__REGION__0__REQ;
+                end
+                2'h3:
+                begin
+                    state__n = (pma__0[4:4] == 1'b0) ? STATE__ACCESS_FAULT : (addr[2:0] != 3'h0) && (pma__0[5:5] == 1'b0)? STATE__MISALIGNED_ADDRESS : STATE__REGION__0__REQ;
+                end
+            endcase
+        end
 
-//==============================================
-// decoder
-//==============================================
-bus__decoder decoder
+        //==============================
+        // STATE__REGION__0__REQ
+        //==============================
+        STATE__REGION__0__REQ:
+        begin
+            cs__0 = 1'b1;
+            en__rd_data__x = ready__0;
+            rd_data__x__n = rd_data__0;
+            state__n = ready__0 ? STATE__RESP : STATE__REGION__0__REQ;
+        end
+
+        //==============================
+        // STATE__REGION__1__PMA_CHECK
+        //==============================
+        STATE__REGION__1__PMA_CHECK:
+        begin
+            case (size__x)
+                2'h0:
+                begin
+                    state__n = (pma__1[1:1] == 1'b0) ? STATE__ACCESS_FAULT : STATE__REGION__1__REQ;
+                end
+                2'h1:
+                begin
+                    state__n = (pma__1[2:2] == 1'b0) ? STATE__ACCESS_FAULT : (addr[0] != 1'b0) && (pma__1[5:5] == 1'b0) ? STATE__MISALIGNED_ADDRESS : STATE__REGION__1__REQ;
+                end
+                2'h2:
+                begin
+                    state__n = (pma__1[3:3] == 1'b0) ? STATE__ACCESS_FAULT : (addr[1:0] != 2'h0) && (pma__1[5:5] == 1'b0) ? STATE__MISALIGNED_ADDRESS : STATE__REGION__1__REQ;
+                end
+                2'h3:
+                begin
+                    state__n = (pma__1[4:4] == 1'b0) ? STATE__ACCESS_FAULT : (addr[2:0] != 3'h0) && (pma__1[5:5] == 1'b0)? STATE__MISALIGNED_ADDRESS : STATE__REGION__1__REQ;
+                end
+            endcase
+        end
+
+        //==============================
+        // STATE__REGION__1__REQ
+        //==============================
+        STATE__REGION__1__REQ:
+        begin
+            cs__1 = 1'b1;
+            en__rd_data__x = ready__1;
+            rd_data__x__n = rd_data__1;
+            state__n = ready__1 ? STATE__RESP : STATE__REGION__1__REQ;
+        end
+
+        //==============================
+        // STATE__REGION__2__PMA_CHECK
+        //==============================
+        STATE__REGION__2__PMA_CHECK:
+        begin
+            case (size__x)
+                2'h0:
+                begin
+                    state__n = (pma__2[1:1] == 1'b0) ? STATE__ACCESS_FAULT : STATE__REGION__2__REQ;
+                end
+                2'h1:
+                begin
+                    state__n = (pma__2[2:2] == 1'b0) ? STATE__ACCESS_FAULT : (addr[0] != 1'b0) && (pma__2[5:5] == 1'b0) ? STATE__MISALIGNED_ADDRESS : STATE__REGION__2__REQ;
+                end
+                2'h2:
+                begin
+                    state__n = (pma__2[3:3] == 1'b0) ? STATE__ACCESS_FAULT : (addr[1:0] != 2'h0) && (pma__2[5:5] == 1'b0) ? STATE__MISALIGNED_ADDRESS : STATE__REGION__2__REQ;
+                end
+                2'h3:
+                begin
+                    state__n = (pma__2[4:4] == 1'b0) ? STATE__ACCESS_FAULT : (addr[2:0] != 3'h0) && (pma__2[5:5] == 1'b0)? STATE__MISALIGNED_ADDRESS : STATE__REGION__2__REQ;
+                end
+            endcase
+        end
+
+        //==============================
+        // STATE__REGION__2__REQ
+        //==============================
+        STATE__REGION__2__REQ:
+        begin
+            cs__2 = 1'b1;
+            en__rd_data__x = ready__2;
+            rd_data__x__n = rd_data__2;
+            state__n = ready__2 ? STATE__RESP : STATE__REGION__2__REQ;
+        end
+
+        //==============================
+        // STATE__REGION__3__PMA_CHECK
+        //==============================
+        STATE__REGION__3__PMA_CHECK:
+        begin
+            case (size__x)
+                2'h0:
+                begin
+                    state__n = (pma__3[1:1] == 1'b0) ? STATE__ACCESS_FAULT : STATE__REGION__3__REQ;
+                end
+                2'h1:
+                begin
+                    state__n = (pma__3[2:2] == 1'b0) ? STATE__ACCESS_FAULT : (addr[0] != 1'b0) && (pma__3[5:5] == 1'b0) ? STATE__MISALIGNED_ADDRESS : STATE__REGION__3__REQ;
+                end
+                2'h2:
+                begin
+                    state__n = (pma__3[3:3] == 1'b0) ? STATE__ACCESS_FAULT : (addr[1:0] != 2'h0) && (pma__3[5:5] == 1'b0) ? STATE__MISALIGNED_ADDRESS : STATE__REGION__3__REQ;
+                end
+                2'h3:
+                begin
+                    state__n = (pma__3[4:4] == 1'b0) ? STATE__ACCESS_FAULT : (addr[2:0] != 3'h0) && (pma__3[5:5] == 1'b0)? STATE__MISALIGNED_ADDRESS : STATE__REGION__3__REQ;
+                end
+            endcase
+        end
+
+        //==============================
+        // STATE__REGION__3__REQ
+        //==============================
+        STATE__REGION__3__REQ:
+        begin
+            cs__3 = 1'b1;
+            en__rd_data__x = ready__3;
+            rd_data__x__n = rd_data__3;
+            state__n = ready__3 ? STATE__RESP : STATE__REGION__3__REQ;
+        end
+
+        //==============================
+        // STATE__REGION__4__PMA_CHECK
+        //==============================
+        STATE__REGION__4__PMA_CHECK:
+        begin
+            case (size__x)
+                2'h0:
+                begin
+                    state__n = (pma__4[1:1] == 1'b0) ? STATE__ACCESS_FAULT : STATE__REGION__4__REQ;
+                end
+                2'h1:
+                begin
+                    state__n = (pma__4[2:2] == 1'b0) ? STATE__ACCESS_FAULT : (addr[0] != 1'b0) && (pma__4[5:5] == 1'b0) ? STATE__MISALIGNED_ADDRESS : STATE__REGION__4__REQ;
+                end
+                2'h2:
+                begin
+                    state__n = (pma__4[3:3] == 1'b0) ? STATE__ACCESS_FAULT : (addr[1:0] != 2'h0) && (pma__4[5:5] == 1'b0) ? STATE__MISALIGNED_ADDRESS : STATE__REGION__4__REQ;
+                end
+                2'h3:
+                begin
+                    state__n = (pma__4[4:4] == 1'b0) ? STATE__ACCESS_FAULT : (addr[2:0] != 3'h0) && (pma__4[5:5] == 1'b0)? STATE__MISALIGNED_ADDRESS : STATE__REGION__4__REQ;
+                end
+            endcase
+        end
+
+        //==============================
+        // STATE__REGION__4__REQ
+        //==============================
+        STATE__REGION__4__REQ:
+        begin
+            cs__4 = 1'b1;
+            en__rd_data__x = ready__4;
+            rd_data__x__n = rd_data__4;
+            state__n = ready__4 ? STATE__RESP : STATE__REGION__4__REQ;
+        end
+
+        //==============================
+        // STATE__REGION__5__PMA_CHECK
+        //==============================
+        STATE__REGION__5__PMA_CHECK:
+        begin
+            case (size__x)
+                2'h0:
+                begin
+                    state__n = (pma__5[1:1] == 1'b0) ? STATE__ACCESS_FAULT : STATE__REGION__5__REQ;
+                end
+                2'h1:
+                begin
+                    state__n = (pma__5[2:2] == 1'b0) ? STATE__ACCESS_FAULT : (addr[0] != 1'b0) && (pma__5[5:5] == 1'b0) ? STATE__MISALIGNED_ADDRESS : STATE__REGION__5__REQ;
+                end
+                2'h2:
+                begin
+                    state__n = (pma__5[3:3] == 1'b0) ? STATE__ACCESS_FAULT : (addr[1:0] != 2'h0) && (pma__5[5:5] == 1'b0) ? STATE__MISALIGNED_ADDRESS : STATE__REGION__5__REQ;
+                end
+                2'h3:
+                begin
+                    state__n = (pma__5[4:4] == 1'b0) ? STATE__ACCESS_FAULT : (addr[2:0] != 3'h0) && (pma__5[5:5] == 1'b0)? STATE__MISALIGNED_ADDRESS : STATE__REGION__5__REQ;
+                end
+            endcase
+        end
+
+        //==============================
+        // STATE__REGION__5__REQ
+        //==============================
+        STATE__REGION__5__REQ:
+        begin
+            cs__5 = 1'b1;
+            en__rd_data__x = ready__5;
+            rd_data__x__n = rd_data__5;
+            state__n = ready__5 ? STATE__RESP : STATE__REGION__5__REQ;
+        end
+
+        //==============================
+        // STATE__REGION__6__PMA_CHECK
+        //==============================
+        STATE__REGION__6__PMA_CHECK:
+        begin
+            case (size__x)
+                2'h0:
+                begin
+                    state__n = (pma__6[1:1] == 1'b0) ? STATE__ACCESS_FAULT : STATE__REGION__6__REQ;
+                end
+                2'h1:
+                begin
+                    state__n = (pma__6[2:2] == 1'b0) ? STATE__ACCESS_FAULT : (addr[0] != 1'b0) && (pma__6[5:5] == 1'b0) ? STATE__MISALIGNED_ADDRESS : STATE__REGION__6__REQ;
+                end
+                2'h2:
+                begin
+                    state__n = (pma__6[3:3] == 1'b0) ? STATE__ACCESS_FAULT : (addr[1:0] != 2'h0) && (pma__6[5:5] == 1'b0) ? STATE__MISALIGNED_ADDRESS : STATE__REGION__6__REQ;
+                end
+                2'h3:
+                begin
+                    state__n = (pma__6[4:4] == 1'b0) ? STATE__ACCESS_FAULT : (addr[2:0] != 3'h0) && (pma__6[5:5] == 1'b0)? STATE__MISALIGNED_ADDRESS : STATE__REGION__6__REQ;
+                end
+            endcase
+        end
+
+        //==============================
+        // STATE__REGION__6__REQ
+        //==============================
+        STATE__REGION__6__REQ:
+        begin
+            cs__6 = 1'b1;
+            en__rd_data__x = ready__6;
+            rd_data__x__n = rd_data__6;
+            state__n = ready__6 ? STATE__RESP : STATE__REGION__6__REQ;
+        end
+
+        //==============================
+        // STATE__REGION__7__PMA_CHECK
+        //==============================
+        STATE__REGION__7__PMA_CHECK:
+        begin
+            case (size__x)
+                2'h0:
+                begin
+                    state__n = (pma__7[1:1] == 1'b0) ? STATE__ACCESS_FAULT : STATE__REGION__7__REQ;
+                end
+                2'h1:
+                begin
+                    state__n = (pma__7[2:2] == 1'b0) ? STATE__ACCESS_FAULT : (addr[0] != 1'b0) && (pma__7[5:5] == 1'b0) ? STATE__MISALIGNED_ADDRESS : STATE__REGION__7__REQ;
+                end
+                2'h2:
+                begin
+                    state__n = (pma__7[3:3] == 1'b0) ? STATE__ACCESS_FAULT : (addr[1:0] != 2'h0) && (pma__7[5:5] == 1'b0) ? STATE__MISALIGNED_ADDRESS : STATE__REGION__7__REQ;
+                end
+                2'h3:
+                begin
+                    state__n = (pma__7[4:4] == 1'b0) ? STATE__ACCESS_FAULT : (addr[2:0] != 3'h0) && (pma__7[5:5] == 1'b0)? STATE__MISALIGNED_ADDRESS : STATE__REGION__7__REQ;
+                end
+            endcase
+        end
+
+        //==============================
+        // STATE__REGION__7__REQ
+        //==============================
+        STATE__REGION__7__REQ:
+        begin
+            cs__7 = 1'b1;
+            en__rd_data__x = ready__7;
+            rd_data__x__n = rd_data__7;
+            state__n = ready__7 ? STATE__RESP : STATE__REGION__7__REQ;
+        end
+
+            
+        //==============================
+        // STATE__RESP
+        //==============================
+        STATE__RESP:
+        begin
+            ready = 1'b1;
+            resp = 1'b0;
+            rd_data = rd_data__x;
+            state__n = STATE__READY; 
+        end
+
+        //==============================
+        // STATE__ACCESS_FAULT
+        //==============================
+        STATE__ACCESS_FAULT:
+        begin
+            ready = 1'b1;
+            resp = 1'b1;
+            rd_data = 64'h0;
+            state__n = STATE__READY;
+        end
+
+        //==============================
+        // STATE__MISALIGNED_ADDRESS
+        //==============================
+        STATE__MISALIGNED_ADDRESS:
+        begin
+            ready = 1'b1;
+            resp = 1'b1;
+            rd_data = 64'h1;
+            state__n = STATE__READY;
+        end
+    endcase
+end
+
+
+assign we__0 = we__x;
+assign addr__0 = addr__x;
+assign size__0 = size__x;
+assign wr_data__0 = wr_data__x;
+assign we__1 = we__x;
+assign addr__1 = addr__x;
+assign size__1 = size__x;
+assign wr_data__1 = wr_data__x;
+assign we__2 = we__x;
+assign addr__2 = addr__x;
+assign size__2 = size__x;
+assign wr_data__2 = wr_data__x;
+assign we__3 = we__x;
+assign addr__3 = addr__x;
+assign size__3 = size__x;
+assign wr_data__3 = wr_data__x;
+assign we__4 = we__x;
+assign addr__4 = addr__x;
+assign size__4 = size__x;
+assign wr_data__4 = wr_data__x;
+assign we__5 = we__x;
+assign addr__5 = addr__x;
+assign size__5 = size__x;
+assign wr_data__5 = wr_data__x;
+assign we__6 = we__x;
+assign addr__6 = addr__x;
+assign size__6 = size__x;
+assign wr_data__6 = wr_data__x;
+assign we__7 = we__x;
+assign addr__7 = addr__x;
+assign size__7 = size__x;
+assign wr_data__7 = wr_data__x;
+
+
+//==============================
+// d_flip_flop__we__x
+//==============================
+d_flip_flop #(.WIDTH(1)) d_flip_flop__we__x
 (
     .clk(clk),
     .rst(rst),
-    .addr(addr),
-    .sel(sel)
-);
-
-
-//==============================================
-// physical_memory_attribute_multiplexer
-//==============================================
-bus__physical_memory_attribute_multiplexer physical_memory_attribute_multiplexer
-(
-    .clk(clk),
-    .rst(rst),
-    .sel(sel),
-    .pma__0(pma__0),
-    .pma__1(pma__1),
-    .pma__2(pma__2),
-    .pma__3(pma__3),
-    .pma__4(pma__4),
-    .pma__5(pma__5),
-    .pma__6(pma__6),
-    .pma__7(pma__7),
-    .pma(pma)
-);
-
-//==============================================
-// physical_memory_attribute_checker
-//==============================================
-bus__physical_memory_attribute_checker physical_memory_attribute_checker
-(
-    .clk(clk),
-    .rst(rst),
-    .addr(addr[2:0]),
-    .size(size),
-    .pma(pma),
-    .status(status)
-);
-
-//==============================================
-// bus__trap
-//==============================================
-bus__trap trap
-(
-    .clk(clk),
-    .rst(rst),
-    .status(status),
-    .cs__x(cs__x),
-    .ready__x(ready__x),
-    .resp__x(resp__x),
-    .rd_data__x(rd_data__x),
-    .cs__y(cs__y),
-    .ready__y(ready__y),
-    .rd_data__y(rd_data__y)
+    .en(en__we__x),
+    .d(we),
+    .q(we__x)
 );
 
 //==============================
-// multiplexer
+// d_flip_flop__addr__x
 //==============================
-bus__multiplexer multiplexer
+d_flip_flop #(.WIDTH(40)) d_flip_flop__addr__x
 (
     .clk(clk),
     .rst(rst),
-    .sel(sel),
-    .cs(cs__y),
-    .ready(ready__y),
-    .rd_data(rd_data__y),
-    .cs__0(cs__0),
-    .ready__0(ready__0),
-    .rd_data__0(rd_data__0),
-    .cs__1(cs__1),
-    .ready__1(ready__1),
-    .rd_data__1(rd_data__1),
-    .cs__2(cs__2),
-    .ready__2(ready__2),
-    .rd_data__2(rd_data__2),
-    .cs__3(cs__3),
-    .ready__3(ready__3),
-    .rd_data__3(rd_data__3),
-    .cs__4(cs__4),
-    .ready__4(ready__4),
-    .rd_data__4(rd_data__4),
-    .cs__5(cs__5),
-    .ready__5(ready__5),
-    .rd_data__5(rd_data__5),
-    .cs__6(cs__6),
-    .ready__6(ready__6),
-    .rd_data__6(rd_data__6),
-    .cs__7(cs__7),
-    .ready__7(ready__7),
-    .rd_data__7(rd_data__7)
+    .en(en__addr__x),
+    .d(addr[39:0]),
+    .q(addr__x)
 );
 
-endmodule
-
-//==============================================
-// bus__decoder
-//==============================================
-module bus__decoder
+//==============================
+// d_flip_flop__size__x
+//==============================
+d_flip_flop #(.WIDTH(2)) d_flip_flop__size__x
 (
-    input clk,
-    input rst,
-    input [63:0] addr,
-    output logic [2:0] sel
+    .clk(clk),
+    .rst(rst),
+    .en(en__size__x),
+    .d(size),
+    .q(size__x)
 );
 
-
-always_comb
-begin
-    casez (addr)
-        64'b0000_0000__0000_0000__0000_0000__0000_0000__0000_????__????_????__????_????__????_????:
-        begin
-            sel = 3'h0; 
-        end
-        64'b0000_0000__0000_0000__0000_0000__0000_0000__1001_????__????_????__????_????__????_????:
-        begin
-            sel = 3'h1; 
-        end
-        64'b0000_0000__0000_0000__0000_0000__0000_0000__1010_????__????_????__????_????__????_????:
-        begin
-            sel = 3'h2; 
-        end
-        64'b0000_0000__0000_0000__0000_0000__0000_0000__1011_????__????_????__????_????__????_????:
-        begin
-            sel = 3'h3; 
-        end
-        64'b0000_0000__0000_0000__0000_0000__0000_0000__1100_????__????_????__????_????__????_????:
-        begin
-            sel = 3'h4; 
-        end
-        64'b0000_0000__0000_0000__0000_0000__0000_0000__1101_????__????_????__????_????__????_????:
-        begin
-            sel = 3'h5; 
-        end
-        64'b0000_0000__0000_0000__0000_0000__0000_0000__1110_????__????_????__????_????__????_????:
-        begin
-            sel = 3'h6; 
-        end
-        default:
-        begin
-            sel = 3'h7; 
-        end
-    endcase
-end
-
-endmodule
-//==============================================
-// bus__multiplexer
-//==============================================
-module bus__multiplexer
+//==============================
+// d_flip_flop__wr_data__x
+//==============================
+d_flip_flop #(.WIDTH(64)) d_flip_flop__wr_data__x
 (
-    input clk,
-    input rst,
-    output logic cs__0,
-    input ready__0,
-    input [63:0] rd_data__0,
-    output logic cs__1,
-    input ready__1,
-    input [63:0] rd_data__1,
-    output logic cs__2,
-    input ready__2,
-    input [63:0] rd_data__2,
-    output logic cs__3,
-    input ready__3,
-    input [63:0] rd_data__3,
-    output logic cs__4,
-    input ready__4,
-    input [63:0] rd_data__4,
-    output logic cs__5,
-    input ready__5,
-    input [63:0] rd_data__5,
-    output logic cs__6,
-    input ready__6,
-    input [63:0] rd_data__6,
-    output logic cs__7,
-    input ready__7,
-    input [63:0] rd_data__7,
-    input cs,
-    output logic ready,
-    output logic [63:0] rd_data,
-    input [2:0] sel
+    .clk(clk),
+    .rst(rst),
+    .en(en__wr_data__x),
+    .d(wr_data),
+    .q(wr_data__x)
 );
 
-
-always_comb
-begin
-    cs__0 = 1'b0; 
-    cs__1 = 1'b0; 
-    cs__2 = 1'b0; 
-    cs__3 = 1'b0; 
-    cs__4 = 1'b0; 
-    cs__5 = 1'b0; 
-    cs__6 = 1'b0; 
-    cs__7 = 1'b0; 
-
-    case (sel)
-        3'h0:
-        begin
-            cs__0 = cs;
-            ready = ready__0;
-            rd_data = rd_data__0;
-        end
-        3'h1:
-        begin
-            cs__1 = cs;
-            ready = ready__1;
-            rd_data = rd_data__1;
-        end
-        3'h2:
-        begin
-            cs__2 = cs;
-            ready = ready__2;
-            rd_data = rd_data__2;
-        end
-        3'h3:
-        begin
-            cs__3 = cs;
-            ready = ready__3;
-            rd_data = rd_data__3;
-        end
-        3'h4:
-        begin
-            cs__4 = cs;
-            ready = ready__4;
-            rd_data = rd_data__4;
-        end
-        3'h5:
-        begin
-            cs__5 = cs;
-            ready = ready__5;
-            rd_data = rd_data__5;
-        end
-        3'h6:
-        begin
-            cs__6 = cs;
-            ready = ready__6;
-            rd_data = rd_data__6;
-        end
-        3'h7:
-        begin
-            cs__7 = cs;
-            ready = ready__7;
-            rd_data = rd_data__7;
-        end
-    endcase
-end
-
-endmodule
-//==============================================
-// bus__physical_memory_attribute_multiplexer
-//==============================================
-module bus__physical_memory_attribute_multiplexer
+//==============================
+// d_flip_flop__rd_data__x
+//==============================
+d_flip_flop #(.WIDTH(64)) d_flip_flop__rd_data__x
 (
-    input clk,
-    input rst,
-    input [2:0] sel,
-    input [7:0] pma__0,
-    input [7:0] pma__1,
-    input [7:0] pma__2,
-    input [7:0] pma__3,
-    input [7:0] pma__4,
-    input [7:0] pma__5,
-    input [7:0] pma__6,
-    input [7:0] pma__7,
-    output logic [7:0] pma
+    .clk(clk),
+    .rst(rst),
+    .en(en__rd_data__x),
+    .d(rd_data__x__n),
+    .q(rd_data__x)
 );
 
-always_comb
-begin
-    case (sel)
-        3'h0:
-        begin
-            pma = pma__0;
-        end
-        3'h1:
-        begin
-            pma = pma__1;
-        end
-        3'h2:
-        begin
-            pma = pma__2;
-        end
-        3'h2:
-        begin
-            pma = pma__3;
-        end
-        3'h4:
-        begin
-            pma = pma__4;
-        end
-        3'h5:
-        begin
-            pma = pma__5;
-        end
-        3'h6:
-        begin
-            pma = pma__6;
-        end
-        3'h7:
-        begin
-            pma = pma__7;
-        end
-    endcase
-end
-
-
-endmodule
-//==============================================
-// bus__physical_memory_attribute_checker 
-//==============================================
-module bus__physical_memory_attribute_checker
+//==============================
+// d_flip_flop__state
+//==============================
+d_flip_flop #(.WIDTH(6), .RESET_VALUE(STATE__RESET)) d_flip_flop__state
 (
-    input clk,
-    input rst,
-    input [2:0] addr, 
-    input [1:0] size,
-    input [7:0] pma,
-    output logic [1:0] status
-);
-
-always_comb 
-begin
-    case (size)
-        2'h0:
-        begin
-            status = (pma[1:1] == 1'b0) ? 2'h1 : 2'h0;
-        end
-        2'h1:
-        begin
-            status = (pma[2:2] == 1'b0) ? 2'h1 : (addr[0] != 1'b0) && (pma[5:5] == 1'b0) ? 2'h2 : 2'h0;
-        end
-        2'h2:
-        begin
-            status = (pma[3:3] == 1'b0) ? 2'h1 : (addr[1:0] != 2'h0) && (pma[5:5] == 1'b0) ? 2'h2 : 2'h0;
-        end
-        2'h3:
-        begin
-            status = (pma[4:4] == 1'b0) ? 2'h1 : (addr[2:0] != 3'h0) && (pma[5:5] == 1'b0)? 2'h2 : 2'h0;
-        end
-    endcase
-end
-
-
-endmodule
-//==============================================
-// bus__trap
-//==============================================
-module bus__trap
-(
-    input clk,
-    input rst,
-    input [1:0] status,
-    input cs__x,
-    output logic ready__x,
-    output logic resp__x,
-    output logic [63:0] rd_data__x,
-    output logic cs__y,
-    input ready__y,
-    input [63:0] rd_data__y
+    .clk(clk),
+    .rst(rst),
+    .en(1'b1),
+    .d(state__n),
+    .q(state)
 );
 
 
-always_comb
-begin
-    case (status)
-        2'h0:
-        begin
-            cs__y = cs__x;
-            resp__x = 1'b0;
-            ready__x = ready__y;
-            rd_data__x = rd_data__y;
-        end
-        2'h1:
-        begin
-            cs__y = 1'b0;
-            resp__x = 1'b1;
-            ready__x = 1'b1;
-            rd_data__x = 64'h0;
-        end
-        2'h2:
-        begin
-            cs__y = 1'b0;
-            resp__x = 1'b1;
-            ready__x = 1'b1;
-            rd_data__x = 64'h1;
-        end
-        default:
-        begin
-            cs__y = 1'b0;
-            resp__x = 1'b1;
-            ready__x = 1'b1;
-            rd_data__x = 64'h0;
-        end
-    endcase
-end
-
 endmodule
+
 //==============================================
 // jay 
 //==============================================
@@ -7344,15 +7437,6 @@ logic context__0__eip;
 
 logic tip;
 
-logic [7:0] pma__0;
-logic [7:0] pma__1;
-logic [7:0] pma__2;
-logic [7:0] pma__3;
-logic [7:0] pma__4;
-logic [7:0] pma__5;
-logic [7:0] pma__6;
-logic [7:0] pma__7;
-
 logic cs;
 logic we;
 logic [39:0] addr;
@@ -7368,71 +7452,64 @@ logic [39:0] addr__0;
 logic [1:0] size__0;
 logic [63:0] wr_data__0;
 logic ready__0;
-logic resp__0;
 logic [63:0] rd_data__0;
-
+logic [7:0] pma__0;
 logic cs__1;
 logic we__1;
 logic [39:0] addr__1;
 logic [1:0] size__1;
 logic [63:0] wr_data__1;
 logic ready__1;
-logic resp__1;
 logic [63:0] rd_data__1;
-
+logic [7:0] pma__1;
 logic cs__2;
 logic we__2;
 logic [39:0] addr__2;
 logic [1:0] size__2;
 logic [63:0] wr_data__2;
 logic ready__2;
-logic resp__2;
 logic [63:0] rd_data__2;
-
+logic [7:0] pma__2;
 logic cs__3;
 logic we__3;
 logic [39:0] addr__3;
 logic [1:0] size__3;
 logic [63:0] wr_data__3;
 logic ready__3;
-logic resp__3;
 logic [63:0] rd_data__3;
-
+logic [7:0] pma__3;
 logic cs__4;
 logic we__4;
 logic [39:0] addr__4;
 logic [1:0] size__4;
 logic [63:0] wr_data__4;
 logic ready__4;
-logic resp__4;
 logic [63:0] rd_data__4;
-
+logic [7:0] pma__4;
 logic cs__5;
 logic we__5;
 logic [39:0] addr__5;
 logic [1:0] size__5;
 logic [63:0] wr_data__5;
 logic ready__5;
-logic resp__5;
 logic [63:0] rd_data__5;
-
+logic [7:0] pma__5;
 logic cs__6;
 logic we__6;
 logic [39:0] addr__6;
 logic [1:0] size__6;
 logic [63:0] wr_data__6;
 logic ready__6;
-logic resp__6;
 logic [63:0] rd_data__6;
-
+logic [7:0] pma__6;
 logic cs__7;
 logic we__7;
 logic [39:0] addr__7;
 logic [1:0] size__7;
 logic [63:0] wr_data__7;
 logic ready__7;
-logic resp__7;
 logic [63:0] rd_data__7;
+logic [7:0] pma__7;
 
 //==============================
 // central_processing_unit__0
@@ -7452,6 +7529,88 @@ central_processing_unit central_processing_unit__0
     .eip(context__0__eip),
     .tip(tip)
 );
+
+//==============================
+// memory_management_unit__0
+//==============================
+memory_management_unit memory_management_unit__0
+(
+    .clk(clk),
+    .rst(rst),
+    .cs__0(cs__0),
+    .we__0(we__0),
+    .addr__0(addr__0),
+    .size__0(size__0),
+    .wr_data__0(wr_data__0),
+    .ready__0(ready__0),
+    .rd_data__0(rd_data__0),
+    .pma__0(pma__0),
+    .cs__1(cs__1),
+    .we__1(we__1),
+    .addr__1(addr__1),
+    .size__1(size__1),
+    .wr_data__1(wr_data__1),
+    .ready__1(ready__1),
+    .rd_data__1(rd_data__1),
+    .pma__1(pma__1),
+    .cs__2(cs__2),
+    .we__2(we__2),
+    .addr__2(addr__2),
+    .size__2(size__2),
+    .wr_data__2(wr_data__2),
+    .ready__2(ready__2),
+    .rd_data__2(rd_data__2),
+    .pma__2(pma__2),
+    .cs__3(cs__3),
+    .we__3(we__3),
+    .addr__3(addr__3),
+    .size__3(size__3),
+    .wr_data__3(wr_data__3),
+    .ready__3(ready__3),
+    .rd_data__3(rd_data__3),
+    .pma__3(pma__3),
+    .cs__4(cs__4),
+    .we__4(we__4),
+    .addr__4(addr__4),
+    .size__4(size__4),
+    .wr_data__4(wr_data__4),
+    .ready__4(ready__4),
+    .rd_data__4(rd_data__4),
+    .pma__4(pma__4),
+    .cs__5(cs__5),
+    .we__5(we__5),
+    .addr__5(addr__5),
+    .size__5(size__5),
+    .wr_data__5(wr_data__5),
+    .ready__5(ready__5),
+    .rd_data__5(rd_data__5),
+    .pma__5(pma__5),
+    .cs__6(cs__6),
+    .we__6(we__6),
+    .addr__6(addr__6),
+    .size__6(size__6),
+    .wr_data__6(wr_data__6),
+    .ready__6(ready__6),
+    .rd_data__6(rd_data__6),
+    .pma__6(pma__6),
+    .cs__7(cs__7),
+    .we__7(we__7),
+    .addr__7(addr__7),
+    .size__7(size__7),
+    .wr_data__7(wr_data__7),
+    .ready__7(ready__7),
+    .rd_data__7(rd_data__7),
+    .pma__7(pma__7),
+    .cs(cs),
+    .we(we),
+    .addr(addr),
+    .size(size),
+    .wr_data(wr_data),
+    .ready(ready),
+    .resp(resp),
+    .rd_data(rd_data)
+);
+
 
 
 //==============================
@@ -7544,87 +7703,6 @@ general_purpose_input_output general_purpose_input_output__0
     .port__1(port__1),
     .port__2(port__2),
     .port__3(port__3)
-);
-
-//==============================
-// bus__0
-//==============================
-bus bus__0 
-(
-    .clk(clk),
-    .rst(rst),
-    .pma__0(pma__0),
-    .pma__1(pma__1),
-    .pma__2(pma__2),
-    .pma__3(pma__3),
-    .pma__4(pma__4),
-    .pma__5(pma__5),
-    .pma__6(pma__6),
-    .pma__7(pma__7),
-    .cs(cs),
-    .we(we),
-    .addr(addr),
-    .size(size),
-    .wr_data(wr_data),
-    .ready(ready),
-    .resp(resp),
-    .rd_data(rd_data),
-    .cs__0(cs__0),
-    .we__0(we__0),
-    .addr__0(addr__0),
-    .size__0(size__0),
-    .wr_data__0(wr_data__0),
-    .ready__0(ready__0),
-    .rd_data__0(rd_data__0),
-    .cs__1(cs__1),
-    .we__1(we__1),
-    .addr__1(addr__1),
-    .size__1(size__1),
-    .wr_data__1(wr_data__1),
-    .ready__1(1'b1),
-    .rd_data__1(rd_data__1),
-    .cs__2(cs__2),
-    .we__2(we__2),
-    .addr__2(addr__2),
-    .size__2(size__2),
-    .wr_data__2(wr_data__2),
-    .ready__2(1'b1),
-    .rd_data__2(rd_data__2),
-    .cs__3(cs__3),
-    .we__3(we__3),
-    .addr__3(addr__3),
-    .size__3(size__3),
-    .wr_data__3(wr_data__3),
-    .ready__3(1'b1),
-    .rd_data__3(rd_data__3),
-    .cs__4(cs__4),
-    .we__4(we__4),
-    .addr__4(addr__4),
-    .size__4(size__4),
-    .wr_data__4(wr_data__4),
-    .ready__4(1'b1),
-    .rd_data__4(rd_data__4),
-    .cs__5(cs__5),
-    .we__5(we__5),
-    .addr__5(addr__5),
-    .size__5(size__5),
-    .wr_data__5(wr_data__5),
-    .ready__5(1'b1),
-    .rd_data__5(rd_data__5),
-    .cs__6(cs__6),
-    .we__6(we__6),
-    .addr__6(addr__6),
-    .size__6(size__6),
-    .wr_data__6(wr_data__6),
-    .ready__6(1'b1),
-    .rd_data__6(rd_data__6),
-    .cs__7(cs__7),
-    .we__7(we__7),
-    .addr__7(addr__7),
-    .size__7(size__7),
-    .wr_data__7(wr_data__7),
-    .ready__7(1'b1),
-    .rd_data__7(rd_data__7)
 );
 
 endmodule

@@ -65,9 +65,9 @@ endef
 
 SIM_IP ?= central_processing_unit
 #SIM_IP := machine_timer_registers
-#all: diff-$(SIM_IP)-sim__xyz 
+all: diff-$(SIM_IP)-sim__xyz 
 #all: sim-$(SIM_IP)-sim__xyz 
-all: vivado_source 
+#all: vivado_source 
 
 
 
@@ -541,34 +541,13 @@ ifeq ($(SIM_IP),$(IP))
 SV += $(addsuffix .sv,$(addprefix $(TOP)/ip/$(IP)/tb/gen/,$(TB_MODULES)))
 endif
 
-###########################
-## memory_management_unit #
-###########################
-#IP := memory_management_unit
-#
-#MODULES :=
-#MODULES += memory_management_unit
-#
-#TB_MODULES :=
-#TB_MODULES += tb
-#
-#SV += $(addsuffix .sv,$(addprefix $(TOP)/ip/$(IP)/src/gen/,$(MODULES)))
-#ifeq ($(SIM_IP),$(IP))
-#SV += $(addsuffix .sv,$(addprefix $(TOP)/ip/$(IP)/tb/gen/,$(TB_MODULES)))
-#endif
-
-#######
-# bus #
-#######
-IP := bus
+##########################
+# memory_management_unit #
+##########################
+IP := memory_management_unit
 
 MODULES :=
-MODULES += bus
-MODULES += bus__decoder
-MODULES += bus__multiplexer
-MODULES += bus__physical_memory_attribute_multiplexer
-MODULES += bus__physical_memory_attribute_checker
-MODULES += bus__trap
+MODULES += memory_management_unit
 
 TB_MODULES :=
 TB_MODULES += tb
@@ -577,6 +556,22 @@ SV += $(addsuffix .sv,$(addprefix $(TOP)/ip/$(IP)/src/gen/,$(MODULES)))
 ifeq ($(SIM_IP),$(IP))
 SV += $(addsuffix .sv,$(addprefix $(TOP)/ip/$(IP)/tb/gen/,$(TB_MODULES)))
 endif
+
+########
+## bus #
+########
+#IP := bus
+#
+#MODULES :=
+#MODULES += bus
+#
+#TB_MODULES :=
+#TB_MODULES += tb
+#
+#SV += $(addsuffix .sv,$(addprefix $(TOP)/ip/$(IP)/src/gen/,$(MODULES)))
+#ifeq ($(SIM_IP),$(IP))
+#SV += $(addsuffix .sv,$(addprefix $(TOP)/ip/$(IP)/tb/gen/,$(TB_MODULES)))
+#endif
 
 #######
 # jay #
@@ -713,17 +708,17 @@ $(eval $(call ip--src--template,$(IP)))
 $(eval $(call ip--tb--template,$(IP)))
 $(eval $(call ip--sim--template,$(IP),$(SIM),$(SV),$(TESTS),default--sim-test--diff--template,default--sim-test--sim--template,default--sim-test--ref--template,default--sim-test--setup--template))
 
-###########################
-## memory_management_unit #
-###########################
-#IP := memory_management_unit
-#
-#SIM := sim__xyz
-#TESTS := test__0 
-#
-#$(eval $(call ip--src--template,$(IP)))
-#$(eval $(call ip--tb--template,$(IP)))
-#$(eval $(call ip--sim--template,$(IP),$(SIM),$(SV),$(TESTS),default--sim-test--diff--template,default--sim-test--sim--template,default--sim-test--ref--template,default--sim-test--setup--template))
+##########################
+# memory_management_unit #
+##########################
+IP := memory_management_unit
+
+SIM := sim__xyz
+TESTS := test__0 
+
+$(eval $(call ip--src--template,$(IP)))
+$(eval $(call ip--tb--template,$(IP)))
+$(eval $(call ip--sim--template,$(IP),$(SIM),$(SV),$(TESTS),default--sim-test--diff--template,default--sim-test--sim--template,default--sim-test--ref--template,default--sim-test--setup--template))
 
 
 #######
@@ -738,17 +733,17 @@ $(eval $(call ip--src--template,$(IP)))
 $(eval $(call ip--tb--template,$(IP)))
 $(eval $(call ip--sim--template,$(IP),$(SIM),$(SV),$(TESTS),default--sim-test--diff--template,default--sim-test--sim--template,default--sim-test--ref--template,default--sim-test--setup--template))
 
-#######
-# bus #
-#######
-IP := bus
-
-SIM := sim__xyz
-TESTS := test__0 
-
-$(eval $(call ip--src--template,$(IP)))
-$(eval $(call ip--tb--template,$(IP)))
-$(eval $(call ip--sim--template,$(IP),$(SIM),$(SV),$(TESTS),default--sim-test--diff--template,default--sim-test--sim--template,default--sim-test--ref--template,default--sim-test--setup--template))
+########
+## bus #
+########
+#IP := bus
+#
+#SIM := sim__xyz
+#TESTS := test__0 
+#
+#$(eval $(call ip--src--template,$(IP)))
+#$(eval $(call ip--tb--template,$(IP)))
+#$(eval $(call ip--sim--template,$(IP),$(SIM),$(SV),$(TESTS),default--sim-test--diff--template,default--sim-test--sim--template,default--sim-test--ref--template,default--sim-test--setup--template))
 
 #######
 # top #
