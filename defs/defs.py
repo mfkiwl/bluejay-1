@@ -369,6 +369,7 @@ defs["CSR__MIE__MTIE__FIELD"] = {"value": "7"}
 defs["CSR__MIE__MTIE__LSB"] = {"value": "7"}
 defs["CSR__MIE__MTIE__MSB"] = {"value": "7"}
 defs["CSR__MIE__MTIE__WIDTH"] = {"value": "1"}
+defs["CSR__MIE__MTIE__MASK"] = {"value": "0x80"}
 defs["CSR__MIE__MTIE__DISABLED"] = {"value": "0b0", "prefix": "1"}
 defs["CSR__MIE__MTIE__ENABLED"] = {"value": "0b1", "prefix": "1"}
 defs["CSR__MIE__UEIE__FIELD"] = {"value": "8"}

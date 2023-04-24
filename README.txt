@@ -52,6 +52,8 @@ Resources:
         - Settup (this is how you make all of the tests!):
             $ export TOPDIR=/home/seankent/riscv/riscv-gnu-toolchain
             $ make clean simulate verify postverify XLEN=64 RISCV_DEVICE=I RISCV_TARGET=riscvOVPsimPlus
+    - crt0
+        - https://en.wikipedia.org/wiki/Crt0 
     - SiFive Interrupt Cookbook
         - https://starfivetech.com/uploads/sifive-interrupt-cookbook-v1p2.pdf
     Recursive Make Considered Harmful - Peter Miller
@@ -66,33 +68,6 @@ Resources:
         - https://support.xilinx.com/s/question/0D54U00006VGb0GSAT/simulation-stuck-ie-no-progress-in-simulation-time-due-to-zero-delay-glitch-in-combinatorial-logic-is-their-a-switch-that-will-tell-the-simulator-to-wait-until-the-entire-alwayscomb-block-is-evaluated-before-deciding-whether-an-event-has-occurred
     - riscv-asm-manual: https://github.com/riscv-non-isa/riscv-asm-manual/blob/master/riscv-asm.md
 
-Hello,
-
-I am encountering an issue with the Vivado Simulator in which the simulation hangs due to a feedback loop between two always_comb blocks. The always_comb blocks share common signals, which get set to default values at the beginning of blocks then are updated to the correctly value based on the state of some FSMs. The update from the default value in one of the blocks results in a zero delay glitch that will re-trigger the other block. The same will happen in second block, which will re-trigger the first block, and so on. 
-
-
-A great description of this issue can be found here: https://chickenbit.net/simulation-stuck-no-progress-in-simulation-time/ 
-
-
-A basic code example that leads to this behavior is (described in the link above):
-
-
-Although this is a toy example, I'm experiencing this exact issue in a design where two FSM attempt to do a valid-ready handshake. I use the following HDL coding style when writing FSMs - e.g. I set all the variables to default values at the beginning of the block, then set them to the correct value based on the FSM state. I do this so I don't have to re-assign every variable in each case. 
-
-
-My questions is: Is there a switch I can provide to the Vivado Simulator such that the simulator will wait until the entire always_comb block is evaluated before deciding whether an event has occurred?
-
-
-I have seen in several articles on this issue that the Cadence Xcelium simulator as a "-delay_trigger" switch that will do just this. So I'm curious if the Vivado Simulator has an equivalent switch. 
-
-
-For more descriptions about this issue, here are some other links that I've found when searching for an answer (they do a better job decribing the issue then I can):
-
-
-    https://support.xilinx.com/s/question/0D52E00006iHmQxSAK/simulation-freezing-with-systemverilog-interfaces-fsm-handshake?language=en_US (Xilinx Forum from a few years ago)
-    https://community.cadence.com/cadence_technology_forums/f/logic-design/15558/problem-with-simvision-hanging-in-an-endless-loop
-    https://groups.google.com/g/comp.lang.verilog/c/iDcmOjJ_XSw
-    https://groups.google.com/g/comp.lang.verilog/c/FWEERWA4pF4?pli=1
 
 
 

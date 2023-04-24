@@ -799,8 +799,8 @@ LDFLAGS += -Wl,--no-relax
 #     $(2): assembly file (.S)
 ################################
 define code--S-to-o--template
-$(1): $(2)
-	riscv64-unknown-elf-gcc $(CFLAGS) -O -c -o $$(@) $$(<)
+$(1): $(2) $(TOP)/defs/gen/defs.h
+	riscv64-unknown-elf-gcc -I $(TOP)/defs/gen/ $(CFLAGS) -O -c -o $$(@) $$(<)
 endef
 
 ################################
@@ -810,8 +810,8 @@ endef
 #     $(2): c file (.c)
 ################################
 define code--c-to-o--template
-$(1): $(2)
-	riscv64-unknown-elf-gcc $(CFLAGS) -O0 -c -o $$(@) $$(<)
+$(1): $(2) $(TOP)/defs/gen/defs.h
+	riscv64-unknown-elf-gcc -I $(TOP)/defs/gen/ $(CFLAGS) -O0 -c -o $$(@) $$(<)
 endef
 
 ################################
@@ -872,8 +872,10 @@ endef
 
 
 $(eval $(call code--S-to-o--template,code/crt0.o,code/crt0.S))
+$(eval $(call code--S-to-o--template,code/lib.o,code/lib.S))
+#$(eval $(call code--c-to-o--template,code/lib.o,code/lib.c))
 $(eval $(call code--c-to-o--template,code/main.o,code/main.c))
-$(eval $(call code--o-to-elf--template,code/prog.elf,code/crt0.o code/main.o))
+$(eval $(call code--o-to-elf--template,code/prog.elf,code/crt0.o code/lib.o code/main.o))
 $(eval $(call code--elf-to-bin--template,code/prog.bin,code/prog.elf))
 $(eval $(call code--elf-to-lst--template,code/prog.lst,code/prog.elf))
 $(eval $(call code--bin-to-mem--template,code/prog.mem,code/prog.bin))
