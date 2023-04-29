@@ -62,7 +62,7 @@ END__0:
     ld t5, 14*8(sp)
     ld t6, 15*8(sp)
     # restore the stack pointer to its original value
-    addi sp, sp, -16*8
+    addi sp, sp, 16*8
 
     # return from the trap
     mret
@@ -74,6 +74,7 @@ END__0:
 # exception_vector_table #
 ##########################
 .global exception_vector_table
+.align 3
 exception_vector_table:
 # 0: instruction adress misaligned 
 .dword stub 
@@ -112,6 +113,7 @@ exception_vector_table:
 # interrupt_vector_table #
 ##########################
 .global interrupt_vector_table
+.align 3
 interrupt_vector_table:
 # 0: reserved
 .dword stub 

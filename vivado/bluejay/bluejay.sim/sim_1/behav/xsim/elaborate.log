@@ -1,11 +1,11 @@
 Vivado Simulator 2019.2
 Copyright 1986-1999, 2001-2019 Xilinx, Inc. All Rights Reserved.
-Running: /tools/Xilinx/Vivado/2019.2/bin/unwrapped/lnx64.o/xelab -wto 68a6928b8e85482c87cfe178a0983b0f --incr --debug typical --relax --mt 8 -L xil_defaultlib -L blk_mem_gen_v8_4_4 -L unisims_ver -L unimacro_ver -L secureip -L xpm --snapshot tb_behav xil_defaultlib.tb xil_defaultlib.glbl -log elaborate.log 
+Running: /tools/Xilinx/Vivado/2019.2/bin/unwrapped/lnx64.o/xelab -wto 68a6928b8e85482c87cfe178a0983b0f --incr --debug typical --relax --mt 8 -L blk_mem_gen_v8_4_4 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip -L xpm --snapshot tb_behav xil_defaultlib.tb xil_defaultlib.glbl -log elaborate.log 
 Using 8 slave threads.
 Starting static elaboration
 Pass Through NonSizing Optimizer
-WARNING: [VRFC 10-3091] actual bit length 40 differs from formal bit length 64 for port 'addr' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:7523]
-WARNING: [VRFC 10-3091] actual bit length 40 differs from formal bit length 64 for port 'addr' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:7606]
+WARNING: [VRFC 10-3091] actual bit length 40 differs from formal bit length 64 for port 'addr' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:7531]
+WARNING: [VRFC 10-3091] actual bit length 40 differs from formal bit length 64 for port 'addr' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:7614]
 Completed static elaboration
 Starting simulation data flow analysis
 WARNING: [XSIM 43-4100] "/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/ip/blk_mem_gen_0/sim/blk_mem_gen_0.v" Line 55. Module blk_mem_gen_0 has a timescale but at least one module in design doesn't have timescale.

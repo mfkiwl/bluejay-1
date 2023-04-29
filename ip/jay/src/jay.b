@@ -31,6 +31,14 @@ logic ready;
 logic resp;
 logic [63:0] rd_data;
 
+assign ready__1 = 1'b1;
+assign ready__2 = 1'b1;
+assign ready__3 = 1'b1;
+assign ready__4 = 1'b1;
+assign ready__5 = 1'b1;
+assign ready__6 = 1'b1;
+assign ready__7 = 1'b1;
+
 PYTHON
 (
     for i in range(8):

@@ -1,3 +1,4 @@
+.global bind_isr
 ############
 # bind_isr #
 ############
@@ -21,4 +22,5 @@ END__0:
 
     sd a2, 0(t0)
     
+    ret
     
