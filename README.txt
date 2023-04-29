@@ -10,6 +10,7 @@ Resources:
         - https://github.com/riscv-collab/riscv-gnu-toolchain
     - RISC-V Assembly Programmer's Manual
         - https://github.com/riscv-non-isa/riscv-asm-manual/blob/master/riscv-asm.md
+        - https://shakti.org.in/docs/risc-v-asm-manual.pdf
     - RISC-V Assembler Reference
         - https://michaeljclark.github.io/asm.html
     - RISC-V Tutorial: Spike & Proxy Kernel from Source to Hello World
@@ -67,6 +68,8 @@ Resources:
         - Great decription of the issue: https://chickenbit.net/simulation-stuck-no-progress-in-simulation-time/
         - https://support.xilinx.com/s/question/0D54U00006VGb0GSAT/simulation-stuck-ie-no-progress-in-simulation-time-due-to-zero-delay-glitch-in-combinatorial-logic-is-their-a-switch-that-will-tell-the-simulator-to-wait-until-the-entire-alwayscomb-block-is-evaluated-before-deciding-whether-an-event-has-occurred
     - riscv-asm-manual: https://github.com/riscv-non-isa/riscv-asm-manual/blob/master/riscv-asm.md
+    - riscv exception/interrupt handler example
+        - https://mullerlee.cyou/2020/07/09/riscv-exception-interrupt/
 
 
 

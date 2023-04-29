@@ -1,9 +1,10 @@
 #include "stdint.h"
 #include "defs.h"
-#include "lib.h"
+
+void init(void);
 
 int main()
 { 
-    init_mtvec();
+    init();
     return 0;
 }

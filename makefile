@@ -869,17 +869,40 @@ $(1): $(2)
 	python3 $(TOP)/tools/mem_to_coe.py $$(<) > $$(@)
 endef
 
+UCODE :=
+UCODE += crt0
+UCODE += trap
+UCODE += stub
+UCODE += bind_isr
+UCODE += main
 
+ASM := $(addsuffix .S,$(addprefix $(TOP)/ucode/,$(UCODE)))
+OBJ := $(addsuffix .o,$(addprefix $(TOP)/ucode/,$(UCODE)))
 
-$(eval $(call code--S-to-o--template,code/crt0.o,code/crt0.S))
-$(eval $(call code--S-to-o--template,code/lib.o,code/lib.S))
-#$(eval $(call code--c-to-o--template,code/lib.o,code/lib.c))
-$(eval $(call code--c-to-o--template,code/main.o,code/main.c))
-$(eval $(call code--o-to-elf--template,code/prog.elf,code/crt0.o code/lib.o code/main.o))
-$(eval $(call code--elf-to-bin--template,code/prog.bin,code/prog.elf))
-$(eval $(call code--elf-to-lst--template,code/prog.lst,code/prog.elf))
-$(eval $(call code--bin-to-mem--template,code/prog.mem,code/prog.bin))
-$(eval $(call code--mem-to-coe--template,code/prog.coe,code/prog.mem))
+$(foreach i,$(UCODE),$(eval $(call code--S-to-o--template,$(TOP)/ucode/$(i).o,$(TOP)/ucode/$(i).S)))
+#$(eval $(call code--S-to-o--template,ucode/crt0.o,ucode/crt0.S))
+#$(eval $(call code--S-to-o--template,ucode/trap.o,ucode/trap.S))
+
+$(eval $(call code--o-to-elf--template,ucode/prog.elf,$(OBJ)))
+$(eval $(call code--elf-to-bin--template,ucode/prog.bin,ucode/prog.elf))
+$(eval $(call code--elf-to-lst--template,ucode/prog.lst,ucode/prog.elf))
+$(eval $(call code--bin-to-mem--template,ucode/prog.mem,ucode/prog.bin))
+$(eval $(call code--mem-to-coe--template,ucode/prog.coe,ucode/prog.mem))
+
+abc:
+	echo $(OBJ) 
+    
+
+#$(eval $(call code--S-to-o--template,code/crt0.o,code/crt0.S))
+#$(eval $(call code--S-to-o--template,code/trap.o,code/trap.S))
+#$(eval $(call code--S-to-o--template,code/init.o,code/init.S))
+##$(eval $(call code--c-to-o--template,code/lib.o,code/lib.c))
+#$(eval $(call code--c-to-o--template,code/main.o,code/main.c))
+#$(eval $(call code--o-to-elf--template,code/prog.elf,code/crt0.o code/trap.o code/main.o code/init.o))
+#$(eval $(call code--elf-to-bin--template,code/prog.bin,code/prog.elf))
+#$(eval $(call code--elf-to-lst--template,code/prog.lst,code/prog.elf))
+#$(eval $(call code--bin-to-mem--template,code/prog.mem,code/prog.bin))
+#$(eval $(call code--mem-to-coe--template,code/prog.coe,code/prog.mem))
 
 #code/crt0.o: code/crt0.S
 #	riscv64-unknown-elf-gcc $(CFLAGS) -O -c -o $(@) $(<)

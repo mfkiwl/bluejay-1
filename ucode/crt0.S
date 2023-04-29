@@ -17,18 +17,17 @@ _start:
     # clear the bss segment (starting at __bss_start and ending at __BSS_END__ - 1)
 	la t0, __bss_start
 	la t1, __BSS_END__
-_start__while__0:
-	bgeu t0, t1, _start__end__0
+WHILE__0:
+	bgeu t0, t1, END__0 
 	sb zero, 0(t0)
 	addi t0, t0, 0x1
-	j _start__while__0
-_start__end__0:
+	j WHILE__0 
+END__0:
 
     # call the main program 
 	call main
 
     # spin indefinitely 
-_start__while__1:
-    j while__1
-_start__end__1:
-
+WHILE__1:
+    j WHILE__1
+END__1:
