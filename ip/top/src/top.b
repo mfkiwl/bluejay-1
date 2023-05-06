@@ -45,13 +45,14 @@ logic [63:0] douta;
 
 
 logic btnd__clean;
+logic btnd__clean__edge;
 
 logic int__1;
 
 assign clk = clk_100mhz;
 assign rst = btnc;
 assign led16_b = port__0[0];
-assign int__1 = btnd__clean;
+assign int__1 = btnd__clean__edge;
 
 assign led = 0;
 //assign led16_b = 0;
@@ -107,13 +108,24 @@ blk_mem_gen_0 blk_mem_gen_0__0
 //==============================
 // debouncer__btnd
 //==============================
-debouncer debouncer__btnd
-#(.DEBOUNCE_COUNT(1000000))
+//debouncer #(.DEBOUNCE_COUNT(0)) debouncer__btnd
+debouncer #(.DEBOUNCE_COUNT(1000000)) debouncer__btnd
 (
     .clk(clk),
     .rst(rst),
     .x(btnd),
     .x__clean(btnd__clean)
+);
+
+//==============================
+// edge_detector__btnd__clean
+//==============================
+edge_detector edge_detector__btnd__clean
+(
+    .clk(clk),
+    .rst(rst),
+    .x(btnd__clean),
+    .x__edge(btnd__clean__edge)
 );
 
 

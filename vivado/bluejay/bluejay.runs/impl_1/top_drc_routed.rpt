@@ -1,7 +1,7 @@
 Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2019.2 (lin64) Build 2708876 Wed Nov  6 21:39:14 MST 2019
-| Date         : Sat Apr 29 09:33:11 2023
+| Date         : Sat May  6 13:48:41 2023
 | Host         : seankent running 64-bit Ubuntu 22.04.2 LTS
 | Command      : report_drc -file top_drc_routed.rpt -pb top_drc_routed.pb -rpx top_drc_routed.rpx
 | Design       : top
@@ -24,12 +24,12 @@ Table of Contents
       Design limits: <entire design considered>
            Ruledeck: default
              Max violations: <unlimited>
-             Violations found: 5
+             Violations found: 6
 +----------+----------+-----------------------------------------------------+------------+
 | Rule     | Severity | Description                                         | Violations |
 +----------+----------+-----------------------------------------------------+------------+
 | CFGBVS-1 | Warning  | Missing CFGBVS and CONFIG_VOLTAGE Design Properties | 1          |
-| PDRC-153 | Warning  | Gated clock check                                   | 4          |
+| PDRC-153 | Warning  | Gated clock check                                   | 5          |
 +----------+----------+-----------------------------------------------------+------------+
 
 2. REPORT DETAILS
@@ -49,20 +49,25 @@ Related violations: <none>
 
 PDRC-153#1 Warning
 Gated clock check  
-Net jay__0/central_processing_unit__0/d_flip_flop__ir/E[0] is a gated clock net sourced by a combinational pin jay__0/central_processing_unit__0/d_flip_flop__ir/op_reg[5]_i_2/O, cell jay__0/central_processing_unit__0/d_flip_flop__ir/op_reg[5]_i_2. This is not good design practice and will likely impact performance. For SLICE registers, for example, use the CE pin to control the loading of data.
+Net edge_detector__btnd__clean/d_flip_flop__state/E[0] is a gated clock net sourced by a combinational pin edge_detector__btnd__clean/d_flip_flop__state/x__edge_reg_i_1/O, cell edge_detector__btnd__clean/d_flip_flop__state/x__edge_reg_i_1. This is not good design practice and will likely impact performance. For SLICE registers, for example, use the CE pin to control the loading of data.
 Related violations: <none>
 
 PDRC-153#2 Warning
 Gated clock check  
-Net jay__0/memory_controller__0/d_flip_flop__state/E[0] is a gated clock net sourced by a combinational pin jay__0/memory_controller__0/d_flip_flop__state/state__n_reg[2]_i_2/O, cell jay__0/memory_controller__0/d_flip_flop__state/state__n_reg[2]_i_2. This is not good design practice and will likely impact performance. For SLICE registers, for example, use the CE pin to control the loading of data.
+Net jay__0/central_processing_unit__0/d_flip_flop__ir/E[0] is a gated clock net sourced by a combinational pin jay__0/central_processing_unit__0/d_flip_flop__ir/op_reg[5]_i_2/O, cell jay__0/central_processing_unit__0/d_flip_flop__ir/op_reg[5]_i_2. This is not good design practice and will likely impact performance. For SLICE registers, for example, use the CE pin to control the loading of data.
 Related violations: <none>
 
 PDRC-153#3 Warning
 Gated clock check  
-Net jay__0/memory_management_unit__0/d_flip_flop__state/q_reg[3]_2[0] is a gated clock net sourced by a combinational pin jay__0/memory_management_unit__0/d_flip_flop__state/state__n_reg[4]_i_2/O, cell jay__0/memory_management_unit__0/d_flip_flop__state/state__n_reg[4]_i_2. This is not good design practice and will likely impact performance. For SLICE registers, for example, use the CE pin to control the loading of data.
+Net jay__0/memory_controller__0/d_flip_flop__state/E[0] is a gated clock net sourced by a combinational pin jay__0/memory_controller__0/d_flip_flop__state/state__n_reg[2]_i_2/O, cell jay__0/memory_controller__0/d_flip_flop__state/state__n_reg[2]_i_2. This is not good design practice and will likely impact performance. For SLICE registers, for example, use the CE pin to control the loading of data.
 Related violations: <none>
 
 PDRC-153#4 Warning
+Gated clock check  
+Net jay__0/memory_management_unit__0/d_flip_flop__state/q_reg[3]_2[0] is a gated clock net sourced by a combinational pin jay__0/memory_management_unit__0/d_flip_flop__state/state__n_reg[4]_i_2/O, cell jay__0/memory_management_unit__0/d_flip_flop__state/state__n_reg[4]_i_2. This is not good design practice and will likely impact performance. For SLICE registers, for example, use the CE pin to control the loading of data.
+Related violations: <none>
+
+PDRC-153#5 Warning
 Gated clock check  
 Net jay__0/memory_management_unit__0/d_flip_flop__state/ready is a gated clock net sourced by a combinational pin jay__0/memory_management_unit__0/d_flip_flop__state/resp_reg_i_1/O, cell jay__0/memory_management_unit__0/d_flip_flop__state/resp_reg_i_1. This is not good design practice and will likely impact performance. For SLICE registers, for example, use the CE pin to control the loading of data.
 Related violations: <none>

@@ -7414,6 +7414,169 @@ d_flip_flop #(.WIDTH(6), .RESET_VALUE(STATE__RESET)) d_flip_flop__state
 endmodule
 
 //==============================================
+// counter
+//==============================================
+module debouncer
+#(parameter DEBOUNCE_COUNT = 0)
+(
+    input clk,
+    input rst,
+    input x,
+    output logic x__clean 
+);
+    
+logic [1:0] state;
+logic [1:0] state__n;
+
+logic [63:0] count;
+logic [63:0] count__n;
+
+localparam STATE__LOW = 2'h0;
+localparam STATE__LOW_TO_HIGH = 2'h1;
+localparam STATE__HIGH_TO_LOW = 2'h2;
+localparam STATE__HIGH = 2'h3;
+
+always_comb
+begin
+    case (state)
+
+        //==============================
+        // STATE__LOW
+        //==============================
+        STATE__LOW:
+        begin
+            x__clean = 1'b0;
+            count__n = 64'h0;
+            state__n = x ? STATE__LOW_TO_HIGH : STATE__LOW;
+        end
+
+        //==============================
+        // STATE__LOW_TO_HIGH
+        //==============================
+        STATE__LOW_TO_HIGH:
+        begin
+            x__clean = 1'b0;
+            count__n = count + 1;
+            state__n = x ? (count == DEBOUNCE_COUNT) ? STATE__HIGH : STATE__LOW_TO_HIGH : STATE__LOW;
+        end
+
+        //==============================
+        // STATE__HIGH_TO_LOW
+        //==============================
+        STATE__HIGH_TO_LOW:
+        begin
+            x__clean = 1'b1;
+            count__n = count + 1;
+            state__n = x ? STATE__HIGH : (count == DEBOUNCE_COUNT) ? STATE__LOW : STATE__HIGH_TO_LOW;
+        end
+
+        //==============================
+        // STATE__HIGH
+        //==============================
+        STATE__HIGH:
+        begin
+            x__clean = 1'b1;
+            count__n = 64'h0;
+            state__n = x ? STATE__HIGH : STATE__HIGH_TO_LOW;
+        end
+
+    endcase
+end
+
+
+//==============================
+// d_flip_flop__state
+//==============================
+d_flip_flop #(.WIDTH(2), .RESET_VALUE(STATE__LOW)) d_flip_flop__state
+(
+    .clk(clk),
+    .rst(rst),
+    .en(1'b1),
+    .d(state__n),
+    .q(state)
+);
+
+//==============================
+// d_flip_flop__count
+//==============================
+d_flip_flop #(.WIDTH(64), .RESET_VALUE(64'h0)) d_flip_flop__count
+(
+    .clk(clk),
+    .rst(rst),
+    .en(1'b1),
+    .d(count__n),
+    .q(count)
+);
+
+endmodule
+
+//==============================================
+// edge_detector
+//==============================================
+module edge_detector
+(
+    input clk,
+    input rst,
+    input x,
+    output logic x__edge 
+);
+
+logic [1:0] state;
+logic [1:0] state__n;
+
+localparam STATE__LOW = 2'h0;
+localparam STATE__EDGE = 2'h1;
+localparam STATE__HIGH = 2'h2;
+
+always_comb
+begin
+    case (state)
+
+        //==============================
+        // STATE__LOW
+        //==============================
+        STATE__LOW:
+        begin
+            x__edge = 1'b0;
+            state__n = x ? STATE__EDGE : STATE__LOW;
+        end
+
+        //==============================
+        // STATE__EDGE
+        //==============================
+        STATE__EDGE:
+        begin
+            x__edge = 1'b1;
+            state__n = x ? STATE__HIGH : STATE__LOW;
+        end
+
+        //==============================
+        // STATE__HIGH
+        //==============================
+        STATE__HIGH:
+        begin
+            x__edge = 1'b0;
+            state__n = x ? STATE__HIGH : STATE__LOW;
+        end
+
+    endcase
+end
+
+//==============================
+// d_flip_flop__state
+//==============================
+d_flip_flop #(.WIDTH(2), .RESET_VALUE(STATE__LOW)) d_flip_flop__state
+(
+    .clk(clk),
+    .rst(rst),
+    .en(1'b1),
+    .d(state__n),
+    .q(state)
+);
+
+    
+endmodule
+//==============================================
 // jay 
 //==============================================
 module jay 
@@ -7761,9 +7924,15 @@ logic [63:0] dina;
 logic [63:0] douta;
 
 
+logic btnd__clean;
+logic btnd__clean__edge;
+
+logic int__1;
+
 assign clk = clk_100mhz;
 assign rst = btnc;
 assign led16_b = port__0[0];
+assign int__1 = btnd__clean__edge;
 
 assign led = 0;
 //assign led16_b = 0;
@@ -7794,7 +7963,7 @@ jay jay__0
     .port__1(port__1),
     .port__2(port__2),
     .port__3(port__3),
-    .int__1(btnd),
+    .int__1(int__1),
     .ena(ena),
     .wea(wea),
     .addra(addra),
@@ -7813,6 +7982,30 @@ blk_mem_gen_0 blk_mem_gen_0__0
     .douta(douta),
     .ena(ena),
     .wea(wea)
+);
+
+
+//==============================
+// debouncer__btnd
+//==============================
+//debouncer #(.DEBOUNCE_COUNT(0)) debouncer__btnd
+debouncer #(.DEBOUNCE_COUNT(1000000)) debouncer__btnd
+(
+    .clk(clk),
+    .rst(rst),
+    .x(btnd),
+    .x__clean(btnd__clean)
+);
+
+//==============================
+// edge_detector__btnd__clean
+//==============================
+edge_detector edge_detector__btnd__clean
+(
+    .clk(clk),
+    .rst(rst),
+    .x(btnd__clean),
+    .x__edge(btnd__clean__edge)
 );
 
 
@@ -7899,14 +8092,12 @@ initial begin
     #11;
     // de-assert rst
     btnc = 1'b0;
-    #10000
+    #30000
     btnd = 1'b1;
     #10000
     btnd = 1'b0;
-    #10000
-    btnd = 1'b1;
     //
-    #20000000;
+    #200000;
 end
 
 endmodule

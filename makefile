@@ -564,6 +564,7 @@ IP := utils
 
 MODULES :=
 MODULES += debouncer
+MODULES += edge_detector
 
 TB_MODULES :=
 TB_MODULES += tb

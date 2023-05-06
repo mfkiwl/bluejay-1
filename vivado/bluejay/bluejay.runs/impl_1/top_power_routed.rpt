@@ -1,7 +1,7 @@
 Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 -------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2019.2 (lin64) Build 2708876 Wed Nov  6 21:39:14 MST 2019
-| Date             : Sat Apr 29 09:33:16 2023
+| Date             : Sat May  6 13:48:44 2023
 | Host             : seankent running 64-bit Ubuntu 22.04.2 LTS
 | Command          : report_power -file top_power_routed.rpt -pb top_power_summary_routed.pb -rpx top_power_routed.rpx
 | Design           : top
@@ -30,10 +30,10 @@ Table of Contents
 ----------
 
 +--------------------------+--------------+
-| Total On-Chip Power (W)  | 0.160        |
+| Total On-Chip Power (W)  | 0.156        |
 | Design Power Budget (W)  | Unspecified* |
 | Power Budget Margin (W)  | NA           |
-| Dynamic (W)              | 0.062        |
+| Dynamic (W)              | 0.059        |
 | Device Static (W)        | 0.098        |
 | Effective TJA (C/W)      | 4.6          |
 | Max Ambient (C)          | 84.3         |
@@ -53,18 +53,18 @@ Table of Contents
 | On-Chip        | Power (W) | Used     | Available | Utilization (%) |
 +----------------+-----------+----------+-----------+-----------------+
 | Clocks         |     0.010 |        3 |       --- |             --- |
-| Slice Logic    |     0.021 |     8353 |       --- |             --- |
-|   LUT as Logic |     0.020 |     4054 |     63400 |            6.39 |
-|   CARRY4       |    <0.001 |      142 |     15850 |            0.90 |
+| Slice Logic    |     0.019 |     8532 |       --- |             --- |
+|   LUT as Logic |     0.019 |     4103 |     63400 |            6.47 |
 |   F7/F8 Muxes  |    <0.001 |      347 |     63400 |            0.55 |
-|   Register     |    <0.001 |     3284 |    126800 |            2.59 |
+|   CARRY4       |    <0.001 |      158 |     15850 |            1.00 |
+|   Register     |    <0.001 |     3355 |    126800 |            2.65 |
 |   BUFG         |    <0.001 |        4 |        32 |           12.50 |
-|   Others       |     0.000 |      112 |       --- |             --- |
-| Signals        |     0.031 |     6842 |       --- |             --- |
+|   Others       |     0.000 |      118 |       --- |             --- |
+| Signals        |     0.029 |     7009 |       --- |             --- |
 | Block RAM      |     0.000 |        8 |       135 |            5.93 |
 | I/O            |    <0.001 |       40 |       210 |           19.05 |
 | Static Power   |     0.098 |          |           |                 |
-| Total          |     0.160 |          |           |                 |
+| Total          |     0.156 |          |           |                 |
 +----------------+-----------+----------+-----------+-----------------+
 
 
@@ -74,7 +74,7 @@ Table of Contents
 +-----------+-------------+-----------+-------------+------------+
 | Source    | Voltage (V) | Total (A) | Dynamic (A) | Static (A) |
 +-----------+-------------+-----------+-------------+------------+
-| Vccint    |       1.000 |     0.077 |       0.062 |      0.015 |
+| Vccint    |       1.000 |     0.073 |       0.058 |      0.015 |
 | Vccaux    |       1.800 |     0.018 |       0.000 |      0.018 |
 | Vcco33    |       3.300 |     0.004 |       0.000 |      0.004 |
 | Vcco25    |       2.500 |     0.000 |       0.000 |      0.000 |
@@ -143,16 +143,15 @@ Table of Contents
 +---------------------------------------+-----------+
 | Name                                  | Power (W) |
 +---------------------------------------+-----------+
-| top                                   |     0.062 |
-|   jay__0                              |     0.062 |
-|     central_processing_unit__0        |     0.059 |
+| top                                   |     0.059 |
+|   jay__0                              |     0.057 |
+|     central_processing_unit__0        |     0.055 |
 |       control_and_status_registers__0 |     0.002 |
-|       d_flip_flop__a                  |     0.008 |
-|       d_flip_flop__b                  |     0.004 |
+|       d_flip_flop__a                  |     0.006 |
+|       d_flip_flop__b                  |     0.005 |
 |       d_flip_flop__ir                 |     0.004 |
-|       d_flip_flop__pc                 |     0.001 |
-|       d_flip_flop__state              |     0.029 |
-|       register_file__0                |     0.010 |
+|       d_flip_flop__state              |     0.025 |
+|       register_file__0                |     0.012 |
 |     machine_timer_registers__0        |     0.001 |
 +---------------------------------------+-----------+
 

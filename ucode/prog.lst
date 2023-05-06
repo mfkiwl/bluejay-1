@@ -7,11 +7,11 @@ Disassembly of section .text:
 0000000000000000 <_start>:
    0:	00008137          	lui	x2,0x8
    4:	00002197          	auipc	x3,0x2
-   8:	b5c18193          	addi	x3,x3,-1188 # 1b60 <__global_pointer$>
+   8:	d1418193          	addi	x3,x3,-748 # 1d18 <__global_pointer$>
    c:	00001297          	auipc	x5,0x1
-  10:	43428293          	addi	x5,x5,1076 # 1440 <__BSS_END__>
+  10:	5ec28293          	addi	x5,x5,1516 # 15f8 <__BSS_END__>
   14:	00001317          	auipc	x6,0x1
-  18:	42c30313          	addi	x6,x6,1068 # 1440 <__BSS_END__>
+  18:	5e430313          	addi	x6,x6,1508 # 15f8 <__BSS_END__>
 
 000000000000001c <WHILE__0>:
   1c:	0062f863          	bgeu	x5,x6,2c <END__0>
@@ -21,13 +21,13 @@ Disassembly of section .text:
 
 000000000000002c <END__0>:
   2c:	00000097          	auipc	x1,0x0
-  30:	27c080e7          	jalr	x1,636(x1) # 2a8 <main>
+  30:	404080e7          	jalr	x1,1028(x1) # 430 <main>
 
 0000000000000034 <WHILE__1>:
   34:	0000006f          	jal	x0,34 <WHILE__1>
 
 0000000000000038 <trap>:
-  38:	f8010113          	addi	x2,x2,-128 # 7f80 <__global_pointer$+0x6420>
+  38:	f8010113          	addi	x2,x2,-128 # 7f80 <__global_pointer$+0x6268>
   3c:	00113023          	sd	x1,0(x2)
   40:	00a13423          	sd	x10,8(x2)
   44:	00b13823          	sd	x11,16(x2)
@@ -51,12 +51,12 @@ Disassembly of section .text:
 
 0000000000000084 <THEN__0>:
   84:	00001317          	auipc	x6,0x1
-  88:	2dc30313          	addi	x6,x6,732 # 1360 <__DATA_BEGIN__>
+  88:	49430313          	addi	x6,x6,1172 # 1518 <__DATA_BEGIN__>
   8c:	0100006f          	jal	x0,9c <END__0>
 
 0000000000000090 <ELSE__0>:
   90:	00001317          	auipc	x6,0x1
-  94:	35030313          	addi	x6,x6,848 # 13e0 <interrupt_vector_table>
+  94:	50830313          	addi	x6,x6,1288 # 1598 <interrupt_vector_table>
   98:	0040006f          	jal	x0,9c <END__0>
 
 000000000000009c <END__0>:
@@ -91,12 +91,12 @@ Disassembly of section .text:
 
 00000000000000fc <THEN__0>:
   fc:	00001297          	auipc	x5,0x1
- 100:	26428293          	addi	x5,x5,612 # 1360 <__DATA_BEGIN__>
+ 100:	41c28293          	addi	x5,x5,1052 # 1518 <__DATA_BEGIN__>
  104:	0100006f          	jal	x0,114 <END__0>
 
 0000000000000108 <ELSE__0>:
  108:	00001297          	auipc	x5,0x1
- 10c:	2d828293          	addi	x5,x5,728 # 13e0 <interrupt_vector_table>
+ 10c:	49028293          	addi	x5,x5,1168 # 1598 <interrupt_vector_table>
  110:	0040006f          	jal	x0,114 <END__0>
 
 0000000000000114 <END__0>:
@@ -116,157 +116,280 @@ Disassembly of section .text:
  138:	3042a073          	csrrs	x0,mie,x5
  13c:	00008067          	jalr	x0,0(x1)
 
-0000000000000140 <enable_interrupts>:
- 140:	00800293          	addi	x5,x0,8
- 144:	3002a073          	csrrs	x0,mstatus,x5
- 148:	00008067          	jalr	x0,0(x1)
+0000000000000140 <enable_external_interrupt>:
+ 140:	000012b7          	lui	x5,0x1
+ 144:	8002829b          	addiw	x5,x5,-2048 # 800 <main+0x3d0>
+ 148:	3042a073          	csrrs	x0,mie,x5
+ 14c:	00008067          	jalr	x0,0(x1)
 
-000000000000014c <set_mstatus_mie>:
- 14c:	00800293          	addi	x5,x0,8
- 150:	3002a073          	csrrs	x0,mstatus,x5
- 154:	00008067          	jalr	x0,0(x1)
+0000000000000150 <enable_interrupts>:
+ 150:	00800293          	addi	x5,x0,8
+ 154:	3002a073          	csrrs	x0,mstatus,x5
+ 158:	00008067          	jalr	x0,0(x1)
 
-0000000000000158 <clear_mstatus_mie>:
- 158:	00800293          	addi	x5,x0,8
- 15c:	3002b073          	csrrc	x0,mstatus,x5
- 160:	00008067          	jalr	x0,0(x1)
+000000000000015c <set_mstatus_mie>:
+ 15c:	00800293          	addi	x5,x0,8
+ 160:	3002a073          	csrrs	x0,mstatus,x5
+ 164:	00008067          	jalr	x0,0(x1)
 
-0000000000000164 <set_mie_mtie>:
- 164:	08000513          	addi	x10,x0,128
- 168:	30452073          	csrrs	x0,mie,x10
- 16c:	00008067          	jalr	x0,0(x1)
+0000000000000168 <clear_mstatus_mie>:
+ 168:	00800293          	addi	x5,x0,8
+ 16c:	3002b073          	csrrc	x0,mstatus,x5
+ 170:	00008067          	jalr	x0,0(x1)
 
-0000000000000170 <sd>:
- 170:	fe010113          	addi	x2,x2,-32
- 174:	00813c23          	sd	x8,24(x2)
- 178:	02010413          	addi	x8,x2,32
- 17c:	fea43423          	sd	x10,-24(x8)
- 180:	feb43023          	sd	x11,-32(x8)
- 184:	fe843783          	ld	x15,-24(x8)
- 188:	fe043703          	ld	x14,-32(x8)
- 18c:	00e7b023          	sd	x14,0(x15)
- 190:	00000013          	addi	x0,x0,0
- 194:	01813403          	ld	x8,24(x2)
- 198:	02010113          	addi	x2,x2,32
- 19c:	00008067          	jalr	x0,0(x1)
+0000000000000174 <set_mie_mtie>:
+ 174:	08000513          	addi	x10,x0,128
+ 178:	30452073          	csrrs	x0,mie,x10
+ 17c:	00008067          	jalr	x0,0(x1)
 
-00000000000001a0 <sb>:
- 1a0:	fe010113          	addi	x2,x2,-32
- 1a4:	00813c23          	sd	x8,24(x2)
- 1a8:	02010413          	addi	x8,x2,32
- 1ac:	fea43423          	sd	x10,-24(x8)
- 1b0:	00058793          	addi	x15,x11,0
- 1b4:	fef403a3          	sb	x15,-25(x8)
- 1b8:	fe843783          	ld	x15,-24(x8)
- 1bc:	fe744703          	lbu	x14,-25(x8)
- 1c0:	00e78023          	sb	x14,0(x15)
- 1c4:	00000013          	addi	x0,x0,0
- 1c8:	01813403          	ld	x8,24(x2)
- 1cc:	02010113          	addi	x2,x2,32
- 1d0:	00008067          	jalr	x0,0(x1)
+0000000000000180 <StoreByte>:
+ 180:	fe010113          	addi	x2,x2,-32
+ 184:	00813c23          	sd	x8,24(x2)
+ 188:	02010413          	addi	x8,x2,32
+ 18c:	fea43423          	sd	x10,-24(x8)
+ 190:	00058793          	addi	x15,x11,0
+ 194:	fef403a3          	sb	x15,-25(x8)
+ 198:	fe843783          	ld	x15,-24(x8)
+ 19c:	fe744703          	lbu	x14,-25(x8)
+ 1a0:	00e78023          	sb	x14,0(x15)
+ 1a4:	00000013          	addi	x0,x0,0
+ 1a8:	01813403          	ld	x8,24(x2)
+ 1ac:	02010113          	addi	x2,x2,32
+ 1b0:	00008067          	jalr	x0,0(x1)
 
-00000000000001d4 <ld>:
- 1d4:	fe010113          	addi	x2,x2,-32
- 1d8:	00813c23          	sd	x8,24(x2)
- 1dc:	02010413          	addi	x8,x2,32
- 1e0:	fea43423          	sd	x10,-24(x8)
- 1e4:	fe843783          	ld	x15,-24(x8)
- 1e8:	0007b783          	ld	x15,0(x15)
- 1ec:	00078513          	addi	x10,x15,0
- 1f0:	01813403          	ld	x8,24(x2)
- 1f4:	02010113          	addi	x2,x2,32
- 1f8:	00008067          	jalr	x0,0(x1)
+00000000000001b4 <StoreWord>:
+ 1b4:	fe010113          	addi	x2,x2,-32
+ 1b8:	00813c23          	sd	x8,24(x2)
+ 1bc:	02010413          	addi	x8,x2,32
+ 1c0:	fea43423          	sd	x10,-24(x8)
+ 1c4:	00058793          	addi	x15,x11,0
+ 1c8:	fef42223          	sw	x15,-28(x8)
+ 1cc:	fe843783          	ld	x15,-24(x8)
+ 1d0:	fe442703          	lw	x14,-28(x8)
+ 1d4:	00e7a023          	sw	x14,0(x15)
+ 1d8:	00000013          	addi	x0,x0,0
+ 1dc:	01813403          	ld	x8,24(x2)
+ 1e0:	02010113          	addi	x2,x2,32
+ 1e4:	00008067          	jalr	x0,0(x1)
 
-00000000000001fc <lb>:
- 1fc:	fe010113          	addi	x2,x2,-32
- 200:	00813c23          	sd	x8,24(x2)
- 204:	02010413          	addi	x8,x2,32
- 208:	fea43423          	sd	x10,-24(x8)
- 20c:	fe843783          	ld	x15,-24(x8)
- 210:	0007c783          	lbu	x15,0(x15)
- 214:	00078513          	addi	x10,x15,0
- 218:	01813403          	ld	x8,24(x2)
- 21c:	02010113          	addi	x2,x2,32
- 220:	00008067          	jalr	x0,0(x1)
+00000000000001e8 <StoreHalf>:
+ 1e8:	fe010113          	addi	x2,x2,-32
+ 1ec:	00813c23          	sd	x8,24(x2)
+ 1f0:	02010413          	addi	x8,x2,32
+ 1f4:	fea43423          	sd	x10,-24(x8)
+ 1f8:	00058793          	addi	x15,x11,0
+ 1fc:	fef41323          	sh	x15,-26(x8)
+ 200:	fe843783          	ld	x15,-24(x8)
+ 204:	fe645703          	lhu	x14,-26(x8)
+ 208:	00e79023          	sh	x14,0(x15)
+ 20c:	00000013          	addi	x0,x0,0
+ 210:	01813403          	ld	x8,24(x2)
+ 214:	02010113          	addi	x2,x2,32
+ 218:	00008067          	jalr	x0,0(x1)
 
-0000000000000224 <timer_interrupt_isr>:
- 224:	fe010113          	addi	x2,x2,-32
- 228:	00113c23          	sd	x1,24(x2)
- 22c:	00813823          	sd	x8,16(x2)
- 230:	02010413          	addi	x8,x2,32
- 234:	00300793          	addi	x15,x0,3
- 238:	01e79793          	slli	x15,x15,0x1e
- 23c:	00178513          	addi	x10,x15,1
- 240:	00000097          	auipc	x1,0x0
- 244:	fbc080e7          	jalr	x1,-68(x1) # 1fc <lb>
- 248:	00050793          	addi	x15,x10,0
- 24c:	fef407a3          	sb	x15,-17(x8)
- 250:	fef44783          	lbu	x15,-17(x8)
- 254:	0007879b          	addiw	x15,x15,0
- 258:	0017b793          	sltiu	x15,x15,1
- 25c:	0ff7f793          	andi	x15,x15,255
- 260:	fef407a3          	sb	x15,-17(x8)
- 264:	fef44783          	lbu	x15,-17(x8)
- 268:	00078593          	addi	x11,x15,0
- 26c:	00300793          	addi	x15,x0,3
- 270:	01e79793          	slli	x15,x15,0x1e
- 274:	00178513          	addi	x10,x15,1
- 278:	00000097          	auipc	x1,0x0
- 27c:	f28080e7          	jalr	x1,-216(x1) # 1a0 <sb>
- 280:	00000593          	addi	x11,x0,0
- 284:	00500793          	addi	x15,x0,5
- 288:	01d79513          	slli	x10,x15,0x1d
- 28c:	00000097          	auipc	x1,0x0
- 290:	ee4080e7          	jalr	x1,-284(x1) # 170 <sd>
- 294:	00000013          	addi	x0,x0,0
- 298:	01813083          	ld	x1,24(x2)
- 29c:	01013403          	ld	x8,16(x2)
- 2a0:	02010113          	addi	x2,x2,32
- 2a4:	00008067          	jalr	x0,0(x1)
+000000000000021c <StoreDouble>:
+ 21c:	fe010113          	addi	x2,x2,-32
+ 220:	00813c23          	sd	x8,24(x2)
+ 224:	02010413          	addi	x8,x2,32
+ 228:	fea43423          	sd	x10,-24(x8)
+ 22c:	feb43023          	sd	x11,-32(x8)
+ 230:	fe843783          	ld	x15,-24(x8)
+ 234:	fe043703          	ld	x14,-32(x8)
+ 238:	00e7b023          	sd	x14,0(x15)
+ 23c:	00000013          	addi	x0,x0,0
+ 240:	01813403          	ld	x8,24(x2)
+ 244:	02010113          	addi	x2,x2,32
+ 248:	00008067          	jalr	x0,0(x1)
 
-00000000000002a8 <main>:
- 2a8:	ff010113          	addi	x2,x2,-16
- 2ac:	00113423          	sd	x1,8(x2)
- 2b0:	00813023          	sd	x8,0(x2)
- 2b4:	01010413          	addi	x8,x2,16
- 2b8:	00000097          	auipc	x1,0x0
- 2bc:	e6c080e7          	jalr	x1,-404(x1) # 124 <init>
- 2c0:	000007b7          	lui	x15,0x0
- 2c4:	22478613          	addi	x12,x15,548 # 224 <timer_interrupt_isr>
- 2c8:	00100593          	addi	x11,x0,1
- 2cc:	00700513          	addi	x10,x0,7
- 2d0:	00000097          	auipc	x1,0x0
- 2d4:	e28080e7          	jalr	x1,-472(x1) # f8 <bind_isr>
- 2d8:	00000593          	addi	x11,x0,0
- 2dc:	00500793          	addi	x15,x0,5
- 2e0:	01d79513          	slli	x10,x15,0x1d
- 2e4:	00000097          	auipc	x1,0x0
- 2e8:	e8c080e7          	jalr	x1,-372(x1) # 170 <sd>
- 2ec:	02faf7b7          	lui	x15,0x2faf
- 2f0:	08078593          	addi	x11,x15,128 # 2faf080 <__global_pointer$+0x2fad520>
- 2f4:	00500793          	addi	x15,x0,5
- 2f8:	01d79793          	slli	x15,x15,0x1d
- 2fc:	00878513          	addi	x10,x15,8
- 300:	00000097          	auipc	x1,0x0
- 304:	e70080e7          	jalr	x1,-400(x1) # 170 <sd>
- 308:	00100593          	addi	x11,x0,1
- 30c:	00300793          	addi	x15,x0,3
- 310:	01e79793          	slli	x15,x15,0x1e
- 314:	00178513          	addi	x10,x15,1
- 318:	00000097          	auipc	x1,0x0
- 31c:	e88080e7          	jalr	x1,-376(x1) # 1a0 <sb>
- 320:	00100593          	addi	x11,x0,1
- 324:	00300793          	addi	x15,x0,3
- 328:	01e79793          	slli	x15,x15,0x1e
- 32c:	00278513          	addi	x10,x15,2
- 330:	00000097          	auipc	x1,0x0
- 334:	e70080e7          	jalr	x1,-400(x1) # 1a0 <sb>
- 338:	00000097          	auipc	x1,0x0
- 33c:	dfc080e7          	jalr	x1,-516(x1) # 134 <enable_timer_interrupt>
- 340:	00000097          	auipc	x1,0x0
- 344:	e00080e7          	jalr	x1,-512(x1) # 140 <enable_interrupts>
- 348:	00000013          	addi	x0,x0,0
- 34c:	00813083          	ld	x1,8(x2)
- 350:	00013403          	ld	x8,0(x2)
- 354:	01010113          	addi	x2,x2,16
- 358:	00008067          	jalr	x0,0(x1)
+000000000000024c <LoadByte>:
+ 24c:	fe010113          	addi	x2,x2,-32
+ 250:	00813c23          	sd	x8,24(x2)
+ 254:	02010413          	addi	x8,x2,32
+ 258:	fea43423          	sd	x10,-24(x8)
+ 25c:	fe843783          	ld	x15,-24(x8)
+ 260:	0007c783          	lbu	x15,0(x15)
+ 264:	00078513          	addi	x10,x15,0
+ 268:	01813403          	ld	x8,24(x2)
+ 26c:	02010113          	addi	x2,x2,32
+ 270:	00008067          	jalr	x0,0(x1)
+
+0000000000000274 <LoadHalf>:
+ 274:	fe010113          	addi	x2,x2,-32
+ 278:	00813c23          	sd	x8,24(x2)
+ 27c:	02010413          	addi	x8,x2,32
+ 280:	fea43423          	sd	x10,-24(x8)
+ 284:	fe843783          	ld	x15,-24(x8)
+ 288:	0007d783          	lhu	x15,0(x15)
+ 28c:	00078513          	addi	x10,x15,0
+ 290:	01813403          	ld	x8,24(x2)
+ 294:	02010113          	addi	x2,x2,32
+ 298:	00008067          	jalr	x0,0(x1)
+
+000000000000029c <LoadWord>:
+ 29c:	fe010113          	addi	x2,x2,-32
+ 2a0:	00813c23          	sd	x8,24(x2)
+ 2a4:	02010413          	addi	x8,x2,32
+ 2a8:	fea43423          	sd	x10,-24(x8)
+ 2ac:	fe843783          	ld	x15,-24(x8)
+ 2b0:	0007a783          	lw	x15,0(x15)
+ 2b4:	03079793          	slli	x15,x15,0x30
+ 2b8:	0307d793          	srli	x15,x15,0x30
+ 2bc:	00078513          	addi	x10,x15,0
+ 2c0:	01813403          	ld	x8,24(x2)
+ 2c4:	02010113          	addi	x2,x2,32
+ 2c8:	00008067          	jalr	x0,0(x1)
+
+00000000000002cc <LoadDouble>:
+ 2cc:	fe010113          	addi	x2,x2,-32
+ 2d0:	00813c23          	sd	x8,24(x2)
+ 2d4:	02010413          	addi	x8,x2,32
+ 2d8:	fea43423          	sd	x10,-24(x8)
+ 2dc:	fe843783          	ld	x15,-24(x8)
+ 2e0:	0007b783          	ld	x15,0(x15)
+ 2e4:	00078513          	addi	x10,x15,0
+ 2e8:	01813403          	ld	x8,24(x2)
+ 2ec:	02010113          	addi	x2,x2,32
+ 2f0:	00008067          	jalr	x0,0(x1)
+
+00000000000002f4 <TimerInterruptIsr>:
+ 2f4:	fe010113          	addi	x2,x2,-32
+ 2f8:	00113c23          	sd	x1,24(x2)
+ 2fc:	00813823          	sd	x8,16(x2)
+ 300:	02010413          	addi	x8,x2,32
+ 304:	00300793          	addi	x15,x0,3
+ 308:	01e79793          	slli	x15,x15,0x1e
+ 30c:	00178513          	addi	x10,x15,1
+ 310:	00000097          	auipc	x1,0x0
+ 314:	f3c080e7          	jalr	x1,-196(x1) # 24c <LoadByte>
+ 318:	00050793          	addi	x15,x10,0
+ 31c:	fef407a3          	sb	x15,-17(x8)
+ 320:	fef44783          	lbu	x15,-17(x8)
+ 324:	0007879b          	addiw	x15,x15,0
+ 328:	0017b793          	sltiu	x15,x15,1
+ 32c:	0ff7f793          	andi	x15,x15,255
+ 330:	fef407a3          	sb	x15,-17(x8)
+ 334:	fef44783          	lbu	x15,-17(x8)
+ 338:	00078593          	addi	x11,x15,0
+ 33c:	00300793          	addi	x15,x0,3
+ 340:	01e79793          	slli	x15,x15,0x1e
+ 344:	00178513          	addi	x10,x15,1
+ 348:	00000097          	auipc	x1,0x0
+ 34c:	e38080e7          	jalr	x1,-456(x1) # 180 <StoreByte>
+ 350:	00000593          	addi	x11,x0,0
+ 354:	00500793          	addi	x15,x0,5
+ 358:	01d79513          	slli	x10,x15,0x1d
+ 35c:	00000097          	auipc	x1,0x0
+ 360:	ec0080e7          	jalr	x1,-320(x1) # 21c <StoreDouble>
+ 364:	00000013          	addi	x0,x0,0
+ 368:	01813083          	ld	x1,24(x2)
+ 36c:	01013403          	ld	x8,16(x2)
+ 370:	02010113          	addi	x2,x2,32
+ 374:	00008067          	jalr	x0,0(x1)
+
+0000000000000378 <ExternalInterruptIsr>:
+ 378:	fe010113          	addi	x2,x2,-32
+ 37c:	00113c23          	sd	x1,24(x2)
+ 380:	00813823          	sd	x8,16(x2)
+ 384:	02010413          	addi	x8,x2,32
+ 388:	48100793          	addi	x15,x0,1153
+ 38c:	01579793          	slli	x15,x15,0x15
+ 390:	00478513          	addi	x10,x15,4
+ 394:	00000097          	auipc	x1,0x0
+ 398:	f08080e7          	jalr	x1,-248(x1) # 29c <LoadWord>
+ 39c:	00050793          	addi	x15,x10,0
+ 3a0:	fef42223          	sw	x15,-28(x8)
+ 3a4:	00500793          	addi	x15,x0,5
+ 3a8:	01d79793          	slli	x15,x15,0x1d
+ 3ac:	00878513          	addi	x10,x15,8
+ 3b0:	00000097          	auipc	x1,0x0
+ 3b4:	f1c080e7          	jalr	x1,-228(x1) # 2cc <LoadDouble>
+ 3b8:	fea43423          	sd	x10,-24(x8)
+ 3bc:	fe843703          	ld	x14,-24(x8)
+ 3c0:	02faf7b7          	lui	x15,0x2faf
+ 3c4:	08078793          	addi	x15,x15,128 # 2faf080 <__global_pointer$+0x2fad368>
+ 3c8:	00f71a63          	bne	x14,x15,3dc <ExternalInterruptIsr+0x64>
+ 3cc:	017d87b7          	lui	x15,0x17d8
+ 3d0:	84078793          	addi	x15,x15,-1984 # 17d7840 <__global_pointer$+0x17d5b28>
+ 3d4:	fef43423          	sd	x15,-24(x8)
+ 3d8:	0100006f          	jal	x0,3e8 <ExternalInterruptIsr+0x70>
+ 3dc:	02faf7b7          	lui	x15,0x2faf
+ 3e0:	08078793          	addi	x15,x15,128 # 2faf080 <__global_pointer$+0x2fad368>
+ 3e4:	fef43423          	sd	x15,-24(x8)
+ 3e8:	fe843583          	ld	x11,-24(x8)
+ 3ec:	00500793          	addi	x15,x0,5
+ 3f0:	01d79793          	slli	x15,x15,0x1d
+ 3f4:	00878513          	addi	x10,x15,8
+ 3f8:	00000097          	auipc	x1,0x0
+ 3fc:	e24080e7          	jalr	x1,-476(x1) # 21c <StoreDouble>
+ 400:	fe442783          	lw	x15,-28(x8)
+ 404:	00078593          	addi	x11,x15,0
+ 408:	48100793          	addi	x15,x0,1153
+ 40c:	01579793          	slli	x15,x15,0x15
+ 410:	00478513          	addi	x10,x15,4
+ 414:	00000097          	auipc	x1,0x0
+ 418:	da0080e7          	jalr	x1,-608(x1) # 1b4 <StoreWord>
+ 41c:	00000013          	addi	x0,x0,0
+ 420:	01813083          	ld	x1,24(x2)
+ 424:	01013403          	ld	x8,16(x2)
+ 428:	02010113          	addi	x2,x2,32
+ 42c:	00008067          	jalr	x0,0(x1)
+
+0000000000000430 <main>:
+ 430:	ff010113          	addi	x2,x2,-16
+ 434:	00113423          	sd	x1,8(x2)
+ 438:	00813023          	sd	x8,0(x2)
+ 43c:	01010413          	addi	x8,x2,16
+ 440:	00000097          	auipc	x1,0x0
+ 444:	ce4080e7          	jalr	x1,-796(x1) # 124 <init>
+ 448:	000007b7          	lui	x15,0x0
+ 44c:	2f478613          	addi	x12,x15,756 # 2f4 <TimerInterruptIsr>
+ 450:	00100593          	addi	x11,x0,1
+ 454:	00700513          	addi	x10,x0,7
+ 458:	00000097          	auipc	x1,0x0
+ 45c:	ca0080e7          	jalr	x1,-864(x1) # f8 <bind_isr>
+ 460:	000007b7          	lui	x15,0x0
+ 464:	37878613          	addi	x12,x15,888 # 378 <ExternalInterruptIsr>
+ 468:	00100593          	addi	x11,x0,1
+ 46c:	00b00513          	addi	x10,x0,11
+ 470:	00000097          	auipc	x1,0x0
+ 474:	c88080e7          	jalr	x1,-888(x1) # f8 <bind_isr>
+ 478:	00000593          	addi	x11,x0,0
+ 47c:	00500793          	addi	x15,x0,5
+ 480:	01d79513          	slli	x10,x15,0x1d
+ 484:	00000097          	auipc	x1,0x0
+ 488:	d98080e7          	jalr	x1,-616(x1) # 21c <StoreDouble>
+ 48c:	02faf7b7          	lui	x15,0x2faf
+ 490:	08078593          	addi	x11,x15,128 # 2faf080 <__global_pointer$+0x2fad368>
+ 494:	00500793          	addi	x15,x0,5
+ 498:	01d79793          	slli	x15,x15,0x1d
+ 49c:	00878513          	addi	x10,x15,8
+ 4a0:	00000097          	auipc	x1,0x0
+ 4a4:	d7c080e7          	jalr	x1,-644(x1) # 21c <StoreDouble>
+ 4a8:	00100593          	addi	x11,x0,1
+ 4ac:	00300793          	addi	x15,x0,3
+ 4b0:	01e79793          	slli	x15,x15,0x1e
+ 4b4:	00178513          	addi	x10,x15,1
+ 4b8:	00000097          	auipc	x1,0x0
+ 4bc:	cc8080e7          	jalr	x1,-824(x1) # 180 <StoreByte>
+ 4c0:	00100593          	addi	x11,x0,1
+ 4c4:	00300793          	addi	x15,x0,3
+ 4c8:	01e79793          	slli	x15,x15,0x1e
+ 4cc:	00278513          	addi	x10,x15,2
+ 4d0:	00000097          	auipc	x1,0x0
+ 4d4:	cb0080e7          	jalr	x1,-848(x1) # 180 <StoreByte>
+ 4d8:	00000097          	auipc	x1,0x0
+ 4dc:	c5c080e7          	jalr	x1,-932(x1) # 134 <enable_timer_interrupt>
+ 4e0:	00000097          	auipc	x1,0x0
+ 4e4:	c60080e7          	jalr	x1,-928(x1) # 140 <enable_external_interrupt>
+ 4e8:	00200593          	addi	x11,x0,2
+ 4ec:	480017b7          	lui	x15,0x48001
+ 4f0:	00179513          	slli	x10,x15,0x1
+ 4f4:	00000097          	auipc	x1,0x0
+ 4f8:	cc0080e7          	jalr	x1,-832(x1) # 1b4 <StoreWord>
+ 4fc:	00000097          	auipc	x1,0x0
+ 500:	c54080e7          	jalr	x1,-940(x1) # 150 <enable_interrupts>
+ 504:	00000013          	addi	x0,x0,0
+ 508:	00813083          	ld	x1,8(x2)
+ 50c:	00013403          	ld	x8,0(x2)
+ 510:	01010113          	addi	x2,x2,16
+ 514:	00008067          	jalr	x0,0(x1)

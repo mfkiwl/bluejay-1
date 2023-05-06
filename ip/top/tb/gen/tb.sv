@@ -79,14 +79,12 @@ initial begin
     #11;
     // de-assert rst
     btnc = 1'b0;
-    #10000
+    #30000
     btnd = 1'b1;
     #10000
     btnd = 1'b0;
-    #10000
-    btnd = 1'b1;
     //
-    #20000000;
+    #200000;
 end
 
 endmodule

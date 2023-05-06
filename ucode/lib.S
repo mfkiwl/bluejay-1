@@ -4,6 +4,12 @@ enable_timer_interrupt:
     csrs mie, t0
     ret
 
+.global enable_external_interrupt
+enable_external_interrupt:
+    li t0, 0x800
+    csrs mie, t0
+    ret
+
 .global enable_interrupts
 enable_interrupts:
     li t0, 0x8 
