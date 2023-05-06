@@ -44,9 +44,14 @@ logic [63:0] dina;
 logic [63:0] douta;
 
 
+logic btnd__clean;
+
+logic int__1;
+
 assign clk = clk_100mhz;
 assign rst = btnc;
 assign led16_b = port__0[0];
+assign int__1 = btnd__clean;
 
 assign led = 0;
 //assign led16_b = 0;
@@ -77,7 +82,7 @@ jay jay__0
     .port__1(port__1),
     .port__2(port__2),
     .port__3(port__3),
-    .int__1(btnd),
+    .int__1(int__1),
     .ena(ena),
     .wea(wea),
     .addra(addra),
@@ -96,6 +101,19 @@ blk_mem_gen_0 blk_mem_gen_0__0
     .douta(douta),
     .ena(ena),
     .wea(wea)
+);
+
+
+//==============================
+// debouncer__btnd
+//==============================
+debouncer debouncer__btnd
+#(.DEBOUNCE_COUNT(1000000))
+(
+    .clk(clk),
+    .rst(rst),
+    .x(btnd),
+    .x__clean(btnd__clean)
 );
 
 

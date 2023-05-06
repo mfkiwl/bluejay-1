@@ -2,45 +2,96 @@
 // counter
 //==============================================
 module debouncer
+#(parameter DEBOUNCE_COUNT = 0)
 (
-    input logic clk,
-    input logic rst,
-    input logic in,
-    output logic out
+    input clk,
+    input rst,
+    input x,
+    output logic x__clean 
 );
     
+logic [1:0] state;
+logic [1:0] state__n;
 
-parameter DEBOUNCE_COUNT = 20'd1_000_000;
-parameter DEBOUNCE_COUNT__LOG2 = 20;
+logic [63:0] count;
+logic [63:0] count__n;
 
+localparam STATE__LOW;
+localparam STATE__LOW_TO_HIGH;
+localparam STATE__HIGH_TO_LOW;
+localparam STATE__HIGH;
 
-logic [DEBOUNCE_COUNT__LOG2:0] count;
-logic in__p;
+always_comb
+begin
+    case (state)
 
-
-always_ff @(posedge clk) begin
-    in__p <= in;
-end
-    
-
-always_ff @(posedge clk) begin
-    out <= (count == DEBOUNCE_COUNT) ? in__p : out;
-end
-    
-
-always_ff @(posedge clk) begin
-    if (rst) begin
-        count <= 0;
-    end
-    else begin
-        if (in == in__p) begin
-            count <= (count == DEBOUNCE_COUNT) ?  DEBOUNCE_COUNT : count + 1;
+        //==============================
+        // STATE__LOW
+        //==============================
+        STATE__LOW:
+        begin
+            x__clean = 1'b0;
+            count__n = 64'h0;
+            state__n = x ? STATE__LOW_TO_HIGH : STATE__LOW;
         end
-        else begin
-            count <= 0;
+
+        //==============================
+        // STATE__LOW_TO_HIGH
+        //==============================
+        STATE__LOW_TO_HIGH:
+        begin
+            x__clean = 1'b0;
+            count__n = count + 1;
+            state__n = x ? (count == DEBOUNCE_COUNT) ? STATE__HIGH : STATE__LOW_TO_HIGH : STATE__LOW;
         end
-    end
+
+        //==============================
+        // STATE__HIGH_TO_LOW
+        //==============================
+        STATE__HIGH_TO_LOW:
+        begin
+            x__clean = 1'b1;
+            count__n = count + 1;
+            state__n = ~x ? (count == DEBOUNCE_COUNT) ? STATE__LOW : STATE__HIGH_TO_LOW : STATE__HIGH;
+        end
+
+        //==============================
+        // STATE__HIGH
+        //==============================
+        STATE__HIGH:
+        begin
+            x__clean = 1'b1;
+            count__n = 64'h0;
+            state__n = ~x ? STATE__HIGH_TO_LOW : STATE__HIGH;
+        end
+
+    endcase
 end
+
+
+//==============================
+// d_flip_flop__state
+//==============================
+d_flip_flop #(.WIDTH(2), .RESET_VALUE(STATE__RESET)) d_flip_flop__state
+(
+    .clk(clk),
+    .rst(rst),
+    .en(1'b1),
+    .d(state__n),
+    .q(state)
+);
+
+//==============================
+// d_flip_flop__count
+//==============================
+d_flip_flop #(.WIDTH(64), .RESET_VALUE(64'h0)) d_flip_flop__count
+(
+    .clk(clk),
+    .rst(rst),
+    .en(1'b1),
+    .d(count__n),
+    .q(count)
+);
 
 endmodule
 

@@ -557,6 +557,23 @@ ifeq ($(SIM_IP),$(IP))
 SV += $(addsuffix .sv,$(addprefix $(TOP)/ip/$(IP)/tb/gen/,$(TB_MODULES)))
 endif
 
+#########
+# utils #
+#########
+IP := utils
+
+MODULES :=
+MODULES += debouncer
+
+TB_MODULES :=
+TB_MODULES += tb
+
+SV += $(addsuffix .sv,$(addprefix $(TOP)/ip/$(IP)/src/gen/,$(MODULES)))
+ifeq ($(SIM_IP),$(IP))
+SV += $(addsuffix .sv,$(addprefix $(TOP)/ip/$(IP)/tb/gen/,$(TB_MODULES)))
+endif
+
+
 ########
 ## bus #
 ########
@@ -728,6 +745,19 @@ IP := jay
 
 SIM := sim__xyz
 TESTS := test__0 
+
+$(eval $(call ip--src--template,$(IP)))
+$(eval $(call ip--tb--template,$(IP)))
+$(eval $(call ip--sim--template,$(IP),$(SIM),$(SV),$(TESTS),default--sim-test--diff--template,default--sim-test--sim--template,default--sim-test--ref--template,default--sim-test--setup--template))
+
+
+#########
+# utils #
+#########
+IP := utils
+
+SIM := sim__xyz
+TESTS := test__a test__b test__c test__d
 
 $(eval $(call ip--src--template,$(IP)))
 $(eval $(call ip--tb--template,$(IP)))
