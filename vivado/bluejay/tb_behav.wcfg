@@ -11,15 +11,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="0fs"></ZoomStartTime>
-      <ZoomEndTime time="1000000fs"></ZoomEndTime>
-      <Cursor1Time time="0fs"></Cursor1Time>
+      <ZoomStartTime time="3500000fs"></ZoomStartTime>
+      <ZoomEndTime time="24500001fs"></ZoomEndTime>
+      <Cursor1Time time="21000000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="255"></NameColumnWidth>
-      <ValueColumnWidth column_width="142"></ValueColumnWidth>
+      <ValueColumnWidth column_width="138"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="77" />
+   <WVObjectSize size="64" />
    <wvobject type="logic" fp_name="/tb/clk_100mhz">
       <obj_property name="ElementShortName">clk_100mhz</obj_property>
       <obj_property name="ObjectShortName">clk_100mhz</obj_property>
@@ -200,105 +200,9 @@
       <obj_property name="ElementShortName">ready__4</obj_property>
       <obj_property name="ObjectShortName">ready__4</obj_property>
    </wvobject>
-   <wvobject type="logic" fp_name="/tb/dut/jay__0/resp__4">
-      <obj_property name="ElementShortName">resp__4</obj_property>
-      <obj_property name="ObjectShortName">resp__4</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/tb/dut/jay__0/bus__0/sel">
-      <obj_property name="ElementShortName">sel[2:0]</obj_property>
-      <obj_property name="ObjectShortName">sel[2:0]</obj_property>
-   </wvobject>
-   <wvobject type="logic" fp_name="/tb/dut/jay__0/cpu_to_mmu__cs">
-      <obj_property name="ElementShortName">cpu_to_mmu__cs</obj_property>
-      <obj_property name="ObjectShortName">cpu_to_mmu__cs</obj_property>
-   </wvobject>
-   <wvobject type="logic" fp_name="/tb/dut/jay__0/cpu_to_mmu__we">
-      <obj_property name="ElementShortName">cpu_to_mmu__we</obj_property>
-      <obj_property name="ObjectShortName">cpu_to_mmu__we</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/tb/dut/jay__0/cpu_to_mmu__addr">
-      <obj_property name="ElementShortName">cpu_to_mmu__addr[63:0]</obj_property>
-      <obj_property name="ObjectShortName">cpu_to_mmu__addr[63:0]</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/tb/dut/jay__0/cpu_to_mmu__size">
-      <obj_property name="ElementShortName">cpu_to_mmu__size[1:0]</obj_property>
-      <obj_property name="ObjectShortName">cpu_to_mmu__size[1:0]</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/tb/dut/jay__0/cpu_to_mmu__wr_data">
-      <obj_property name="ElementShortName">cpu_to_mmu__wr_data[63:0]</obj_property>
-      <obj_property name="ObjectShortName">cpu_to_mmu__wr_data[63:0]</obj_property>
-   </wvobject>
-   <wvobject type="logic" fp_name="/tb/dut/jay__0/cpu_to_mmu__ready">
-      <obj_property name="ElementShortName">cpu_to_mmu__ready</obj_property>
-      <obj_property name="ObjectShortName">cpu_to_mmu__ready</obj_property>
-   </wvobject>
-   <wvobject type="logic" fp_name="/tb/dut/jay__0/cpu_to_mmu__resp">
-      <obj_property name="ElementShortName">cpu_to_mmu__resp</obj_property>
-      <obj_property name="ObjectShortName">cpu_to_mmu__resp</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/tb/dut/jay__0/cpu_to_mmu__rd_data">
-      <obj_property name="ElementShortName">cpu_to_mmu__rd_data[63:0]</obj_property>
-      <obj_property name="ObjectShortName">cpu_to_mmu__rd_data[63:0]</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/tb/dut/jay__0/bus__0/decoder/addr">
-      <obj_property name="ElementShortName">addr[39:0]</obj_property>
-      <obj_property name="ObjectShortName">addr[39:0]</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/tb/dut/jay__0/bus__0/decoder/sel">
-      <obj_property name="ElementShortName">sel[2:0]</obj_property>
-      <obj_property name="ObjectShortName">sel[2:0]</obj_property>
-   </wvobject>
    <wvobject type="array" fp_name="/tb/dut/jay__0/memory_management_unit__0/state">
-      <obj_property name="ElementShortName">state[3:0]</obj_property>
-      <obj_property name="ObjectShortName">state[3:0]</obj_property>
-   </wvobject>
-   <wvobject type="logic" fp_name="/tb/dut/jay__0/mmu_to_bus__cs">
-      <obj_property name="ElementShortName">mmu_to_bus__cs</obj_property>
-      <obj_property name="ObjectShortName">mmu_to_bus__cs</obj_property>
-   </wvobject>
-   <wvobject type="logic" fp_name="/tb/dut/jay__0/mmu_to_bus__we">
-      <obj_property name="ElementShortName">mmu_to_bus__we</obj_property>
-      <obj_property name="ObjectShortName">mmu_to_bus__we</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/tb/dut/jay__0/mmu_to_bus__addr">
-      <obj_property name="ElementShortName">mmu_to_bus__addr[39:0]</obj_property>
-      <obj_property name="ObjectShortName">mmu_to_bus__addr[39:0]</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/tb/dut/jay__0/mmu_to_bus__size">
-      <obj_property name="ElementShortName">mmu_to_bus__size[1:0]</obj_property>
-      <obj_property name="ObjectShortName">mmu_to_bus__size[1:0]</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/tb/dut/jay__0/mmu_to_bus__wr_data">
-      <obj_property name="ElementShortName">mmu_to_bus__wr_data[63:0]</obj_property>
-      <obj_property name="ObjectShortName">mmu_to_bus__wr_data[63:0]</obj_property>
-   </wvobject>
-   <wvobject type="logic" fp_name="/tb/dut/jay__0/mmu_to_bus__ready">
-      <obj_property name="ElementShortName">mmu_to_bus__ready</obj_property>
-      <obj_property name="ObjectShortName">mmu_to_bus__ready</obj_property>
-   </wvobject>
-   <wvobject type="logic" fp_name="/tb/dut/jay__0/mmu_to_bus__resp">
-      <obj_property name="ElementShortName">mmu_to_bus__resp</obj_property>
-      <obj_property name="ObjectShortName">mmu_to_bus__resp</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/tb/dut/jay__0/mmu_to_bus__rd_data">
-      <obj_property name="ElementShortName">mmu_to_bus__rd_data[63:0]</obj_property>
-      <obj_property name="ObjectShortName">mmu_to_bus__rd_data[63:0]</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/tb/dut/jay__0/bus__0/decoder/sel">
-      <obj_property name="ElementShortName">sel[2:0]</obj_property>
-      <obj_property name="ObjectShortName">sel[2:0]</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/tb/dut/jay__0/bus__0/multiplexor/sel">
-      <obj_property name="ElementShortName">sel[2:0]</obj_property>
-      <obj_property name="ObjectShortName">sel[2:0]</obj_property>
-   </wvobject>
-   <wvobject type="logic" fp_name="/tb/dut/jay__0/bus__0/multiplexor/cs__4">
-      <obj_property name="ElementShortName">cs__4</obj_property>
-      <obj_property name="ObjectShortName">cs__4</obj_property>
-   </wvobject>
-   <wvobject type="logic" fp_name="/tb/dut/jay__0/bus__0/multiplexor/cs">
-      <obj_property name="ElementShortName">cs</obj_property>
-      <obj_property name="ObjectShortName">cs</obj_property>
+      <obj_property name="ElementShortName">state[5:0]</obj_property>
+      <obj_property name="ObjectShortName">state[5:0]</obj_property>
    </wvobject>
    <wvobject type="logic" fp_name="/tb/dut/jay__0/general_purpose_input_output__0/cs">
       <obj_property name="ElementShortName">cs</obj_property>
@@ -327,5 +231,49 @@
    <wvobject type="array" fp_name="/tb/dut/jay__0/general_purpose_input_output__0/oe__0">
       <obj_property name="ElementShortName">oe__0[7:0]</obj_property>
       <obj_property name="ObjectShortName">oe__0[7:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb/dut/jay__0/central_processing_unit__0/control_and_status_registers__0/mie">
+      <obj_property name="ElementShortName">mie[63:0]</obj_property>
+      <obj_property name="ObjectShortName">mie[63:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb/dut/jay__0/central_processing_unit__0/control_and_status_registers__0/we__mie">
+      <obj_property name="ElementShortName">we__mie</obj_property>
+      <obj_property name="ObjectShortName">we__mie</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb/dut/jay__0/central_processing_unit__0/control_and_status_registers__0/en__mie">
+      <obj_property name="ElementShortName">en__mie</obj_property>
+      <obj_property name="ObjectShortName">en__mie</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb/dut/jay__0/central_processing_unit__0/control_and_status_registers__0/mie__meie">
+      <obj_property name="ElementShortName">mie__meie[0:0]</obj_property>
+      <obj_property name="ObjectShortName">mie__meie[0:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb/dut/jay__0/central_processing_unit__0/control_and_status_registers__0/mie__msie">
+      <obj_property name="ElementShortName">mie__msie[0:0]</obj_property>
+      <obj_property name="ObjectShortName">mie__msie[0:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb/dut/jay__0/central_processing_unit__0/control_and_status_registers__0/mie__mtie">
+      <obj_property name="ElementShortName">mie__mtie[0:0]</obj_property>
+      <obj_property name="ObjectShortName">mie__mtie[0:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb/dut/jay__0/central_processing_unit__0/control_and_status_registers__0/en__mie">
+      <obj_property name="ElementShortName">en__mie</obj_property>
+      <obj_property name="ObjectShortName">en__mie</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb/dut/jay__0/central_processing_unit__0/control_and_status_registers__0/wr_data">
+      <obj_property name="ElementShortName">wr_data[63:0]</obj_property>
+      <obj_property name="ObjectShortName">wr_data[63:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb/dut/jay__0/central_processing_unit__0/register_file__0/x__10">
+      <obj_property name="ElementShortName">x__10[63:0]</obj_property>
+      <obj_property name="ObjectShortName">x__10[63:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb/dut/jay__0/central_processing_unit__0/register_file__0/x__20">
+      <obj_property name="ElementShortName">x__20[63:0]</obj_property>
+      <obj_property name="ObjectShortName">x__20[63:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb/dut/jay__0/central_processing_unit__0/control_and_status_registers__0/mtvec">
+      <obj_property name="ElementShortName">mtvec[63:0]</obj_property>
+      <obj_property name="ObjectShortName">mtvec[63:0]</obj_property>
    </wvobject>
 </wave_config>

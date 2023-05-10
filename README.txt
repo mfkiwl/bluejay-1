@@ -53,6 +53,8 @@ Resources:
         - Settup (this is how you make all of the tests!):
             $ export TOPDIR=/home/seankent/riscv/riscv-gnu-toolchain
             $ make clean simulate verify postverify XLEN=64 RISCV_DEVICE=I RISCV_TARGET=riscvOVPsimPlus
+    - Inline assebly code
+        - https://www.codeinsideout.com/blog/stm32/assembly/#extended-assembly
     - crt0
         - https://en.wikipedia.org/wiki/Crt0 
     - SiFive Interrupt Cookbook
