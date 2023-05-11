@@ -915,7 +915,6 @@ $(foreach i,$(UCODE),$(eval $(call code--S-to-o--template,$(TOP)/ucode/$(i).o,$(
 #$(eval $(call code--S-to-o--template,ucode/crt0.o,ucode/crt0.S))
 #$(eval $(call code--S-to-o--template,ucode/trap.o,ucode/trap.S))
 
-$(eval $(call code--o-to-elf--template,ucode/prog.elf,$(OBJ) $(TOP)/ucode/libjay.o))
 #$(eval $(call code--o-to-elf--template,ucode/prog.elf,$(OBJ) $(TOP)/ucode/main.o))
 $(eval $(call code--elf-to-bin--template,ucode/prog.bin,ucode/prog.elf))
 $(eval $(call code--elf-to-lst--template,ucode/prog.lst,ucode/prog.elf))
@@ -923,7 +922,22 @@ $(eval $(call code--bin-to-mem--template,ucode/prog.mem,ucode/prog.bin))
 $(eval $(call code--mem-to-coe--template,ucode/prog.coe,ucode/prog.mem))
 
 $(eval $(call code--c-to-o--template,$(TOP)/ucode/main.o,$(TOP)/ucode/main.c))
+
+
+SRC :=
+SRC += mie
+SRC += mstatus
+SRC += mtvec
+SRC += mcause
+
+CPP := $(addsuffix .S,$(addprefix $(TOP)/ucode/,$(SRC)))
+CPPOBJ := $(addsuffix .o,$(addprefix $(TOP)/ucode/,$(SRC)))
+
+$(foreach i,$(SRC),$(eval $(call code--c-to-o--template,$(TOP)/ucode/$(i).o,$(TOP)/ucode/$(i).cpp)))
+
 $(eval $(call code--c-to-o--template,$(TOP)/ucode/libjay.o,$(TOP)/ucode/libjay.cpp))
+
+$(eval $(call code--o-to-elf--template,ucode/prog.elf,$(OBJ) $(CPPOBJ) $(TOP)/ucode/libjay.o))
 
 abc:
 	echo $(OBJ) 

@@ -2,7 +2,6 @@
 // include 
 //==============================================
 #include <stdint.h>
-#include "defs.h"
 #include "mie.hpp"
 #include "mstatus.hpp"
 #include "mtvec.hpp"
@@ -57,25 +56,20 @@ uint64_t LoadDouble(uint64_t * ptr)
 //==============================================
 struct Trap
 {
+    static void * interrupt_vector_table[];
+    static void * exception_vector_table[];
+
     static void Init();
     static void Entry();
     static void SetISR(void * isr, uint64_t exception_code, uint64_t interrupt);
-    static void DefaultISR();
-
-    static void (* interrupt_vector_table[1])();
-    static void (* exception_vector_table[1])();
 };
-
-void (* Trap::interrupt_vector_table[1])() = {&Trap::DefaultISR};
-void (* Trap::exception_vector_table[1])() = {&Trap::DefaultISR};
-
 
 //==============================================
 // Trap::Init 
 //==============================================
 void Trap::Init()
 {
-    mtvec::CSRW((uint64_t)&Trap::Entry);
+    mtvec::CSRW(&Trap::Entry);
 }
 
 //==============================================
@@ -103,16 +97,15 @@ void Trap::Entry()
     asm volatile ("sd t5, 112(sp)");
     asm volatile ("sd t6, 120(sp)");
     
-
-    if ((mcause::CSRR() & CSR__MCAUSE__INTERRUPT__MASK) >> CSR__MCAUSE__INTERRUPT__LSB)
+    // call the ISR
+    if (mcause::CSRR() >> 63)
     {
-        Trap::interrupt_vector_table[(mcause::CSRR() & CSR__MCAUSE__EXCEPTION_CODE__MASK) >> CSR__MCAUSE__EXCEPTION_CODE__LSB];
+        
     }
     else
     {
-        Trap::interrupt_vector_table[(mcause::CSRR() & CSR__MCAUSE__EXCEPTION_CODE__MASK) >> CSR__MCAUSE__EXCEPTION_CODE__LSB];
     }
-
+    asm volatile ("addi x20, x0, 0xbc" : : : );
 
     // pop the non-saved register off of the stack
     asm volatile ("ld ra, 0(sp)");
@@ -138,13 +131,6 @@ void Trap::Entry()
     asm volatile ("mret");
 }
 
-//==============================================
-// Trap::DefaultISR
-//==============================================
-void Trap::DefaultISR()
-{
-    
-}
 
 
 

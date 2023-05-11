@@ -5,7 +5,7 @@
 # init #
 ########
 init:
-    # initialize mtvec
+    # initialize machine trap-vector base-address register 
     la t0, trap
     csrw mtvec, t0
     ret

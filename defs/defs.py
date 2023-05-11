@@ -434,7 +434,10 @@ defs["CSR__MEPC__MEPC__RESET_VALUE"] = {"value": "0x0", "prefix": "64"}
 
 defs["CSR__MCAUSE"] = {"value": "0x342", "prefix": "12"}
 defs["CSR__MCAUSE__EXCEPTION_CODE__FIELD"] = {"value": "62:0"}
+defs["CSR__MCAUSE__EXCEPTION_CODE__LSB"] = {"value": "0"}
+defs["CSR__MCAUSE__EXCEPTION_CODE__MSB"] = {"value": "62"}
 defs["CSR__MCAUSE__EXCEPTION_CODE__WIDTH"] = {"value": "63"}
+defs["CSR__MCAUSE__EXCEPTION_CODE__MASK"] = {"value": "0x7fffffffffffffff"}
 defs["CSR__MCAUSE__EXCEPTION_CODE__HARD_RESET"] = {"value": "0x0", "prefix": "63"}
 defs["CSR__MCAUSE__EXCEPTION_CODE__INSTRUCTION_ADDRESS_MISALIGNED"] = {"value": "0x0", "prefix": "63"}
 defs["CSR__MCAUSE__EXCEPTION_CODE__INSTRUCTION_ACCESS_FAULT"] = {"value": "0x1", "prefix": "63"}
@@ -452,7 +455,10 @@ defs["CSR__MCAUSE__EXCEPTION_CODE__MACHINE_SOFTWARE_INTERRUPT"] = {"value": "0x3
 defs["CSR__MCAUSE__EXCEPTION_CODE__MACHINE_TIMER_INTERRUPT"] = {"value": "0x7", "prefix": "63"}
 defs["CSR__MCAUSE__EXCEPTION_CODE__MACHINE_EXTERNAL_INTERRUPT"] = {"value": "0xb", "prefix": "63"}
 defs["CSR__MCAUSE__INTERRUPT__FIELD"] = {"value": "63"}
+defs["CSR__MCAUSE__INTERRUPT__LSB"] = {"value": "63"}
+defs["CSR__MCAUSE__INTERRUPT__MSB"] = {"value": "63"}
 defs["CSR__MCAUSE__INTERRUPT__WIDTH"] = {"value": "1"}
+defs["CSR__MCAUSE__INTERRUPT__MASK"] = {"value": "0x8000000000000000"}
 defs["CSR__MCAUSE__INTERRUPT__NOT_INTERRUPT"] = {"value": "0b0", "prefix": "1"}
 defs["CSR__MCAUSE__INTERRUPT__INTERRUPT"] = {"value": "0b1", "prefix": "1"}
 

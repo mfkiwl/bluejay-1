@@ -4,8 +4,8 @@
 # trap #
 ########
 .align 2
-.global trap 
-trap:
+.global trap_handler
+trap_handler:
     # allocate space for 16 double words on the stack
     addi sp, sp, -16*8
     # push the non-saved registers onto the stack
