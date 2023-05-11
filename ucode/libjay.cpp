@@ -250,7 +250,7 @@ void main(void)
     Trap::Init();
     //Trap::SetISR(foo, CSR__MCAUSE__EXCEPTION_CODE__MACHINE_TIMER_INTERRUPT, CSR__MCAUSE__INTERRUPT__INTERRUPT);
 
-    asm volatile ("csrs mstatus, %0" : : "r" (0x8) : );
+    //asm volatile ("csrs mstatus, %0" : : "r" (0x8) : );
     //mie::Set(0x80);
     //mie::Clear(0x80);
     //mie::Write(0xaaaa);
@@ -258,8 +258,8 @@ void main(void)
     //value = mie::Read();
     uint64_t rd;
     mie::CSRS(0x80);
-    rd = mie::CRRRC(0x80);
-    rd = mie::CRRRS(0x880);
+    rd = mie::CSRRC(0x80);
+    rd = mie::CSRRS(0x880);
     mie::CSRC(0x80);
     rd = mie::CSRRW(0x888);
     mie::CSRW(0x808);

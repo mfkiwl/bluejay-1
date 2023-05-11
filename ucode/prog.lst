@@ -7,11 +7,11 @@ Disassembly of section .text:
 0000000000000000 <_start>:
    0:	00008137          	lui	x2,0x8
    4:	00002197          	auipc	x3,0x2
-   8:	d3018193          	addi	x3,x3,-720 # 1d34 <__global_pointer$>
+   8:	ee418193          	addi	x3,x3,-284 # 1ee8 <__global_pointer$>
    c:	00001297          	auipc	x5,0x1
-  10:	52828293          	addi	x5,x5,1320 # 1534 <__DATA_BEGIN__>
+  10:	6dc28293          	addi	x5,x5,1756 # 16e8 <__BSS_END__>
   14:	00001317          	auipc	x6,0x1
-  18:	52430313          	addi	x6,x6,1316 # 1538 <__BSS_END__>
+  18:	6d430313          	addi	x6,x6,1748 # 16e8 <__BSS_END__>
 
 000000000000001c <while__0>:
   1c:	0062f863          	bgeu	x5,x6,2c <end__0>
@@ -21,13 +21,13 @@ Disassembly of section .text:
 
 000000000000002c <end__0>:
   2c:	00000097          	auipc	x1,0x0
-  30:	268080e7          	jalr	x1,616(x1) # 294 <main>
+  30:	384080e7          	jalr	x1,900(x1) # 3b0 <main>
 
 0000000000000034 <while__1>:
   34:	0000006f          	jal	x0,34 <while__1>
 
 0000000000000038 <_Z9StoreBytePhh>:
-  38:	fe010113          	addi	x2,x2,-32 # 7fe0 <__global_pointer$+0x62ac>
+  38:	fe010113          	addi	x2,x2,-32 # 7fe0 <__global_pointer$+0x60f8>
   3c:	00813c23          	sd	x8,24(x2)
   40:	02010413          	addi	x8,x2,32
   44:	fea43423          	sd	x10,-24(x8)
@@ -135,100 +135,189 @@ Disassembly of section .text:
  1a4:	02010113          	addi	x2,x2,32
  1a8:	00008067          	jalr	x0,0(x1)
 
-00000000000001ac <_ZN3mie4ReadEv>:
- 1ac:	fe010113          	addi	x2,x2,-32
- 1b0:	00813c23          	sd	x8,24(x2)
- 1b4:	02010413          	addi	x8,x2,32
- 1b8:	304027f3          	csrrs	x15,mie,x0
- 1bc:	fef43423          	sd	x15,-24(x8)
- 1c0:	fe843783          	ld	x15,-24(x8)
- 1c4:	00078513          	addi	x10,x15,0
- 1c8:	01813403          	ld	x8,24(x2)
- 1cc:	02010113          	addi	x2,x2,32
+00000000000001ac <_ZN4Trap4InitEv>:
+ 1ac:	ff010113          	addi	x2,x2,-16
+ 1b0:	00813423          	sd	x8,8(x2)
+ 1b4:	01010413          	addi	x8,x2,16
+ 1b8:	000007b7          	lui	x15,0x0
+ 1bc:	1d478793          	addi	x15,x15,468 # 1d4 <_ZN4Trap5EntryEv>
+ 1c0:	30579073          	csrrw	x0,mtvec,x15
+ 1c4:	00000013          	addi	x0,x0,0
+ 1c8:	00813403          	ld	x8,8(x2)
+ 1cc:	01010113          	addi	x2,x2,16
  1d0:	00008067          	jalr	x0,0(x1)
 
-00000000000001d4 <_ZN3mie5WriteEm>:
- 1d4:	fe010113          	addi	x2,x2,-32
- 1d8:	00813c23          	sd	x8,24(x2)
- 1dc:	02010413          	addi	x8,x2,32
- 1e0:	fea43423          	sd	x10,-24(x8)
- 1e4:	fe843783          	ld	x15,-24(x8)
- 1e8:	30479073          	csrrw	x0,mie,x15
- 1ec:	00000013          	addi	x0,x0,0
- 1f0:	01813403          	ld	x8,24(x2)
- 1f4:	02010113          	addi	x2,x2,32
- 1f8:	00008067          	jalr	x0,0(x1)
+00000000000001d4 <_ZN4Trap5EntryEv>:
+ 1d4:	ff010113          	addi	x2,x2,-16
+ 1d8:	00813423          	sd	x8,8(x2)
+ 1dc:	01010413          	addi	x8,x2,16
+ 1e0:	f8010113          	addi	x2,x2,-128
+ 1e4:	00113023          	sd	x1,0(x2)
+ 1e8:	00a13423          	sd	x10,8(x2)
+ 1ec:	00b13823          	sd	x11,16(x2)
+ 1f0:	00c13c23          	sd	x12,24(x2)
+ 1f4:	02d13023          	sd	x13,32(x2)
+ 1f8:	02e13423          	sd	x14,40(x2)
+ 1fc:	02f13823          	sd	x15,48(x2)
+ 200:	03013c23          	sd	x16,56(x2)
+ 204:	05113023          	sd	x17,64(x2)
+ 208:	04513423          	sd	x5,72(x2)
+ 20c:	04613823          	sd	x6,80(x2)
+ 210:	04713c23          	sd	x7,88(x2)
+ 214:	07c13023          	sd	x28,96(x2)
+ 218:	07d13423          	sd	x29,104(x2)
+ 21c:	07e13823          	sd	x30,112(x2)
+ 220:	07f13c23          	sd	x31,120(x2)
+ 224:	0bc00a13          	addi	x20,x0,188
+ 228:	00013083          	ld	x1,0(x2)
+ 22c:	00813503          	ld	x10,8(x2)
+ 230:	01013583          	ld	x11,16(x2)
+ 234:	01813603          	ld	x12,24(x2)
+ 238:	02013683          	ld	x13,32(x2)
+ 23c:	02813703          	ld	x14,40(x2)
+ 240:	03013783          	ld	x15,48(x2)
+ 244:	03813803          	ld	x16,56(x2)
+ 248:	04013883          	ld	x17,64(x2)
+ 24c:	04813283          	ld	x5,72(x2)
+ 250:	05013303          	ld	x6,80(x2)
+ 254:	05813383          	ld	x7,88(x2)
+ 258:	06013e03          	ld	x28,96(x2)
+ 25c:	06813e83          	ld	x29,104(x2)
+ 260:	07013f03          	ld	x30,112(x2)
+ 264:	07813f83          	ld	x31,120(x2)
+ 268:	08010113          	addi	x2,x2,128
+ 26c:	30200073          	mret
+ 270:	00000013          	addi	x0,x0,0
+ 274:	00813403          	ld	x8,8(x2)
+ 278:	01010113          	addi	x2,x2,16
+ 27c:	00008067          	jalr	x0,0(x1)
 
-00000000000001fc <_ZN3mie3SetEm>:
- 1fc:	fe010113          	addi	x2,x2,-32
- 200:	00813c23          	sd	x8,24(x2)
- 204:	02010413          	addi	x8,x2,32
- 208:	fea43423          	sd	x10,-24(x8)
- 20c:	fe843783          	ld	x15,-24(x8)
- 210:	3047a073          	csrrs	x0,mie,x15
- 214:	00000013          	addi	x0,x0,0
- 218:	01813403          	ld	x8,24(x2)
- 21c:	02010113          	addi	x2,x2,32
- 220:	00008067          	jalr	x0,0(x1)
+0000000000000280 <_ZN3mie5CSRRWEm>:
+ 280:	fd010113          	addi	x2,x2,-48
+ 284:	02813423          	sd	x8,40(x2)
+ 288:	03010413          	addi	x8,x2,48
+ 28c:	fca43c23          	sd	x10,-40(x8)
+ 290:	fd843783          	ld	x15,-40(x8)
+ 294:	304797f3          	csrrw	x15,mie,x15
+ 298:	fef43423          	sd	x15,-24(x8)
+ 29c:	fe843783          	ld	x15,-24(x8)
+ 2a0:	00078513          	addi	x10,x15,0
+ 2a4:	02813403          	ld	x8,40(x2)
+ 2a8:	03010113          	addi	x2,x2,48
+ 2ac:	00008067          	jalr	x0,0(x1)
 
-0000000000000224 <_ZN3mie5ClearEm>:
- 224:	fe010113          	addi	x2,x2,-32
- 228:	00813c23          	sd	x8,24(x2)
- 22c:	02010413          	addi	x8,x2,32
- 230:	fea43423          	sd	x10,-24(x8)
- 234:	fe843783          	ld	x15,-24(x8)
- 238:	3047b073          	csrrc	x0,mie,x15
- 23c:	00000013          	addi	x0,x0,0
- 240:	01813403          	ld	x8,24(x2)
- 244:	02010113          	addi	x2,x2,32
- 248:	00008067          	jalr	x0,0(x1)
+00000000000002b0 <_ZN3mie4CSRREv>:
+ 2b0:	fe010113          	addi	x2,x2,-32
+ 2b4:	00813c23          	sd	x8,24(x2)
+ 2b8:	02010413          	addi	x8,x2,32
+ 2bc:	304027f3          	csrrs	x15,mie,x0
+ 2c0:	fef43423          	sd	x15,-24(x8)
+ 2c4:	fe843783          	ld	x15,-24(x8)
+ 2c8:	00078513          	addi	x10,x15,0
+ 2cc:	01813403          	ld	x8,24(x2)
+ 2d0:	02010113          	addi	x2,x2,32
+ 2d4:	00008067          	jalr	x0,0(x1)
 
-000000000000024c <_ZN4Trap4InitEv>:
- 24c:	ff010113          	addi	x2,x2,-16
- 250:	00813423          	sd	x8,8(x2)
- 254:	01010413          	addi	x8,x2,16
- 258:	000007b7          	lui	x15,0x0
- 25c:	27478793          	addi	x15,x15,628 # 274 <_ZN4Trap5EntryEv>
- 260:	30579073          	csrrw	x0,mtvec,x15
- 264:	00000013          	addi	x0,x0,0
- 268:	00813403          	ld	x8,8(x2)
- 26c:	01010113          	addi	x2,x2,16
- 270:	00008067          	jalr	x0,0(x1)
-
-0000000000000274 <_ZN4Trap5EntryEv>:
- 274:	ff010113          	addi	x2,x2,-16
- 278:	00813423          	sd	x8,8(x2)
- 27c:	01010413          	addi	x8,x2,16
- 280:	0bc00a13          	addi	x20,x0,188
- 284:	00000013          	addi	x0,x0,0
- 288:	00813403          	ld	x8,8(x2)
- 28c:	01010113          	addi	x2,x2,16
- 290:	00008067          	jalr	x0,0(x1)
-
-0000000000000294 <main>:
- 294:	fe010113          	addi	x2,x2,-32
- 298:	00113c23          	sd	x1,24(x2)
- 29c:	00813823          	sd	x8,16(x2)
- 2a0:	02010413          	addi	x8,x2,32
- 2a4:	00000097          	auipc	x1,0x0
- 2a8:	fa8080e7          	jalr	x1,-88(x1) # 24c <_ZN4Trap4InitEv>
- 2ac:	00800793          	addi	x15,x0,8
- 2b0:	3007a073          	csrrs	x0,mstatus,x15
- 2b4:	08000513          	addi	x10,x0,128
- 2b8:	00000097          	auipc	x1,0x0
- 2bc:	f44080e7          	jalr	x1,-188(x1) # 1fc <_ZN3mie3SetEm>
- 2c0:	08000513          	addi	x10,x0,128
- 2c4:	00000097          	auipc	x1,0x0
- 2c8:	f60080e7          	jalr	x1,-160(x1) # 224 <_ZN3mie5ClearEm>
- 2cc:	0000b7b7          	lui	x15,0xb
- 2d0:	aaa78513          	addi	x10,x15,-1366 # aaaa <__global_pointer$+0x8d76>
- 2d4:	00000097          	auipc	x1,0x0
- 2d8:	f00080e7          	jalr	x1,-256(x1) # 1d4 <_ZN3mie5WriteEm>
- 2dc:	00000097          	auipc	x1,0x0
- 2e0:	ed0080e7          	jalr	x1,-304(x1) # 1ac <_ZN3mie4ReadEv>
+00000000000002d8 <_ZN3mie4CSRWEm>:
+ 2d8:	fe010113          	addi	x2,x2,-32
+ 2dc:	00813c23          	sd	x8,24(x2)
+ 2e0:	02010413          	addi	x8,x2,32
  2e4:	fea43423          	sd	x10,-24(x8)
- 2e8:	00000013          	addi	x0,x0,0
- 2ec:	01813083          	ld	x1,24(x2)
- 2f0:	01013403          	ld	x8,16(x2)
- 2f4:	02010113          	addi	x2,x2,32
- 2f8:	00008067          	jalr	x0,0(x1)
+ 2e8:	fe843783          	ld	x15,-24(x8)
+ 2ec:	30479073          	csrrw	x0,mie,x15
+ 2f0:	00000013          	addi	x0,x0,0
+ 2f4:	01813403          	ld	x8,24(x2)
+ 2f8:	02010113          	addi	x2,x2,32
+ 2fc:	00008067          	jalr	x0,0(x1)
+
+0000000000000300 <_ZN3mie5CSRRSEm>:
+ 300:	fd010113          	addi	x2,x2,-48
+ 304:	02813423          	sd	x8,40(x2)
+ 308:	03010413          	addi	x8,x2,48
+ 30c:	fca43c23          	sd	x10,-40(x8)
+ 310:	fd843783          	ld	x15,-40(x8)
+ 314:	3047a7f3          	csrrs	x15,mie,x15
+ 318:	fef43423          	sd	x15,-24(x8)
+ 31c:	fe843783          	ld	x15,-24(x8)
+ 320:	00078513          	addi	x10,x15,0
+ 324:	02813403          	ld	x8,40(x2)
+ 328:	03010113          	addi	x2,x2,48
+ 32c:	00008067          	jalr	x0,0(x1)
+
+0000000000000330 <_ZN3mie4CSRSEm>:
+ 330:	fe010113          	addi	x2,x2,-32
+ 334:	00813c23          	sd	x8,24(x2)
+ 338:	02010413          	addi	x8,x2,32
+ 33c:	fea43423          	sd	x10,-24(x8)
+ 340:	fe843783          	ld	x15,-24(x8)
+ 344:	3047a073          	csrrs	x0,mie,x15
+ 348:	00000013          	addi	x0,x0,0
+ 34c:	01813403          	ld	x8,24(x2)
+ 350:	02010113          	addi	x2,x2,32
+ 354:	00008067          	jalr	x0,0(x1)
+
+0000000000000358 <_ZN3mie5CSRRCEm>:
+ 358:	fd010113          	addi	x2,x2,-48
+ 35c:	02813423          	sd	x8,40(x2)
+ 360:	03010413          	addi	x8,x2,48
+ 364:	fca43c23          	sd	x10,-40(x8)
+ 368:	fd843783          	ld	x15,-40(x8)
+ 36c:	3047b7f3          	csrrc	x15,mie,x15
+ 370:	fef43423          	sd	x15,-24(x8)
+ 374:	fe843783          	ld	x15,-24(x8)
+ 378:	00078513          	addi	x10,x15,0
+ 37c:	02813403          	ld	x8,40(x2)
+ 380:	03010113          	addi	x2,x2,48
+ 384:	00008067          	jalr	x0,0(x1)
+
+0000000000000388 <_ZN3mie4CSRCEm>:
+ 388:	fe010113          	addi	x2,x2,-32
+ 38c:	00813c23          	sd	x8,24(x2)
+ 390:	02010413          	addi	x8,x2,32
+ 394:	fea43423          	sd	x10,-24(x8)
+ 398:	fe843783          	ld	x15,-24(x8)
+ 39c:	3047b073          	csrrc	x0,mie,x15
+ 3a0:	00000013          	addi	x0,x0,0
+ 3a4:	01813403          	ld	x8,24(x2)
+ 3a8:	02010113          	addi	x2,x2,32
+ 3ac:	00008067          	jalr	x0,0(x1)
+
+00000000000003b0 <main>:
+ 3b0:	fe010113          	addi	x2,x2,-32
+ 3b4:	00113c23          	sd	x1,24(x2)
+ 3b8:	00813823          	sd	x8,16(x2)
+ 3bc:	02010413          	addi	x8,x2,32
+ 3c0:	00000097          	auipc	x1,0x0
+ 3c4:	dec080e7          	jalr	x1,-532(x1) # 1ac <_ZN4Trap4InitEv>
+ 3c8:	08000513          	addi	x10,x0,128
+ 3cc:	00000097          	auipc	x1,0x0
+ 3d0:	f64080e7          	jalr	x1,-156(x1) # 330 <_ZN3mie4CSRSEm>
+ 3d4:	08000513          	addi	x10,x0,128
+ 3d8:	00000097          	auipc	x1,0x0
+ 3dc:	f80080e7          	jalr	x1,-128(x1) # 358 <_ZN3mie5CSRRCEm>
+ 3e0:	fea43423          	sd	x10,-24(x8)
+ 3e4:	000017b7          	lui	x15,0x1
+ 3e8:	88078513          	addi	x10,x15,-1920 # 880 <main+0x4d0>
+ 3ec:	00000097          	auipc	x1,0x0
+ 3f0:	f14080e7          	jalr	x1,-236(x1) # 300 <_ZN3mie5CSRRSEm>
+ 3f4:	fea43423          	sd	x10,-24(x8)
+ 3f8:	08000513          	addi	x10,x0,128
+ 3fc:	00000097          	auipc	x1,0x0
+ 400:	f8c080e7          	jalr	x1,-116(x1) # 388 <_ZN3mie4CSRCEm>
+ 404:	000017b7          	lui	x15,0x1
+ 408:	88878513          	addi	x10,x15,-1912 # 888 <main+0x4d8>
+ 40c:	00000097          	auipc	x1,0x0
+ 410:	e74080e7          	jalr	x1,-396(x1) # 280 <_ZN3mie5CSRRWEm>
+ 414:	fea43423          	sd	x10,-24(x8)
+ 418:	000017b7          	lui	x15,0x1
+ 41c:	80878513          	addi	x10,x15,-2040 # 808 <main+0x458>
+ 420:	00000097          	auipc	x1,0x0
+ 424:	eb8080e7          	jalr	x1,-328(x1) # 2d8 <_ZN3mie4CSRWEm>
+ 428:	00000097          	auipc	x1,0x0
+ 42c:	e88080e7          	jalr	x1,-376(x1) # 2b0 <_ZN3mie4CSRREv>
+ 430:	fea43423          	sd	x10,-24(x8)
+ 434:	00000013          	addi	x0,x0,0
+ 438:	01813083          	ld	x1,24(x2)
+ 43c:	01013403          	ld	x8,16(x2)
+ 440:	02010113          	addi	x2,x2,32
+ 444:	00008067          	jalr	x0,0(x1)
