@@ -1,4 +1,12 @@
+//==============================================
+// include 
+//==============================================
 #include <stdint.h>
+#include "mie.hpp"
+#include "mstatus.hpp"
+#include "mtvec.hpp"
+#include "mcause.hpp"
+
 
 void StoreByte(uint8_t * ptr, uint8_t value)
 {
@@ -41,50 +49,6 @@ uint64_t LoadDouble(uint64_t * ptr)
     return *ptr; 
 }
 
-////==============================================
-//// mie
-////==============================================
-//struct mie
-//{
-//    static uint64_t Read();
-//    static void Write(uint64_t value);
-//    static void Set(uint64_t mask);
-//    static void Clear(uint64_t mask);
-//};
-//
-////==============================================
-//// mie::Read
-////==============================================
-//uint64_t mie::Read()
-//{
-//    uint64_t value;
-//    asm volatile ("csrr %0, mie" : "=r" (value) : : );
-//    return value;
-//}
-//
-////==============================================
-//// mie::Write
-////==============================================
-//void mie::Write(uint64_t value)
-//{
-//    asm volatile ("csrw mie, %0" : : "r" (value) : );
-//}
-//
-////==============================================
-//// mie::Set
-////==============================================
-//void mie::Set(uint64_t mask)
-//{
-//    asm volatile ("csrs mie, %0" : : "r" (mask) : );
-//}
-//
-////==============================================
-//// mie::Clear
-////==============================================
-//void mie::Clear(uint64_t mask)
-//{
-//    asm volatile ("csrc mie, %0" : : "r" (mask) : );
-//}
 
 
 //==============================================
@@ -105,8 +69,7 @@ struct Trap
 //==============================================
 void Trap::Init()
 {
-    asm volatile ("csrw mtvec, %0" : : "r" (&Trap::Entry) : );
-    //mtvec::CSRW(&Trap::Entry);
+    mtvec::CSRW(&Trap::Entry);
 }
 
 //==============================================
@@ -114,8 +77,6 @@ void Trap::Init()
 //==============================================
 void Trap::Entry()
 {
-    //asm volatile ("addi x20, x0, 0xbc" : : : );
-
     // allocate space for 16 double words on the stack
     asm volatile ("addi sp, sp, -128");
     // push the non-saved registers onto the stack
@@ -136,8 +97,14 @@ void Trap::Entry()
     asm volatile ("sd t5, 112(sp)");
     asm volatile ("sd t6, 120(sp)");
     
-
     // call the ISR
+    if (mcause::CSRR() >> 63)
+    {
+        
+    }
+    else
+    {
+    }
     asm volatile ("addi x20, x0, 0xbc" : : : );
 
     // pop the non-saved register off of the stack
@@ -164,83 +131,6 @@ void Trap::Entry()
     asm volatile ("mret");
 }
 
-//==============================================
-// mie
-//==============================================
-struct mie
-{
-    static uint64_t CSRRW(uint64_t rs1);
-    static uint64_t CSRR();
-    static void CSRW(uint64_t rs1);
-    static uint64_t CSRRS(uint64_t rs1);
-    static void CSRS(uint64_t rs1);
-    static uint64_t CSRRC(uint64_t rs1);
-    static void CSRC(uint64_t rs1);
-};
-
-//==============================================
-// mie::CSRRW
-//==============================================
-uint64_t mie::CSRRW(uint64_t rs1)
-{
-    uint64_t rd;
-    asm volatile ("csrrw %0, mie, %1" : "=r" (rd) : "r" (rs1) : );
-    return rd;
-}
-
-//==============================================
-// mie::CSRR
-//==============================================
-uint64_t mie::CSRR()
-{
-    uint64_t rd;
-    asm volatile ("csrr %0, mie" : "=r" (rd) : : );
-    return rd;
-}
-
-//==============================================
-// mie::CSRW
-//==============================================
-void mie::CSRW(uint64_t rs1)
-{
-    asm volatile ("csrw mie, %0" : : "r" (rs1) : );
-}
-
-//==============================================
-// mie::CSRRS
-//==============================================
-uint64_t mie::CSRRS(uint64_t rs1)
-{
-    uint64_t rd;
-    asm volatile ("csrrs %0, mie, %1" : "=r" (rd) : "r" (rs1) : );
-    return rd;
-}
-
-//==============================================
-// mie::CSRS
-//==============================================
-void mie::CSRS(uint64_t rs1)
-{
-    asm volatile ("csrs mie, %0" : : "r" (rs1) : );
-}
-
-//==============================================
-// mie::CSRRC
-//==============================================
-uint64_t mie::CSRRC(uint64_t rs1)
-{
-    uint64_t rd;
-    asm volatile ("csrrc %0, mie, %1" : "=r" (rd) : "r" (rs1) : );
-    return rd;
-}
-
-//==============================================
-// mie::CSRC
-//==============================================
-void mie::CSRC(uint64_t rs1)
-{
-    asm volatile ("csrc mie, %0" : : "r" (rs1) : );
-}
 
 
 
