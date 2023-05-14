@@ -55,6 +55,8 @@ Resources:
             $ make clean simulate verify postverify XLEN=64 RISCV_DEVICE=I RISCV_TARGET=riscvOVPsimPlus
     - Inline assebly code
         - https://www.codeinsideout.com/blog/stm32/assembly/#extended-assembly
+    - Writing a Bare Metal OS:
+        - https://www.rpi4os.com/
     - crt0
         - https://en.wikipedia.org/wiki/Crt0 
     - SiFive Interrupt Cookbook

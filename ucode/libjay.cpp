@@ -1,173 +1,60 @@
 //==============================================
 // include 
 //==============================================
-#include <stdint.h>
-#include "defs.h"
-#include "mie.hpp"
-#include "mstatus.hpp"
-#include "mtvec.hpp"
-#include "mcause.hpp"
+#include "jay.hpp"
 
 
-void StoreByte(uint8_t * ptr, uint8_t value)
+#define DELAY__0 50000000
+#define DELAY__1 25000000
+
+
+void TimerInterruptIsr(void)
 {
-    *ptr = value;
+    uint8_t data__0;    
+    data__0 = Jay::LoadByte((uint8_t *)(GENERAL_PURPOSE_INPUT_OUTPUT__BASE_ADDR + GENERAL_PURPOSE_INPUT_OUTPUT__DATA__0));
+    data__0 = !data__0;
+    Jay::StoreByte((uint8_t *)(GENERAL_PURPOSE_INPUT_OUTPUT__BASE_ADDR + GENERAL_PURPOSE_INPUT_OUTPUT__DATA__0), data__0);
+    Jay::StoreDouble((uint64_t *)(MACHINE_TIMER_REGISTERS__BASE_ADDR + MACHINE_TIMER_REGISTERS__MTIME), 0);
 }
 
-void StoreHalf(uint16_t * ptr, uint16_t value)
+void ExternalInterruptIsr(void)
 {
-    *ptr = value;
-}
+    uint32_t id;
+    uint64_t delay;
+    // claim external interrupt
+    id = Jay::LoadWord((uint32_t *)(PLATFORM_LEVEL_INTERRUPT_CONTROLLER__BASE_ADDR + PLATFORM_LEVEL_INTERRUPT_CONTROLLER__CONTEXT__0__INTERRUPT_CLAIM_COMPLETE));
+    delay = Jay::LoadDouble((uint64_t *)(MACHINE_TIMER_REGISTERS__BASE_ADDR + MACHINE_TIMER_REGISTERS__MTIMECMP));
 
-void StoreWord(uint32_t * ptr, uint32_t value)
-{
-    *ptr = value;
-}
-
-
-void StoreDouble(uint64_t * ptr, uint64_t value)
-{
-    *ptr = value;
-}
-
-uint8_t LoadByte(uint8_t * ptr)
-{
-    return *ptr; 
-}
-
-uint16_t LoadHalf(uint16_t * ptr)
-{
-    return *ptr; 
-}
-
-uint16_t LoadWord(uint32_t * ptr)
-{
-    return *ptr; 
-}
-
-uint64_t LoadDouble(uint64_t * ptr)
-{
-    return *ptr; 
-}
-
-
-
-//==============================================
-// Trap 
-//==============================================
-struct Trap
-{
-    static void Init();
-    static void Entry();
-    static void SetISR(void * isr, uint64_t exception_code, uint64_t interrupt);
-    static void DefaultISR();
-
-    static void (* interrupt_vector_table[1])();
-    static void (* exception_vector_table[1])();
-};
-
-void (* Trap::interrupt_vector_table[1])() = {&Trap::DefaultISR};
-void (* Trap::exception_vector_table[1])() = {&Trap::DefaultISR};
-
-
-//==============================================
-// Trap::Init 
-//==============================================
-void Trap::Init()
-{
-    mtvec::CSRW((uint64_t)&Trap::Entry);
-}
-
-//==============================================
-// Trap::Entry
-//==============================================
-void Trap::Entry()
-{
-    // allocate space for 16 double words on the stack
-    asm volatile ("addi sp, sp, -128");
-    // push the non-saved registers onto the stack
-    asm volatile ("sd ra, 0(sp)");
-    asm volatile ("sd a0, 8(sp)");
-    asm volatile ("sd a1, 16(sp)");
-    asm volatile ("sd a2, 24(sp)");
-    asm volatile ("sd a3, 32(sp)");
-    asm volatile ("sd a4, 40(sp)");
-    asm volatile ("sd a5, 48(sp)");
-    asm volatile ("sd a6, 56(sp)");
-    asm volatile ("sd a7, 64(sp)");
-    asm volatile ("sd t0, 72(sp)");
-    asm volatile ("sd t1, 80(sp)");
-    asm volatile ("sd t2, 88(sp)");
-    asm volatile ("sd t3, 96(sp)");
-    asm volatile ("sd t4, 104(sp)");
-    asm volatile ("sd t5, 112(sp)");
-    asm volatile ("sd t6, 120(sp)");
-    
-
-    if ((mcause::CSRR() & CSR__MCAUSE__INTERRUPT__MASK) >> CSR__MCAUSE__INTERRUPT__LSB)
+    if (delay == DELAY__0)
     {
-        Trap::interrupt_vector_table[(mcause::CSRR() & CSR__MCAUSE__EXCEPTION_CODE__MASK) >> CSR__MCAUSE__EXCEPTION_CODE__LSB];
+        delay = DELAY__1;
     }
     else
     {
-        Trap::interrupt_vector_table[(mcause::CSRR() & CSR__MCAUSE__EXCEPTION_CODE__MASK) >> CSR__MCAUSE__EXCEPTION_CODE__LSB];
+        delay = DELAY__0;
     }
 
-
-    // pop the non-saved register off of the stack
-    asm volatile ("ld ra, 0(sp)");
-    asm volatile ("ld a0, 8(sp)");
-    asm volatile ("ld a1, 16(sp)");
-    asm volatile ("ld a2, 24(sp)");
-    asm volatile ("ld a3, 32(sp)");
-    asm volatile ("ld a4, 40(sp)");
-    asm volatile ("ld a5, 48(sp)");
-    asm volatile ("ld a6, 56(sp)");
-    asm volatile ("ld a7, 64(sp)");
-    asm volatile ("ld t0, 72(sp)");
-    asm volatile ("ld t1, 80(sp)");
-    asm volatile ("ld t2, 88(sp)");
-    asm volatile ("ld t3, 96(sp)");
-    asm volatile ("ld t4, 104(sp)");
-    asm volatile ("ld t5, 112(sp)");
-    asm volatile ("ld t6, 120(sp)");
-    // restore the stack pointer to its original value
-    asm volatile ("addi sp, sp, 128");
-
-    // return from the trap
-    asm volatile ("mret");
+    Jay::StoreDouble((uint64_t *)(MACHINE_TIMER_REGISTERS__BASE_ADDR + MACHINE_TIMER_REGISTERS__MTIMECMP), delay);
+    Jay::StoreWord((uint32_t *)(PLATFORM_LEVEL_INTERRUPT_CONTROLLER__BASE_ADDR + PLATFORM_LEVEL_INTERRUPT_CONTROLLER__CONTEXT__0__INTERRUPT_CLAIM_COMPLETE), id);
 }
-
-//==============================================
-// Trap::DefaultISR
-//==============================================
-void Trap::DefaultISR()
-{
-    
-}
-
-
-
 
 void main(void)
 {
-    Trap::Init();
-    //Trap::SetISR(foo, CSR__MCAUSE__EXCEPTION_CODE__MACHINE_TIMER_INTERRUPT, CSR__MCAUSE__INTERRUPT__INTERRUPT);
+    Jay::Init();
+    Jay::SetInterruptServiceRoutine(&TimerInterruptIsr, CSR__MCAUSE__EXCEPTION_CODE__MACHINE_TIMER_INTERRUPT, 0x1);
+    Jay::SetInterruptServiceRoutine(&ExternalInterruptIsr, CSR__MCAUSE__EXCEPTION_CODE__MACHINE_EXTERNAL_INTERRUPT, 0x1);
 
-    //asm volatile ("csrs mstatus, %0" : : "r" (0x8) : );
-    //mie::Set(0x80);
-    //mie::Clear(0x80);
-    //mie::Write(0xaaaa);
-    //uint64_t value;
-    //value = mie::Read();
-    uint64_t rd;
-    mie::CSRS(0x80);
-    rd = mie::CSRRC(0x80);
-    rd = mie::CSRRS(0x880);
-    mie::CSRC(0x80);
-    rd = mie::CSRRW(0x888);
-    mie::CSRW(0x808);
-    rd = mie::CSRR();
+    Jay::StoreDouble((uint64_t *)(MACHINE_TIMER_REGISTERS__BASE_ADDR + MACHINE_TIMER_REGISTERS__MTIME), 0);
+    Jay::StoreDouble((uint64_t *)(MACHINE_TIMER_REGISTERS__BASE_ADDR + MACHINE_TIMER_REGISTERS__MTIMECMP), DELAY__0);
+    Jay::StoreByte((uint8_t *)(GENERAL_PURPOSE_INPUT_OUTPUT__BASE_ADDR + GENERAL_PURPOSE_INPUT_OUTPUT__DATA__0), 0x1);
+    Jay::StoreByte((uint8_t *)(GENERAL_PURPOSE_INPUT_OUTPUT__BASE_ADDR + GENERAL_PURPOSE_INPUT_OUTPUT__OE__0), 0x1);
 
+    mie::CSRS(CSR__MIE__MTIE__MASK);
+    mie::CSRS(CSR__MIE__MEIE__MASK);
+
+    // enable interrupt source 1 for context 0
+    Jay::StoreWord((uint32_t *)(PLATFORM_LEVEL_INTERRUPT_CONTROLLER__BASE_ADDR + PLATFORM_LEVEL_INTERRUPT_CONTROLLER__CONTEXT__0__INTERRUPT_ENABLE_BITS__0_TO_31), 0x2);
+
+    mstatus::CSRS(CSR__MSTATUS__MIE__MASK);
 }
 

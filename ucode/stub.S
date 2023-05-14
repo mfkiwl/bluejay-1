@@ -1,3 +1,0 @@
-.global stub
-stub:
-    ret
