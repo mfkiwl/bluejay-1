@@ -31,5 +31,6 @@ struct Jay
     void sd(uint64_t rs1, uint64_t rs2);
 };
 
+Jay jay;
 
 #endif

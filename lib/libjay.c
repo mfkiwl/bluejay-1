@@ -2,6 +2,7 @@
 // include 
 //==============================================
 #include "jay.h"
+#include "trap.h"
 
 
 #define DELAY__0 50000000
@@ -40,9 +41,9 @@ void ExternalInterruptIsr(void)
 
 void main(void)
 {
-    //jay.Init();
-    //jay.SetInterruptServiceRoutine(&TimerInterruptIsr, CSR__MCAUSE__EXCEPTION_CODE__MACHINE_TIMER_INTERRUPT, 0x1);
-    //jay.SetInterruptServiceRoutine(&ExternalInterruptIsr, CSR__MCAUSE__EXCEPTION_CODE__MACHINE_EXTERNAL_INTERRUPT, 0x1);
+    trap.Init();
+    trap.Set(CSR__MCAUSE__EXCEPTION_CODE__MACHINE_TIMER_INTERRUPT, 0x1, &TimerInterruptIsr);
+    trap.Set(CSR__MCAUSE__EXCEPTION_CODE__MACHINE_EXTERNAL_INTERRUPT, 0x1, &ExternalInterruptIsr);
 
     jay.sd((uint64_t)(MACHINE_TIMER_REGISTERS__BASE_ADDR + MACHINE_TIMER_REGISTERS__MTIME), 0);
     jay.sd((uint64_t)(MACHINE_TIMER_REGISTERS__BASE_ADDR + MACHINE_TIMER_REGISTERS__MTIMECMP), DELAY__0);
