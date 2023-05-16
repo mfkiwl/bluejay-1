@@ -1,5 +1,5 @@
-#ifndef MCAUSE__H
-#define MCAUSE__H
+#ifndef MCAUSE__HPP
+#define MCAUSE__HPP
 
 //==============================================
 // include 

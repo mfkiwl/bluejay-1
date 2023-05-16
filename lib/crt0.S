@@ -23,6 +23,9 @@ while__0:
 	j while__0
 end__0:
 
+    # run global initialization functions
+    call __libc_init_array
+
     # call the main program 
 	call main
 

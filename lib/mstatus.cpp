@@ -1,69 +1,68 @@
 //==============================================
 // include 
 //==============================================
-#include "mie.h"
+#include "mstatus.hpp"
 
 //==============================================
-// MIE::csrrw
+// MSTATUS::csrrw
 //==============================================
-uint64_t MIE::csrrw(uint64_t rs1)
+uint64_t MSTATUS::csrrw(uint64_t rs1)
 {
     uint64_t rd;
-    asm volatile ("csrrw %[rd], mie, %[rs1]" : [rd] "=r" (rd) : [rs1] "r" (rs1) : );
+    asm volatile ("csrrw %[rd], mstatus, %[rs1]" : [rd] "=r" (rd) : [rs1] "r" (rs1) : );
     return rd;
 }
 
 //==============================================
-// MIE::csrr
+// MSTATUS::csrr
 //==============================================
-uint64_t MIE::csrr()
+uint64_t MSTATUS::csrr()
 {
     uint64_t rd;
-    asm volatile ("csrr %[rd], mie" : [rd] "=r" (rd) : : );
+    asm volatile ("csrr %[rd], mstatus" : [rd] "=r" (rd) : : );
     return rd;
 }
 
 //==============================================
-// MIE::csrw
+// MSTATUS::csrw
 //==============================================
-void MIE::csrw(uint64_t rs1)
+void MSTATUS::csrw(uint64_t rs1)
 {
-    asm volatile ("csrw mie, %[rs1]" : : [rs1] "r" (rs1) : );
+    asm volatile ("csrw mstatus, %[rs1]" : : [rs1] "r" (rs1) : );
 }
 
 //==============================================
-// MIE::csrrs
+// MSTATUS::csrrs
 //==============================================
-uint64_t MIE::csrrs(uint64_t rs1)
+uint64_t MSTATUS::csrrs(uint64_t rs1)
 {
     uint64_t rd;
-    asm volatile ("csrrs %[rd], mie, %1" : [rd] "=r" (rd) : [rs1] "r" (rs1) : );
+    asm volatile ("csrrs %[rd], mstatus, %[rs1]" : [rd] "=r" (rd) : [rs1] "r" (rs1) : );
     return rd;
 }
 
 //==============================================
-// MIE::csrs
+// MSTATUS::csrs
 //==============================================
-void MIE::csrs(uint64_t rs1)
+void MSTATUS::csrs(uint64_t rs1)
 {
-    asm volatile ("csrs mie, %[rs1]" : : [rs1] "r" (rs1) : );
+    asm volatile ("csrs mstatus, %[rs1]" : : [rs1] "r" (rs1) : );
 }
 
 //==============================================
-// MIE::csrrc
+// MSTATUS::csrrc
 //==============================================
-uint64_t MIE::csrrc(uint64_t rs1)
+uint64_t MSTATUS::csrrc(uint64_t rs1)
 {
     uint64_t rd;
-    asm volatile ("csrrc %[rd], mie, %[rs1]" : [rd] "=r" (rd) : [rs1] "r" (rs1) : );
+    asm volatile ("csrrc %[rd], mstatus, %[rs1]" : [rd] "=r" (rd) : [rs1] "r" (rs1) : );
     return rd;
 }
 
 //==============================================
-// MIE::csrc
+// MSTATUS::csrc
 //==============================================
-void MIE::csrc(uint64_t rs1)
+void MSTATUS::csrc(uint64_t rs1)
 {
-    asm volatile ("csrc mie, %[rs1]" : : [rs1] "r" (rs1) : );
+    asm volatile ("csrc mstatus, %[rs1]" : : [rs1] "r" (rs1) : );
 }
-

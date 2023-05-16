@@ -1,11 +1,11 @@
-#ifndef TRAP__H
-#define TRAP__H
+#ifndef TRAP__HPP
+#define TRAP__HPP
 
 //==============================================
 // include 
 //==============================================
 #include <stdint.h>
-#include "jay.h"
+#include "jay.hpp"
 
 //==============================================
 // Trap 
@@ -22,6 +22,6 @@ struct Trap
     void Spin();
 };
 
-Trap trap;
+extern Trap trap;
 
 #endif

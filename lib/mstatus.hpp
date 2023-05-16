@@ -1,5 +1,5 @@
-#ifndef MSTATUS__H
-#define MSTATUS__H
+#ifndef MSTATUS__HPP
+#define MSTATUS__HPP
 
 //==============================================
 // include 

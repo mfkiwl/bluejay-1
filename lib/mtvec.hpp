@@ -1,5 +1,5 @@
-#ifndef MTVEC__H
-#define MTVEC__H
+#ifndef MTVEC__HPP
+#define MTVEC__HPP
 
 //==============================================
 // include 

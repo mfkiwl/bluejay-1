@@ -8,6 +8,9 @@
 Resources:
     - Riscv-gnu-toolchain:
         - https://github.com/riscv-collab/riscv-gnu-toolchain
+        - configure risc-v toolchain for rv64i: ./configure --prefix=/opt/riscv --with-arch=rv64i --with-abi=lp64
+            - if you don't do this, you will get error: can't link double-float modules with soft-float modules
+                - fix: https://forums.sifive.com/t/16-bit-instructions-from-objdump/979/4  (comment by jimw from Jan 18)
     - RISC-V Assembly Programmer's Manual
         - https://github.com/riscv-non-isa/riscv-asm-manual/blob/master/riscv-asm.md
         - https://shakti.org.in/docs/risc-v-asm-manual.pdf

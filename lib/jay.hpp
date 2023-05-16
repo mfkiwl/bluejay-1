@@ -1,15 +1,15 @@
-#ifndef JAY__H
-#define JAY__H
+#ifndef JAY__HPP
+#define JAY__HPP
 
 //==============================================
 // include 
 //==============================================
 #include <stdint.h>
 #include "defs.h"
-#include "mie.h"
-#include "mstatus.h"
-#include "mtvec.h"
-#include "mcause.h"
+#include "mie.hpp"
+#include "mstatus.hpp"
+#include "mtvec.hpp"
+#include "mcause.hpp"
 
 //==============================================
 // Jay 
@@ -31,6 +31,6 @@ struct Jay
     void sd(uint64_t rs1, uint64_t rs2);
 };
 
-Jay jay;
+extern Jay jay;
 
 #endif

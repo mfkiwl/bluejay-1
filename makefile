@@ -816,11 +816,17 @@ CFLAGS += -ffreestanding
 CFLAGS += -fno-pic
 CFLAGS += -march=$(MARCH)
 CFLAGS += -mabi=$(MABI)
+#CFLAGS += -lc
+#CFLAGS += -lgcc
 
 LDFLAGS :=
 LDFLAGS += -nostdlib
 LDFLAGS += -Wl,-Ttext=0x0
 LDFLAGS += -Wl,--no-relax
+
+
+LDLIBS += -lc
+LDLIBS += -lgcc
 
 
 ################################
@@ -853,7 +859,7 @@ endef
 ################################
 define code--o-to-elf--template
 $(1): $(2)
-	riscv64-unknown-elf-gcc $(CFLAGS) $(LDFLAGS) -o $$(@) $$(^)
+	riscv64-unknown-elf-gcc $(CFLAGS) $(LDFLAGS) -o $$(@) $$(^) $(LDLIBS)
 endef
 
 ################################
@@ -924,23 +930,23 @@ $(eval $(call code--mem-to-coe--template,ucode/prog.coe,ucode/prog.mem))
 $(eval $(call code--c-to-o--template,$(TOP)/ucode/main.o,$(TOP)/ucode/main.c))
 
 
-SRC :=
-SRC += mie
-SRC += mstatus
-SRC += mtvec
-SRC += mcause
-
-CPP := $(addsuffix .S,$(addprefix $(TOP)/ucode/,$(SRC)))
-CPPOBJ := $(addsuffix .o,$(addprefix $(TOP)/ucode/,$(SRC)))
-
-$(foreach i,$(SRC),$(eval $(call code--c-to-o--template,$(TOP)/ucode/$(i).o,$(TOP)/ucode/$(i).cpp)))
-
-$(eval $(call code--c-to-o--template,$(TOP)/ucode/libjay.o,$(TOP)/ucode/libjay.cpp))
-
-$(eval $(call code--o-to-elf--template,ucode/prog.elf,$(OBJ) $(CPPOBJ) $(TOP)/ucode/libjay.o))
-
-abc:
-	echo $(OBJ) 
+#src :=
+#src += mie
+#src += mstatus
+#src += mtvec
+#src += mcause
+#
+#cpp := $(addsuffix .s,$(addprefix $(top)/ucode/,$(src)))
+#cppobj := $(addsuffix .o,$(addprefix $(top)/ucode/,$(src)))
+#
+#$(foreach i,$(src),$(eval $(call code--c-to-o--template,$(top)/ucode/$(i).o,$(top)/ucode/$(i).cpp)))
+#
+#$(eval $(call code--c-to-o--template,$(top)/ucode/libjay.o,$(top)/ucode/libjay.cpp))
+#
+#$(eval $(call code--o-to-elf--template,ucode/prog.elf,$(obj) $(cppobj) $(top)/ucode/libjay.o))
+#
+#abc:
+#	echo $(obj) 
     
 
 #$(eval $(call code--S-to-o--template,code/crt0.o,code/crt0.S))
@@ -977,6 +983,39 @@ abc:
 #
 
 
+SRC :=
+SRC += mie
+SRC += mstatus
+SRC += mtvec
+SRC += mcause
+SRC += jay
+SRC += trap
+
+
+CPP := $(addsuffix .cpp,$(addprefix $(TOP)/lib/,$(SRC)))
+CPPOBJ := $(addsuffix .o,$(addprefix $(TOP)/lib/,$(SRC)))
+
+$(foreach i,$(SRC),$(eval $(call code--c-to-o--template,$(TOP)/lib/$(i).o,$(TOP)/lib/$(i).cpp)))
+
+$(eval $(call code--c-to-o--template,$(TOP)/lib/libjay.o,$(TOP)/lib/libjay.cpp))
+
+$(eval $(call code--o-to-elf--template,lib/prog.elf,lib/crt0.o $(CPPOBJ) $(TOP)/lib/libjay.o))
+
+
+$(eval $(call code--S-to-o--template,lib/crt0.o,lib/crt0.S))
+#$(eval $(call code--S-to-o--template,ucode/trap.o,ucode/trap.S))
+
+#$(eval $(call code--o-to-elf--template,ucode/prog.elf,$(OBJ) $(TOP)/ucode/main.o))
+$(eval $(call code--elf-to-bin--template,lib/prog.bin,lib/prog.elf))
+$(eval $(call code--elf-to-lst--template,lib/prog.lst,lib/prog.elf))
+$(eval $(call code--bin-to-mem--template,lib/prog.mem,lib/prog.bin))
+$(eval $(call code--mem-to-coe--template,lib/prog.coe,lib/prog.mem))
+
+#$(eval $(call code--c-to-o--template,$(TOP)/ucode/main.o,$(TOP)/ucode/main.c))
+
+
+abc:
+	echo $(obj) 
 
 
 .PHONY: clean

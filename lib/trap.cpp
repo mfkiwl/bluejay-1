@@ -1,7 +1,7 @@
 //==============================================
 // include 
 //==============================================
-#include "trap.h"
+#include "trap.hpp"
 
 //==============================================
 // Trap::Trap
@@ -11,34 +11,34 @@ Trap::Trap()
     // initialize the interrupt_vector_table 
     this->interrupt_vector_table[0] = &this->Spin;
     this->interrupt_vector_table[1] = &this->Spin;
-    this->interrupt_vector_table[2] = &this->Spin;
-    this->interrupt_vector_table[3] = &this->Spin;
-    this->interrupt_vector_table[4] = &this->Spin;
-    this->interrupt_vector_table[5] = &this->Spin;
-    this->interrupt_vector_table[6] = &this->Spin;
-    this->interrupt_vector_table[7] = &this->Spin;
-    this->interrupt_vector_table[8] = &this->Spin;
-    this->interrupt_vector_table[9] = &this->Spin;
-    this->interrupt_vector_table[10] = &this->Spin;
-    this->interrupt_vector_table[11] = &this->Spin;
+    //this->interrupt_vector_table[2] = &this->Spin;
+    //this->interrupt_vector_table[3] = &this->Spin;
+    //this->interrupt_vector_table[4] = &this->Spin;
+    //this->interrupt_vector_table[5] = &this->Spin;
+    //this->interrupt_vector_table[6] = &this->Spin;
+    //this->interrupt_vector_table[7] = &this->Spin;
+    //this->interrupt_vector_table[8] = &this->Spin;
+    //this->interrupt_vector_table[9] = &this->Spin;
+    //this->interrupt_vector_table[10] = &this->Spin;
+    //this->interrupt_vector_table[11] = &this->Spin;
 
-    // initialize the exception_vector_table
-    this->exception_vector_table[0] = &this->Spin;
-    this->exception_vector_table[1] = &this->Spin;
-    this->exception_vector_table[2] = &this->Spin;
-    this->exception_vector_table[3] = &this->Spin;
-    this->exception_vector_table[4] = &this->Spin;
-    this->exception_vector_table[5] = &this->Spin;
-    this->exception_vector_table[6] = &this->Spin;
-    this->exception_vector_table[7] = &this->Spin;
-    this->exception_vector_table[8] = &this->Spin;
-    this->exception_vector_table[9] = &this->Spin;
-    this->exception_vector_table[10] = &this->Spin;
-    this->exception_vector_table[11] = &this->Spin;
-    this->exception_vector_table[12] = &this->Spin;
-    this->exception_vector_table[13] = &this->Spin;
-    this->exception_vector_table[14] = &this->Spin;
-    this->exception_vector_table[15] = &this->Spin;
+    //// initialize the exception_vector_table
+    //this->exception_vector_table[0] = &this->Spin;
+    //this->exception_vector_table[1] = &this->Spin;
+    //this->exception_vector_table[2] = &this->Spin;
+    //this->exception_vector_table[3] = &this->Spin;
+    //this->exception_vector_table[4] = &this->Spin;
+    //this->exception_vector_table[5] = &this->Spin;
+    //this->exception_vector_table[6] = &this->Spin;
+    //this->exception_vector_table[7] = &this->Spin;
+    //this->exception_vector_table[8] = &this->Spin;
+    //this->exception_vector_table[9] = &this->Spin;
+    //this->exception_vector_table[10] = &this->Spin;
+    //this->exception_vector_table[11] = &this->Spin;
+    //this->exception_vector_table[12] = &this->Spin;
+    //this->exception_vector_table[13] = &this->Spin;
+    //this->exception_vector_table[14] = &this->Spin;
+    //this->exception_vector_table[15] = &this->Spin;
 }
 
 //==============================================
@@ -46,7 +46,7 @@ Trap::Trap()
 //==============================================
 void Trap::Init()
 {
-    jay.mtvec.csrw((uint64_t)&this->Entry);
+    //jay.mtvec.csrw((uint64_t)&this->Entry);
 }
 
 //==============================================
@@ -155,4 +155,6 @@ void Trap::Spin()
 {
    while (1) {}
 }
+
+Trap trap;
 

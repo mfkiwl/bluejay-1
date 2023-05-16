@@ -1,69 +1,69 @@
 //==============================================
 // include 
 //==============================================
-#include "mtvec.h"
+#include "mie.hpp"
 
 //==============================================
-// MTVEC::csrrw
+// MIE::csrrw
 //==============================================
-uint64_t MTVEC::csrrw(uint64_t rs1)
+uint64_t MIE::csrrw(uint64_t rs1)
 {
     uint64_t rd;
-    asm volatile ("csrrw %[rd], mtvec, %[rs1]" : [rd] "=r" (rd) : [rs1] "r" (rs1) : );
+    asm volatile ("csrrw %[rd], mie, %[rs1]" : [rd] "=r" (rd) : [rs1] "r" (rs1) : );
     return rd;
 }
 
 //==============================================
-// MTVEC::csrr
+// MIE::csrr
 //==============================================
-uint64_t MTVEC::csrr()
+uint64_t MIE::csrr()
 {
     uint64_t rd;
-    asm volatile ("csrr %[rd], mtvec" : [rd] "=r" (rd) : : );
+    asm volatile ("csrr %[rd], mie" : [rd] "=r" (rd) : : );
     return rd;
 }
 
 //==============================================
-// MTVEC::csrw
+// MIE::csrw
 //==============================================
-void MTVEC::csrw(uint64_t rs1)
+void MIE::csrw(uint64_t rs1)
 {
-    asm volatile ("csrw mtvec, %[rs1]" : : [rs1] "r" (rs1) : );
+    asm volatile ("csrw mie, %[rs1]" : : [rs1] "r" (rs1) : );
 }
 
 //==============================================
-// MTVEC::csrrs
+// MIE::csrrs
 //==============================================
-uint64_t MTVEC::csrrs(uint64_t rs1)
+uint64_t MIE::csrrs(uint64_t rs1)
 {
     uint64_t rd;
-    asm volatile ("csrrs %[rd], mtvec, %[rs1]" : [rd] "=r" (rd) : [rs1] "r" (rs1) : );
+    asm volatile ("csrrs %[rd], mie, %1" : [rd] "=r" (rd) : [rs1] "r" (rs1) : );
     return rd;
 }
 
 //==============================================
-// MTVEC::csrs
+// MIE::csrs
 //==============================================
-void MTVEC::csrs(uint64_t rs1)
+void MIE::csrs(uint64_t rs1)
 {
-    asm volatile ("csrs mtvec, %[rs1]" : : [rs1] "r" (rs1) : );
+    asm volatile ("csrs mie, %[rs1]" : : [rs1] "r" (rs1) : );
 }
 
 //==============================================
-// MTVEC::csrrc
+// MIE::csrrc
 //==============================================
-uint64_t MTVEC::csrrc(uint64_t rs1)
+uint64_t MIE::csrrc(uint64_t rs1)
 {
     uint64_t rd;
-    asm volatile ("csrrc %[rd], mtvec, %[rs1]" : [rd] "=r" (rd) : [rs1] "r" (rs1) : );
+    asm volatile ("csrrc %[rd], mie, %[rs1]" : [rd] "=r" (rd) : [rs1] "r" (rs1) : );
     return rd;
 }
 
 //==============================================
-// MTVEC::csrc
+// MIE::csrc
 //==============================================
-void MTVEC::csrc(uint64_t rs1)
+void MIE::csrc(uint64_t rs1)
 {
-    asm volatile ("csrc mtvec, %[rs1]" : : [rs1] "r" (rs1) : );
+    asm volatile ("csrc mie, %[rs1]" : : [rs1] "r" (rs1) : );
 }
 

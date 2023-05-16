@@ -1,5 +1,5 @@
-#ifndef MIE__H
-#define MIE__H
+#ifndef MIE__HPP
+#define MIE__HPP
 
 //==============================================
 // include 

@@ -1,13 +1,15 @@
 //==============================================
 // include 
 //==============================================
-#include "jay.h"
-#include "trap.h"
+#include "jay.hpp"
+#include "trap.hpp"
 
 
 #define DELAY__0 50000000
 #define DELAY__1 25000000
 
+//Jay jay;
+//Trap trap;
 
 void TimerInterruptIsr(void)
 {
@@ -15,7 +17,7 @@ void TimerInterruptIsr(void)
     data__0 = jay.lb((uint64_t)(GENERAL_PURPOSE_INPUT_OUTPUT__BASE_ADDR + GENERAL_PURPOSE_INPUT_OUTPUT__DATA__0));
     data__0 = !data__0;
     jay.sb((uint64_t)(GENERAL_PURPOSE_INPUT_OUTPUT__BASE_ADDR + GENERAL_PURPOSE_INPUT_OUTPUT__DATA__0), data__0);
-    jay.sd((uint64_t *)(MACHINE_TIMER_REGISTERS__BASE_ADDR + MACHINE_TIMER_REGISTERS__MTIME), 0);
+    jay.sd((uint64_t)(MACHINE_TIMER_REGISTERS__BASE_ADDR + MACHINE_TIMER_REGISTERS__MTIME), 0);
 }
 
 void ExternalInterruptIsr(void)
