@@ -2,11 +2,13 @@
 // include 
 //==============================================
 #include "jay.hpp"
-#include "trap.hpp"
+//#include "trap.hpp"
 
 
 #define DELAY__0 50000000
 #define DELAY__1 25000000
+//#define DELAY__0 200
+//#define DELAY__1 100
 
 //Jay jay;
 //Trap trap;
@@ -41,11 +43,17 @@ void ExternalInterruptIsr(void)
     jay.sw((uint64_t)(PLATFORM_LEVEL_INTERRUPT_CONTROLLER__BASE_ADDR + PLATFORM_LEVEL_INTERRUPT_CONTROLLER__CONTEXT__0__INTERRUPT_CLAIM_COMPLETE), id);
 }
 
+extern void (* interrupt_vector_table[12])();
+//extern uint64_t * interrupt_vector_table;
+
 void main(void)
 {
-    trap.Init();
-    trap.Set(CSR__MCAUSE__EXCEPTION_CODE__MACHINE_TIMER_INTERRUPT, 0x1, &TimerInterruptIsr);
-    trap.Set(CSR__MCAUSE__EXCEPTION_CODE__MACHINE_EXTERNAL_INTERRUPT, 0x1, &ExternalInterruptIsr);
+    //trap.Init();
+    //trap.Set(CSR__MCAUSE__EXCEPTION_CODE__MACHINE_TIMER_INTERRUPT, 0x1, &TimerInterruptIsr);
+    //trap.Set(CSR__MCAUSE__EXCEPTION_CODE__MACHINE_EXTERNAL_INTERRUPT, 0x1, &ExternalInterruptIsr);
+
+    jay.sd((uint64_t)interrupt_vector_table + CSR__MCAUSE__EXCEPTION_CODE__MACHINE_TIMER_INTERRUPT * 8, (uint64_t)&TimerInterruptIsr);
+    jay.sd((uint64_t)interrupt_vector_table + CSR__MCAUSE__EXCEPTION_CODE__MACHINE_EXTERNAL_INTERRUPT * 8, (uint64_t)&ExternalInterruptIsr);
 
     jay.sd((uint64_t)(MACHINE_TIMER_REGISTERS__BASE_ADDR + MACHINE_TIMER_REGISTERS__MTIME), 0);
     jay.sd((uint64_t)(MACHINE_TIMER_REGISTERS__BASE_ADDR + MACHINE_TIMER_REGISTERS__MTIMECMP), DELAY__0);

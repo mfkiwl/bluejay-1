@@ -36,7 +36,7 @@ add_files /home/seankent/bluejay/vivado/coe/main.coe
 add_files /home/seankent/bluejay/vivado/coe/blinky.coe
 add_files /home/seankent/bluejay/vivado/coe/interactive_blinky.coe
 add_files /home/seankent/bluejay/code/prog.coe
-add_files /home/seankent/bluejay/ucode/prog.coe
+add_files /home/seankent/bluejay/lib/prog.coe
 read_verilog -library xil_defaultlib -sv /home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv
 read_ip -quiet /home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/ip/blk_mem_gen_0/blk_mem_gen_0.xci
 set_property used_in_implementation false [get_files -all /home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/ip/blk_mem_gen_0/blk_mem_gen_0_ooc.xdc]

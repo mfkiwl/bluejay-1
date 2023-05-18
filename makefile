@@ -989,7 +989,8 @@ SRC += mstatus
 SRC += mtvec
 SRC += mcause
 SRC += jay
-SRC += trap
+SRC += main
+#SRC += trap
 
 
 CPP := $(addsuffix .cpp,$(addprefix $(TOP)/lib/,$(SRC)))
@@ -997,9 +998,8 @@ CPPOBJ := $(addsuffix .o,$(addprefix $(TOP)/lib/,$(SRC)))
 
 $(foreach i,$(SRC),$(eval $(call code--c-to-o--template,$(TOP)/lib/$(i).o,$(TOP)/lib/$(i).cpp)))
 
-$(eval $(call code--c-to-o--template,$(TOP)/lib/libjay.o,$(TOP)/lib/libjay.cpp))
 
-$(eval $(call code--o-to-elf--template,lib/prog.elf,lib/crt0.o $(CPPOBJ) $(TOP)/lib/libjay.o))
+$(eval $(call code--o-to-elf--template,lib/prog.elf,lib/crt0.o $(CPPOBJ)))
 
 
 $(eval $(call code--S-to-o--template,lib/crt0.o,lib/crt0.S))

@@ -77,6 +77,8 @@ Resources:
     - riscv-asm-manual: https://github.com/riscv-non-isa/riscv-asm-manual/blob/master/riscv-asm.md
     - riscv exception/interrupt handler example
         - https://mullerlee.cyou/2020/07/09/riscv-exception-interrupt/
+    - sifive e31 core doc:
+        - https://starfivetech.com/uploads/e31_core_complex_manual_21G1.pdf
 
 
 

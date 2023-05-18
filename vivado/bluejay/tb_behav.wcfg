@@ -11,15 +11,20 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="3500000fs"></ZoomStartTime>
-      <ZoomEndTime time="24500001fs"></ZoomEndTime>
-      <Cursor1Time time="21000000fs"></Cursor1Time>
+      <ZoomStartTime time="23500000fs"></ZoomStartTime>
+      <ZoomEndTime time="104500001fs"></ZoomEndTime>
+      <Cursor1Time time="91000000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="255"></NameColumnWidth>
-      <ValueColumnWidth column_width="138"></ValueColumnWidth>
+      <ValueColumnWidth column_width="134"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="64" />
+   <WVObjectSize size="74" />
+   <wave_markers>
+      <marker label="" time="9800000" />
+      <marker label="" time="28670000" />
+      <marker label="" time="61278685" />
+   </wave_markers>
    <wvobject type="logic" fp_name="/tb/clk_100mhz">
       <obj_property name="ElementShortName">clk_100mhz</obj_property>
       <obj_property name="ObjectShortName">clk_100mhz</obj_property>
@@ -164,10 +169,6 @@
       <obj_property name="ElementShortName">state__n[2:0]</obj_property>
       <obj_property name="ObjectShortName">state__n[2:0]</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/tb/dut/jay__0/central_processing_unit__0/pc">
-      <obj_property name="ElementShortName">pc[63:0]</obj_property>
-      <obj_property name="ObjectShortName">pc[63:0]</obj_property>
-   </wvobject>
    <wvobject type="array" fp_name="/tb/dut/jay__0/central_processing_unit__0/ir">
       <obj_property name="ElementShortName">ir[31:0]</obj_property>
       <obj_property name="ObjectShortName">ir[31:0]</obj_property>
@@ -256,6 +257,10 @@
       <obj_property name="ElementShortName">mie__mtie[0:0]</obj_property>
       <obj_property name="ObjectShortName">mie__mtie[0:0]</obj_property>
    </wvobject>
+   <wvobject type="array" fp_name="/tb/dut/jay__0/central_processing_unit__0/control_and_status_registers__0/mstatus__mie">
+      <obj_property name="ElementShortName">mstatus__mie[0:0]</obj_property>
+      <obj_property name="ObjectShortName">mstatus__mie[0:0]</obj_property>
+   </wvobject>
    <wvobject type="logic" fp_name="/tb/dut/jay__0/central_processing_unit__0/control_and_status_registers__0/en__mie">
       <obj_property name="ElementShortName">en__mie</obj_property>
       <obj_property name="ObjectShortName">en__mie</obj_property>
@@ -275,5 +280,45 @@
    <wvobject type="array" fp_name="/tb/dut/jay__0/central_processing_unit__0/control_and_status_registers__0/mtvec">
       <obj_property name="ElementShortName">mtvec[63:0]</obj_property>
       <obj_property name="ObjectShortName">mtvec[63:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb/dut/jay__0/central_processing_unit__0/register_file__0/x__15">
+      <obj_property name="ElementShortName">x__15[63:0]</obj_property>
+      <obj_property name="ObjectShortName">x__15[63:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb/dut/jay__0/central_processing_unit__0/pc">
+      <obj_property name="ElementShortName">pc[63:0]</obj_property>
+      <obj_property name="ObjectShortName">pc[63:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb/dut/jay__0/platform_level_interrupt_controller__0/cs">
+      <obj_property name="ElementShortName">cs</obj_property>
+      <obj_property name="ObjectShortName">cs</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb/dut/jay__0/platform_level_interrupt_controller__0/we">
+      <obj_property name="ElementShortName">we</obj_property>
+      <obj_property name="ObjectShortName">we</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb/dut/jay__0/platform_level_interrupt_controller__0/addr">
+      <obj_property name="ElementShortName">addr[25:0]</obj_property>
+      <obj_property name="ObjectShortName">addr[25:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb/dut/jay__0/platform_level_interrupt_controller__0/int__1">
+      <obj_property name="ElementShortName">int__1</obj_property>
+      <obj_property name="ObjectShortName">int__1</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb/dut/jay__0/platform_level_interrupt_controller__0/request__1">
+      <obj_property name="ElementShortName">request__1</obj_property>
+      <obj_property name="ObjectShortName">request__1</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb/dut/jay__0/platform_level_interrupt_controller__0/complete__1">
+      <obj_property name="ElementShortName">complete__1</obj_property>
+      <obj_property name="ObjectShortName">complete__1</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb/dut/jay__0/tip">
+      <obj_property name="ElementShortName">tip</obj_property>
+      <obj_property name="ObjectShortName">tip</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb/dut/jay__0/context__0__eip">
+      <obj_property name="ElementShortName">context__0__eip</obj_property>
+      <obj_property name="ObjectShortName">context__0__eip</obj_property>
    </wvobject>
 </wave_config>
