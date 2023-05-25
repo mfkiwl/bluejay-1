@@ -1,0 +1,466 @@
+
+sw/prog.elf:     file format elf64-littleriscv
+
+
+Disassembly of section .text:
+
+0000000000000000 <_start>:
+   0:	00008137          	lui	x2,0x8
+   4:	00001197          	auipc	x3,0x1
+   8:	c0c18193          	addi	x3,x3,-1012 # c10 <__global_pointer$>
+   c:	00000297          	auipc	x5,0x0
+  10:	04028293          	addi	x5,x5,64 # 4c <trap_entry>
+  14:	30529073          	csrrw	x0,mtvec,x5
+  18:	00001297          	auipc	x5,0x1
+  1c:	af028293          	addi	x5,x5,-1296 # b08 <jay>
+  20:	00001317          	auipc	x6,0x1
+  24:	ae830313          	addi	x6,x6,-1304 # b08 <jay>
+
+0000000000000028 <_start__while__0>:
+  28:	0062f863          	bgeu	x5,x6,38 <_start__endwhile__0>
+  2c:	00028023          	sb	x0,0(x5)
+  30:	00128293          	addi	x5,x5,1
+  34:	ff5ff06f          	jal	x0,28 <_start__while__0>
+
+0000000000000038 <_start__endwhile__0>:
+  38:	00000097          	auipc	x1,0x0
+  3c:	4c0080e7          	jalr	x1,1216(x1) # 4f8 <__libc_init_array>
+  40:	00000097          	auipc	x1,0x0
+  44:	3d0080e7          	jalr	x1,976(x1) # 410 <main>
+
+0000000000000048 <_start__while__1>:
+  48:	0000006f          	jal	x0,48 <_start__while__1>
+
+000000000000004c <trap_entry>:
+  4c:	f8010113          	addi	x2,x2,-128 # 7f80 <__global_pointer$+0x7370>
+  50:	00113023          	sd	x1,0(x2)
+  54:	00a13423          	sd	x10,8(x2)
+  58:	00b13823          	sd	x11,16(x2)
+  5c:	00c13c23          	sd	x12,24(x2)
+  60:	02d13023          	sd	x13,32(x2)
+  64:	02e13423          	sd	x14,40(x2)
+  68:	02f13823          	sd	x15,48(x2)
+  6c:	03013c23          	sd	x16,56(x2)
+  70:	05113023          	sd	x17,64(x2)
+  74:	04513423          	sd	x5,72(x2)
+  78:	04613823          	sd	x6,80(x2)
+  7c:	04713c23          	sd	x7,88(x2)
+  80:	07c13023          	sd	x28,96(x2)
+  84:	07d13423          	sd	x29,104(x2)
+  88:	07e13823          	sd	x30,112(x2)
+  8c:	07f13c23          	sd	x31,120(x2)
+  90:	342022f3          	csrrs	x5,mcause,x0
+
+0000000000000094 <trap_entry__if__0>:
+  94:	0002c863          	blt	x5,x0,a4 <trap_entry__else__0>
+
+0000000000000098 <trap_entry__then__0>:
+  98:	00001317          	auipc	x6,0x1
+  9c:	88030313          	addi	x6,x6,-1920 # 918 <exception_vector_table>
+  a0:	0100006f          	jal	x0,b0 <trap_entry__endif__0>
+
+00000000000000a4 <trap_entry__else__0>:
+  a4:	00001317          	auipc	x6,0x1
+  a8:	8f430313          	addi	x6,x6,-1804 # 998 <interrupt_vector_table>
+  ac:	0040006f          	jal	x0,b0 <trap_entry__endif__0>
+
+00000000000000b0 <trap_entry__endif__0>:
+  b0:	00329393          	slli	x7,x5,0x3
+  b4:	00730e33          	add	x28,x6,x7
+  b8:	000e3e83          	ld	x29,0(x28)
+  bc:	000e80e7          	jalr	x1,0(x29)
+  c0:	00013083          	ld	x1,0(x2)
+  c4:	00813503          	ld	x10,8(x2)
+  c8:	01013583          	ld	x11,16(x2)
+  cc:	01813603          	ld	x12,24(x2)
+  d0:	02013683          	ld	x13,32(x2)
+  d4:	02813703          	ld	x14,40(x2)
+  d8:	03013783          	ld	x15,48(x2)
+  dc:	03813803          	ld	x16,56(x2)
+  e0:	04013883          	ld	x17,64(x2)
+  e4:	04813283          	ld	x5,72(x2)
+  e8:	05013303          	ld	x6,80(x2)
+  ec:	05813383          	ld	x7,88(x2)
+  f0:	06013e03          	ld	x28,96(x2)
+  f4:	06813e83          	ld	x29,104(x2)
+  f8:	07013f03          	ld	x30,112(x2)
+  fc:	07813f83          	ld	x31,120(x2)
+ 100:	08010113          	addi	x2,x2,128
+ 104:	30200073          	mret
+
+0000000000000108 <default_handler>:
+ 108:	0000006f          	jal	x0,108 <default_handler>
+
+000000000000010c <_ZN3MIE5csrrwEm>:
+ 10c:	30459573          	csrrw	x10,mie,x11
+ 110:	00008067          	jalr	x0,0(x1)
+
+0000000000000114 <_ZN3MIE4csrrEv>:
+ 114:	30402573          	csrrs	x10,mie,x0
+ 118:	00008067          	jalr	x0,0(x1)
+
+000000000000011c <_ZN3MIE4csrwEm>:
+ 11c:	30459073          	csrrw	x0,mie,x11
+ 120:	00008067          	jalr	x0,0(x1)
+
+0000000000000124 <_ZN3MIE5csrrsEm>:
+ 124:	3045a573          	csrrs	x10,mie,x11
+ 128:	00008067          	jalr	x0,0(x1)
+
+000000000000012c <_ZN3MIE4csrsEm>:
+ 12c:	3045a073          	csrrs	x0,mie,x11
+ 130:	00008067          	jalr	x0,0(x1)
+
+0000000000000134 <_ZN3MIE5csrrcEm>:
+ 134:	3045b573          	csrrc	x10,mie,x11
+ 138:	00008067          	jalr	x0,0(x1)
+
+000000000000013c <_ZN3MIE4csrcEm>:
+ 13c:	3045b073          	csrrc	x0,mie,x11
+ 140:	00008067          	jalr	x0,0(x1)
+
+0000000000000144 <_ZN7MSTATUS5csrrwEm>:
+ 144:	30051573          	csrrw	x10,mstatus,x10
+ 148:	00008067          	jalr	x0,0(x1)
+
+000000000000014c <_ZN7MSTATUS4csrrEv>:
+ 14c:	30002573          	csrrs	x10,mstatus,x0
+ 150:	00008067          	jalr	x0,0(x1)
+
+0000000000000154 <_ZN7MSTATUS4csrwEm>:
+ 154:	30051073          	csrrw	x0,mstatus,x10
+ 158:	00008067          	jalr	x0,0(x1)
+
+000000000000015c <_ZN7MSTATUS5csrrsEm>:
+ 15c:	30052573          	csrrs	x10,mstatus,x10
+ 160:	00008067          	jalr	x0,0(x1)
+
+0000000000000164 <_ZN7MSTATUS4csrsEm>:
+ 164:	30052073          	csrrs	x0,mstatus,x10
+ 168:	00008067          	jalr	x0,0(x1)
+
+000000000000016c <_ZN7MSTATUS5csrrcEm>:
+ 16c:	30053573          	csrrc	x10,mstatus,x10
+ 170:	00008067          	jalr	x0,0(x1)
+
+0000000000000174 <_ZN7MSTATUS4csrcEm>:
+ 174:	30053073          	csrrc	x0,mstatus,x10
+ 178:	00008067          	jalr	x0,0(x1)
+
+000000000000017c <_ZN5MTVEC5csrrwEm>:
+ 17c:	30559573          	csrrw	x10,mtvec,x11
+ 180:	00008067          	jalr	x0,0(x1)
+
+0000000000000184 <_ZN5MTVEC4csrrEv>:
+ 184:	30502573          	csrrs	x10,mtvec,x0
+ 188:	00008067          	jalr	x0,0(x1)
+
+000000000000018c <_ZN5MTVEC4csrwEm>:
+ 18c:	30559073          	csrrw	x0,mtvec,x11
+ 190:	00008067          	jalr	x0,0(x1)
+
+0000000000000194 <_ZN5MTVEC5csrrsEm>:
+ 194:	3055a573          	csrrs	x10,mtvec,x11
+ 198:	00008067          	jalr	x0,0(x1)
+
+000000000000019c <_ZN5MTVEC4csrsEm>:
+ 19c:	3055a073          	csrrs	x0,mtvec,x11
+ 1a0:	00008067          	jalr	x0,0(x1)
+
+00000000000001a4 <_ZN5MTVEC5csrrcEm>:
+ 1a4:	3055b573          	csrrc	x10,mtvec,x11
+ 1a8:	00008067          	jalr	x0,0(x1)
+
+00000000000001ac <_ZN5MTVEC4csrcEm>:
+ 1ac:	3055b073          	csrrc	x0,mtvec,x11
+ 1b0:	00008067          	jalr	x0,0(x1)
+
+00000000000001b4 <_ZN6MCAUSE5csrrwEm>:
+ 1b4:	34251573          	csrrw	x10,mcause,x10
+ 1b8:	00008067          	jalr	x0,0(x1)
+
+00000000000001bc <_ZN6MCAUSE4csrrEv>:
+ 1bc:	34202573          	csrrs	x10,mcause,x0
+ 1c0:	00008067          	jalr	x0,0(x1)
+
+00000000000001c4 <_ZN6MCAUSE4csrwEm>:
+ 1c4:	34251073          	csrrw	x0,mcause,x10
+ 1c8:	00008067          	jalr	x0,0(x1)
+
+00000000000001cc <_ZN6MCAUSE5csrrsEm>:
+ 1cc:	34252573          	csrrs	x10,mcause,x10
+ 1d0:	00008067          	jalr	x0,0(x1)
+
+00000000000001d4 <_ZN6MCAUSE4csrsEm>:
+ 1d4:	34252073          	csrrs	x0,mcause,x10
+ 1d8:	00008067          	jalr	x0,0(x1)
+
+00000000000001dc <_ZN6MCAUSE5csrrcEm>:
+ 1dc:	34253573          	csrrc	x10,mcause,x10
+ 1e0:	00008067          	jalr	x0,0(x1)
+
+00000000000001e4 <_ZN6MCAUSE4csrcEm>:
+ 1e4:	34253073          	csrrc	x0,mcause,x10
+ 1e8:	00008067          	jalr	x0,0(x1)
+
+00000000000001ec <_ZN3Jay2lbEm>:
+ 1ec:	00058503          	lb	x10,0(x11)
+ 1f0:	00008067          	jalr	x0,0(x1)
+
+00000000000001f4 <_ZN3Jay2lhEm>:
+ 1f4:	00059503          	lh	x10,0(x11)
+ 1f8:	00008067          	jalr	x0,0(x1)
+
+00000000000001fc <_ZN3Jay2lwEm>:
+ 1fc:	0005a503          	lw	x10,0(x11)
+ 200:	00008067          	jalr	x0,0(x1)
+
+0000000000000204 <_ZN3Jay2ldEm>:
+ 204:	0005b503          	ld	x10,0(x11)
+ 208:	00008067          	jalr	x0,0(x1)
+
+000000000000020c <_ZN3Jay2sbEmm>:
+ 20c:	00c58023          	sb	x12,0(x11)
+ 210:	00008067          	jalr	x0,0(x1)
+
+0000000000000214 <_ZN3Jay2shEmm>:
+ 214:	00c59023          	sh	x12,0(x11)
+ 218:	00008067          	jalr	x0,0(x1)
+
+000000000000021c <_ZN3Jay2swEmm>:
+ 21c:	00c5a023          	sw	x12,0(x11)
+ 220:	00008067          	jalr	x0,0(x1)
+
+0000000000000224 <_ZN3Jay2sdEmm>:
+ 224:	00c5b023          	sd	x12,0(x11)
+ 228:	00008067          	jalr	x0,0(x1)
+
+000000000000022c <_Z17TimerInterruptISRv>:
+ 22c:	fe010113          	addi	x2,x2,-32
+ 230:	00813823          	sd	x8,16(x2)
+ 234:	00001437          	lui	x8,0x1
+ 238:	b2043783          	ld	x15,-1248(x8) # b20 <state>
+ 23c:	00913423          	sd	x9,8(x2)
+ 240:	01213023          	sd	x18,0(x2)
+ 244:	00500493          	addi	x9,x0,5
+ 248:	00001937          	lui	x18,0x1
+ 24c:	0017b793          	sltiu	x15,x15,1
+ 250:	01d49593          	slli	x11,x9,0x1d
+ 254:	00000613          	addi	x12,x0,0
+ 258:	b0890513          	addi	x10,x18,-1272 # b08 <jay>
+ 25c:	b2f43023          	sd	x15,-1248(x8)
+ 260:	00113c23          	sd	x1,24(x2)
+ 264:	00000097          	auipc	x1,0x0
+ 268:	fc0080e7          	jalr	x1,-64(x1) # 224 <_ZN3Jay2sdEmm>
+ 26c:	b2043783          	ld	x15,-1248(x8)
+ 270:	00300593          	addi	x11,x0,3
+ 274:	06078863          	beq	x15,x0,2e4 <_Z17TimerInterruptISRv+0xb8>
+ 278:	01e59593          	slli	x11,x11,0x1e
+ 27c:	00258593          	addi	x11,x11,2
+ 280:	b0890513          	addi	x10,x18,-1272
+ 284:	00000613          	addi	x12,x0,0
+ 288:	00000097          	auipc	x1,0x0
+ 28c:	f84080e7          	jalr	x1,-124(x1) # 20c <_ZN3Jay2sbEmm>
+ 290:	000017b7          	lui	x15,0x1
+ 294:	b007b603          	ld	x12,-1280(x15) # b00 <N__on>
+ 298:	01d49593          	slli	x11,x9,0x1d
+ 29c:	00858593          	addi	x11,x11,8
+ 2a0:	b0890513          	addi	x10,x18,-1272
+ 2a4:	00000097          	auipc	x1,0x0
+ 2a8:	f80080e7          	jalr	x1,-128(x1) # 224 <_ZN3Jay2sdEmm>
+ 2ac:	b2043783          	ld	x15,-1248(x8)
+ 2b0:	00079e63          	bne	x15,x0,2cc <_Z17TimerInterruptISRv+0xa0>
+ 2b4:	00001737          	lui	x14,0x1
+ 2b8:	b1873783          	ld	x15,-1256(x14) # b18 <count>
+ 2bc:	00700693          	addi	x13,x0,7
+ 2c0:	04d78e63          	beq	x15,x13,31c <_Z17TimerInterruptISRv+0xf0>
+ 2c4:	00178793          	addi	x15,x15,1
+ 2c8:	b0f73c23          	sd	x15,-1256(x14)
+ 2cc:	01813083          	ld	x1,24(x2)
+ 2d0:	01013403          	ld	x8,16(x2)
+ 2d4:	00813483          	ld	x9,8(x2)
+ 2d8:	00013903          	ld	x18,0(x2)
+ 2dc:	02010113          	addi	x2,x2,32
+ 2e0:	00008067          	jalr	x0,0(x1)
+ 2e4:	01e59593          	slli	x11,x11,0x1e
+ 2e8:	b0890513          	addi	x10,x18,-1272
+ 2ec:	00200613          	addi	x12,x0,2
+ 2f0:	00258593          	addi	x11,x11,2
+ 2f4:	00000097          	auipc	x1,0x0
+ 2f8:	f18080e7          	jalr	x1,-232(x1) # 20c <_ZN3Jay2sbEmm>
+ 2fc:	000017b7          	lui	x15,0x1
+ 300:	af87b603          	ld	x12,-1288(x15) # af8 <N__off>
+ 304:	01d49593          	slli	x11,x9,0x1d
+ 308:	00858593          	addi	x11,x11,8
+ 30c:	b0890513          	addi	x10,x18,-1272
+ 310:	00000097          	auipc	x1,0x0
+ 314:	f14080e7          	jalr	x1,-236(x1) # 224 <_ZN3Jay2sdEmm>
+ 318:	f95ff06f          	jal	x0,2ac <_Z17TimerInterruptISRv+0x80>
+ 31c:	000015b7          	lui	x11,0x1
+ 320:	b105b783          	ld	x15,-1264(x11) # b10 <i>
+ 324:	000016b7          	lui	x13,0x1
+ 328:	9f868693          	addi	x13,x13,-1544 # 9f8 <samples>
+ 32c:	00178793          	addi	x15,x15,1
+ 330:	01f7f793          	andi	x15,x15,31
+ 334:	00379613          	slli	x12,x15,0x3
+ 338:	00c686b3          	add	x13,x13,x12
+ 33c:	0006b603          	ld	x12,0(x13)
+ 340:	01813083          	ld	x1,24(x2)
+ 344:	01013403          	ld	x8,16(x2)
+ 348:	b0f5b823          	sd	x15,-1264(x11)
+ 34c:	3e800693          	addi	x13,x0,1000
+ 350:	000017b7          	lui	x15,0x1
+ 354:	b0c7b023          	sd	x12,-1280(x15) # b00 <N__on>
+ 358:	40c686b3          	sub	x13,x13,x12
+ 35c:	000017b7          	lui	x15,0x1
+ 360:	aed7bc23          	sd	x13,-1288(x15) # af8 <N__off>
+ 364:	b0073c23          	sd	x0,-1256(x14)
+ 368:	00813483          	ld	x9,8(x2)
+ 36c:	00013903          	ld	x18,0(x2)
+ 370:	02010113          	addi	x2,x2,32
+ 374:	00008067          	jalr	x0,0(x1)
+
+0000000000000378 <_Z20ExternalInterruptISRv>:
+ 378:	fe010113          	addi	x2,x2,-32
+ 37c:	48100593          	addi	x11,x0,1153
+ 380:	00813823          	sd	x8,16(x2)
+ 384:	01559593          	slli	x11,x11,0x15
+ 388:	00001437          	lui	x8,0x1
+ 38c:	00458593          	addi	x11,x11,4
+ 390:	b0840513          	addi	x10,x8,-1272 # b08 <jay>
+ 394:	00113c23          	sd	x1,24(x2)
+ 398:	00913423          	sd	x9,8(x2)
+ 39c:	00000097          	auipc	x1,0x0
+ 3a0:	e60080e7          	jalr	x1,-416(x1) # 1fc <_ZN3Jay2lwEm>
+ 3a4:	00500593          	addi	x11,x0,5
+ 3a8:	01d59593          	slli	x11,x11,0x1d
+ 3ac:	00050493          	addi	x9,x10,0
+ 3b0:	00858593          	addi	x11,x11,8
+ 3b4:	b0840513          	addi	x10,x8,-1272
+ 3b8:	00000097          	auipc	x1,0x0
+ 3bc:	e4c080e7          	jalr	x1,-436(x1) # 204 <_ZN3Jay2ldEm>
+ 3c0:	0c800613          	addi	x12,x0,200
+ 3c4:	00c51463          	bne	x10,x12,3cc <_Z20ExternalInterruptISRv+0x54>
+ 3c8:	06400613          	addi	x12,x0,100
+ 3cc:	00500593          	addi	x11,x0,5
+ 3d0:	01d59593          	slli	x11,x11,0x1d
+ 3d4:	b0840513          	addi	x10,x8,-1272
+ 3d8:	00858593          	addi	x11,x11,8
+ 3dc:	00000097          	auipc	x1,0x0
+ 3e0:	e48080e7          	jalr	x1,-440(x1) # 224 <_ZN3Jay2sdEmm>
+ 3e4:	b0840513          	addi	x10,x8,-1272
+ 3e8:	01013403          	ld	x8,16(x2)
+ 3ec:	01813083          	ld	x1,24(x2)
+ 3f0:	00048613          	addi	x12,x9,0
+ 3f4:	48100593          	addi	x11,x0,1153
+ 3f8:	00813483          	ld	x9,8(x2)
+ 3fc:	01559593          	slli	x11,x11,0x15
+ 400:	00458593          	addi	x11,x11,4
+ 404:	02010113          	addi	x2,x2,32
+ 408:	00000317          	auipc	x6,0x0
+ 40c:	e1430067          	jalr	x0,-492(x6) # 21c <_ZN3Jay2swEmm>
+
+Disassembly of section .text.startup:
+
+0000000000000410 <main>:
+ 410:	fe010113          	addi	x2,x2,-32
+ 414:	00813823          	sd	x8,16(x2)
+ 418:	00000637          	lui	x12,0x0
+ 41c:	00001437          	lui	x8,0x1
+ 420:	000015b7          	lui	x11,0x1
+ 424:	b0840513          	addi	x10,x8,-1272 # b08 <jay>
+ 428:	22c60613          	addi	x12,x12,556 # 22c <_Z17TimerInterruptISRv>
+ 42c:	9d058593          	addi	x11,x11,-1584 # 9d0 <interrupt_vector_table+0x38>
+ 430:	00113c23          	sd	x1,24(x2)
+ 434:	00913423          	sd	x9,8(x2)
+ 438:	00000097          	auipc	x1,0x0
+ 43c:	dec080e7          	jalr	x1,-532(x1) # 224 <_ZN3Jay2sdEmm>
+ 440:	00500493          	addi	x9,x0,5
+ 444:	01d49593          	slli	x11,x9,0x1d
+ 448:	b0840513          	addi	x10,x8,-1272
+ 44c:	00000613          	addi	x12,x0,0
+ 450:	00000097          	auipc	x1,0x0
+ 454:	dd4080e7          	jalr	x1,-556(x1) # 224 <_ZN3Jay2sdEmm>
+ 458:	01d49593          	slli	x11,x9,0x1d
+ 45c:	b0840513          	addi	x10,x8,-1272
+ 460:	00000613          	addi	x12,x0,0
+ 464:	00858593          	addi	x11,x11,8
+ 468:	00300493          	addi	x9,x0,3
+ 46c:	00000097          	auipc	x1,0x0
+ 470:	db8080e7          	jalr	x1,-584(x1) # 224 <_ZN3Jay2sdEmm>
+ 474:	01e49493          	slli	x9,x9,0x1e
+ 478:	00148593          	addi	x11,x9,1
+ 47c:	b0840513          	addi	x10,x8,-1272
+ 480:	00000613          	addi	x12,x0,0
+ 484:	00000097          	auipc	x1,0x0
+ 488:	d88080e7          	jalr	x1,-632(x1) # 20c <_ZN3Jay2sbEmm>
+ 48c:	00200613          	addi	x12,x0,2
+ 490:	00248593          	addi	x11,x9,2
+ 494:	b0840513          	addi	x10,x8,-1272
+ 498:	00000097          	auipc	x1,0x0
+ 49c:	d74080e7          	jalr	x1,-652(x1) # 20c <_ZN3Jay2sbEmm>
+ 4a0:	b0840513          	addi	x10,x8,-1272
+ 4a4:	08000593          	addi	x11,x0,128
+ 4a8:	00000097          	auipc	x1,0x0
+ 4ac:	c84080e7          	jalr	x1,-892(x1) # 12c <_ZN3MIE4csrsEm>
+ 4b0:	000015b7          	lui	x11,0x1
+ 4b4:	b0840513          	addi	x10,x8,-1272
+ 4b8:	80058593          	addi	x11,x11,-2048 # 800 <__libc_init_array+0x308>
+ 4bc:	00000097          	auipc	x1,0x0
+ 4c0:	c70080e7          	jalr	x1,-912(x1) # 12c <_ZN3MIE4csrsEm>
+ 4c4:	480015b7          	lui	x11,0x48001
+ 4c8:	b0840513          	addi	x10,x8,-1272
+ 4cc:	00200613          	addi	x12,x0,2
+ 4d0:	00159593          	slli	x11,x11,0x1
+ 4d4:	00000097          	auipc	x1,0x0
+ 4d8:	d48080e7          	jalr	x1,-696(x1) # 21c <_ZN3Jay2swEmm>
+ 4dc:	01013403          	ld	x8,16(x2)
+ 4e0:	01813083          	ld	x1,24(x2)
+ 4e4:	00813483          	ld	x9,8(x2)
+ 4e8:	00800513          	addi	x10,x0,8
+ 4ec:	02010113          	addi	x2,x2,32
+ 4f0:	00000317          	auipc	x6,0x0
+ 4f4:	c7430067          	jalr	x0,-908(x6) # 164 <_ZN7MSTATUS4csrsEm>
+
+Disassembly of section .text.__libc_init_array:
+
+00000000000004f8 <__libc_init_array>:
+ 4f8:	fe010113          	addi	x2,x2,-32
+ 4fc:	00813823          	sd	x8,16(x2)
+ 500:	000007b7          	lui	x15,0x0
+ 504:	00000437          	lui	x8,0x0
+ 508:	01213023          	sd	x18,0(x2)
+ 50c:	00078793          	addi	x15,x15,0 # 0 <_start>
+ 510:	00040713          	addi	x14,x8,0 # 0 <_start>
+ 514:	00113c23          	sd	x1,24(x2)
+ 518:	00913423          	sd	x9,8(x2)
+ 51c:	40e78933          	sub	x18,x15,x14
+ 520:	02e78263          	beq	x15,x14,544 <__libc_init_array+0x4c>
+ 524:	40395913          	srai	x18,x18,0x3
+ 528:	00040413          	addi	x8,x8,0
+ 52c:	00000493          	addi	x9,x0,0
+ 530:	00043783          	ld	x15,0(x8)
+ 534:	00148493          	addi	x9,x9,1
+ 538:	00840413          	addi	x8,x8,8
+ 53c:	000780e7          	jalr	x1,0(x15)
+ 540:	ff24e8e3          	bltu	x9,x18,530 <__libc_init_array+0x38>
+ 544:	00000437          	lui	x8,0x0
+ 548:	000007b7          	lui	x15,0x0
+ 54c:	00078793          	addi	x15,x15,0 # 0 <_start>
+ 550:	00040713          	addi	x14,x8,0 # 0 <_start>
+ 554:	40e78933          	sub	x18,x15,x14
+ 558:	40395913          	srai	x18,x18,0x3
+ 55c:	02e78063          	beq	x15,x14,57c <__libc_init_array+0x84>
+ 560:	00040413          	addi	x8,x8,0
+ 564:	00000493          	addi	x9,x0,0
+ 568:	00043783          	ld	x15,0(x8)
+ 56c:	00148493          	addi	x9,x9,1
+ 570:	00840413          	addi	x8,x8,8
+ 574:	000780e7          	jalr	x1,0(x15)
+ 578:	ff24e8e3          	bltu	x9,x18,568 <__libc_init_array+0x70>
+ 57c:	01813083          	ld	x1,24(x2)
+ 580:	01013403          	ld	x8,16(x2)
+ 584:	00813483          	ld	x9,8(x2)
+ 588:	00013903          	ld	x18,0(x2)
+ 58c:	02010113          	addi	x2,x2,32
+ 590:	00008067          	jalr	x0,0(x1)

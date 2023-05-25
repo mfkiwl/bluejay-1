@@ -7897,6 +7897,8 @@ module top
     output logic led17_b,
     output logic led17_g,
     output logic led17_r,
+    output logic aud_pwm,
+    output logic aud_sd,
     output logic [7:0] an,
     output logic ca, 
     output logic cb, 
@@ -7933,6 +7935,8 @@ assign clk = clk_100mhz;
 assign rst = btnc;
 assign led16_b = port__0[0];
 assign int__1 = btnd__clean__edge;
+assign aud_pwm = port__0[1];
+assign aud_sd = 1'b1;
 
 assign led = 0;
 //assign led16_b = 0;
@@ -8031,6 +8035,8 @@ logic btnd;
 logic [15:0] led;
 //logic led16_b;
 wire led16_b;
+wire aud_pwm;
+wire aud_sd;
 logic led16_g;
 logic led16_r;
 logic led17_b;
@@ -8064,6 +8070,8 @@ top dut
     .led17_b(led17_b),
     .led17_g(led17_g),
     .led17_r(led17_r),
+    .aud_pwm(aud_pwm),
+    .aud_sd(aud_sd),
     .an(an),
     .ca(ca), 
     .cb(cb), 

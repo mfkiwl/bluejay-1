@@ -1,31 +1,41 @@
+################################################
+# MAKE__DIR 
+#
+# Arguments:
+#     $(1):
+################################################
+define MAKE__DIR
 
-
-################################
-# dir 
-#     $(1): directory 
-################################
-define dir_t
 $(1):
 	$(MKDIR) $(1)
+
 endef
 
 ################################
-# sv
-#     $(1): directory 
-#     $(2): name 
+# MAKE__RTL
+#
+# Arguments:
+#     $(1):
+#     $(2):
+#     $(3):
+#     $(4):
 ################################
-define sv
-$(1)/gen/$(2).sv: $(1)/$(2).b $(TOP)/defs/gen/defs.py | $(1)
-	$(PYTHON) $(TOP)/tools/bluejay.py $(1)/$(2).b $(1)/gen/$(2).sv $(TOP)/defs/gen/defs.py
+define MAKE__RTL
+
+$(2)/$(1): $(4)/$(3) $(TOP)/defs/gen/defs.py | $(2)
+	$(PYTHON) $(TOP)/tools/bluejay.py $(4)/$(3) $(2)/$(1) $(TOP)/defs/gen/defs.py
+
 endef
 
 ################################
-# make_ip  
-#     $(1): ip  
-#     $(2): modules 
+# MAKE__IP__SRC
+#     $(1):
+#     $(2):
 ################################
-define make_ip 
-$(eval $(call dir_t,$(TOP)/ip/$(IP)))
-$(foreach MODULE,$(MODULES),$(eval $(call sv,$(TOP)/ip/$(IP)/src,$(MODULE))))
+define MAKE__IP__SRC
+
+$(eval $(call MAKE__DIR,$(1)/gen))
+$(foreach i,$(2),$(eval $(call MAKE__RTL,$(i).sv,$(1)/gen,$(i).b,$(1))))
+
 endef
 

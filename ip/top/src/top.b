@@ -17,6 +17,8 @@ module top
     output logic led17_b,
     output logic led17_g,
     output logic led17_r,
+    output logic aud_pwm,
+    output logic aud_sd,
     output logic [7:0] an,
     output logic ca, 
     output logic cb, 
@@ -53,6 +55,8 @@ assign clk = clk_100mhz;
 assign rst = btnc;
 assign led16_b = port__0[0];
 assign int__1 = btnd__clean__edge;
+assign aud_pwm = port__0[1];
+assign aud_sd = 1'b1;
 
 assign led = 0;
 //assign led16_b = 0;

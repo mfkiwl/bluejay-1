@@ -15,7 +15,7 @@ Attempting to get a license for feature 'Synthesis' and/or device 'xc7a100t'
 INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7a100t'
 INFO: [Device 21-403] Loading part xc7a100tcsg324-1
 INFO: Launching helper process for spawning children vivado processes
-INFO: Helper process launched with PID 26429 
+INFO: Helper process launched with PID 122205 
 WARNING: [Synth 8-992] ready__1 is already implicitly declared earlier [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:7633]
 WARNING: [Synth 8-992] ready__2 is already implicitly declared earlier [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:7641]
 WARNING: [Synth 8-992] ready__3 is already implicitly declared earlier [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:7649]
@@ -24,7 +24,7 @@ WARNING: [Synth 8-992] ready__5 is already implicitly declared earlier [/home/se
 WARNING: [Synth 8-992] ready__6 is already implicitly declared earlier [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:7673]
 WARNING: [Synth 8-992] ready__7 is already implicitly declared earlier [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:7681]
 ---------------------------------------------------------------------------------
-Starting RTL Elaboration : Time (s): cpu = 00:00:02 ; elapsed = 00:00:03 . Memory (MB): peak = 2146.809 ; gain = 208.625 ; free physical = 22704 ; free virtual = 28729
+Starting RTL Elaboration : Time (s): cpu = 00:00:02 ; elapsed = 00:00:03 . Memory (MB): peak = 2146.812 ; gain = 208.625 ; free physical = 16808 ; free virtual = 24347
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-6157] synthesizing module 'top' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:7884]
 INFO: [Synth 8-6157] synthesizing module 'jay' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:7582]
@@ -425,8 +425,8 @@ WARNING: [Synth 8-3848] Net rd_data__5 in module/entity jay does not have driver
 WARNING: [Synth 8-3848] Net rd_data__6 in module/entity jay does not have driver. [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:7674]
 WARNING: [Synth 8-3848] Net rd_data__7 in module/entity jay does not have driver. [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:7682]
 INFO: [Synth 8-6155] done synthesizing module 'jay' (18#1) [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:7582]
-INFO: [Synth 8-6157] synthesizing module 'blk_mem_gen_0' [/home/seankent/bluejay/vivado/bluejay/bluejay.runs/synth_1/.Xil/Vivado-26401-seankent/realtime/blk_mem_gen_0_stub.v:6]
-INFO: [Synth 8-6155] done synthesizing module 'blk_mem_gen_0' (19#1) [/home/seankent/bluejay/vivado/bluejay/bluejay.runs/synth_1/.Xil/Vivado-26401-seankent/realtime/blk_mem_gen_0_stub.v:6]
+INFO: [Synth 8-6157] synthesizing module 'blk_mem_gen_0' [/home/seankent/bluejay/vivado/bluejay/bluejay.runs/synth_1/.Xil/Vivado-122170-seankent/realtime/blk_mem_gen_0_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'blk_mem_gen_0' (19#1) [/home/seankent/bluejay/vivado/bluejay/bluejay.runs/synth_1/.Xil/Vivado-122170-seankent/realtime/blk_mem_gen_0_stub.v:6]
 INFO: [Synth 8-6157] synthesizing module 'debouncer' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:7419]
 	Parameter DEBOUNCE_COUNT bound to: 1000000 - type: integer 
 	Parameter STATE__LOW bound to: 2'b00 
@@ -464,6 +464,7 @@ WARNING: [Synth 8-3917] design top has port led16_r driven by constant 0
 WARNING: [Synth 8-3917] design top has port led17_b driven by constant 0
 WARNING: [Synth 8-3917] design top has port led17_g driven by constant 0
 WARNING: [Synth 8-3917] design top has port led17_r driven by constant 0
+WARNING: [Synth 8-3917] design top has port aud_sd driven by constant 1
 WARNING: [Synth 8-3917] design top has port an[7] driven by constant 1
 WARNING: [Synth 8-3917] design top has port an[6] driven by constant 1
 WARNING: [Synth 8-3917] design top has port an[5] driven by constant 1
@@ -569,7 +570,7 @@ WARNING: [Synth 8-3331] design top has unconnected port btnu
 WARNING: [Synth 8-3331] design top has unconnected port btnl
 WARNING: [Synth 8-3331] design top has unconnected port btnr
 ---------------------------------------------------------------------------------
-Finished RTL Elaboration : Time (s): cpu = 00:00:03 ; elapsed = 00:00:04 . Memory (MB): peak = 2222.684 ; gain = 284.500 ; free physical = 22710 ; free virtual = 28737
+Finished RTL Elaboration : Time (s): cpu = 00:00:03 ; elapsed = 00:00:04 . Memory (MB): peak = 2222.688 ; gain = 284.500 ; free physical = 16820 ; free virtual = 24361
 ---------------------------------------------------------------------------------
 
 Report Check Netlist: 
@@ -582,12 +583,12 @@ Report Check Netlist:
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:04 ; elapsed = 00:00:05 . Memory (MB): peak = 2237.527 ; gain = 299.344 ; free physical = 22715 ; free virtual = 28742
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:04 ; elapsed = 00:00:05 . Memory (MB): peak = 2237.531 ; gain = 299.344 ; free physical = 16824 ; free virtual = 24365
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:04 ; elapsed = 00:00:05 . Memory (MB): peak = 2237.527 ; gain = 299.344 ; free physical = 22715 ; free virtual = 28742
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:04 ; elapsed = 00:00:05 . Memory (MB): peak = 2237.531 ; gain = 299.344 ; free physical = 16824 ; free virtual = 24365
 ---------------------------------------------------------------------------------
-Netlist sorting complete. Time (s): cpu = 00:00:00.12 ; elapsed = 00:00:00.12 . Memory (MB): peak = 2237.527 ; gain = 0.000 ; free physical = 22701 ; free virtual = 28728
+Netlist sorting complete. Time (s): cpu = 00:00:00.12 ; elapsed = 00:00:00.12 . Memory (MB): peak = 2237.531 ; gain = 0.000 ; free physical = 16811 ; free virtual = 24352
 INFO: [Project 1-570] Preparing netlist for logic optimization
 
 Processing XDC Constraints
@@ -600,28 +601,28 @@ INFO: [Project 1-236] Implementation specific constraints were found while readi
 Resolution: To avoid this warning, move constraints listed in [.Xil/top_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
 Completed Processing XDC Constraints
 
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2432.090 ; gain = 0.000 ; free physical = 22552 ; free virtual = 28579
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2434.031 ; gain = 0.000 ; free physical = 16666 ; free virtual = 24206
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Constraint Validation Runtime : Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:00.02 . Memory (MB): peak = 2432.090 ; gain = 0.000 ; free physical = 22552 ; free virtual = 28579
+Constraint Validation Runtime : Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:00.02 . Memory (MB): peak = 2434.031 ; gain = 0.000 ; free physical = 16665 ; free virtual = 24206
 WARNING: [Timing 38-316] Clock period '20.000' specified during out-of-context synthesis of instance 'blk_mem_gen_0__0' at clock pin 'clka' is different from the actual clock period '10.000', this can lead to different synthesis results.
 ---------------------------------------------------------------------------------
-Finished Constraint Validation : Time (s): cpu = 00:00:09 ; elapsed = 00:00:10 . Memory (MB): peak = 2438.027 ; gain = 499.844 ; free physical = 22698 ; free virtual = 28725
+Finished Constraint Validation : Time (s): cpu = 00:00:08 ; elapsed = 00:00:10 . Memory (MB): peak = 2438.000 ; gain = 499.812 ; free physical = 16802 ; free virtual = 24343
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Loading Part and Timing Information
 ---------------------------------------------------------------------------------
 Loading part: xc7a100tcsg324-1
 ---------------------------------------------------------------------------------
-Finished Loading Part and Timing Information : Time (s): cpu = 00:00:09 ; elapsed = 00:00:10 . Memory (MB): peak = 2438.027 ; gain = 499.844 ; free physical = 22698 ; free virtual = 28725
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:08 ; elapsed = 00:00:10 . Memory (MB): peak = 2438.000 ; gain = 499.812 ; free physical = 16802 ; free virtual = 24343
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying 'set_property' XDC Constraints
 ---------------------------------------------------------------------------------
 Applied set_property DONT_TOUCH = true for blk_mem_gen_0__0. (constraint file  auto generated constraint, line ).
 ---------------------------------------------------------------------------------
-Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:09 ; elapsed = 00:00:10 . Memory (MB): peak = 2438.027 ; gain = 499.844 ; free physical = 22698 ; free virtual = 28725
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:08 ; elapsed = 00:00:10 . Memory (MB): peak = 2438.000 ; gain = 499.812 ; free physical = 16802 ; free virtual = 24343
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-5818] HDL ADVISOR - The operator resource <adder> is shared. To prevent sharing consider applying a KEEP on the output of the operator [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:3199]
 INFO: [Synth 8-5546] ROM "rd_data" won't be mapped to RAM because it is too sparse
@@ -648,7 +649,7 @@ WARNING: [Synth 8-327] inferring latch for variable 'rd_data_reg' [/home/seanken
 WARNING: [Synth 8-327] inferring latch for variable 'x__edge_reg' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:7540]
 WARNING: [Synth 8-327] inferring latch for variable 'state__n_reg' [/home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv:7541]
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:14 ; elapsed = 00:00:16 . Memory (MB): peak = 2496.027 ; gain = 557.844 ; free physical = 22668 ; free virtual = 28696
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:13 ; elapsed = 00:00:15 . Memory (MB): peak = 2488.992 ; gain = 550.805 ; free physical = 16776 ; free virtual = 24318
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -990,6 +991,7 @@ WARNING: [Synth 8-3917] design top has port led16_r driven by constant 0
 WARNING: [Synth 8-3917] design top has port led17_b driven by constant 0
 WARNING: [Synth 8-3917] design top has port led17_g driven by constant 0
 WARNING: [Synth 8-3917] design top has port led17_r driven by constant 0
+WARNING: [Synth 8-3917] design top has port aud_sd driven by constant 1
 WARNING: [Synth 8-3917] design top has port an[7] driven by constant 1
 WARNING: [Synth 8-3917] design top has port an[6] driven by constant 1
 WARNING: [Synth 8-3917] design top has port an[5] driven by constant 1
@@ -1141,8 +1143,40 @@ WARNING: [Synth 8-3332] Sequential element (addr_reg[40]) is unused and will be 
 WARNING: [Synth 8-3332] Sequential element (addr_reg[27]) is unused and will be removed from module central_processing_unit.
 WARNING: [Synth 8-3332] Sequential element (addr_reg[26]) is unused and will be removed from module central_processing_unit.
 WARNING: [Synth 8-3332] Sequential element (memory_management_unit__0/state__n_reg[5]) is unused and will be removed from module jay.
+WARNING: [Synth 8-3332] Sequential element (decoder__0/imm_reg[63]) is unused and will be removed from module central_processing_unit.
+WARNING: [Synth 8-3332] Sequential element (decoder__0/imm_reg[30]) is unused and will be removed from module central_processing_unit.
+WARNING: [Synth 8-3332] Sequential element (decoder__0/imm_reg[29]) is unused and will be removed from module central_processing_unit.
+WARNING: [Synth 8-3332] Sequential element (decoder__0/imm_reg[28]) is unused and will be removed from module central_processing_unit.
+WARNING: [Synth 8-3332] Sequential element (decoder__0/imm_reg[27]) is unused and will be removed from module central_processing_unit.
+WARNING: [Synth 8-3332] Sequential element (decoder__0/imm_reg[26]) is unused and will be removed from module central_processing_unit.
+WARNING: [Synth 8-3332] Sequential element (decoder__0/imm_reg[25]) is unused and will be removed from module central_processing_unit.
+WARNING: [Synth 8-3332] Sequential element (decoder__0/imm_reg[24]) is unused and will be removed from module central_processing_unit.
+WARNING: [Synth 8-3332] Sequential element (decoder__0/imm_reg[23]) is unused and will be removed from module central_processing_unit.
+WARNING: [Synth 8-3332] Sequential element (decoder__0/imm_reg[22]) is unused and will be removed from module central_processing_unit.
+WARNING: [Synth 8-3332] Sequential element (decoder__0/imm_reg[21]) is unused and will be removed from module central_processing_unit.
+WARNING: [Synth 8-3332] Sequential element (decoder__0/imm_reg[20]) is unused and will be removed from module central_processing_unit.
+WARNING: [Synth 8-3332] Sequential element (decoder__0/imm_reg[19]) is unused and will be removed from module central_processing_unit.
+WARNING: [Synth 8-3332] Sequential element (decoder__0/imm_reg[18]) is unused and will be removed from module central_processing_unit.
+WARNING: [Synth 8-3332] Sequential element (decoder__0/imm_reg[17]) is unused and will be removed from module central_processing_unit.
+WARNING: [Synth 8-3332] Sequential element (decoder__0/imm_reg[16]) is unused and will be removed from module central_processing_unit.
+WARNING: [Synth 8-3332] Sequential element (decoder__0/imm_reg[15]) is unused and will be removed from module central_processing_unit.
+WARNING: [Synth 8-3332] Sequential element (decoder__0/imm_reg[14]) is unused and will be removed from module central_processing_unit.
+WARNING: [Synth 8-3332] Sequential element (decoder__0/imm_reg[13]) is unused and will be removed from module central_processing_unit.
+WARNING: [Synth 8-3332] Sequential element (decoder__0/imm_reg[12]) is unused and will be removed from module central_processing_unit.
+WARNING: [Synth 8-3332] Sequential element (decoder__0/imm_reg[11]) is unused and will be removed from module central_processing_unit.
+WARNING: [Synth 8-3332] Sequential element (decoder__0/imm_reg[10]) is unused and will be removed from module central_processing_unit.
+WARNING: [Synth 8-3332] Sequential element (decoder__0/imm_reg[9]) is unused and will be removed from module central_processing_unit.
+WARNING: [Synth 8-3332] Sequential element (decoder__0/imm_reg[8]) is unused and will be removed from module central_processing_unit.
+WARNING: [Synth 8-3332] Sequential element (decoder__0/imm_reg[7]) is unused and will be removed from module central_processing_unit.
+WARNING: [Synth 8-3332] Sequential element (decoder__0/imm_reg[6]) is unused and will be removed from module central_processing_unit.
+WARNING: [Synth 8-3332] Sequential element (decoder__0/imm_reg[5]) is unused and will be removed from module central_processing_unit.
+WARNING: [Synth 8-3332] Sequential element (decoder__0/imm_reg[4]) is unused and will be removed from module central_processing_unit.
+WARNING: [Synth 8-3332] Sequential element (decoder__0/imm_reg[3]) is unused and will be removed from module central_processing_unit.
+WARNING: [Synth 8-3332] Sequential element (decoder__0/imm_reg[2]) is unused and will be removed from module central_processing_unit.
+WARNING: [Synth 8-3332] Sequential element (decoder__0/imm_reg[1]) is unused and will be removed from module central_processing_unit.
+WARNING: [Synth 8-3332] Sequential element (decoder__0/imm_reg[0]) is unused and will be removed from module central_processing_unit.
 ---------------------------------------------------------------------------------
-Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:36 ; elapsed = 00:00:40 . Memory (MB): peak = 2528.059 ; gain = 589.875 ; free physical = 22618 ; free virtual = 28655
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:35 ; elapsed = 00:00:38 . Memory (MB): peak = 2521.023 ; gain = 582.836 ; free physical = 16728 ; free virtual = 24280
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start ROM, RAM, DSP and Shift Register Reporting
@@ -1173,13 +1207,13 @@ Report RTL Partitions:
 Start Applying XDC Timing Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:40 ; elapsed = 00:00:44 . Memory (MB): peak = 2528.059 ; gain = 589.875 ; free physical = 22501 ; free virtual = 28538
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:39 ; elapsed = 00:00:43 . Memory (MB): peak = 2521.023 ; gain = 582.836 ; free physical = 16625 ; free virtual = 24176
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Timing Optimization
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Timing Optimization : Time (s): cpu = 00:00:46 ; elapsed = 00:00:51 . Memory (MB): peak = 2537.059 ; gain = 598.875 ; free physical = 22463 ; free virtual = 28500
+Finished Timing Optimization : Time (s): cpu = 00:00:45 ; elapsed = 00:00:49 . Memory (MB): peak = 2522.023 ; gain = 583.836 ; free physical = 16555 ; free virtual = 24107
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -1190,40 +1224,8 @@ Report RTL Partitions:
 ---------------------------------------------------------------------------------
 Start Technology Mapping
 ---------------------------------------------------------------------------------
-WARNING: [Synth 8-3332] Sequential element (jay__0/central_processing_unit__0/decoder__0/imm_reg[63]) is unused and will be removed from module top.
-WARNING: [Synth 8-3332] Sequential element (jay__0/central_processing_unit__0/decoder__0/imm_reg[30]) is unused and will be removed from module top.
-WARNING: [Synth 8-3332] Sequential element (jay__0/central_processing_unit__0/decoder__0/imm_reg[29]) is unused and will be removed from module top.
-WARNING: [Synth 8-3332] Sequential element (jay__0/central_processing_unit__0/decoder__0/imm_reg[28]) is unused and will be removed from module top.
-WARNING: [Synth 8-3332] Sequential element (jay__0/central_processing_unit__0/decoder__0/imm_reg[27]) is unused and will be removed from module top.
-WARNING: [Synth 8-3332] Sequential element (jay__0/central_processing_unit__0/decoder__0/imm_reg[26]) is unused and will be removed from module top.
-WARNING: [Synth 8-3332] Sequential element (jay__0/central_processing_unit__0/decoder__0/imm_reg[25]) is unused and will be removed from module top.
-WARNING: [Synth 8-3332] Sequential element (jay__0/central_processing_unit__0/decoder__0/imm_reg[24]) is unused and will be removed from module top.
-WARNING: [Synth 8-3332] Sequential element (jay__0/central_processing_unit__0/decoder__0/imm_reg[23]) is unused and will be removed from module top.
-WARNING: [Synth 8-3332] Sequential element (jay__0/central_processing_unit__0/decoder__0/imm_reg[22]) is unused and will be removed from module top.
-WARNING: [Synth 8-3332] Sequential element (jay__0/central_processing_unit__0/decoder__0/imm_reg[21]) is unused and will be removed from module top.
-WARNING: [Synth 8-3332] Sequential element (jay__0/central_processing_unit__0/decoder__0/imm_reg[20]) is unused and will be removed from module top.
-WARNING: [Synth 8-3332] Sequential element (jay__0/central_processing_unit__0/decoder__0/imm_reg[19]) is unused and will be removed from module top.
-WARNING: [Synth 8-3332] Sequential element (jay__0/central_processing_unit__0/decoder__0/imm_reg[18]) is unused and will be removed from module top.
-WARNING: [Synth 8-3332] Sequential element (jay__0/central_processing_unit__0/decoder__0/imm_reg[17]) is unused and will be removed from module top.
-WARNING: [Synth 8-3332] Sequential element (jay__0/central_processing_unit__0/decoder__0/imm_reg[16]) is unused and will be removed from module top.
-WARNING: [Synth 8-3332] Sequential element (jay__0/central_processing_unit__0/decoder__0/imm_reg[15]) is unused and will be removed from module top.
-WARNING: [Synth 8-3332] Sequential element (jay__0/central_processing_unit__0/decoder__0/imm_reg[14]) is unused and will be removed from module top.
-WARNING: [Synth 8-3332] Sequential element (jay__0/central_processing_unit__0/decoder__0/imm_reg[13]) is unused and will be removed from module top.
-WARNING: [Synth 8-3332] Sequential element (jay__0/central_processing_unit__0/decoder__0/imm_reg[12]) is unused and will be removed from module top.
-WARNING: [Synth 8-3332] Sequential element (jay__0/central_processing_unit__0/decoder__0/imm_reg[11]) is unused and will be removed from module top.
-WARNING: [Synth 8-3332] Sequential element (jay__0/central_processing_unit__0/decoder__0/imm_reg[10]) is unused and will be removed from module top.
-WARNING: [Synth 8-3332] Sequential element (jay__0/central_processing_unit__0/decoder__0/imm_reg[9]) is unused and will be removed from module top.
-WARNING: [Synth 8-3332] Sequential element (jay__0/central_processing_unit__0/decoder__0/imm_reg[8]) is unused and will be removed from module top.
-WARNING: [Synth 8-3332] Sequential element (jay__0/central_processing_unit__0/decoder__0/imm_reg[7]) is unused and will be removed from module top.
-WARNING: [Synth 8-3332] Sequential element (jay__0/central_processing_unit__0/decoder__0/imm_reg[6]) is unused and will be removed from module top.
-WARNING: [Synth 8-3332] Sequential element (jay__0/central_processing_unit__0/decoder__0/imm_reg[5]) is unused and will be removed from module top.
-WARNING: [Synth 8-3332] Sequential element (jay__0/central_processing_unit__0/decoder__0/imm_reg[4]) is unused and will be removed from module top.
-WARNING: [Synth 8-3332] Sequential element (jay__0/central_processing_unit__0/decoder__0/imm_reg[3]) is unused and will be removed from module top.
-WARNING: [Synth 8-3332] Sequential element (jay__0/central_processing_unit__0/decoder__0/imm_reg[2]) is unused and will be removed from module top.
-WARNING: [Synth 8-3332] Sequential element (jay__0/central_processing_unit__0/decoder__0/imm_reg[1]) is unused and will be removed from module top.
-WARNING: [Synth 8-3332] Sequential element (jay__0/central_processing_unit__0/decoder__0/imm_reg[0]) is unused and will be removed from module top.
 ---------------------------------------------------------------------------------
-Finished Technology Mapping : Time (s): cpu = 00:00:49 ; elapsed = 00:00:54 . Memory (MB): peak = 2537.059 ; gain = 598.875 ; free physical = 22459 ; free virtual = 28496
+Finished Technology Mapping : Time (s): cpu = 00:00:48 ; elapsed = 00:00:52 . Memory (MB): peak = 2522.023 ; gain = 583.836 ; free physical = 16559 ; free virtual = 24111
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -1247,13 +1249,13 @@ Start Final Netlist Cleanup
 Finished Final Netlist Cleanup
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished IO Insertion : Time (s): cpu = 00:00:52 ; elapsed = 00:00:56 . Memory (MB): peak = 2537.059 ; gain = 598.875 ; free physical = 22463 ; free virtual = 28500
+Finished IO Insertion : Time (s): cpu = 00:00:50 ; elapsed = 00:00:55 . Memory (MB): peak = 2522.023 ; gain = 583.836 ; free physical = 16558 ; free virtual = 24110
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Instances
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Instances : Time (s): cpu = 00:00:52 ; elapsed = 00:00:56 . Memory (MB): peak = 2537.059 ; gain = 598.875 ; free physical = 22463 ; free virtual = 28500
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:50 ; elapsed = 00:00:55 . Memory (MB): peak = 2522.023 ; gain = 583.836 ; free physical = 16558 ; free virtual = 24110
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -1272,25 +1274,25 @@ Report Check Netlist:
 Start Rebuilding User Hierarchy
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:52 ; elapsed = 00:00:57 . Memory (MB): peak = 2537.059 ; gain = 598.875 ; free physical = 22463 ; free virtual = 28500
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:51 ; elapsed = 00:00:55 . Memory (MB): peak = 2522.023 ; gain = 583.836 ; free physical = 16558 ; free virtual = 24110
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Ports
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Ports : Time (s): cpu = 00:00:52 ; elapsed = 00:00:57 . Memory (MB): peak = 2537.059 ; gain = 598.875 ; free physical = 22463 ; free virtual = 28500
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:51 ; elapsed = 00:00:55 . Memory (MB): peak = 2522.023 ; gain = 583.836 ; free physical = 16558 ; free virtual = 24110
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:52 ; elapsed = 00:00:57 . Memory (MB): peak = 2537.059 ; gain = 598.875 ; free physical = 22463 ; free virtual = 28500
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:51 ; elapsed = 00:00:55 . Memory (MB): peak = 2522.023 ; gain = 583.836 ; free physical = 16558 ; free virtual = 24110
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Nets
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Nets : Time (s): cpu = 00:00:52 ; elapsed = 00:00:57 . Memory (MB): peak = 2537.059 ; gain = 598.875 ; free physical = 22463 ; free virtual = 28500
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:51 ; elapsed = 00:00:55 . Memory (MB): peak = 2522.023 ; gain = 583.836 ; free physical = 16558 ; free virtual = 24110
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Writing Synthesis Report
@@ -1310,97 +1312,98 @@ Report Cell Usage:
 |1     |blk_mem_gen_0 |     1|
 |2     |BUFG          |     5|
 |3     |CARRY4        |   158|
-|4     |LUT1          |     5|
-|5     |LUT2          |   186|
-|6     |LUT3          |   472|
-|7     |LUT4          |   492|
-|8     |LUT5          |   904|
-|9     |LUT6          |  2493|
-|10    |MUXF7         |   341|
-|11    |MUXF8         |     6|
-|12    |FDRE          |  3105|
-|13    |FDSE          |     2|
+|4     |LUT1          |     8|
+|5     |LUT2          |   234|
+|6     |LUT3          |   480|
+|7     |LUT4          |   561|
+|8     |LUT5          |  1039|
+|9     |LUT6          |  2322|
+|10    |MUXF7         |   262|
+|11    |MUXF8         |     1|
+|12    |FDRE          |  3100|
+|13    |FDSE          |     3|
 |14    |LD            |   248|
 |15    |IBUF          |     3|
 |16    |IOBUF         |     1|
-|17    |OBUF          |    36|
+|17    |OBUF          |    37|
+|18    |OBUFT         |     1|
 +------+--------------+------+
 
 Report Instance Areas: 
 +------+-----------------------------------------------------+---------------------------------------------+------+
 |      |Instance                                             |Module                                       |Cells |
 +------+-----------------------------------------------------+---------------------------------------------+------+
-|1     |top                                                  |                                             |  8521|
+|1     |top                                                  |                                             |  8527|
 |2     |  debouncer__btnd                                    |debouncer                                    |   165|
 |3     |    d_flip_flop__count                               |d_flip_flop__parameterized4_57               |    99|
 |4     |    d_flip_flop__state                               |d_flip_flop__parameterized13_58              |    66|
 |5     |  edge_detector__btnd__clean                         |edge_detector                                |     8|
 |6     |    d_flip_flop__state                               |d_flip_flop__parameterized13_56              |     5|
-|7     |  jay__0                                             |jay                                          |  8239|
-|8     |    central_processing_unit__0                       |central_processing_unit                      |  6911|
+|7     |  jay__0                                             |jay                                          |  8243|
+|8     |    central_processing_unit__0                       |central_processing_unit                      |  6875|
 |9     |      arithmetic_logic_unit__0                       |arithmetic_logic_unit                        |   102|
 |10    |      comparator__0                                  |comparator                                   |    14|
-|11    |      control_and_status_registers__0                |control_and_status_registers                 |   532|
-|12    |        d_flip_flop__mcause__exception_code          |d_flip_flop__parameterized5                  |    63|
+|11    |      control_and_status_registers__0                |control_and_status_registers                 |   546|
+|12    |        d_flip_flop__mcause__exception_code          |d_flip_flop__parameterized5                  |    91|
 |13    |        d_flip_flop__mcause__interrupt               |d_flip_flop__parameterized0_43               |     1|
 |14    |        d_flip_flop__mcycle__mcycle                  |d_flip_flop__parameterized4_44               |    64|
-|15    |        d_flip_flop__mepc__mepc                      |d_flip_flop__parameterized4_45               |    64|
+|15    |        d_flip_flop__mepc__mepc                      |d_flip_flop__parameterized4_45               |    72|
 |16    |        d_flip_flop__mie__meie                       |d_flip_flop__parameterized0_46               |     1|
 |17    |        d_flip_flop__mie__msie                       |d_flip_flop__parameterized0_47               |     1|
 |18    |        d_flip_flop__mie__mtie                       |d_flip_flop__parameterized0_48               |     1|
-|19    |        d_flip_flop__minstret__minstret              |d_flip_flop__parameterized4_49               |    68|
+|19    |        d_flip_flop__minstret__minstret              |d_flip_flop__parameterized4_49               |   114|
 |20    |        d_flip_flop__mip__meip                       |d_flip_flop__parameterized3_50               |     2|
 |21    |        d_flip_flop__mip__msip                       |d_flip_flop__parameterized0_51               |     2|
-|22    |        d_flip_flop__mip__mtip                       |d_flip_flop__parameterized3_52               |     2|
-|23    |        d_flip_flop__mstatus__mie                    |d_flip_flop__parameterized0_53               |     7|
+|22    |        d_flip_flop__mip__mtip                       |d_flip_flop__parameterized3_52               |     1|
+|23    |        d_flip_flop__mstatus__mie                    |d_flip_flop__parameterized0_53               |     4|
 |24    |        d_flip_flop__mstatus__mpie                   |d_flip_flop__parameterized1                  |     1|
-|25    |        d_flip_flop__mtval__mtval                    |d_flip_flop__parameterized4_54               |   128|
+|25    |        d_flip_flop__mtval__mtval                    |d_flip_flop__parameterized4_54               |    64|
 |26    |        d_flip_flop__mtvec__trap_vector_base_address |d_flip_flop__parameterized2                  |    62|
 |27    |        d_flip_flop__state__minstret                 |d_flip_flop__parameterized0_55               |     1|
-|28    |      d_flip_flop__a                                 |d_flip_flop_8                                |   824|
-|29    |      d_flip_flop__b                                 |d_flip_flop_9                                |   595|
-|30    |      d_flip_flop__ir                                |d_flip_flop__parameterized7                  |    88|
+|28    |      d_flip_flop__a                                 |d_flip_flop_8                                |   862|
+|29    |      d_flip_flop__b                                 |d_flip_flop_9                                |   557|
+|30    |      d_flip_flop__ir                                |d_flip_flop__parameterized7                  |   152|
 |31    |      d_flip_flop__pc                                |d_flip_flop__parameterized4_10               |    81|
-|32    |      d_flip_flop__state                             |d_flip_flop__parameterized6_11               |  1765|
-|33    |      decoder__0                                     |decoder                                      |    52|
-|34    |      register_file__0                               |register_file                                |  2817|
-|35    |        d_flip_flop__x__1                            |d_flip_flop_12                               |    64|
+|32    |      d_flip_flop__state                             |d_flip_flop__parameterized6_11               |  1689|
+|33    |      decoder__0                                     |decoder                                      |    53|
+|34    |      register_file__0                               |register_file                                |  2777|
+|35    |        d_flip_flop__x__1                            |d_flip_flop_12                               |   127|
 |36    |        d_flip_flop__x__10                           |d_flip_flop_13                               |    64|
-|37    |        d_flip_flop__x__11                           |d_flip_flop_14                               |   192|
-|38    |        d_flip_flop__x__12                           |d_flip_flop_15                               |    64|
+|37    |        d_flip_flop__x__11                           |d_flip_flop_14                               |    74|
+|38    |        d_flip_flop__x__12                           |d_flip_flop_15                               |   154|
 |39    |        d_flip_flop__x__13                           |d_flip_flop_16                               |    64|
-|40    |        d_flip_flop__x__14                           |d_flip_flop_17                               |    64|
-|41    |        d_flip_flop__x__15                           |d_flip_flop_18                               |   128|
-|42    |        d_flip_flop__x__16                           |d_flip_flop_19                               |    64|
-|43    |        d_flip_flop__x__17                           |d_flip_flop_20                               |    64|
-|44    |        d_flip_flop__x__18                           |d_flip_flop_21                               |    64|
-|45    |        d_flip_flop__x__19                           |d_flip_flop_22                               |   192|
-|46    |        d_flip_flop__x__2                            |d_flip_flop_23                               |    64|
-|47    |        d_flip_flop__x__20                           |d_flip_flop_24                               |    64|
+|40    |        d_flip_flop__x__14                           |d_flip_flop_17                               |    71|
+|41    |        d_flip_flop__x__15                           |d_flip_flop_18                               |    77|
+|42    |        d_flip_flop__x__16                           |d_flip_flop_19                               |   141|
+|43    |        d_flip_flop__x__17                           |d_flip_flop_20                               |    65|
+|44    |        d_flip_flop__x__18                           |d_flip_flop_21                               |    70|
+|45    |        d_flip_flop__x__19                           |d_flip_flop_22                               |    64|
+|46    |        d_flip_flop__x__2                            |d_flip_flop_23                               |    77|
+|47    |        d_flip_flop__x__20                           |d_flip_flop_24                               |   178|
 |48    |        d_flip_flop__x__21                           |d_flip_flop_25                               |    64|
-|49    |        d_flip_flop__x__22                           |d_flip_flop_26                               |    64|
-|50    |        d_flip_flop__x__23                           |d_flip_flop_27                               |   128|
-|51    |        d_flip_flop__x__24                           |d_flip_flop_28                               |    64|
+|49    |        d_flip_flop__x__22                           |d_flip_flop_26                               |    65|
+|50    |        d_flip_flop__x__23                           |d_flip_flop_27                               |    64|
+|51    |        d_flip_flop__x__24                           |d_flip_flop_28                               |   127|
 |52    |        d_flip_flop__x__25                           |d_flip_flop_29                               |    64|
-|53    |        d_flip_flop__x__26                           |d_flip_flop_30                               |    64|
-|54    |        d_flip_flop__x__27                           |d_flip_flop_31                               |   257|
-|55    |        d_flip_flop__x__28                           |d_flip_flop_32                               |    64|
+|53    |        d_flip_flop__x__26                           |d_flip_flop_30                               |    65|
+|54    |        d_flip_flop__x__27                           |d_flip_flop_31                               |    64|
+|55    |        d_flip_flop__x__28                           |d_flip_flop_32                               |   181|
 |56    |        d_flip_flop__x__29                           |d_flip_flop_33                               |    64|
-|57    |        d_flip_flop__x__3                            |d_flip_flop_34                               |   192|
+|57    |        d_flip_flop__x__3                            |d_flip_flop_34                               |    73|
 |58    |        d_flip_flop__x__30                           |d_flip_flop_35                               |    64|
-|59    |        d_flip_flop__x__31                           |d_flip_flop_36                               |   128|
-|60    |        d_flip_flop__x__4                            |d_flip_flop_37                               |    64|
-|61    |        d_flip_flop__x__5                            |d_flip_flop_38                               |    64|
+|59    |        d_flip_flop__x__31                           |d_flip_flop_36                               |    64|
+|60    |        d_flip_flop__x__4                            |d_flip_flop_37                               |   178|
+|61    |        d_flip_flop__x__5                            |d_flip_flop_38                               |    70|
 |62    |        d_flip_flop__x__6                            |d_flip_flop_39                               |    64|
-|63    |        d_flip_flop__x__7                            |d_flip_flop_40                               |   128|
-|64    |        d_flip_flop__x__8                            |d_flip_flop_41                               |    64|
+|63    |        d_flip_flop__x__7                            |d_flip_flop_40                               |    87|
+|64    |        d_flip_flop__x__8                            |d_flip_flop_41                               |   129|
 |65    |        d_flip_flop__x__9                            |d_flip_flop_42                               |    64|
-|66    |    general_purpose_input_output__0                  |general_purpose_input_output                 |    97|
+|66    |    general_purpose_input_output__0                  |general_purpose_input_output                 |    99|
 |67    |      d_flip_flop__data__0                           |d_flip_flop__parameterized14                 |    15|
 |68    |      d_flip_flop__data__1                           |d_flip_flop__parameterized14_2               |    16|
 |69    |      d_flip_flop__data__2                           |d_flip_flop__parameterized14_3               |    16|
 |70    |      d_flip_flop__data__3                           |d_flip_flop__parameterized14_4               |    16|
-|71    |      d_flip_flop__oe__0                             |d_flip_flop__parameterized6                  |    10|
+|71    |      d_flip_flop__oe__0                             |d_flip_flop__parameterized6                  |    12|
 |72    |      d_flip_flop__oe__1                             |d_flip_flop__parameterized6_5                |     8|
 |73    |      d_flip_flop__oe__2                             |d_flip_flop__parameterized6_6                |     8|
 |74    |      d_flip_flop__oe__3                             |d_flip_flop__parameterized6_7                |     8|
@@ -1409,11 +1412,11 @@ Report Instance Areas:
 |77    |      d_flip_flop__mtimecmp__mtimecmp                |d_flip_flop__parameterized4_1                |   160|
 |78    |    memory_controller__0                             |memory_controller                            |    16|
 |79    |      d_flip_flop__state                             |d_flip_flop__parameterized11                 |    13|
-|80    |    memory_management_unit__0                        |memory_management_unit                       |   827|
+|80    |    memory_management_unit__0                        |memory_management_unit                       |   865|
 |81    |      d_flip_flop__addr__x                           |d_flip_flop__parameterized8                  |   257|
-|82    |      d_flip_flop__rd_data__x                        |d_flip_flop                                  |   150|
+|82    |      d_flip_flop__rd_data__x                        |d_flip_flop                                  |   119|
 |83    |      d_flip_flop__size__x                           |d_flip_flop__parameterized9                  |     3|
-|84    |      d_flip_flop__state                             |d_flip_flop__parameterized10                 |   247|
+|84    |      d_flip_flop__state                             |d_flip_flop__parameterized10                 |   316|
 |85    |      d_flip_flop__we__x                             |d_flip_flop__parameterized3                  |     1|
 |86    |      d_flip_flop__wr_data__x                        |d_flip_flop_0                                |   163|
 |87    |    platform_level_interrupt_controller__0           |platform_level_interrupt_controller          |    60|
@@ -1425,30 +1428,30 @@ Report Instance Areas:
 |93    |        d_flip_flop__state                           |d_flip_flop__parameterized13                 |     4|
 +------+-----------------------------------------------------+---------------------------------------------+------+
 ---------------------------------------------------------------------------------
-Finished Writing Synthesis Report : Time (s): cpu = 00:00:52 ; elapsed = 00:00:57 . Memory (MB): peak = 2537.059 ; gain = 598.875 ; free physical = 22463 ; free virtual = 28500
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:51 ; elapsed = 00:00:55 . Memory (MB): peak = 2522.023 ; gain = 583.836 ; free physical = 16558 ; free virtual = 24110
 ---------------------------------------------------------------------------------
-Synthesis finished with 0 errors, 0 critical warnings and 132 warnings.
-Synthesis Optimization Runtime : Time (s): cpu = 00:00:50 ; elapsed = 00:00:54 . Memory (MB): peak = 2537.059 ; gain = 398.375 ; free physical = 22517 ; free virtual = 28554
-Synthesis Optimization Complete : Time (s): cpu = 00:00:52 ; elapsed = 00:00:57 . Memory (MB): peak = 2537.066 ; gain = 598.875 ; free physical = 22517 ; free virtual = 28554
+Synthesis finished with 0 errors, 0 critical warnings and 133 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:49 ; elapsed = 00:00:53 . Memory (MB): peak = 2522.023 ; gain = 383.367 ; free physical = 16611 ; free virtual = 24162
+Synthesis Optimization Complete : Time (s): cpu = 00:00:51 ; elapsed = 00:00:55 . Memory (MB): peak = 2522.031 ; gain = 583.836 ; free physical = 16611 ; free virtual = 24162
 INFO: [Project 1-571] Translating synthesized netlist
-Netlist sorting complete. Time (s): cpu = 00:00:00.06 ; elapsed = 00:00:00.06 . Memory (MB): peak = 2537.066 ; gain = 0.000 ; free physical = 22587 ; free virtual = 28624
-INFO: [Netlist 29-17] Analyzing 754 Unisim elements for replacement
+Netlist sorting complete. Time (s): cpu = 00:00:00.06 ; elapsed = 00:00:00.06 . Memory (MB): peak = 2522.031 ; gain = 0.000 ; free physical = 16679 ; free virtual = 24231
+INFO: [Netlist 29-17] Analyzing 670 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
 INFO: [Project 1-570] Preparing netlist for logic optimization
 INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2569.074 ; gain = 0.000 ; free physical = 22539 ; free virtual = 28576
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2554.039 ; gain = 0.000 ; free physical = 16632 ; free virtual = 24184
 INFO: [Project 1-111] Unisim Transformation Summary:
   A total of 249 instances were transformed.
   IOBUF => IOBUF (IBUF, OBUFT): 1 instance 
   LD => LDCE: 248 instances
 
 INFO: [Common 17-83] Releasing license: Synthesis
-238 Infos, 273 Warnings, 0 Critical Warnings and 0 Errors encountered.
+238 Infos, 275 Warnings, 0 Critical Warnings and 0 Errors encountered.
 synth_design completed successfully
-synth_design: Time (s): cpu = 00:00:58 ; elapsed = 00:01:04 . Memory (MB): peak = 2569.074 ; gain = 871.930 ; free physical = 22695 ; free virtual = 28732
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2569.074 ; gain = 0.000 ; free physical = 22695 ; free virtual = 28732
+synth_design: Time (s): cpu = 00:00:56 ; elapsed = 00:01:10 . Memory (MB): peak = 2554.039 ; gain = 856.891 ; free physical = 16807 ; free virtual = 24359
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2554.039 ; gain = 0.000 ; free physical = 16807 ; free virtual = 24359
 WARNING: [Constraints 18-5210] No constraints selected for write.
 Resolution: This message can indicate that there are no constraints for the design, or it can indicate that the used_in flags are set such that the constraints are ignored. This later case is used when running synth_design to not write synthesis constraints to the resulting checkpoint. Instead, project constraints are read when the synthesized design is opened.
 INFO: [Common 17-1381] The checkpoint '/home/seankent/bluejay/vivado/bluejay/bluejay.runs/synth_1/top.dcp' has been generated.
 INFO: [runtcl-4] Executing : report_utilization -file top_utilization_synth.rpt -pb top_utilization_synth.pb
-INFO: [Common 17-206] Exiting Vivado at Wed May 17 20:45:27 2023...
+INFO: [Common 17-206] Exiting Vivado at Wed May 24 11:42:05 2023...

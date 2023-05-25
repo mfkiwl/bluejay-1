@@ -816,13 +816,16 @@ CFLAGS += -ffreestanding
 CFLAGS += -fno-pic
 CFLAGS += -march=$(MARCH)
 CFLAGS += -mabi=$(MABI)
+#CFLAGS += --entry=_start
 #CFLAGS += -lc
 #CFLAGS += -lgcc
 
 LDFLAGS :=
 LDFLAGS += -nostdlib
-LDFLAGS += -Wl,-Ttext=0x0
+LDFLAGS += -nostartfiles
+#LDFLAGS += -Wl,-Ttext=0x0
 LDFLAGS += -Wl,--no-relax
+LDFLAGS += -Wl,-T $(TOP)/link/link.ld 
 
 
 LDLIBS += -lc
@@ -848,7 +851,7 @@ endef
 ################################
 define code--c-to-o--template
 $(1): $(2) $(TOP)/defs/gen/defs.h
-	riscv64-unknown-elf-gcc -I $(TOP)/defs/gen/ $(CFLAGS) -O0 -c -o $$(@) $$(<)
+	riscv64-unknown-elf-gcc -I $(TOP)/defs/gen/ -I $(TOP)/lib/ $(CFLAGS) -O3 -c -o $$(@) $$(<)
 endef
 
 ################################
@@ -989,7 +992,7 @@ SRC += mstatus
 SRC += mtvec
 SRC += mcause
 SRC += jay
-SRC += main
+#SRC += main
 #SRC += trap
 
 
@@ -1011,7 +1014,14 @@ $(eval $(call code--elf-to-lst--template,lib/prog.lst,lib/prog.elf))
 $(eval $(call code--bin-to-mem--template,lib/prog.mem,lib/prog.bin))
 $(eval $(call code--mem-to-coe--template,lib/prog.coe,lib/prog.mem))
 
-#$(eval $(call code--c-to-o--template,$(TOP)/ucode/main.o,$(TOP)/ucode/main.c))
+
+
+$(eval $(call code--o-to-elf--template,sw/prog.elf,lib/crt0.o $(CPPOBJ) sw/main.o))
+$(eval $(call code--c-to-o--template,sw/main.o,sw/main.cpp))
+$(eval $(call code--elf-to-bin--template,sw/prog.bin,sw/prog.elf))
+$(eval $(call code--elf-to-lst--template,sw/prog.lst,sw/prog.elf))
+$(eval $(call code--bin-to-mem--template,sw/prog.mem,sw/prog.bin))
+$(eval $(call code--mem-to-coe--template,sw/prog.coe,sw/prog.mem))
 
 
 abc:

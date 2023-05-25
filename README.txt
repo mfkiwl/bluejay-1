@@ -64,7 +64,7 @@ Resources:
         - https://en.wikipedia.org/wiki/Crt0 
     - SiFive Interrupt Cookbook
         - https://starfivetech.com/uploads/sifive-interrupt-cookbook-v1p2.pdf
-    Recursive Make Considered Harmful - Peter Miller
+    - Recursive Make Considered Harmful - Peter Miller
         - https://aegis.sourceforge.net/auug97.pdf
     - Vivado simulation hangs when two FSMs communicate with eachother and one of the signals is assinged a default value in an always_comb block
         - Someone with a similar issue: https://support.xilinx.com/s/question/0D52E00006iHmQxSAK/simulation-freezing-with-systemverilog-interfaces-fsm-handshake?language=en_US
@@ -79,6 +79,10 @@ Resources:
         - https://mullerlee.cyou/2020/07/09/riscv-exception-interrupt/
     - sifive e31 core doc:
         - https://starfivetech.com/uploads/e31_core_complex_manual_21G1.pdf
+    - Nexys A7 FPGA Board 
+        - https://digilent.com/reference/_media/reference/programmable-logic/nexys-a7/nexys-a7_rm.pdf
+    - What happend before main:
+        - https://embeddedartistry.com/blog/2019/04/08/a-general-overview-of-what-happens-before-main/
 
 
 

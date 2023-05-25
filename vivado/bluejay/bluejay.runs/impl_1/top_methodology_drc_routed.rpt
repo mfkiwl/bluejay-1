@@ -1,7 +1,7 @@
 Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 -----------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2019.2 (lin64) Build 2708876 Wed Nov  6 21:39:14 MST 2019
-| Date         : Wed May 17 20:46:41 2023
+| Date         : Wed May 24 11:43:29 2023
 | Host         : seankent running 64-bit Ubuntu 22.04.2 LTS
 | Command      : report_methodology -file top_methodology_drc_routed.rpt -pb top_methodology_drc_routed.pb -rpx top_methodology_drc_routed.rpx
 | Design       : top
@@ -23,11 +23,11 @@ Table of Contents
           Floorplan: design_1
       Design limits: <entire design considered>
              Max violations: <unlimited>
-             Violations found: 251
+             Violations found: 252
 +-----------+----------+-------------------------------+------------+
 | Rule      | Severity | Description                   | Violations |
 +-----------+----------+-------------------------------+------------+
-| TIMING-18 | Warning  | Missing input or output delay | 3          |
+| TIMING-18 | Warning  | Missing input or output delay | 4          |
 | TIMING-20 | Warning  | Non-clocked latch             | 248        |
 +-----------+----------+-------------------------------+------------+
 
@@ -46,6 +46,11 @@ Related violations: <none>
 TIMING-18#3 Warning
 Missing input or output delay  
 An input delay is missing on led16_b relative to clock(s) sys_clk_pin
+Related violations: <none>
+
+TIMING-18#4 Warning
+Missing input or output delay  
+An output delay is missing on aud_pwm relative to clock(s) sys_clk_pin
 Related violations: <none>
 
 TIMING-20#1 Warning

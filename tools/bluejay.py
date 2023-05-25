@@ -21,7 +21,7 @@ class Bluejay:
         Bluejay constructor. 
         
         Arguments:
-            tokens (list): a list of tokens.
+            tokens (list): A list of tokens.
         """
         self.tokens = copy.deepcopy(tokens)
 

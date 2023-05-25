@@ -18,6 +18,8 @@ logic btnd;
 logic [15:0] led;
 //logic led16_b;
 wire led16_b;
+wire aud_pwm;
+wire aud_sd;
 logic led16_g;
 logic led16_r;
 logic led17_b;
@@ -51,6 +53,8 @@ top dut
     .led17_b(led17_b),
     .led17_g(led17_g),
     .led17_r(led17_r),
+    .aud_pwm(aud_pwm),
+    .aud_sd(aud_sd),
     .an(an),
     .ca(ca), 
     .cb(cb), 

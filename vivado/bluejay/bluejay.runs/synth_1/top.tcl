@@ -17,6 +17,8 @@ proc create_report { reportName command } {
     send_msg_id runtcl-5 warning "$msg"
   }
 }
+set_param chipscope.maxJobs 5
+set_param xicom.use_bs_reader 1
 create_project -in_memory -part xc7a100tcsg324-1
 
 set_param project.singleFileAddWarning.threshold 0
@@ -32,11 +34,8 @@ set_property board_part_repo_paths {/home/seankent/.Xilinx/Vivado/2019.2/xhub/bo
 set_property board_part digilentinc.com:nexys4_ddr:part0:1.1 [current_project]
 set_property ip_output_repo /home/seankent/bluejay/vivado/bluejay/bluejay.cache/ip [current_project]
 set_property ip_cache_permissions {read write} [current_project]
-add_files /home/seankent/bluejay/vivado/coe/main.coe
-add_files /home/seankent/bluejay/vivado/coe/blinky.coe
-add_files /home/seankent/bluejay/vivado/coe/interactive_blinky.coe
-add_files /home/seankent/bluejay/code/prog.coe
 add_files /home/seankent/bluejay/lib/prog.coe
+add_files /home/seankent/bluejay/sw/prog.coe
 read_verilog -library xil_defaultlib -sv /home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/new/top.sv
 read_ip -quiet /home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/ip/blk_mem_gen_0/blk_mem_gen_0.xci
 set_property used_in_implementation false [get_files -all /home/seankent/bluejay/vivado/bluejay/bluejay.srcs/sources_1/ip/blk_mem_gen_0/blk_mem_gen_0_ooc.xdc]
