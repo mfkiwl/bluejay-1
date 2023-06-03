@@ -31,14 +31,6 @@ logic ready;
 logic resp;
 logic [63:0] rd_data;
 
-assign ready__1 = 1'b1;
-assign ready__2 = 1'b1;
-assign ready__3 = 1'b1;
-assign ready__4 = 1'b1;
-assign ready__5 = 1'b1;
-assign ready__6 = 1'b1;
-assign ready__7 = 1'b1;
-
 logic cs__0;
 logic we__0;
 logic [39:0] addr__0;
@@ -103,6 +95,15 @@ logic [63:0] wr_data__7;
 logic ready__7;
 logic [63:0] rd_data__7;
 logic [7:0] pma__7;
+
+assign ready__1 = 1'b1;
+assign ready__2 = 1'b1;
+assign ready__3 = 1'b1;
+assign ready__4 = 1'b1;
+assign ready__5 = 1'b1;
+assign ready__6 = 1'b1;
+assign ready__7 = 1'b1;
+
 
 //==============================
 // central_processing_unit__0

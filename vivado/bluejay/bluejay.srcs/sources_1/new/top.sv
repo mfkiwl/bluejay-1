@@ -7577,6 +7577,237 @@ d_flip_flop #(.WIDTH(2), .RESET_VALUE(STATE__LOW)) d_flip_flop__state
     
 endmodule
 //==============================================
+// pulse_width_modulator
+//==============================================
+module pulse_width_modulator 
+(
+    input clk,
+    input rst,
+    input cs,
+    input we,
+    input [3:0] addr,
+    input [63:0] wr_data,
+    output logic [63:0] rd_data,
+    output logic pwm 
+);
+
+
+logic [2:0] state;
+logic [2:0] state__n;
+
+logic [63:0] x;
+logic [63:0] x__n;
+logic [63:0] x__high;
+logic [63:0] x__high__n;
+logic en__x__high;
+logic [63:0] x__low;
+logic [63:0] x__low__n;
+logic en__x__low;
+
+
+// Period Register 
+logic [63:0] period;
+logic we__period;
+logic en__period;
+
+// Duty Register 
+logic [63:0] duty;
+logic we__duty;
+logic en__duty;
+
+always_comb
+begin
+    we__period = 1'b0;
+    we__duty = 1'b0;
+            
+    case (addr)
+        PULSE_WIDTH_MODULATOR__PERIOD:
+        begin
+            rd_data = period;
+            we__period = we;
+        end
+        PULSE_WIDTH_MODULATOR__DUTY:
+        begin
+            rd_data = duty;
+            we__duty = we;
+        end
+    endcase
+end
+
+
+assign x__high__n = duty;
+assign x__low__n = period - duty;
+
+
+localparam STATE__RESET = 3'h0;
+localparam STATE__LOW = 3'h1;
+localparam STATE__LOW_LAST = 3'h2;
+localparam STATE__HIGH = 3'h3;
+localparam STATE__HIGH_LAST = 3'h4;
+
+always_comb
+begin
+    case (state)
+        //==============================
+        // STATE__RESET
+        //==============================
+        STATE__RESET:
+        begin
+            pwm = 1'b0;
+            x__n = 0;
+            en__x__high = 1'b0;
+            en__x__low = 1'b0;
+            state__n = (x__low == 0) & (x__high == 0) : STATE__RESET : (x__low == 0) & (x__high == 1) ? STATE__HIGH_LAST : STATE__LOW_LAST;
+        end
+
+        //==============================
+        // STATE__LOW
+        //==============================
+        STATE__LOW:
+        begin
+            pwm = 1'b0;
+            x__n = x + 1;
+            en__x__high = (x == (x__low - 1));
+            en__x__low = (x == (x__low - 1));
+            state__n = (x == (x__low - 1)) ? STATE__LOW_LAST : STATE__LOW;
+        end
+
+        //==============================
+        // STATE__LOW_LAST
+        //==============================
+        STATE__LOW_LAST:
+        begin
+            pwm = 1'b0;
+            x__n = 0;
+            en__x__high = 1'b0;
+            en__x__low = 1'b0;
+            state__n = (x__high == 0) & (x__low == 1) ? STATE__LOW_LAST : (x__high == 0) & (x__low > 1) ? STATE__LOW : (x__high == 1) ? STATE__HIGH_LAST : STATE__HIGH; 
+        end
+
+        //==============================
+        // STATE__HIGH
+        //==============================
+        STATE__HIGH:
+        begin
+            pwm = 1'b1;
+            x__n = x + 1;
+            en__x__high = 1'b0;
+            en__x__low = 1'b0;
+            state__n = (x == (x__high - 1)) ? STATE__HIGH_LAST : STATE__HIGH;
+        end
+
+        //==============================
+        // STATE__HIGH_LAST
+        //==============================
+        STATE__HIGH_LAST:
+        begin
+            pwm = 1'b1;
+            x__n = 0;
+            en__x__high = 1'b0;
+            en__x__low = 1'b0;
+            state__n = (x__low == 0) & (x__high == 1) ? STATE__HIGH_LAST : (x__low == 0) & (x__high > 1) ? STATE__HIGH : (x__low == 1) ? STATE__LOW_LAST : STATE__LOW;
+        end
+
+    endcase
+end
+
+always_comb
+begin
+    case (en__mtime & we__mtime & cs)
+        1'b0:
+        begin
+            count = mtime__mtime + 1;
+        end
+        1'b1:
+        begin
+            mtime__mtime__n = wr_data[63:0];
+        end
+    endcase
+end
+
+
+assign en__period = cs & we__period;
+
+//==============================
+// d_flip_flop__period
+//==============================
+d_flip_flop #(.WIDTH(64), .RESET_VALUE(64'h0)) d_flip_flop__period
+(
+    .clk(clk),
+    .rst(rst),
+    .en(en__period),
+    .d(wr_data),
+    .q(period)
+);
+
+assign en__duty = cs & we__duty;
+
+//==============================
+// d_flip_flop__duty
+//==============================
+d_flip_flop #(.WIDTH(64), .RESET_VALUE(64'h0)) d_flip_flop__duty
+(
+    .clk(clk),
+    .rst(rst),
+    .en(en__duty),
+    .d(wr_data),
+    .q(duty)
+);
+
+//==============================
+// d_flip_flop__state
+//==============================
+d_flip_flop #(.WIDTH(3), .RESET_VALUE(STATE__RESET)) d_flip_flop__state
+(
+    .clk(clk),
+    .rst(rst),
+    .en(1'b1),
+    .d(state__n),
+    .q(state)
+);
+
+//==============================
+// d_flip_flop__x
+//==============================
+d_flip_flop #(.WIDTH(64), .RESET_VALUE(64'h0)) d_flip_flop__x
+(
+    .clk(clk),
+    .rst(rst),
+    .en(1'b1),
+    .d(x__n),
+    .q(x)
+);
+
+//==============================
+// d_flip_flop__x__high
+//==============================
+d_flip_flop #(.WIDTH(64), .RESET_VALUE(64'h0)) d_flip_flop__x__high
+(
+    .clk(clk),
+    .rst(rst),
+    .en(en__x__high),
+    .d(x__high__n),
+    .q(x__high)
+);
+
+//==============================
+// d_flip_flop__x__low
+//==============================
+d_flip_flop #(.WIDTH(64), .RESET_VALUE(64'h0)) d_flip_flop__x__low
+(
+    .clk(clk),
+    .rst(rst),
+    .en(en__x__low),
+    .d(x__low__n),
+    .q(x__low)
+);
+
+
+
+
+
+endmodule
+//==============================================
 // jay 
 //==============================================
 module jay 

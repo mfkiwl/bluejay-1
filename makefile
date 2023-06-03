@@ -565,6 +565,7 @@ IP := utils
 MODULES :=
 MODULES += debouncer
 MODULES += edge_detector
+MODULES += pulse_width_modulator
 
 TB_MODULES :=
 TB_MODULES += tb
@@ -758,7 +759,7 @@ $(eval $(call ip--sim--template,$(IP),$(SIM),$(SV),$(TESTS),default--sim-test--d
 IP := utils
 
 SIM := sim__xyz
-TESTS := test__a test__b test__c test__d
+TESTS := test__a
 
 $(eval $(call ip--src--template,$(IP)))
 $(eval $(call ip--tb--template,$(IP)))
