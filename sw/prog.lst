@@ -7,14 +7,14 @@ Disassembly of section .text:
 0000000000000000 <_start>:
    0:	00008137          	lui	x2,0x8
    4:	00001197          	auipc	x3,0x1
-   8:	c0c18193          	addi	x3,x3,-1012 # c10 <__global_pointer$>
+   8:	a9c18193          	addi	x3,x3,-1380 # aa0 <__global_pointer$>
    c:	00000297          	auipc	x5,0x0
   10:	04028293          	addi	x5,x5,64 # 4c <trap_entry>
   14:	30529073          	csrrw	x0,mtvec,x5
   18:	00001297          	auipc	x5,0x1
-  1c:	af028293          	addi	x5,x5,-1296 # b08 <jay>
+  1c:	90028293          	addi	x5,x5,-1792 # 918 <jay>
   20:	00001317          	auipc	x6,0x1
-  24:	ae830313          	addi	x6,x6,-1304 # b08 <jay>
+  24:	8f830313          	addi	x6,x6,-1800 # 918 <jay>
 
 0000000000000028 <_start__while__0>:
   28:	0062f863          	bgeu	x5,x6,38 <_start__endwhile__0>
@@ -24,15 +24,15 @@ Disassembly of section .text:
 
 0000000000000038 <_start__endwhile__0>:
   38:	00000097          	auipc	x1,0x0
-  3c:	4c0080e7          	jalr	x1,1216(x1) # 4f8 <__libc_init_array>
+  3c:	334080e7          	jalr	x1,820(x1) # 36c <__libc_init_array>
   40:	00000097          	auipc	x1,0x0
-  44:	3d0080e7          	jalr	x1,976(x1) # 410 <main>
+  44:	260080e7          	jalr	x1,608(x1) # 2a0 <main>
 
 0000000000000048 <_start__while__1>:
   48:	0000006f          	jal	x0,48 <_start__while__1>
 
 000000000000004c <trap_entry>:
-  4c:	f8010113          	addi	x2,x2,-128 # 7f80 <__global_pointer$+0x7370>
+  4c:	f8010113          	addi	x2,x2,-128 # 7f80 <__global_pointer$+0x74e0>
   50:	00113023          	sd	x1,0(x2)
   54:	00a13423          	sd	x10,8(x2)
   58:	00b13823          	sd	x11,16(x2)
@@ -55,13 +55,13 @@ Disassembly of section .text:
   94:	0002c863          	blt	x5,x0,a4 <trap_entry__else__0>
 
 0000000000000098 <trap_entry__then__0>:
-  98:	00001317          	auipc	x6,0x1
-  9c:	88030313          	addi	x6,x6,-1920 # 918 <exception_vector_table>
+  98:	00000317          	auipc	x6,0x0
+  9c:	6a030313          	addi	x6,x6,1696 # 738 <exception_vector_table>
   a0:	0100006f          	jal	x0,b0 <trap_entry__endif__0>
 
 00000000000000a4 <trap_entry__else__0>:
-  a4:	00001317          	auipc	x6,0x1
-  a8:	8f430313          	addi	x6,x6,-1804 # 998 <interrupt_vector_table>
+  a4:	00000317          	auipc	x6,0x0
+  a8:	71430313          	addi	x6,x6,1812 # 7b8 <interrupt_vector_table>
   ac:	0040006f          	jal	x0,b0 <trap_entry__endif__0>
 
 00000000000000b0 <trap_entry__endif__0>:
@@ -236,231 +236,130 @@ Disassembly of section .text:
  228:	00008067          	jalr	x0,0(x1)
 
 000000000000022c <_Z17TimerInterruptISRv>:
- 22c:	fe010113          	addi	x2,x2,-32
- 230:	00813823          	sd	x8,16(x2)
- 234:	00001437          	lui	x8,0x1
- 238:	b2043783          	ld	x15,-1248(x8) # b20 <state>
- 23c:	00913423          	sd	x9,8(x2)
- 240:	01213023          	sd	x18,0(x2)
- 244:	00500493          	addi	x9,x0,5
- 248:	00001937          	lui	x18,0x1
- 24c:	0017b793          	sltiu	x15,x15,1
- 250:	01d49593          	slli	x11,x9,0x1d
- 254:	00000613          	addi	x12,x0,0
- 258:	b0890513          	addi	x10,x18,-1272 # b08 <jay>
- 25c:	b2f43023          	sd	x15,-1248(x8)
- 260:	00113c23          	sd	x1,24(x2)
- 264:	00000097          	auipc	x1,0x0
- 268:	fc0080e7          	jalr	x1,-64(x1) # 224 <_ZN3Jay2sdEmm>
- 26c:	b2043783          	ld	x15,-1248(x8)
- 270:	00300593          	addi	x11,x0,3
- 274:	06078863          	beq	x15,x0,2e4 <_Z17TimerInterruptISRv+0xb8>
- 278:	01e59593          	slli	x11,x11,0x1e
- 27c:	00258593          	addi	x11,x11,2
- 280:	b0890513          	addi	x10,x18,-1272
- 284:	00000613          	addi	x12,x0,0
- 288:	00000097          	auipc	x1,0x0
- 28c:	f84080e7          	jalr	x1,-124(x1) # 20c <_ZN3Jay2sbEmm>
- 290:	000017b7          	lui	x15,0x1
- 294:	b007b603          	ld	x12,-1280(x15) # b00 <N__on>
- 298:	01d49593          	slli	x11,x9,0x1d
- 29c:	00858593          	addi	x11,x11,8
- 2a0:	b0890513          	addi	x10,x18,-1272
- 2a4:	00000097          	auipc	x1,0x0
- 2a8:	f80080e7          	jalr	x1,-128(x1) # 224 <_ZN3Jay2sdEmm>
- 2ac:	b2043783          	ld	x15,-1248(x8)
- 2b0:	00079e63          	bne	x15,x0,2cc <_Z17TimerInterruptISRv+0xa0>
- 2b4:	00001737          	lui	x14,0x1
- 2b8:	b1873783          	ld	x15,-1256(x14) # b18 <count>
- 2bc:	00700693          	addi	x13,x0,7
- 2c0:	04d78e63          	beq	x15,x13,31c <_Z17TimerInterruptISRv+0xf0>
- 2c4:	00178793          	addi	x15,x15,1
- 2c8:	b0f73c23          	sd	x15,-1256(x14)
- 2cc:	01813083          	ld	x1,24(x2)
- 2d0:	01013403          	ld	x8,16(x2)
- 2d4:	00813483          	ld	x9,8(x2)
- 2d8:	00013903          	ld	x18,0(x2)
- 2dc:	02010113          	addi	x2,x2,32
- 2e0:	00008067          	jalr	x0,0(x1)
- 2e4:	01e59593          	slli	x11,x11,0x1e
- 2e8:	b0890513          	addi	x10,x18,-1272
- 2ec:	00200613          	addi	x12,x0,2
- 2f0:	00258593          	addi	x11,x11,2
- 2f4:	00000097          	auipc	x1,0x0
- 2f8:	f18080e7          	jalr	x1,-232(x1) # 20c <_ZN3Jay2sbEmm>
- 2fc:	000017b7          	lui	x15,0x1
- 300:	af87b603          	ld	x12,-1288(x15) # af8 <N__off>
- 304:	01d49593          	slli	x11,x9,0x1d
- 308:	00858593          	addi	x11,x11,8
- 30c:	b0890513          	addi	x10,x18,-1272
- 310:	00000097          	auipc	x1,0x0
- 314:	f14080e7          	jalr	x1,-236(x1) # 224 <_ZN3Jay2sdEmm>
- 318:	f95ff06f          	jal	x0,2ac <_Z17TimerInterruptISRv+0x80>
- 31c:	000015b7          	lui	x11,0x1
- 320:	b105b783          	ld	x15,-1264(x11) # b10 <i>
- 324:	000016b7          	lui	x13,0x1
- 328:	9f868693          	addi	x13,x13,-1544 # 9f8 <samples>
- 32c:	00178793          	addi	x15,x15,1
- 330:	01f7f793          	andi	x15,x15,31
- 334:	00379613          	slli	x12,x15,0x3
- 338:	00c686b3          	add	x13,x13,x12
- 33c:	0006b603          	ld	x12,0(x13)
- 340:	01813083          	ld	x1,24(x2)
- 344:	01013403          	ld	x8,16(x2)
- 348:	b0f5b823          	sd	x15,-1264(x11)
- 34c:	3e800693          	addi	x13,x0,1000
- 350:	000017b7          	lui	x15,0x1
- 354:	b0c7b023          	sd	x12,-1280(x15) # b00 <N__on>
- 358:	40c686b3          	sub	x13,x13,x12
- 35c:	000017b7          	lui	x15,0x1
- 360:	aed7bc23          	sd	x13,-1288(x15) # af8 <N__off>
- 364:	b0073c23          	sd	x0,-1256(x14)
- 368:	00813483          	ld	x9,8(x2)
- 36c:	00013903          	ld	x18,0(x2)
- 370:	02010113          	addi	x2,x2,32
- 374:	00008067          	jalr	x0,0(x1)
-
-0000000000000378 <_Z20ExternalInterruptISRv>:
- 378:	fe010113          	addi	x2,x2,-32
- 37c:	48100593          	addi	x11,x0,1153
- 380:	00813823          	sd	x8,16(x2)
- 384:	01559593          	slli	x11,x11,0x15
- 388:	00001437          	lui	x8,0x1
- 38c:	00458593          	addi	x11,x11,4
- 390:	b0840513          	addi	x10,x8,-1272 # b08 <jay>
- 394:	00113c23          	sd	x1,24(x2)
- 398:	00913423          	sd	x9,8(x2)
- 39c:	00000097          	auipc	x1,0x0
- 3a0:	e60080e7          	jalr	x1,-416(x1) # 1fc <_ZN3Jay2lwEm>
- 3a4:	00500593          	addi	x11,x0,5
- 3a8:	01d59593          	slli	x11,x11,0x1d
- 3ac:	00050493          	addi	x9,x10,0
- 3b0:	00858593          	addi	x11,x11,8
- 3b4:	b0840513          	addi	x10,x8,-1272
- 3b8:	00000097          	auipc	x1,0x0
- 3bc:	e4c080e7          	jalr	x1,-436(x1) # 204 <_ZN3Jay2ldEm>
- 3c0:	0c800613          	addi	x12,x0,200
- 3c4:	00c51463          	bne	x10,x12,3cc <_Z20ExternalInterruptISRv+0x54>
- 3c8:	06400613          	addi	x12,x0,100
- 3cc:	00500593          	addi	x11,x0,5
- 3d0:	01d59593          	slli	x11,x11,0x1d
- 3d4:	b0840513          	addi	x10,x8,-1272
- 3d8:	00858593          	addi	x11,x11,8
- 3dc:	00000097          	auipc	x1,0x0
- 3e0:	e48080e7          	jalr	x1,-440(x1) # 224 <_ZN3Jay2sdEmm>
- 3e4:	b0840513          	addi	x10,x8,-1272
- 3e8:	01013403          	ld	x8,16(x2)
- 3ec:	01813083          	ld	x1,24(x2)
- 3f0:	00048613          	addi	x12,x9,0
- 3f4:	48100593          	addi	x11,x0,1153
- 3f8:	00813483          	ld	x9,8(x2)
- 3fc:	01559593          	slli	x11,x11,0x15
- 400:	00458593          	addi	x11,x11,4
- 404:	02010113          	addi	x2,x2,32
- 408:	00000317          	auipc	x6,0x0
- 40c:	e1430067          	jalr	x0,-492(x6) # 21c <_ZN3Jay2swEmm>
+ 22c:	ff010113          	addi	x2,x2,-16
+ 230:	00813023          	sd	x8,0(x2)
+ 234:	00500593          	addi	x11,x0,5
+ 238:	00001437          	lui	x8,0x1
+ 23c:	91840513          	addi	x10,x8,-1768 # 918 <jay>
+ 240:	00000613          	addi	x12,x0,0
+ 244:	01d59593          	slli	x11,x11,0x1d
+ 248:	00113423          	sd	x1,8(x2)
+ 24c:	00000097          	auipc	x1,0x0
+ 250:	fd8080e7          	jalr	x1,-40(x1) # 224 <_ZN3Jay2sdEmm>
+ 254:	000016b7          	lui	x13,0x1
+ 258:	9206b783          	ld	x15,-1760(x13) # 920 <i>
+ 25c:	00001737          	lui	x14,0x1
+ 260:	81870713          	addi	x14,x14,-2024 # 818 <samples>
+ 264:	00178793          	addi	x15,x15,1
+ 268:	01f7f793          	andi	x15,x15,31
+ 26c:	00379613          	slli	x12,x15,0x3
+ 270:	00c70733          	add	x14,x14,x12
+ 274:	91840513          	addi	x10,x8,-1768
+ 278:	00013403          	ld	x8,0(x2)
+ 27c:	00813083          	ld	x1,8(x2)
+ 280:	00073603          	ld	x12,0(x14)
+ 284:	00d00593          	addi	x11,x0,13
+ 288:	01c59593          	slli	x11,x11,0x1c
+ 28c:	92f6b023          	sd	x15,-1760(x13)
+ 290:	00858593          	addi	x11,x11,8
+ 294:	01010113          	addi	x2,x2,16
+ 298:	00000317          	auipc	x6,0x0
+ 29c:	f8c30067          	jalr	x0,-116(x6) # 224 <_ZN3Jay2sdEmm>
 
 Disassembly of section .text.startup:
 
-0000000000000410 <main>:
- 410:	fe010113          	addi	x2,x2,-32
- 414:	00813823          	sd	x8,16(x2)
- 418:	00000637          	lui	x12,0x0
- 41c:	00001437          	lui	x8,0x1
- 420:	000015b7          	lui	x11,0x1
- 424:	b0840513          	addi	x10,x8,-1272 # b08 <jay>
- 428:	22c60613          	addi	x12,x12,556 # 22c <_Z17TimerInterruptISRv>
- 42c:	9d058593          	addi	x11,x11,-1584 # 9d0 <interrupt_vector_table+0x38>
- 430:	00113c23          	sd	x1,24(x2)
- 434:	00913423          	sd	x9,8(x2)
- 438:	00000097          	auipc	x1,0x0
- 43c:	dec080e7          	jalr	x1,-532(x1) # 224 <_ZN3Jay2sdEmm>
- 440:	00500493          	addi	x9,x0,5
- 444:	01d49593          	slli	x11,x9,0x1d
- 448:	b0840513          	addi	x10,x8,-1272
- 44c:	00000613          	addi	x12,x0,0
- 450:	00000097          	auipc	x1,0x0
- 454:	dd4080e7          	jalr	x1,-556(x1) # 224 <_ZN3Jay2sdEmm>
- 458:	01d49593          	slli	x11,x9,0x1d
- 45c:	b0840513          	addi	x10,x8,-1272
- 460:	00000613          	addi	x12,x0,0
- 464:	00858593          	addi	x11,x11,8
- 468:	00300493          	addi	x9,x0,3
- 46c:	00000097          	auipc	x1,0x0
- 470:	db8080e7          	jalr	x1,-584(x1) # 224 <_ZN3Jay2sdEmm>
- 474:	01e49493          	slli	x9,x9,0x1e
- 478:	00148593          	addi	x11,x9,1
- 47c:	b0840513          	addi	x10,x8,-1272
- 480:	00000613          	addi	x12,x0,0
- 484:	00000097          	auipc	x1,0x0
- 488:	d88080e7          	jalr	x1,-632(x1) # 20c <_ZN3Jay2sbEmm>
- 48c:	00200613          	addi	x12,x0,2
- 490:	00248593          	addi	x11,x9,2
- 494:	b0840513          	addi	x10,x8,-1272
- 498:	00000097          	auipc	x1,0x0
- 49c:	d74080e7          	jalr	x1,-652(x1) # 20c <_ZN3Jay2sbEmm>
- 4a0:	b0840513          	addi	x10,x8,-1272
- 4a4:	08000593          	addi	x11,x0,128
- 4a8:	00000097          	auipc	x1,0x0
- 4ac:	c84080e7          	jalr	x1,-892(x1) # 12c <_ZN3MIE4csrsEm>
- 4b0:	000015b7          	lui	x11,0x1
- 4b4:	b0840513          	addi	x10,x8,-1272
- 4b8:	80058593          	addi	x11,x11,-2048 # 800 <__libc_init_array+0x308>
- 4bc:	00000097          	auipc	x1,0x0
- 4c0:	c70080e7          	jalr	x1,-912(x1) # 12c <_ZN3MIE4csrsEm>
- 4c4:	480015b7          	lui	x11,0x48001
- 4c8:	b0840513          	addi	x10,x8,-1272
- 4cc:	00200613          	addi	x12,x0,2
- 4d0:	00159593          	slli	x11,x11,0x1
- 4d4:	00000097          	auipc	x1,0x0
- 4d8:	d48080e7          	jalr	x1,-696(x1) # 21c <_ZN3Jay2swEmm>
- 4dc:	01013403          	ld	x8,16(x2)
- 4e0:	01813083          	ld	x1,24(x2)
- 4e4:	00813483          	ld	x9,8(x2)
- 4e8:	00800513          	addi	x10,x0,8
- 4ec:	02010113          	addi	x2,x2,32
- 4f0:	00000317          	auipc	x6,0x0
- 4f4:	c7430067          	jalr	x0,-908(x6) # 164 <_ZN7MSTATUS4csrsEm>
+00000000000002a0 <main>:
+ 2a0:	fe010113          	addi	x2,x2,-32
+ 2a4:	00813823          	sd	x8,16(x2)
+ 2a8:	00000637          	lui	x12,0x0
+ 2ac:	00001437          	lui	x8,0x1
+ 2b0:	000005b7          	lui	x11,0x0
+ 2b4:	22c60613          	addi	x12,x12,556 # 22c <_Z17TimerInterruptISRv>
+ 2b8:	7f058593          	addi	x11,x11,2032 # 7f0 <interrupt_vector_table+0x38>
+ 2bc:	91840513          	addi	x10,x8,-1768 # 918 <jay>
+ 2c0:	00113c23          	sd	x1,24(x2)
+ 2c4:	00913423          	sd	x9,8(x2)
+ 2c8:	00000097          	auipc	x1,0x0
+ 2cc:	f5c080e7          	jalr	x1,-164(x1) # 224 <_ZN3Jay2sdEmm>
+ 2d0:	00500493          	addi	x9,x0,5
+ 2d4:	01d49593          	slli	x11,x9,0x1d
+ 2d8:	00000613          	addi	x12,x0,0
+ 2dc:	91840513          	addi	x10,x8,-1768
+ 2e0:	00000097          	auipc	x1,0x0
+ 2e4:	f44080e7          	jalr	x1,-188(x1) # 224 <_ZN3Jay2sdEmm>
+ 2e8:	01d49593          	slli	x11,x9,0x1d
+ 2ec:	00002637          	lui	x12,0x2
+ 2f0:	dc560613          	addi	x12,x12,-571 # 1dc5 <__global_pointer$+0x1325>
+ 2f4:	00858593          	addi	x11,x11,8
+ 2f8:	91840513          	addi	x10,x8,-1768
+ 2fc:	00000097          	auipc	x1,0x0
+ 300:	f28080e7          	jalr	x1,-216(x1) # 224 <_ZN3Jay2sdEmm>
+ 304:	000017b7          	lui	x15,0x1
+ 308:	9207b703          	ld	x14,-1760(x15) # 920 <i>
+ 30c:	000017b7          	lui	x15,0x1
+ 310:	81878793          	addi	x15,x15,-2024 # 818 <samples>
+ 314:	00371713          	slli	x14,x14,0x3
+ 318:	00e787b3          	add	x15,x15,x14
+ 31c:	0007b603          	ld	x12,0(x15)
+ 320:	00d00493          	addi	x9,x0,13
+ 324:	01c49493          	slli	x9,x9,0x1c
+ 328:	00848593          	addi	x11,x9,8
+ 32c:	91840513          	addi	x10,x8,-1768
+ 330:	00000097          	auipc	x1,0x0
+ 334:	ef4080e7          	jalr	x1,-268(x1) # 224 <_ZN3Jay2sdEmm>
+ 338:	08000613          	addi	x12,x0,128
+ 33c:	00048593          	addi	x11,x9,0
+ 340:	91840513          	addi	x10,x8,-1768
+ 344:	00000097          	auipc	x1,0x0
+ 348:	ee0080e7          	jalr	x1,-288(x1) # 224 <_ZN3Jay2sdEmm>
+ 34c:	91840513          	addi	x10,x8,-1768
+ 350:	08000593          	addi	x11,x0,128
+ 354:	00000097          	auipc	x1,0x0
+ 358:	dd8080e7          	jalr	x1,-552(x1) # 12c <_ZN3MIE4csrsEm>
+ 35c:	00800513          	addi	x10,x0,8
+ 360:	00000097          	auipc	x1,0x0
+ 364:	e04080e7          	jalr	x1,-508(x1) # 164 <_ZN7MSTATUS4csrsEm>
+ 368:	0000006f          	jal	x0,368 <main+0xc8>
 
 Disassembly of section .text.__libc_init_array:
 
-00000000000004f8 <__libc_init_array>:
- 4f8:	fe010113          	addi	x2,x2,-32
- 4fc:	00813823          	sd	x8,16(x2)
- 500:	000007b7          	lui	x15,0x0
- 504:	00000437          	lui	x8,0x0
- 508:	01213023          	sd	x18,0(x2)
- 50c:	00078793          	addi	x15,x15,0 # 0 <_start>
- 510:	00040713          	addi	x14,x8,0 # 0 <_start>
- 514:	00113c23          	sd	x1,24(x2)
- 518:	00913423          	sd	x9,8(x2)
- 51c:	40e78933          	sub	x18,x15,x14
- 520:	02e78263          	beq	x15,x14,544 <__libc_init_array+0x4c>
- 524:	40395913          	srai	x18,x18,0x3
- 528:	00040413          	addi	x8,x8,0
- 52c:	00000493          	addi	x9,x0,0
- 530:	00043783          	ld	x15,0(x8)
- 534:	00148493          	addi	x9,x9,1
- 538:	00840413          	addi	x8,x8,8
- 53c:	000780e7          	jalr	x1,0(x15)
- 540:	ff24e8e3          	bltu	x9,x18,530 <__libc_init_array+0x38>
- 544:	00000437          	lui	x8,0x0
- 548:	000007b7          	lui	x15,0x0
- 54c:	00078793          	addi	x15,x15,0 # 0 <_start>
- 550:	00040713          	addi	x14,x8,0 # 0 <_start>
- 554:	40e78933          	sub	x18,x15,x14
- 558:	40395913          	srai	x18,x18,0x3
- 55c:	02e78063          	beq	x15,x14,57c <__libc_init_array+0x84>
- 560:	00040413          	addi	x8,x8,0
- 564:	00000493          	addi	x9,x0,0
- 568:	00043783          	ld	x15,0(x8)
- 56c:	00148493          	addi	x9,x9,1
- 570:	00840413          	addi	x8,x8,8
- 574:	000780e7          	jalr	x1,0(x15)
- 578:	ff24e8e3          	bltu	x9,x18,568 <__libc_init_array+0x70>
- 57c:	01813083          	ld	x1,24(x2)
- 580:	01013403          	ld	x8,16(x2)
- 584:	00813483          	ld	x9,8(x2)
- 588:	00013903          	ld	x18,0(x2)
- 58c:	02010113          	addi	x2,x2,32
- 590:	00008067          	jalr	x0,0(x1)
+000000000000036c <__libc_init_array>:
+ 36c:	fe010113          	addi	x2,x2,-32
+ 370:	00813823          	sd	x8,16(x2)
+ 374:	000007b7          	lui	x15,0x0
+ 378:	00000437          	lui	x8,0x0
+ 37c:	01213023          	sd	x18,0(x2)
+ 380:	00078793          	addi	x15,x15,0 # 0 <_start>
+ 384:	00040713          	addi	x14,x8,0 # 0 <_start>
+ 388:	00113c23          	sd	x1,24(x2)
+ 38c:	00913423          	sd	x9,8(x2)
+ 390:	40e78933          	sub	x18,x15,x14
+ 394:	02e78263          	beq	x15,x14,3b8 <__libc_init_array+0x4c>
+ 398:	40395913          	srai	x18,x18,0x3
+ 39c:	00040413          	addi	x8,x8,0
+ 3a0:	00000493          	addi	x9,x0,0
+ 3a4:	00043783          	ld	x15,0(x8)
+ 3a8:	00148493          	addi	x9,x9,1
+ 3ac:	00840413          	addi	x8,x8,8
+ 3b0:	000780e7          	jalr	x1,0(x15)
+ 3b4:	ff24e8e3          	bltu	x9,x18,3a4 <__libc_init_array+0x38>
+ 3b8:	00000437          	lui	x8,0x0
+ 3bc:	000007b7          	lui	x15,0x0
+ 3c0:	00078793          	addi	x15,x15,0 # 0 <_start>
+ 3c4:	00040713          	addi	x14,x8,0 # 0 <_start>
+ 3c8:	40e78933          	sub	x18,x15,x14
+ 3cc:	40395913          	srai	x18,x18,0x3
+ 3d0:	02e78063          	beq	x15,x14,3f0 <__libc_init_array+0x84>
+ 3d4:	00040413          	addi	x8,x8,0
+ 3d8:	00000493          	addi	x9,x0,0
+ 3dc:	00043783          	ld	x15,0(x8)
+ 3e0:	00148493          	addi	x9,x9,1
+ 3e4:	00840413          	addi	x8,x8,8
+ 3e8:	000780e7          	jalr	x1,0(x15)
+ 3ec:	ff24e8e3          	bltu	x9,x18,3dc <__libc_init_array+0x70>
+ 3f0:	01813083          	ld	x1,24(x2)
+ 3f4:	01013403          	ld	x8,16(x2)
+ 3f8:	00813483          	ld	x9,8(x2)
+ 3fc:	00013903          	ld	x18,0(x2)
+ 400:	02010113          	addi	x2,x2,32
+ 404:	00008067          	jalr	x0,0(x1)

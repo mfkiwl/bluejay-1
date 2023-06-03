@@ -50,12 +50,13 @@ logic btnd__clean;
 logic btnd__clean__edge;
 
 logic int__1;
+logic pwm;
 
 assign clk = clk_100mhz;
 assign rst = btnc;
 assign led16_b = port__0[0];
 assign int__1 = btnd__clean__edge;
-assign aud_pwm = port__0[1];
+assign aud_pwm = pwm ? 1'bz : 1'b0;
 assign aud_sd = 1'b1;
 
 assign led = 0;
@@ -88,6 +89,7 @@ jay jay__0
     .port__2(port__2),
     .port__3(port__3),
     .int__1(int__1),
+    .pwm(pwm),
     .ena(ena),
     .wea(wea),
     .addra(addra),

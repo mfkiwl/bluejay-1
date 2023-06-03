@@ -14,13 +14,15 @@ module jay
     output logic [11:0] addra, 
     output logic [63:0] dina,
     input [63:0] douta,
-    input int__1
+    input int__1,
+    output logic pwm
 );
 
 
 logic context__0__eip;
 
 logic tip;
+
 
 logic cs;
 logic we;
@@ -297,6 +299,21 @@ general_purpose_input_output general_purpose_input_output__0
     .port__1(port__1),
     .port__2(port__2),
     .port__3(port__3)
+);
+
+//==============================================
+// pusle_width_modulator__0 
+//==============================================
+pulse_width_modulator pusle_width_modulator__0 
+(
+    .clk(clk),
+    .rst(rst),
+    .cs(cs__5),
+    .we(we__5),
+    .addr(addr__5[3:0]),
+    .wr_data(wr_data__5),
+    .rd_data(rd_data__5),
+    .pwm(pwm)
 );
 
 endmodule

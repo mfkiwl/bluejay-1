@@ -6363,7 +6363,7 @@ assign pma__5[0:0] = 1'b0;
 assign pma__5[1:1] = 1'b0;
 assign pma__5[2:2] = 1'b0;
 assign pma__5[3:3] = 1'b0;
-assign pma__5[4:4] = 1'b0;
+assign pma__5[4:4] = 1'b1;
 assign pma__5[5:5] = 1'b0;
 
 //==============================================
@@ -7592,17 +7592,16 @@ module pulse_width_modulator
 );
 
 
-logic [2:0] state;
-logic [2:0] state__n;
+logic [3:0] state;
+logic [3:0] state__n;
 
-logic [63:0] x;
-logic [63:0] x__n;
-logic [63:0] x__high;
-logic [63:0] x__high__n;
-logic en__x__high;
-logic [63:0] x__low;
-logic [63:0] x__low__n;
-logic en__x__low;
+logic [65:0] x;
+logic [65:0] x__n;
+logic [65:0] x__high;
+logic [65:0] x__high__n;
+logic [65:0] x__low;
+logic [65:0] x__low__n;
+logic en__x;
 
 
 // Period Register 
@@ -7621,12 +7620,12 @@ begin
     we__duty = 1'b0;
             
     case (addr)
-        PULSE_WIDTH_MODULATOR__PERIOD:
+        4'h0000000:
         begin
             rd_data = period;
             we__period = we;
         end
-        PULSE_WIDTH_MODULATOR__DUTY:
+        4'h0000008:
         begin
             rd_data = duty;
             we__duty = we;
@@ -7635,18 +7634,23 @@ begin
 end
 
 
-assign x__high__n = duty;
-assign x__low__n = period - duty;
+assign x__high__n = (duty > period) ? 0 : duty << 2;
+assign x__low__n = (duty > period) ? 0 : (period - duty) << 2;
 
 
-localparam STATE__RESET = 3'h0;
-localparam STATE__LOW = 3'h1;
-localparam STATE__LOW_LAST = 3'h2;
-localparam STATE__HIGH = 3'h3;
-localparam STATE__HIGH_LAST = 3'h4;
+localparam STATE__RESET = 4'h0;
+localparam STATE__HIGH__0 = 4'h1;
+localparam STATE__HIGH__1 = 4'h2;
+localparam STATE__HIGH__2 = 4'h3;
+localparam STATE__HIGH__3 = 4'h4;
+localparam STATE__HIGH__4 = 4'h5;
+localparam STATE__LOW__0 = 4'h6;
+localparam STATE__LOW__1 = 4'h7;
+localparam STATE__LOW__2 = 4'h8;
 
 always_comb
 begin
+
     case (state)
         //==============================
         // STATE__RESET
@@ -7655,73 +7659,98 @@ begin
         begin
             pwm = 1'b0;
             x__n = 0;
-            en__x__high = 1'b0;
-            en__x__low = 1'b0;
-            state__n = (x__low == 0) & (x__high == 0) : STATE__RESET : (x__low == 0) & (x__high == 1) ? STATE__HIGH_LAST : STATE__LOW_LAST;
+            en__x = 1'b1;
+            state__n = (x__low == 0) & (x__high == 0) ? STATE__RESET : (x__low == 0) ? STATE__HIGH__0 : STATE__LOW__0; 
         end
 
         //==============================
-        // STATE__LOW
+        // STATE__HIGH__0
         //==============================
-        STATE__LOW:
-        begin
-            pwm = 1'b0;
-            x__n = x + 1;
-            en__x__high = (x == (x__low - 1));
-            en__x__low = (x == (x__low - 1));
-            state__n = (x == (x__low - 1)) ? STATE__LOW_LAST : STATE__LOW;
-        end
-
-        //==============================
-        // STATE__LOW_LAST
-        //==============================
-        STATE__LOW_LAST:
-        begin
-            pwm = 1'b0;
-            x__n = 0;
-            en__x__high = 1'b0;
-            en__x__low = 1'b0;
-            state__n = (x__high == 0) & (x__low == 1) ? STATE__LOW_LAST : (x__high == 0) & (x__low > 1) ? STATE__LOW : (x__high == 1) ? STATE__HIGH_LAST : STATE__HIGH; 
-        end
-
-        //==============================
-        // STATE__HIGH
-        //==============================
-        STATE__HIGH:
+        STATE__HIGH__0:
         begin
             pwm = 1'b1;
             x__n = x + 1;
-            en__x__high = 1'b0;
-            en__x__low = 1'b0;
-            state__n = (x == (x__high - 1)) ? STATE__HIGH_LAST : STATE__HIGH;
+            en__x = 1'b0;
+            state__n = (x == (x__high - 4)) ? STATE__HIGH__1 : STATE__HIGH__0;
         end
 
         //==============================
-        // STATE__HIGH_LAST
+        // STATE__HIGH__1
         //==============================
-        STATE__HIGH_LAST:
+        STATE__HIGH__1:
+        begin
+            pwm = 1'b1;
+            x__n = x + 1;
+            en__x = 1'b0;
+            state__n = (x__low == 0) ? STATE__HIGH__3 : STATE__HIGH__2; 
+        end
+
+        //==============================
+        // STATE__HIGH__2
+        //==============================
+        STATE__HIGH__2:
+        begin
+            pwm = 1'b1;
+            x__n = x + 1;
+            en__x = 1'b0;
+            state__n = STATE__HIGH__4; 
+        end
+
+        //==============================
+        // STATE__HIGH__3
+        //==============================
+        STATE__HIGH__3:
+        begin
+            pwm = 1'b1;
+            x__n = x + 1;
+            en__x = 1'b1;
+            state__n = STATE__HIGH__4; 
+        end
+
+        //==============================
+        // STATE__HIGH__4
+        //==============================
+        STATE__HIGH__4:
         begin
             pwm = 1'b1;
             x__n = 0;
-            en__x__high = 1'b0;
-            en__x__low = 1'b0;
-            state__n = (x__low == 0) & (x__high == 1) ? STATE__HIGH_LAST : (x__low == 0) & (x__high > 1) ? STATE__HIGH : (x__low == 1) ? STATE__LOW_LAST : STATE__LOW;
+            en__x = 1'b0;
+            state__n = (x__low == 0) & (x__high == 0) ? STATE__RESET : (x__low == 0) ? STATE__HIGH__0 : STATE__LOW__0; 
         end
 
-    endcase
-end
+        //==============================
+        // STATE__LOW__0
+        //==============================
+        STATE__LOW__0:
+        begin
+            pwm = 1'b0;
+            x__n = x + 1;
+            en__x = 1'b0;
+            state__n = (x == (x__low - 3)) ? STATE__LOW__1 : STATE__LOW__0;
+        end
 
-always_comb
-begin
-    case (en__mtime & we__mtime & cs)
-        1'b0:
+        //==============================
+        // STATE__LOW__1
+        //==============================
+        STATE__LOW__1:
         begin
-            count = mtime__mtime + 1;
+            pwm = 1'b0;
+            x__n = x + 1;
+            en__x = 1'b1;
+            state__n = STATE__LOW__2; 
         end
-        1'b1:
+
+        //==============================
+        // STATE__LOW__2
+        //==============================
+        STATE__LOW__2:
         begin
-            mtime__mtime__n = wr_data[63:0];
+            pwm = 1'b0;
+            x__n = 0;
+            en__x = 1'b0;
+            state__n = (x__low == 0) & (x__high == 0) ? STATE__RESET : (x__high == 0) ? STATE__LOW__0 : STATE__HIGH__0; 
         end
+
     endcase
 end
 
@@ -7757,7 +7786,7 @@ d_flip_flop #(.WIDTH(64), .RESET_VALUE(64'h0)) d_flip_flop__duty
 //==============================
 // d_flip_flop__state
 //==============================
-d_flip_flop #(.WIDTH(3), .RESET_VALUE(STATE__RESET)) d_flip_flop__state
+d_flip_flop #(.WIDTH(4), .RESET_VALUE(STATE__RESET)) d_flip_flop__state
 (
     .clk(clk),
     .rst(rst),
@@ -7769,7 +7798,7 @@ d_flip_flop #(.WIDTH(3), .RESET_VALUE(STATE__RESET)) d_flip_flop__state
 //==============================
 // d_flip_flop__x
 //==============================
-d_flip_flop #(.WIDTH(64), .RESET_VALUE(64'h0)) d_flip_flop__x
+d_flip_flop #(.WIDTH(66), .RESET_VALUE(66'h0)) d_flip_flop__x
 (
     .clk(clk),
     .rst(rst),
@@ -7781,11 +7810,11 @@ d_flip_flop #(.WIDTH(64), .RESET_VALUE(64'h0)) d_flip_flop__x
 //==============================
 // d_flip_flop__x__high
 //==============================
-d_flip_flop #(.WIDTH(64), .RESET_VALUE(64'h0)) d_flip_flop__x__high
+d_flip_flop #(.WIDTH(66), .RESET_VALUE(66'h0)) d_flip_flop__x__high
 (
     .clk(clk),
     .rst(rst),
-    .en(en__x__high),
+    .en(en__x),
     .d(x__high__n),
     .q(x__high)
 );
@@ -7793,11 +7822,11 @@ d_flip_flop #(.WIDTH(64), .RESET_VALUE(64'h0)) d_flip_flop__x__high
 //==============================
 // d_flip_flop__x__low
 //==============================
-d_flip_flop #(.WIDTH(64), .RESET_VALUE(64'h0)) d_flip_flop__x__low
+d_flip_flop #(.WIDTH(66), .RESET_VALUE(66'h0)) d_flip_flop__x__low
 (
     .clk(clk),
     .rst(rst),
-    .en(en__x__low),
+    .en(en__x),
     .d(x__low__n),
     .q(x__low)
 );
@@ -7823,13 +7852,15 @@ module jay
     output logic [11:0] addra, 
     output logic [63:0] dina,
     input [63:0] douta,
-    input int__1
+    input int__1,
+    output logic pwm
 );
 
 
 logic context__0__eip;
 
 logic tip;
+
 
 logic cs;
 logic we;
@@ -7839,14 +7870,6 @@ logic [63:0] wr_data;
 logic ready;
 logic resp;
 logic [63:0] rd_data;
-
-assign ready__1 = 1'b1;
-assign ready__2 = 1'b1;
-assign ready__3 = 1'b1;
-assign ready__4 = 1'b1;
-assign ready__5 = 1'b1;
-assign ready__6 = 1'b1;
-assign ready__7 = 1'b1;
 
 logic cs__0;
 logic we__0;
@@ -7912,6 +7935,15 @@ logic [63:0] wr_data__7;
 logic ready__7;
 logic [63:0] rd_data__7;
 logic [7:0] pma__7;
+
+assign ready__1 = 1'b1;
+assign ready__2 = 1'b1;
+assign ready__3 = 1'b1;
+assign ready__4 = 1'b1;
+assign ready__5 = 1'b1;
+assign ready__6 = 1'b1;
+assign ready__7 = 1'b1;
+
 
 //==============================
 // central_processing_unit__0
@@ -8107,6 +8139,21 @@ general_purpose_input_output general_purpose_input_output__0
     .port__3(port__3)
 );
 
+//==============================================
+// pusle_width_modulator__0 
+//==============================================
+pulse_width_modulator pusle_width_modulator__0 
+(
+    .clk(clk),
+    .rst(rst),
+    .cs(cs__5),
+    .we(we__5),
+    .addr(addr__5[3:0]),
+    .wr_data(wr_data__5),
+    .rd_data(rd_data__5),
+    .pwm(pwm)
+);
+
 endmodule
 
 //==============================================
@@ -8161,12 +8208,13 @@ logic btnd__clean;
 logic btnd__clean__edge;
 
 logic int__1;
+logic pwm;
 
 assign clk = clk_100mhz;
 assign rst = btnc;
 assign led16_b = port__0[0];
 assign int__1 = btnd__clean__edge;
-assign aud_pwm = port__0[1];
+assign aud_pwm = pwm ? 1'bz : 1'b0;
 assign aud_sd = 1'b1;
 
 assign led = 0;
@@ -8199,6 +8247,7 @@ jay jay__0
     .port__2(port__2),
     .port__3(port__3),
     .int__1(int__1),
+    .pwm(pwm),
     .ena(ena),
     .wea(wea),
     .addra(addra),

@@ -540,4 +540,4 @@ defs["GENERAL_PURPOSE_INPUT_OUTPUT__OE__3"] = {"value": "0xb", "prefix": "4"}
 
 defs["PULSE_WIDTH_MODULATOR__BASE_ADDR"] = {"value": "0xd0000000", "prefix": "40"}
 defs["PULSE_WIDTH_MODULATOR__PERIOD"] = {"value": "0x0000000", "prefix": "4"}
-defs["PULSE_WIDTH_MODULATOR__DUTY"] = {"value": "0x0000004", "prefix": "4"}
+defs["PULSE_WIDTH_MODULATOR__DUTY"] = {"value": "0x0000008", "prefix": "4"}

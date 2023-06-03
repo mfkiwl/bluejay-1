@@ -47,7 +47,7 @@ begin
             rd_data = period;
             we__period = we;
         end
-        4'h0000004:
+        4'h0000008:
         begin
             rd_data = duty;
             we__duty = we;
