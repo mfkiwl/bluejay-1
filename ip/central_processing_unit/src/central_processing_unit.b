@@ -1617,10 +1617,6 @@ always_comb begin
             cs = 1'b1;
             addr = c;
             size = SIZE__BYTE;
-            rf__cs = 1'b1;
-            rf__addr = rd;
-            rf__we = ready & ~resp;
-            rf__wr_data = {{56{rd_data[7]}}, rd_data[7:0]};
             state__n = (ready & ~resp) ? STATE__LB__2 : (ready & resp & (rd_data == ERRORCODE__ACCESS_FAULT)) ? STATE__EXCEPTION__LOAD_ACCESS_FAULT__0 : (ready & resp & (rd_data == ERRORCODE__MISALIGNED_ADDRESS)) ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0 : STATE__LB__1;
         end
 
@@ -1629,6 +1625,10 @@ always_comb begin
         //==============================
         STATE__LB__2:
         begin
+            rf__cs = 1'b1;
+            rf__addr = rd;
+            rf__we = 1'b1;
+            rf__wr_data = {{56{rd_data[7]}}, rd_data[7:0]};
             pc__n = pc + 4;
             instret = 1'b1;
             state__n = STATE__FETCH__0;
@@ -1655,10 +1655,6 @@ always_comb begin
             cs = 1'b1;
             addr = c;
             size = SIZE__HALF_WORD;
-            rf__cs = 1'b1;
-            rf__addr = rd;
-            rf__we = ready & ~resp;
-            rf__wr_data = {{48{rd_data[15]}}, rd_data[15:0]};
             state__n = (ready & ~resp) ? STATE__LH__2 : (ready & resp & (rd_data == ERRORCODE__ACCESS_FAULT)) ? STATE__EXCEPTION__LOAD_ACCESS_FAULT__0 : (ready & resp & (rd_data == ERRORCODE__MISALIGNED_ADDRESS)) ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0 : STATE__LH__1;
         end
 
@@ -1667,6 +1663,10 @@ always_comb begin
         //==============================
         STATE__LH__2:
         begin
+            rf__cs = 1'b1;
+            rf__addr = rd;
+            rf__we = 1'b1;
+            rf__wr_data = {{48{rd_data[15]}}, rd_data[15:0]};
             pc__n = pc + 4;
             instret = 1'b1;
             state__n = STATE__FETCH__0;
@@ -1693,10 +1693,6 @@ always_comb begin
             cs = 1'b1;
             addr = c;
             size = SIZE__WORD;
-            rf__cs = 1'b1;
-            rf__addr = rd;
-            rf__we = ready & ~resp;
-            rf__wr_data = {{32{rd_data[31]}}, rd_data[31:0]};
             state__n = (ready & ~resp) ? STATE__LW__2 : (ready & resp & (rd_data == ERRORCODE__ACCESS_FAULT)) ? STATE__EXCEPTION__LOAD_ACCESS_FAULT__0 : (ready & resp & (rd_data == ERRORCODE__MISALIGNED_ADDRESS)) ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0 : STATE__LW__1;
         end
 
@@ -1705,6 +1701,10 @@ always_comb begin
         //==============================
         STATE__LW__2:
         begin
+            rf__cs = 1'b1;
+            rf__addr = rd;
+            rf__we = 1'b1;
+            rf__wr_data = {{32{rd_data[31]}}, rd_data[31:0]};
             pc__n = pc + 4;
             instret = 1'b1;
             state__n = STATE__FETCH__0;
@@ -1731,10 +1731,6 @@ always_comb begin
             cs = 1'b1;
             addr = c;
             size = SIZE__DOUBLE_WORD;
-            rf__cs = 1'b1;
-            rf__addr = rd;
-            rf__we = ready & ~resp;
-            rf__wr_data = rd_data;
             state__n = (ready & ~resp) ? STATE__LD__2 : (ready & resp & (rd_data == ERRORCODE__ACCESS_FAULT)) ? STATE__EXCEPTION__LOAD_ACCESS_FAULT__0 : (ready & resp & (rd_data == ERRORCODE__MISALIGNED_ADDRESS)) ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0 : STATE__LD__1;
         end
 
@@ -1743,6 +1739,10 @@ always_comb begin
         //==============================
         STATE__LD__2:
         begin
+            rf__cs = 1'b1;
+            rf__addr = rd;
+            rf__we = 1'b1;
+            rf__wr_data = rd_data;
             pc__n = pc + 4;
             instret = 1'b1;
             state__n = STATE__FETCH__0;
@@ -1769,10 +1769,6 @@ always_comb begin
             cs = 1'b1;
             addr = c;
             size = SIZE__BYTE;
-            rf__cs = 1'b1;
-            rf__addr = rd;
-            rf__we = ready & ~resp;
-            rf__wr_data = {56'h0, rd_data[7:0]};
             state__n = (ready & ~resp) ? STATE__LBU__2 : (ready & resp & (rd_data == ERRORCODE__ACCESS_FAULT)) ? STATE__EXCEPTION__LOAD_ACCESS_FAULT__0 : (ready & resp & (rd_data == ERRORCODE__MISALIGNED_ADDRESS)) ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0 : STATE__LBU__1;
         end
 
@@ -1781,6 +1777,10 @@ always_comb begin
         //==============================
         STATE__LBU__2:
         begin
+            rf__cs = 1'b1;
+            rf__addr = rd;
+            rf__we = 1'b1;
+            rf__wr_data = {56'h0, rd_data[7:0]};
             pc__n = pc + 4;
             instret = 1'b1;
             state__n = STATE__FETCH__0;
@@ -1807,10 +1807,6 @@ always_comb begin
             cs = 1'b1;
             addr = c;
             size = SIZE__HALF_WORD;
-            rf__cs = 1'b1;
-            rf__addr = rd;
-            rf__we = ready & ~resp;
-            rf__wr_data = {48'h0, rd_data[15:0]};
             state__n = (ready & ~resp) ? STATE__LHU__2 : (ready & resp & (rd_data == ERRORCODE__ACCESS_FAULT)) ? STATE__EXCEPTION__LOAD_ACCESS_FAULT__0 : (ready & resp & (rd_data == ERRORCODE__MISALIGNED_ADDRESS)) ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0 : STATE__LHU__1;
         end
 
@@ -1819,6 +1815,10 @@ always_comb begin
         //==============================
         STATE__LHU__2:
         begin
+            rf__cs = 1'b1;
+            rf__addr = rd;
+            rf__we = 1'b1;
+            rf__wr_data = {48'h0, rd_data[15:0]};
             pc__n = pc + 4;
             instret = 1'b1;
             state__n = STATE__FETCH__0;
@@ -1845,10 +1845,6 @@ always_comb begin
             cs = 1'b1;
             addr = c;
             size = SIZE__WORD;
-            rf__cs = 1'b1;
-            rf__addr = rd;
-            rf__we = ready & ~resp;
-            rf__wr_data = {32'h0, rd_data[31:0]};
             state__n = (ready & ~resp) ? STATE__LWU__2 : (ready & resp & (rd_data == ERRORCODE__ACCESS_FAULT)) ? STATE__EXCEPTION__LOAD_ACCESS_FAULT__0 : (ready & resp & (rd_data == ERRORCODE__MISALIGNED_ADDRESS)) ? STATE__EXCEPTION__LOAD_ADDRESS_MISALIGNED__0 : STATE__LWU__1;
         end
 
@@ -1857,6 +1853,10 @@ always_comb begin
         //==============================
         STATE__LWU__2:
         begin
+            rf__cs = 1'b1;
+            rf__addr = rd;
+            rf__we = 1'b1;
+            rf__wr_data = {32'h0, rd_data[31:0]};
             pc__n = pc + 4;
             instret = 1'b1;
             state__n = STATE__FETCH__0;
