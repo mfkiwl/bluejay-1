@@ -171,7 +171,6 @@ PYTHON
         'STATE__RESET',
         'STATE__FETCH__0',
         'STATE__FETCH__1',
-        'STATE__FETCH__2',
         'STATE__DECODE',
         'STATE__LB__0',
         'STATE__LB__1',
@@ -432,15 +431,6 @@ always_comb begin
             size = SIZE__WORD;
             ir__n = rd_data[31:0];
             state__n = (ready & ~resp) ? STATE__DECODE : (ready & resp & (rd_data == ERRORCODE__ACCESS_FAULT)) ? STATE__EXCEPTION__INSTRUCTION_ACCESS_FAULT__0 : STATE__FETCH__1;
-        end
-
-        //==============================
-        // STATE__FETCH__2
-        //==============================
-        STATE__FETCH__2:
-        begin
-            ir__n = rd_data[31:0];
-            state__n = STATE__DECODE;
         end
 
         //==============================
