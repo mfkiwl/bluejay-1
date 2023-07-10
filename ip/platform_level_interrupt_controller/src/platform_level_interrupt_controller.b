@@ -10,7 +10,8 @@ module platform_level_interrupt_controller
     input [25:0] addr,
     input [31:0] wr_data,
     output logic [31:0] rd_data,
-    input int__1,
+    input irq__0,
+    input irq__1,
     output logic context__0__eip
 );
 
@@ -46,7 +47,7 @@ platform_level_interrupt_controller__gateway gateway__1
 (
     .clk(clk),
     .rst(rst),
-    .int__x(int__1),
+    .irq__x(irq__1),
     .request__x(request__1),
     .complete__x(complete__1)
 );

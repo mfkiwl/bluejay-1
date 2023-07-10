@@ -54,6 +54,7 @@ PYTHON
     states = [
         'STATE__IDLE',
         'STATE__SB__0',
+        'STATE__SB__1',
         'STATE__SH__0',
         'STATE__SH__1',
         'STATE__SW__0',
@@ -64,13 +65,10 @@ PYTHON
         'STATE__LB__1',
         'STATE__LH__0',
         'STATE__LH__1',
-        'STATE__LH__2',
         'STATE__LW__0',
         'STATE__LW__1',
-        'STATE__LW__2',
         'STATE__LD__0',
         'STATE__LD__1',
-        'STATE__LD__2',
         'STATE__MISALIGNED_ADDRESS',
     ]
 
@@ -92,13 +90,21 @@ begin
         //==============================
         STATE__IDLE:
         begin
-            state__n = (cs & we & (size == SIZE__BYTE)) ? STATE__SB__0 : cs & ~we ? STATE__ : STATE__IDLE;
+            state__n = (cs & we & (size == SIZE__BYTE)) ? STATE__SB__0 : (cs & ~we & (size == SIZE__BYTE)) ? STATE__LB__0 : (cs & we & (size == SIZE__HALF_WORD)) ? STATE__SH__0 : (cs & ~we & (size == SIZE__HALF_WORD)) ? STATE__LH__0 : (cs & we & (size == SIZE__WORD)) ? STATE__SW__0 : (cs & ~we & (size == SIZE__WORD)) ? STATE__LW__0 : (cs & we & (size == SIZE__DOUBLE_WORD)) ? STATE__SD__0 : (cs & ~we & (size == SIZE__DOUBLE_WORD)) ? STATE__LD__0 : STATE__IDLE;
         end
 
         //==============================
         // STATE__SB__0
         //==============================
         STATE__SB__0:
+        begin
+            state__n = STATE__SB__1; 
+        end
+
+        //==============================
+        // STATE__SB__1
+        //==============================
+        STATE__SB__1:
         begin
             ready = 1'b1;
             en = 8'h1;
@@ -164,7 +170,6 @@ begin
         //==============================
         STATE__LB__0:
         begin
-            ready = 1'b1;
             state__n = STATE__LB__1; 
         end
 
@@ -192,15 +197,6 @@ begin
         STATE__LH__1:
         begin
             ready = 1'b1;
-            state__n = STATE__LH__2; 
-        end
-
-        //==============================
-        // STATE__LH__2
-        //==============================
-        STATE__LH__2:
-        begin
-            ready = 1'b1;
             rd_data[7:0] = memory[addr];
             rd_data[15:8] = memory[addr + 1];
             state__n = STATE__IDLE; 
@@ -218,15 +214,6 @@ begin
         // STATE__LW__1
         //==============================
         STATE__LW__1:
-        begin
-            ready = 1'b1;
-            state__n = STATE__LW__2; 
-        end
-
-        //==============================
-        // STATE__LW__2
-        //==============================
-        STATE__LW__2:
         begin
             ready = 1'b1;
             rd_data[7:0] = memory[addr];
@@ -248,15 +235,6 @@ begin
         // STATE__LD__1
         //==============================
         STATE__LD__1:
-        begin
-            ready = 1'b1;
-            state__n = STATE__LD__2; 
-        end
-
-        //==============================
-        // STATE__LD__2
-        //==============================
-        STATE__LD__2:
         begin
             ready = 1'b1;
             rd_data[7:0] = memory[addr];
