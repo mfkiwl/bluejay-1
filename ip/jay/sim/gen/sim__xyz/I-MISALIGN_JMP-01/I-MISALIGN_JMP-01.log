@@ -1,0 +1,120 @@
+Info Session started: Tue Apr 11 20:05:06 2023
+
+Info PROGRAM /home/seankent/bluejay/imperas/imperas-riscv-tests/riscv-ovpsim-plus/bin/Linux64/riscvOVPsimPlus.exe
+Info ------------- ENVIRONMENT -------------
+Info --------------------------------------
+Info -------- FLAGS (from command line)
+Info --variant  RV64I
+Info --override  riscvOVPsim/cpu/tval_ii_code=F
+Info --program  /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/I-MISALIGN_JMP-01/I-MISALIGN_JMP-01.elf
+Info --signaturedump
+Info --customcontrol
+Info --override  riscvOVPsim/cpu/sigdump/SignatureFile=/home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/I-MISALIGN_JMP-01/I-MISALIGN_JMP-01.signature.output
+Info --override  riscvOVPsim/cpu/sigdump/SignatureGranularity=4
+Info --override  riscvOVPsim/cpu/simulateexceptions=T
+Info --override  riscvOVPsim/cpu/defaultsemihost=F
+Info --logfile  /home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/I-MISALIGN_JMP-01/I-MISALIGN_JMP-01.log
+Info --override  riscvOVPsim/cpu/user_version=2.3
+Info --------------------------------------
+Imperas riscvOVPsimPlus
+
+
+riscvOVPsimPlus (64-Bit) v20230201.0 Open Virtual Platform simulator from www.IMPERAS.com.
+Copyright (c) 2005-2023 Imperas Software Ltd.  Contains Imperas Proprietary Information.
+Licensed Software, All Rights Reserved.
+Visit www.IMPERAS.com for multicore debug, verification and analysis solutions.
+
+riscvOVPsimPlus started: Tue Apr 11 20:05:06 2023
+
+
+Info (OR_OF) Target 'riscvOVPsim/cpu' has object file read from '/home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/I-MISALIGN_JMP-01/I-MISALIGN_JMP-01.elf'
+Info (OR_PH) Program Headers:
+Info (OR_PH) Type           Offset             VirtAddr           PhysAddr
+Info (OR_PH)                FileSiz            MemSiz             Flags  Align
+Info (OR_PD) PROC           0x0000000000003208 0x0000000000000000 0x0000000000000000
+Info (OR_PD)                0x000000000000001e 0x0000000000000000 R--    1
+Info (OR_PD) LOAD           0x0000000000001000 0x0000000080000000 0x0000000080000000
+Info (OR_PD)                0x00000000000006e8 0x00000000000006e8 R-E    1000
+Info (OR_PD) LOAD           0x0000000000002000 0x0000000080001000 0x0000000080001000
+Info (OR_PD)                0x0000000000001208 0x0000000000001208 RW-    1000
+Info (SIGNATURE_DUMP_FSB) Found Symbol 'begin_signature' in application at 0x80002000
+Info (SIGNATURE_DUMP_FSE) Found Symbol 'end_signature' in application at 0x80002090
+Info (SIGNATURE_DUMP_EN) Signature File enabled, file '/home/seankent/bluejay/ip/central_processing_unit/sim/gen/sim__xyz/I-MISALIGN_JMP-01/I-MISALIGN_JMP-01.signature.output'.
+Info (SIGNATURE_DUMP_ES) Extracting signature from 0x80002000 size 144 bytes
+Info (SIGNATURE_DUMP_SB) Symbol 'begin_signature' at 0x80002000
+Info (SIGNATURE_DUMP_SE) Symbol 'end_signature' at 0x80002090
+Warning (RISCV_IMA) CPU 'riscvOVPsim/cpu' 0x80000430 00a0006f j       8000043a: Fetch from unaligned address (0x8000043a)
+Info (SIGNATURE_DUMP_SFW) Signature Write 1 0x80002000 bytes 4 0x2
+Warning (RISCV_IMA) CPU 'riscvOVPsim/cpu' 0x800004b8 00020067 jr      tp: Fetch from unaligned address (0x800004c2)
+Warning (RISCV_IMA) CPU 'riscvOVPsim/cpu' 0x800004d0 00020067 jr      tp: Fetch from unaligned address (0x800004da)
+Warning (RISCV_IMA) CPU 'riscvOVPsim/cpu' 0x800004e8 00220067 jr      2(tp): Fetch from unaligned address (0x800004f2)
+Warning (RISCV_IMA) CPU 'riscvOVPsim/cpu' 0x80000508 00320067 jr      3(tp): Fetch from unaligned address (0x80000512)
+Warning (RISCV_IMA) CPU 'riscvOVPsim/cpu' 0x8000053c 00528563 beq     t0,t0,80000546: Fetch from unaligned address (0x80000546)
+Warning (RISCV_IMA) CPU 'riscvOVPsim/cpu' 0x80000570 00629563 bne     t0,t1,8000057a: Fetch from unaligned address (0x8000057a)
+Warning (RISCV_IMA) CPU 'riscvOVPsim/cpu' 0x800005a4 0062c563 blt     t0,t1,800005ae: Fetch from unaligned address (0x800005ae)
+Warning (RISCV_IMA) CPU 'riscvOVPsim/cpu' 0x800005d8 0062e563 bltu    t0,t1,800005e2: Fetch from unaligned address (0x800005e2)
+Warning (RISCV_IMA) CPU 'riscvOVPsim/cpu' 0x8000060c 00535563 bge     t1,t0,80000616: Fetch from unaligned address (0x80000616)
+Warning (RISCV_IMA) CPU 'riscvOVPsim/cpu' 0x80000640 00537563 bgeu    t1,t0,8000064a: Fetch from unaligned address (0x8000064a)
+Info (SIGNATURE_DUMP_WTH) Intercept 'write_tohost'. Generate Signature file
+00000002
+00000000
+11111111
+22222222
+33333333
+44444444
+00000002
+00000000
+55555555
+00000002
+00000000
+66666666
+00000002
+00000000
+77777777
+00000002
+00000000
+88888888
+00000002
+00000000
+99999999
+00000002
+00000000
+aaaaaaaa
+00000002
+00000000
+bbbbbbbb
+00000002
+00000000
+cccccccc
+00000002
+00000000
+dddddddd
+00000002
+00000000
+eeeeeeee
+Info 
+Info ---------------------------------------------------
+Info CPU 'riscvOVPsim/cpu' STATISTICS
+Info   Type                  : riscv (RV64I)
+Info   Nominal MIPS          : 100
+Info   Final program counter : 0x8000003c
+Info   Simulated instructions: 501
+Info   Simulated MIPS        : run too short for meaningful result
+Info ---------------------------------------------------
+Info 
+Info ---------------------------------------------------
+Info SIMULATION TIME STATISTICS
+Info   Simulated time        : 0.00 seconds
+Info   User time             : 0.00 seconds
+Info   System time           : 0.00 seconds
+Info   Elapsed time          : 0.00 seconds
+Info ---------------------------------------------------
+
+riscvOVPsimPlus finished: Tue Apr 11 20:05:06 2023
+
+
+riscvOVPsimPlus (64-Bit) v20230201.0 Open Virtual Platform simulator from www.IMPERAS.com.
+Visit www.IMPERAS.com for multicore debug, verification and analysis solutions.
+
+Info Session ended: Tue Apr 11 20:05:06 2023
+

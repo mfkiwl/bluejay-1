@@ -63,7 +63,7 @@ endef
 
 
 
-SIM_IP ?= central_processing_unit
+SIM_IP ?= jay
 #SIM_IP := machine_timer_registers
 #all: diff-$(SIM_IP)-sim__xyz 
 #all: sim-$(SIM_IP)-sim__xyz 
@@ -330,13 +330,13 @@ endef
 
 
 ################################
-# central_processing_unit--sim-test--diff--template                                                
+# jay--sim-test--diff--template                                                
 #
 #     $(1): ip name
 #     $(2): simulation name 
 #     $(3): test name
 ################################
-define central_processing_unit--sim-test--diff--template
+define jay--sim-test--diff--template
 $(TOP)/ip/$(1)/sim/gen/$(2)/$(3)/diff.timestamp: $(TOP)/ip/$(1)/sim/gen/$(2)/$(3)/$(3).diff
 	$(TOUCH) $$(@)
 
@@ -345,13 +345,13 @@ $(TOP)/ip/$(1)/sim/gen/$(2)/$(3)/$(3).diff: $(TOP)/ip/$(1)/sim/gen/$(2)/$(3)/sim
 endef
 
 ################################
-# central_processing_unit--sim-test--sim--template                                                
+# jay--sim-test--sim--template                                                
 #
 #     $(1): ip name
 #     $(2): simulation name 
 #     $(3): test name
 ################################
-define central_processing_unit--sim-test--sim--template
+define jay--sim-test--sim--template
 $(TOP)/ip/$(1)/sim/gen/$(2)/$(3)/sim.timestamp: $(TOP)/ip/$(1)/sim/gen/$(2)/$(3)/$(SNAPSHOT).wdb
 	$(TOUCH) $$(@)
 
@@ -360,13 +360,13 @@ $(TOP)/ip/$(1)/sim/gen/$(2)/$(3)/$(SNAPSHOT).wdb: $(TOP)/ip/$(1)/sim/gen/$(2)/$(
 endef
 
 ################################
-# central_processing_unit--sim-test--setup--template                                                
+# jay--sim-test--setup--template                                                
 #
 #     $(1): ip name
 #     $(2): simulation name 
 #     $(3): test name
 ################################
-define central_processing_unit--sim-test--setup--template
+define jay--sim-test--setup--template
 $(TOP)/ip/$(1)/sim/gen/$(2)/$(3)/setup.timestamp: $(TOP)/ip/$(1)/sim/gen/$(2)/xelab.timestamp $(TOP)/ip/$(1)/sim/gen/$(2)/$(3)/$(3).elf $(TOP)/ip/$(1)/sim/gen/$(2)/$(3)/$(3).mem $(TOP)/ip/$(1)/sim/gen/$(2)/$(3)/$(3).lst $(TOP)/ip/$(1)/sim/gen/$(2)/$(3)/begin_signature.sig $(TOP)/ip/$(1)/sim/gen/$(2)/$(3)/end_signature.sig $(TOP)/ip/$(1)/sim/gen/$(2)/$(3)/tohost.sig
 	$(TOUCH) $$(@)
 
@@ -389,13 +389,13 @@ endef
 
 
 ################################
-# central_processing_unit--sim-test--ref--template                                                
+# jay--sim-test--ref--template                                                
 #
 #     $(1): ip name
 #     $(2): simulation name 
 #     $(3): test name
 ################################
-define central_processing_unit--sim-test--ref--template
+define jay--sim-test--ref--template
 $(TOP)/ip/$(1)/sim/gen/$(2)/$(3)/ref.timestamp: $(TOP)/ip/$(1)/sim/gen/$(2)/$(3)/$(3).log
 	$(TOUCH) $$(@)
 
@@ -434,18 +434,18 @@ ifeq ($(SIM_IP),$(IP))
 SV += $(addsuffix .sv,$(addprefix $(TOP)/ip/$(IP)/tb/gen/,$(TB_MODULES)))
 endif
 
-###########################
-# central_processing_unit #
-###########################
-IP := central_processing_unit
+#######
+# jay #
+#######
+IP := jay
 
 MODULES :=
-MODULES += central_processing_unit
-MODULES += arithmetic_logic_unit
-MODULES += register_file
-MODULES += comparator
-MODULES += decoder
-MODULES += control_and_status_registers
+MODULES += jay
+MODULES += jay__arithmetic_logic_unit
+MODULES += jay__register_file
+MODULES += jay__comparator
+MODULES += jay__decoder
+MODULES += jay__control_and_status_registers
 
 TB_MODULES :=
 TB_MODULES += tb 
@@ -592,21 +592,21 @@ endif
 #SV += $(addsuffix .sv,$(addprefix $(TOP)/ip/$(IP)/tb/gen/,$(TB_MODULES)))
 #endif
 
-#######
-# jay #
-#######
-IP := jay
-
-MODULES :=
-MODULES += jay
-
-TB_MODULES :=
-TB_MODULES += tb
-
-SV += $(addsuffix .sv,$(addprefix $(TOP)/ip/$(IP)/src/gen/,$(MODULES)))
-ifeq ($(SIM_IP),$(IP))
-SV += $(addsuffix .sv,$(addprefix $(TOP)/ip/$(IP)/tb/gen/,$(TB_MODULES)))
-endif
+########
+## jay #
+########
+#IP := jay
+#
+#MODULES :=
+#MODULES += jay
+#
+#TB_MODULES :=
+#TB_MODULES += tb
+#
+#SV += $(addsuffix .sv,$(addprefix $(TOP)/ip/$(IP)/src/gen/,$(MODULES)))
+#ifeq ($(SIM_IP),$(IP))
+#SV += $(addsuffix .sv,$(addprefix $(TOP)/ip/$(IP)/tb/gen/,$(TB_MODULES)))
+#endif
 
 #######
 # top #
@@ -663,10 +663,10 @@ $(eval $(call ip--tb--template,$(IP)))
 $(eval $(call ip--sim--template,$(IP),$(SIM),$(SV),$(TESTS),default--sim-test--diff--template,default--sim-test--sim--template,default--sim-test--ref--template,default--sim-test--setup--template))
 
 
-###########################
-# central_processing_unit #
-###########################
-IP := central_processing_unit
+#######
+# jay #
+#######
+IP := jay
 
 SIM := sim__xyz
 TESTS := ADD-01 ADDI-01 ADDW-01 ADDIW-01 AND-01 ANDI-01 AUIPC-01 BEQ-01 BGE-01 BGEU-01 BLT-01 BLTU-01 BNE-01 I-DELAY_SLOTS-01 I-EBREAK-01 I-ECALL-01 I-ENDIANESS-01 I-IO-01 I-MISALIGN_JMP-01 I-MISALIGN_LDST-01 I-NOP-01 I-RF_size-01 I-RF_width-01 I-RF_x0-01 JAL-01 JALR-01 LB-01 LBU-01 LD-01 LH-01 LHU-01 LUI-01 LW-01 LWU-01 OR-01 ORI-01 SB-01 SD-01 SH-01 SLL-01 SLLI-01 SLLIW-01 SLLW-01 SLT-01 SLTI-01 SLTIU-01 SLTU-01 SRA-01 SRAI-01 SRAIW-01 SRAW-01 SRL-01 SRLI-01 SRLIW-01 SRLW-01 SUB-01 SUBW-01 SW-01 XOR-01 XORI-01
@@ -676,7 +676,7 @@ TESTS := ADD-01 ADDI-01 ADDW-01 ADDIW-01 AND-01 ANDI-01 AUIPC-01 BEQ-01 BGE-01 B
 
 $(eval $(call ip--src--template,$(IP)))
 $(eval $(call ip--tb--template,$(IP)))
-$(eval $(call ip--sim--template,$(IP),$(SIM),$(SV),$(TESTS),central_processing_unit--sim-test--diff--template,central_processing_unit--sim-test--sim--template,central_processing_unit--sim-test--ref--template,central_processing_unit--sim-test--setup--template))
+$(eval $(call ip--sim--template,$(IP),$(SIM),$(SV),$(TESTS),jay--sim-test--diff--template,jay--sim-test--sim--template,jay--sim-test--ref--template,jay--sim-test--setup--template))
 
 
 #######################################
@@ -740,17 +740,17 @@ $(eval $(call ip--tb--template,$(IP)))
 $(eval $(call ip--sim--template,$(IP),$(SIM),$(SV),$(TESTS),default--sim-test--diff--template,default--sim-test--sim--template,default--sim-test--ref--template,default--sim-test--setup--template))
 
 
-#######
-# jay #
-#######
-IP := jay
-
-SIM := sim__xyz
-TESTS := test__0 
-
-$(eval $(call ip--src--template,$(IP)))
-$(eval $(call ip--tb--template,$(IP)))
-$(eval $(call ip--sim--template,$(IP),$(SIM),$(SV),$(TESTS),default--sim-test--diff--template,default--sim-test--sim--template,default--sim-test--ref--template,default--sim-test--setup--template))
+########
+## jay #
+########
+#IP := jay
+#
+#SIM := sim__xyz
+#TESTS := test__0 
+#
+#$(eval $(call ip--src--template,$(IP)))
+#$(eval $(call ip--tb--template,$(IP)))
+#$(eval $(call ip--sim--template,$(IP),$(SIM),$(SV),$(TESTS),default--sim-test--diff--template,default--sim-test--sim--template,default--sim-test--ref--template,default--sim-test--setup--template))
 
 
 #########

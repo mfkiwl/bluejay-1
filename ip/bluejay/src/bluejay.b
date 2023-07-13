@@ -13,8 +13,7 @@ module bluejay
     input ready,
     input resp,
     input [63:0] rd_data,
-    input int__0,
-    input int__1
+    input irq__1
 );
 
 
@@ -32,6 +31,12 @@ logic ready;
 logic resp;
 logic [63:0] rd_data;
 
+
+assign cs = cs__3 | cs__4;
+assign ready__3 = ready;
+assign ready__4 = ready;
+assign rd_data__3 = rd_data;
+assign rd_data__4 = rd_data;
 
 
 PYTHON
@@ -110,12 +115,13 @@ platform_level_interrupt_controller platform_level_interrupt_controller__0
 (
     .clk(clk),
     .rst(rst),
-    .cs(cs__1),
-    .we(we__1),
-    .addr(addr__1[25:0]),
-    .wr_data(wr_data__1[31:0]),
-    .rd_data(rd_data__1[31:0]),
-    .int__1(int__1),
+    .cs(cs__0),
+    .we(we__0),
+    .addr(addr__0[25:0]),
+    .wr_data(wr_data__0[31:0]),
+    .rd_data(rd_data__0[31:0]),
+    .irq__0(),
+    .irq__1(irq__1),
     .context__0__eip(context__0__eip)
 );
 
@@ -126,11 +132,11 @@ machine_timer_registers machine_timer_registers__0
 (
     .clk(clk),
     .rst(rst),
-    .cs(cs__2),
-    .we(we__2),
-    .addr(addr__2[3:0]),
-    .wr_data(wr_data__2),
-    .rd_data(rd_data__2),
+    .cs(cs__1),
+    .we(we__1),
+    .addr(addr__1[3:0]),
+    .wr_data(wr_data__1),
+    .rd_data(rd_data__1),
     .tip(tip)
 );
 
@@ -141,11 +147,11 @@ physical_memory_attribute_registers physical_memory_attribute_registers__0
 (   
     .clk(clk),
     .rst(rst),
-    .cs(cs__3),
-    .we(we__3),
-    .addr(addr__3[2:0]),
-    .wr_data(wr_data__3[7:0]),
-    .rd_data(rd_data__3[7:0]),
+    .cs(cs__2),
+    .we(we__2),
+    .addr(addr__2[2:0]),
+    .wr_data(wr_data__2[7:0]),
+    .rd_data(rd_data__2[7:0]),
     .pma__0(pma__0),
     .pma__1(pma__1),
     .pma__2(pma__2),
