@@ -10,8 +10,9 @@ module control_and_status_registers
     input [11:0] addr,
     output logic [63:0] rd_data,
     input [63:0] wr_data,
-    input eip,
     input tip,
+    input sip,
+    input eip,
     input instret,
     output logic [CSR__MSTATUS__MIE__WIDTH-1:0] mstatus__mie,
     output logic [CSR__MIE__MEIE__WIDTH-1:0] mie__meie,
@@ -488,8 +489,8 @@ d_flip_flop #(.WIDTH(CSR__MIP__MSIP__WIDTH), .RESET_VALUE(CSR__MIP__MSIP__NOT_PE
 (
     .clk(clk),
     .rst(rst),
-    .en(en__mip),
-    .d(wr_data[CSR__MIP__MSIP__FIELD]),
+    .en(1'b1),
+    .d(sip),
     .q(mip__msip)
 );
 

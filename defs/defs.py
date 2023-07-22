@@ -2,7 +2,6 @@ defs["XLEN"] = {"value": "64"}
 
 defs["PC_RESET_VALUE"] = {"value": "0x0", "prefix": "64"}
 
-
 defs["ERRORCODE__ACCESS_FAULT"] = {"value": "0x0", "prefix": "64"}
 defs["ERRORCODE__MISALIGNED_ADDRESS"] = {"value": "0x1", "prefix": "64"}
 
@@ -478,15 +477,14 @@ defs["MEMORY_MAP__REGION__5"] = {"value": "0b0000_0000__0000_0000__0000_0000__00
 defs["MEMORY_MAP__REGION__6"] = {"value": "0b0000_0000__0000_0000__0000_0000__0000_0000__1110_????__????_????__????_????__????_????", "prefix": "64"}
 defs["MEMORY_MAP__REGION__7"] = {"value": "0b0000_0000__0000_0000__0000_0000__0000_0000__1111_????__????_????__????_????__????_????", "prefix": "64"}
 
-defs["PLATFORM_LEVEL_INTERRUPT_CONTROLLER__BASE_ADDR"] = {"value": "0x90000000", "prefix": "40"}
-defs["PLATFORM_LEVEL_INTERRUPT_CONTROLLER__INTERRUPT_SOURCE_PRIORITY__0"] = {"value": "0x0000000", "prefix": "26"}
-defs["PLATFORM_LEVEL_INTERRUPT_CONTROLLER__INTERRUPT_SOURCE_PRIORITY__1"] = {"value": "0x0000004", "prefix": "26"}
-defs["PLATFORM_LEVEL_INTERRUPT_CONTROLLER__INTERRUPT_PENDING_BITS__0_TO_31"] = {"value": "0x0001000", "prefix": "26"}
-defs["PLATFORM_LEVEL_INTERRUPT_CONTROLLER__CONTEXT__0__INTERRUPT_ENABLE_BITS__0_TO_31"] = {"value": "0x0002000", "prefix": "26"}
-defs["PLATFORM_LEVEL_INTERRUPT_CONTROLLER__CONTEXT__0__PRIORITY_THRESHOLD"] = {"value": "0x0200000", "prefix": "26"}
-defs["PLATFORM_LEVEL_INTERRUPT_CONTROLLER__CONTEXT__0__INTERRUPT_CLAIM_COMPLETE"] = {"value": "0x0200004", "prefix": "26"}
+defs["JBUS__NUMBER_OF_REGIONS"] = {"value": "4"}
+defs["JBUS__INCLUDE_SLAVES"] = {"value": "0"}
+defs["JBUS__REGION__0"] = {"value": "0b0000_????__????_????__????_????__????_????", "prefix": "40"}
+defs["JBUS__REGION__1"] = {"value": "0b0001_0000__0000_0000__0000_0000__0000_????", "prefix": "40"}
+defs["JBUS__REGION__2"] = {"value": "0b0002_0000__0000_0000__0000_0000__0000_0???", "prefix": "40"}
+defs["JBUS__REGION__3"] = {"value": "0b0003_0000__0000_0000__0000_0000__0000_????", "prefix": "40"}
 
-defs["MACHINE_TIMER_REGISTERS__BASE_ADDR"] = {"value": "0xa0000000", "prefix": "40"}
+defs["MACHINE_TIMER_REGISTERS__BASE_ADDR"] = {"value": "0x10000000", "prefix": "40"}
 defs["MACHINE_TIMER_REGISTERS__MTIME"] = {"value": "0x0", "prefix": "4"}
 defs["MACHINE_TIMER_REGISTERS__MTIME__MTIME__FIELD"] = {"value": "63:0"}
 defs["MACHINE_TIMER_REGISTERS__MTIME__MTIME__WIDTH"] = {"value": "64"}
@@ -495,6 +493,24 @@ defs["MACHINE_TIMER_REGISTERS__MTIMECMP"] = {"value": "0x8", "prefix": "4"}
 defs["MACHINE_TIMER_REGISTERS__MTIMECMP__MTIMECMP__FIELD"] = {"value": "63:0"}
 defs["MACHINE_TIMER_REGISTERS__MTIMECMP__MTIMECMP__WIDTH"] = {"value": "64"}
 defs["MACHINE_TIMER_REGISTERS__MTIMECMP__MTIMECMP__RESET_VALUE"] = {"value": "0x0", "prefix": "64"}
+
+defs["SOFTWARE_INTERRUPT_REGISTERS__BASE_ADDR"] = {"value": "0x20000000", "prefix": "40"}
+defs["SOFTWARE_INTERRUPT_REGISTERS__MSIP"] = {"value": "0x0", "prefix": "3"}
+defs["SOFTWARE_INTERRUPT_REGISTERS__MSIP__MSIP__FIELD"] = {"value": "0"}
+defs["SOFTWARE_INTERRUPT_REGISTERS__MSIP__MSIP__WIDTH"] = {"value": "1"}
+defs["SOFTWARE_INTERRUPT_REGISTERS__MSIP__MSIP__RESET_VALUE"] = {"value": "0b0", "prefix": "1"}
+defs["SOFTWARE_INTERRUPT_REGISTERS__MSIP__WARL__0__FIELD"] = {"value": "63:1"}
+defs["SOFTWARE_INTERRUPT_REGISTERS__MSIP__WARL__0__WIDTH"] = {"value": "63"}
+defs["SOFTWARE_INTERRUPT_REGISTERS__MSIP__WARL__0__VALUE"] = {"value": "0x0", "prefix": "63"}
+
+
+defs["PLATFORM_LEVEL_INTERRUPT_CONTROLLER__BASE_ADDR"] = {"value": "0x90000000", "prefix": "40"}
+defs["PLATFORM_LEVEL_INTERRUPT_CONTROLLER__INTERRUPT_SOURCE_PRIORITY__0"] = {"value": "0x0000000", "prefix": "26"}
+defs["PLATFORM_LEVEL_INTERRUPT_CONTROLLER__INTERRUPT_SOURCE_PRIORITY__1"] = {"value": "0x0000004", "prefix": "26"}
+defs["PLATFORM_LEVEL_INTERRUPT_CONTROLLER__INTERRUPT_PENDING_BITS__0_TO_31"] = {"value": "0x0001000", "prefix": "26"}
+defs["PLATFORM_LEVEL_INTERRUPT_CONTROLLER__CONTEXT__0__INTERRUPT_ENABLE_BITS__0_TO_31"] = {"value": "0x0002000", "prefix": "26"}
+defs["PLATFORM_LEVEL_INTERRUPT_CONTROLLER__CONTEXT__0__PRIORITY_THRESHOLD"] = {"value": "0x0200000", "prefix": "26"}
+defs["PLATFORM_LEVEL_INTERRUPT_CONTROLLER__CONTEXT__0__INTERRUPT_CLAIM_COMPLETE"] = {"value": "0x0200004", "prefix": "26"}
 
 defs["PHYSICAL_MEMORY_ATTRIBUTE_REGISTERS__BASE_ADDR"] = {"value": "0xb0000000", "prefix": "40"}
 defs["PHYSICAL_MEMORY_ATTRIBUTE_REGISTERS__PMA__0"] = {"value": "0x0", "prefix": "3"}

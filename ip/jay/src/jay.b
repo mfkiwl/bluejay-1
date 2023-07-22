@@ -13,8 +13,9 @@ module jay
     input ready,
     input resp,
     input [63:0] rd_data,
-    input eip,
-    input tip
+    input sip,
+    input tip,
+    input eip
 );
 
 // Program Counter/Instruction Register
@@ -150,8 +151,9 @@ jay__control_and_status_registers control_and_status_registers
     .addr(csr__addr),
     .rd_data(csr__rd_data),
     .wr_data(csr__wr_data),
-    .eip(eip),
+    .sip(sip),
     .tip(tip),
+    .eip(eip),
     .instret(instret),
     .mstatus__mie(mstatus__mie),
     .mie__meie(mie__meie),

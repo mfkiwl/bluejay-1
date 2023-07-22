@@ -17,9 +17,9 @@ module bluejay
 );
 
 
-logic context__0__eip;
-
+logic sip;
 logic tip;
+logic context__0__eip;
 
 
 logic cs;
@@ -61,9 +61,9 @@ assign ready__6 = 1'b1;
 assign ready__7 = 1'b1;
 
 //==============================
-// central_processing_unit__0
+// jay__0 
 //==============================
-central_processing_unit central_processing_unit__0 
+jay jay__0 
 (
     .clk(clk),
     .rst(rst),
@@ -75,14 +75,15 @@ central_processing_unit central_processing_unit__0
     .ready(ready),
     .resp(resp),
     .rd_data(rd_data),
-    .eip(context__0__eip),
-    .tip(tip)
+    .sip(sip),
+    .tip(tip),
+    .eip(context__0__eip)
 );
 
 //==============================
-// bus__0
+// jbus__0
 //==============================
-bus bus__0
+jbus jbus__0
 (
     .clk(clk),
     .rst(rst),
@@ -109,7 +110,36 @@ PYTHON
 );
 
 //==============================================
-// platform_level_interrupt_controller 
+// machine_timer_registers__0 
+//==============================================
+machine_timer_registers machine_timer_registers__0 
+(
+    .clk(clk),
+    .rst(rst),
+    .cs(cs__0),
+    .we(we__0),
+    .addr(addr__0[3:0]),
+    .wr_data(wr_data__0),
+    .rd_data(rd_data__0),
+    .tip(tip)
+);
+
+//==============================================
+// software_interrupt_registers__0 
+//==============================================
+software_interrupt_registers software_interrupt_registers__0
+(
+    .clk(clk),
+    .rst(rst),
+    .cs(cs__1),
+    .we(we__1),
+    .wr_data(wr_data__1),
+    .rd_data(rd_data__1),
+    .sip(sip)
+);
+
+//==============================================
+// platform_level_interrupt_controller__0
 //==============================================
 platform_level_interrupt_controller platform_level_interrupt_controller__0
 (
@@ -125,20 +155,7 @@ platform_level_interrupt_controller platform_level_interrupt_controller__0
     .context__0__eip(context__0__eip)
 );
 
-//==============================================
-// machine_timer_registers__0 
-//==============================================
-machine_timer_registers machine_timer_registers__0 
-(
-    .clk(clk),
-    .rst(rst),
-    .cs(cs__1),
-    .we(we__1),
-    .addr(addr__1[3:0]),
-    .wr_data(wr_data__1),
-    .rd_data(rd_data__1),
-    .tip(tip)
-);
+
 
 //==============================
 // physical_memory_attribute_registers__0
