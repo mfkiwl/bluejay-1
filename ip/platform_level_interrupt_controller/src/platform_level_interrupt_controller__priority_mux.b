@@ -1,5 +1,5 @@
 //==============================================
-// platform_level_interrupt_controller__priority_mux
+// platform_level_interrupt_controller__
 //==============================================
 module platform_level_interrupt_controller__priority_mux
 (
@@ -18,6 +18,7 @@ module platform_level_interrupt_controller__priority_mux
     output logic ip__c,
     output logic [31:0] priority__c
 );
+
 
 
 always_comb

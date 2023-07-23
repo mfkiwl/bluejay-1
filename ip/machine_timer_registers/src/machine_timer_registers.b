@@ -9,6 +9,8 @@ module machine_timer_registers
     input we,
     input [3:0] addr,
     input [63:0] wr_data,
+    output logic ready,
+    output logic resp,
     output logic [63:0] rd_data,
     output logic tip
 );
@@ -27,16 +29,16 @@ logic [MACHINE_TIMER_REGISTERS__MTIMECMP__MTIMECMP__WIDTH-1:0] mtimecmp__mtimecm
 logic we__mtimecmp;
 logic en__mtimecmp;
 
-
 assign tip = mtime >= mtimecmp;
-
 
 always_comb
 begin
+    ready = 1'b1;
+    resp = 1'b0;
     we__mtime = 1'b0;
     we__mtimecmp = 1'b0;
-            
-    case (addr)
+
+    casez (addr)
         MACHINE_TIMER_REGISTERS__MTIME:
         begin
             rd_data = mtime;
@@ -46,6 +48,11 @@ begin
         begin
             rd_data = mtimecmp;
             we__mtimecmp = we;
+        end
+        default:
+        begin
+            resp = cs;
+            rd_data = ERRORCODE__ACCESS_FAULT;
         end
     endcase
 end
@@ -104,3 +111,4 @@ d_flip_flop #(.WIDTH(MACHINE_TIMER_REGISTERS__MTIMECMP__MTIMECMP__WIDTH), .RESET
 
 
 endmodule
+

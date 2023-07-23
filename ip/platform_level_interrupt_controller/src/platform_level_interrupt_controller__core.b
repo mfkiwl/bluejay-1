@@ -9,6 +9,8 @@ module platform_level_interrupt_controller__core
     input we,
     input [25:0] addr,
     input [31:0] wr_data,
+    output logic ready,
+    output logic resp,
     output logic [31:0] rd_data,
     input request__0,
     input request__1,
@@ -113,6 +115,8 @@ assign context__0__eip = (context__0__priority > context__0__threshold);
 
 always_comb
 begin
+    ready = 1'b1;
+    resp = 1'b0;
     rd_data = 32'h0;
     we__priority__0 = 1'b0;
     re__priority__0 = 1'b0;
@@ -164,6 +168,61 @@ begin
             we__context__0__claim_complete = we;
             re__context__0__claim_complete = ~we;
         end
+        default:
+        begin
+            resp = cs;
+            rd_data = ERRORCODE__ACCESS_FAULT;
+        end
+    endcase
+end
+
+case (size)
+    SIZE__DOUBLE_WORD:
+    begin
+        case (addr[2:0])
+            3'h0:
+            begin
+                
+            end
+            3'h1:
+            begin
+                resp = BYTE_ACCESS_SUPPORTED ? 1'b1;
+            end
+            3'h0:
+            begin
+            end
+        endcase
+    end
+endcase
+
+always_comb
+begin
+    case (state)
+        STATE__IDLE:
+        begin
+            state__n = cs & size
+        end
+
+        STATE__DECODE:
+        begin
+            casez (addr)
+                {PLATFORM_LEVEL_INTERRUPT_CONTROLLER__INTERRUPT_SOURCE_PRIORITY__1[], 2'b??}:
+                begin
+                    state__n = (size != SIZE__WORD) ? STATE__ACCESS_FAULT : (addr[1:0] != 2'h0) ? STATE__MISALIGNED_ADDRESS : we ? STATE__WRITE__INTERRUPT_SOURCE_PRIORITY__1 : STATE__READ__INTERRUPT_SOURCE_PRIORITY__1; 
+                end
+                default:
+                begin
+                    state__n = STATE__ACCESS_FAULT;
+                end
+            endcase
+        end
+
+        STATE__READ__:
+        begin
+            
+            state__n = cs & size
+        end
+
     endcase
 end
 
