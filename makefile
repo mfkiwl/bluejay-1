@@ -463,6 +463,8 @@ IP := machine_timer_registers
 
 MODULES :=
 MODULES += machine_timer_registers
+MODULES += machine_timer_registers__mtime
+MODULES += machine_timer_registers__mtimecmp
 
 TB_MODULES :=
 TB_MODULES += tb

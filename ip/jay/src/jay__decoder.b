@@ -1,7 +1,7 @@
 //==============================================
-// decoder
+// jay__decoder
 //==============================================
-module decoder
+module jay__decoder
 (
     input clk,
     input rst,
@@ -32,7 +32,8 @@ assign funct12 = ir[31:20];
 assign uimm = {{59{1'b0}}, ir[19:15]};
 
 // Generate immediate.
-always_comb begin
+always_comb
+begin
     case (format)
         FORMAT__R_TYPE: imm = 0;
         FORMAT__I_TYPE: imm = {{53{ir[31]}}, ir[30:25], ir[24:21], ir[20]};
@@ -44,7 +45,8 @@ always_comb begin
 end
 
 // Decode instruction.
-always_comb begin
+always_comb
+begin
     case (opcode)
         7'h03:
         begin
@@ -436,7 +438,8 @@ always_comb begin
 end
 
 // Set control signals.
-always_comb begin
+always_comb
+begin
     format = FORMAT__I_TYPE;
 
     case (op)

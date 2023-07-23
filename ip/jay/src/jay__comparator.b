@@ -1,7 +1,7 @@
 //==============================================
-// comparator
+// jay__comparator
 //==============================================
-module comparator
+module jay__comparator
 (
     input clk,
     input rst,

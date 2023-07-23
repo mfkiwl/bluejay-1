@@ -1,7 +1,7 @@
 //==============================================
-// register_file
+// jay__register_file
 //==============================================
-module register_file
+module jay__register_file
 (
     input clk,
     input rst,
@@ -21,12 +21,6 @@ PYTHON
 PYTHON
 (
     for i in range(32):
-        print(f"logic we__x__{i};")
-)
-
-PYTHON
-(
-    for i in range(32):
         print(f"logic en__x__{i};")
 )
 
@@ -36,7 +30,7 @@ begin
 PYTHON
 (
     for i in range(32):
-        print(f"    we__x__{i} = 1'b0;")
+        print(f"    en__x__{i} = 1'b0;")
 )
 
     case (addr)
@@ -48,7 +42,7 @@ PYTHON
             5'h{i:x}:
             begin
                 rd_data = x__{i};
-                we__x__{i} = we;
+                en__x__{i} = cs & we;
             end
         """
         )
@@ -56,15 +50,7 @@ PYTHON
     endcase
 end
 
-PYTHON
-(
-    for i in range(32):
-        print(f"assign en__x__{i} = cs & we__x__{i};")
-)
-
-
 assign x__0 = 64'h0;
-
 
 PYTHON
 (

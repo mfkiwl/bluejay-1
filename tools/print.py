@@ -24,15 +24,18 @@ y = [1, 2, 4]
 
 #for i in range(32):
 #    print(math.sin(math.pi
+#
+#N = 32 
+#ix = np.arange(N)
+#signal = np.sin(2*np.pi*ix/float(N))
+#
+#for i in range(len(signal)):
+#    signal[i] = int((signal[i] + 1) * 128/2)
+#
+#print("{")
+#for sample in signal:
+#    print(f"{sample}, ",end="")
+#print("}")
 
-N = 32 
-ix = np.arange(N)
-signal = np.sin(2*np.pi*ix/float(N))
-
-for i in range(len(signal)):
-    signal[i] = int((signal[i] + 1) * 128/2)
-
-print("{")
-for sample in signal:
-    print(f"{sample}, ",end="")
-print("}")
+for i in range(16):
+    print(f'{i:x}')

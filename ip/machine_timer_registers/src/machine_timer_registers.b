@@ -15,98 +15,62 @@ module machine_timer_registers
     output logic tip
 );
 
-
-// Machine Time Register (mtime)
 logic [63:0] mtime;
-logic [MACHINE_TIMER_REGISTERS__MTIME__MTIME__WIDTH-1:0] mtime__mtime;
-logic [MACHINE_TIMER_REGISTERS__MTIME__MTIME__WIDTH-1:0] mtime__mtime__n;
-logic we__mtime;
-logic en__mtime;
-
-// Machine Time Compare Register (mtimecmp)
 logic [63:0] mtimecmp;
-logic [MACHINE_TIMER_REGISTERS__MTIMECMP__MTIMECMP__WIDTH-1:0] mtimecmp__mtimecmp;
-logic we__mtimecmp;
-logic en__mtimecmp;
 
-assign tip = mtime >= mtimecmp;
+logic en__mtime;
+logic en__mtimecmp;
 
 always_comb
 begin
     ready = 1'b1;
     resp = 1'b0;
-    we__mtime = 1'b0;
-    we__mtimecmp = 1'b0;
+    rd_data = ERRORCODE__ACCESS_FAULT;
+    en__mtime = 1'b0;
+    en__mtimecmp = 1'b0;
 
     casez (addr)
         MACHINE_TIMER_REGISTERS__MTIME:
         begin
             rd_data = mtime;
-            we__mtime = we;
+            en__mtime = cs & we;
         end
         MACHINE_TIMER_REGISTERS__MTIMECMP:
         begin
             rd_data = mtimecmp;
-            we__mtimecmp = we;
+            en__mtimecmp = cs & we;
         end
         default:
         begin
             resp = cs;
-            rd_data = ERRORCODE__ACCESS_FAULT;
         end
     endcase
 end
 
-//============================================== 
-// Machine Time Register (mtime)
-//==============================================
-assign mtime[MACHINE_TIMER_REGISTERS__MTIME__MTIME__FIELD] = mtime__mtime;
-
-assign en__mtime = 1'b1; 
-
-always_comb
-begin
-    case (en__mtime & we__mtime & cs)
-        1'b0:
-        begin
-            mtime__mtime__n = mtime__mtime + 1;
-        end
-        1'b1:
-        begin
-            mtime__mtime__n = wr_data[MACHINE_TIMER_REGISTERS__MTIME__MTIME__FIELD];
-        end
-    endcase
-end
+assign tip = mtime >= mtimecmp;
 
 //==============================
-// d_flip_flop__mtime__mtime
+// machine_timer_registers__mtime machine_timer_register__mtime__0
 //==============================
-d_flip_flop #(.WIDTH(MACHINE_TIMER_REGISTERS__MTIME__MTIME__WIDTH), .RESET_VALUE(MACHINE_TIMER_REGISTERS__MTIME__MTIME__RESET_VALUE)) d_flip_flop__mtime__mtime
+machine_timer_registers__mtime machine_timer_register__mtime__0
 (
     .clk(clk),
     .rst(rst),
     .en(en__mtime),
-    .d(mtime__mtime__n),
-    .q(mtime__mtime)
+    .wr_data(wr_data),
+    .rd_data(mtime)
 );
 
-//============================================== 
-// Machine Time Compare Register (mtimecmp)
-//==============================================
-assign mtimecmp[MACHINE_TIMER_REGISTERS__MTIMECMP__MTIMECMP__FIELD] = mtimecmp__mtimecmp;
-
-assign en__mtimecmp = cs & we__mtimecmp;
-
 //==============================
-// d_flip_flop__mtimecmp__mtimecmp
+// machine_timer_registers__mtimecmp machine_timer_register__mtimecmp__0
 //==============================
-d_flip_flop #(.WIDTH(MACHINE_TIMER_REGISTERS__MTIMECMP__MTIMECMP__WIDTH), .RESET_VALUE(MACHINE_TIMER_REGISTERS__MTIMECMP__MTIMECMP__RESET_VALUE)) d_flip_flop__mtimecmp__mtimecmp
+machine_timer_registers__mtimecmp machine_timer_register__mtimecmp__0
 (
     .clk(clk),
     .rst(rst),
     .en(en__mtimecmp),
-    .d(wr_data[MACHINE_TIMER_REGISTERS__MTIMECMP__MTIMECMP__FIELD]),
-    .q(mtimecmp__mtimecmp)
+    .wr_data(wr_data),
+    .rd_data(mtime)
 );
 
 

@@ -1,7 +1,7 @@
 //==============================================
-// arithmetic_logic_unit
+// jay__arithmetic_logic_unit
 //==============================================
-module arithmetic_logic_unit
+module jay__arithmetic_logic_unit
 (
     input clk,
     input rst,
@@ -14,7 +14,8 @@ module arithmetic_logic_unit
 logic [63:0] x;
 
 // Mathmatical/logical operations.
-always_comb begin
+always_comb
+begin
     case (func)
         FUNC__ADD: 
         begin 

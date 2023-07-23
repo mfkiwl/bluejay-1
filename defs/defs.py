@@ -316,11 +316,11 @@ defs["CSR__MIP__MEIP__MSB"] = {"value": "11"}
 defs["CSR__MIP__MEIP__WIDTH"] = {"value": "1"}
 defs["CSR__MIP__MEIP__NOT_PENDING"] = {"value": "0b0", "prefix": "1"}
 defs["CSR__MIP__MEIP__PENDING"] = {"value": "0b1", "prefix": "1"}
-defs["CSR__MIP__WIRI__0__FIELD"] = {"value": "63:12"}
-defs["CSR__MIP__WIRI__0__LSB"] = {"value": "12"}
-defs["CSR__MIP__WIRI__0__MSB"] = {"value": "63"}
-defs["CSR__MIP__WIRI__0__WIDTH"] = {"value": "52"}
-defs["CSR__MIP__WIRI__0__VALUE"] = {"value": "0x0", "prefix": "52"}
+defs["CSR__MIP__WIRI0__FIELD"] = {"value": "63:12"}
+defs["CSR__MIP__WIRI0__LSB"] = {"value": "12"}
+defs["CSR__MIP__WIRI0__MSB"] = {"value": "63"}
+defs["CSR__MIP__WIRI0__WIDTH"] = {"value": "52"}
+defs["CSR__MIP__WIRI0__VALUE"] = {"value": "0x0", "prefix": "52"}
 
 defs["CSR__MIE"] = {"value": "0x304", "prefix": "12"}
 defs["CSR__MIE__USIE__FIELD"] = {"value": "0"}
@@ -413,15 +413,19 @@ defs["CSR__MINSTRET__MINSTRET__FIELD"] = {"value": "63:0"}
 defs["CSR__MINSTRET__MINSTRET__WIDTH"] = {"value": "64"}
 defs["CSR__MINSTRET__MINSTRET__RESET_VALUE"] = {"value": "0x0", "prefix": "64"}
 
-defs["CSR__MHPMCOUNTER3"] = {"value": "0xb03", "prefix": "12"}
-defs["CSR__MHPMCOUNTER3__MHPMCOUNTER3__FIELD"] = {"value": "63:0"}
-defs["CSR__MHPMCOUNTER3__MHPMCOUNTER3__WIDTH"] = {"value": "64"}
-defs["CSR__MHPMCOUNTER3__MHPMCOUNTER3__VALUE"] = {"value": "0x0", "prefix": "64"}
+for i in range(3, 32):
+    defs[f"CSR__MHPMCOUNTER{i}"] = {"value": "0x{0xb00 + i:x}", "prefix": "12"}
 
-defs["CSR__MHPMEVENT3"] = {"value": "0x323", "prefix": "12"}
-defs["CSR__MHPMEVENT3__MHPMEVENT3__FIELD"] = {"value": "63:0"}
-defs["CSR__MHPMEVENT3__MHPMEVENT3__WIDTH"] = {"value": "64"}
-defs["CSR__MHPMEVENT3__MHPMEVENT3__VALUE"] = {"value": "0x0", "prefix": "64"}
+defs["CSR__MHPMCOUNTER__MHPMCOUNTER__FIELD"] = {"value": "63:0"}
+defs["CSR__MHPMCOUNTER__MHPMCOUNTER__WIDTH"] = {"value": "64"}
+defs["CSR__MHPMCOUNTER__MHPMCOUNTER__VALUE"] = {"value": "0x0", "prefix": "64"}
+
+for i in range(3, 32):
+    defs[f"CSR__MHPMEVENT{i}"] = {"value": "0x{0x320 + i:x}", "prefix": "12"}
+
+defs["CSR__MHPMEVENT__MHPMEVENT__FIELD"] = {"value": "63:0"}
+defs["CSR__MHPMEVENT__MHPMEVENT__WIDTH"] = {"value": "64"}
+defs["CSR__MHPMEVENT__MHPMEVENT__VALUE"] = {"value": "0x0", "prefix": "64"}
 
 defs["CSR__MSCRATCH"] = {"value": "0x340", "prefix": "12"}
 defs["CSR__MSCRATCH__MSCRATCH__FIELD"] = {"value": "63:0"}
@@ -482,7 +486,7 @@ defs["JBUS__INCLUDE_SLAVES"] = {"value": "0"}
 defs["JBUS__REGION__0"] = {"value": "0b0000_????__????_????__????_????__????_????", "prefix": "40"}
 defs["JBUS__REGION__1"] = {"value": "0b0001_0000__0000_0000__0000_0000__0000_????", "prefix": "40"}
 defs["JBUS__REGION__2"] = {"value": "0b0002_0000__0000_0000__0000_0000__0000_0???", "prefix": "40"}
-defs["JBUS__REGION__3"] = {"value": "0b0003_0000__0000_0000__0000_0000__0000_????", "prefix": "40"}
+defs["JBUS__REGION__3"] = {"value": "0b0003_00??__????_????__????_????__????_????", "prefix": "40"}
 
 defs["MACHINE_TIMER_REGISTERS__BASE_ADDR"] = {"value": "0x10000000", "prefix": "40"}
 defs["MACHINE_TIMER_REGISTERS__MTIME"] = {"value": "0x0", "prefix": "4"}
