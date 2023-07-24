@@ -215,7 +215,7 @@ jay__misa jay__misa__0
     .rst(rst),
     .en(en__misa),
     .wr_data(wr_data),
-    .rd_data(misa)
+    .misa(misa)
 );
 
 //==============================
@@ -227,7 +227,7 @@ jay__mvendorid jay__mvendorid__0
     .rst(rst),
     .en(en__mvendorid),
     .wr_data(wr_data),
-    .rd_data(mvendorid)
+    .mvendorid(mvendorid)
 );
 
 //==============================
@@ -239,7 +239,7 @@ jay__marchid jay__marchid__0
     .rst(rst),
     .en(en__marchid),
     .wr_data(wr_data),
-    .rd_data(marchid)
+    .marchid(marchid)
 );
 
 //==============================
@@ -251,7 +251,7 @@ jay__mimpid jay__mimpid__0
     .rst(rst),
     .en(en__mimpid),
     .wr_data(wr_data),
-    .rd_data(mimpid)
+    .mimpid(mimpid)
 );
 
 //==============================
@@ -263,7 +263,7 @@ jay__mhartid jay__mhartid__0
     .rst(rst),
     .en(en__mhartid),
     .wr_data(wr_data),
-    .rd_data(mhartid)
+    .mhartid(mhartid)
 );
 
 //==============================
@@ -275,7 +275,7 @@ jay__mstatus jay__mstatus__0
     .rst(rst),
     .en(en__mstatus),
     .wr_data(wr_data),
-    .rd_data(mstatus)
+    .mstatus(mstatus)
 );
 
 //==============================
@@ -287,7 +287,7 @@ jay__mtvec jay__mtvec__0
     .rst(rst),
     .en(en__mtvec),
     .wr_data(wr_data),
-    .rd_data(mtvec)
+    .mtvec(mtvec)
 );
 
 //==============================
@@ -299,7 +299,7 @@ jay__medeleg jay__medeleg__0
     .rst(rst),
     .en(en__medeleg),
     .wr_data(wr_data),
-    .rd_data(medeleg)
+    .medeleg(medeleg)
 );
 
 //==============================
@@ -311,7 +311,7 @@ jay__mideleg jay__mideleg__0
     .rst(rst),
     .en(en__mideleg),
     .wr_data(wr_data),
-    .rd_data(mideleg)
+    .mideleg(mideleg)
 );
 
 //==============================
@@ -323,7 +323,7 @@ jay__mip jay__mip__0
     .rst(rst),
     .en(en__mip),
     .wr_data(wr_data),
-    .rd_data(mip),
+    .mip(mip),
     .sip(sip)
 );
 
@@ -336,7 +336,7 @@ jay__mie jay__mie__0
     .rst(rst),
     .en(en__mie),
     .wr_data(wr_data),
-    .rd_data(mie)
+    .mie(mie)
 );
 
 //==============================
@@ -348,7 +348,7 @@ jay__mcycle jay__mcycle__0
     .rst(rst),
     .en(en__mcycle),
     .wr_data(wr_data),
-    .rd_data(mcycle)
+    .mcycle(mcycle)
 );
 
 //==============================
@@ -360,7 +360,7 @@ jay__minstret jay__minstret__0
     .rst(rst),
     .en(en__minstret),
     .wr_data(wr_data),
-    .rd_data(minstret),
+    .minstret(minstret),
     .instret(instret)
 );
 
@@ -373,7 +373,7 @@ jay__mscratch jay__mscratch__0
     .rst(rst),
     .en(en__mscratch),
     .wr_data(wr_data),
-    .rd_data(mscratch)
+    .mscratch(mscratch)
 );
 
 //==============================
@@ -385,7 +385,7 @@ jay__mepc jay__mepc__0
     .rst(rst),
     .en(en__mepc),
     .wr_data(wr_data),
-    .rd_data(mepc)
+    .mepc(mepc)
 );
 
 //==============================
@@ -397,7 +397,7 @@ jay__mcause jay__mcause__0
     .rst(rst),
     .en(en__mcause),
     .wr_data(wr_data),
-    .rd_data(mcause)
+    .mcause(mcause)
 );
 
 //==============================
@@ -409,7 +409,7 @@ jay__mtval jay__mtval__0
     .rst(rst),
     .en(en__mtval),
     .wr_data(wr_data),
-    .rd_data(mtval)
+    .mtval(mtval)
 );
 
 PYTHON
@@ -424,7 +424,7 @@ PYTHON
         print(f"    .rst(rst),")
         print(f"    .en(en__mhpmcounter{i}),")
         print(f"    .wr_data(wr_data),")
-        print(f"    .rd_data(mhpmcounter{i})")
+        print(f"    .mhpmcounter(mhpmcounter{i})")
         print(f");")
         print(f"")
         print(f"//==============================")
@@ -436,7 +436,7 @@ PYTHON
         print(f"    .rst(rst),")
         print(f"    .en(en__mhpmevent{i}),")
         print(f"    .wr_data(wr_data),")
-        print(f"    .rd_data(mhpmevent{i})")
+        print(f"    .mhpmevent(mhpmevent{i})")
         print(f");")
         print(f"")
 )

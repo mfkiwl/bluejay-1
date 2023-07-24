@@ -7,14 +7,11 @@ module machine_timer_registers__mtime
     input rst,
     input en,
     input [63:0] wr_data,
-    output logic [63:0] rd_data
+    output logic [63:0] mtime 
 );
 
-logic [63:0] mtime;
 logic [MACHINE_TIMER_REGISTERS__MTIME__MTIME__WIDTH-1:0] mtime__mtime;
 logic [MACHINE_TIMER_REGISTERS__MTIME__MTIME__WIDTH-1:0] mtime__mtime__n;
-
-assign rd_data = mtime;
 
 assign mtime[MACHINE_TIMER_REGISTERS__MTIME__MTIME__FIELD] = mtime__mtime;
 

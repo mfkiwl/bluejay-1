@@ -7,14 +7,11 @@ module jay__mepc
     input rst,
     input en,
     input [63:0] wr_data,
-    output logic [63:0] rd_data
+    output logic [63:0] mepc 
 );
 
-logic [63:0] mepc;
 logic [CSR__MEPC__MEPC__WIDTH-1:0] mepc__mepc;
 logic [CSR__MEPC__MEPC__WIDTH-1:0] mepc__mepc__n;
-
-assign rd_data = mepc;
 
 assign mepc[CSR__MEPC__MEPC__FIELD] = mepc__mepc;
 

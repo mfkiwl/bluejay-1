@@ -7,13 +7,12 @@ module jay__mip
     input rst,
     input en,
     input [63:0] wr_data,
-    output logic [63:0] rd_data,
+    output logic [63:0] mip,
     input sip,
     input tip,
     input eip
 );
 
-logic [63:0] mip;
 logic [CSR__MIP__USIP__WIDTH-1:0] mip__usip;
 logic [CSR__MIP__SSIP__WIDTH-1:0] mip__ssip;
 logic [CSR__MIP__HSIP__WIDTH-1:0] mip__hsip;
@@ -30,8 +29,6 @@ logic [CSR__MIP__HEIP__WIDTH-1:0] mip__heip;
 logic [CSR__MIP__MEIP__WIDTH-1:0] mip__meip,
 logic [CSR__MIP__MEIP__WIDTH-1:0] mip__meip__n,
 logic [CSR__MIP__WIRI__0__WIDTH-1:0] mip__wiri__0;
-
-assign rd_data = mip;
 
 assign mip[CSR__MIP__USIP__FIELD] = mip__usip;
 assign mip[CSR__MIP__SSIP__FIELD] = mip__ssip;

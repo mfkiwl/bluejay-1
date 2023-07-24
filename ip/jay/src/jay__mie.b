@@ -7,10 +7,9 @@ module jay__mie
     input rst,
     input en,
     input [63:0] wr_data,
-    output logic [63:0] rd_data
+    output logic [63:0] mie 
 );
 
-logic [63:0] mie;
 logic [CSR__MIE__USIE__WIDTH-1:0] mie__usie;
 logic [CSR__MIE__SSIE__WIDTH-1:0] mie__ssie;
 logic [CSR__MIE__HSIE__WIDTH-1:0] mie__hsie;
@@ -26,8 +25,6 @@ logic [CSR__MIE__HEIE__WIDTH-1:0] mie__heie;
 logic [CSR__MIE__MEIE__WIDTH-1:0] mie__meie,
 logic [CSR__MIE__MEIE__WIDTH-1:0] mie__meie__n,
 logic [CSR__MIE__WPRI__0__WIDTH-1:0] mie__wpri__0;
-
-assign rd_data = mie;
 
 assign mie[CSR__MIE__USIE__FIELD] = mie__usie;
 assign mie[CSR__MIE__SSIE__FIELD] = mie__ssie;

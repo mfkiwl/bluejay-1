@@ -35,7 +35,7 @@ software_interrupt_registers__msip software_interrupt_registers__msip__0
     .rst(rst),
     .en(en),
     .wr_data(wr_data),
-    .rd_data(msip),
+    .msip(msip),
 );
 
 endmodule

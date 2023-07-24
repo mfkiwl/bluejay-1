@@ -7,10 +7,9 @@ module jay__mstatus
     input rst,
     input en,
     input [63:0] wr_data,
-    output logic [63:0] rd_data
+    output logic [63:0] mstatus 
 );
 
-logic [63:0] mstatus;
 logic [CSR__MSTATUS__UIE__WIDTH-1:0] mstatus__uie;
 logic [CSR__MSTATUS__SIE__WIDTH-1:0] mstatus__sie;
 logic [CSR__MSTATUS__HIE__WIDTH-1:0] mstatus__hie;
@@ -30,8 +29,6 @@ logic [CSR__MSTATUS__PUM__WIDTH-1:0] mstatus__pum;
 logic [CSR__MSTATUS__MXR__WIDTH-1:0] mstatus__mxr;
 logic [CSR__MSTATUS__VM__WIDTH-1:0] mstatus__vm;
 logic [CSR__MSTATUS__SD__WIDTH-1:0] mstatus__sd;
-
-assign rd_data = mstatus;
 
 assign mstatus[CSR__MSTATUS__UIE__FIELD] = mstatus__uie;
 assign mstatus[CSR__MSTATUS__SIE__FIELD] = mstatus__sie;

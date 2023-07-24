@@ -7,13 +7,10 @@ module jay__medeleg
     input rst,
     input en,
     input [63:0] wr_data,
-    output logic [63:0] rd_data
+    output logic [63:0] medeleg 
 );
 
-logic [63:0] medeleg;
 logic [CSR__MEDELEG__SYNCHRONOUS_EXCEPTIONS__WIDTH-1:0] medeleg__synchronous_exceptions;
-
-assign rd_data = medeleg;
 
 assign medeleg[CSR__MEDELEG__SYNCHRONOUS_EXCEPTIONS__FIELD] = medeleg__synchronous_exceptions;
 

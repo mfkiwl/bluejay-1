@@ -7,18 +7,15 @@ module jay__minstret
     input rst,
     input en,
     input [63:0] wr_data,
-    output logic [63:0] rd_data,
+    output logic [63:0] minstret,
     input instret
 );
 
-logic [63:0] minstret;
 logic [CSR__MINSTRET__MINSTRET__WIDTH-1:0] minstret__minstret;
 logic [CSR__MINSTRET__MINSTRET__WIDTH-1:0] minstret__minstret__n;
 
 logic state;
 logic state__n;
-
-assign rd_data = minstret;
 
 assign minstret[CSR__MINSTRET__MINSTRET__FIELD] = minstret__minstret;
 

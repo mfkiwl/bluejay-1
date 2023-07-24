@@ -7,15 +7,12 @@ module jay__mtvec
     input rst,
     input en,
     input [63:0] wr_data,
-    output logic [63:0] rd_data
+    output logic [63:0] mtvec 
 );
 
-logic [63:0] mtvec;
 logic [CSR__MTVEC__MODE__WIDTH-1:0] mtvec__mode;
 logic [CSR__MTVEC__BASE__WIDTH-1:0] mtvec__base;
 logic [CSR__MTVEC__BASE__WIDTH-1:0] mtvec__base__n;
-
-assign rd_data = mtvec;
 
 assign mtvec[CSR__MTVEC__MODE__FIELD] = mtvec__mode;
 assign mtvec[CSR__MTVEC__BASE__FIELD] = mtvec__base;

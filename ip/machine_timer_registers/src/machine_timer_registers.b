@@ -58,7 +58,7 @@ machine_timer_registers__mtime machine_timer_register__mtime__0
     .rst(rst),
     .en(en__mtime),
     .wr_data(wr_data),
-    .rd_data(mtime)
+    .mtime(mtime)
 );
 
 //==============================
@@ -70,7 +70,7 @@ machine_timer_registers__mtimecmp machine_timer_register__mtimecmp__0
     .rst(rst),
     .en(en__mtimecmp),
     .wr_data(wr_data),
-    .rd_data(mtime)
+    .mtimecmp(mtimecmp)
 );
 
 

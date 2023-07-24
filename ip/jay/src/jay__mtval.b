@@ -7,14 +7,11 @@ module jay__mtval
     input rst,
     input en,
     input [63:0] wr_data,
-    output logic [63:0] rd_data
+    output logic [63:0] mtval 
 );
 
-logic [63:0] mtval;
 logic [CSR__MTVAL__MTVAL__WIDTH-1:0] mtval__mtval;
 logic [CSR__MTVAL__MTVAL__WIDTH-1:0] mtval__mtval__n;
-
-assign rd_data = mtval;
 
 assign mtval[CSR__MTVAL__MTVAL__FIELD] = mtval__mtval;
 

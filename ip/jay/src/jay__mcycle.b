@@ -7,14 +7,11 @@ module jay__mcycle
     input rst,
     input en,
     input [63:0] wr_data,
-    output logic [63:0] rd_data
+    output logic [63:0] mcycle 
 );
 
-logic [63:0] mcycle;
 logic [CSR__MCYCLE__MCYCLE__WIDTH-1:0] mcycle__mcycle;
 logic [CSR__MCYCLE__MCYCLE__WIDTH-1:0] mcycle__mcycle__n;
-
-assign rd_data = mcycle;
 
 assign mcycle[CSR__MCYCLE__MCYCLE__FIELD] = mcycle__mcycle;
 

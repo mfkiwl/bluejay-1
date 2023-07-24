@@ -7,14 +7,11 @@ module jay__mscratch
     input rst,
     input en,
     input [63:0] wr_data,
-    output logic [63:0] rd_data
+    output logic [63:0] mscratch 
 );
 
-logic [63:0] mscratch;
 logic [CSR__MSCRATCH__MSCRATCH__WIDTH-1:0] mscratch__mscratch;
 logic [CSR__MSCRATCH__MSCRATCH__WIDTH-1:0] mscratch__mscratch__n;
-
-assign rd_data = mscratch;
 
 assign mscratch[CSR__MSCRATCH__MSCRATCH__FIELD] = mscratch__mscratch;
 

@@ -16,7 +16,6 @@ module general_purpose_input_output
     inout [7:0] port__3
 );
 
-
 logic [7:0] data__0;
 logic [7:0] oe__0;
 logic we__data__0;

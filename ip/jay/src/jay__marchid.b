@@ -7,13 +7,10 @@ module jay__marchid
     input rst,
     input en,
     input [63:0] wr_data,
-    output logic [63:0] rd_data
+    output logic [63:0] marchid 
 );
 
-logic [63:0] marchid;
 logic [CSR__MARCHID__ARCHITECTURE_ID__WIDTH-1:0] marchid__architecture_id;
-
-assign rd_data = marchid;
 
 assign marchid[CSR__MARCHID__ARCHITECTURE_ID__FIELD] = marchid__architecture_id;
 

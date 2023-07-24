@@ -7,16 +7,13 @@ module jay__mcause
     input rst,
     input en,
     input [63:0] wr_data,
-    output logic [63:0] rd_data
+    output logic [63:0] mcause 
 );
 
-logic [63:0] mcause;
 logic [CSR__MCAUSE__EXCEPTION_CODE__WIDTH-1:0] mcause__exception_code;
 logic [CSR__MCAUSE__EXCEPTION_CODE__WIDTH-1:0] mcause__exception_code__n;
 logic [CSR__MCAUSE__INTERRUPT__WIDTH-1:0] mcause__interrupt;
 logic [CSR__MCAUSE__INTERRUPT__WIDTH-1:0] mcause__interrupt__n;
-
-assign rd_data = mcause;
 
 assign mcause[CSR__MCAUSE__EXCEPTION_CODE__FIELD] = mcause__exception_code;
 assign mcause[CSR__MCAUSE__INTERRUPT__FIELD] = mcause__interrupt;
