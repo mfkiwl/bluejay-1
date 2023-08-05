@@ -10,7 +10,6 @@ module platform_level_interrupt_controller__ie
     output logic [31:0] ie 
 );
 
-logic [31:0] ie;
 PYTHON
 (
     for i in range(32):
@@ -23,6 +22,12 @@ PYTHON
 (
     for i in range(32):
         print(f"assign ie[PLATFORM_LEVEL_INTERRUPT_CONTROLLER__IE__IE__{i}__FIELD] = ie__ie__{i};")
+)
+
+PYTHON
+(
+    for i in range(32):
+        print(f"assign ie__ie__{i}__n = wr_data[PLATFORM_LEVEL_INTERRUPT_CONTROLLER__IE__IE__{i}__FIELD];")
 )
 
 PYTHON

@@ -12,161 +12,74 @@ module platform_level_interrupt_controller__core
     output logic ready,
     output logic resp,
     output logic [31:0] rd_data,
-    input request__0,
     input request__1,
-    output logic complete__0,
     output logic complete__1,
     output logic context__0__eip
 );
 
 
-logic ip__0;
-logic ip__1;
-
-// Interrupt Source Priority - Source 0
-logic [31:0] priority__0;
-logic we__priority__0;
-logic re__priority__0;
-logic en__priority__0;
-
 // Interrupt Source Priority - Source 1
 logic [31:0] priority__1;
-logic we__priority__1;
-logic re__priority__1;
 logic en__priority__1;
 
 // Interrupt Pending Bits - Source 0-31
 logic [31:0] ip__0_to_31;
-logic we__ip__0_to_31;
-logic re__ip__0_to_31;
-logic en__ip__0_to_31;
+logic ip__0_to_31__ip__0;
+logic ip__0_to_31__ip__1;
 
 // Interrupt Enable Bits - Context 0 - Source 0-31
 logic [31:0] context__0__ie__0_to_31;
-logic we__context__0__ie__0_to_31;
-logic re__context__0__ie__0_to_31;
 logic en__context__0__ie__0_to_31;
-logic context__0__ie__0;
-logic context__0__ie__1;
+logic context__0__ie__0_to_31__ie__0;
+logic context__0__ie__0_to_31__ie__1;
 
 // Priority Threshold - Context 0 
-logic [31:0] context__0__threshold;
-logic we__context__0__threshold;
-logic re__context__0__threshold;
-logic en__context__0__threshold;
+logic [31:0] context__0__thrsh;
+logic en__context__0__thres;
 
 // Interrupt Claim/Complete - Context 0 
-logic [31:0] context__0__claim_complete;
-logic we__context__0__claim_complete;
-logic re__context__0__claim_complete;
-logic en__context__0__claim_complete;
+logic [31:0] context__0__clmcmpl;
+logic en__context__0__clmcmpl;
 
-// Interrupt Claim/Complete - Combined
-logic we__context__x__claim_complete;
-logic re__context__x__claim_complete;
-logic claim__0;
 logic claim__1;
-
-logic [9:0] context__0__priority_mux__0__id;
-logic context__0__priority_mux__0__ie;
-logic context__0__priority_mux__0__ip;
-logic [31:0] context__0__priority_mux__0__priority;
-
-
-assign ip__0 = 1'b0;
-
-//==============================================
-// sr_flip_flop__ip__1
-//==============================================
-sr_flip_flop sr_flip_flop__ip__1 
-(
-    .clk(clk),
-    .s(request__1),
-    .r(claim__1 || rst),
-    .q(ip__1)
-);
-
-
-//==============================
-//  context__0__mux__0
-//==============================
-platform_level_interrupt_controller__priority_mux context__0__priority_mux__0
-(
-    .clk(clk),
-    .rst(rst),
-    .id__a(10'h0),
-    .ie__a(context__0__ie__0),
-    .ip__a(ip__0),
-    .priority__a(priority__0),
-    .id__b(10'h1),
-    .ie__b(context__0__ie__1),
-    .ip__b(ip__1),
-    .priority__b(priority__1),
-    .id__c(context__0__priority_mux__0__id),
-    .ie__c(context__0__priority_mux__0__ie),
-    .ip__c(context__0__priority_mux__0__ip),
-    .priority__c(context__0__priority_mux__0__priority)
-);
-
-assign context__0__id = context__0__priority_mux__0__id;
-assign context__0__priority = context__0__priority_mux__0__priority;
-assign context__0__eip = (context__0__priority > context__0__threshold);
-
 
 always_comb
 begin
     ready = 1'b1;
     resp = 1'b0;
     rd_data = 32'h0;
-    we__priority__0 = 1'b0;
-    re__priority__0 = 1'b0;
-    we__priority__1 = 1'b0;
-    re__priority__1 = 1'b0;
-    we__ip__0_to_31 = 1'b0;
-    re__ip__0_to_31 = 1'b0;
-    we__context__0__ie__0_to_31 = 1'b0;
-    re__context__0__ie__0_to_31 = 1'b0;
-    we__context__0__threshold = 1'b0;
-    re__context__0__threshold = 1'b0;
-    we__context__0__claim_complete = 1'b0;
-    re__context__0__claim_complete = 1'b0;
+    en__priority__1 = 1'b0;
+    en__context__0__ie__0_to_31 = 1'b0;
+    en__context__0__thrsh = 1'b0;
+    en__context__0__clmcmpl = 1'b0;
+    re__clmcmpl = 1'b0;
+    we__clmcmpl = 1'b0;
 
     case (addr)
-        PLATFORM_LEVEL_INTERRUPT_CONTROLLER__INTERRUPT_SOURCE_PRIORITY__0:
-        begin
-            rd_data = priority__0; 
-            we__priority__0 = we;            
-            re__priority__0 = ~we;            
-        end
-        PLATFORM_LEVEL_INTERRUPT_CONTROLLER__INTERRUPT_SOURCE_PRIORITY__1:
+        PLATFORM_LEVEL_INTERRUPT_CONTROLLER__PRIORITY__1:
         begin
             rd_data = priority__1; 
-            we__priority__1 = we;            
-            re__priority__1 = ~we;            
+            en__priority__1 = cs & we;
         end
-        PLATFORM_LEVEL_INTERRUPT_CONTROLLER__INTERRUPT_PENDING_BITS__0_TO_31:
+        PLATFORM_LEVEL_INTERRUPT_CONTROLLER__IP__0_TO_31:
         begin
             rd_data = ip__0_to_31;
-            we__ip__0_to_31 = we;
-            re__ip__0_to_31 = ~we;
         end
-        PLATFORM_LEVEL_INTERRUPT_CONTROLLER__CONTEXT__0__INTERRUPT_ENABLE_BITS__0_TO_31:
+        PLATFORM_LEVEL_INTERRUPT_CONTROLLER__CONTEXT__0__IE__0_TO_31:
         begin
             rd_data = context__0__ie__0_to_31;
-            we__context__0__ie__0_to_31 = we;
-            re__context__0__ie__0_to_31 = ~we;
+            en__context__0__ie__0_to_31 = cs & we;
         end
-        PLATFORM_LEVEL_INTERRUPT_CONTROLLER__CONTEXT__0__PRIORITY_THRESHOLD:
+        PLATFORM_LEVEL_INTERRUPT_CONTROLLER__CONTEXT__0__THRSH:
         begin
-            rd_data = context__0__threshold;
-            we__context__0__threshold = we;
-            re__context__0__threshold = ~we;
+            rd_data = context__0__thrsh;
+            en__context__0__thrsh = cs & we;
         end
-        PLATFORM_LEVEL_INTERRUPT_CONTROLLER__CONTEXT__0__INTERRUPT_CLAIM_COMPLETE:
+        PLATFORM_LEVEL_INTERRUPT_CONTROLLER__CONTEXT__0__CLMCMPL:
         begin
-            rd_data = context__0__claim_complete;
-            we__context__0__claim_complete = we;
-            re__context__0__claim_complete = ~we;
+            rd_data = context__0__clmcmpl;
+            we__clmcmpl = cs & we;
+            re__clmcmpl = cs & ~we;
         end
         default:
         begin
@@ -176,114 +89,103 @@ begin
     endcase
 end
 
-
-//==============================================
-// Interrupt Source Priority - Source 0
-//==============================================
-assign priority__0 = 32'h0;
-
-
-//==============================================
-// Interrupt Source Priority - Source 1
-//==============================================
-assign priority__1 = 32'h1;
-
-
-//==============================================
-// Interrupt Pending Bits - Source 0-31
-//==============================================
-assign ip__0_to_31[0] = ip__0;
-assign ip__0_to_31[1] = ip__1;
-assign ip__0_to_31[31:2] = 0;
-
-
-//==============================================
-// Interrupt Enable Bits - Context 0 - Source 0-31
-//==============================================
-assign context__0__ie__0_to_31[0] = context__0__ie__0;
-assign context__0__ie__0_to_31[1] = context__0__ie__1;
-assign context__0__ie__0_to_31[31:2] = 0;
-
-assign en__context__0__ie__0_to_31 = cs & we__context__0__ie__0_to_31;
-
-assign context__0__ie__0 = 1'b0;
+assign claim__1 = re__clmcmpl & (rd_data[9:0] == 10'h1);
+assign complete__1 = we__clmcmpl & (wr_data[9:0] == 10'h1);
 
 //==============================
-// d_flip_flop__context__0__ie__1
+// context__0__funnel 
 //==============================
-d_flip_flop #(.WIDTH(1), .RESET_VALUE(1'b0)) d_flip_flop__context__0__ie__1
+platform_level_interrupt_controller__funnel context__0__funnel
+(
+    .clk(clk),
+    .rst(rst),
+PYTHON
+(
+    for i in range(PLATFORM_LEVEL_INTERRUPT_CONTROLLER__NUMBER_OF_INTERRUPT_SOURCES):
+        print(f".id__{i}(10'h{x:i}),")
+        print(f".ip__{i}(ip__0_to_31__ip__{i}),")
+        print(f".ie__{i}(context__0__ie__0_to_31__ie__{i}),")
+        if i == 0:
+            print(f".priority__{i}(32'h0),")
+        else:
+            print(f".priority__{i}(priority__{i}),")
+)
+    .id(context__0__id),
+    .ip(),
+    .ie(),
+    .priority(context__0__priority)
+);
+
+assign context__0__eip = context__0__priority > context__0__thrsh;
+
+//==============================
+// platform_level_interrupt_controller__priority__1
+//==============================
+platform_level_interrupt_controller__priority platform_level_interrupt_controller__priority__1
+(
+    .clk(clk),
+    .rst(rst),
+    .en(en__priority__1),
+    .wr_data(wr_data),
+    .priority(priority__1)
+)
+
+//==============================
+// platform_level_interrupt_controller__ip__0_to_31
+//==============================
+platform_level_interrupt_controller__ip platform_level_interrupt_controller__ip__0_to_31
+(
+    .clk(clk),
+    .rst(rst),
+PYTHON
+(
+    for i in range(32):
+        if i == 0:
+            print(f"    .request__{i}(1'b0),")
+            print(f"    .claim__{i}(),")
+        else
+            print(f"    .request__{i}(request__{i}),")
+            print(f"    .claim__{i}(claim__{i}),")
+)
+    .ip(ip__0_to_31)
+)
+
+//==============================
+// platform_level_interrupt_controller__context__0__ie__0_to_31
+//==============================
+platform_level_interrupt_controller__ie platform_level_interrupt_controller__context__0__ie__0_to_31
 (
     .clk(clk),
     .rst(rst),
     .en(en__context__0__ie__0_to_31),
-    .d(wr_data[1]),
-    .q(context__0__ie__1)
-);
-
-
-//==============================================
-// Priority Threshold - Context 0 
-//==============================================
-assign en__context__0__threshold = cs & we__context__0__threshold;
+    .wr_data(wr_data),
+    .ie(context__0__ie__0_to_31)
+)
 
 //==============================
-// d_flip_flop__context__0__threshold
+// platform_level_interrupt_controller__context__0__thrsh
 //==============================
-d_flip_flop #(.WIDTH(32), .RESET_VALUE(32'h0)) d_flip_flop__context__0__threshold
+platform_level_interrupt_controller__thrsh platform_level_interrupt_controller__context__0__thrsh
 (
     .clk(clk),
     .rst(rst),
-    .en(en__context__0__threshold),
-    .d(wr_data),
-    .q(context__0__threshold)
-);
+    .en(en__context__0__thrsh),
+    .wr_data(wr_data),
+    .thrsh(context__0__thrsh)
+)
 
-
-//==============================================
-// Interrupt Claim/Complete - Context 0 
-//==============================================
-assign context__0__claim_complete[9:0] = context__0__id;
-assign context__0__claim_complete[31:10] = 22'h0;
-
-
-
-
-assign re__context__x__claim_complete = re__context__0__claim_complete; 
-assign we__context__x__claim_complete = we__context__0__claim_complete;
-
-always_comb
-begin
-    claim__0 = 1'b0; 
-    claim__1 = 1'b0; 
-
-    case (rd_data[9:0]) 
-        10'h0:
-        begin
-            claim__0 = cs & re__context__x__claim_complete;
-        end
-        10'h1:
-        begin
-            claim__1 = cs & re__context__x__claim_complete;
-        end
-    endcase
-end
-
-always_comb
-begin
-    complete__0 = 1'b0; 
-    complete__1 = 1'b0; 
-
-    case (wr_data[9:0]) 
-        10'h0:
-        begin
-            complete__0 = cs & we__context__x__claim_complete;
-        end
-        10'h1:
-        begin
-            complete__1 = cs & we__context__x__claim_complete;
-        end
-    endcase
-end
+//==============================
+// platform_level_interrupt_controller__context__0__clmcmpl
+//==============================
+platform_level_interrupt_controller__clmcmpl platform_level_interrupt_controller__context__0__clmcmpl
+(
+    .clk(clk),
+    .rst(rst),
+    .id(context__0__id),
+    .clmcmpl(context__0__clmcmpl)
+)
 
 
 endmodule
+
+

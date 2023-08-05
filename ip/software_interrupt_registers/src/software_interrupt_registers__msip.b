@@ -23,7 +23,7 @@ assign msip__warl__0 = SOFTWARE_INTERRUPT_REGISTERS__MSIP__WARL__0__VALUE;
 //==============================
 // d_flip_flop__msip__msip
 //==============================
-d_flip_flop #(.WIDTH(SOFTWARE_INTERRUPT_REGISTERS__MSIP__MSIP__WIDTH), .RESET_VALUE(SOFTWARE_INTERRUPT_REGISTERS__MSIP__MSIP__RESET_VALUE)) d_flip_flop__msip__msip
+d_flip_flop #(.WIDTH(SOFTWARE_INTERRUPT_REGISTERS__MSIP__MSIP__WIDTH), .RESET_VALUE(SOFTWARE_INTERRUPT_REGISTERS__MSIP__MSIP__NOT_PENDING)) d_flip_flop__msip__msip
 (
     .clk(clk),
     .rst(rst),

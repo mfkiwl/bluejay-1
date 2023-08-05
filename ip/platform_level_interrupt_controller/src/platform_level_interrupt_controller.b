@@ -16,9 +16,7 @@ module platform_level_interrupt_controller
 );
 
 
-logic request__0;
 logic request__1;
-logic complete__0;
 logic complete__1;
 
 //==============================
@@ -33,9 +31,7 @@ platform_level_interrupt_controller__core core
     .addr(addr),
     .wr_data(wr_data),
     .rd_data(rd_data),
-    .request__0(request__0),
     .request__1(request__1),
-    .complete__0(complete__0),
     .complete__1(complete__1),
     .context__0__eip(context__0__eip)
 );
@@ -47,9 +43,9 @@ platform_level_interrupt_controller__gateway gateway__1
 (
     .clk(clk),
     .rst(rst),
-    .irq__x(irq__1),
-    .request__x(request__1),
-    .complete__x(complete__1)
+    .irq(irq__1),
+    .request(request__1),
+    .complete(complete__1)
 );
 
 endmodule
