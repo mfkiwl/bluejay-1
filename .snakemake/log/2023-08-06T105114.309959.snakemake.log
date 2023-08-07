@@ -1,0 +1,7 @@
+Building DAG of jobs...
+MissingInputException in rule all in file /Users/seankent/Documents/bluejay/Snakefile, line 3:
+Missing input files for rule all:
+    output: /Users/seankent/Documents/bluejayip/jay/src/gen/central_processing_unit.bcalls/all.vcf
+    affected files:
+        /Users/seankent/Documents/bluejayip/jay/src/central_processing_unit.b
+        /Users/seankent/Documents/bluejaydefs/gen/defs.py

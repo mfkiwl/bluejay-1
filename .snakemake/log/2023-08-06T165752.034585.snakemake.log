@@ -1,0 +1,8 @@
+Building DAG of jobs...
+InputFunctionException in rule sim in file /Users/seankent/Documents/bluejay/Snakefile, line 44:
+Error:
+  NameError: name 'wildcards' is not defined
+Wildcards:
+  module=jay
+Traceback:
+  File "/Users/seankent/Documents/bluejay/Snakefile", line 36, in get_deps

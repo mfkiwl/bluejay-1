@@ -1,0 +1,40 @@
+Building DAG of jobs...
+Using shell: /bin/bash
+Provided cores: 1 (use --cores to define parallelism)
+Rules claiming more threads will be scaled down.
+Job stats:
+job                          count
+-------------------------  -------
+bluejay_to_system_verilog        1
+sim                              1
+total                            2
+
+Select jobs to execute...
+
+[Sun Aug  6 17:22:31 2023]
+rule bluejay_to_system_verilog:
+    input: /Users/seankent/Documents/bluejay/ip/jay/src/jay__decoder.b, /Users/seankent/Documents/bluejay/defs/gen/defs.py
+    output: /Users/seankent/Documents/bluejay/ip/jay/src/gen/jay__decoder.sv
+    jobid: 3
+    reason: Updated input files: /Users/seankent/Documents/bluejay/ip/jay/src/jay__decoder.b
+    wildcards: dir=/Users/seankent/Documents/bluejay/ip/jay/src, gen=gen, module=jay__decoder
+    resources: tmpdir=/var/folders/60/y598ns5n3cqfww8y3ty2f3kr0000gn/T
+
+[Sun Aug  6 17:22:33 2023]
+Finished job 3.
+1 of 2 steps (50%) done
+Select jobs to execute...
+
+[Sun Aug  6 17:22:33 2023]
+rule sim:
+    input: /Users/seankent/Documents/bluejay/ip/jay/src/gen/jay__register_file.sv, /Users/seankent/Documents/bluejay/ip/lib/src/gen/d_flip_flop.sv, /Users/seankent/Documents/bluejay/ip/jay/src/gen/jay__decoder.sv
+    output: sim_jay_0.txt
+    jobid: 0
+    reason: Input files updated by another job: /Users/seankent/Documents/bluejay/ip/jay/src/gen/jay__decoder.sv
+    wildcards: mod=jay, suffix=0
+    resources: tmpdir=/var/folders/60/y598ns5n3cqfww8y3ty2f3kr0000gn/T
+
+[Sun Aug  6 17:22:33 2023]
+Finished job 0.
+2 of 2 steps (100%) done
+Complete log: .snakemake/log/2023-08-06T172231.799478.snakemake.log

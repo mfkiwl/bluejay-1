@@ -14,7 +14,6 @@ module jay__decoder
     output logic [63:0] uimm
 );
 
-
 logic [6:0] opcode;
 logic [2:0] funct3;
 logic [6:0] funct7;

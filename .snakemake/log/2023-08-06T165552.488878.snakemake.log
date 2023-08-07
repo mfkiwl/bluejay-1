@@ -1,0 +1,3 @@
+NameError in file /Users/seankent/Documents/bluejay/Snakefile, line 42:
+name 'TOP' is not defined
+  File "/Users/seankent/Documents/bluejay/Snakefile", line 42, in <module>

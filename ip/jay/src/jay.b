@@ -69,7 +69,6 @@ logic mip__meip;
 logic mip__msip;
 logic mip__mtip;
 
-
 // CSR logic
 logic instret;
 

@@ -1,0 +1,10 @@
+Building DAG of jobs...
+InputFunctionException in rule sim in file /Users/seankent/Documents/bluejay/Snakefile, line 46:
+Error:
+  AttributeError: 'str' object has no attribute 'mod'
+Wildcards:
+  mod=jay
+  suffix=0
+Traceback:
+  File "/Users/seankent/Documents/bluejay/Snakefile", line 39, in get_deps
+  File "/Users/seankent/Documents/bluejay/Snakefile", line 31, in get_sv

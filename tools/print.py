@@ -37,5 +37,15 @@ y = [1, 2, 4]
 #    print(f"{sample}, ",end="")
 #print("}")
 
-for i in range(16):
-    print(f'{i:x}')
+#for i in range(16):
+#    print(f'{i:x}')
+
+top = "/Users/seankent/Documents/bluejay"
+
+
+modules = {"jay": {"b": f"{top}/ip/jay/src/", "sv": f"{top}/ip/jay/src/gen/", "defs": f"{top}/defs/gen/defs.py"}}
+
+print(modules)
+
+
+

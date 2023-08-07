@@ -1,0 +1,54 @@
+Building DAG of jobs...
+Using shell: /bin/bash
+Provided cores: 1 (use --cores to define parallelism)
+Rules claiming more threads will be scaled down.
+Job stats:
+job                          count
+-------------------------  -------
+bluejay_to_system_verilog        2
+sim                              1
+total                            3
+
+Select jobs to execute...
+
+[Sun Aug  6 17:21:40 2023]
+rule bluejay_to_system_verilog:
+    input: /Users/seankent/Documents/bluejay/ip/jay/src/jay__decoder.b, /Users/seankent/Documents/bluejay/defs/gen/defs.py
+    output: /Users/seankent/Documents/bluejay/ip/jay/src/gen/jay__decoder.sv
+    jobid: 1
+    reason: Missing output files: /Users/seankent/Documents/bluejay/ip/jay/src/gen/jay__decoder.sv
+    wildcards: dir=/Users/seankent/Documents/bluejay/ip/jay/src, gen=gen, module=jay__decoder
+    resources: tmpdir=/var/folders/60/y598ns5n3cqfww8y3ty2f3kr0000gn/T
+
+[Sun Aug  6 17:21:42 2023]
+Finished job 1.
+1 of 3 steps (33%) done
+Select jobs to execute...
+
+[Sun Aug  6 17:21:42 2023]
+rule bluejay_to_system_verilog:
+    input: /Users/seankent/Documents/bluejay/ip/jay/src/jay__register_file.b, /Users/seankent/Documents/bluejay/defs/gen/defs.py
+    output: /Users/seankent/Documents/bluejay/ip/jay/src/gen/jay__register_file.sv
+    jobid: 2
+    reason: Missing output files: /Users/seankent/Documents/bluejay/ip/jay/src/gen/jay__register_file.sv
+    wildcards: dir=/Users/seankent/Documents/bluejay/ip/jay/src, gen=gen, module=jay__register_file
+    resources: tmpdir=/var/folders/60/y598ns5n3cqfww8y3ty2f3kr0000gn/T
+
+[Sun Aug  6 17:21:42 2023]
+Finished job 2.
+2 of 3 steps (67%) done
+Select jobs to execute...
+
+[Sun Aug  6 17:21:42 2023]
+rule sim:
+    input: /Users/seankent/Documents/bluejay/ip/jay/src/gen/jay__decoder.sv, /Users/seankent/Documents/bluejay/ip/jay/src/gen/jay__register_file.sv, /Users/seankent/Documents/bluejay/ip/lib/src/gen/d_flip_flop.sv
+    output: sim_jay_0.txt
+    jobid: 0
+    reason: Missing output files: sim_jay_0.txt; Input files updated by another job: /Users/seankent/Documents/bluejay/ip/jay/src/gen/jay__decoder.sv, /Users/seankent/Documents/bluejay/ip/jay/src/gen/jay__register_file.sv
+    wildcards: mod=jay, suffix=0
+    resources: tmpdir=/var/folders/60/y598ns5n3cqfww8y3ty2f3kr0000gn/T
+
+[Sun Aug  6 17:21:42 2023]
+Finished job 0.
+3 of 3 steps (100%) done
+Complete log: .snakemake/log/2023-08-06T172140.242343.snakemake.log

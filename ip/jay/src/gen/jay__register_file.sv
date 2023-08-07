@@ -1,7 +1,7 @@
 //==============================================
-// register_file
+// jay__register_file
 //==============================================
-module register_file
+module jay__register_file
 (
     input clk,
     input rst,
@@ -45,39 +45,6 @@ logic [63:0] x__29;
 logic [63:0] x__30;
 logic [63:0] x__31;
 
-logic we__x__0;
-logic we__x__1;
-logic we__x__2;
-logic we__x__3;
-logic we__x__4;
-logic we__x__5;
-logic we__x__6;
-logic we__x__7;
-logic we__x__8;
-logic we__x__9;
-logic we__x__10;
-logic we__x__11;
-logic we__x__12;
-logic we__x__13;
-logic we__x__14;
-logic we__x__15;
-logic we__x__16;
-logic we__x__17;
-logic we__x__18;
-logic we__x__19;
-logic we__x__20;
-logic we__x__21;
-logic we__x__22;
-logic we__x__23;
-logic we__x__24;
-logic we__x__25;
-logic we__x__26;
-logic we__x__27;
-logic we__x__28;
-logic we__x__29;
-logic we__x__30;
-logic we__x__31;
-
 logic en__x__0;
 logic en__x__1;
 logic en__x__2;
@@ -114,303 +81,268 @@ logic en__x__31;
 
 always_comb
 begin
-    we__x__0 = 1'b0;
-    we__x__1 = 1'b0;
-    we__x__2 = 1'b0;
-    we__x__3 = 1'b0;
-    we__x__4 = 1'b0;
-    we__x__5 = 1'b0;
-    we__x__6 = 1'b0;
-    we__x__7 = 1'b0;
-    we__x__8 = 1'b0;
-    we__x__9 = 1'b0;
-    we__x__10 = 1'b0;
-    we__x__11 = 1'b0;
-    we__x__12 = 1'b0;
-    we__x__13 = 1'b0;
-    we__x__14 = 1'b0;
-    we__x__15 = 1'b0;
-    we__x__16 = 1'b0;
-    we__x__17 = 1'b0;
-    we__x__18 = 1'b0;
-    we__x__19 = 1'b0;
-    we__x__20 = 1'b0;
-    we__x__21 = 1'b0;
-    we__x__22 = 1'b0;
-    we__x__23 = 1'b0;
-    we__x__24 = 1'b0;
-    we__x__25 = 1'b0;
-    we__x__26 = 1'b0;
-    we__x__27 = 1'b0;
-    we__x__28 = 1'b0;
-    we__x__29 = 1'b0;
-    we__x__30 = 1'b0;
-    we__x__31 = 1'b0;
+    en__x__0 = 1'b0;
+    en__x__1 = 1'b0;
+    en__x__2 = 1'b0;
+    en__x__3 = 1'b0;
+    en__x__4 = 1'b0;
+    en__x__5 = 1'b0;
+    en__x__6 = 1'b0;
+    en__x__7 = 1'b0;
+    en__x__8 = 1'b0;
+    en__x__9 = 1'b0;
+    en__x__10 = 1'b0;
+    en__x__11 = 1'b0;
+    en__x__12 = 1'b0;
+    en__x__13 = 1'b0;
+    en__x__14 = 1'b0;
+    en__x__15 = 1'b0;
+    en__x__16 = 1'b0;
+    en__x__17 = 1'b0;
+    en__x__18 = 1'b0;
+    en__x__19 = 1'b0;
+    en__x__20 = 1'b0;
+    en__x__21 = 1'b0;
+    en__x__22 = 1'b0;
+    en__x__23 = 1'b0;
+    en__x__24 = 1'b0;
+    en__x__25 = 1'b0;
+    en__x__26 = 1'b0;
+    en__x__27 = 1'b0;
+    en__x__28 = 1'b0;
+    en__x__29 = 1'b0;
+    en__x__30 = 1'b0;
+    en__x__31 = 1'b0;
 
     case (addr)
         
         5'h0:
         begin
             rd_data = x__0;
-            we__x__0 = we;
+            en__x__0 = cs & we;
         end
     
         
         5'h1:
         begin
             rd_data = x__1;
-            we__x__1 = we;
+            en__x__1 = cs & we;
         end
     
         
         5'h2:
         begin
             rd_data = x__2;
-            we__x__2 = we;
+            en__x__2 = cs & we;
         end
     
         
         5'h3:
         begin
             rd_data = x__3;
-            we__x__3 = we;
+            en__x__3 = cs & we;
         end
     
         
         5'h4:
         begin
             rd_data = x__4;
-            we__x__4 = we;
+            en__x__4 = cs & we;
         end
     
         
         5'h5:
         begin
             rd_data = x__5;
-            we__x__5 = we;
+            en__x__5 = cs & we;
         end
     
         
         5'h6:
         begin
             rd_data = x__6;
-            we__x__6 = we;
+            en__x__6 = cs & we;
         end
     
         
         5'h7:
         begin
             rd_data = x__7;
-            we__x__7 = we;
+            en__x__7 = cs & we;
         end
     
         
         5'h8:
         begin
             rd_data = x__8;
-            we__x__8 = we;
+            en__x__8 = cs & we;
         end
     
         
         5'h9:
         begin
             rd_data = x__9;
-            we__x__9 = we;
+            en__x__9 = cs & we;
         end
     
         
         5'ha:
         begin
             rd_data = x__10;
-            we__x__10 = we;
+            en__x__10 = cs & we;
         end
     
         
         5'hb:
         begin
             rd_data = x__11;
-            we__x__11 = we;
+            en__x__11 = cs & we;
         end
     
         
         5'hc:
         begin
             rd_data = x__12;
-            we__x__12 = we;
+            en__x__12 = cs & we;
         end
     
         
         5'hd:
         begin
             rd_data = x__13;
-            we__x__13 = we;
+            en__x__13 = cs & we;
         end
     
         
         5'he:
         begin
             rd_data = x__14;
-            we__x__14 = we;
+            en__x__14 = cs & we;
         end
     
         
         5'hf:
         begin
             rd_data = x__15;
-            we__x__15 = we;
+            en__x__15 = cs & we;
         end
     
         
         5'h10:
         begin
             rd_data = x__16;
-            we__x__16 = we;
+            en__x__16 = cs & we;
         end
     
         
         5'h11:
         begin
             rd_data = x__17;
-            we__x__17 = we;
+            en__x__17 = cs & we;
         end
     
         
         5'h12:
         begin
             rd_data = x__18;
-            we__x__18 = we;
+            en__x__18 = cs & we;
         end
     
         
         5'h13:
         begin
             rd_data = x__19;
-            we__x__19 = we;
+            en__x__19 = cs & we;
         end
     
         
         5'h14:
         begin
             rd_data = x__20;
-            we__x__20 = we;
+            en__x__20 = cs & we;
         end
     
         
         5'h15:
         begin
             rd_data = x__21;
-            we__x__21 = we;
+            en__x__21 = cs & we;
         end
     
         
         5'h16:
         begin
             rd_data = x__22;
-            we__x__22 = we;
+            en__x__22 = cs & we;
         end
     
         
         5'h17:
         begin
             rd_data = x__23;
-            we__x__23 = we;
+            en__x__23 = cs & we;
         end
     
         
         5'h18:
         begin
             rd_data = x__24;
-            we__x__24 = we;
+            en__x__24 = cs & we;
         end
     
         
         5'h19:
         begin
             rd_data = x__25;
-            we__x__25 = we;
+            en__x__25 = cs & we;
         end
     
         
         5'h1a:
         begin
             rd_data = x__26;
-            we__x__26 = we;
+            en__x__26 = cs & we;
         end
     
         
         5'h1b:
         begin
             rd_data = x__27;
-            we__x__27 = we;
+            en__x__27 = cs & we;
         end
     
         
         5'h1c:
         begin
             rd_data = x__28;
-            we__x__28 = we;
+            en__x__28 = cs & we;
         end
     
         
         5'h1d:
         begin
             rd_data = x__29;
-            we__x__29 = we;
+            en__x__29 = cs & we;
         end
     
         
         5'h1e:
         begin
             rd_data = x__30;
-            we__x__30 = we;
+            en__x__30 = cs & we;
         end
     
         
         5'h1f:
         begin
             rd_data = x__31;
-            we__x__31 = we;
+            en__x__31 = cs & we;
         end
     
     endcase
 end
 
-assign en__x__0 = cs & we__x__0;
-assign en__x__1 = cs & we__x__1;
-assign en__x__2 = cs & we__x__2;
-assign en__x__3 = cs & we__x__3;
-assign en__x__4 = cs & we__x__4;
-assign en__x__5 = cs & we__x__5;
-assign en__x__6 = cs & we__x__6;
-assign en__x__7 = cs & we__x__7;
-assign en__x__8 = cs & we__x__8;
-assign en__x__9 = cs & we__x__9;
-assign en__x__10 = cs & we__x__10;
-assign en__x__11 = cs & we__x__11;
-assign en__x__12 = cs & we__x__12;
-assign en__x__13 = cs & we__x__13;
-assign en__x__14 = cs & we__x__14;
-assign en__x__15 = cs & we__x__15;
-assign en__x__16 = cs & we__x__16;
-assign en__x__17 = cs & we__x__17;
-assign en__x__18 = cs & we__x__18;
-assign en__x__19 = cs & we__x__19;
-assign en__x__20 = cs & we__x__20;
-assign en__x__21 = cs & we__x__21;
-assign en__x__22 = cs & we__x__22;
-assign en__x__23 = cs & we__x__23;
-assign en__x__24 = cs & we__x__24;
-assign en__x__25 = cs & we__x__25;
-assign en__x__26 = cs & we__x__26;
-assign en__x__27 = cs & we__x__27;
-assign en__x__28 = cs & we__x__28;
-assign en__x__29 = cs & we__x__29;
-assign en__x__30 = cs & we__x__30;
-assign en__x__31 = cs & we__x__31;
-
-
 assign x__0 = 64'h0;
-
 
 //==============================
 // d_flip_flop__x__1

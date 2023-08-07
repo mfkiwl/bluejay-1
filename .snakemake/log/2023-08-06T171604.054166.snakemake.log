@@ -1,0 +1,7 @@
+Building DAG of jobs...
+MissingInputException in rule bluejay_to_system_verilog in file /Users/seankent/Documents/bluejay/Snakefile, line 58:
+Missing input files for rule bluejay_to_system_verilog:
+    output: /Users/seankent/Documents/bluejay/ip/lib/gen/d_flip_flop.sv
+    wildcards: dir=/Users/seankent/Documents/bluejay/ip/lib, gen=gen, module=d_flip_flop
+    affected files:
+        /Users/seankent/Documents/bluejay/ip/lib/d_flip_flop.b
