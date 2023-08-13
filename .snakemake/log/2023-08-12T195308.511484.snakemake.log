@@ -1,0 +1,51 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 1 (use --cores to define parallelism)
+Rules claiming more threads will be scaled down.
+Job stats:
+job      count
+-----  -------
+2            1
+4            1
+total        2
+
+Select jobs to execute...
+
+[Sat Aug 12 19:53:08 2023]
+rule 2:
+    input: /home/seankent/bluejay/ip/jay/src/jay.b, defs/gen/defs.py
+    output: /home/seankent/bluejay/ip/jay/src/gen/jay.sv
+    jobid: 1
+    reason: Set of input files has changed since last execution; Code has changed since last execution
+    wildcards: dir=/home/seankent/bluejay/ip/jay/src, module=jay
+    resources: tmpdir=/tmp
+
+[Sat Aug 12 19:53:11 2023]
+Finished job 1.
+1 of 2 steps (50%) done
+Select jobs to execute...
+
+[Sat Aug 12 19:53:11 2023]
+rule 4:
+    input: /home/seankent/bluejay/ip/jay/src/gen/jay.sv
+    output: ip/jay/sim/jay/gen/run__0/xvlog.done
+    jobid: 0
+    reason: Input files updated by another job: /home/seankent/bluejay/ip/jay/src/gen/jay.sv
+    wildcards: ip=jay, dut=jay, run=run__0
+    resources: tmpdir=/tmp
+
+[Sat Aug 12 19:53:11 2023]
+Error in rule 4:
+    jobid: 0
+    input: /home/seankent/bluejay/ip/jay/src/gen/jay.sv
+    output: ip/jay/sim/jay/gen/run__0/xvlog.done
+    shell:
+        
+        mkdir -p ip/jay/sim/jay/gen/run__0"
+        cd ip/jay/sim/jay/gen/run__0 ; xvlog --sv --incr /home/seankent/bluejay/ip/jay/src/gen/jay.sv
+        
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: .snakemake/log/2023-08-12T195308.511484.snakemake.log

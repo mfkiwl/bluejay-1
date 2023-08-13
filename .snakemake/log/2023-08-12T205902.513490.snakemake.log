@@ -1,0 +1,7 @@
+Building DAG of jobs...
+MissingInputException in rule 2 in file /home/seankent/bluejay/Snakefile, line 10:
+Missing input files for rule 2:
+    output: /home/seankent/bluejay/ip/jay/src/gen/jay__mcause.sv
+    wildcards: dir=/home/seankent/bluejay/ip/jay/src, module=jay__mcause
+    affected files:
+        /home/seankent/bluejay/ip/jay/src/jay__mcause.b

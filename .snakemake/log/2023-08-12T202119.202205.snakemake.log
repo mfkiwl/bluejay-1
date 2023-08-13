@@ -1,0 +1,83 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 1 (use --cores to define parallelism)
+Rules claiming more threads will be scaled down.
+Job stats:
+job      count
+-----  -------
+2            3
+3            1
+4            1
+total        5
+
+Select jobs to execute...
+
+[Sat Aug 12 20:21:19 2023]
+rule 3:
+    input: defs/defs.py
+    output: defs/gen/defs.py
+    jobid: 2
+    reason: Updated input files: defs/defs.py
+    resources: tmpdir=/tmp
+
+[Sat Aug 12 20:21:19 2023]
+Finished job 2.
+1 of 5 steps (20%) done
+Select jobs to execute...
+
+[Sat Aug 12 20:21:19 2023]
+rule 2:
+    input: /home/seankent/bluejay/ip/jay/src/jay.b, defs/gen/defs.py
+    output: /home/seankent/bluejay/ip/jay/src/gen/jay.sv
+    jobid: 4
+    reason: Input files updated by another job: defs/gen/defs.py
+    wildcards: dir=/home/seankent/bluejay/ip/jay/src, module=jay
+    resources: tmpdir=/tmp
+
+[Sat Aug 12 20:21:22 2023]
+Finished job 4.
+2 of 5 steps (40%) done
+Select jobs to execute...
+
+[Sat Aug 12 20:21:22 2023]
+rule 2:
+    input: /home/seankent/bluejay/ip/jay/src/jay__decoder.b, defs/gen/defs.py
+    output: /home/seankent/bluejay/ip/jay/src/gen/jay__decoder.sv
+    jobid: 3
+    reason: Input files updated by another job: defs/gen/defs.py
+    wildcards: dir=/home/seankent/bluejay/ip/jay/src, module=jay__decoder
+    resources: tmpdir=/tmp
+
+[Sat Aug 12 20:21:23 2023]
+Finished job 3.
+3 of 5 steps (60%) done
+Select jobs to execute...
+
+[Sat Aug 12 20:21:23 2023]
+rule 2:
+    input: /home/seankent/bluejay/ip/lib/src/d_flip_flop.b, defs/gen/defs.py
+    output: /home/seankent/bluejay/ip/lib/src/gen/d_flip_flop.sv
+    jobid: 1
+    reason: Input files updated by another job: defs/gen/defs.py
+    wildcards: dir=/home/seankent/bluejay/ip/lib/src, module=d_flip_flop
+    resources: tmpdir=/tmp
+
+[Sat Aug 12 20:21:23 2023]
+Finished job 1.
+4 of 5 steps (80%) done
+Select jobs to execute...
+
+[Sat Aug 12 20:21:23 2023]
+rule 4:
+    input: /home/seankent/bluejay/ip/lib/src/gen/d_flip_flop.sv, /home/seankent/bluejay/ip/jay/src/gen/jay__decoder.sv, /home/seankent/bluejay/ip/jay/src/gen/jay.sv
+    output: ip/jay/sim/jay/gen/run__0/xvlog.done
+    jobid: 0
+    reason: Input files updated by another job: /home/seankent/bluejay/ip/lib/src/gen/d_flip_flop.sv, /home/seankent/bluejay/ip/jay/src/gen/jay__decoder.sv, /home/seankent/bluejay/ip/jay/src/gen/jay.sv
+    wildcards: ip=jay, dut=jay, run=run__0
+    resources: tmpdir=/tmp
+
+Touching output file ip/jay/sim/jay/gen/run__0/xvlog.done.
+[Sat Aug 12 20:21:24 2023]
+Finished job 0.
+5 of 5 steps (100%) done
+Complete log: .snakemake/log/2023-08-12T202119.202205.snakemake.log

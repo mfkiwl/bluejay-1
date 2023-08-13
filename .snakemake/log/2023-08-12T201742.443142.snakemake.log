@@ -1,0 +1,4 @@
+AttributeError in file /home/seankent/bluejay/Snakefile, line 3:
+'Jaymake' object has no attribute 'get_sv'
+  File "/home/seankent/bluejay/Snakefile", line 3, in <module>
+  File "/home/seankent/bluejay/jaymake.py", line 77, in <module>

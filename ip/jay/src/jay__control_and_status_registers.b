@@ -14,6 +14,7 @@ module jay__control_and_status_registers
     input sip,
     input eip,
     input instret,
+    output logic [CSR__MSTATUS__MIE__WIDTH-1:0] mstatus__mie,
     output logic [CSR__MIE__MSIE__WIDTH-1:0] mie__msie,
     output logic [CSR__MIE__MTIE__WIDTH-1:0] mie__mtie,
     output logic [CSR__MIE__MEIE__WIDTH-1:0] mie__meie,
@@ -70,6 +71,7 @@ PYTHON
         print(f"logic en__mhpmevent{i};")
 )
 
+assign mstatus__mie = mstatus[CSR__MSTATUS__MIE__FIELD];
 assign mie__msie = mie[CSR__MIE__MSIE__FIELD];
 assign mie__mtie = mie[CSR__MIE__MTIE__FIELD];
 assign mie__meie = mie[CSR__MIE__MEIE__FIELD];
@@ -197,6 +199,10 @@ PYTHON
         print(f"            rd_data = mhpmcounter{i};")
         print(f"            en__mhpmcounter{i} = cs & we;")
         print(f"        end")
+)
+PYTHON
+(
+    for i in range(3, 32):
         print(f"        CSR__MHPMEVENT{i}:")
         print(f"        begin")
         print(f"            rd_data = mhpmevent{i};")

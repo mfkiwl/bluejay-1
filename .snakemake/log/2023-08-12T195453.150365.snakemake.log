@@ -1,0 +1,26 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 1 (use --cores to define parallelism)
+Rules claiming more threads will be scaled down.
+Job stats:
+job      count
+-----  -------
+4            1
+total        1
+
+Select jobs to execute...
+
+[Sat Aug 12 19:54:53 2023]
+rule 4:
+    input: /home/seankent/bluejay/ip/jay/src/gen/jay.sv
+    output: ip/jay/sim/jay/gen/run__0/xvlog.done
+    jobid: 0
+    reason: Missing output files: ip/jay/sim/jay/gen/run__0/xvlog.done
+    wildcards: ip=jay, dut=jay, run=run__0
+    resources: tmpdir=/tmp
+
+Touching output file ip/jay/sim/jay/gen/run__0/xvlog.done.
+[Sat Aug 12 19:54:53 2023]
+Finished job 0.
+1 of 1 steps (100%) done
+Complete log: .snakemake/log/2023-08-12T195453.150365.snakemake.log

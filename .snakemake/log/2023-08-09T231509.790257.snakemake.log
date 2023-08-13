@@ -1,0 +1,3 @@
+Building DAG of jobs...
+MissingRuleException:
+No rule to produce /home/seankent/bluejay/ip/jay/sim/gen/run__0123/test__a/sim.ts (if you use input functions make sure that they don't raise unexpected exceptions).

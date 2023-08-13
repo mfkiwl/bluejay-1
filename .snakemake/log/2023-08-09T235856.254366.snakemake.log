@@ -1,0 +1,25 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 1 (use --cores to define parallelism)
+Rules claiming more threads will be scaled down.
+Job stats:
+job      count
+-----  -------
+xsim         1
+total        1
+
+Select jobs to execute...
+
+[Wed Aug  9 23:58:56 2023]
+rule xsim:
+    input: /home/seankent/bluejay/ip/jay/sim/jay/gen/run__0123/xelab.ts
+    output: /home/seankent/bluejay/ip/jay/sim/jay/gen/run__0123/test__a/sim.ts
+    jobid: 0
+    reason: Missing output files: /home/seankent/bluejay/ip/jay/sim/jay/gen/run__0123/test__a/sim.ts
+    wildcards: top=/home/seankent/bluejay, ip=jay, dut=jay, run=run__0123, test=test__a
+    resources: tmpdir=/tmp
+
+[Wed Aug  9 23:58:56 2023]
+Finished job 0.
+1 of 1 steps (100%) done
+Complete log: .snakemake/log/2023-08-09T235856.254366.snakemake.log

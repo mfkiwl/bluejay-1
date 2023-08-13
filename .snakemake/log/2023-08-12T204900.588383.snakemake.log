@@ -1,0 +1,66 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 1 (use --cores to define parallelism)
+Rules claiming more threads will be scaled down.
+Job stats:
+job      count
+-----  -------
+2            2
+4            1
+5            1
+total        4
+
+Select jobs to execute...
+
+[Sat Aug 12 20:49:00 2023]
+rule 2:
+    input: /home/seankent/bluejay/ip/jay/sim/jay/tb/memory.b, defs/gen/defs.py
+    output: /home/seankent/bluejay/ip/jay/sim/jay/tb/gen/memory.sv
+    jobid: 6
+    reason: Missing output files: /home/seankent/bluejay/ip/jay/sim/jay/tb/gen/memory.sv; Updated input files: /home/seankent/bluejay/ip/jay/sim/jay/tb/memory.b
+    wildcards: dir=/home/seankent/bluejay/ip/jay/sim/jay/tb, module=memory
+    resources: tmpdir=/tmp
+
+[Sat Aug 12 20:49:00 2023]
+Finished job 6.
+1 of 4 steps (25%) done
+Select jobs to execute...
+
+[Sat Aug 12 20:49:00 2023]
+rule 2:
+    input: /home/seankent/bluejay/ip/jay/sim/jay/tb/tb.b, defs/gen/defs.py
+    output: /home/seankent/bluejay/ip/jay/sim/jay/tb/gen/tb.sv
+    jobid: 7
+    reason: Missing output files: /home/seankent/bluejay/ip/jay/sim/jay/tb/gen/tb.sv; Updated input files: /home/seankent/bluejay/ip/jay/sim/jay/tb/tb.b
+    wildcards: dir=/home/seankent/bluejay/ip/jay/sim/jay/tb, module=tb
+    resources: tmpdir=/tmp
+
+[Sat Aug 12 20:49:01 2023]
+Finished job 7.
+2 of 4 steps (50%) done
+Select jobs to execute...
+
+[Sat Aug 12 20:49:01 2023]
+rule 4:
+    input: /home/seankent/bluejay/ip/lib/src/gen/d_flip_flop.sv, /home/seankent/bluejay/ip/jay/src/gen/jay.sv, /home/seankent/bluejay/ip/jay/src/gen/jay__decoder.sv, /home/seankent/bluejay/ip/jay/sim/jay/tb/gen/memory.sv, /home/seankent/bluejay/ip/jay/sim/jay/tb/gen/tb.sv
+    output: ip/jay/sim/jay/gen/run__0/xvlog.done
+    jobid: 1
+    reason: Input files updated by another job: /home/seankent/bluejay/ip/jay/sim/jay/tb/gen/memory.sv, /home/seankent/bluejay/ip/jay/sim/jay/tb/gen/tb.sv
+    wildcards: ip=jay, dut=jay, run=run__0
+    resources: tmpdir=/tmp
+
+[Sat Aug 12 20:49:01 2023]
+Error in rule 4:
+    jobid: 1
+    input: /home/seankent/bluejay/ip/lib/src/gen/d_flip_flop.sv, /home/seankent/bluejay/ip/jay/src/gen/jay.sv, /home/seankent/bluejay/ip/jay/src/gen/jay__decoder.sv, /home/seankent/bluejay/ip/jay/sim/jay/tb/gen/memory.sv, /home/seankent/bluejay/ip/jay/sim/jay/tb/gen/tb.sv
+    output: ip/jay/sim/jay/gen/run__0/xvlog.done
+    shell:
+        
+        mkdir -p ip/jay/sim/jay/gen/run__0
+        cd ip/jay/sim/jay/gen/run__0 ; xvlog --sv --incr /home/seankent/bluejay/ip/lib/src/gen/d_flip_flop.sv /home/seankent/bluejay/ip/jay/src/gen/jay.sv /home/seankent/bluejay/ip/jay/src/gen/jay__decoder.sv /home/seankent/bluejay/ip/jay/sim/jay/tb/gen/memory.sv /home/seankent/bluejay/ip/jay/sim/jay/tb/gen/tb.sv
+        
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: .snakemake/log/2023-08-12T204900.588383.snakemake.log

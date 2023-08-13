@@ -1,0 +1,55 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 1 (use --cores to define parallelism)
+Rules claiming more threads will be scaled down.
+Job stats:
+job      count
+-----  -------
+xelab        1
+xsim         1
+xvlog        1
+total        3
+
+Select jobs to execute...
+
+[Wed Aug  9 23:16:11 2023]
+rule xvlog:
+    input: /home/seankent/bluejay/sv
+    output: /home/seankent/bluejay/ip/jay/sim/jay/gen/run__0123/xvlog.ts
+    jobid: 2
+    reason: Missing output files: /home/seankent/bluejay/ip/jay/sim/jay/gen/run__0123/xvlog.ts
+    wildcards: top=/home/seankent/bluejay, ip=jay, dut=jay, run=run__0123
+    resources: tmpdir=/tmp
+
+[Wed Aug  9 23:16:11 2023]
+Finished job 2.
+1 of 3 steps (33%) done
+Select jobs to execute...
+
+[Wed Aug  9 23:16:11 2023]
+rule xelab:
+    input: /home/seankent/bluejay/ip/jay/sim/jay/gen/run__0123/xvlog.ts
+    output: /home/seankent/bluejay/ip/jay/sim/jay/gen/run__0123/xelab.ts
+    jobid: 1
+    reason: Missing output files: /home/seankent/bluejay/ip/jay/sim/jay/gen/run__0123/xelab.ts; Input files updated by another job: /home/seankent/bluejay/ip/jay/sim/jay/gen/run__0123/xvlog.ts
+    wildcards: top=/home/seankent/bluejay, ip=jay, dut=jay, run=run__0123
+    resources: tmpdir=/tmp
+
+[Wed Aug  9 23:16:11 2023]
+Finished job 1.
+2 of 3 steps (67%) done
+Select jobs to execute...
+
+[Wed Aug  9 23:16:11 2023]
+rule xsim:
+    input: /home/seankent/bluejay/ip/jay/sim/jay/gen/run__0123/xelab.ts
+    output: /home/seankent/bluejay/ip/jay/sim/jay/gen/run__0123/test__a/sim.ts
+    jobid: 0
+    reason: Missing output files: /home/seankent/bluejay/ip/jay/sim/jay/gen/run__0123/test__a/sim.ts; Input files updated by another job: /home/seankent/bluejay/ip/jay/sim/jay/gen/run__0123/xelab.ts
+    wildcards: top=/home/seankent/bluejay, ip=jay, dut=jay, run=run__0123, test=test__a
+    resources: tmpdir=/tmp
+
+[Wed Aug  9 23:16:11 2023]
+Finished job 0.
+3 of 3 steps (100%) done
+Complete log: .snakemake/log/2023-08-09T231611.004323.snakemake.log

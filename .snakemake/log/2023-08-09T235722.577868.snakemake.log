@@ -1,0 +1,3 @@
+NameError in file /home/seankent/bluejay/Snakefile, line 5:
+name 'JayMake' is not defined
+  File "/home/seankent/bluejay/Snakefile", line 5, in <module>

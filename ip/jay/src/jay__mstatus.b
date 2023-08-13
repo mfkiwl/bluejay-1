@@ -13,8 +13,8 @@ module jay__mstatus
 logic [CSR__MSTATUS__UIE__WIDTH-1:0] mstatus__uie;
 logic [CSR__MSTATUS__SIE__WIDTH-1:0] mstatus__sie;
 logic [CSR__MSTATUS__HIE__WIDTH-1:0] mstatus__hie;
-logic [CSR__MSTATUS__MIE__WIDTH-1:0] mstatus__mie,
-logic [CSR__MSTATUS__MIE__WIDTH-1:0] mstatus__mie__n,
+logic [CSR__MSTATUS__MIE__WIDTH-1:0] mstatus__mie;
+logic [CSR__MSTATUS__MIE__WIDTH-1:0] mstatus__mie__n;
 logic [CSR__MSTATUS__UPIE__WIDTH-1:0] mstatus__upie;
 logic [CSR__MSTATUS__SPIE__WIDTH-1:0] mstatus__spie;
 logic [CSR__MSTATUS__HPIE__WIDTH-1:0] mstatus__hpie;

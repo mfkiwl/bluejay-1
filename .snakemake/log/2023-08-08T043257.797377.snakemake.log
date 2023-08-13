@@ -1,0 +1,7 @@
+Building DAG of jobs...
+MissingInputException in rule sim__wdb in file /home/seankent/bluejay/Snakefile, line 9:
+Missing input files for rule sim__wdb:
+    output: /home/seankent/bluejay/ip/jay/sim/gen/sim__xyz/ADD-01/snapshot.wdb
+    wildcards: ip=jay, gen=gen, sim=sim__xyz, test=ADD-01
+    affected files:
+        /home/seankent/bluejay/ip/jay/sim/gen/sim__xyz/ADD-01/snapshot

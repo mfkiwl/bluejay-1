@@ -1,0 +1,1 @@
+-top "tb" -snapshot "ip/jay/sim/jay/gen/run__0/snapshot" 

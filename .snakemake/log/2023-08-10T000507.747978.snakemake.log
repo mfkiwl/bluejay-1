@@ -1,0 +1,7 @@
+Building DAG of jobs...
+MissingInputException in rule xvlog in file /home/seankent/bluejay/Snakefile, line 30:
+Missing input files for rule xvlog:
+    output: /home/seankent/bluejay/ip/jay/sim/jay/gen/run__0123/xvlog.ts
+    wildcards: top=/home/seankent/bluejay, ip=jay, dut=jay, run=run__0123
+    affected files:
+        jay

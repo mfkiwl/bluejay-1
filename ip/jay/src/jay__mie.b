@@ -13,17 +13,17 @@ module jay__mie
 logic [CSR__MIE__USIE__WIDTH-1:0] mie__usie;
 logic [CSR__MIE__SSIE__WIDTH-1:0] mie__ssie;
 logic [CSR__MIE__HSIE__WIDTH-1:0] mie__hsie;
-logic [CSR__MIE__MSIE__WIDTH-1:0] mie__msie,
-logic [CSR__MIE__MSIE__WIDTH-1:0] mie__msie__n,
+logic [CSR__MIE__MSIE__WIDTH-1:0] mie__msie;
+logic [CSR__MIE__MSIE__WIDTH-1:0] mie__msie__n;
 logic [CSR__MIE__UTIE__WIDTH-1:0] mie__utie;
 logic [CSR__MIE__STIE__WIDTH-1:0] mie__stie;
 logic [CSR__MIE__HTIE__WIDTH-1:0] mie__htie;
-logic [CSR__MIE__MTIE__WIDTH-1:0] mie__mtie__n,
+logic [CSR__MIE__MTIE__WIDTH-1:0] mie__mtie__n;
 logic [CSR__MIE__UEIE__WIDTH-1:0] mie__ueie;
 logic [CSR__MIE__SEIE__WIDTH-1:0] mie__seie;
 logic [CSR__MIE__HEIE__WIDTH-1:0] mie__heie;
-logic [CSR__MIE__MEIE__WIDTH-1:0] mie__meie,
-logic [CSR__MIE__MEIE__WIDTH-1:0] mie__meie__n,
+logic [CSR__MIE__MEIE__WIDTH-1:0] mie__meie;
+logic [CSR__MIE__MEIE__WIDTH-1:0] mie__meie__n;
 logic [CSR__MIE__WPRI__0__WIDTH-1:0] mie__wpri__0;
 
 assign mie[CSR__MIE__USIE__FIELD] = mie__usie;

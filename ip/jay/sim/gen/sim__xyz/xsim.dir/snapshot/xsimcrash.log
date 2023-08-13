@@ -1,0 +1,14 @@
+Printing stacktrace...
+
+[0] /lib/x86_64-linux-gnu/libc.so.6(+0x19d97d) [0x7f61fdd9d97d]
+[1] /tools/Xilinx/Vivado/2019.2/lib/lnx64.o/Ubuntu/libstdc++.so.6(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::append(char const*)+0x14) [0x7f61fd11df94]
+[2] /tools/Xilinx/Vivado/2019.2/lib/lnx64.o/librdi_simulator_kernel.so(ISIMK::VlogFile::fileOpen(char const*)+0x235) [0x7f61fe63e675]
+[3] xsim.dir/snapshot/xsimk(+0x4eca5) [0x561c1494aca5]
+[4] /tools/Xilinx/Vivado/2019.2/lib/lnx64.o/librdi_simulator_kernel.so(+0x28fd57) [0x7f61fe68fd57]
+[5] /tools/Xilinx/Vivado/2019.2/lib/lnx64.o/librdi_simulator_kernel.so(ISIMK::Kernel::callProcessExecuteFunctions()+0x5c) [0x7f61fe68f4cc]
+[6] /tools/Xilinx/Vivado/2019.2/lib/lnx64.o/librdi_simulator_kernel.so(ISIMK::HdlQ::processTimeSlots()+0xa7) [0x7f61fe683f77]
+[7] /tools/Xilinx/Vivado/2019.2/lib/lnx64.o/librdi_simulator_kernel.so(ISIMK::GDBMIHost::runSimulationLoop()+0x149) [0x7f61fe67dee9]
+[8] /tools/Xilinx/Vivado/2019.2/lib/lnx64.o/Ubuntu/libstdc++.so.6(+0xb8cbf) [0x7f61fd0b8cbf]
+[9] /lib/x86_64-linux-gnu/libc.so.6(+0x94b43) [0x7f61fdc94b43]
+[10] /lib/x86_64-linux-gnu/libc.so.6(+0x126a00) [0x7f61fdd26a00]
+Done

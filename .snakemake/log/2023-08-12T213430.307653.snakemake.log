@@ -1,0 +1,8 @@
+Building DAG of jobs...
+InputFunctionException in rule 6 in file /home/seankent/bluejay/Snakefile, line 56:
+Error:
+  AttributeError: 'Wildcards' object has no attribute 'ip'
+Wildcards:
+  test=ADD-01
+Traceback:
+  File "/home/seankent/bluejay/jaymake.py", line 72, in snakemake_get_tb_top

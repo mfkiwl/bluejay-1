@@ -1,0 +1,4 @@
+NameError in file /home/seankent/bluejay/Snakefile, line 3:
+name 'JayMake' is not defined
+  File "/home/seankent/bluejay/Snakefile", line 3, in <module>
+  File "/home/seankent/bluejay/jaymake.py", line 57, in <module>

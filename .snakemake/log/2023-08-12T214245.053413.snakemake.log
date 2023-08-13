@@ -1,0 +1,3 @@
+Building DAG of jobs...
+MissingRuleException:
+No rule to produce ip/jay/sim/jay/tests/ADD-01/ADD-01.elf (if you use input functions make sure that they don't raise unexpected exceptions).

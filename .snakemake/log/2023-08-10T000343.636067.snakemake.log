@@ -1,0 +1,12 @@
+Building DAG of jobs...
+InputFunctionException in rule xvlog in file /home/seankent/bluejay/Snakefile, line 30:
+Error:
+  KeyError: ['/home/seankent/bluejay', 'jay', 'jay', 'run__0123']
+Wildcards:
+  top=/home/seankent/bluejay
+  ip=jay
+  dut=jay
+  run=run__0123
+Traceback:
+  File "/home/seankent/bluejay/jaymake.py", line 38, in get_all_sv
+  File "/home/seankent/bluejay/jaymake.py", line 26, in get_sv

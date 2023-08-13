@@ -1,0 +1,38 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 1 (use --cores to define parallelism)
+Rules claiming more threads will be scaled down.
+Job stats:
+job      count
+-----  -------
+xelab        1
+xsim         1
+xvlog        1
+total        3
+
+Select jobs to execute...
+
+[Thu Aug 10 00:06:06 2023]
+rule xvlog:
+    input: /home/seankent/bluejay/ip/jay/src/gen/jay.sv, /home/seankent/bluejay/ip/jay/src/gen/jay__decoder.sv, /home/seankent/bluejay/ip/lib/src/gen/d_flip_flop.sv
+    output: /home/seankent/bluejay/ip/jay/sim/jay/gen/run__0123/xvlog.ts
+    jobid: 2
+    reason: Missing output files: /home/seankent/bluejay/ip/jay/sim/jay/gen/run__0123/xvlog.ts; Set of input files has changed since last execution
+    wildcards: top=/home/seankent/bluejay, ip=jay, dut=jay, run=run__0123
+    resources: tmpdir=/tmp
+
+[Thu Aug 10 00:06:06 2023]
+Error in rule xvlog:
+    jobid: 2
+    input: /home/seankent/bluejay/ip/jay/src/gen/jay.sv, /home/seankent/bluejay/ip/jay/src/gen/jay__decoder.sv, /home/seankent/bluejay/ip/lib/src/gen/d_flip_flop.sv
+    output: /home/seankent/bluejay/ip/jay/sim/jay/gen/run__0123/xvlog.ts
+    shell:
+        
+        mkdir -p /home/seankent/bluejay/ip/jay/sim/jay/gen/run__0123
+        cp /home/seankent/bluejay/ip/jay/src/gen/jay.sv /home/seankent/bluejay/ip/jay/src/gen/jay__decoder.sv /home/seankent/bluejay/ip/lib/src/gen/d_flip_flop.sv /home/seankent/bluejay/ip/jay/sim/jay/gen/run__0123/xvlog.ts
+        
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: .snakemake/log/2023-08-10T000605.972759.snakemake.log

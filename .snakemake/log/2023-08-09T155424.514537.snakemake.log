@@ -1,0 +1,7 @@
+Building DAG of jobs...
+MissingInputException in rule diff in file /home/seankent/bluejay/Snakefile, line 45:
+Missing input files for rule diff:
+    output: /home/seankent/bluejay/ip/jay/sim/gen/sim__a/test__0/diff.ts
+    wildcards: ip_name=jay, sim_name=sim__a, test_name=test__0
+    affected files:
+        /home/seankent/bluejay/ip/jay/sim/gen/sim__a/test__0/ref.ts

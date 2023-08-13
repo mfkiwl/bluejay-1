@@ -10,7 +10,6 @@ module jay__mhpmevent
     output logic [63:0] mhpmevent 
 );
 
-logic [63:0] mhpmevent;
 logic [CSR__MHPMEVENT__MHPMEVENT__WIDTH-1:0] mhpmevent__mhpmevent;
 
 assign mhpmevent[CSR__MHPMEVENT__MHPMEVENT__FIELD] = mhpmevent__mhpmevent;

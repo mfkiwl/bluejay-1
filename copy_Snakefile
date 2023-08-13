@@ -1,0 +1,95 @@
+top = "/Users/seankent/Documents/bluejay"
+top = "/home/seankent/bluejay"
+
+import jaymake
+from jaymake import JayMake
+jm = JayMake()
+
+jm.config["ip"] = {}
+jm.config["ip"]["jay"] = {}
+jm.config["ip"]["jay"]["src"] = {}
+jm.config["ip"]["jay"]["src"] = {"jay", "jay__decoder"}
+jm.config["ip"]["jay"]["deps"] = {"lib"}
+
+jm.config["ip"]["jay"]["sim"] = {}
+jm.config["ip"]["jay"]["sim"]["jay"] = {}
+jm.config["ip"]["jay"]["sim"]["jay"]["tb"] = {"tb", "memory"}
+jm.config["ip"]["jay"]["sim"]["jay"]["tests"] = {"ADD-01"}
+
+jm.config["ip"]["lib"] = {}
+jm.config["ip"]["lib"]["src"] = {}
+jm.config["ip"]["lib"]["src"]["d_flip_flop"] = {}
+jm.config["ip"]["lib"]["deps"] = {}
+
+BLUEJAY = top
+
+
+#$(TOP)/ip/$(1)/sim/gen/$(2)/$(3)/$(SNAPSHOT).wdb: $(TOP)/ip/$(1)/sim/gen/$(2)/$(3)/setup.timestamp
+#$(CD) $(TOP)/ip/$(1)/sim/gen/$(2) ; $(XSIM) $(SNAPSHOT) --tclbatch $(XSIM__CFG) --wdb $$(@) 
+
+rule xvlog:
+    input:
+        #sv = BLUEJAY + "/sv",
+        sv = jm.snakemake_get_all_sv
+    output:
+        xvlog_ts = "{top}/ip/{ip}/sim/{dut}/gen/{run}/xvlog.ts" 
+    shell:
+	    #$(CD) $(TOP)/ip/$(1)/sim/gen/$(2) ; $(XVLOG) $(XVLOG__OPTS) $(3)
+        #"cd {wildcards.dir} ; touch {output.xvlog}"
+        """
+        mkdir -p {wildcards.top}/ip/{wildcards.ip}/sim/{wildcards.dut}/gen/{wildcards.run}
+        cd {wildcards.top}/ip/{wildcards.ip}/sim/{wildcards.dut}/gen/{wildcards.run} ; 
+        echo {input.sv} 
+        touch {output.xvlog_ts}
+        """
+
+rule xelab:
+    input:
+        xvlog_ts = "{top}/ip/{ip}/sim/{dut}/gen/{run}/xvlog.ts" 
+    output:
+        xelab_ts = "{top}/ip/{ip}/sim/{dut}/gen/{run}/xelab.ts" 
+    shell:
+        #"cd " + top + "/ip/{wildcards.ip}/sim/{wildcards.gen}/{wildcards.sim} ; xsim snapshot --tclbatch " + top + "/tcl/xsim_cfg.tcl --wdb snapshot.wdb"
+	    # $(CD) $(TOP)/ip/$(1)/sim/gen/$(2) ; $(XELAB) -debug all $(XELAB__OPTS) -top tb -snapshot $(SNAPSHOT) 
+        "cp {input.xvlog_ts} {output.xelab_ts}"
+
+
+rule xsim:
+    input:
+        xelab_ts = "{top}/ip/{ip}/sim/{dut}/gen/{run}/xelab.ts" 
+    output:
+        #wdb = top + "/ip/{ip}/sim/{gen}/{sim}/{test}/snapshot.wdb",
+        #wdb = "{top}/jay--ADD_01--snapshot.wdb",
+        sim_ts = "{top}/ip/{ip}/sim/{dut}/gen/{run}/{test}/sim.ts" 
+    shell:
+        #"cd " + top + "/ip/{wildcards.ip}/sim/{wildcards.gen}/{wildcards.sim} ; xsim snapshot --tclbatch " + top + "/tcl/xsim_cfg.tcl --wdb snapshot.wdb"
+        #"cd " + top + "/ip/{wildcards.ip}/sim/{wildcards.gen}/{wildcards.sim} ; touch {output.wdb}"
+        "cp {input.xelab_ts} {output.sim_ts}"
+
+
+rule ref_ts:
+    input:
+    output:
+        ref_ts = BLUEJAY + "/ip/{ip_name}/sim/gen/{sim_name}/{test_name}/ref.ts" 
+    shell:
+        "touch {output.ref_ts}"
+
+rule diff:
+    input:
+        ref_ts = BLUEJAY + "/ip/{ip_name}/sim/gen/{sim_name}/{test_name}/ref.ts",
+        sim_ts = BLUEJAY + "/ip/{ip_name}/sim/gen/{sim_name}/{test_name}/sim.ts" 
+    output:
+        diff_ts = BLUEJAY + "/ip/{ip_name}/sim/gen/{sim_name}/{test_name}/diff.ts" 
+    shell:
+        "cp {input.sim_ts} {output.diff_ts}"
+
+
+
+rule bluejay_to_system_verilog:
+    input:
+        b = "{dir}/{module}.b",
+        defs = f"{top}/defs/gen/defs.py"
+    output:
+        sv = "{dir}/{gen}/{module}.sv" 
+    shell:
+        "python3 tools/bluejay.py {input.b} {output.sv} {input.defs}"

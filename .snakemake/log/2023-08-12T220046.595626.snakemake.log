@@ -1,0 +1,13 @@
+Building DAG of jobs...
+AmbiguousRuleException:
+Rules 10 and 9 are ambiguous for the file ip/jay/sim/jay/tests/ADD-01/gen/ADD-01.mem.
+Consider starting rule output with a unique prefix, constrain your wildcards, or use the ruleorder directive.
+Wildcards:
+	10: test=ADD-01
+	9: test=ADD-01
+Expected input files:
+	10: ip/jay/sim/jay/tests/ADD-01/gen/ADD-01.bin
+	9: ip/jay/sim/jay/tests/ADD-01/gen/ADD-01.bin
+Expected output files:
+	10: ip/jay/sim/jay/tests/ADD-01/gen/ADD-01.mem
+	9: ip/jay/sim/jay/tests/ADD-01/gen/ADD-01.mem

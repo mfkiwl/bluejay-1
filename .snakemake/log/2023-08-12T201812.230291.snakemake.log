@@ -1,0 +1,12 @@
+Building DAG of jobs...
+InputFunctionException in rule 4 in file /home/seankent/bluejay/Snakefile, line 44:
+Error:
+  NameError: name 'files' is not defined
+Wildcards:
+  ip=jay
+  dut=jay
+  run=run__0
+Traceback:
+  File "/home/seankent/bluejay/jaymake.py", line 52, in snakemake_get_all_system_verilog_files
+  File "/home/seankent/bluejay/jaymake.py", line 38, in get_all_system_verilog_files
+  File "/home/seankent/bluejay/jaymake.py", line 29, in get_ip_system_verilog_files

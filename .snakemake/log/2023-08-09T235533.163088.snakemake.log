@@ -1,0 +1,2 @@
+SyntaxError in file /home/seankent/bluejay/Snakefile, line 17:
+positional argument follows keyword argument

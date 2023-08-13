@@ -1,0 +1,26 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 1 (use --cores to define parallelism)
+Rules claiming more threads will be scaled down.
+Job stats:
+job             count
+------------  -------
+sim__diff           1
+sim__rtl_sim        1
+sim__wdb            1
+total               3
+
+Select jobs to execute...
+
+[Tue Aug  8 04:33:19 2023]
+rule sim__wdb:
+    input: /home/seankent/bluejay/ip/jay/sim/gen/sim__xyz/ADD-01/snapshot
+    output: /home/seankent/bluejay/ip/jay/sim/gen/sim__xyz/ADD-01/snapshot.wdb
+    jobid: 2
+    reason: Missing output files: /home/seankent/bluejay/ip/jay/sim/gen/sim__xyz/ADD-01/snapshot.wdb; Updated input files: /home/seankent/bluejay/ip/jay/sim/gen/sim__xyz/ADD-01/snapshot
+    wildcards: ip=jay, gen=gen, sim=sim__xyz, test=ADD-01
+    resources: tmpdir=/tmp
+
+RuleException in rule sim__wdb in file /home/seankent/bluejay/Snakefile, line 9:
+NameError: The name 'ip' is unknown in this context. Did you mean 'wildcards.ip'?, when formatting the following:
+cd/home/seankent/bluejay/ip/{ip}/sim/{gen}/{sim} ; xsim snapshot --tclbatch /home/seankent/bluejay/tcl/xsim_cfg.tcl --wdb snapshot.wdb

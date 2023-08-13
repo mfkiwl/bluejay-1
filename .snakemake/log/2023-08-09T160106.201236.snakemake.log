@@ -1,0 +1,28 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 1 (use --cores to define parallelism)
+Rules claiming more threads will be scaled down.
+Job stats:
+job       count
+------  -------
+diff          1
+ref_ts        1
+xelab         1
+xsim          1
+xvlog         1
+total         5
+
+Select jobs to execute...
+
+[Wed Aug  9 16:01:06 2023]
+rule xvlog:
+    input: /home/seankent/bluejay/sv
+    output: /home/seankent/bluejay/ip/jay/sim/gen/sim__a/xvlog.ts
+    jobid: 4
+    reason: Missing output files: /home/seankent/bluejay/ip/jay/sim/gen/sim__a/xvlog.ts
+    wildcards: ip_name=jay, sim_name=sim__a
+    resources: tmpdir=/tmp
+
+RuleException in rule xvlog in file /home/seankent/bluejay/Snakefile, line 10:
+NameError: The name 'ip_name' is unknown in this context. Did you mean 'wildcards.ip_name'?, when formatting the following:
+mkdir -p /home/seankent/bluejay/ip/{ip_name}/sim/gen/{sim_name}cp {input.sv} > {output.xvlog_ts}

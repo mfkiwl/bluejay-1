@@ -1,0 +1,59 @@
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/jay/src/gen/jay__mhartid.sv" into library work
+INFO: [VRFC 10-311] analyzing module jay__mhartid
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/jay/src/gen/jay__mepc.sv" into library work
+INFO: [VRFC 10-311] analyzing module jay__mepc
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/jay/src/gen/jay__mcause.sv" into library work
+INFO: [VRFC 10-311] analyzing module jay__mcause
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/jay/src/gen/jay__arithmetic_logic_unit.sv" into library work
+INFO: [VRFC 10-311] analyzing module jay__arithmetic_logic_unit
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/lib/src/gen/d_flip_flop.sv" into library work
+INFO: [VRFC 10-311] analyzing module d_flip_flop
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/jay/src/gen/jay__mhpmcounter.sv" into library work
+INFO: [VRFC 10-311] analyzing module jay__mhpmcounter
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/jay/src/gen/jay.sv" into library work
+INFO: [VRFC 10-311] analyzing module jay
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/jay/src/gen/jay__mimpid.sv" into library work
+INFO: [VRFC 10-311] analyzing module jay__mimpid
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/jay/src/gen/jay__medeleg.sv" into library work
+INFO: [VRFC 10-311] analyzing module jay__medeleg
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/jay/src/gen/jay__misa.sv" into library work
+INFO: [VRFC 10-311] analyzing module jay__misa
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/jay/src/gen/jay__mcycle.sv" into library work
+INFO: [VRFC 10-311] analyzing module jay__mcycle
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/jay/src/gen/jay__mie.sv" into library work
+INFO: [VRFC 10-311] analyzing module jay__mie
+INFO: [VRFC 10-2458] undeclared symbol mie__mtie, assumed default net type wire [/home/seankent/bluejay/ip/jay/src/gen/jay__mie.sv:78]
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/jay/src/gen/jay__marchid.sv" into library work
+INFO: [VRFC 10-311] analyzing module jay__marchid
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/jay/src/gen/jay__mideleg.sv" into library work
+INFO: [VRFC 10-311] analyzing module jay__mideleg
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/jay/src/gen/jay__decoder.sv" into library work
+INFO: [VRFC 10-311] analyzing module jay__decoder
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/jay/src/gen/jay__mscratch.sv" into library work
+INFO: [VRFC 10-311] analyzing module jay__mscratch
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/jay/src/gen/jay__mtval.sv" into library work
+INFO: [VRFC 10-311] analyzing module jay__mtval
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/jay/src/gen/jay__mhpmevent.sv" into library work
+INFO: [VRFC 10-311] analyzing module jay__mhpmevent
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/jay/src/gen/jay__comparator.sv" into library work
+INFO: [VRFC 10-311] analyzing module jay__comparator
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/jay/src/gen/jay__register_file.sv" into library work
+INFO: [VRFC 10-311] analyzing module jay__register_file
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/jay/src/gen/jay__control_and_status_registers.sv" into library work
+INFO: [VRFC 10-311] analyzing module jay__control_and_status_registers
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/jay/src/gen/jay__mstatus.sv" into library work
+INFO: [VRFC 10-311] analyzing module jay__mstatus
+INFO: [VRFC 10-2458] undeclared symbol mstatus___spie, assumed default net type wire [/home/seankent/bluejay/ip/jay/src/gen/jay__mstatus.sv:57]
+INFO: [VRFC 10-2458] undeclared symbol mstatus__mpie__n, assumed default net type wire [/home/seankent/bluejay/ip/jay/src/gen/jay__mstatus.sv:59]
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/jay/src/gen/jay__minstret.sv" into library work
+INFO: [VRFC 10-311] analyzing module jay__minstret
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/jay/src/gen/jay__mtvec.sv" into library work
+INFO: [VRFC 10-311] analyzing module jay__mtvec
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/jay/src/gen/jay__mip.sv" into library work
+INFO: [VRFC 10-311] analyzing module jay__mip
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/jay/src/gen/jay__mvendorid.sv" into library work
+INFO: [VRFC 10-311] analyzing module jay__mvendorid
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/jay/sim/jay/tb/gen/tb.sv" into library work
+INFO: [VRFC 10-311] analyzing module tb
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/seankent/bluejay/ip/jay/sim/jay/tb/gen/memory.sv" into library work
+INFO: [VRFC 10-311] analyzing module tb_mem

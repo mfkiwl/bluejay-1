@@ -16,8 +16,8 @@ module jay__mip
 logic [CSR__MIP__USIP__WIDTH-1:0] mip__usip;
 logic [CSR__MIP__SSIP__WIDTH-1:0] mip__ssip;
 logic [CSR__MIP__HSIP__WIDTH-1:0] mip__hsip;
-logic [CSR__MIP__MSIP__WIDTH-1:0] mip__msip,
-logic [CSR__MIP__MSIP__WIDTH-1:0] mip__msip__n,
+logic [CSR__MIP__MSIP__WIDTH-1:0] mip__msip;
+logic [CSR__MIP__MSIP__WIDTH-1:0] mip__msip__n;
 logic [CSR__MIP__UTIP__WIDTH-1:0] mip__utip;
 logic [CSR__MIP__STIP__WIDTH-1:0] mip__stip;
 logic [CSR__MIP__HTIP__WIDTH-1:0] mip__htip;
@@ -26,8 +26,8 @@ logic [CSR__MIP__MTIP__WIDTH-1:0] mip__mtip__n;
 logic [CSR__MIP__UEIP__WIDTH-1:0] mip__ueip;
 logic [CSR__MIP__SEIP__WIDTH-1:0] mip__seip;
 logic [CSR__MIP__HEIP__WIDTH-1:0] mip__heip;
-logic [CSR__MIP__MEIP__WIDTH-1:0] mip__meip,
-logic [CSR__MIP__MEIP__WIDTH-1:0] mip__meip__n,
+logic [CSR__MIP__MEIP__WIDTH-1:0] mip__meip;
+logic [CSR__MIP__MEIP__WIDTH-1:0] mip__meip__n;
 logic [CSR__MIP__WIRI__0__WIDTH-1:0] mip__wiri__0;
 
 assign mip[CSR__MIP__USIP__FIELD] = mip__usip;

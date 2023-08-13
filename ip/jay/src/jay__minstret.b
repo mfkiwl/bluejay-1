@@ -11,6 +11,9 @@ module jay__minstret
     input instret
 );
 
+localparam STATE__IDLE = 1'b0;
+localparam STATE__WRITE_OCCURED = 1'b1;
+
 logic [CSR__MINSTRET__MINSTRET__WIDTH-1:0] minstret__minstret;
 logic [CSR__MINSTRET__MINSTRET__WIDTH-1:0] minstret__minstret__n;
 
@@ -34,9 +37,6 @@ d_flip_flop #(.WIDTH(CSR__MINSTRET__MINSTRET__WIDTH), .RESET_VALUE(CSR__MINSTRET
 );
 
 
-localparam STATE__IDLE = 1'b0;
-localparam STATE__WRITE_OCCURED = 1'b1;
-
 always_comb
 begin
     case (state)
@@ -45,7 +45,7 @@ begin
         //==============================
         STATE__IDLE:
         begin
-            state__n = instret ? STATE__IDLE : en : STATE__WRITE_OCCURED : STATE__IDLE;
+            state__n = instret ? STATE__IDLE : en ? STATE__WRITE_OCCURED : STATE__IDLE;
         end
 
         //==============================

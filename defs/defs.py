@@ -316,11 +316,11 @@ defs["CSR__MIP__MEIP__MSB"] = {"value": "11"}
 defs["CSR__MIP__MEIP__WIDTH"] = {"value": "1"}
 defs["CSR__MIP__MEIP__NOT_PENDING"] = {"value": "0b0", "prefix": "1"}
 defs["CSR__MIP__MEIP__PENDING"] = {"value": "0b1", "prefix": "1"}
-defs["CSR__MIP__WIRI0__FIELD"] = {"value": "63:12"}
-defs["CSR__MIP__WIRI0__LSB"] = {"value": "12"}
-defs["CSR__MIP__WIRI0__MSB"] = {"value": "63"}
-defs["CSR__MIP__WIRI0__WIDTH"] = {"value": "52"}
-defs["CSR__MIP__WIRI0__VALUE"] = {"value": "0x0", "prefix": "52"}
+defs["CSR__MIP__WIRI__0__FIELD"] = {"value": "63:12"}
+defs["CSR__MIP__WIRI__0__LSB"] = {"value": "12"}
+defs["CSR__MIP__WIRI__0__MSB"] = {"value": "63"}
+defs["CSR__MIP__WIRI__0__WIDTH"] = {"value": "52"}
+defs["CSR__MIP__WIRI__0__VALUE"] = {"value": "0x0", "prefix": "52"}
 
 defs["CSR__MIE"] = {"value": "0x304", "prefix": "12"}
 defs["CSR__MIE__USIE__FIELD"] = {"value": "0"}
@@ -414,14 +414,14 @@ defs["CSR__MINSTRET__MINSTRET__WIDTH"] = {"value": "64"}
 defs["CSR__MINSTRET__MINSTRET__RESET_VALUE"] = {"value": "0x0", "prefix": "64"}
 
 for i in range(3, 32):
-    defs[f"CSR__MHPMCOUNTER{i}"] = {"value": "0x{0xb00 + i:x}", "prefix": "12"}
+    defs[f"CSR__MHPMCOUNTER{i}"] = {"value": f"0x{0xb00 + i:x}", "prefix": "12"}
 
 defs["CSR__MHPMCOUNTER__MHPMCOUNTER__FIELD"] = {"value": "63:0"}
 defs["CSR__MHPMCOUNTER__MHPMCOUNTER__WIDTH"] = {"value": "64"}
 defs["CSR__MHPMCOUNTER__MHPMCOUNTER__VALUE"] = {"value": "0x0", "prefix": "64"}
 
 for i in range(3, 32):
-    defs[f"CSR__MHPMEVENT{i}"] = {"value": "0x{0x320 + i:x}", "prefix": "12"}
+    defs[f"CSR__MHPMEVENT{i}"] = {"value": f"0x{0x320 + i:x}", "prefix": "12"}
 
 defs["CSR__MHPMEVENT__MHPMEVENT__FIELD"] = {"value": "63:0"}
 defs["CSR__MHPMEVENT__MHPMEVENT__WIDTH"] = {"value": "64"}
@@ -569,7 +569,6 @@ defs["PLATFORM_LEVEL_INTERRUPT_CONTROLLER__CONTEXT__0__CLMCMPL__ID__FIELD"] = {"
 defs["PLATFORM_LEVEL_INTERRUPT_CONTROLLER__CONTEXT__0__CLMCMPL__ID__WIDTH"] = {"value": "32"}
 
 
-
 defs["PHYSICAL_MEMORY_ATTRIBUTE_REGISTERS__BASE_ADDR"] = {"value": "0xb0000000", "prefix": "40"}
 defs["PHYSICAL_MEMORY_ATTRIBUTE_REGISTERS__PMA__0"] = {"value": "0x0", "prefix": "3"}
 defs["PHYSICAL_MEMORY_ATTRIBUTE_REGISTERS__PMA__1"] = {"value": "0x1", "prefix": "3"}
@@ -598,6 +597,8 @@ defs["PHYSICAL_MEMORY_ATTRIBUTE_CHECKER__STATUS__OK"] = {"value": "0x0", "prefix
 defs["PHYSICAL_MEMORY_ATTRIBUTE_CHECKER__STATUS__ACCESS_FAULT"] = {"value": "0x1", "prefix": "2"}
 defs["PHYSICAL_MEMORY_ATTRIBUTE_CHECKER__STATUS__MISALIGNED_ADDRESS"] = {"value": "0x2", "prefix": "2"}
 
+
+
 defs["GENERAL_PURPOSE_INPUT_OUTPUT__BASE_ADDR"] = {"value": "0xc0000000", "prefix": "40"}
 defs["GENERAL_PURPOSE_INPUT_OUTPUT__PORT__0"] = {"value": "0x0", "prefix": "4"}
 defs["GENERAL_PURPOSE_INPUT_OUTPUT__DATA__0"] = {"value": "0x1", "prefix": "4"}
@@ -615,3 +616,6 @@ defs["GENERAL_PURPOSE_INPUT_OUTPUT__OE__3"] = {"value": "0xb", "prefix": "4"}
 defs["PULSE_WIDTH_MODULATOR__BASE_ADDR"] = {"value": "0xd0000000", "prefix": "40"}
 defs["PULSE_WIDTH_MODULATOR__PERIOD"] = {"value": "0x0000000", "prefix": "4"}
 defs["PULSE_WIDTH_MODULATOR__DUTY"] = {"value": "0x0000008", "prefix": "4"}
+
+
+

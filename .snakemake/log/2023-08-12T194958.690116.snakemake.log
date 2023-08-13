@@ -1,0 +1,13 @@
+Building DAG of jobs...
+AmbiguousRuleException:
+Rules 5 and 4 are ambiguous for the file ip/jay/sim/jay/gen/run__0/xvlog.done.
+Consider starting rule output with a unique prefix, constrain your wildcards, or use the ruleorder directive.
+Wildcards:
+	5: dut=jay,ip=jay,run=run__0
+	4: dut=jay,ip=jay,run=run__0/xvlog.done
+Expected input files:
+	5: ip/jay/src/gen/jay.sv ip/jay/sim/jay/gen/run__0
+	4: 
+Expected output files:
+	5: ip/jay/sim/jay/gen/run__0/xvlog.done
+	4: ip/jay/sim/jay/gen/run__0/xvlog.done

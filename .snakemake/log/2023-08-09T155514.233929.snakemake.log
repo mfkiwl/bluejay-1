@@ -1,0 +1,3 @@
+CreateRuleException in file /home/seankent/bluejay/Snakefile, line 51:
+The name diff is already used by another rule
+  File "/home/seankent/bluejay/Snakefile", line 51, in <module>

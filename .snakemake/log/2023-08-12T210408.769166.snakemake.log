@@ -1,0 +1,52 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 1 (use --cores to define parallelism)
+Rules claiming more threads will be scaled down.
+Job stats:
+job      count
+-----  -------
+2            1
+4            1
+5            1
+total        3
+
+Select jobs to execute...
+
+[Sat Aug 12 21:04:08 2023]
+rule 2:
+    input: /home/seankent/bluejay/ip/jay/src/jay__mhpmevent.b, defs/gen/defs.py
+    output: /home/seankent/bluejay/ip/jay/src/gen/jay__mhpmevent.sv
+    jobid: 22
+    reason: Updated input files: /home/seankent/bluejay/ip/jay/src/jay__mhpmevent.b
+    wildcards: dir=/home/seankent/bluejay/ip/jay/src, module=jay__mhpmevent
+    resources: tmpdir=/tmp
+
+[Sat Aug 12 21:04:08 2023]
+Finished job 22.
+1 of 3 steps (33%) done
+Select jobs to execute...
+
+[Sat Aug 12 21:04:08 2023]
+rule 4:
+    input: /home/seankent/bluejay/ip/jay/src/gen/jay__misa.sv, /home/seankent/bluejay/ip/jay/src/gen/jay__arithmetic_logic_unit.sv, /home/seankent/bluejay/ip/jay/src/gen/jay__mimpid.sv, /home/seankent/bluejay/ip/jay/src/gen/jay__mepc.sv, /home/seankent/bluejay/ip/jay/src/gen/jay__mscratch.sv, /home/seankent/bluejay/ip/jay/src/gen/jay__mhartid.sv, /home/seankent/bluejay/ip/jay/src/gen/jay__mcause.sv, /home/seankent/bluejay/ip/jay/src/gen/jay__decoder.sv, /home/seankent/bluejay/ip/jay/src/gen/jay__mip.sv, /home/seankent/bluejay/ip/jay/src/gen/jay__comparator.sv, /home/seankent/bluejay/ip/lib/src/gen/d_flip_flop.sv, /home/seankent/bluejay/ip/jay/src/gen/jay__mcycle.sv, /home/seankent/bluejay/ip/jay/src/gen/jay__medeleg.sv, /home/seankent/bluejay/ip/jay/src/gen/jay__mhpmcounter.sv, /home/seankent/bluejay/ip/jay/src/gen/jay__register_file.sv, /home/seankent/bluejay/ip/jay/src/gen/jay__mvendorid.sv, /home/seankent/bluejay/ip/jay/src/gen/jay__mstatus.sv, /home/seankent/bluejay/ip/jay/src/gen/jay__mtvec.sv, /home/seankent/bluejay/ip/jay/src/gen/jay__mideleg.sv, /home/seankent/bluejay/ip/jay/src/gen/jay__mhpmevent.sv, /home/seankent/bluejay/ip/jay/src/gen/jay.sv, /home/seankent/bluejay/ip/jay/src/gen/jay__mie.sv, /home/seankent/bluejay/ip/jay/src/gen/jay__mtval.sv, /home/seankent/bluejay/ip/jay/src/gen/jay__marchid.sv, /home/seankent/bluejay/ip/jay/src/gen/jay__control_and_status_registers.sv, /home/seankent/bluejay/ip/jay/sim/jay/tb/gen/memory.sv, /home/seankent/bluejay/ip/jay/sim/jay/tb/gen/tb.sv
+    output: ip/jay/sim/jay/gen/run__0/xvlog.done
+    jobid: 1
+    reason: Missing output files: ip/jay/sim/jay/gen/run__0/xvlog.done; Input files updated by another job: /home/seankent/bluejay/ip/jay/src/gen/jay__mhpmevent.sv
+    wildcards: ip=jay, dut=jay, run=run__0
+    resources: tmpdir=/tmp
+
+[Sat Aug 12 21:04:09 2023]
+Error in rule 4:
+    jobid: 1
+    input: /home/seankent/bluejay/ip/jay/src/gen/jay__misa.sv, /home/seankent/bluejay/ip/jay/src/gen/jay__arithmetic_logic_unit.sv, /home/seankent/bluejay/ip/jay/src/gen/jay__mimpid.sv, /home/seankent/bluejay/ip/jay/src/gen/jay__mepc.sv, /home/seankent/bluejay/ip/jay/src/gen/jay__mscratch.sv, /home/seankent/bluejay/ip/jay/src/gen/jay__mhartid.sv, /home/seankent/bluejay/ip/jay/src/gen/jay__mcause.sv, /home/seankent/bluejay/ip/jay/src/gen/jay__decoder.sv, /home/seankent/bluejay/ip/jay/src/gen/jay__mip.sv, /home/seankent/bluejay/ip/jay/src/gen/jay__comparator.sv, /home/seankent/bluejay/ip/lib/src/gen/d_flip_flop.sv, /home/seankent/bluejay/ip/jay/src/gen/jay__mcycle.sv, /home/seankent/bluejay/ip/jay/src/gen/jay__medeleg.sv, /home/seankent/bluejay/ip/jay/src/gen/jay__mhpmcounter.sv, /home/seankent/bluejay/ip/jay/src/gen/jay__register_file.sv, /home/seankent/bluejay/ip/jay/src/gen/jay__mvendorid.sv, /home/seankent/bluejay/ip/jay/src/gen/jay__mstatus.sv, /home/seankent/bluejay/ip/jay/src/gen/jay__mtvec.sv, /home/seankent/bluejay/ip/jay/src/gen/jay__mideleg.sv, /home/seankent/bluejay/ip/jay/src/gen/jay__mhpmevent.sv, /home/seankent/bluejay/ip/jay/src/gen/jay.sv, /home/seankent/bluejay/ip/jay/src/gen/jay__mie.sv, /home/seankent/bluejay/ip/jay/src/gen/jay__mtval.sv, /home/seankent/bluejay/ip/jay/src/gen/jay__marchid.sv, /home/seankent/bluejay/ip/jay/src/gen/jay__control_and_status_registers.sv, /home/seankent/bluejay/ip/jay/sim/jay/tb/gen/memory.sv, /home/seankent/bluejay/ip/jay/sim/jay/tb/gen/tb.sv
+    output: ip/jay/sim/jay/gen/run__0/xvlog.done
+    shell:
+        
+        mkdir -p ip/jay/sim/jay/gen/run__0
+        cd ip/jay/sim/jay/gen/run__0 ; xvlog --sv --incr /home/seankent/bluejay/ip/jay/src/gen/jay__misa.sv /home/seankent/bluejay/ip/jay/src/gen/jay__arithmetic_logic_unit.sv /home/seankent/bluejay/ip/jay/src/gen/jay__mimpid.sv /home/seankent/bluejay/ip/jay/src/gen/jay__mepc.sv /home/seankent/bluejay/ip/jay/src/gen/jay__mscratch.sv /home/seankent/bluejay/ip/jay/src/gen/jay__mhartid.sv /home/seankent/bluejay/ip/jay/src/gen/jay__mcause.sv /home/seankent/bluejay/ip/jay/src/gen/jay__decoder.sv /home/seankent/bluejay/ip/jay/src/gen/jay__mip.sv /home/seankent/bluejay/ip/jay/src/gen/jay__comparator.sv /home/seankent/bluejay/ip/lib/src/gen/d_flip_flop.sv /home/seankent/bluejay/ip/jay/src/gen/jay__mcycle.sv /home/seankent/bluejay/ip/jay/src/gen/jay__medeleg.sv /home/seankent/bluejay/ip/jay/src/gen/jay__mhpmcounter.sv /home/seankent/bluejay/ip/jay/src/gen/jay__register_file.sv /home/seankent/bluejay/ip/jay/src/gen/jay__mvendorid.sv /home/seankent/bluejay/ip/jay/src/gen/jay__mstatus.sv /home/seankent/bluejay/ip/jay/src/gen/jay__mtvec.sv /home/seankent/bluejay/ip/jay/src/gen/jay__mideleg.sv /home/seankent/bluejay/ip/jay/src/gen/jay__mhpmevent.sv /home/seankent/bluejay/ip/jay/src/gen/jay.sv /home/seankent/bluejay/ip/jay/src/gen/jay__mie.sv /home/seankent/bluejay/ip/jay/src/gen/jay__mtval.sv /home/seankent/bluejay/ip/jay/src/gen/jay__marchid.sv /home/seankent/bluejay/ip/jay/src/gen/jay__control_and_status_registers.sv /home/seankent/bluejay/ip/jay/sim/jay/tb/gen/memory.sv /home/seankent/bluejay/ip/jay/sim/jay/tb/gen/tb.sv
+        
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: .snakemake/log/2023-08-12T210408.769166.snakemake.log
